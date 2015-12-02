@@ -1,0 +1,9 @@
+/target/
+.classpath
+/db
+/bin
+/deployments
+/META-INF	
+/com.tcp.data.model.*
+.project
+.settings
