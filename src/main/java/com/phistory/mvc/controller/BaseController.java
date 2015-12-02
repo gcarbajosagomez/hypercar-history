@@ -3,8 +3,9 @@ package com.phistory.mvc.controller;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -19,14 +20,17 @@ import com.tcp.data.dao.impl.PictureDao;
  * @author Gonzalo
  *
  */
+@Slf4j
 public class BaseController extends BaseControllerData
-{
-	private Logger logger = LoggerFactory.getLogger(this.getClass());	
+{	
 	@Inject
+	@Getter
 	private CarDao carDao;
 	@Inject
+	@Getter
 	private PictureDao pictureDao;
 	@Inject
+	@Getter
 	private ContentSearchDao contentSearchDao;	
 	@Inject
 	private ModelFiller baseModelFiller;
@@ -36,7 +40,7 @@ public class BaseController extends BaseControllerData
     						  HttpServletRequest request)
 	{
 		String requestUri = extractRequestUriFromRequest(request);
-		logger.info("Handling " + request.getMethod() + " request to URI " + requestUri);
+		log.info("Handling " + request.getMethod() + " request to URI " + requestUri);
 		
 		model.addAttribute("requestURI",  requestUri);		
 		
@@ -55,16 +59,4 @@ public class BaseController extends BaseControllerData
 		
 		return request.getRequestURI().toString() + requestQueryString;
 	}	
-
-	public CarDao getCarDao() {
-		return carDao;
-	}
-
-	public PictureDao getPictureDao() {
-		return pictureDao;
-	}
-
-	public ContentSearchDao getContentSearchDao() {
-		return contentSearchDao;
-	}
 }

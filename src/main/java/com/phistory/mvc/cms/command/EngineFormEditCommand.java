@@ -2,6 +2,8 @@ package com.phistory.mvc.cms.command;
 
 import javax.validation.Valid;
 
+import lombok.Data;
+
 import com.phistory.mvc.cms.form.EngineForm;
 
 /**
@@ -9,20 +11,13 @@ import com.phistory.mvc.cms.form.EngineForm;
  *
  * @author Gonzalo
  */
+@Data
 public class EngineFormEditCommand
 {
 	@Valid
     private EngineForm engineForm;	
-
+	
 	public EngineFormEditCommand() {
 		engineForm = new EngineForm();
-	}
-
-	public EngineForm getEngineForm() {
-		return engineForm;
-	}
-
-	public void setEngineForm(EngineForm engineForm) {
-		this.engineForm = engineForm;
 	}
 }

@@ -18,11 +18,12 @@ public class BaseControllerData
      ******Request params*****
      *************************/
     protected static final String CAR_ID          					= "carId";
+    protected static final String MANUFACTURER_ID          			= "manufacturerId";
     protected static final String PICTURE_ID      					= "picId";
     protected static final String PAG_NUM      	  					= "pagNum";
     protected static final String PAG_NUM_DATA	  					= "pagNumData";
-    protected static final String ITEMS_PER_PAGE  					= "itemsPerPage";
-    protected static final String ITEMS_PER_PAGE_DATA    			= "itemsPerPageData";
+    protected static final String CARS_PER_PAGE  					= "carsPerPage";
+    protected static final String CARS_PER_PAGE_DATA    			= "carsPerPageData";
     protected static final String CONTENT_TO_SEARCH     			= "contentToSearch";
     protected static final String SEARCH_TOTAL_RESULTS_DATA 		= "searchTotalResultsData";
 	
@@ -32,6 +33,7 @@ public class BaseControllerData
 	protected static final String ACTION               		  		= "action";
 	protected static final String LOAD_CAR_PICTURE_ACTION     		= "loadCarPicture";
     protected static final String LOAD_CAR_PREVIEW_ACTION     		= "loadCarPreview";
+    protected static final String LOAD_MANUFACTURER_LOGO_ACTION 	= "loadManufacturerLogo";
 	protected static final String PICTURE_LOAD_COMMAND_ACTION 		= "pictureLoadCommand";
 	
 	/*************************

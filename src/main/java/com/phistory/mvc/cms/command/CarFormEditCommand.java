@@ -2,6 +2,8 @@ package com.phistory.mvc.cms.command;
 
 import javax.validation.Valid;
 
+import lombok.Data;
+
 import com.phistory.mvc.cms.form.CarForm;
 
 /**
@@ -9,20 +11,13 @@ import com.phistory.mvc.cms.form.CarForm;
  *
  * @author Gonzalo
  */
+@Data
 public class CarFormEditCommand
 {
     @Valid
     private CarForm carForm;
-
+    
     public CarFormEditCommand() {
         this.carForm = new CarForm();
     }
-
-    public CarForm getCarForm() {
-        return carForm;
-    }
-
-    public void setCarForm(CarForm carForm) {
-        this.carForm = carForm;
-    }    
 }

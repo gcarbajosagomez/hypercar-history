@@ -5,8 +5,8 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 
@@ -28,10 +28,10 @@ import com.phistory.mvc.springframework.view.ModelFiller;
  * @author Gonzalo
  *
  */
+@Slf4j
 @Controller
 public class CarController extends BaseController
 {
-	private static Logger logger = LoggerFactory.getLogger(CarController.class);
 	@Inject
 	private CarControllerUtil carControllerUtil;
 	@Inject
@@ -45,13 +45,13 @@ public class CarController extends BaseController
 					method = RequestMethod.GET)
 	public ModelAndView handleCarsList(Model model,
 									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-									   @RequestParam(defaultValue = "8", value = ITEMS_PER_PAGE, required = true) int itemsPerPage)
+									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
 	{		
 		try
 		{		
-			PaginationDto paginationDto = new PaginationDto(pagNum, itemsPerPage);
+			CarsPaginationDto carsPaginationDto = new CarsPaginationDto(pagNum, carsPerPage);
 			
-			carsListModelFiller.fillPaginatedModel(model, paginationDto);
+			carsListModelFiller.fillPaginatedModel(model, carsPaginationDto);
 			carModelFiller.fillModel(model);
 			pictureModelFiller.fillModel(model);
 			
@@ -59,7 +59,7 @@ public class CarController extends BaseController
 		}
 		catch(Exception e)
 		{
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 			
 			return new ModelAndView(ERROR);
 		}		
@@ -83,7 +83,7 @@ public class CarController extends BaseController
 		}
 		catch(Exception e)
 		{
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 	
 			return new ModelAndView(ERROR);
 		}
@@ -94,8 +94,8 @@ public class CarController extends BaseController
 					consumes = MediaType.APPLICATION_JSON,
     				produces = MediaType.APPLICATION_JSON)
 	@ResponseBody
-	public Map<String, Object> handlePagination(@RequestBody(required = true) PaginationDto paginationDto)
+	public Map<String, Object> handlePagination(@RequestBody(required = true) CarsPaginationDto carsPaginationDto)
 	{			
-		return carControllerUtil.handlePagination(paginationDto);
+		return carControllerUtil.createPaginationData(carsPaginationDto);
 	}	
 }

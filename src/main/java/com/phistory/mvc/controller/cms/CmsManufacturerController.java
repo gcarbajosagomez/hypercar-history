@@ -1,23 +1,31 @@
 package com.phistory.mvc.controller.cms;
 
 import java.util.Locale;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import javax.ws.rs.core.MediaType;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
+import com.phistory.mvc.controller.cms.util.ManufacturerControllerUtil;
+import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
+import com.phistory.mvc.springframework.view.ManufacturerModelFiller;
+import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.Manufacturer;
 
 /**
@@ -29,25 +37,45 @@ public class CmsManufacturerController extends CmsBaseController
 {
     private final String MANUFACTURER_EDIT_FORM_COMMAND = "MEFC"; 
     @Inject
+    private ManufacturerControllerUtil manufacturerControllerUtil;
+    @Inject
     private ManufacturerFormCreator manufacturerFormCreator;
+    @Inject
+    private ManufacturerModelFiller manufacturerModelFiller;
+    @Inject
+	private ModelFiller pictureModelFiller;
 
     @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_LIST_URL + HTML_SUFFIX,
 				    method = RequestMethod.GET)
     public ModelAndView handleEditDefault(Model model,
 			  							  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-			  							  @RequestParam(defaultValue = "8", value = ITEMS_PER_PAGE, required = true) int itemsPerPage)
+			  							  @RequestParam(defaultValue = "8", value = MANUFACTURERS_PER_PAGE, required = true) int manufacturersPerPage)
     {    	
-    	model.addAttribute(ITEMS_PER_PAGE_DATA, itemsPerPage);
-        fillModel(model);
+    	ManufacturersPaginationDto manufacturersPaginationDto = new ManufacturersPaginationDto(pagNum, manufacturersPerPage);
+    	
+    	manufacturerModelFiller.fillPaginatedModel(model, manufacturersPaginationDto);
+		pictureModelFiller.fillModel(model);
         
         return new ModelAndView();
+    }
+    
+    @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_LIST_URL + HTML_SUFFIX,
+		    		method = RequestMethod.POST,
+		    		consumes = MediaType.APPLICATION_JSON,
+		    		produces = MediaType.APPLICATION_JSON)
+    @ResponseBody
+    public Map<String, Object> handlePagination(@RequestBody(required = true) ManufacturersPaginationDto manufacturersPaginationDto)
+    {			
+    	return manufacturerControllerUtil.createPaginationData(manufacturersPaginationDto);
     }
 
     @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_EDIT_URL + HTML_SUFFIX,
 					method = RequestMethod.GET)
     public ModelAndView handleListDefault(Model model)
     {
-        
+    	manufacturerModelFiller.fillModel(model);
+		pictureModelFiller.fillModel(model);
+    	
         return new ModelAndView();
     }
     
@@ -61,7 +89,13 @@ public class CmsManufacturerController extends CmsBaseController
         {    
         	try
         	{
-        		saveOrEditManufacturer(command, model);
+        		Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
+        		
+        		String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+						  											  new Object[]{manufacturer.getFriendlyName()},
+						  											  Locale.getDefault());
+
+        		model.addAttribute("successMessage", successMessage);
         	}
         	catch (Exception ex)
         	{
@@ -69,7 +103,8 @@ public class CmsManufacturerController extends CmsBaseController
         	}
         }
         
-        fillModel(model);
+        manufacturerModelFiller.fillModel(model);
+        pictureModelFiller.fillModel(model);
         
         return new ModelAndView();
 	}
@@ -84,7 +119,7 @@ public class CmsManufacturerController extends CmsBaseController
 		{
 			try
 			{
-				deleteManufacturer(command);
+				manufacturerControllerUtil.deleteManufacturer(command);
 			}
 			catch (Exception ex)
 			{
@@ -92,7 +127,7 @@ public class CmsManufacturerController extends CmsBaseController
 			}
 		}
 
-		fillModel(model);
+		manufacturerModelFiller.fillModel(model);
 		
 		return new ModelAndView("manufacturerEdit");
 	}    
@@ -110,34 +145,5 @@ public class CmsManufacturerController extends CmsBaseController
         }
         
         return command;
-    }
-    
-    private void saveOrEditManufacturer(ManufacturerFormEditCommand command, Model model)
-    {
-        if(command.getManufacturerForm() != null)
-        {
-            Manufacturer manufacturer = manufacturerFormCreator.createEntityFromForm(command.getManufacturerForm());
-            getManufacturerDao().saveOrEdit(manufacturer);
-            
-            String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
-					  											  new Object[]{command.getManufacturerForm().getName()},
-					  											  Locale.getDefault());
-
-            model.addAttribute("successMessage", successMessage);
-        }
-    }
-    
-    private void deleteManufacturer(ManufacturerFormEditCommand command)
-    {
-        if (command.getManufacturerForm() != null)
-        {
-            Manufacturer manufacturer = manufacturerFormCreator.createEntityFromForm(command.getManufacturerForm());            
-            getManufacturerDao().delete(manufacturer);
-        }
-    }
-
-    private void fillModel(Model model)
-    {
-        model.addAttribute("manufacturers", getManufacturerDao().getAll());
     }
 }

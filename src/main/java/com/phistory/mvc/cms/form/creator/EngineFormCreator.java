@@ -1,23 +1,22 @@
 package com.phistory.mvc.cms.form.creator;
 
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.stereotype.Component;
+
 import com.phistory.mvc.cms.form.EngineForm;
 import com.tcp.data.model.engine.Engine;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * Creates new Engines out of the data contained in EngineForms and vice versa
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class EngineFormCreator implements EntityFormCreator<Engine, EngineForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(EngineFormCreator.class);
-
     /**
      * Create a new EngineForm out of the data contained in an Engine
      */
@@ -42,7 +41,7 @@ public class EngineFormCreator implements EntityFormCreator<Engine, EngineForm>
         }
         catch (Exception e)
         {
-            logger.error(e.toString(), e);
+            log.error(e.toString(), e);
         }
         
         return new EngineForm();
@@ -73,7 +72,7 @@ public class EngineFormCreator implements EntityFormCreator<Engine, EngineForm>
         }
         catch (Exception e)
         {
-            logger.error(e.toString(), e);
+            log.error(e.toString(), e);
         }
         
         return new Engine();

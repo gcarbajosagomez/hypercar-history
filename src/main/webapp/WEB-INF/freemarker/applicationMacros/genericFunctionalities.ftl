@@ -31,6 +31,7 @@
         			<script src="/pagani-history-web/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
         			<script src="/pagani-history-web/resources/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/pagani-history-web/resources/javascript/lib/bootstrap-datepicker.js"></script>
+        			<script src="/pagani-history-web/resources/javascript/lib/bootbox.min.js"></script>
 					<script src="/pagani-history-web/resources/javascript/lib/modernizr.custom.js"></script>
 					<script src="/pagani-history-web/resources/javascript/main.js"></script>
 					
@@ -330,6 +331,43 @@
 	<#return message/>
 </#function>
 
+<#macro addBlueImpGallery>
+	<#-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false">
+    	<#-- The container for the modal slides -->
+    	<div class="slides"></div>
+    	<#-- Controls for the borderless lightbox -->
+    	<h3 class="title"></h3>
+    	<a class="prev">‹</a>
+    	<a class="next">›</a>
+    	<a class="close">×</a>
+    	<a class="play-pause"></a>
+    	<ol class="indicator"></ol>
+    	<#-- The modal dialog, which will be used to wrap the lightbox content -->
+    	<div class="modal fade">
+        	<div class="modal-dialog">
+           		<div class="modal-content">
+           			<div class="modal-header">
+           				<button type="button" class="close" aria-hidden="true">&times;</button>
+           				<h4 class="modal-title"></h4>
+           			</div>
+           			<div class="modal-body next"></div>
+           			<div class="modal-footer">
+           				<button type="button" class="btn btn-default pull-left prev">
+           					<i class="glyphicon glyphicon-chevron-left"></i>
+           						Previous
+           				</button>
+               			<button type="button" class="btn btn-primary next">
+                   		Next
+                   		<i class="glyphicon glyphicon-chevron-right"></i>
+               			</button>
+           			</div>
+        		</div>
+        	</div>
+    	</div>
+	</div>
+</#macro>
+
 <script type='text/javascript'>
 
 function setPageLanguage(locale, mainForm)
@@ -385,7 +423,7 @@ function setPageLanguage(locale, mainForm)
 				{
 					var contentSearchDto = {		
 							 				 ${pagNum} 			: 1,
-	         				 				 ${itemsPerPage} 	: <#if itemsPerPageData??>${itemsPerPageData}<#else>8</#if>,
+	         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 							 				 ${contentToSearch} : $("#content-search-input")[0].value,
 							 				 searchTotalResults : $("#search-total-results")[0].value	
 	         			   				   }; 
@@ -407,7 +445,7 @@ function handleContentSearch(contentToSearch, mainForm)
 {
 	var contentSearchDto = {		
 							 ${pagNum} : 1,
-	         				 ${itemsPerPage} : <#if itemsPerPageData??>${itemsPerPageData}<#else>8</#if>,
+	         				 ${carsPerPage} : <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 							 ${contentToSearch} : contentToSearch
 	         			   }; 
 	         			   
@@ -455,7 +493,7 @@ function handleContentSearch(contentToSearch, mainForm)
 				$("#main-car-list-div").append(noContentFoundElements);				
             }                      
 
-			window.history.pushState(null,'',"${modelsSearchURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=" + contentSearchDto.itemsPerPage);			
+			window.history.pushState(null,'',"${modelsSearchURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage);			
 			setupContentSearchEventListeners();	
 		}
 		
@@ -470,7 +508,7 @@ function createContentSearchPagination(contentSearchDto)
 	    	bootstrapMajorVersion : 3,
     	    currentPage: contentSearchDto.pagNum,
     	    alignment: 'left',
-        	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${itemsPerPage}),
+        	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${carsPerPage}),
     	    useBootstrapTooltip: true,
     	    tooltipTitles:
     	    	function(type,page,current)
@@ -522,7 +560,7 @@ function createContentSearchPagination(contentSearchDto)
       								{
       									document.children[0].innerHTML = data;      									
         	        	 	    		$('#main-car-list-div').unblock();       	        	 	    		
-        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}${HTMLSuffix}?${pagNum}=" + page + "&${itemsPerPage}=" + contentSearchDto.itemsPerPage);	
+        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}${HTMLSuffix}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.carsPerPage);	
     									options.currentPage = contentSearchDto.${pagNum};
         	        	 	    		$('#pagination-ul').bootstrapPaginator(options);
     									$('#pagination-ul').addClass('cursor-pointer');

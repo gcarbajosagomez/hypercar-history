@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,11 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Gonzalo
  *
  */
+@Slf4j
 @Controller
 public class CookiesPolicyController extends BaseController
-{	
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+{		
 	@RequestMapping(value = COOKIES_POLICY_URL + HTML_SUFFIX,
 				    method = RequestMethod.GET)
 	public ModelAndView handleDefault()
@@ -28,7 +27,7 @@ public class CookiesPolicyController extends BaseController
 		}
 		catch (Exception e)
 		{
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 			
 			return new ModelAndView(ERROR);
 		}		

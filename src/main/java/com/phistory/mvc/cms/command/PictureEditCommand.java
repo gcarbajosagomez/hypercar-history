@@ -1,5 +1,9 @@
 package com.phistory.mvc.cms.command;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import org.springframework.web.multipart.MultipartFile;
 
 import com.tcp.data.model.Picture;
@@ -9,32 +13,11 @@ import com.tcp.data.model.Picture;
  *
  * @author Gonzalo
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class PictureEditCommand
 {
 	private Picture picture;
 	private MultipartFile pictureFile;
-
-	public PictureEditCommand() {		
-	}	
-
-	public PictureEditCommand(Picture picture, MultipartFile pictureFile) {
-		this.picture = picture;
-		this.pictureFile = pictureFile;
-	}
-	
-	public Picture getPicture() {
-		return picture;
-	}
-
-	public void setPicture(Picture picture) {
-		this.picture = picture;
-	}
-
-	public MultipartFile getPictureFile() {
-		return pictureFile;
-	}
-
-	public void setPictureFile(MultipartFile pictureFile) {
-		this.pictureFile = pictureFile;
-	}	
 }

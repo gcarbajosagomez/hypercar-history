@@ -3,13 +3,15 @@ package com.phistory.mvc.cms.form.creator;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
+import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.tcp.data.dao.impl.PictureDao;
 import com.tcp.data.model.Manufacturer;
+import com.tcp.data.model.Picture;
 import com.tcp.data.model.util.PictureUtil;
 
 /**
@@ -17,10 +19,10 @@ import com.tcp.data.model.util.PictureUtil;
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, ManufacturerForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(ManufacturerFormCreator.class);
     @Inject
     private PictureDao pictureDao;
 
@@ -35,14 +37,33 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             ManufacturerForm manufacturerForm = new ManufacturerForm(manufacturer.getId(),
             											 		     manufacturer.getName(),
             											 		     manufacturer.getNationality(),
-            											 		     manufacturer.getLogo(),
+            											 		     null,
             											 		     manufacturer.getStory());
-
+            if (manufacturer.getId() != null)
+            {
+            	try
+            	{
+            		PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
+            		Picture carPreview = pictureDao.getManufacturerLogo(manufacturer.getId());
+            		
+            		if (carPreview != null)
+            		{
+            			pictureEditCommand.setPicture(carPreview);
+            		}
+            		
+            		manufacturerForm.setPreviewPictureEditCommand(pictureEditCommand);
+            	}
+            	catch(Exception e)
+            	{
+            		log.error(e.toString(), e);
+            	}
+            }
+            
             return manufacturerForm;
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new ManufacturerForm();
@@ -59,14 +80,14 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),
             									   manufacturerForm.getName(),
             									   manufacturerForm.getNationality(),
-            									   PictureUtil.createPictureFromMultipartFile(manufacturerForm.getLogoPictureFile(), pictureDao),
+            									   PictureUtil.createPictureFromMultipartFile(manufacturerForm.getPreviewPictureEditCommand().getPictureFile(), pictureDao),
             									   manufacturerForm.getStory());
 
             return object;
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new Manufacturer();

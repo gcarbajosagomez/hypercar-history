@@ -2,8 +2,8 @@ package com.phistory.mvc.controller.cms;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+@Slf4j
 @Controller
 public class CmsLoginController extends CmsBaseController
-{
-	private static Logger logger = LoggerFactory.getLogger(CmsLoginController.class);
-	
+{	
 	@RequestMapping(value = {CMS_CONTEXT, CMS_CONTEXT + LOGIN_URL + HTML_SUFFIX},
 				    method = RequestMethod.GET)
 	public ModelAndView handleLogin(HttpServletResponse request,
@@ -49,7 +48,7 @@ public class CmsLoginController extends CmsBaseController
 		{
 			setLoggedIn(false);
 			
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 				
 			return new ModelAndView(ERROR);
 		}	

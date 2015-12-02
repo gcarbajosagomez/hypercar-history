@@ -36,8 +36,13 @@
 		<org.springsecurity.version>4.0.2.RELEASE</org.springsecurity.version>
 		<org.spring-boot.version>1.2.7.RELEASE</org.spring-boot.version>
 		<org.freemarker.version>2.3.23</org.freemarker.version>	
+		<org.projectlombok.version>1.16.6</org.projectlombok.version>
+		<org.assertj-core.version>1.7.0</org.assertj-core.version>
 		<commons.collection.version>3.2.1</commons.collection.version>
 		<mysql.connector.version>5.1.36</mysql.connector.version>	
+		<org.selenium.version>2.48.2</org.selenium.version>
+		<junit.version>4.12</junit.version>
+		<xml-apis.version>1.4.01</xml-apis.version>
 	</properties>
 
 	<build>
@@ -151,8 +156,8 @@
 		<dependency>
 			<groupId>com.the-carpedia</groupId>
 			<artifactId>the-carpedia-data</artifactId>
-			<version>${com.thecarpedia.data.version}</version>			
-		</dependency>		
+			<version>${com.thecarpedia.data.version}</version>	
+		</dependency>	
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -207,7 +212,18 @@
 			<artifactId>spring-boot</artifactId>
 			<version>${org.spring-boot.version}</version>
 			<classifier>javadoc</classifier>
-		</dependency>		
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${org.springframework.version}</version>
+			<classifier>javadoc</classifier>
+		</dependency>
 		<dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
@@ -253,5 +269,58 @@
 			<version>${com.fasterxml.jackson.core.version}</version>
 			<classifier>javadoc</classifier>
 		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${org.projectlombok.version}</version>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>${org.selenium.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-support</artifactId>
+			<version>${org.selenium.version}</version>
+			<classifier>sources</classifier>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
+  			<groupId>org.assertj</groupId>
+  			<artifactId>assertj-core</artifactId>
+  			<version>${org.assertj-core.version}</version>
+  			<scope>test</scope>
+		</dependency>
+		<dependency>
+  			<groupId>org.assertj</groupId>
+  			<artifactId>assertj-core</artifactId>
+  			<version>${org.assertj-core.version}</version>
+  			<classifier>javadoc</classifier>
+		</dependency>
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>${xml-apis.version}</version>
+			<scope>test</scope>
+		</dependency>	
 	</dependencies>
 </project>

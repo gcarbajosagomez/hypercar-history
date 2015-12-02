@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,7 +27,7 @@ import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
@@ -37,10 +37,10 @@ import com.tcp.data.model.car.Car;
  * @author Gonzalo
  */
 @Controller
+@Slf4j
 public class CmsCarController extends CmsBaseController
 {
     private static final String CAR_EDIT_FORM_COMMAND = "CEFC"; 
-    private Logger logger = LoggerFactory.getLogger(CmsCarController.class);
     @Inject
     private CarControllerUtil carControllerUtil;
     @Inject
@@ -58,13 +58,13 @@ public class CmsCarController extends CmsBaseController
     			    method = RequestMethod.GET)
     public ModelAndView handleDefault(Model model,
 					  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-					  @RequestParam(defaultValue = "8", value = ITEMS_PER_PAGE, required = true) int itemsPerPage)
+					  @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
     {		
     	try
     	{		
-    		PaginationDto paginationDto = new PaginationDto(pagNum, itemsPerPage);
+    		CarsPaginationDto carsPaginationDto = new CarsPaginationDto(pagNum, carsPerPage);
 
-    		carsListModelFiller.fillPaginatedModel(model, paginationDto);
+    		carsListModelFiller.fillPaginatedModel(model, carsPaginationDto);
 			carModelFiller.fillModel(model);
 			pictureModelFiller.fillModel(model);
 
@@ -72,7 +72,7 @@ public class CmsCarController extends CmsBaseController
     	}
     	catch(Exception e)
     	{
-    		logger.error(e.toString(), e);
+    		log.error(e.toString(), e);
 
     		return new ModelAndView(ERROR);
     	}		
@@ -83,9 +83,9 @@ public class CmsCarController extends CmsBaseController
     			    consumes = MediaType.APPLICATION_JSON,
     			    produces = MediaType.APPLICATION_JSON)
     @ResponseBody
-    public Map<String, Object> handlePagination(@RequestBody(required = true) PaginationDto paginationDto)
+    public Map<String, Object> handlePagination(@RequestBody(required = true) CarsPaginationDto carsPaginationDto)
     {			
-    	return carControllerUtil.handlePagination(paginationDto);
+    	return carControllerUtil.createPaginationData(carsPaginationDto);
     }
 
     @RequestMapping(value = CMS_CONTEXT + CAR_EDIT_URL + HTML_SUFFIX,
@@ -101,7 +101,7 @@ public class CmsCarController extends CmsBaseController
     	}
         catch (Exception ex)
         {
-        	logger.error(ex.toString(), ex);
+        	log.error(ex.toString(), ex);
         	model.addAttribute("exceptionMessage", ex.toString());
         }
 
@@ -125,16 +125,20 @@ public class CmsCarController extends CmsBaseController
 						  											  new Object[]{car.getFriendlyName()},
 						  											  Locale.getDefault());     
         		model.addAttribute("successMessage", successMessage);
-        	}
-    		
-    		carEditModelFiller.fillCarEditModel(model, command);
+        	}    		
     	}
         catch (Exception ex)
         {
-        	logger.error(ex.toString(), ex);
+        	log.error(ex.toString(), ex);
         	model.addAttribute("exceptionMessage", ex.toString());
-        	carEditModelFiller.fillCarEditModel(model, command);
+        	
         }
+		finally
+		{
+			carModelFiller.fillModel(model);
+			carEditModelFiller.fillCarEditModel(model, command);
+			pictureModelFiller.fillModel(model);
+		}
         
         return new ModelAndView();
 	}
@@ -154,7 +158,7 @@ public class CmsCarController extends CmsBaseController
 		}
 		catch (Exception ex)
 		{
-			logger.error(ex.toString(), ex);
+			log.error(ex.toString(), ex);
 			model.addAttribute("exceptionMessage", ex.toString());
 		}
 		finally

@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.form.creator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.form.TyreForm;
@@ -12,12 +12,11 @@ import com.tcp.data.model.tyre.Tyre;
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class TyreFormCreator implements EntityFormCreator<Tyre, TyreForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(TyreFormCreator.class);
-
-    /**
+	/**
      * Create a new TyreForm out of the data contained in a Tyre
      */
     @Override
@@ -33,9 +32,9 @@ public class TyreFormCreator implements EntityFormCreator<Tyre, TyreForm>
 
             return tyreForm;
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            logger.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new TyreForm();
@@ -57,9 +56,9 @@ public class TyreFormCreator implements EntityFormCreator<Tyre, TyreForm>
 
             return tyre;
         }
-        catch (Exception ex) 
+        catch (Exception e) 
         {
-            logger.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new Tyre();

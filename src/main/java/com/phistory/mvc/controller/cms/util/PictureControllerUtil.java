@@ -1,10 +1,13 @@
 package com.phistory.mvc.controller.cms.util;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
+import com.phistory.mvc.command.PictureLoadCommand;
+import com.phistory.mvc.controller.BaseControllerData;
 import com.tcp.data.command.PictureDataCommand;
 import com.tcp.data.dao.impl.PictureDao;
 import com.tcp.data.model.Picture;
@@ -17,7 +20,7 @@ import com.tcp.data.model.Picture.PictureType;
  *
  */
 @Component
-public class PictureControllerUtil
+public class PictureControllerUtil extends BaseControllerData
 {	
 	@Inject
 	private PictureDao pictureDao;
@@ -71,5 +74,74 @@ public class PictureControllerUtil
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Load a picture depending on the action being performed
+	 * 
+	 * @param command
+	 * @return
+	 * @throws Exception
+	 */
+	public Picture loadPicture(PictureLoadCommand command) throws Exception
+	{
+		switch (command.getAction())
+		{
+			case LOAD_CAR_PICTURE_ACTION:
+			{
+				if (command.getPictureId() != null)
+				{
+					return pictureDao.getById(command.getPictureId());
+				}
+
+			}
+			case LOAD_CAR_PREVIEW_ACTION:
+			{
+				if (command.getCarId() != null)
+				{
+					return pictureDao.getCarPreview(command.getCarId());
+				}
+			}
+			case LOAD_MANUFACTURER_LOGO_ACTION:
+        	{
+        		if (command.getManufacturerId() != null)
+        		{
+        			return pictureDao.getManufacturerLogo(command.getManufacturerId());
+        		}
+        	}
+        	default:
+        	{
+        		if (command.getPictureId() != null)
+        		{
+        			return pictureDao.getById(command.getPictureId());
+        		}
+        	}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Print the binary information of a Picture to a HTTP response
+	 * 
+	 * @param picture
+	 * @param response
+	 * @return
+	 * @throws Exception
+	 */
+	public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) throws Exception
+	{		
+		if (picture != null && picture.getImage() != null)
+		{
+			response.setContentType(IMAGE_CONTENT_TYPE);
+
+			int imgBytesLength = (int) picture.getImage().length();
+			byte[] imgBytes = picture.getImage().getBytes(1, imgBytesLength);
+
+			response.getOutputStream().write(imgBytes);
+			response.getOutputStream().flush();
+		}
+		
+		return response;
 	}
 }

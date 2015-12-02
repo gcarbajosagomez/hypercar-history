@@ -17,7 +17,6 @@ import com.phistory.mvc.cms.propertyEditor.PreviewPicturePropertyEditor;
 import com.phistory.mvc.controller.BaseController;
 import com.tcp.data.dao.impl.EngineDao;
 import com.tcp.data.dao.impl.ManufacturerDao;
-import com.tcp.data.model.Manufacturer;
 import com.tcp.data.model.Picture;
 import com.tcp.data.model.engine.Engine;
 
@@ -57,14 +56,14 @@ public class CmsBaseController extends BaseController
      ******Request params*****
      *************************/
     protected static final String ENGINE_ID          				= "engineId";
-    protected static final String MANUFACTURER_ID          			= "manufacturerId";
+    protected static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
+    protected static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
     protected static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
     
     /*************************
-     **********Actions********
+     **********Misc***********
      *************************/
-	protected static final String SAVE_OR_EDIT_ACTION 		    	= "saveOrEdit";
-    protected static final String LOAD_MANUFACTURER_LOGO_ACTION 	= "loadManufacturerLogo";
+    protected static final String MANUFACTURERS 					= "manufacturers"; 
 	
 	@ModelAttribute(value = CMS_CONTEXT)
     public void fillBaseCmsModel(Model model)
@@ -80,7 +79,6 @@ public class CmsBaseController extends BaseController
 	@InitBinder
     public void initBinder(WebDataBinder binder)
     {
-        binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<Manufacturer, Long>(manufacturerDao));
         binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<Engine, Long>(engineDao));
         binder.registerCustomEditor(Picture.class, new PreviewPicturePropertyEditor(getPictureDao()));
         binder.registerCustomEditor(Calendar.class, new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));

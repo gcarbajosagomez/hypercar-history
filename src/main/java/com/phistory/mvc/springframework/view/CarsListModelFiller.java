@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 
 import com.phistory.mvc.controller.BaseControllerData;
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.tcp.data.dao.impl.CarDao;
 
 /**
@@ -32,13 +32,13 @@ public class CarsListModelFiller extends BaseControllerData implements ModelFill
 	 * Fill the model with paginated car data
 	 * 
 	 * @param model
-	 * @param paginationDto
+	 * @param carsPaginationDto
 	 */
-	public void fillPaginatedModel(Model model, PaginationDto paginationDto)
+	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto)
 	{
-		model.addAttribute(CARS, 					carDao.getByCriteria(CarControllerUtil.createSearchCommand(paginationDto)));
-		model.addAttribute(ITEMS_PER_PAGE_DATA, 	paginationDto.getItemsPerPage());
-		model.addAttribute(PAG_NUM_DATA, 	    	paginationDto.getPagNum());
+		model.addAttribute(CARS, 				carDao.getByCriteria(CarControllerUtil.createSearchCommand(carsPaginationDto)));
+		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDto.getCarsPerPage());
+		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDto.getPagNum());
 		
 		fillModel(model);
 	}

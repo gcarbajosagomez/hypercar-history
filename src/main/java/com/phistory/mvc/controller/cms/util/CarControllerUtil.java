@@ -12,7 +12,7 @@ import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.controller.BaseController;
-import com.phistory.mvc.model.dto.PaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.tcp.data.command.SearchCommand;
 import com.tcp.data.dao.impl.CarDao;
 import com.tcp.data.model.Picture;
@@ -106,12 +106,18 @@ public class CarControllerUtil extends BaseController
         }
     }
 	
-	public Map<String, Object> handlePagination(PaginationDto paginationDto)
+	/**
+	 * Create the data needed to handle car pagination
+	 * 
+	 * @param carsPaginationDto
+	 * @return
+	 */
+	public Map<String, Object> createPaginationData(CarsPaginationDto carsPaginationDto)
     {			
     	Map<String, Object> data = new HashMap<String, Object>();
-    	data.put(CARS, getCarDao().getByCriteria(createSearchCommand(paginationDto)));
-    	data.put(ITEMS_PER_PAGE_DATA, paginationDto.getItemsPerPage());
-    	data.put(PAG_NUM_DATA, paginationDto.getPagNum());		
+    	data.put(CARS, carDao.getByCriteria(createSearchCommand(carsPaginationDto)));
+    	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
+    	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
 
     	return data;
     }
@@ -122,19 +128,19 @@ public class CarControllerUtil extends BaseController
 	 * @param paginationDto
 	 * @return
 	 */
-	public static SearchCommand createSearchCommand(PaginationDto paginationDto)
+	public static SearchCommand createSearchCommand(CarsPaginationDto carsPaginationDto)
 	{
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put("productionStartDate", Boolean.TRUE);
 		
-	    paginationDto.calculatePageFirstResult();
+		carsPaginationDto.calculatePageFirstResult(carsPaginationDto.getCarsPerPage());
 		
 		return new SearchCommand(Car.class,
 								 null,
 								 null,
 								 null,
 								 orderByMap,
-								 paginationDto.getFirstResult(),
-								 paginationDto.getItemsPerPage());
+								 carsPaginationDto.getFirstResult(),
+								 carsPaginationDto.getCarsPerPage());
 	}
 }

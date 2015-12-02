@@ -2,8 +2,8 @@ package com.phistory.mvc.cms.form.creator;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
@@ -17,10 +17,10 @@ import com.tcp.data.model.car.Car;
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class CarFormCreator implements EntityFormCreator<Car, CarForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(CarFormCreator.class);   
     @Inject
     private PictureDao pictureDao;
     @Inject
@@ -62,6 +62,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             							  car.getFuelTankCapacity(),
             							  tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
             							  null, 
+            							  null,
             							  car.getDriveWheelType());
             
             if (car.getId() != null)
@@ -80,7 +81,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             	}
             	catch(Exception e)
             	{
-            		logger.error(e.toString(), e);
+            		log.error(e.toString(), e);
             	}
             }
             return carForm;
@@ -88,7 +89,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new CarForm();
@@ -133,7 +134,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new Car();

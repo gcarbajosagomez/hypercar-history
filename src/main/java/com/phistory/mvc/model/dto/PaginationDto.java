@@ -1,60 +1,43 @@
 package com.phistory.mvc.model.dto;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
 /**
  * DTO class that transports pagination data 
  * 
  * @author Gonzalo
  *
  */
+@Data
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class PaginationDto
 {
+	@NonNull
 	private Integer pagNum;
-	private Integer itemsPerPage;
 	private int firstResult;
 	
-	public PaginationDto() {
-		super();
-	}
-
-	public PaginationDto(Integer pagNum, Integer itemsPerPage) {
-		super();
-		this.pagNum = pagNum;
-		this.itemsPerPage = itemsPerPage;
-	}
-	
-	public void calculatePageFirstResult()
+	/**
+	 * Calculate the index of the first result based on the number of the current page and items per page
+	 * 
+	 * @param itemsPerPage
+	 */
+	public void calculatePageFirstResult(Integer itemsPerPage)
 	{
 		firstResult = 0;
 		
 		int pagNum = getPagNum();
 		
-    	if(getItemsPerPage() != null && pagNum > 1)
+    	if(itemsPerPage != null && pagNum > 1)
     	{
-    		firstResult = (pagNum - 1) * getItemsPerPage();
+    		firstResult = (pagNum - 1) * itemsPerPage;
     	}
     	else
     	{
     		firstResult = 0;
     	}
-	}
-
-	public Integer getPagNum() {
-		return pagNum;
-	}
-
-	public void setPagNum(Integer pagNum) {
-		this.pagNum = pagNum;
-	}
-
-	public Integer getItemsPerPage() {
-		return itemsPerPage;
-	}
-
-	public void setItemsPerPage(Integer itemsPerPage) {
-		this.itemsPerPage = itemsPerPage;
-	}
-
-	public int getFirstResult() {
-		return firstResult;
 	}
 }

@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.form.creator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.form.TransmissionForm;
@@ -12,11 +12,10 @@ import com.tcp.data.model.transmission.Transmission;
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class TransmissionFormCreator implements EntityFormCreator<Transmission, TransmissionForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(TransmissionFormCreator.class);
-
     /**
      * Create a new TransmissionForm out of the data contained in a Transmission
      */
@@ -34,7 +33,7 @@ public class TransmissionFormCreator implements EntityFormCreator<Transmission, 
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new TransmissionForm();
@@ -57,7 +56,7 @@ public class TransmissionFormCreator implements EntityFormCreator<Transmission, 
         } 
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new Transmission();

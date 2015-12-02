@@ -25,12 +25,18 @@
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left">${getTextSource('car')}</h2>
-						
-					<input value="${getTextSource('cms.saveOrEditCar')}" class="btn btn-success" onClick="saveOrEditCar();" />
+						 
+					<a class="btn btn-success" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('car.confirmSaveOrEdit')}');">
+						<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditCar')}
+					</a>
 					<#if CEFC.carForm.id??>
-						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteCar')}" onClick="deleteCar();"/>
+						<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}carDelete${HTMLSuffix}"/>', "${getTextSource('car.confirmDelete')}");">
+							<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteCar')}
+						</a>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}carEdit${HTMLSuffix}"/>' class="btn btn-default">${getTextSource('cms.newCar')}</a>             			
+	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}carEdit${HTMLSuffix}"/>'>
+						<span class="glyphicon glyphicon-new-window"></span> ${getTextSource('cms.newCar')}
+					</a>             			
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal text-left">
@@ -189,13 +195,12 @@
                            ${getTextSource('car.previewImage')} 
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.previewPictureEditCommand.pictureFile"/>                       
-                           <input type="file" id="${spring.status.expression}" name="${spring.status.expression}" class="form-control" accept="image/*" size="20" onChange="displayPreviewImageWhenFileSelected(this.files[0]);"/></br>     
+						   <@spring.formInput "CEFC.carForm.previewPictureEditCommand.pictureFile", "class=form-control accept=image/* size=20 onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>                       
                       </dd>
                           
                       <div id="car-preview-picture-area">                 	    
                       	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="car-preview-image" class="thumbnail car-preview-img" <#if CEFC.carForm.id??>src="/pagani-history-web/${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=${CEFC.carForm.id}"</#if>>                                                 
+                            <img id="car-preview-image" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=${CEFC.carForm.id}"/>'</#if>                                              
                       </div>	                            
 				   </dl>
 			   </div>			
@@ -205,8 +210,12 @@
 			       <h3 class="text-left">${getTextSource('engine')}</h2>
 					
 				   <div>
-				   	   <input class="btn btn-info" type="button" value="Load from DB" onClick="loadEngineFromDB();"/>
-					   <input class="btn btn-default" type="button" value="New engine" onClick="eraseEngineFormFields();"/>
+				   	   <a class="btn btn-info" onClick="loadEngineFromDB();">
+				   	   		<i class="fa fa-database"></i> ${getTextSource('cms.loadEngineFromDb')}
+				   	   	</a>
+					   <a class="btn btn-default" onClick="eraseEngineFormFields();">
+					   		<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.newEngine')}
+					   </a>
 				   </div>
 			   </div>
 			   <div id="engine-main-div" class="panel-body">	
@@ -397,16 +406,17 @@
 			   <div class="panel-heading">
 					<h3 class="text-left">${getTextSource('pictureSet')}</h2>
 					
-					<div class="row">
-						<h5 class="text-muted col-lg-2">${getTextSource('cms.addPicture')}</h5>
-						<a class="col-lg-1"><span class="glyphicon glyphicon-plus-sign" onClick="addPictureUploadBox();"></span></a>		
-					</div>					
+					<a class="btn btn-info" onClick="addPictureUploadBox();">
+      					<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.addPicture')}
+   					</a>				
 			   </div>
 			   <div class="panel-body row">                      
                     <#if pictureIds?has_content>
+						<@addBlueImpGallery/>
+
                         <#list pictureIds?chunk(2) as row>                       		  
                             <#list row as pictureId>                                								
-                                <a href='<@spring.url "/{pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
+                                <a href='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
                              		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/pagani-history-web/${pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                	</a> 
                             </#list>
@@ -700,40 +710,35 @@
         
            $('#pictureUploadInputs').find('tbody').append(newTr);
        }
-       
-       function displayPreviewImageWhenFileSelected(previewFile)
-       {
-       	   var reader = new FileReader();
-       	  
-       	   reader.onload = function(e)
- 		   {
-    		  var img = $('#car-preview-image')[0];
-    		  img.src = reader.result;
-    		      					
-    		  $('#car-preview-picture-area').append(img);
-       	   }
-       	  
-       	   reader.readAsDataURL(previewFile); 
-       }
-       
-       function saveOrEditCar(login)
-	   {		
-		   var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
-    
-    	   $("#main-form").append(csrfData);
-    	   $("#main-form").enctype="multipart/form-data";
-		   $("#main-form").submit();
-	   }
-       
-       function deleteCar()
-       {
-       		var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
-    
-    	  	$("#main-form").append(csrfData);
-    	  	$("#main-form").enctype="multipart/form-data";
-       		$('#main-form')[0].action = '<@spring.url "/${cmsContext}carDelete${HTMLSuffix}"/>';
-       		$('#main-form').submit();
-       }
+
+	function displayPreviewImageWhenFileSelected(img, previewPictureArea, previewFile)
+	{
+		var reader = new FileReader();
+	  
+		reader.onload = function(e)
+		{
+			img.src = reader.result;
+		      					
+			previewPictureArea.append(img);
+		}
+	  
+		reader.readAsDataURL(previewFile); 
+	}
+	
+	function displayPreviewImageWhenFileSelected(previewFile)
+	{
+		var reader = new FileReader();
+	  
+		reader.onload = function(e)
+		{
+			var img = $('#car-preview-image')[0];
+			img.src = reader.result;
+		      					
+			$('#car-preview-picture-area').append(img);
+		}
+	  
+		reader.readAsDataURL(previewFile); 
+	}
 
        $(function()
        {

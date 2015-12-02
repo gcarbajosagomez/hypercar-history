@@ -22,8 +22,8 @@ public class BaseModelFiller extends BaseControllerData implements ModelFiller
 		model.addAttribute("cookiesPolicyURL", 	   COOKIES_POLICY_URL);
 		model.addAttribute("carsURL", 			   CARS_URL);	
 		model.addAttribute("modelsSearchURL", 	   MODELS_SEARCH_URL);
+		model.addAttribute(CARS_PER_PAGE, 		   CARS_PER_PAGE);
 		model.addAttribute(PAG_NUM, 			   PAG_NUM);
-		model.addAttribute(ITEMS_PER_PAGE, 		   ITEMS_PER_PAGE);
 		model.addAttribute(CONTENT_TO_SEARCH, 	   CONTENT_TO_SEARCH);	
 		model.addAttribute("languageCookieName",   LANGUAGE_COOKIE_NAME);
 		model.addAttribute(ACTION, 				   ACTION);

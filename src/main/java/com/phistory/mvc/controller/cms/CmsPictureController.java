@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,7 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.phistory.mvc.cms.command.PictureLoadCommand;
+import com.phistory.mvc.command.PictureLoadCommand;
+import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
 
 /**
@@ -30,6 +32,8 @@ import com.tcp.data.model.Picture;
 public class CmsPictureController extends CmsBaseController
 {    
     private Logger logger = LoggerFactory.getLogger(getClass());
+    @Inject
+    private PictureControllerUtil pictureControllerUtil;
     
     @RequestMapping(value = CMS_CONTEXT + PICTURE_DELETE_URL + HTML_SUFFIX,
     				method = RequestMethod.POST)
@@ -47,7 +51,7 @@ public class CmsPictureController extends CmsBaseController
     	
         try
         {
-            Picture picture = loadPicture(command);
+            Picture picture = pictureControllerUtil.loadPicture(command);
             getPictureDao().delete(picture);
             
             String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
@@ -87,42 +91,5 @@ public class CmsPictureController extends CmsBaseController
         												    manufacturerId);
         
         return command;
-    }
-
-    private Picture loadPicture(PictureLoadCommand command)
-    {
-    	if(command != null && command.getAction() != null)
-    	{
-    		switch (command.getAction())
-    		{
-            	case LOAD_CAR_PICTURE_ACTION:
-            	{
-            		if (command.getPictureId() != null) {
-            			return getPictureDao().getById(command.getPictureId());
-            		}
-
-            	}
-            	case LOAD_CAR_PREVIEW_ACTION:
-            	{
-            		if (command.getCarId() != null) {
-            			return getPictureDao().getCarPreview(command.getCarId());
-            		}
-            	}
-            	case LOAD_MANUFACTURER_LOGO_ACTION:
-            	{
-            		if (command.getManufacturerId() != null) {
-            			return getPictureDao().getManufacturerLogo(command.getManufacturerId());
-            		}
-            	}
-            	default:
-            	{
-            		if (command.getPictureId() != null) {
-            			return getPictureDao().getById(command.getPictureId());
-            		}
-            	}
-    		}
-    	}
-        
-        return null;
     }
 }

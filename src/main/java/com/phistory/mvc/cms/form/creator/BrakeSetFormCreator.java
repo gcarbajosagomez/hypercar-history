@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.form.creator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.form.BrakeSetForm;
@@ -12,11 +12,10 @@ import com.tcp.data.model.brake.BrakeSet;
  * 
  * @author Gonzalo
  */
+@Slf4j
 @Component
 public class BrakeSetFormCreator implements EntityFormCreator<BrakeSet, BrakeSetForm>
 {
-    private static final Logger logger = LoggerFactory.getLogger(BrakeSetFormCreator.class);
-
     /**
      * Create a new BrakeSetForm out of the data contained in a BrakeSet
      */
@@ -34,7 +33,7 @@ public class BrakeSetFormCreator implements EntityFormCreator<BrakeSet, BrakeSet
         } 
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new BrakeSetForm();
@@ -57,7 +56,7 @@ public class BrakeSetFormCreator implements EntityFormCreator<BrakeSet, BrakeSet
         }
         catch (Exception ex)
         {
-            logger.error(ex.toString(), ex);
+            log.error(ex.toString(), ex);
         }
         
         return new BrakeSet();

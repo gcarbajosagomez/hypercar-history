@@ -26,8 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http        
         .authorizeRequests()
         	.antMatchers("/*.html").permitAll()
-            .antMatchers("/cms/*.html").access("hasRole('USER')")
-            .and()
+            .antMatchers("/cms/*.html").access("hasRole('USER')").and()
         .formLogin()
         	.defaultSuccessUrl("/cms/login.html?success")
             .loginPage("/cms/login.html")

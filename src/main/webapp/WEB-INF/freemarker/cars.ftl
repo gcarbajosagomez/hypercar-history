@@ -2,26 +2,26 @@
 
 <@startPage getTextSource('title.allModels')/>
 
-<div id="main-container" class="container panel panel-default cars-main-container main-panel">
+<div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="row">
 		<div class="col-lg-2">
-			<div class="thumbnail list-group cars-list-group">
+			<div class="thumbnail list-group">
 				<#list models as car>
     				<a class="list-group-item" href=${carsDetailsURL}${HTMLSuffix}?${carId}=${car.id}>
-    					<h5 class="text-center model-list-group-element">${car.model}</h5>
+    					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
 			</div>
 		</div>
 		
 		<div id="main-car-list-div" class="col-lg-10 thumbnail">
-			<#if (itemsPerPageData >= 1)>
+			<#if (carsPerPageData >= 1)>
 				<div id="car-list-div" class="col-lg-12">	
-					<ul class="grid car-preview">		
+					<ul class="grid preview">		
 						<#list cars?chunk(2) as row>	
-							<div class="row" id="car-list-row">
+							<div id="car-list-row" class="row">
 								<#list row as car>
-									<div class="col-lg-6 col-md-6 col-sm-12 car-preview-outer" id="${car.manufacturer.name}-${car.model}-div">	
+									<div class="col-lg-6 col-md-6 col-sm-12 preview-outer" id="${car.manufacturer.name}-${car.model}-div">	
 										<#assign zIndex = (car_index + 1) * (row_index + 1)>
 										<#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->		
 										<#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>		
@@ -36,7 +36,7 @@
 					</ul>
 				</div>
 				
-				<#assign chunkedModelsList = models?chunk(itemsPerPageData)>
+				<#assign chunkedModelsList = models?chunk(carsPerPageData)>
 				
 				<div id="car-pagination-main-div" class="col-lg-12" style="margin-top: 55px;">
 					<div class="<#if (chunkedModelsList?size < 2)>col-lg-3 col-md-3 col-sm-5 col-xs-6<#elseif (chunkedModelsList?size >= 3)>col-lg-7 col-md-7 col-sm-8 col-xs-10<#else>col-lg-6 col-md-6 col-sm-7 col-xs-8</#if> center-block well well-sm">
@@ -47,17 +47,17 @@
 								</div>
 							</#if>
 							<div class="<#if (chunkedModelsList?size == 1)>text-center<#else>text-right</#if> <#if (chunkedModelsList?size < 2)>col-lg-12 col-md-12 col-sm-12 col-xs-12<#else><#if (chunkedModelsList?size < 3)>col-lg-5<#else>col-lg-4</#if> col-md-5 col-sm-5 col-xs-12</#if>" style="height:56px; margin-bottom: 20px;">
-								<button class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" id="cars-per-page-menu" data-toggle="dropdown">
+								<button id="cars-per-page-menu" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
     								${getTextSource('pagination.carsPerPage')}
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-menu">
-									<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=5">5</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=10">10</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=15">15</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=20">20</a></li>
+									<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=5">5</a></li>
+    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=10">10</a></li>
+    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=15">15</a></li>
+    								<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=20">20</a></li>
    									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${itemsPerPage}=${models?size}">${getTextSource('pagination.allCars')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${carsURL}${HTMLSuffix}?${pagNum}=1&${carsPerPage}=${models?size}">${getTextSource('pagination.allCars')}</a></li>
   								</ul>
   							</div>
   						</div>
@@ -71,7 +71,7 @@
 
 <script type='text/javascript'>
 	
-	<#if cars?? && (models?size > itemsPerPageData)>
+	<#if cars?? && (models?size > carsPerPageData)>
 		$( document ).ready(function()
 		{
   			createPagination();
@@ -111,7 +111,7 @@
 	         			ajaxCallBeingProcessed = true;
 	         			var paginationData = {
 	         									${pagNum} : page,
-	         									${itemsPerPage} : ${itemsPerPageData}
+	         									${carsPerPage} : ${carsPerPageData}
 	         							  	 };
  			
     	     	    	$.ajax({
@@ -141,7 +141,7 @@
         	        	 	    	
         	        	 	    	if (data != null)
         	        	 	    	{
-        	        	 	    		window.history.pushState(null,'',"${carsURL}${HTMLSuffix}?pagNum=" + data.pagNumData + "&itemsPerPage=" + data.itemsPerPageData); 
+        	        	 	    		window.history.pushState(null,'',"${carsURL}${HTMLSuffix}?pagNum=" + data.pagNumData + "&carsPerPage=" + data.carsPerPageData); 
 									}
 						  	  });  
 					}                      
@@ -181,17 +181,17 @@
     
     function writeCarListRow(cars, zIndex)
     { 	
-    	carRowString = "<div class='row' id='car-list-row'>";
-    	carRowString = carRowString.concat("<ul class='grid car-preview'>");
+    	carRowString = "<div id='car-list-row' class='row'>";
+    	carRowString = carRowString.concat("<ul class='grid preview'>");
 
     	for (var i=0 ; i< cars.length; i++)
     	{
-    		carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 car-preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
-    		carRowString = carRowString.concat(	  "<div class='thumbnail car-preview-div'>");
+    		carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
+    		carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
     		carRowString = carRowString.concat(	  	 	"<figure>");
-		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-car-preview-div'>");
-            carRowString = carRowString.concat(					"<img class='img-thumbnail car-preview-img' src='${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + cars[i].model + "'>");
+		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
+            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
 			carRowString = carRowString.concat(					"<a href='${carsDetailsURL}${HTMLSuffix}?${carId}=" + cars[i].id + "' style='padding-bottom: 0px; padding-top: 0px;'>");
@@ -213,15 +213,15 @@
 </script>
 
 <#macro printCarPreview car zIndex> 
-	<div class="thumbnail car-preview-div">		
+	<div class="thumbnail preview-div">		
     	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
         	<figure>
-				<div class="caption vertically-aligned-div vertically-aligned-car-preview-div">
-               		<img class="img-thumbnail car-preview-img" src="${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=${car.id}" alt="${car.manufacturer.name} ${car.model}">
+				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
+               		<img class="img-thumbnail preview-img" src="${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=${car.id}" alt="${car.manufacturer.name} ${car.model}">
 				</div>
 				<figcaption>
 			 		<a href="${carsDetailsURL}${HTMLSuffix}?${carId}=${car.id}" style="padding-bottom: 0px; padding-top: 0px;">
-						<h3 class="text-center car-model-name">${car.model}</h3>
+						<h3 class="text-center model-name">${car.model}</h3>
 					</a>
 				</figcaption>
 			</figure>

@@ -8,7 +8,8 @@ import java.util.Random;
 
 import javax.inject.Inject;
 
-import org.jboss.logging.Logger;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +25,10 @@ import com.tcp.data.model.car.Car;
  * @author Gonzalo
  *
  */
+@Slf4j
 @Controller
 public class IndexController extends BaseController
 {	
-	private final static Logger logger = Logger.getLogger(IndexController.class);
 	@Inject
 	private ModelFiller pictureModelFiller;	
 	@Inject
@@ -49,7 +50,7 @@ public class IndexController extends BaseController
 		}
 		catch(Exception e)
 		{
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 			
 			return new ModelAndView(ERROR);
 		}
