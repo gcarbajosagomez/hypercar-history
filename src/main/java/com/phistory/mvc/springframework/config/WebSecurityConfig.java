@@ -25,17 +25,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	{        
 		http        
         .authorizeRequests()
-        	.antMatchers("/*.html").permitAll()
-            .antMatchers("/cms/*.html").access("hasRole('USER')").and()
+        	.antMatchers("/*").permitAll()
+            .antMatchers("/cms/*").access("hasRole('USER')").and()
         .formLogin()
-        	.defaultSuccessUrl("/cms/login.html?success")
-            .loginPage("/cms/login.html")
-            .failureUrl("/cms/login.html?error")
+        	.loginPage("/cms/login")
+        	.defaultSuccessUrl("/cms/login?success")
+            .failureUrl("/cms/login?error")
             .permitAll()
             .and()
 		.logout()
-			.logoutUrl("/cms/logout.html")
-			.logoutSuccessUrl("/cms/login.html?logout")
+			.logoutUrl("/cms/login?logout")
+			.logoutSuccessUrl("/cms/login")
 			.permitAll();
     }
 	

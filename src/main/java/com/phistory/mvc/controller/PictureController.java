@@ -24,13 +24,13 @@ import com.tcp.data.model.Picture;
  */
 @Slf4j
 @Controller
+@RequestMapping(value = "picture")
 public class PictureController extends BaseController
 {	
 	@Inject
     private PictureControllerUtil pictureControllerUtil;
 	
-	@RequestMapping(value = PICTURE_URL + HTML_SUFFIX,
-					method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public void handleDefault(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command)

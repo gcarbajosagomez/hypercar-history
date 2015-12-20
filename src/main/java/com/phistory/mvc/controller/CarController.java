@@ -29,7 +29,8 @@ import com.phistory.mvc.springframework.view.ModelFiller;
  *
  */
 @Slf4j
-@Controller
+@Controller()
+@RequestMapping(value = "cars")
 public class CarController extends BaseController
 {
 	@Inject
@@ -41,8 +42,7 @@ public class CarController extends BaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(value = CARS_URL + HTML_SUFFIX,
-					method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleCarsList(Model model,
 									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
 									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
@@ -65,7 +65,7 @@ public class CarController extends BaseController
 		}		
 	}
 	
-	@RequestMapping(value = CAR_DETAILS_URL + HTML_SUFFIX,
+	@RequestMapping(value = CAR_DETAILS_URL,
 		    		method = RequestMethod.GET)
 	public ModelAndView handleCarDetails(Model model,
 							  		  	 @RequestParam(value = CAR_ID, required = true) Long carId,
@@ -79,7 +79,7 @@ public class CarController extends BaseController
 			model.addAttribute("pictureIds", getPictureDao().getIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 	
-			return new ModelAndView();
+			return new ModelAndView(CAR_DETAILS);
 		}
 		catch(Exception e)
 		{
@@ -89,8 +89,7 @@ public class CarController extends BaseController
 		}
 	}
 	
-	@RequestMapping(value = CARS_URL + HTML_SUFFIX,
-					method = RequestMethod.POST,
+	@RequestMapping(method = RequestMethod.POST,
 					consumes = MediaType.APPLICATION_JSON,
     				produces = MediaType.APPLICATION_JSON)
 	@ResponseBody

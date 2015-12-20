@@ -35,7 +35,7 @@ public class ApplicationContextInitializer implements WebApplicationInitializer
 	      
 	    // security filter
 	    FilterRegistration.Dynamic securityFilter = container.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain"));
-	    securityFilter.addMappingForUrlPatterns(null, false, "*.html");
+	    securityFilter.addMappingForUrlPatterns(null, false, "*");
 
 	    // Create the dispatcher servlet's Spring application context
 	    AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
@@ -44,6 +44,6 @@ public class ApplicationContextInitializer implements WebApplicationInitializer
 	    // Register and map the dispatcher servlet
 	    ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
 	    dispatcher.setLoadOnStartup(1);
-	    dispatcher.addMapping("*.html");
+	    dispatcher.addMapping("*");
     }
 }

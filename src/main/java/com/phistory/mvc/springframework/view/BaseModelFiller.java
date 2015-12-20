@@ -17,7 +17,7 @@ public class BaseModelFiller extends BaseControllerData implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute("HTMLSuffix", 		   HTML_SUFFIX);
+		model.addAttribute("paganiHistoryWeb", 	   PAGANI_HISTORY_WEB);
 		model.addAttribute("indexURL", 			   INDEX_URL);
 		model.addAttribute("cookiesPolicyURL", 	   COOKIES_POLICY_URL);
 		model.addAttribute("carsURL", 			   CARS_URL);	

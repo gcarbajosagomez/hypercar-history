@@ -15,10 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Slf4j
 @Controller
+@RequestMapping(value = "cookiesPolicy",
+				method = RequestMethod.GET)
 public class CookiesPolicyController extends BaseController
 {		
-	@RequestMapping(value = COOKIES_POLICY_URL + HTML_SUFFIX,
-				    method = RequestMethod.GET)
 	public ModelAndView handleDefault()
 	{
 		try

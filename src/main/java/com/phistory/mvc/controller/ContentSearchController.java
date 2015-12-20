@@ -35,6 +35,7 @@ import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType
  */
 @Slf4j
 @Controller
+@RequestMapping(value = "modelsSearch")
 public class ContentSearchController extends BaseController implements InitializingBean
 {
 	@Inject
@@ -42,8 +43,7 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(value = MODELS_SEARCH_URL + HTML_SUFFIX,
-					method = RequestMethod.POST,
+	@RequestMapping(method = RequestMethod.POST,
 					produces = MediaType.APPLICATION_JSON)
 	@ResponseBody
 	public ModelAndView handleModelsSearch(Model model, 
@@ -57,7 +57,7 @@ public class ContentSearchController extends BaseController implements Initializ
 		
 			model.addAttribute(CARS, dataContentSearchDto.getResults());
 			model.addAttribute(MODELS, getCarDao().getDistinctModelsWithId());
-			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getItemsPerPage());
+			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getCarsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
 			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());
 			carModelFiller.fillModel(model);
@@ -73,15 +73,14 @@ public class ContentSearchController extends BaseController implements Initializ
 		}	
 	}
 	
-	@RequestMapping(value = MODELS_SEARCH_URL + HTML_SUFFIX,
-				    method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleModelsSearch(@RequestParam(defaultValue = "0", value = PAG_NUM, required = true) int pagNum,
-			  							   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int itemsPerPage,
+			  							   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage,
 			  							   HttpServletResponse httpServletResponse)
 	{		
 		try
 		{
-			httpServletResponse.sendRedirect(CARS_URL + HTML_SUFFIX + "?" + PAG_NUM + "=" + pagNum + "&" + CARS_PER_PAGE + "=" + itemsPerPage);
+			httpServletResponse.sendRedirect(CARS_URL + "?" + PAG_NUM + "=" + pagNum + "&" + CARS_PER_PAGE + "=" + carsPerPage);
 			
 			return null;
 		}
@@ -110,7 +109,7 @@ public class ContentSearchController extends BaseController implements Initializ
 		Map<String, SimpleDataConditionCommand> dataConditionMap = new HashMap<>();
 		dataConditionMap.put("model", simpleDataConditionCommand);
 		
-		contentSearchDto.calculatePageFirstResult(contentSearchDto.getItemsPerPage());
+		contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
 		
 		return new SearchCommand(Car.class,
 								 null,
@@ -118,7 +117,7 @@ public class ContentSearchController extends BaseController implements Initializ
 								 null,
 								 orderByMap,
 								 contentSearchDto.getFirstResult(),
-								 contentSearchDto.getItemsPerPage());
+								 contentSearchDto.getCarsPerPage());
 	}
 	
 	@Override

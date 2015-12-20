@@ -26,13 +26,14 @@ import com.tcp.data.model.engine.Engine;
  * @author Gonzalo
  */
 @Controller
+@RequestMapping(value = "/cms/engine")
 public class CmsEngineController extends CmsBaseController
 {
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";  
     @Inject
     private EngineFormCreator engineFormCreator;
 
-    @RequestMapping(value = CMS_CONTEXT + ENGINE_CONTENT_LIST_URL + HTML_SUFFIX,
+    @RequestMapping(value = CONTENT_LIST_URL,
     				method = RequestMethod.POST,
     				produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -41,8 +42,7 @@ public class CmsEngineController extends CmsBaseController
         return command.getEngineForm();
     }
     
-    @RequestMapping(value = CMS_CONTEXT + ENGINE_EDIT_URL + HTML_SUFFIX,
-            		method = RequestMethod.POST,
+    @RequestMapping(method = RequestMethod.POST,
             		produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public Engine handleSaveOrEditEngine(HttpServletRequest request,

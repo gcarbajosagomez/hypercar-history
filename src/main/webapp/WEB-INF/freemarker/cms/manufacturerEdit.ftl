@@ -28,9 +28,9 @@
 						
 					<input type="button" class="btn btn-success" value="${getTextSource('cms.saveOrEditManufacturer')}" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('manufacturer.confirmSaveOrEdit')}');" />
 					<#if MEFC.manufacturerForm.id??>
-						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteManufacturer($(#main-form), '<@spring.url "/${cmsContext}manufacturerDelete${HTMLSuffix}"/>');"/>
+						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteCar($('#main-form'), '<@spring.url "/${cmsContext}${manufacturersURL}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${manufacturerEditURL}${HTMLSuffix}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
+	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal text-left">
@@ -76,7 +76,7 @@
 
 					  <div id="manufacturer-preview-picture-area">                 	    
                       	  	<@spring.bind "MEFC.manufacturerForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="manufacturer-preview-image" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadManufacturerLogoAction}&${manufacturerId}=${MEFC.manufacturerForm.id}"/>'</#if>                                                 
+                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${pictureURL}?${action}=${loadManufacturerLogoAction}&${manufacturerId}=${MEFC.manufacturerForm.id}"/>'</#if>                                                 
                       </div>  
              	 </dl>
      	   </div>
@@ -102,4 +102,10 @@
 	  
 		reader.readAsDataURL(previewFile); 
 	}
+	
+	$(function()
+    {              								  		
+		$('#main-form')[0].enctype="multipart/form-data";
+    });
+
 </script>

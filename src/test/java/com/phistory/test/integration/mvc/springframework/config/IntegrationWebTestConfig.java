@@ -1,16 +1,17 @@
 package com.phistory.test.integration.mvc.springframework.config;
 
-import java.net.MalformedURLException;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-import com.phistory.test.integration.web.login.LoginPage;
-
+@PropertySource("classpath:/com/phistory/systemproperty/dev/systemProperties.properties")
 @Configuration
+@ComponentScan(basePackages = "com.phistory.test.integration.web")
 public class IntegrationWebTestConfig
 {
 	@Bean
@@ -23,10 +24,14 @@ public class IntegrationWebTestConfig
 	}
 	
 	@Bean
-	public LoginPage loginPage() throws MalformedURLException
+	public WebDriver webDriver()
 	{
-		WebDriver webDriver = new FirefoxDriver();
-		
-		return new LoginPage(webDriver);
+		return new FirefoxDriver();
+	}
+	
+	@Bean
+	public PropertySourcesPlaceholderConfigurer propertyConfigIn()
+	{
+		return new PropertySourcesPlaceholderConfigurer();
 	}
 }

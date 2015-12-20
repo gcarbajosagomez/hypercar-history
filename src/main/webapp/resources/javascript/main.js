@@ -15,11 +15,11 @@ function submitLoginForm(login)
 	
 	if (login)
 	{
-		$("#main-form")[0].action = "/pagani-history-web/cms/login.html";
+		$("#main-form")[0].action = "/pagani-history-web/cms/login";
 	}
 	else
 	{
-		$("#main-form")[0].action = "/pagani-history-web/cms/logout.html";
+		$("#main-form")[0].action = "/pagani-history-web/cms/login?logout";
 	}
     
     $("#main-form").append(csrfData);

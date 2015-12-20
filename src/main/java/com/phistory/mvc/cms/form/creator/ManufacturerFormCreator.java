@@ -1,6 +1,8 @@
 
 package com.phistory.mvc.cms.form.creator;
 
+import java.sql.Blob;
+
 import javax.inject.Inject;
 
 import lombok.extern.slf4j.Slf4j;
@@ -61,9 +63,9 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             
             return manufacturerForm;
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            log.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new ManufacturerForm();
@@ -77,17 +79,29 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
     {
         try
         {
+        	Blob logoImage = null;        	
+        	Picture logo = manufacturerForm.getPreviewPictureEditCommand().getPicture();
+        	
+        	if (logo != null && logo.getImage().length() > 0)
+        	{
+        		logoImage = logo.getImage();
+        	}
+        	else
+        	{
+        		logoImage = PictureUtil.createPictureFromMultipartFile(manufacturerForm.getPreviewPictureEditCommand().getPictureFile(), pictureDao);
+        	}
+        	
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),
             									   manufacturerForm.getName(),
             									   manufacturerForm.getNationality(),
-            									   PictureUtil.createPictureFromMultipartFile(manufacturerForm.getPreviewPictureEditCommand().getPictureFile(), pictureDao),
+            									   logoImage,
             									   manufacturerForm.getStory());
 
             return object;
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            log.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new Manufacturer();

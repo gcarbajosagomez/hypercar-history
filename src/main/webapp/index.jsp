@@ -4,7 +4,7 @@
 
 <%
 	try {
- 		response.sendRedirect("index.html");
+ 		response.sendRedirect("index");
 	} catch (Exception ex) {
 	}
 %>

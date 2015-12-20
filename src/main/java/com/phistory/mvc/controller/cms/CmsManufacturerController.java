@@ -4,9 +4,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
+
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +35,8 @@ import com.tcp.data.model.Manufacturer;
  * @author Gonzalo
  */
 @Controller
+@Slf4j
+@RequestMapping(value = "/cms/manufacturers")
 public class CmsManufacturerController extends CmsBaseController
 {
     private final String MANUFACTURER_EDIT_FORM_COMMAND = "MEFC"; 
@@ -45,11 +49,10 @@ public class CmsManufacturerController extends CmsBaseController
     @Inject
 	private ModelFiller pictureModelFiller;
 
-    @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_LIST_URL + HTML_SUFFIX,
-				    method = RequestMethod.GET)
-    public ModelAndView handleEditDefault(Model model,
-			  							  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-			  							  @RequestParam(defaultValue = "8", value = MANUFACTURERS_PER_PAGE, required = true) int manufacturersPerPage)
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView handleListManufacturers(Model model,
+			  							  	   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
+			  							  	   @RequestParam(defaultValue = "8", value = MANUFACTURERS_PER_PAGE, required = true) int manufacturersPerPage)
     {    	
     	ManufacturersPaginationDto manufacturersPaginationDto = new ManufacturersPaginationDto(pagNum, manufacturersPerPage);
     	
@@ -59,8 +62,7 @@ public class CmsManufacturerController extends CmsBaseController
         return new ModelAndView();
     }
     
-    @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_LIST_URL + HTML_SUFFIX,
-		    		method = RequestMethod.POST,
+    @RequestMapping(method = RequestMethod.POST,
 		    		consumes = MediaType.APPLICATION_JSON,
 		    		produces = MediaType.APPLICATION_JSON)
     @ResponseBody
@@ -69,18 +71,18 @@ public class CmsManufacturerController extends CmsBaseController
     	return manufacturerControllerUtil.createPaginationData(manufacturersPaginationDto);
     }
 
-    @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_EDIT_URL + HTML_SUFFIX,
-					method = RequestMethod.GET)
-    public ModelAndView handleListDefault(Model model)
+    @RequestMapping(value = EDIT_URL,
+    				method = RequestMethod.GET)
+    public ModelAndView handleEditManufacturer(Model model)
     {
     	manufacturerModelFiller.fillModel(model);
 		pictureModelFiller.fillModel(model);
     	
-        return new ModelAndView();
+        return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
     }
     
-    @RequestMapping(value = CMS_CONTEXT + MANUFACTURER_EDIT_URL + HTML_SUFFIX,
-    			    method = RequestMethod.POST)
+    @RequestMapping(value = EDIT_URL,
+					method = RequestMethod.POST)
     public ModelAndView handleSaveOrEditManufacturer(Model model,
     											     @Valid @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
     											     BindingResult result)
@@ -106,30 +108,35 @@ public class CmsManufacturerController extends CmsBaseController
         manufacturerModelFiller.fillModel(model);
         pictureModelFiller.fillModel(model);
         
-        return new ModelAndView();
+        return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 	}
 
-	@RequestMapping(value = CMS_CONTEXT + MANUFACTURER_DELETE_URL + HTML_SUFFIX,
+	@RequestMapping(value = DELETE_URL,
 					method = RequestMethod.POST)
-	public ModelAndView handleDeleteCar(HttpServletRequest request,
-									    Model model,
-									    @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
-									    BindingResult result) {
+	public ModelAndView handleDeleteManufacturer(HttpServletResponse response,
+												 Model model,
+									    		 @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
+									    		 BindingResult result) {
 		if (!result.hasErrors())
 		{
 			try
 			{
 				manufacturerControllerUtil.deleteManufacturer(command);
+				response.sendRedirect(EDIT_URL);
+				
+				return null;
 			}
-			catch (Exception ex)
+			catch (Exception e)
 			{
-				model.addAttribute("exception", ex.toString());
+				log.error(e.toString(), e);
+				model.addAttribute("exception", e.toString());
+				manufacturerModelFiller.fillModel(model);
+				
+				return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 			}
 		}
-
-		manufacturerModelFiller.fillModel(model);
 		
-		return new ModelAndView("manufacturerEdit");
+		return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 	}    
 
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)

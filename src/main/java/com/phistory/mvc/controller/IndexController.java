@@ -27,6 +27,7 @@ import com.tcp.data.model.car.Car;
  */
 @Slf4j
 @Controller
+@RequestMapping(value = {"/", "index"})
 public class IndexController extends BaseController
 {	
 	@Inject
@@ -36,8 +37,7 @@ public class IndexController extends BaseController
 	@Inject
 	private Random previewPictureRandomGenerator;	
 	
-	@RequestMapping(value = {"/", INDEX_URL + HTML_SUFFIX},
-					method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleDefault(Model model)
 	{		
 		try
@@ -57,7 +57,7 @@ public class IndexController extends BaseController
 	}
 	
 	/**
-	 * Generates a list of random car names to picture ids
+	 * Generates a list of random car names to picture Ids
 	 * @return
 	 */
 	private Map<String, Long> generateRandomCarNamesToPictureIds()
@@ -76,17 +76,16 @@ public class IndexController extends BaseController
 			}
 		}
 		
-		for ( Long picId : randomPicIds )
-		{
-			Car car = getCarDao().getByPictureId(picId);
-			carNamesToPictureIds.put(car.getFriendlyName(), picId);
-		}
+		randomPicIds.parallelStream().forEach(pictureId -> {
+			Car car = getCarDao().getByPictureId(pictureId);
+			carNamesToPictureIds.put(car.getFriendlyName(), pictureId);
+		});
 		
 		return carNamesToPictureIds;
 	}
 	
 	/**
-	 * Generates a list of random picture ids out of all of the picture Ids in the database
+	 * Generates a list of random picture Ids out of all of the Picture Ids in the database
 	 * 
 	 * @param pictureIds
 	 * @param numOfIdsToSelect
@@ -105,7 +104,7 @@ public class IndexController extends BaseController
 			{	
 				while (true)				
 				{
-					//the limit value is exclusive, so we can increase the number by 1
+					//the limit value is exclusive, so we have to increase the number by 1
 					Long randomId = new Long(previewPictureRandomGenerator.nextInt(highestPictureId.intValue() + 1));
 					
 					//the generator has a max value, but not a min, so we need to check first
@@ -120,11 +119,7 @@ public class IndexController extends BaseController
 						{
 							randomId = new Long(previewPictureRandomGenerator.nextInt(highestPictureId.intValue() + 1));
 						}				
-					}
-					else
-					{
-						continue;
-					}				
+					}			
 				}
 			}
 		}

@@ -6,10 +6,9 @@ public class BaseControllerData
 	/********************
      *******URLs*********
      ********************/
-	protected static final String HTML_SUFFIX 		 				= ".html";
 	protected static final String INDEX_URL   		 				= "index";
 	protected static final String CARS_URL           				= "cars";
-	protected static final String CAR_DETAILS_URL    				= "carDetails";
+	protected static final String CAR_DETAILS_URL    				= "details";
 	protected static final String MODELS_SEARCH_URL  				= "modelsSearch";
 	protected static final String PICTURE_URL 		 				= "picture";
 	protected static final String COOKIES_POLICY_URL 				= "cookiesPolicy"; 
@@ -39,6 +38,7 @@ public class BaseControllerData
 	/*************************
      **********Misc***********
      *************************/
+	protected static final String PAGANI_HISTORY_WEB 				= "pagani-history-web";	
 	protected static final String IMAGE_CONTENT_TYPE 				= "image/jpg";	
 	protected static final String UNITS_OF_MEASURE   				= "unitsOfMeasure"; 
 	protected static final String UNITS_OF_MEASURE_COOKIE_NAME  	= "def_units"; 	 
@@ -49,4 +49,5 @@ public class BaseControllerData
 	protected static final String CARS                   			= "cars";  
 	protected static final String MODELS                   			= "models"; 
 	protected static final String CONTENT_SEARCH_DTO       			= "contentSearchDto";
+	protected static final String CAR_DETAILS       				= "carDetails";
 }

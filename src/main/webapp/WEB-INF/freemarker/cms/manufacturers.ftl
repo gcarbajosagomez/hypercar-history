@@ -7,7 +7,7 @@
         <div class="col-lg-2">
 			<div class="thumbnail list-group">
 				<#list manufacturers as manufacturer>
-    				<a class="list-group-item" href=${manufacturerEditURL}${HTMLSuffix}?${manufacturerId}=${manufacturer.id}>
+    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}?${manufacturerId}=${manufacturer.id}"/>'>
     					<h5 class="text-center list-group-element">${manufacturer.name}</h5>
     				</a>
   				</#list> 
@@ -52,12 +52,12 @@
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="manufacturers-per-page-menu">
-									<li role="presentation"><a role="menuitem" href="${manufacturerListURL}${HTMLSuffix}?${pagNum}=1&${manufacturersPerPage}=5">5</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturerListURL}${HTMLSuffix}?${pagNum}=1&${manufacturersPerPage}=10">10</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturerListURL}${HTMLSuffix}?${pagNum}=1&${manufacturersPerPage}=15">15</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturerListURL}${HTMLSuffix}?${pagNum}=1&${manufacturersPerPage}=20">20</a></li>
+									<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=5">5</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=10">10</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=15">15</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=20">20</a></li>
    									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${manufacturerListURL}${HTMLSuffix}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${getTextSource('pagination.allManufacturers')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${getTextSource('pagination.allManufacturers')}</a></li>
   								</ul>
   							</div>
   						</div>
@@ -74,10 +74,10 @@
     	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
         	<figure>
 				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
-               		<img class="img-thumbnail preview-img" src='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadManufacturerLogoAction}&${manufacturerId}=${manufacturer.id}"/>' alt="${manufacturer.name}">
+               		<img class="img-thumbnail preview-img" src='<@spring.url "/${pictureURL}?${action}=${loadManufacturerLogoAction}&${manufacturerId}=${manufacturer.id}"/>' alt="${manufacturer.name}">
 				</div>
 				<figcaption>
-			 		<a href="${manufacturerEditURL}${HTMLSuffix}?${manufacturerId}=${manufacturer.id}" style="padding-bottom: 0px; padding-top: 0px;">
+			 		<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}?${manufacturerId}=${manufacturer.id}"/>' style="padding-bottom: 0px; padding-top: 0px;">
 						<h3 class="text-center model-name">${manufacturer.name}</h3>
 					</a>
 				</figcaption>

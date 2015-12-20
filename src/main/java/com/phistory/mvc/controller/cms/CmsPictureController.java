@@ -29,13 +29,14 @@ import com.tcp.data.model.Picture;
  * @author Gonzalo
  */
 @Controller
+@RequestMapping(value = "/cms/pictures")
 public class CmsPictureController extends CmsBaseController
 {    
     private Logger logger = LoggerFactory.getLogger(getClass());
     @Inject
     private PictureControllerUtil pictureControllerUtil;
     
-    @RequestMapping(value = CMS_CONTEXT + PICTURE_DELETE_URL + HTML_SUFFIX,
+    @RequestMapping(value = DELETE_URL,
     				method = RequestMethod.POST)
     @ResponseBody
     public String handleDeletePicture(Model model, 

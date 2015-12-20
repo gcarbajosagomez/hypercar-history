@@ -13,10 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
+@RequestMapping(value = {"/cms", "/cms/login"})
 public class CmsLoginController extends CmsBaseController
 {	
-	@RequestMapping(value = {CMS_CONTEXT, CMS_CONTEXT + LOGIN_URL + HTML_SUFFIX},
-				    method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleLogin(HttpServletResponse request,
 									Model model,
 									@RequestParam(value = "success", required = false) String success,
@@ -28,7 +28,7 @@ public class CmsLoginController extends CmsBaseController
 			if (success != null)
 			{				
 				setLoggedIn(true);
-				request.sendRedirect(CARS_URL + HTML_SUFFIX);
+				request.sendRedirect(CARS_URL);
 			}
 			
 			if (error != null)
@@ -47,7 +47,6 @@ public class CmsLoginController extends CmsBaseController
 		catch(Exception e)
 		{
 			setLoggedIn(false);
-			
 			log.error(e.toString(), e);
 				
 			return new ModelAndView(ERROR);

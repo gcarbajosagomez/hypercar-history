@@ -30,11 +30,11 @@
 						<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditCar')}
 					</a>
 					<#if CEFC.carForm.id??>
-						<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}carDelete${HTMLSuffix}"/>', "${getTextSource('car.confirmDelete')}");">
+						<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${deleteURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
 							<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteCar')}
 						</a>
 					</#if>
-	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}carEdit${HTMLSuffix}"/>'>
+	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}carEdit"/>'>
 						<span class="glyphicon glyphicon-new-window"></span> ${getTextSource('cms.newCar')}
 					</a>             			
 			   </div>
@@ -200,7 +200,7 @@
                           
                       <div id="car-preview-picture-area">                 	    
                       	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="car-preview-image" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadCarPreviewAction}&${carId}=${CEFC.carForm.id}"/>'</#if>                                              
+                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${pictureURL}?${action}=${loadCarPreviewAction}&${carId}=${CEFC.carForm.id}"/>'</#if>                                              
                       </div>	                            
 				   </dl>
 			   </div>			
@@ -224,11 +224,11 @@
 				   	       ${getTextSource('engine.codes')}                   
                    	       <#if engines?? && (engines?size > 0)>
                                <dd>
-                                   <select name="${spring.status.expression}" onChange="loadEngineById(this.value);">
-                                   	 <option value=""> 
-                                      <#list engines as engine>
-                                          <option value="${engine.id}"<#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
-                                      </#list>
+								   <select class="form-control" onChange="loadEngineById(this.value);">
+                              			<option value=""> 
+                                        <#list engines as engine>
+                                        	<option value="${engine.id}"<#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
+                                      	</#list>
                                    <select>
                                </dd>
                            </#if>
@@ -416,8 +416,8 @@
 
                         <#list pictureIds?chunk(2) as row>                       		  
                             <#list row as pictureId>                                								
-                                <a href='<@spring.url "/${pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
-                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/pagani-history-web/${pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                <a href='<@spring.url "/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
+                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${paganiHistoryWeb}/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                	</a> 
                             </#list>
                         </#list>    
@@ -561,7 +561,7 @@
        			
 	           	 $.ajax({
 	        			type: 'POST',
-	            	    url: '<@spring.url "/${cmsContext}engineContentList${HTMLSuffix}?engineId="/>' + engineId,
+	            	    url: '<@spring.url "/${cmsContext}engineContentList?engineId="/>' + engineId,
 	                	contentType: 'application/json; charset=UTF-8',
 						beforeSend: function(xhr)
 						{
@@ -709,39 +709,25 @@
            newTr.append(newTd);
         
            $('#pictureUploadInputs').find('tbody').append(newTr);
-       }
+    	}
 
-	function displayPreviewImageWhenFileSelected(img, previewPictureArea, previewFile)
-	{
-		var reader = new FileReader();
-	  
-		reader.onload = function(e)
+		function displayPreviewImageWhenFileSelected(previewFile)
 		{
-			img.src = reader.result;
+			var reader = new FileReader();
+		  
+			reader.onload = function(e)
+			{
+				var img = $('#car-preview-image')[0];
+				img.src = reader.result;
 		      					
-			previewPictureArea.append(img);
+				$('#car-preview-picture-area').append(img);
+			}
+	  
+			reader.readAsDataURL(previewFile); 
 		}
-	  
-		reader.readAsDataURL(previewFile); 
-	}
-	
-	function displayPreviewImageWhenFileSelected(previewFile)
-	{
-		var reader = new FileReader();
-	  
-		reader.onload = function(e)
-		{
-			var img = $('#car-preview-image')[0];
-			img.src = reader.result;
-		      					
-			$('#car-preview-picture-area').append(img);
-		}
-	  
-		reader.readAsDataURL(previewFile); 
-	}
 
-       $(function()
-       {
+       	$(function()
+       	{
        	   $('.input-group.date').datepicker({
            							   		  format: "yyyy-mm",
     								   		  endDate: "0y",
@@ -749,6 +735,8 @@
    									   		  minViewMode: 2,
     								   		  autoclose: true
       								  		});
-       });
+      								  		
+		   $('#main-form')[0].enctype="multipart/form-data";
+       	});
 	   
 </script>

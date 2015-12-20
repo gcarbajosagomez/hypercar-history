@@ -38,6 +38,7 @@ import com.tcp.data.model.car.Car;
  */
 @Controller
 @Slf4j
+@RequestMapping(value = "/cms/cars")
 public class CmsCarController extends CmsBaseController
 {
     private static final String CAR_EDIT_FORM_COMMAND = "CEFC"; 
@@ -54,11 +55,10 @@ public class CmsCarController extends CmsBaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
     
-    @RequestMapping(value = CMS_CONTEXT + CARS_URL + HTML_SUFFIX,
-    			    method = RequestMethod.GET)
-    public ModelAndView handleDefault(Model model,
-					  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-					  @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
+    @RequestMapping(method = RequestMethod.GET)
+    public ModelAndView handleCarList(Model model,
+					  				  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
+					  				  @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
     {		
     	try
     	{		
@@ -78,8 +78,7 @@ public class CmsCarController extends CmsBaseController
     	}		
 	}
     
-    @RequestMapping(value = CMS_CONTEXT + CARS_URL + HTML_SUFFIX,
-    			    method = RequestMethod.POST,
+    @RequestMapping(method = RequestMethod.POST,
     			    consumes = MediaType.APPLICATION_JSON,
     			    produces = MediaType.APPLICATION_JSON)
     @ResponseBody
@@ -88,7 +87,7 @@ public class CmsCarController extends CmsBaseController
     	return carControllerUtil.createPaginationData(carsPaginationDto);
     }
 
-    @RequestMapping(value = CMS_CONTEXT + CAR_EDIT_URL + HTML_SUFFIX,
+    @RequestMapping(value = EDIT_URL,
 				    method = RequestMethod.GET)
     public ModelAndView handleEditDefault(Model model,
     									  @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
@@ -105,11 +104,11 @@ public class CmsCarController extends CmsBaseController
         	model.addAttribute("exceptionMessage", ex.toString());
         }
 
-        return new ModelAndView();
+        return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
-    @RequestMapping(value = CMS_CONTEXT + CAR_EDIT_URL + HTML_SUFFIX,
-                    method = RequestMethod.POST)
+    @RequestMapping(value = EDIT_URL,
+    				method = RequestMethod.POST)
     public ModelAndView handleSaveOrEditCar(HttpServletRequest request,
     										Model model,
     										@Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
@@ -125,12 +124,17 @@ public class CmsCarController extends CmsBaseController
 						  											  new Object[]{car.getFriendlyName()},
 						  											  Locale.getDefault());     
         		model.addAttribute("successMessage", successMessage);
-        	}    		
+        	}
+    		else
+    		{
+    			String errorMessage = getMessageSource().getMessage("entityContainedErrors",null, Locale.getDefault());     
+    			model.addAttribute("exceptionMessage", errorMessage);
+    		}
     	}
-        catch (Exception ex)
+        catch (Exception e)
         {
-        	log.error(ex.toString(), ex);
-        	model.addAttribute("exceptionMessage", ex.toString());
+        	log.error(e.toString(), e);
+        	model.addAttribute("exceptionMessage", e.toString());
         	
         }
 		finally
@@ -140,33 +144,34 @@ public class CmsCarController extends CmsBaseController
 			pictureModelFiller.fillModel(model);
 		}
         
-        return new ModelAndView();
+        return new ModelAndView(CAR_EDIT_VIEW_NAME);
 	}
 
-	@RequestMapping(value = CMS_CONTEXT + CAR_DELETE_URL + HTML_SUFFIX,
+	@RequestMapping(value = DELETE_URL,
 					method = RequestMethod.POST)
-	public ModelAndView handleDeleteCar(HttpServletRequest request,
-										HttpServletResponse response,
+	public ModelAndView handleDeleteCar(HttpServletResponse response,
 										Model model,
-										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
-										BindingResult result)
+										BindingResult result,
+										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
 	{
-		try
+		if (!result.hasErrors())
 		{
-			carControllerUtil.deleteCar(command);
-			response.sendRedirect(CAR_EDIT_URL);
-		}
-		catch (Exception ex)
-		{
-			log.error(ex.toString(), ex);
-			model.addAttribute("exceptionMessage", ex.toString());
-		}
-		finally
-		{		
-			carEditModelFiller.fillCarEditModel(model, command);		
+			try		
+			{
+				carControllerUtil.deleteCar(command);
+				response.sendRedirect(EDIT_URL);
+			}
+			catch (Exception e)
+			{
+				log.error(e.toString(), e);
+				model.addAttribute("exceptionMessage", e.toString());
+				carModelFiller.fillModel(model);
+				
+				return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+			}
 		}
 		
-		return new ModelAndView("carEdit");
+		return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 	}
 
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)

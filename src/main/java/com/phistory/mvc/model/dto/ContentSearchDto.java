@@ -16,12 +16,12 @@ import lombok.NoArgsConstructor;
 public class ContentSearchDto extends PaginationDto
 {	
 	private String contentToSearch;
-	private Integer itemsPerPage;
+	private Integer carsPerPage;
 
-	public ContentSearchDto(Integer pagNum, Integer itemsPerPage, String contentToSearch)
+	public ContentSearchDto(Integer pagNum, Integer carsPerPage, String contentToSearch)
 	{
 		super(pagNum);
-		this.itemsPerPage = itemsPerPage;
+		this.carsPerPage = carsPerPage;
 		this.contentToSearch = contentToSearch;
 	}
 }

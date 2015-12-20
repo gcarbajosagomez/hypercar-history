@@ -18,7 +18,7 @@
   						<div class="carousel-inner">    						
     						<#list carNamesToPictureIds?keys as carName>
     							<div class="item <#if carName_index == 0> active </#if>" id="pic-div-${carNamesToPictureIds[carName]}">
-      								<img src="${pictureURL}${HTMLSuffix}?${action}=${loadCarPictureAction}&${picId}=${carNamesToPictureIds[carName]}" alt="${carName}" >
+      								<img src="${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${carNamesToPictureIds[carName]}" alt="${carName}" >
       								<div class="carousel-caption">
         								${carName}		
 	      							</div>
@@ -26,10 +26,10 @@
     		  				</#list>
       					</div>
       					<#-- Controls -->
-  						<a class="left carousel-control" href="#car-pictures-carousel" data-slide="prev">
+  						<a id="left-arrow-control" class="left carousel-control" href="#car-pictures-carousel" data-slide="prev">
     						<span class="glyphicon glyphicon-chevron-left"></span>
 	  					</a>
-  						<a class="right carousel-control" href="#car-pictures-carousel" data-slide="next">
+  						<a id="right-arrow-control" class="right carousel-control" href="#car-pictures-carousel" data-slide="next">
     						<span class="glyphicon glyphicon-chevron-right"></span>
 	  					</a>
       				</div>
