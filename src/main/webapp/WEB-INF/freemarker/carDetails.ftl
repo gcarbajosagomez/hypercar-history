@@ -27,8 +27,8 @@
   						<div class="carousel-inner">    						
     						<#list pictureIds as pictureId>
     							<div class="item <#if pictureId_index == 0> active </#if>" id="pic-div-${pictureId}">
-      								<a href="/${paganiHistoryWeb}/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" data-gallery>
-										<img src="/${paganiHistoryWeb}/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}"> 
+      								<a href="/${paganiHistoryWeb}/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" data-gallery>
+										<img src="/${paganiHistoryWeb}/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}"> 
 									</a> 														
     							</div>
 	      					</#list>

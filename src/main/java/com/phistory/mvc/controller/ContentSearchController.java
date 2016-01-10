@@ -69,7 +69,7 @@ public class ContentSearchController extends BaseController implements Initializ
 		{
 			log.error(e.toString(), e);
 			
-			return new ModelAndView(ERROR);
+			return new ModelAndView(ERROR_VIEW_NAME);
 		}	
 	}
 	
@@ -88,7 +88,7 @@ public class ContentSearchController extends BaseController implements Initializ
 		{
 			log.error(ioe.toString(), ioe);
 			
-			return new ModelAndView(ERROR);
+			return new ModelAndView(ERROR_VIEW_NAME);
 		}
 	}
 	

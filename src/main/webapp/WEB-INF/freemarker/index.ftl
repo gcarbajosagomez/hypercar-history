@@ -18,7 +18,7 @@
   						<div class="carousel-inner">    						
     						<#list carNamesToPictureIds?keys as carName>
     							<div class="item <#if carName_index == 0> active </#if>" id="pic-div-${carNamesToPictureIds[carName]}">
-      								<img src="${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${carNamesToPictureIds[carName]}" alt="${carName}" >
+      								<img src="${picturesURL}/${loadCarPictureAction}?${picId}=${carNamesToPictureIds[carName]}" alt="${carName}" >
       								<div class="carousel-caption">
         								${carName}		
 	      							</div>

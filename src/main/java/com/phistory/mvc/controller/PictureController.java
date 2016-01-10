@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +25,7 @@ import com.tcp.data.model.Picture;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "picture")
+@RequestMapping(value = "pictures/{action}")
 public class PictureController extends BaseController
 {	
 	@Inject
@@ -47,7 +48,7 @@ public class PictureController extends BaseController
 	}
 
 	@ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
-	public PictureLoadCommand createCommand(@RequestParam(value = ACTION, required = false) String action,
+	public PictureLoadCommand createCommand(@PathVariable(ACTION) String action,
 											@RequestParam(value = CAR_ID, required = false) Long carId,
 											@RequestParam(value = MANUFACTURER_ID, required = false) Long manufacturerId,
 											@RequestParam(value = PICTURE_ID, required = false) Long pictureId)

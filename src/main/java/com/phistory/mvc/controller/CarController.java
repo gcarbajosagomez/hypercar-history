@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -61,15 +62,17 @@ public class CarController extends BaseController
 		{
 			log.error(e.toString(), e);
 			
-			return new ModelAndView(ERROR);
+			return new ModelAndView(ERROR_VIEW_NAME);
 		}		
 	}
 	
-	@RequestMapping(value = CAR_DETAILS_URL,
+	@RequestMapping(value = "{" + ID + "}",
 		    		method = RequestMethod.GET)
 	public ModelAndView handleCarDetails(Model model,
-							  		  	 @RequestParam(value = CAR_ID, required = true) Long carId,
-							  		  	 @CookieValue(value=UNITS_OF_MEASURE_COOKIE_NAME, defaultValue=UNITS_OF_MEASURE_METRIC, required=false) String unitsOfMeasure)
+							  		  	 @PathVariable(ID) Long carId,
+							  		  	 @CookieValue(value = UNITS_OF_MEASURE_COOKIE_NAME,
+							  		  	 			  defaultValue = UNITS_OF_MEASURE_METRIC,
+							  		  	 			  required=false) String unitsOfMeasure)
 	{
 		try
 		{	
@@ -85,7 +88,7 @@ public class CarController extends BaseController
 		{
 			log.error(e.toString(), e);
 	
-			return new ModelAndView(ERROR);
+			return new ModelAndView(ERROR_VIEW_NAME);
 		}
 	}
 	

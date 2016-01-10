@@ -1,6 +1,5 @@
 package com.phistory.mvc.controller;
 
-
 public class BaseControllerData
 {
 	/********************
@@ -8,14 +7,15 @@ public class BaseControllerData
      ********************/
 	protected static final String INDEX_URL   		 				= "index";
 	protected static final String CARS_URL           				= "cars";
-	protected static final String CAR_DETAILS_URL    				= "details";
+	protected static final String ENGINES_URL           			= "engines";
 	protected static final String MODELS_SEARCH_URL  				= "modelsSearch";
-	protected static final String PICTURE_URL 		 				= "picture";
+	protected static final String PICTURES_URL 		 				= "pictures";
 	protected static final String COOKIES_POLICY_URL 				= "cookiesPolicy"; 
 	
 	/*************************
      ******Request params*****
      *************************/
+	protected static final String ID          						= "id";
     protected static final String CAR_ID          					= "carId";
     protected static final String MANUFACTURER_ID          			= "manufacturerId";
     protected static final String PICTURE_ID      					= "picId";
@@ -45,7 +45,7 @@ public class BaseControllerData
 	protected static final String UNITS_OF_MEASURE_METRIC       	= "metric"; 		 
 	protected static final String UNITS_OF_MEASURE_IMPERIAL     	= "imperial";
 	protected static final String LANGUAGE_COOKIE_NAME   			= "def_lang"; 
-	protected static final String ERROR                   			= "error";  
+	protected static final String ERROR_VIEW_NAME                   = "/error";  
 	protected static final String CARS                   			= "cars";  
 	protected static final String MODELS                   			= "models"; 
 	protected static final String CONTENT_SEARCH_DTO       			= "contentSearchDto";

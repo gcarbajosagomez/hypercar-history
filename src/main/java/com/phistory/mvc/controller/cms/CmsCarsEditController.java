@@ -15,10 +15,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,7 +28,6 @@ import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
-import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 
@@ -38,10 +37,9 @@ import com.tcp.data.model.car.Car;
  */
 @Controller
 @Slf4j
-@RequestMapping(value = "/cms/cars")
-public class CmsCarController extends CmsBaseController
+@RequestMapping(value = "/cms/cars/{id}")
+public class CmsCarsEditController extends CmsBaseController
 {
-    private static final String CAR_EDIT_FORM_COMMAND = "CEFC"; 
     @Inject
     private CarControllerUtil carControllerUtil;
     @Inject
@@ -49,34 +47,9 @@ public class CmsCarController extends CmsBaseController
     @Inject
 	private ModelFiller carModelFiller;
 	@Inject
-	private CarsListModelFiller carsListModelFiller;
-	@Inject
 	private CarEditModelFIller carEditModelFiller;
 	@Inject
 	private ModelFiller pictureModelFiller;
-    
-    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView handleCarList(Model model,
-					  				  @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-					  				  @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
-    {		
-    	try
-    	{		
-    		CarsPaginationDto carsPaginationDto = new CarsPaginationDto(pagNum, carsPerPage);
-
-    		carsListModelFiller.fillPaginatedModel(model, carsPaginationDto);
-			carModelFiller.fillModel(model);
-			pictureModelFiller.fillModel(model);
-
-    		return new ModelAndView();
-    	}
-    	catch(Exception e)
-    	{
-    		log.error(e.toString(), e);
-
-    		return new ModelAndView(ERROR);
-    	}		
-	}
     
     @RequestMapping(method = RequestMethod.POST,
     			    consumes = MediaType.APPLICATION_JSON,
@@ -86,11 +59,11 @@ public class CmsCarController extends CmsBaseController
     {			
     	return carControllerUtil.createPaginationData(carsPaginationDto);
     }
-
+    
     @RequestMapping(value = EDIT_URL,
-				    method = RequestMethod.GET)
-    public ModelAndView handleEditDefault(Model model,
-    									  @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
+		    		method = RequestMethod.GET)
+    public ModelAndView handleEditCarDefault(Model model,
+    										 @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
     {
     	try
     	{
@@ -98,13 +71,13 @@ public class CmsCarController extends CmsBaseController
     		carEditModelFiller.fillCarEditModel(model, command);
     		pictureModelFiller.fillModel(model);
     	}
-        catch (Exception ex)
-        {
-        	log.error(ex.toString(), ex);
-        	model.addAttribute("exceptionMessage", ex.toString());
-        }
+    	catch (Exception ex)
+    	{
+    		log.error(ex.toString(), ex);
+    		model.addAttribute("exceptionMessage", ex.toString());
+    	}
 
-        return new ModelAndView(CAR_EDIT_VIEW_NAME);
+    	return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
     @RequestMapping(value = EDIT_URL,
@@ -171,11 +144,11 @@ public class CmsCarController extends CmsBaseController
 			}
 		}
 		
-		return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+		return new ModelAndView(CAR_EDIT_VIEW_NAME);
 	}
 
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
-    public CarFormEditCommand createCarEditFormCommand(@RequestParam(value = CAR_ID, required = false) Long carId)
+    public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId)
     {
         CarFormEditCommand command = new CarFormEditCommand();
 

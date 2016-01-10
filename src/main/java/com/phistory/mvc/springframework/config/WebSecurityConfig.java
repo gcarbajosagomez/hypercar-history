@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * Configuration class for setting up the application's security config
+ * Configuration class for setting up the application's security config.
  * 
  * @author gonzalo
  *
@@ -26,7 +26,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http        
         .authorizeRequests()
         	.antMatchers("/*").permitAll()
-            .antMatchers("/cms/*").access("hasRole('USER')").and()
+            .antMatchers("/cms/*").access("hasRole('USER')")
+            .antMatchers("/cms/*/*").access("hasRole('USER')").and()
         .formLogin()
         	.loginPage("/cms/login")
         	.defaultSuccessUrl("/cms/login?success")

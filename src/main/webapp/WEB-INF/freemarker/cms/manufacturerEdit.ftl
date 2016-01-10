@@ -15,10 +15,10 @@
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>${exceptionMessage}
 			</div>
-		<#elseif sucessMessage??>
-			<div class="col-xs-12 alert alert-sucess" role="info">
+		<#elseif successMessage??>
+			<div class="col-xs-12 alert alert-success" role="info">
 				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				<span class="sr-only">Info:</span>${sucessMessage}
+				<span class="sr-only">Info:</span>${successMessage}
 			</div>
 	   </#if>           	
 	   <div class="col-lg-9 col-sm-12 col-xs-12">		
@@ -30,7 +30,7 @@
 					<#if MEFC.manufacturerForm.id??>
 						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteCar($('#main-form'), '<@spring.url "/${cmsContext}${manufacturersURL}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
+	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal text-left">
@@ -76,7 +76,7 @@
 
 					  <div id="manufacturer-preview-picture-area">                 	    
                       	  	<@spring.bind "MEFC.manufacturerForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${pictureURL}?${action}=${loadManufacturerLogoAction}&${manufacturerId}=${MEFC.manufacturerForm.id}"/>'</#if>                                                 
+                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${manufacturerId}=${MEFC.manufacturerForm.id}"/>'</#if>                                                 
                       </div>  
              	 </dl>
      	   </div>

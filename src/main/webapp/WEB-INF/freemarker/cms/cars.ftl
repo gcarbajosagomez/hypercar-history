@@ -7,7 +7,7 @@
 		<div class="col-lg-2">
 			<div class="thumbnail list-group">
 				<#list models as car>
-    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}?${carId}=${car.id}"/>'>
+    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}?${id}=${car.id}"/>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
@@ -191,10 +191,10 @@
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
     		carRowString = carRowString.concat(	  	 	"<figure>");
 		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${paganiHistoryWeb}/${pictureURL}?${action}=${loadCarPreviewAction}&${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + cars[i].model + "'>");
+            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${paganiHistoryWeb}/${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='${carsURL}/${editURL}?${carId}=" + cars[i].id + "' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "/${editURL}"' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	
@@ -217,10 +217,10 @@
     	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
         	<figure>
 				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
-               		<img class="img-thumbnail preview-img" src='<@spring.url "/${pictureURL}?${action}=${loadCarPreviewAction}&${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
+               		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
 				</div>
 				<figcaption>
-			 		<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}?${carId}=${car.id}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+			 		<a href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
 						<h3 class="text-center model-name">${car.model}</h3>
 					</a>
 				</figcaption>

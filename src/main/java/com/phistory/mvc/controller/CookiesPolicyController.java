@@ -29,7 +29,7 @@ public class CookiesPolicyController extends BaseController
 		{
 			log.error(e.toString(), e);
 			
-			return new ModelAndView(ERROR);
+			return new ModelAndView(ERROR_VIEW_NAME);
 		}		
 	}
 }

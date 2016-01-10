@@ -18,6 +18,6 @@ public class PictureModelFiller extends BaseControllerData implements ModelFille
 	public void fillModel(Model model) 
 	{		
 		model.addAttribute(PICTURE_ID, 	  PICTURE_ID);
-		model.addAttribute("pictureURL",  PICTURE_URL);
+		model.addAttribute("picturesURL",  PICTURES_URL);
 	}
 }

@@ -42,7 +42,7 @@ function saveOrEditEntity(form, saveMessage)
     });	   
 }
 
-function deleteCar(form, deleteUrl, deleteMessage)
+function deleteCar(form, deleteMessage)
 {
 	bootbox.confirm(deleteMessage, function(result)
     {
@@ -53,7 +53,7 @@ function deleteCar(form, deleteUrl, deleteMessage)
 
 			form.append(csrfData);
 			form.enctype="multipart/form-data";
-			form[0].action = deleteUrl;
+			form[0].action = '/pagani-history-web/cms/cars/delete';
 			form.submit();
 		}
     });

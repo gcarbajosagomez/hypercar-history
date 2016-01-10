@@ -63,6 +63,7 @@ public class CmsBaseController extends BaseController
     protected static final String MANUFACTURERS 					= "manufacturers"; 
     protected static final String CAR_EDIT_VIEW_NAME 				= "/cms/carEdit"; 
     protected static final String MANUFACTURER_EDIT_VIEW_NAME 		= "/cms/manufacturerEdit"; 
+    protected static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
 	
 	@ModelAttribute(value = CMS_CONTEXT)
     public void fillBaseCmsModel(Model model)

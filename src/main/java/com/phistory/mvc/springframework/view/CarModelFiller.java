@@ -17,7 +17,6 @@ public class CarModelFiller extends BaseControllerData implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute("carsDetailsURL",   	        CAR_DETAILS_URL);
 		model.addAttribute(CAR_ID, 			   	        CAR_ID);	
 		model.addAttribute("loadCarPreviewAction",      LOAD_CAR_PREVIEW_ACTION);
 		model.addAttribute("loadCarPictureAction",      LOAD_CAR_PICTURE_ACTION);		

@@ -355,11 +355,11 @@
            			<div class="modal-footer">
            				<button type="button" class="btn btn-default pull-left prev">
            					<i class="glyphicon glyphicon-chevron-left"></i>
-           						Previous
+           					${getTextSource('previous')}    
            				</button>
                			<button type="button" class="btn btn-primary next">
-                   		Next
-                   		<i class="glyphicon glyphicon-chevron-right"></i>
+                   			${getTextSource('next')}
+                   			<i class="glyphicon glyphicon-chevron-right"></i>
                			</button>
            			</div>
         		</div>
@@ -433,7 +433,6 @@ function setPageLanguage(locale, mainForm)
 				}
             }
                
-                        
             ajaxCallBeingProcessed = false;
             setupContentSearchEventListeners();	
 			$('#main-wrap-div').unblock();           	

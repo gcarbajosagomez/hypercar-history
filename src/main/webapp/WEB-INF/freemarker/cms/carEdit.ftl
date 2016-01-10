@@ -15,10 +15,10 @@
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 				<span class="sr-only">Error:</span>${exceptionMessage}
 			</div>
-		<#elseif sucessMessage??>
-			<div class="col-xs-12 alert alert-sucess" role="info">
+		<#elseif successMessage??>
+			<div class="col-xs-12 alert alert-success" role="info">
 				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				<span class="sr-only">Info:</span>${sucessMessage}
+				<span class="sr-only">Info:</span>${successMessage}
 			</div>
 	   </#if>           	
 	   <div class="col-lg-6 col-sm-6 col-xs-12">		
@@ -30,11 +30,11 @@
 						<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditCar')}
 					</a>
 					<#if CEFC.carForm.id??>
-						<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${deleteURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
+						<a class="btn btn-danger" onClick="deleteCar($(#main-form), "${getTextSource('car.confirmDelete')}");"/>
 							<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteCar')}
 						</a>
 					</#if>
-	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}carEdit"/>'>
+	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
 						<span class="glyphicon glyphicon-new-window"></span> ${getTextSource('cms.newCar')}
 					</a>             			
 			   </div>
@@ -200,7 +200,7 @@
                           
                       <div id="car-preview-picture-area">                 	    
                       	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${pictureURL}?${action}=${loadCarPreviewAction}&${carId}=${CEFC.carForm.id}"/>'</#if>                                              
+                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${CEFC.carForm.id}"/>'</#if>                                              
                       </div>	                            
 				   </dl>
 			   </div>			
@@ -213,9 +213,17 @@
 				   	   <a class="btn btn-info" onClick="loadEngineFromDB();">
 				   	   		<i class="fa fa-database"></i> ${getTextSource('cms.loadEngineFromDb')}
 				   	   	</a>
-					   <a class="btn btn-default" onClick="eraseEngineFormFields();">
-					   		<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.newEngine')}
-					   </a>
+				   	   	<a class="btn btn-success" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('engine.confirmSaveOrEdit')}');">
+							<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditEngine')}
+						</a>
+				   	   	<a class="btn btn-default" onClick="eraseEngineFormFields();">
+					   	   		<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.newEngine')}
+					   	</a>
+					   <#if CEFC.carForm.engineForm.id??>
+					   		<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${deleteURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
+								<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteEngine')}
+							</a>
+					   </#if>
 				   </div>
 			   </div>
 			   <div id="engine-main-div" class="panel-body">	
@@ -404,7 +412,7 @@
 	   <div class="col-lg-6 col-sm-6 col-xs-12">	
 	       <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('pictureSet')}</h2>
+					<h3 class="text-left">${getTextSource('pictureSet')}</h3>
 					
 					<a class="btn btn-info" onClick="addPictureUploadBox();">
       					<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.addPicture')}
@@ -416,8 +424,8 @@
 
                         <#list pictureIds?chunk(2) as row>                       		  
                             <#list row as pictureId>                                								
-                                <a href='<@spring.url "/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
-                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${paganiHistoryWeb}/${pictureURL}?${action}=${loadCarPictureAction}&${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
+                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${paganiHistoryWeb}/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                	</a> 
                             </#list>
                         </#list>    
@@ -456,7 +464,7 @@
                       </dd>
                   </#if>                  
                   	 <@spring.bind "${objectBindingPath?string}.train"/>  	 
-                  	 <input type="hidden" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
+                  	 <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
                   <dt>         
                        ${getTextSource('brake.disc.diameter')}          
                   </dt>
@@ -470,7 +478,7 @@
                   <dd>
                        <@spring.bind "${objectBindingPath}.discMaterial"/>
                        
-                       <select name="${spring.status.expression}" class="form-control">
+                       <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                            <#list brakeDiscMaterials as brakeDiscMaterial>
                                <option value="${brakeDiscMaterial}"<#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")>selected</#if>>${getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
                            </#list>
@@ -507,7 +515,7 @@
                       </dd>
                   </#if>
                   	 <@spring.bind "${objectBindingPath?string}.train"/>
-                     <input type="hidden" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${tyreTrain}">
+                     <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${tyreTrain}">
                   <dt>         
                         ${getTextSource('tyre.width')}    
                   </dt>
@@ -561,7 +569,7 @@
        			
 	           	 $.ajax({
 	        			type: 'POST',
-	            	    url: '<@spring.url "/${cmsContext}engineContentList?engineId="/>' + engineId,
+	            	    url: '<@spring.url "/${cmsContext}${enginesURL}/"/>' + engineId,
 	                	contentType: 'application/json; charset=UTF-8',
 						beforeSend: function(xhr)
 						{
