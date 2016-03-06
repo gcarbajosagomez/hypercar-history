@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.propertyEditor;
 
-import com.tcp.data.dao.Dao;
-import com.tcp.data.model.ModelObject;
+import com.tcp.data.dao.generic.*;
+import com.tcp.data.model.GenericObject;
 
 import java.beans.PropertyEditorSupport;
 import java.io.Serializable;
@@ -10,7 +10,7 @@ import java.io.Serializable;
  *
  * @author Gonzalo
  */
-public class GenericObjectPropertyEditor<TYPE extends ModelObject, IDENTIFIER extends Serializable> extends PropertyEditorSupport
+public class GenericObjectPropertyEditor<TYPE extends GenericObject, IDENTIFIER extends Serializable> extends PropertyEditorSupport
 {
     protected Dao<TYPE, IDENTIFIER> dao;
 

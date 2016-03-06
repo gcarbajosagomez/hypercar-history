@@ -30,7 +30,7 @@
 						<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditCar')}
 					</a>
 					<#if CEFC.carForm.id??>
-						<a class="btn btn-danger" onClick="deleteCar($(#main-form), "${getTextSource('car.confirmDelete')}");"/>
+						<a class="btn btn-danger" onClick="deleteEntity($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
 							<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteCar')}
 						</a>
 					</#if>

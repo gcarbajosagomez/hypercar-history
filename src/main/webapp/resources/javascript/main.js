@@ -42,19 +42,21 @@ function saveOrEditEntity(form, saveMessage)
     });	   
 }
 
-function deleteCar(form, deleteMessage)
+function deleteEntity(url, deleteMessage)
 {
 	bootbox.confirm(deleteMessage, function(result)
     {
 		//OK button
 		if (result == true)
 		{
-			var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
-
-			form.append(csrfData);
-			form.enctype="multipart/form-data";
-			form[0].action = '/pagani-history-web/cms/cars/delete';
-			form.submit();
+			$.ajax({
+			    url: url,
+			    type: 'DELETE',
+			    beforeSend: function(xhr)
+	    	    {
+			    	xhr = addCrsfTokenToAjaxRequest(xhr);
+	    	    }
+			});
 		}
     });
 }

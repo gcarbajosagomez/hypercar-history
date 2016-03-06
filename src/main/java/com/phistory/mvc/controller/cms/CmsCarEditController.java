@@ -1,13 +1,11 @@
 package com.phistory.mvc.controller.cms;
 
 import java.util.Locale;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,10 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
@@ -27,7 +23,6 @@ import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 
@@ -38,7 +33,7 @@ import com.tcp.data.model.car.Car;
 @Controller
 @Slf4j
 @RequestMapping(value = "/cms/cars/{id}")
-public class CmsCarsEditController extends CmsBaseController
+public class CmsCarEditController extends CmsBaseController
 {
     @Inject
     private CarControllerUtil carControllerUtil;
@@ -50,15 +45,6 @@ public class CmsCarsEditController extends CmsBaseController
 	private CarEditModelFIller carEditModelFiller;
 	@Inject
 	private ModelFiller pictureModelFiller;
-    
-    @RequestMapping(method = RequestMethod.POST,
-    			    consumes = MediaType.APPLICATION_JSON,
-    			    produces = MediaType.APPLICATION_JSON)
-    @ResponseBody
-    public Map<String, Object> handlePagination(@RequestBody(required = true) CarsPaginationDto carsPaginationDto)
-    {			
-    	return carControllerUtil.createPaginationData(carsPaginationDto);
-    }
     
     @RequestMapping(value = EDIT_URL,
 		    		method = RequestMethod.GET)
@@ -151,14 +137,9 @@ public class CmsCarsEditController extends CmsBaseController
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId)
     {
         CarFormEditCommand command = new CarFormEditCommand();
-
-        if (carId != null)
-        {
-            Car car = getCarDao().getById(carId);
-            CarForm carForm = carFormCreator.createFormFromEntity(car);
-            
-            command.setCarForm(carForm);
-        }
+        Car car = getCarDao().getById(carId);
+        CarForm carForm = carFormCreator.createFormFromEntity(car);  
+        command.setCarForm(carForm);
         
         return command;
     } 

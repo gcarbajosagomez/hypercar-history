@@ -8,8 +8,9 @@
 
 <@startPage title/> 
 
- <div id="main-container" class="container">
-	<div class="row">			
+<div id="main-container" class="container">
+	<div class="row">		
+		<@addEditOperationResultMessage exceptionMessage!"", successMessage!""/>   
 		<#if exceptionMessage??>
 			<div class="col-xs-12 alert alert-danger" role="alert">
 				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -20,15 +21,15 @@
 				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
 				<span class="sr-only">Info:</span>${successMessage}
 			</div>
-	   </#if>           	
-	   <div class="col-lg-9 col-sm-12 col-xs-12">		
+	   </#if>     	
+	  	<div class="col-lg-9 col-sm-12 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left">${getTextSource('manufacturer')}</h2>
 						
 					<input type="button" class="btn btn-success" value="${getTextSource('cms.saveOrEditManufacturer')}" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('manufacturer.confirmSaveOrEdit')}');" />
 					<#if MEFC.manufacturerForm.id??>
-						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteCar($('#main-form'), '<@spring.url "/${cmsContext}${manufacturersURL}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
+						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
 	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
 			   </div>
@@ -82,7 +83,7 @@
      	   </div>
         </div>
     </div>
- </div>
+</div>
 
 <@endPage/>
 

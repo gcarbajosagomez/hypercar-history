@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.propertyEditor;
 
-import com.tcp.data.dao.Dao;
+import com.tcp.data.dao.generic.*;
 import com.tcp.data.dao.impl.PictureDao;
 import com.tcp.data.model.Picture;
 

@@ -30,7 +30,7 @@
 		<maven-shade-plugin.version>2.4.1</maven-shade-plugin.version>
 		
 		<javax.ee.version>7.0</javax.ee.version>
-		<com.thecarpedia.data.version>1.2.12</com.thecarpedia.data.version>
+		<com.thecarpedia.data.version>1.2.11</com.thecarpedia.data.version>
 		<com.fasterxml.jackson.core.version>2.6.1</com.fasterxml.jackson.core.version>
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
 		<org.springsecurity.version>4.0.2.RELEASE</org.springsecurity.version>

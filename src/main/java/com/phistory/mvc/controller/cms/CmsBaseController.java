@@ -52,7 +52,6 @@ public class CmsBaseController extends BaseController
     /*************************
      ******Request params*****
      *************************/
-    protected static final String ENGINE_ID          				= "engineId";
     protected static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
     protected static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
     protected static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
@@ -64,6 +63,10 @@ public class CmsBaseController extends BaseController
     protected static final String CAR_EDIT_VIEW_NAME 				= "/cms/carEdit"; 
     protected static final String MANUFACTURER_EDIT_VIEW_NAME 		= "/cms/manufacturerEdit"; 
     protected static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
+    protected static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
+    protected static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
+    protected static final String SUCCESS_MESSAGE  					= "successMessage"; 
+    
 	
 	@ModelAttribute(value = CMS_CONTEXT)
     public void fillBaseCmsModel(Model model)

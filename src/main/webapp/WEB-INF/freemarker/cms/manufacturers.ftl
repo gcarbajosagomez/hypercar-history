@@ -7,7 +7,7 @@
         <div class="col-lg-2">
 			<div class="thumbnail list-group">
 				<#list manufacturers as manufacturer>
-    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}?${manufacturerId}=${manufacturer.id}"/>'>
+    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>'>
     					<h5 class="text-center list-group-element">${manufacturer.name}</h5>
     				</a>
   				</#list> 
@@ -77,7 +77,7 @@
                		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${manufacturerId}=${manufacturer.id}"/>' alt="${manufacturer.name}">
 				</div>
 				<figcaption>
-			 		<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}?${manufacturerId}=${manufacturer.id}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+			 		<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
 						<h3 class="text-center model-name">${manufacturer.name}</h3>
 					</a>
 				</figcaption>

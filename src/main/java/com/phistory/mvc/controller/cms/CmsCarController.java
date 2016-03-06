@@ -1,18 +1,24 @@
 package com.phistory.mvc.controller.cms;
 
+import java.util.Map;
+
 import javax.inject.Inject;
+import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
+import com.phistory.mvc.controller.cms.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
@@ -20,7 +26,7 @@ import com.phistory.mvc.springframework.view.ModelFiller;
 @Component
 @Slf4j
 @RequestMapping(value = "/cms/cars")
-public class CmsCarsController extends CmsBaseController {
+public class CmsCarController extends CmsBaseController {
 	
 	@Inject
 	private CarsListModelFiller carsListModelFiller;
@@ -30,6 +36,8 @@ public class CmsCarsController extends CmsBaseController {
 	private ModelFiller pictureModelFiller;
 	@Inject
 	private CarEditModelFIller carEditModelFiller;
+	@Inject
+    private CarControllerUtil carControllerUtil;
 	
 	@RequestMapping(method = RequestMethod.GET)
     public ModelAndView handleListCars(Model model,
@@ -54,6 +62,15 @@ public class CmsCarsController extends CmsBaseController {
     	}		
 	}
 	
+	@RequestMapping(method = RequestMethod.POST,
+		    		consumes = MediaType.APPLICATION_JSON,
+		    		produces = MediaType.APPLICATION_JSON)
+	@ResponseBody
+	public Map<String, Object> handlePagination(@RequestBody(required = true) CarsPaginationDto carsPaginationDto)
+	{			
+		return carControllerUtil.createPaginationData(carsPaginationDto);
+	}
+	
     @RequestMapping(value = EDIT_URL,
 				    method = RequestMethod.GET)
     public ModelAndView handleNewCar(Model model)
@@ -66,10 +83,10 @@ public class CmsCarsController extends CmsBaseController {
     		carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
     		pictureModelFiller.fillModel(model);
     	}
-        catch (Exception ex)
+        catch (Exception e)
         {
-        	log.error(ex.toString(), ex);
-        	model.addAttribute("exceptionMessage", ex.toString());
+        	log.error(e.toString(), e);
+        	model.addAttribute("exceptionMessage", e.toString());
         }
 
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
