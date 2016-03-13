@@ -11,17 +11,6 @@
 <div id="main-container" class="container">
 	<div class="row">		
 		<@addEditOperationResultMessage exceptionMessage!"", successMessage!""/>   
-		<#if exceptionMessage??>
-			<div class="col-xs-12 alert alert-danger" role="alert">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only">Error:</span>${exceptionMessage}
-			</div>
-		<#elseif successMessage??>
-			<div class="col-xs-12 alert alert-success" role="info">
-				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				<span class="sr-only">Info:</span>${successMessage}
-			</div>
-	   </#if>     	
 	  	<div class="col-lg-9 col-sm-12 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">

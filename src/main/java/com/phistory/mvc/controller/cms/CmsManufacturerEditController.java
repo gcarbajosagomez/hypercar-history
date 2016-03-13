@@ -3,7 +3,7 @@ package com.phistory.mvc.controller.cms;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,6 @@ public class CmsManufacturerEditController extends CmsBaseController
         	try
         	{
         		Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
-        		
         		String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 						  											  new Object[]{manufacturer.getFriendlyName()},
 						  											  Locale.getDefault());
@@ -85,7 +84,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 
 	@RequestMapping(value = DELETE_URL,
 					method = RequestMethod.DELETE)
-	public ModelAndView handleDeleteManufacturer(HttpServletResponse response,
+	public ModelAndView handleDeleteManufacturer(HttpServletRequest request,
 												 Model model,
 									    		 @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
 									    		 BindingResult result) {
@@ -94,18 +93,22 @@ public class CmsManufacturerEditController extends CmsBaseController
 			try
 			{
 				manufacturerControllerUtil.deleteManufacturer(command);
-				response.sendRedirect(EDIT_URL);
-				
-				return null;
+				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
+						  											  new Object[]{command.getManufacturerForm().getName()},
+						  											  Locale.getDefault());
+
+				model.addAttribute(SUCCESS_MESSAGE, successMessage);
+				model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, new ManufacturerFormEditCommand());
 			}
 			catch (Exception e)
 			{
 				log.error(e.toString(), e);
 				model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+			}
+			finally 
+			{
 				manufacturerModelFiller.fillModel(model);
 				pictureModelFiller.fillModel(model);
-				
-				return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 			}
 		}
 		

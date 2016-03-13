@@ -370,16 +370,89 @@
 
 <#macro addEditOperationResultMessage exceptionMessage, successMessage>
 	<#if exceptionMessage?has_content>
-			<div class="col-xs-12 alert alert-danger" role="alert">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only">Error:</span>exceptionMessage
-			</div>
+		<div class="col-xs-12 alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+			<span class="sr-only">Error:</span>${exceptionMessage}
+		</div>
 	<#elseif successMessage?has_content>
-			<div class="col-xs-12 alert alert-success" role="info">
-				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				<span class="sr-only">Info:</span>successMessage
-			</div>
+		<div class="col-xs-12 alert alert-success" role="info">
+			<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+			<span class="sr-only">Info:</span>${successMessage}
+		</div>
 	</#if>    
+</#macro>
+
+<#macro createCarsPagination chunkedModelsList>			
+    var options =
+    {
+	    bootstrapMajorVersion : 3,
+    	currentPage: ${pagNumData},
+    	alignment: 'left',
+        totalPages: <#if chunkedModelsList??><#if (chunkedModelsList?size <= 5)>${chunkedModelsList?size}<#else>5</#if><#else>1</#if>,
+    	useBootstrapTooltip: true,
+    	tooltipTitles:
+    	   	function(type,page,current)
+	       	{
+	       		switch (type) {
+                case "first":
+                    return "${getTextSource('pagination.goToFirstPage')} ";
+                case "prev":
+                    return "${getTextSource('pagination.goToPreviousPage')} ";
+                case "next":
+                    return "${getTextSource('pagination.goToNextPage')} ";
+                case "last":
+                    return "${getTextSource('pagination.goToLastPage')} ";
+                case "page":
+                    return "${getTextSource('pagination.goToPage')} " + page;
+                }
+	     	},        
+        onPageClicked:
+	       	function(e,originalEvent,type,page)
+	       	{      		
+	       		if (!ajaxCallBeingProcessed)
+	       		{	         			
+	       			ajaxCallBeingProcessed = true;
+	       			var paginationData = {
+	       									${pagNum} : page,
+	       									${carsPerPage} : ${carsPerPageData}
+	       							  	 };
+ 		
+    	   	    	$.ajax({
+        	       			type: 'POST',
+                			url: "${carsURL}",
+               				dataType: 'json',
+               				contentType: 'application/json; charset=UTF-8',
+               				data: JSON.stringify(paginationData), 
+               				beforeSend: function(xhr)
+               				{
+								$('#main-car-list-div').block({ 
+									css: {         										
+        									border:         '0px solid', 
+        									backgroundColor:'rgba(94, 92, 92, 0)'
+    								},
+               						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+            					});
+            					
+									xhr = addCrsfTokenToAjaxRequest(xhr);
+  							}
+	                	  })	                	 
+	                	  .done(function (data)
+						  {    	            	 
+        	        	    	writeCarPreviews(data.cars);
+        	        	     	$('#main-car-list-div').unblock(); 
+        	        	     	ajaxCallBeingProcessed = false;
+        	        	 	    	
+        	        	     	if (data != null)
+        	        	     	{
+        	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNumData + "&${carsPerPage}=" + data.carsPerPageData); 
+								}
+						  });  
+				}                      
+            }
+    	}        
+
+    	$('#pagination-ul').bootstrapPaginator(options);
+    	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
 
 <script type='text/javascript'>
@@ -515,7 +588,7 @@ function handleContentSearch(contentToSearch, mainForm)
 }
 
 function createContentSearchPagination(contentSearchDto)
-	{		
+{		
 		var options =
     	{
 	    	bootstrapMajorVersion : 3,
@@ -587,7 +660,7 @@ function createContentSearchPagination(contentSearchDto)
 
     	$('#pagination-ul').bootstrapPaginator(options);
     	$('#pagination-ul').addClass('cursor-pointer');
-    }
+}
 
 function setupContentSearchEventListeners()
 {

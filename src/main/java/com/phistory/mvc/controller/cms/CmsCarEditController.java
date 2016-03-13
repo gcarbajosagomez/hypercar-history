@@ -78,7 +78,6 @@ public class CmsCarEditController extends CmsBaseController
     		if (!result.hasErrors())
     		{        	
         		Car car = carControllerUtil.saveOrEditCar(command);  
-        		
         		String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 						  											  new Object[]{car.getFriendlyName()},
 						  											  Locale.getDefault());     
@@ -115,18 +114,26 @@ public class CmsCarEditController extends CmsBaseController
 	{
 		if (!result.hasErrors())
 		{
-			try		
+			try
 			{
 				carControllerUtil.deleteCar(command);
-				response.sendRedirect(EDIT_URL);
+				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
+						  											  new Object[]{command.getCarForm().getManufacturer().getFriendlyName() + command.getCarForm().getModel()},
+						  											  Locale.getDefault());
+
+				model.addAttribute(SUCCESS_MESSAGE, successMessage);
+				model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarFormEditCommand());
 			}
 			catch (Exception e)
 			{
 				log.error(e.toString(), e);
-				model.addAttribute("exceptionMessage", e.toString());
+				model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+			}
+			finally 
+			{
 				carModelFiller.fillModel(model);
-				
-				return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+				carEditModelFiller.fillCarEditModel(model, command);
+				pictureModelFiller.fillModel(model);
 			}
 		}
 		

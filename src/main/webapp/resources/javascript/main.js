@@ -56,7 +56,38 @@ function deleteEntity(url, deleteMessage)
 	    	    {
 			    	xhr = addCrsfTokenToAjaxRequest(xhr);
 	    	    }
+			})
+			.done(function(data)
+			{
+				document.children[0].innerHTML = data; 	
 			});
 		}
     });
+}
+
+function writeCarPreviews(data)
+{
+	var auxCarRowList = new Array();
+		var carListString = "";
+							 
+		for (var i=0 ; i< data.length; i++)
+	{
+    	if (i%2 == 0)
+		{
+			auxCarRowList = new Array()
+			auxCarRowList[0] = data[i];
+								
+			if((i + 1) <= (data.length - 1))
+			{
+				auxCarRowList[1] = data[i + 1];
+			}
+			
+    		i++;
+    		
+    		zIndex = ((data.length - (i + 1)) + 1);
+			carListString = carListString.concat(writeCarListRow(auxCarRowList, zIndex));
+		}
+	}
+					 
+	$('#car-list-div')[0].innerHTML = carListString;
 }
