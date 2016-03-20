@@ -41,6 +41,7 @@ public class CmsBaseController extends BaseController
      *******URLs*********
      ********************/
 	protected static final String CMS_CONTEXT 						= "cms/"; 
+	protected static final String SAVE_URL 		 					= "save";
 	protected static final String EDIT_URL 		 					= "edit";
     protected static final String DELETE_URL  						= "delete";
     protected static final String LOGIN_URL	 	   					= "login";
@@ -55,6 +56,9 @@ public class CmsBaseController extends BaseController
     protected static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
     protected static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
     protected static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
+    protected static final String LOGIN_SUCCESS 					= "success";
+    protected static final String LOGIN_ERROR 						= "error";
+    protected static final String LOGOUT 							= "logout";
     
     /*************************
      **********Misc***********
@@ -71,12 +75,13 @@ public class CmsBaseController extends BaseController
 	@ModelAttribute(value = CMS_CONTEXT)
     public void fillBaseCmsModel(Model model)
     {
-		model.addAttribute("editURL", 				EDIT_URL);
-		model.addAttribute("deleteURL", 			DELETE_URL);
-		model.addAttribute("manufacturersURL", 		MANUFACTURERS_URL);
-		model.addAttribute("loginURL", 	 			LOGIN_URL);
-		model.addAttribute("loggedIn", 	 			loggedIn);
-		model.addAttribute("cmsContext", 			CMS_CONTEXT);
+		model.addAttribute("saveURL", 			SAVE_URL);
+		model.addAttribute("editURL", 			EDIT_URL);
+		model.addAttribute("deleteURL", 		DELETE_URL);
+		model.addAttribute("manufacturersURL",	MANUFACTURERS_URL);
+		model.addAttribute("loginURL", 	 		LOGIN_URL);
+		model.addAttribute("loggedIn", 	 		loggedIn);
+		model.addAttribute("cmsContext", 		CMS_CONTEXT);
     }
 	
 	@InitBinder

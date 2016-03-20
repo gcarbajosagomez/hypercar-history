@@ -382,7 +382,7 @@
 	</#if>    
 </#macro>
 
-<#macro createCarsPagination chunkedModelsList>			
+<#macro createCarsPagination chunkedModelsList>	
     var options =
     {
 	    bootstrapMajorVersion : 3,
@@ -416,7 +416,6 @@
 	       									${pagNum} : page,
 	       									${carsPerPage} : ${carsPerPageData}
 	       							  	 };
- 		
     	   	    	$.ajax({
         	       			type: 'POST',
                 			url: "${carsURL}",

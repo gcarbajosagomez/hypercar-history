@@ -15,14 +15,16 @@ public interface EntityFormCreator<ENTITY, ENTITYFORM>
 	 *  
 	 * @param entity 
 	 * @return The entity form created
+	 * @throws Exception
 	 */
-	public ENTITYFORM createFormFromEntity(ENTITY entity);
+	public ENTITYFORM createFormFromEntity(ENTITY entity) throws Exception;
 	
 	/**
 	 * Create a new entity out of the data contained in an entity form
 	 * 
 	 * @param entityForm
 	 * @return The entity created
+	 * @throws Exception
 	 */
-	public ENTITY createEntityFromForm(ENTITYFORM entityForm);
+	public ENTITY createEntityFromForm(ENTITYFORM entityForm) throws Exception;
 }

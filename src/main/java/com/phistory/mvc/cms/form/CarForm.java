@@ -71,10 +71,10 @@ public class CarForm
 
     public CarForm()
     {
-        this.engineForm = new EngineForm();
-        this.brakeSetForm = new BrakeSetForm();
+        this.engineForm = 		new EngineForm();
+        this.brakeSetForm = 	new BrakeSetForm();
         this.transmissionForm = new TransmissionForm();
-        this.tyreSetForm = new TyreSetForm();
-        this.manufacturer = new Manufacturer();
+        this.tyreSetForm = 		new TyreSetForm();
+        this.manufacturer = 	new Manufacturer();
     }
 }

@@ -25,18 +25,12 @@
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left">${getTextSource('car')}</h2>
-						 
-					<a class="btn btn-success" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('car.confirmSaveOrEdit')}');">
-						<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditCar')}
-					</a>
+					
+					<input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>${getTextSource('cms.editCar')}<#else>${getTextSource('cms.saveCar')}</#if>" onClick="saveOrEditCar();"/>
 					<#if CEFC.carForm.id??>
-						<a class="btn btn-danger" onClick="deleteEntity($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
-							<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteCar')}
-						</a>
+						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteCar')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>', '${getTextSource('car.confirmDelete')}');"/>
 					</#if>
-	       			<a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
-						<span class="glyphicon glyphicon-new-window"></span> ${getTextSource('cms.newCar')}
-					</a>             			
+	       			<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newCar')}</a>   
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal text-left">
@@ -732,6 +726,15 @@
 			}
 	  
 			reader.readAsDataURL(previewFile); 
+		}
+		
+		function saveOrEditCar()
+		{
+			<#if CEFC.carForm.id??>
+				editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${editURL}"/>', '${getTextSource('car.confirmEdit')}');
+			<#else>
+				saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${getTextSource('car.confirmSave')}');
+			</#if>
 		}
 
        	$(function()

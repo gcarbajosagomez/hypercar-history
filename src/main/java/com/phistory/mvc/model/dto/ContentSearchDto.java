@@ -1,7 +1,6 @@
 package com.phistory.mvc.model.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -11,7 +10,6 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 public class ContentSearchDto extends PaginationDto
 {	

@@ -25,4 +25,6 @@ public class ManufacturerForm
     private String nationality;
     private PictureEditCommand previewPictureEditCommand;
     private String story;
+    
+    
 }

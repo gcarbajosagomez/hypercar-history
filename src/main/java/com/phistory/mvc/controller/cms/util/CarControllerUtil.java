@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
@@ -51,15 +50,24 @@ public class CarControllerUtil extends BaseController
 
             if (command.getCarForm().getPictureFiles() != null)
             {
-                for (MultipartFile file : command.getCarForm().getPictureFiles())
-                {
-                	Picture picture = new Picture(null,
-                								  car,
-                								  null, 
-                								  PictureType.PICTURE);
-                	
-                	pictureControllerUtil.saveOrEditPicture(new PictureEditCommand(picture, file)); 
-                }
+            	command.getCarForm().getPictureFiles().forEach(file ->
+            	{
+            		Picture picture = new Picture(null,
+							  					  car,
+							  					  null, 
+							  					  PictureType.PICTURE);
+            		try
+            		{
+						pictureControllerUtil.saveOrEditPicture(new PictureEditCommand(picture, file));
+					}
+            		catch (Exception e)
+            		{
+						try
+						{
+							throw new Exception(e.getMessage());
+						} catch (Exception e1) {}
+					} 
+            	});
             }
             
             if (command.getCarForm().getPreviewPictureEditCommand().getPictureFile() != null)
@@ -81,7 +89,7 @@ public class CarControllerUtil extends BaseController
             
             if(command.getCarForm().getId() == null)
             {
-            	//After the car has been saved, we need to recreate the carForm with all the new assigned ids
+            	//After the car has been saved, we need to recreate the carForm with all the newly assigned ids
             	command.setCarForm(carFormCreator.createFormFromEntity(car));   
             }
             

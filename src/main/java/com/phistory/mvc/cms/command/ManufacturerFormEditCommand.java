@@ -2,7 +2,9 @@ package com.phistory.mvc.cms.command;
 
 import javax.validation.Valid;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import com.phistory.mvc.cms.form.ManufacturerForm;
 
@@ -12,12 +14,10 @@ import com.phistory.mvc.cms.form.ManufacturerForm;
  * @author Gonzalo
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ManufacturerFormEditCommand
 {
 	@Valid
-    private ManufacturerForm manufacturerForm;
-	
-	public ManufacturerFormEditCommand() {
-        this.manufacturerForm = new ManufacturerForm();
-    }
+    private ManufacturerForm manufacturerForm = new ManufacturerForm();
 }

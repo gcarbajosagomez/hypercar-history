@@ -16,7 +16,7 @@
 			   <div class="panel-heading">
 					<h3 class="text-left">${getTextSource('manufacturer')}</h2>
 						
-					<input type="button" class="btn btn-success" value="${getTextSource('cms.saveOrEditManufacturer')}" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('manufacturer.confirmSaveOrEdit')}');" />
+					<input type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${getTextSource('cms.editManufacturer')}<#else>${getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
 					<#if MEFC.manufacturerForm.id??>
 						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
@@ -77,6 +77,15 @@
 <@endPage/>
 
 <script type="text/javascript">
+
+	function saveOrEditManufacturer()
+	{
+		<#if MEFC.manufacturerForm.id??>
+			editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${getTextSource('manufacturer.confirmEdit')}');
+		<#else>
+			saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${getTextSource('manufacturer.confirmSave')}');
+		</#if>
+	}
 
 	function displayPreviewImageWhenFileSelected(previewFile)
 	{

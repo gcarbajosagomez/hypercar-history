@@ -3,8 +3,6 @@ package com.phistory.mvc.controller.cms;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -67,25 +65,24 @@ public class CmsCarEditController extends CmsBaseController
     }
 
     @RequestMapping(value = EDIT_URL,
-    				method = RequestMethod.POST)
-    public ModelAndView handleSaveOrEditCar(HttpServletRequest request,
-    										Model model,
-    										@Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
-    										BindingResult result)
+    				method = {RequestMethod.POST, RequestMethod.PUT})
+    public ModelAndView handleEditCar(Model model,
+    								  @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
+    								  BindingResult result)
     {
     	try
     	{
     		if (!result.hasErrors())
     		{        	
         		Car car = carControllerUtil.saveOrEditCar(command);  
-        		String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+        		String successMessage = getMessageSource().getMessage("entityEditedSuccessfully",
 						  											  new Object[]{car.getFriendlyName()},
 						  											  Locale.getDefault());     
         		model.addAttribute("successMessage", successMessage);
         	}
     		else
     		{
-    			String errorMessage = getMessageSource().getMessage("entityContainedErrors",null, Locale.getDefault());     
+    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
     			model.addAttribute("exceptionMessage", errorMessage);
     		}
     	}
@@ -106,9 +103,8 @@ public class CmsCarEditController extends CmsBaseController
 	}
 
 	@RequestMapping(value = DELETE_URL,
-					method = RequestMethod.POST)
-	public ModelAndView handleDeleteCar(HttpServletResponse response,
-										Model model,
+					method = RequestMethod.DELETE)
+	public ModelAndView handleDeleteCar(Model model,
 										BindingResult result,
 										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
 	{
@@ -143,10 +139,9 @@ public class CmsCarEditController extends CmsBaseController
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId)
     {
-        CarFormEditCommand command = new CarFormEditCommand();
         Car car = getCarDao().getById(carId);
         CarForm carForm = carFormCreator.createFormFromEntity(car);  
-        command.setCarForm(carForm);
+        CarFormEditCommand command = new CarFormEditCommand(carForm);
         
         return command;
     } 

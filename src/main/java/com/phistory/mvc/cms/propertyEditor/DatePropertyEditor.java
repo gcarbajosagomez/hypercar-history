@@ -4,16 +4,16 @@ import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  *
  * @author Gonzalo
  */
+@Slf4j
 public class DatePropertyEditor extends PropertyEditorSupport
 {
-    private static final Logger logger = LoggerFactory.getLogger(DatePropertyEditor.class);
     private SimpleDateFormat dateFormat;
 
     public DatePropertyEditor(SimpleDateFormat dateFormat)
@@ -35,8 +35,7 @@ public class DatePropertyEditor extends PropertyEditorSupport
         }
         catch (Exception e)
         {
-            logger.error(e.toString(), e);
-            
+            log.error(e.toString(), e);           
         }
         
         return "";
@@ -50,12 +49,12 @@ public class DatePropertyEditor extends PropertyEditorSupport
             Date date = dateFormat.parse(text);
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(date);
-
+            
             setValue(calendar);
         }
         catch (Exception e)
         {
-            logger.error(e.toString(), e);
+            log.error(e.toString(), e);
         }
     }
 }

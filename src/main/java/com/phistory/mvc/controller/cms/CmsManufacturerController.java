@@ -30,8 +30,8 @@ import com.tcp.data.model.Manufacturer;
 @Controller
 @Slf4j
 @RequestMapping(value = "/cms/manufacturers")
-public class CmsManufacturerController extends CmsBaseController {
-	
+public class CmsManufacturerController extends CmsBaseController
+{
 	@Inject
     private ManufacturerModelFiller manufacturerModelFiller;
 	@Inject
@@ -78,6 +78,7 @@ public class CmsManufacturerController extends CmsBaseController {
     	{
     		ManufacturerFormEditCommand manufacturerFormEditCommand = new ManufacturerFormEditCommand();
     		model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, manufacturerFormEditCommand);
+    		
     		manufacturerModelFiller.fillModel(model);
     		pictureModelFiller.fillModel(model);
     	}
@@ -86,14 +87,15 @@ public class CmsManufacturerController extends CmsBaseController {
     		log.error(e.toString(), e);
     		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
     	}
-    		return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+    	
+    	return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
     }
     
-    @RequestMapping(value = EDIT_URL,
+    @RequestMapping(value = SAVE_URL,
 					method = RequestMethod.POST)
     public ModelAndView handleSaveNewManufacturer(Model model,
-									   		   	  @Valid @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
-									   		      BindingResult result)
+									   		   	  @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
+									   		   	  BindingResult result)
     {
     	if (!result.hasErrors())
     	{    
@@ -111,10 +113,12 @@ public class CmsManufacturerController extends CmsBaseController {
     		{
     			model.addAttribute(EXCEPTION_MESSAGE, e.toString());
     		}
+    		finally 
+    		{
+    	    	manufacturerModelFiller.fillModel(model);
+    	    	pictureModelFiller.fillModel(model);
+    		}
     	}
-
-    	manufacturerModelFiller.fillModel(model);
-    	pictureModelFiller.fillModel(model);
 
     	return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
     }

@@ -3,7 +3,6 @@ package com.phistory.mvc.controller.cms;
 import java.util.Locale;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +44,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 
     @RequestMapping(value = EDIT_URL,
     				method = RequestMethod.GET)
-    public ModelAndView handleEditManufacturer(Model model)
+    public ModelAndView handleEditManufacturer(Model model, @PathVariable(ID) Long manufacturerId)
     {
     	manufacturerModelFiller.fillModel(model);
 		pictureModelFiller.fillModel(model);
@@ -54,41 +53,43 @@ public class CmsManufacturerEditController extends CmsBaseController
     }
     
     @RequestMapping(value = EDIT_URL,
-					method = RequestMethod.POST)
+					method = {RequestMethod.POST, RequestMethod.PUT})
     public ModelAndView handleEditManufacturer(Model model,
-    										   @Valid @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
+    										   @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
     										   BindingResult result)
     {
-        if (!result.hasErrors())
-        {    
-        	try
-        	{
-        		Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
-        		String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
-						  											  new Object[]{manufacturer.getFriendlyName()},
-						  											  Locale.getDefault());
-
-        		model.addAttribute(SUCCESS_MESSAGE, successMessage);
-        	}
-        	catch (Exception e)
-        	{
-        		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-        	}
-        }
-        
-        manufacturerModelFiller.fillModel(model);
-        pictureModelFiller.fillModel(model);
-        
-        return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+    	if (!result.hasErrors())
+    	{    
+    		try
+    		{
+    			Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
+		
+    			String successMessage = getMessageSource().getMessage("entityEditedSuccessfully",
+				  											  		  new Object[]{manufacturer.getFriendlyName()},
+				  											  		  Locale.getDefault());
+    			model.addAttribute(SUCCESS_MESSAGE, successMessage);
+    		}
+    		catch (Exception e)
+    		{
+    			model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+    		}
+    		finally
+    		{
+    			manufacturerModelFiller.fillModel(model);
+    	    	pictureModelFiller.fillModel(model);
+    		}
+    	}
+    	
+    	return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
 	}
 
 	@RequestMapping(value = DELETE_URL,
 					method = RequestMethod.DELETE)
-	public ModelAndView handleDeleteManufacturer(HttpServletRequest request,
-												 Model model,
-									    		 @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
-									    		 BindingResult result) {
-		if (!result.hasErrors())
+	public ModelAndView handleDeleteManufacturer(Model model,
+									    		 @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
+									    		 BindingResult result)
+	{
+		if (command.getManufacturerForm() != null && command.getManufacturerForm().getId() != null)
 		{
 			try
 			{
@@ -105,11 +106,11 @@ public class CmsManufacturerEditController extends CmsBaseController
 				log.error(e.toString(), e);
 				model.addAttribute(EXCEPTION_MESSAGE, e.toString());
 			}
-			finally 
-			{
-				manufacturerModelFiller.fillModel(model);
-				pictureModelFiller.fillModel(model);
-			}
+    		finally
+    		{
+    			manufacturerModelFiller.fillModel(model);
+    	    	pictureModelFiller.fillModel(model);
+    		}
 		}
 		
 		return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
@@ -118,10 +119,16 @@ public class CmsManufacturerEditController extends CmsBaseController
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId)
     {
-    	ManufacturerFormEditCommand command = new ManufacturerFormEditCommand();
     	Manufacturer manufacturer = getManufacturerDao().getById(manufacturerId);
-        ManufacturerForm manufacturerForm = manufacturerFormCreator.createFormFromEntity(manufacturer);
-        command.setManufacturerForm(manufacturerForm);
+        ManufacturerForm manufacturerForm = new ManufacturerForm();
+		try 
+		{
+			manufacturerForm = manufacturerFormCreator.createFormFromEntity(manufacturer);
+		}
+		catch (Exception e) {
+			log.error(e.toString(), e);
+		}
+        ManufacturerFormEditCommand command = new ManufacturerFormEditCommand(manufacturerForm);
                 
         return command;
     }

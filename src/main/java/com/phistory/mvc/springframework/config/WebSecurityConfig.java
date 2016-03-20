@@ -26,8 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http        
         .authorizeRequests()
         	.antMatchers("/*").permitAll()
-            .antMatchers("/cms/*").access("hasRole('USER')")
-            .antMatchers("/cms/*/*").access("hasRole('USER')").and()
+            .antMatchers("/cms/*").authenticated()
+            .antMatchers("/cms/*/*").authenticated()
+            .antMatchers("/cms/*/*/*").authenticated().and()
         .formLogin()
         	.loginPage("/cms/login")
         	.defaultSuccessUrl("/cms/login?success")
@@ -36,8 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
             .and()
 		.logout()
 			.logoutUrl("/cms/login?logout")
-			.logoutSuccessUrl("/cms/login")
-			.permitAll();
+			.logoutSuccessUrl("/cms/login");
+			//.permitAll();
     }
 	
 	@Autowired

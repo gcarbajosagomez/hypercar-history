@@ -11,8 +11,6 @@ function addCrsfTokenToAjaxRequest(xhr)
 
 function submitLoginForm(login)
 {		
-	var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
-	
 	if (login)
 	{
 		$("#main-form")[0].action = "/pagani-history-web/cms/login";
@@ -21,25 +19,72 @@ function submitLoginForm(login)
 	{
 		$("#main-form")[0].action = "/pagani-history-web/cms/login?logout";
 	}
-    
+
+	var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
     $("#main-form").append(csrfData);
+	$("#main-form")[0].method = 'POST';
 	$("#main-form").submit();
 }
 
-function saveOrEditEntity(form, saveMessage)
+function saveEntity(url, saveMessage)
 {		
 	bootbox.confirm(saveMessage, function(result)
     {
 		//OK button
 		if (result == true)
 		{
-			var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
-		
-			form.append(csrfData);
-			form.enctype="multipart/form-data";
-			form.submit();
+			$.ajax({            
+	        	type:'POST',
+		        url: url,
+		        data: new FormData($("#main-form")[0]),
+		        processData: false,
+		        contentType: false,
+		        beforeSend: function(xhr)
+	    	    {
+					xhr = addCrsfTokenToAjaxRequest(xhr);
+	    	    }
+			})
+			.done(function(data)
+			{
+				document.children[0].innerHTML = data; 	
+				window.history.pushState(null,'', url.replace("/save", "/" + $("#main-form")[0][2].value + "/edit"));		
+			});
 		}
     });	   
+}
+
+function editEntity(url, editMessage)
+{		
+	bootbox.confirm(editMessage, function(result)
+	{
+		//OK button
+		if (result == true)
+		{
+			$.ajax({            
+			  	type:'POST',
+				url: url,
+		        data: new FormData($("#main-form")[0]),
+		        processData: false,
+		        contentType: false,
+				beforeSend: function(xhr)
+			    {
+					xhr = addCrsfTokenToAjaxRequest(xhr);
+			    }
+			})
+			.done(function(data)
+			{
+				document.children[0].innerHTML = data; 
+			});
+		}
+	});	   
+}
+
+function submitEntityForm(form) {
+	var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
+	
+	form.append(csrfData);
+	form.enctype="multipart/form-data";
+	form.submit();
 }
 
 function deleteEntity(url, deleteMessage)
@@ -59,7 +104,8 @@ function deleteEntity(url, deleteMessage)
 			})
 			.done(function(data)
 			{
-				document.children[0].innerHTML = data; 	
+				document.children[0].innerHTML = data; 		
+				window.history.pushState(null,'', url.replace(/\/[0-9]{1,}\/delete/, "/edit"));		
 			});
 		}
     });
@@ -68,9 +114,9 @@ function deleteEntity(url, deleteMessage)
 function writeCarPreviews(data)
 {
 	var auxCarRowList = new Array();
-		var carListString = "";
+	var carListString = "";
 							 
-		for (var i=0 ; i< data.length; i++)
+	for (var i=0 ; i< data.length; i++)
 	{
     	if (i%2 == 0)
 		{

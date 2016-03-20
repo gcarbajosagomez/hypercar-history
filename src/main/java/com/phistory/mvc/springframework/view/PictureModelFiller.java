@@ -17,7 +17,7 @@ public class PictureModelFiller extends BaseControllerData implements ModelFille
 	@Override
 	public void fillModel(Model model) 
 	{		
-		model.addAttribute(PICTURE_ID, 	  PICTURE_ID);
-		model.addAttribute("picturesURL",  PICTURES_URL);
+		model.addAttribute(PICTURE_ID, 	  	PICTURE_ID);
+		model.addAttribute("picturesURL",	PICTURES_URL);
 	}
 }

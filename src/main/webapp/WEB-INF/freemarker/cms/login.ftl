@@ -20,23 +20,23 @@
 						</div>
 					</#if>
 					<#if loggedIn?? && loggedIn == false> 
-  					<div class="form-group">
-    					<label for="username-input" class="col-sm-2 control-label">${getTextSource('cms.login.user')}</label>
-    					<div class="col-sm-10">
-      						<input id="username-input" name="username" type="text" class="form-control" placeholder="Username">
-    					</div>
-  					</div>
-  					<div class="form-group">
-    					<label for="password-input" class="col-sm-2 control-label">${getTextSource('cms.login.password')}</label>
-    					<div class="col-sm-10">
-      						<input id="password-input" name="password" type="password" class="form-control" placeholder="Password">
-    					</div>
-  					</div>
-  					<div class="form-group">
-    					<div class="col-sm-offset-2 col-sm-10">
-      						<button id="login-button" class="btn btn-success" onClick="submitLoginForm(true);">${getTextSource('cms.login')}</button>  						
-    					</div>
-  					</div>
+  						<div class="form-group">
+    						<label for="username-input" class="col-sm-2 control-label">${getTextSource('cms.login.user')}</label>
+	    					<div class="col-sm-10">
+    	  						<input id="username-input" name="username" type="text" class="form-control" placeholder="Username">
+    						</div>
+  						</div>
+  						<div class="form-group">
+    						<label for="password-input" class="col-sm-2 control-label">${getTextSource('cms.login.password')}</label>
+    						<div class="col-sm-10">
+	      						<input id="password-input" name="password" type="password" class="form-control" placeholder="Password">
+    						</div>
+  						</div>
+  						<div class="form-group">
+    						<div class="col-sm-offset-2 col-sm-10">
+      							<button id="login-button" class="btn btn-success" onClick="submitLoginForm(true);">${getTextSource('cms.login')}</button>  						
+    						</div>
+  						</div>
 					</#if> 
 					<#if loggedIn?? && loggedIn == true>   
 						<button id="logout-button" class="btn btn-danger" onClick="submitLoginForm(false);">${getTextSource('cms.logout')}</button>

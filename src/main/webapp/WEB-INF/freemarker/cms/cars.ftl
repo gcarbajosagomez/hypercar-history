@@ -16,7 +16,7 @@
 		
 		<div id="main-car-list-div" class="col-lg-10 thumbnail">
 			<#if (carsPerPageData >= 1)>
-				<div id="car-list-div" class="col-lg-12" >	
+				<div id="car-list-div" class="col-lg-12">	
 					<ul class="grid preview">		
 						<#list cars?chunk(2) as row>	
 							<div id="car-list-row" class="row">
@@ -90,10 +90,10 @@
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
     		carRowString = carRowString.concat(	  	 	"<figure>");
 		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${paganiHistoryWeb}/${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + cars[i].model + "'>");
+            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${paganiHistoryWeb}/${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "/${editURL}"' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	

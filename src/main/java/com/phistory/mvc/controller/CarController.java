@@ -30,7 +30,7 @@ import com.phistory.mvc.springframework.view.ModelFiller;
  *
  */
 @Slf4j
-@Controller()
+@Controller
 @RequestMapping(value = "cars")
 public class CarController extends BaseController
 {

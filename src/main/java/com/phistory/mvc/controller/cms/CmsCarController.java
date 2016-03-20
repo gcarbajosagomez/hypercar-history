@@ -1,14 +1,19 @@
 package com.phistory.mvc.controller.cms;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,6 +27,7 @@ import com.phistory.mvc.controller.cms.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
+import com.tcp.data.model.car.Car;
 
 @Component
 @Slf4j
@@ -90,5 +96,44 @@ public class CmsCarController extends CmsBaseController {
         }
 
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
+    }
+    
+    @RequestMapping(value = SAVE_URL,
+				    method = RequestMethod.POST)
+    public ModelAndView handleSaveNewCar(HttpServletRequest request,
+							  		  	 Model model,
+							  		  	 @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
+							  		  	 BindingResult result)
+    {
+    	try
+    	{
+    		if (!result.hasErrors())
+    		{        	
+    			Car car = carControllerUtil.saveOrEditCar(command);  
+    			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+				  											  		  new Object[]{car.getFriendlyName()},
+				  											  		  Locale.getDefault());     
+    			model.addAttribute("successMessage", successMessage);
+    		}
+    		else
+    		{
+    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
+    			model.addAttribute("exceptionMessage", errorMessage);
+    		}
+    	}
+    	catch (Exception e)
+    	{
+    		log.error(e.toString(), e);
+    		model.addAttribute("exceptionMessage", e.toString());
+	
+    	}
+    	finally
+    	{
+    		carModelFiller.fillModel(model);
+    		carEditModelFiller.fillCarEditModel(model, command);
+    		pictureModelFiller.fillModel(model);
+    	}
+
+    	return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 }

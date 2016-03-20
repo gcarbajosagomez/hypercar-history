@@ -15,6 +15,7 @@ import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import com.tcp.data.command.SearchCommand;
 import com.tcp.data.dao.impl.ManufacturerDao;
 import com.tcp.data.model.Manufacturer;
+import com.tcp.data.model.car.Car;
 
 /**
  * Set of utilities for the ManufacturerController class
@@ -31,18 +32,24 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	private ManufacturerFormCreator manufacturerFormCreator;
 	
 	/**
-	 * Handle the save or edition of a Manufacturer
+	 * Handle the save or edition of a {@link Manufacturer}
 	 * 
 	 * @param command
-	 * @return the newly saved edited car if everything went well, null otherwise
+	 * @return the newly saved or edited {@link Car} if everything went well, null otherwise
 	 * @throws Exception
 	 */
-	public Manufacturer saveOrEditManufacturer(ManufacturerFormEditCommand command, Model model)
+	public Manufacturer saveOrEditManufacturer(ManufacturerFormEditCommand command, Model model) throws Exception
     {
         if(command.getManufacturerForm() != null)
         {
             Manufacturer manufacturer = manufacturerFormCreator.createEntityFromForm(command.getManufacturerForm());
             manufacturerDao.saveOrEdit(manufacturer);
+            
+            if(command.getManufacturerForm().getId() == null)
+            {
+            	//After the car has been saved, we need to recreate the {@link ManufacturerForm} with all the newly assigned ids
+            	command.setManufacturerForm(manufacturerFormCreator.createFormFromEntity(manufacturer));   
+            }
             
             return manufacturer;
         }
@@ -56,7 +63,7 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	 * @param command
 	 * @throws Exception
 	 */
-    public void deleteManufacturer(ManufacturerFormEditCommand command)
+    public void deleteManufacturer(ManufacturerFormEditCommand command) throws Exception
     {
         if (command.getManufacturerForm() != null)
         {

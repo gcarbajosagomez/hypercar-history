@@ -77,6 +77,37 @@
   			<@createCarsPagination chunkedModelsList/>
 		});
 	</#if>
+	
+	function writeCarListRow(cars, zIndex)
+    { 	
+    	carRowString = "<div id='car-list-row' class='row'>";
+    	carRowString = carRowString.concat("<ul class='grid preview'>");
+
+    	for (var i=0 ; i< cars.length; i++)
+    	{
+    		carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
+    		carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
+    		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
+    		carRowString = carRowString.concat(	  	 	"<figure>");
+		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
+            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(				"</div>");
+            carRowString = carRowString.concat(				"<figcaption>");
+			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
+			carRowString = carRowString.concat(					"</a>");	
+            carRowString = carRowString.concat(				"</figcaption>");		   	
+			carRowString = carRowString.concat(	  		"</figure>");   	
+			carRowString = carRowString.concat(	  	 "</li>");   	
+			carRowString = carRowString.concat(	  "</div>");
+			carRowString = carRowString.concat("</div>");
+    	}
+    	
+		carRowString = carRowString.concat("</ul>");
+    	carRowString = carRowString.concat("</div>");
+    	
+    	return carRowString;
+    }
        
 </script>
 
@@ -85,10 +116,10 @@
     	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
         	<figure>
 				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
-               		<img class="img-thumbnail preview-img" src="${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}" alt="${car.manufacturer.name} ${car.model}">
+               		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
 				</div>
 				<figcaption>
-			 		<a href="${carsURL}/${car.id}" style="padding-bottom: 0px; padding-top: 0px;">
+			 		<a href='<@spring.url "/${carsURL}/${car.id}"/>' style="padding-bottom: 0px; padding-top: 0px;">
 						<h3 class="text-center model-name">${car.model}</h3>
 					</a>
 				</figcaption>

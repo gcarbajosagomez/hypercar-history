@@ -2,12 +2,14 @@
 package com.phistory.mvc.cms.form.creator;
 
 import java.sql.Blob;
+import java.util.Optional;
 
 import javax.inject.Inject;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
@@ -32,7 +34,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
      * Create a new ManufacturerForm out of the data contained in a Manufacturer
      */
     @Override
-    public ManufacturerForm createFormFromEntity(Manufacturer manufacturer)
+    public ManufacturerForm createFormFromEntity(Manufacturer manufacturer) throws Exception
     {
         try
         {
@@ -46,11 +48,11 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             	try
             	{
             		PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-            		Picture carPreview = pictureDao.getManufacturerLogo(manufacturer.getId());
+            		Optional<Picture> carPreview = Optional.of(pictureDao.getManufacturerLogo(manufacturer.getId()));
             		
-            		if (carPreview != null)
+            		if (carPreview.isPresent())
             		{
-            			pictureEditCommand.setPicture(carPreview);
+            			pictureEditCommand.setPicture(carPreview.get());
             		}
             		
             		manufacturerForm.setPreviewPictureEditCommand(pictureEditCommand);
@@ -66,35 +68,36 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
         catch (Exception e)
         {
             log.error(e.toString(), e);
+            throw e;
         }
-        
-        return new ManufacturerForm();
     }
 
     /**
      * Create a new Manufacturer out of the data contained in a ManufacturerForm
+     * @throws Exception 
      */
     @Override
-    public Manufacturer createEntityFromForm(ManufacturerForm manufacturerForm)
+    public Manufacturer createEntityFromForm(ManufacturerForm manufacturerForm) throws Exception
     {
         try
         {
-        	Blob logoImage = null;        	
-        	Picture logo = manufacturerForm.getPreviewPictureEditCommand().getPicture();
+        	Optional<MultipartFile> logoFile = Optional.ofNullable(manufacturerForm.getPreviewPictureEditCommand().getPictureFile());
+        	Optional<Blob> logo = Optional.empty();
         	
-        	if (logo != null && logo.getImage().length() > 0)
+        	if (manufacturerForm.getPreviewPictureEditCommand().getPicture() != null)
         	{
-        		logoImage = logo.getImage();
+        		logo = Optional.ofNullable(manufacturerForm.getPreviewPictureEditCommand().getPicture().getImage());  
         	}
-        	else
-        	{
-        		logoImage = PictureUtil.createPictureFromMultipartFile(manufacturerForm.getPreviewPictureEditCommand().getPictureFile(), pictureDao);
+        	        	
+        	if ((logoFile.isPresent() && logoFile.get().getSize() > 0) && (!logo.isPresent() || (logo.isPresent() && logo.get().length() == 0)))
+        	{        		
+        		logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), pictureDao));
         	}
         	
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),
             									   manufacturerForm.getName(),
             									   manufacturerForm.getNationality(),
-            									   logoImage,
+            									   logo.isPresent() ? logo.get() : null,
             									   manufacturerForm.getStory());
 
             return object;
@@ -102,8 +105,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
         catch (Exception e)
         {
             log.error(e.toString(), e);
+            throw e;
         }
-        
-        return new Manufacturer();
     }
 }
