@@ -86,6 +86,8 @@ public class CmsManufacturerController extends CmsBaseController
     	{
     		log.error(e.toString(), e);
     		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+			
+			return new ModelAndView(ERROR_VIEW_NAME);
     	}
     	
     	return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
@@ -106,16 +108,15 @@ public class CmsManufacturerController extends CmsBaseController
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 				  											  		  new Object[]{manufacturer.getFriendlyName()},
 				  											  		  Locale.getDefault());
-
-    			model.addAttribute(SUCCESS_MESSAGE, successMessage);
+    			model.addAttribute(SUCCESS_MESSAGE, successMessage);   			
     		}
     		catch (Exception e)
     		{
     			model.addAttribute(EXCEPTION_MESSAGE, e.toString());
     		}
-    		finally 
+    		finally
     		{
-    	    	manufacturerModelFiller.fillModel(model);
+    			manufacturerModelFiller.fillModel(model);
     	    	pictureModelFiller.fillModel(model);
     		}
     	}

@@ -24,7 +24,5 @@ public class ManufacturerForm
     @NotEmpty(message = "The field above must not be blank.")
     private String nationality;
     private PictureEditCommand previewPictureEditCommand;
-    private String story;
-    
-    
+    private String story;   
 }

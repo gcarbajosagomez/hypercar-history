@@ -34,14 +34,14 @@
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal text-left">
-			      	<#if CEFC.carForm.id??>
+			      	  <#if CEFC.carForm.id??>
                       	<dt>         
                           	${getTextSource('id')}           
                       	</dt>
                       	<dd>
-                        	 <h5 class="text-muted">${CEFC.carForm.id}</h5>
-                         	 <@spring.formHiddenInput "CEFC.carForm.id", ""/>
-                         </dd>
+                        	<h5 class="text-muted">${CEFC.carForm.id}</h5>
+                         	<@spring.formHiddenInput "CEFC.carForm.id", ""/>
+                        </dd>
                       </#if>
                       <dt>         
                            ${getTextSource('car.manufacturer')}</h5>                     
@@ -130,19 +130,26 @@
                           	<@spring.showErrors '<br>'/>  	
                       </dd>
                       <dt>         
-                           ${getTextSource('car.width')}
-                      </dt>
-                      <dd>
-                           <@spring.formInput "CEFC.carForm.width", "class=form-control placeholder=${getTextSource('MM')}", "text"/>
-                           <@spring.showErrors 'br'/>  
-                      </dd>
-                      <dt>         
                            ${getTextSource('car.length')} 
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.carForm.length", "class=form-control placeholder=${getTextSource('MM')}", "text"/>	 
                            <@spring.showErrors 'br'/>  
-                      </dd>
+                      </dd>                     
+                      <dt>         
+                           ${getTextSource('car.width')}
+                      </dt>
+                      <dd>
+                           <@spring.formInput "CEFC.carForm.width", "class=form-control placeholder=${getTextSource('MM')}", "text"/>
+                           <@spring.showErrors 'br'/>  
+                      </dd>   
+					  <dt>         
+                           ${getTextSource('car.height')}
+                      </dt>
+                      <dd>
+                           <@spring.formInput "CEFC.carForm.height", "class=form-control placeholder=${getTextSource('MM')}", "text"/>
+                           <@spring.showErrors 'br'/>  
+                      </dd>                      
                       <dt>         
                            ${getTextSource('car.acceleration')} 
                       </dt>
@@ -412,9 +419,9 @@
       					<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.addPicture')}
    					</a>				
 			   </div>
-			   <div class="panel-body row">                      
+			   <div class="panel-body row">                  
                     <#if pictureIds?has_content>
-						<@addBlueImpGallery/>
+						<@addBlueImpGallery/>    
 
                         <#list pictureIds?chunk(2) as row>                       		  
                             <#list row as pictureId>                                								
@@ -423,14 +430,19 @@
                                	</a> 
                             </#list>
                         </#list>    
-                    <#else>
+                    <#elseif CEFC.carForm.id??>
                  	    <h3 class="text-left">${getTextSource('noPicturesAvailable')}</h2>
          			</#if>             			   
                        
                     <table id="pictureUploadInputs">
                         <@spring.bind "CEFC.carForm.pictureFiles"/>
-                        <tr>                        
-                            <td><input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0]" class="form-control" value="${getTextSource('cms.addPicture')}" accept="image/*" size="40"/></td>
+                        <tr>      
+                            <td><input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0]" onChange="displayCarPictureWhenFileSelected(this.files[0]);" class="form-control" accept="image/*" size="10"/></td>
+                            <td>
+                            	<div id="car-picture-area-0">           		                      
+                            		<img id="car-picture-0" class="thumbnail preview-img">                                           
+                      			</div>
+                      		</td>
                         </tr>
                     </table>                   
                </div>
@@ -458,7 +470,7 @@
                       </dd>
                   </#if>                  
                   	 <@spring.bind "${objectBindingPath?string}.train"/>  	 
-                  	 <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
+                  	 <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
                   <dt>         
                        ${getTextSource('brake.disc.diameter')}          
                   </dt>
@@ -698,17 +710,28 @@
 
        function addPictureUploadBox()
        {
-           pictureUploadBoxNum = $('#carEditForm :file').length -1;
-           newPictureUploadBox = $('<input>', {'type' : 'file', 
-        	   								   'id' : 'carForm.pictureFiles[' + pictureUploadBoxNum + ']', 
-                                               'name' : 'carForm.pictureFiles[' + pictureUploadBoxNum + ']', 
-                                               'accept' : 'image/*',
-                                               'size' : '40'});
-           newTd = $('<td>');
-           newTd.append('<br>');
-           newTd.append(newPictureUploadBox);
+           pictureUploadBoxNum = $("input[id^='carForm.pictureFiles']").length;
+           newPictureUploadBox = $('<input>', {'type' 		: 'file', 
+        	   								   'id' 		: 'carForm.pictureFiles[' + pictureUploadBoxNum + ']', 
+                                               'name' 		: 'carForm.pictureFiles[' + pictureUploadBoxNum + ']',
+                                               'onChange'	: 'displayCarPictureWhenFileSelected(this.files[0]);', 
+                                               'accept' 	: 'image/*',
+                                               'size' 		: '10'});
+                                               
+           $numberOfCarPictureAreas = $("[id^='car-picture-area']").length;
+           newCarPictureAreaDiv = $('<div>', {'id' : 'car-picture-area-' + $numberOfCarPictureAreas});
+           newCarPictureAreaDiv.append($('<img>', {'id' : 'car-picture-' + $numberOfCarPictureAreas,
+           										   'class' : "thumbnail preview-img"}));
+                      
+           pictureFileInputTd = $('<td>');
+           pictureFileInputTd.append('<br>');
+           pictureFileInputTd.append(newPictureUploadBox);
+           pictureAreaTd = $('<td>');
+           pictureAreaTd.append('<br>');
+           pictureAreaTd.append(newCarPictureAreaDiv);
            newTr = $('<tr>');
-           newTr.append(newTd);
+           newTr.append(pictureFileInputTd);
+           newTr.append(pictureAreaTd);
         
            $('#pictureUploadInputs').find('tbody').append(newTr);
     	}
@@ -723,6 +746,24 @@
 				img.src = reader.result;
 		      					
 				$('#car-preview-picture-area').append(img);
+			}
+	  
+			reader.readAsDataURL(previewFile); 
+		}
+		
+		function displayCarPictureWhenFileSelected(previewFile)
+		{
+			var reader = new FileReader();
+		  
+			reader.onload = function(e)
+			{
+				$numberOfCarPictures = $("[id^='car-picture-area']").length;
+				<!-- first car-picture-area is number 0 -->
+				$numberOfCarPictures--;
+				var img = $('#car-picture-' + $numberOfCarPictures)[0];
+				img.src = reader.result;
+		      					
+				$('#car-picture-area-' + $numberOfCarPictures).append(img);
 			}
 	  
 			reader.readAsDataURL(previewFile); 

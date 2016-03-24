@@ -47,7 +47,17 @@ function saveEntity(url, saveMessage)
 			.done(function(data)
 			{
 				document.children[0].innerHTML = data; 	
-				window.history.pushState(null,'', url.replace("/save", "/" + $("#main-form")[0][2].value + "/edit"));		
+				$savedEntityId = $("input[id^='carForm.id']").value;
+				if ($savedEntityId.length > 0) 
+				{
+					$urlReplacement = "/" + $savedEntityId + "/edit";
+				} 
+				else
+				{
+					$urlReplacement = "/edit";
+				}
+				
+				window.history.pushState(null,'', url.replace("/save", $urlReplacement));		
 			});
 		}
     });	   

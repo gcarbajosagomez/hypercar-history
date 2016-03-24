@@ -19,5 +19,5 @@ import com.phistory.mvc.cms.form.CarForm;
 public class CarFormEditCommand
 {
     @Valid
-    private CarForm carForm;
+    private CarForm carForm = new CarForm();
 }

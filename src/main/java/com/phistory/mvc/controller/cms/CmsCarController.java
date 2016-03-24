@@ -4,7 +4,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import javax.ws.rs.core.MediaType;
 
@@ -32,8 +31,8 @@ import com.tcp.data.model.car.Car;
 @Component
 @Slf4j
 @RequestMapping(value = "/cms/cars")
-public class CmsCarController extends CmsBaseController {
-	
+public class CmsCarController extends CmsBaseController
+{
 	@Inject
 	private CarsListModelFiller carsListModelFiller;
 	@Inject
@@ -88,20 +87,21 @@ public class CmsCarController extends CmsBaseController {
     		carModelFiller.fillModel(model);
     		carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
     		pictureModelFiller.fillModel(model);
+    		
+    		return new ModelAndView(CAR_EDIT_VIEW_NAME);
     	}
         catch (Exception e)
         {
         	log.error(e.toString(), e);
         	model.addAttribute("exceptionMessage", e.toString());
-        }
-
-        return new ModelAndView(CAR_EDIT_VIEW_NAME);
+        	
+        	return new ModelAndView(ERROR_VIEW_NAME);
+        }      
     }
     
     @RequestMapping(value = SAVE_URL,
 				    method = RequestMethod.POST)
-    public ModelAndView handleSaveNewCar(HttpServletRequest request,
-							  		  	 Model model,
+    public ModelAndView handleSaveNewCar(Model model,
 							  		  	 @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
 							  		  	 BindingResult result)
     {
@@ -119,21 +119,20 @@ public class CmsCarController extends CmsBaseController {
     		{
     			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
     			model.addAttribute("exceptionMessage", errorMessage);
-    		}
+    		}		
     	}
     	catch (Exception e)
     	{
     		log.error(e.toString(), e);
     		model.addAttribute("exceptionMessage", e.toString());
-	
-    	}
+        }
     	finally
     	{
     		carModelFiller.fillModel(model);
     		carEditModelFiller.fillCarEditModel(model, command);
-    		pictureModelFiller.fillModel(model);
+    		pictureModelFiller.fillModel(model);  
     	}
-
-    	return new ModelAndView(CAR_EDIT_VIEW_NAME);
+		
+		return new ModelAndView(CAR_EDIT_VIEW_NAME);     	
     }
 }

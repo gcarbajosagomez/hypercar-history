@@ -1,9 +1,11 @@
 package com.phistory.mvc.cms.form;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import com.tcp.data.model.brake.Brake.BrakeDiscMaterial;
-import com.tcp.data.model.brake.CarBrakeTrain;
+import com.tcp.data.model.brake.BrakeDiscMaterial;
+import com.tcp.data.model.brake.BrakeTrain;
 
 /**
  * Brake form
@@ -11,11 +13,13 @@ import com.tcp.data.model.brake.CarBrakeTrain;
  * @author Gonzalo
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BrakeForm
 {
     private Long id;
     private Long discDiameter;
     private BrakeDiscMaterial discMaterial;
     private Long caliperNumOfPistons;
-    private CarBrakeTrain train;
+    private BrakeTrain train;
 }
