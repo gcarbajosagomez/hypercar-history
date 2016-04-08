@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 /**
  * Configuration class for setting up the application's security config.
  * 
@@ -20,24 +22,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
+	private static final String USER = "u";
+	private static final String PASSWORD = "p";
+	
 	@Override
     protected void configure(HttpSecurity http) throws Exception
 	{        
 		http        
         .authorizeRequests()
         	.antMatchers("/*").permitAll()
-            .antMatchers("/cms/*").authenticated()
-            .antMatchers("/cms/*/*").authenticated()
-            .antMatchers("/cms/*/*/*").authenticated().and()
+            .antMatchers("/" + CMS_CONTEXT + "*").authenticated()
+            .antMatchers("/" + CMS_CONTEXT + "*/*").authenticated()
+            .antMatchers("/" + CMS_CONTEXT + "*/*/*").authenticated().and()
         .formLogin()
-        	.loginPage("/cms/login")
-        	.defaultSuccessUrl("/cms/login?success")
-            .failureUrl("/cms/login?error")
-            .permitAll()
-            .and()
+        	.loginPage("/" + CMS_CONTEXT + LOGIN_URL)
+        	.defaultSuccessUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGIN_SUCCESS)
+            .failureUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGIN_ERROR)
+            .permitAll().and()
 		.logout()
-			.logoutUrl("/cms/login?logout")
-			.logoutSuccessUrl("/cms/login")
+			.logoutUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGOUT)
+			.logoutSuccessUrl("/" + CMS_CONTEXT + LOGIN_URL)
 			.permitAll();
     }
 	
@@ -45,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
 		auth.inMemoryAuthentication()
-		 	.withUser("u")
-		 	.password("p")
+		 	.withUser(USER)
+		 	.password(PASSWORD)
 		 	.roles("USER");
     }
 	

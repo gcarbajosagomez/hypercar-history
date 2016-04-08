@@ -1,7 +1,7 @@
 package com.phistory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,11 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author gonzalo
  *
  */
-@SpringBootApplication()
+@SpringBootApplication
+@Slf4j
 public class Main
 {
-	private static Logger logger = LoggerFactory.getLogger(Main.class);
-	
 	/**
 	 * Entry method to the application
 	 * 
@@ -29,7 +28,7 @@ public class Main
 		}
 		catch (Exception e) 
 		{
-			logger.error(e.toString(), e);
+			log.error(e.toString(), e);
 		}
 	}
 }

@@ -14,8 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.phistory.test.integration.mvc.springframework.config.IntegrationWebTestConfig;
 import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 
-@SpringApplicationConfiguration(classes = IntegrationWebTestConfig.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = IntegrationWebTestConfig.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class LoginTest implements InitializingBean
 {	
 	@Inject
@@ -28,7 +28,7 @@ public class LoginTest implements InitializingBean
 		loginPage.initializePage();	
 	}
 	
-	@Test
+	//@Test
 	public void testLogin() throws Exception
 	{
 		loginPage.typeUsername("u");

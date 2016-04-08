@@ -47,7 +47,7 @@ function saveEntity(url, saveMessage)
 			.done(function(data)
 			{
 				document.children[0].innerHTML = data; 	
-				$savedEntityId = $("input[id^='carForm.id']").value;
+				$savedEntityId = $("input[id*='.id']")[0].value;
 				if ($savedEntityId.length > 0) 
 				{
 					$urlReplacement = "/" + $savedEntityId + "/edit";

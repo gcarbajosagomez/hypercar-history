@@ -105,8 +105,8 @@ public class CmsCarEditController extends CmsBaseController
 	@RequestMapping(value = DELETE_URL,
 					method = RequestMethod.DELETE)
 	public ModelAndView handleDeleteCar(Model model,
-										BindingResult result,
-										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command)
+										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
+										BindingResult result)
 	{
 		if (!result.hasErrors())
 		{

@@ -12,9 +12,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
-import com.phistory.mvc.springframework.config.AppConfig;
-import com.phistory.mvc.springframework.config.MainServletConfig;
-
 /**
  * Context initializer class
  * 
@@ -22,7 +19,7 @@ import com.phistory.mvc.springframework.config.MainServletConfig;
  *
  */
 public class ApplicationContextInitializer implements WebApplicationInitializer
-{
+{	
 	@Override
     public void onStartup(ServletContext container) throws ServletException
 	{

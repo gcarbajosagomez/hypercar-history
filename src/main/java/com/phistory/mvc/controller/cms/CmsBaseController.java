@@ -5,6 +5,8 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import lombok.Data;
+
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -27,6 +29,7 @@ import com.tcp.data.model.engine.Engine;
  * @author Gonzalo
  *
  */
+@Data
 public class CmsBaseController extends BaseController
 {
 	private static boolean loggedIn = false;
@@ -40,11 +43,12 @@ public class CmsBaseController extends BaseController
 	/********************
      *******URLs*********
      ********************/
-	protected static final String CMS_CONTEXT 						= "cms/"; 
+	public static final String CMS_CONTEXT 							= "cms/"; 
+	public static final String LOGIN_URL	 	   					= "login";
+	
 	protected static final String SAVE_URL 		 					= "save";
 	protected static final String EDIT_URL 		 					= "edit";
     protected static final String DELETE_URL  						= "delete";
-    protected static final String LOGIN_URL	 	   					= "login";
     protected static final String CONTENT_LIST_URL  				= "contentList";
 	protected static final String CARS_URL		           			= "cars";
 	protected static final String MANUFACTURERS_URL					= "manufacturers"; 
@@ -53,12 +57,14 @@ public class CmsBaseController extends BaseController
     /*************************
      ******Request params*****
      *************************/
+	public static final String QUERY_STRING_SEPARATOR				= "?";
+	public static final String LOGIN_SUCCESS 						= "success";
+	public static final String LOGIN_ERROR 							= "error";
+	public static final String LOGOUT 								= "logout";
+    
     protected static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
     protected static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
     protected static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
-    protected static final String LOGIN_SUCCESS 					= "success";
-    protected static final String LOGIN_ERROR 						= "error";
-    protected static final String LOGOUT 							= "logout";
     
     /*************************
      **********Misc***********
@@ -87,23 +93,11 @@ public class CmsBaseController extends BaseController
 	@InitBinder
     public void initBinder(WebDataBinder binder)
     {
-		binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<Manufacturer, Long>(manufacturerDao));
-        binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<Engine, Long>(engineDao));
-        binder.registerCustomEditor(Picture.class, new PreviewPicturePropertyEditor(getPictureDao()));
-        binder.registerCustomEditor(Calendar.class, new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
+		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<Manufacturer, Long>(this.manufacturerDao));
+        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<Engine, Long>(this.engineDao));
+        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(getPictureDao()));
+        binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
     }
-
-	public ManufacturerDao getManufacturerDao() {
-		return manufacturerDao;
-	}
-
-	public EngineDao getEngineDao() {
-		return engineDao;
-	}
-
-	public ResourceBundleMessageSource getMessageSource() {
-		return messageSource;
-	}
 
 	public void setLoggedIn(boolean loggedIn) {
 		CmsBaseController.loggedIn = loggedIn;

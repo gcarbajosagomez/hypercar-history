@@ -29,7 +29,7 @@ import freemarker.template.TemplateException;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "com.phistory.mvc.controller")
+@ComponentScan(basePackages = {"com.phistory.mvc"})
 @Import(SqlDatabaseConfig.class)
 public class MainServletConfig extends WebMvcConfigurerAdapter
 {		

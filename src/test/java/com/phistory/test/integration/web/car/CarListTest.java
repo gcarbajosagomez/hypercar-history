@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.phistory.test.integration.mvc.springframework.config.IntegrationWebTestConfig;
 
-@SpringApplicationConfiguration(classes = IntegrationWebTestConfig.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@SpringApplicationConfiguration(classes = IntegrationWebTestConfig.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 public class CarListTest implements InitializingBean
 {	
 	@Inject
@@ -23,13 +23,13 @@ public class CarListTest implements InitializingBean
 		carListPage.initializePage();	
 	}
 	
-	@Test
+	//@Test
 	public void testCarList() throws Exception
 	{
 		Assert.assertTrue("Main car list div is not present", carListPage.isMainCarListDivPresent());
 	}
 	
-	@Test
+	//@Test
 	public void testPagination() throws Exception
 	{
 		Assert.assertTrue("Pagination div is not present", carListPage.isPaginationDivPresent());

@@ -9,9 +9,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
-@PropertySource("classpath:/com/phistory/systemproperty/dev/systemProperties.properties")
+/*@PropertySource("classpath:/com/phistory/systemproperty/dev/systemProperties.properties")
 @Configuration
-@ComponentScan(basePackages = "com.phistory.test.integration.web")
+@ComponentScan(basePackages = "com.phistory.test.integration.web")*/
 public class IntegrationWebTestConfig
 {
 	@Bean
