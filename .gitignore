@@ -4,7 +4,7 @@
 /bin
 /deployments
 /META-INF/	
-*/META-INF
+META-INF
 /com.tcp.data.model.*
 .project
 .settings
