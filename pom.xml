@@ -8,7 +8,7 @@
 	<artifactId>pagani-history-web</artifactId>
 	<version>1.1.0</version>
 	<packaging>jar</packaging>
-	<name>Pagani History Web</name>
+	<name>Pagani History Web</name> 
 	<developers>
 		<developer>
 			<name>Gonzalo Carbajosa Gómez</name>
