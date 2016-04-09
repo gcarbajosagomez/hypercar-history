@@ -1,0 +1,14 @@
+target/
+.classpath
+.mvn/
+/db
+/bin
+/deployments
+/META-INF/	
+META-INF
+/com.tcp.data.model.*
+.project
+.settings/
+.tern-project
+mvnw
+mvnw.cmd
