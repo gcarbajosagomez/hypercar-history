@@ -15,7 +15,7 @@ then
   ln -s $JDK_DIR $JDK_LINK
 fi
 # export environment vriables
-export JAVA_HOME="$OPENSHIFT_DATA_DIR$JDK_LINK"
+export JAVA_HOME=$OPENSHIFT_DATA_DIR$JDK_LINK
 export PATH=$JAVA_HOME/bin:$PATH
 # call our own mvn script with the right settings
 cd $OPENSHIFT_REPO_DIR

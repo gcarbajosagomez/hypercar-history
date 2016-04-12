@@ -2,4 +2,4 @@
 export OPENSHIFT_DIY_LOG_DIR=$OPENSHIFT_DATA_DIR/logs
 rm -f ${OPENSHIFT_DIY_LOG_DIR}bootjava8.log
 
-nohup java -jar $OPENSHIFT_REPO_DIRdeployments/ROOT.jar > ${OPENSHIFT_DIY_LOG_DIR}bootjava8.log 2>&1 &
+nohup $OPENSHIFT_DATA_DIRjdk1.8/bin/java -jar $OPENSHIFT_REPO_DIRdeployments/ROOT.jar > ${OPENSHIFT_DIY_LOG_DIR}bootjava8.log 2>&1 &
