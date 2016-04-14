@@ -50,7 +50,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public FreeMarkerConfigurer freemarkerConfigurer() throws IOException, TemplateException
 	{
 		FreeMarkerConfigurer freemarkerConfigurer = new FreeMarkerConfigurer();
-		freemarkerConfigurer.setTemplateLoaderPaths("WEB-INF/freemarker/", "WEB-INF/freemarker/cms");
+		freemarkerConfigurer.setTemplateLoaderPaths("classpath:com/phistory/freemarker/");
 		freemarkerConfigurer.setDefaultEncoding("UTF-8");
 		
 		return freemarkerConfigurer; 

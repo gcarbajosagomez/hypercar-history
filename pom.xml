@@ -81,7 +81,7 @@
                 <configuration>
                 	<finalName>ROOT</finalName>
                 	<outputDirectory>deployments</outputDirectory>
-					<packagingExcludes>WEB-INF/lib/*-javadoc.jar</packagingExcludes>
+              		<excludeArtifactIds>lombok</excludeArtifactIds>
                 </configuration>
             </plugin>
 			<plugin>
@@ -281,6 +281,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>${org.projectlombok.version}</version>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
