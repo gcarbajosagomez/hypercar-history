@@ -9,7 +9,7 @@ public class BaseControllerData
 	public static final String CARS_URL           				= "cars";
 	public static final String ENGINES_URL           			= "engines";
 	public static final String MODELS_SEARCH_URL  				= "modelsSearch";
-	public static final String PICTURES_URL 		 				= "pictures";
+	public static final String PICTURES_URL 		 			= "pictures";
 	public static final String COOKIES_POLICY_URL 				= "cookiesPolicy"; 
 	
 	/*************************
@@ -17,9 +17,9 @@ public class BaseControllerData
      *************************/
 	public static final String ID          						= "id";
     public static final String CAR_ID          					= "carId";
-    public static final String MANUFACTURER_ID          			= "manufacturerId";
+    public static final String MANUFACTURER_ID          		= "manufacturerId";
     public static final String PICTURE_ID      					= "picId";
-    public static final String PAG_NUM      	  					= "pagNum";
+    public static final String PAG_NUM      	  				= "pagNum";
     public static final String PAG_NUM_DATA	  					= "pagNumData";
     public static final String CARS_PER_PAGE  					= "carsPerPage";
     public static final String CARS_PER_PAGE_DATA    			= "carsPerPageData";
@@ -29,7 +29,7 @@ public class BaseControllerData
     /*************************
      **********Actions********
      *************************/
-	public static final String ACTION               		  		= "action";
+	public static final String ACTION               		  	= "action";
 	public static final String LOAD_CAR_PICTURE_ACTION     		= "loadCarPicture";
     public static final String LOAD_CAR_PREVIEW_ACTION     		= "loadCarPreview";
     public static final String LOAD_MANUFACTURER_LOGO_ACTION 	= "loadManufacturerLogo";
@@ -45,9 +45,9 @@ public class BaseControllerData
 	public static final String UNITS_OF_MEASURE_METRIC       	= "metric"; 		 
 	public static final String UNITS_OF_MEASURE_IMPERIAL     	= "imperial";
 	public static final String LANGUAGE_COOKIE_NAME   			= "def_lang"; 
-	public static final String ERROR_VIEW_NAME                   = "/error";  
+	public static final String ERROR_VIEW_NAME                  = "/error";  
 	public static final String CARS                   			= "cars";  
-	public static final String MODELS                   			= "models"; 
-	public static final String CONTENT_SEARCH_DTO       			= "contentSearchDto";
+	public static final String MODELS                   		= "models"; 
+	public static final String CONTENT_SEARCH_DTO       		= "contentSearchDto";
 	public static final String CAR_DETAILS       				= "carDetails";
 }

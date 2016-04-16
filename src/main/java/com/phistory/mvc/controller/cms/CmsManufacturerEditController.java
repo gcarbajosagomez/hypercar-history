@@ -24,13 +24,16 @@ import com.phistory.mvc.springframework.view.ManufacturerModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.Manufacturer;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 /**
  *
  * @author Gonzalo
  */
 @Controller
 @Slf4j
-@RequestMapping(value = "/cms/manufacturers/{id}")
+@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS + "{" + ID + "}")
 public class CmsManufacturerEditController extends CmsBaseController
 {
     @Inject

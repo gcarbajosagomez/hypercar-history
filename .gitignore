@@ -12,3 +12,4 @@ META-INF
 .tern-project
 mvnw
 mvnw.cmd
+*.log

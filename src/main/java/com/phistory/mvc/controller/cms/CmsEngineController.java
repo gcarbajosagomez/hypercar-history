@@ -25,13 +25,16 @@ import com.phistory.mvc.cms.form.creator.EngineFormCreator;
 import com.phistory.mvc.controller.cms.util.EngineControllerUtil;
 import com.tcp.data.model.engine.Engine;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 /**
  *
  * @author Gonzalo
  */
 @Controller
 @Slf4j
-@RequestMapping(value = "/cms/engines/{id}")
+@RequestMapping(value = CMS_CONTEXT + ENGINES_URL + "{" + ID + "}")
 public class CmsEngineController extends CmsBaseController
 {
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";  

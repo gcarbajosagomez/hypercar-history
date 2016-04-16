@@ -43,24 +43,24 @@ public class CmsBaseController extends BaseController
 	/********************
      *******URLs*********
      ********************/
-	public static final String CMS_CONTEXT 							= "cms/"; 
-	public static final String LOGIN_URL	 	   					= "login";
+	public static final String CMS_CONTEXT 						= "cms/"; 
+	public static final String LOGIN_URL	 	   				= "login";
 	
-	public static final String SAVE_URL 		 					= "save";
-	public static final String EDIT_URL 		 					= "edit";
+	public static final String SAVE_URL 		 				= "save";
+	public static final String EDIT_URL 		 				= "edit";
     public static final String DELETE_URL  						= "delete";
     public static final String CONTENT_LIST_URL  				= "contentList";
 	public static final String CARS_URL		           			= "cars";
-	public static final String MANUFACTURERS_URL					= "manufacturers"; 
+	public static final String MANUFACTURERS_URL				= "manufacturers"; 
 	public static final String PREVIEW_PICTURE_DELETE_URL 		= "previewPictureDelete";
     
     /*************************
      ******Request params*****
      *************************/
-	public static final String QUERY_STRING_SEPARATOR				= "?";
-	public static final String LOGIN_SUCCESS 						= "success";
-	public static final String LOGIN_ERROR 							= "error";
-	public static final String LOGOUT 								= "logout";
+	public static final String QUERY_STRING_SEPARATOR			= "?";
+	public static final String LOGIN_SUCCESS 					= "success";
+	public static final String LOGIN_ERROR 						= "error";
+	public static final String LOGOUT 							= "logout";
     
     public static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
     public static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
@@ -75,7 +75,7 @@ public class CmsBaseController extends BaseController
     public static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
     public static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
     public static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
-    public static final String SUCCESS_MESSAGE  					= "successMessage"; 
+    public static final String SUCCESS_MESSAGE  				= "successMessage"; 
     
 	
 	@ModelAttribute(value = CMS_CONTEXT)

@@ -24,12 +24,15 @@ import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 /**
  *
  * @author Gonzalo
  */
 @Controller
-@RequestMapping(value = "/cms/pictures")
+@RequestMapping(value = CMS_CONTEXT + PICTURES_URL)
 public class CmsPictureController extends CmsBaseController
 {    
     private Logger logger = LoggerFactory.getLogger(getClass());

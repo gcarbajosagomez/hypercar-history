@@ -1,5 +1,7 @@
 package com.phistory.mvc.controller.cms;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 import javax.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
-@RequestMapping(value = {"/cms", "/cms/login"})
+@RequestMapping(value = {CMS_CONTEXT, CMS_CONTEXT + LOGIN_URL})
 public class CmsLoginController extends CmsBaseController
 {	
 	@RequestMapping
