@@ -17,6 +17,8 @@ import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+
 /**
  * Controller to handle Picture URLs
  * 
@@ -25,7 +27,7 @@ import com.tcp.data.model.Picture;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "pictures/{action}")
+@RequestMapping(value = PICTURES_URL + "/{" + ACTION + "}")
 public class PictureController extends BaseController
 {	
 	@Inject

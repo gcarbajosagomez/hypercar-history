@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+
 /**
  * Controller to handle Index URLs
  * 
@@ -27,7 +29,7 @@ import com.tcp.data.model.car.Car;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = {"/", "index"})
+@RequestMapping(value = {"/", INDEX_URL})
 public class IndexController extends BaseController
 {	
 	@Inject

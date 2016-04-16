@@ -23,6 +23,8 @@ import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+
 /**
  * Controller to handle Cars URLs
  * 
@@ -31,7 +33,7 @@ import com.phistory.mvc.springframework.view.ModelFiller;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "cars")
+@RequestMapping(value = CARS)
 public class CarController extends BaseController
 {
 	@Inject

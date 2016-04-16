@@ -27,6 +27,8 @@ import com.tcp.data.model.car.Car;
 import com.tcp.data.query.command.SimpleDataConditionCommand;
 import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+
 /**
  * Controller to handle ContentSearch URLs
  * 
@@ -35,7 +37,7 @@ import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "modelsSearch")
+@RequestMapping(value = MODELS_SEARCH_URL)
 public class ContentSearchController extends BaseController implements InitializingBean
 {
 	@Inject

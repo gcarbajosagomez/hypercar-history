@@ -46,13 +46,13 @@ public class CmsBaseController extends BaseController
 	public static final String CMS_CONTEXT 							= "cms/"; 
 	public static final String LOGIN_URL	 	   					= "login";
 	
-	protected static final String SAVE_URL 		 					= "save";
-	protected static final String EDIT_URL 		 					= "edit";
-    protected static final String DELETE_URL  						= "delete";
-    protected static final String CONTENT_LIST_URL  				= "contentList";
-	protected static final String CARS_URL		           			= "cars";
-	protected static final String MANUFACTURERS_URL					= "manufacturers"; 
-	protected static final String PREVIEW_PICTURE_DELETE_URL 		= "previewPictureDelete";
+	public static final String SAVE_URL 		 					= "save";
+	public static final String EDIT_URL 		 					= "edit";
+    public static final String DELETE_URL  						= "delete";
+    public static final String CONTENT_LIST_URL  				= "contentList";
+	public static final String CARS_URL		           			= "cars";
+	public static final String MANUFACTURERS_URL					= "manufacturers"; 
+	public static final String PREVIEW_PICTURE_DELETE_URL 		= "previewPictureDelete";
     
     /*************************
      ******Request params*****
@@ -62,20 +62,20 @@ public class CmsBaseController extends BaseController
 	public static final String LOGIN_ERROR 							= "error";
 	public static final String LOGOUT 								= "logout";
     
-    protected static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
-    protected static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
-    protected static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
+    public static final String MANUFACTURERS_PER_PAGE  			= "manufacturersPerPage";
+    public static final String MANUFACTURERS_PER_PAGE_DATA    	= "manufacturersPerPageData";
+    public static final String DELETE_PREVIEW_PICTURE 			= "deletePreviewPicture";
     
     /*************************
      **********Misc***********
      *************************/
-    protected static final String MANUFACTURERS 					= "manufacturers"; 
-    protected static final String CAR_EDIT_VIEW_NAME 				= "/cms/carEdit"; 
-    protected static final String MANUFACTURER_EDIT_VIEW_NAME 		= "/cms/manufacturerEdit"; 
-    protected static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
-    protected static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
-    protected static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
-    protected static final String SUCCESS_MESSAGE  					= "successMessage"; 
+    public static final String MANUFACTURERS 					= "manufacturers"; 
+    public static final String CAR_EDIT_VIEW_NAME 				= "/cms/carEdit"; 
+    public static final String MANUFACTURER_EDIT_VIEW_NAME 		= "/cms/manufacturerEdit"; 
+    public static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
+    public static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
+    public static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
+    public static final String SUCCESS_MESSAGE  					= "successMessage"; 
     
 	
 	@ModelAttribute(value = CMS_CONTEXT)

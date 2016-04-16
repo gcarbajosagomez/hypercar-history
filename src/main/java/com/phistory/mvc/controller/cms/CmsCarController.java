@@ -9,6 +9,7 @@ import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.xerces.impl.dtd.models.CMStateSet;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,9 +29,11 @@ import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 @Component
 @Slf4j
-@RequestMapping(value = "/cms/cars")
+@RequestMapping(value = CMS_CONTEXT + CARS)
 public class CmsCarController extends CmsBaseController
 {
 	@Inject

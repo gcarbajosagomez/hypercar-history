@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
+
 /**
  * Controller to handle CookiesPolicy URLs
  * 
@@ -15,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = "cookiesPolicy",
+@RequestMapping(value = COOKIES_POLICY_URL,
 				method = RequestMethod.GET)
 public class CookiesPolicyController extends BaseController
 {		
