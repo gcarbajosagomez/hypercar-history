@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "build" action hook initializing!!
+
 # define some variables for JDK 8
 JDK_TGZ=jdk-8u60-linux-i586.tar.gz
 JDK_URL=http://download.oracle.com/otn-pub/java/jdk/8u60-b27/$JDK_TGZ

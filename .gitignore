@@ -13,3 +13,4 @@ META-INF
 mvnw
 mvnw.cmd
 *.log
+.fuse*
