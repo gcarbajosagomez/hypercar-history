@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 
 import java.util.Locale;
 import java.util.Map;

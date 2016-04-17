@@ -34,7 +34,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
  */
 @Controller
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + ENGINES_URL + "{" + ID + "}")
+@RequestMapping(value = CMS_CONTEXT + ENGINES_URL + "/{" + ID + "}")
 public class CmsEngineController extends CmsBaseController
 {
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";  

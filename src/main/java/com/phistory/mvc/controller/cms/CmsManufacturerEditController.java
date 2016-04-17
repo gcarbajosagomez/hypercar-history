@@ -33,7 +33,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
  */
 @Controller
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS + "{" + ID + "}")
+@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS + "/{" + ID + "}")
 public class CmsManufacturerEditController extends CmsBaseController
 {
     @Inject

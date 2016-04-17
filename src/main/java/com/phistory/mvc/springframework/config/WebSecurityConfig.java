@@ -22,8 +22,8 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-	private static final String USER = "u";
-	private static final String PASSWORD = "p";
+	private static final String USER = "admin";
+	private static final String PASSWORD = "NederlandsLesVanavond2016";
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception

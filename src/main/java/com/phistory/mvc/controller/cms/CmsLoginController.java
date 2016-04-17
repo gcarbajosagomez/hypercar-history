@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Slf4j
 @Controller
-@RequestMapping(value = {CMS_CONTEXT, CMS_CONTEXT + LOGIN_URL})
+@RequestMapping(value = {"cms", CMS_CONTEXT + LOGIN_URL})
 public class CmsLoginController extends CmsBaseController
 {	
 	@RequestMapping

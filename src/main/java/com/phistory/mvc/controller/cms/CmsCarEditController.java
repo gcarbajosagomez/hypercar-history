@@ -33,7 +33,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
  */
 @Controller
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + CARS + "{" + ID + "}")
+@RequestMapping(value = CMS_CONTEXT + CARS + "/{" + ID + "}")
 public class CmsCarEditController extends CmsBaseController
 {
     @Inject
