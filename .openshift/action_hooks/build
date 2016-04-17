@@ -41,4 +41,4 @@ then
 fi
 # call our own mvn script with the right settings
 cd $OPENSHIFT_REPO_DIR
-${OPENSHIFT_DATA_DIR}${MVN_LINK}/bin/mvn package -s .openshift/action_hooks/settings.xml -DskipTests=true -P prod
+${OPENSHIFT_DATA_DIR}${MVN_LINK}/bin/mvn clean package -s .openshift/action_hooks/settings.xml -DskipTests=true -P prod
