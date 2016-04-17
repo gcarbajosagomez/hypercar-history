@@ -81,7 +81,35 @@
                 <configuration>
                 	<finalName>ROOT</finalName>
                 	<outputDirectory>deployments</outputDirectory>
+                	<excludeGroupIds>org.seleniumhq.selenium,junit,org.assertj,xml-apis</excludeGroupIds>
               		<excludeArtifactIds>lombok</excludeArtifactIds>
+              		<excludes>
+              			<dependency>
+							<groupId>javax</groupId>
+							<artifactId>javaee-web-api</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>lucene</groupId>
+							<artifactId>lucene-core</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>com.fasterxml.jackson.core</groupId>
+							<artifactId>jackson-databind</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-webmvc</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-web</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+              		</excludes>
                 </configuration>
             </plugin>
 			<plugin>
@@ -96,7 +124,7 @@
 					<webResources>
 						<resource>
               				<!-- this is relative to the pom.xml directory -->
-              				<directory>src/main/webapp/resources</directory>
+              				<directory>src/main/resources/static</directory>
             			</resource>            			
 					</webResources>
 				</configuration>
