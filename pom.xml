@@ -90,7 +90,7 @@
 							<classifier>javadoc</classifier>
 						</dependency>
 						<dependency>
-							<groupId>lucene</groupId>
+							<groupId>org.apache.lucene</groupId>
 							<artifactId>lucene-core</artifactId>
 							<classifier>javadoc</classifier>
 						</dependency>
@@ -107,6 +107,26 @@
 						<dependency>
 							<groupId>org.springframework</groupId>
 							<artifactId>spring-web</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-context</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-test</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.freemarker</groupId>
+							<artifactId>freemarker</artifactId>
 							<classifier>javadoc</classifier>
 						</dependency>
               		</excludes>
