@@ -13,11 +13,11 @@ function submitLoginForm(login)
 {		
 	if (login)
 	{
-		$("#main-form")[0].action = "/pagani-history-web/cms/login";
+		$("#main-form")[0].action = "/cms/login";
 	}
 	else
 	{
-		$("#main-form")[0].action = "/pagani-history-web/cms/login?logout";
+		$("#main-form")[0].action = "/cms/login?logout";
 	}
 
 	var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
