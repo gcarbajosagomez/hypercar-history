@@ -21,7 +21,7 @@ echo "JAVA_HOME" exported to ${JAVA_HOME}
 export PATH=$JAVA_HOME/bin:$PATH
 echo "PATH" exported to ${PATH}
 # define some variables for Maven 3
-M2_HOME="$OPENSHIFT_DATA_DIR/.m2"
+M2_HOME="${OPENSHIFT_DATA_DIR}.m2"
 export M2_HOME
 echo "M2_HOME" exported to ${M2_HOME}
 mkdir -p $M2_HOME
