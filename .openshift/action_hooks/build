@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 echo "build" action hook initializing!!
 
 # define some variables for JDK 8
