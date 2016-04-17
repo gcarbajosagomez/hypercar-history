@@ -2,7 +2,7 @@
 # The logic to start up your application should be put in this
 # script. The application will work only if it binds to
 # $OPENSHIFT_DIY_IP:8080
-echo "start" action hook initializing!!
+echo "start" action hook initializing!! 
 
 rm -rf ${OPENSHIFT_REPO_DIR}deployments/logs
 mkdir ${OPENSHIFT_REPO_DIR}deployments/logs
