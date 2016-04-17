@@ -6,5 +6,6 @@ echo "start" action hook initializing!!
 
 rm -rf ${OPENSHIFT_REPO_DIR}deployments/logs
 mkdir ${OPENSHIFT_REPO_DIR}deployments/logs
+cd ${OPENSHIFT_REPO_DIR}deployments
 
-${OPENSHIFT_DATA_DIR}jdk1.8/bin/java -jar ${OPENSHIFT_REPO_DIR}deployments/ROOT.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP}
+nohup ${OPENSHIFT_DATA_DIR}jdk1.8/bin/java -jar ROOT.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP} > startup.log 2>&1 &
