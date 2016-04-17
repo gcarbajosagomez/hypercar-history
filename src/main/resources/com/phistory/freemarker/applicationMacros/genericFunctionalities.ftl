@@ -14,26 +14,26 @@
 					<#-- default header name is X-CSRF-TOKEN -->
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
 					 
-					<link rel="shortcut icon" href="/${paganiHistoryWeb}/resources/img/favicon.ico">    				
-        			<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/bootstrap.min.css">
-					<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/bootstrap-theme.min.css">
-                	<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/font-awesome.min.css">
-					<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/bootstrap-image-gallery.min.css">
-					<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/blueimp-gallery.min.css">
-        			<link rel="stylesheet" href="/${paganiHistoryWeb}/resources/stylesheet/main.css">     			
+					<link rel="shortcut icon" href="/resources/img/favicon.ico">    				
+        			<link rel="stylesheet" href="/resources/stylesheet/bootstrap.min.css">
+					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-theme.min.css">
+                	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
+					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
+					<link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
+        			<link rel="stylesheet" href="/resources/stylesheet/main.css">     			
 					
-            		<script src="/${paganiHistoryWeb}/resources/javascript/lib/jquery.min.js"></script>	
-            		<script src="/${paganiHistoryWeb}/resources/javascript/lib/jquery.cookie.js"></script>
-            		<script src="/${paganiHistoryWeb}/resources/javascript/lib/jquery.cookiesdirective.js"></script>
-            		<script src="/${paganiHistoryWeb}/resources/javascript/lib/jquery.blockUI.js"></script>
-					<script src="/${paganiHistoryWeb}/resources/javascript/lib/jquery.blueimp-gallery.min.js"></script>
-        			<script src="/${paganiHistoryWeb}/resources/javascript/lib/bootstrap.min.js"></script>
-        			<script src="/${paganiHistoryWeb}/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
-        			<script src="/${paganiHistoryWeb}/resources/javascript/lib/bootstrap-paginator.min.js"></script>
-        			<script src="/${paganiHistoryWeb}/resources/javascript/lib/bootstrap-datepicker.js"></script>
-        			<script src="/${paganiHistoryWeb}/resources/javascript/lib/bootbox.min.js"></script>
-					<script src="/${paganiHistoryWeb}/resources/javascript/lib/modernizr.custom.js"></script>
-					<script src="/${paganiHistoryWeb}/resources/javascript/main.js"></script>
+            		<script src="/resources/javascript/lib/jquery.min.js"></script>	
+            		<script src="/resources/javascript/lib/jquery.cookie.js"></script>
+            		<script src="/resources/javascript/lib/jquery.cookiesdirective.js"></script>
+            		<script src="/resources/javascript/lib/jquery.blockUI.js"></script>
+					<script src="/resources/javascript/lib/jquery.blueimp-gallery.min.js"></script>
+        			<script src="/resources/javascript/lib/bootstrap.min.js"></script>
+        			<script src="/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
+        			<script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
+        			<script src="/resources/javascript/lib/bootstrap-datepicker.js"></script>
+        			<script src="/resources/javascript/lib/bootbox.min.js"></script>
+					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
+					<script src="/resources/javascript/main.js"></script>
 					
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
         			<script type='text/javascript'>						
@@ -43,7 +43,7 @@
 						$(document).ready(function()
 						{		
 							<#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
-							$.getScript('/${paganiHistoryWeb}/resources/javascript/lib/toucheffects.js', null);							
+							$.getScript('/resources/javascript/lib/toucheffects.js', null);							
 												
         					$.cookiesDirective({
             					privacyPolicyUri: '${cookiesPolicyURL}',
@@ -93,7 +93,7 @@
 											<h4 class="italic-font text-right" style="padding-right: 30px">${getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
           					   			<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          					   				<img class="main-logo" src="/${paganiHistoryWeb}/resources/img/Pagani-Logo.png">
+          					   				<img class="main-logo" src="/resources/img/Pagani-Logo.png">
           					   			</div>
 	          					   	</div>
     	      					 </a>
@@ -229,53 +229,53 @@
 			      							<div class="modal-body" style="background-color: rgba(0, 0, 0, 0.611765);">
     			    							<div class="thumbnail row technology-stack" style="margin-bottom: 0px;">
     			    								<div class="col-lg-12" style="padding-top: 10px;">     		    									
-    		    										<img src="/${paganiHistoryWeb}/resources/img/tech-stack/openshift-logo.png">   										
+    		    										<img src="/resources/img/tech-stack/openshift-logo.png">   										
     		    										<div class="thumbnail row technology-stack-inner-logo">
     		    											<div class="col-lg-12" style="margin-top: 10px;"> 
    			    												<div class="row" style="margin-top: 10px;"> 
    			    													<div class="col-lg-4" style="padding-bottom: 10px;">
-   		    															<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/wildfly-logo.png">
+   		    															<img class="center-block" src="/resources/img/tech-stack/wildfly-logo.png">
    		    														</div>  			    												
    		    														<div class="col-lg-4" style="padding-bottom: 10px;">
-   		    															<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/git-logo.png">
+   		    															<img class="center-block" src="/resources/img/tech-stack/git-logo.png">
    		    														</div>
    		    														<div class="col-lg-4" style="padding: 10px;">
-   		    															<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/maven-logo.png">
+   		    															<img class="center-block" src="/resources/img/tech-stack/maven-logo.png">
    		    														</div>
 	   		    												</div>
    			    												<div class="thumbnail">
    			    													<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px; margin-bottom: 10px;">   		    														
    		    															<div class="col-lg-6"> 
-   		    																<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/hibernate-logo.png">
+   		    																<img class="center-block" src="/resources/img/tech-stack/hibernate-logo.png">
    		    															</div>
    		    															<div class="col-lg-6" style="padding-top: 10px;"> 
-    		    															<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/mysql-logo.png">
+    		    															<img class="center-block" src="/resources/img/tech-stack/mysql-logo.png">
    			    														</div>
     			    												</div>
    				    												<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px; margin-bottom: 10px;">
    				    													<div class="col-lg-12">  														
    		    																<div class="col-lg-6" style="padding-top: 10px;">
    		    																	<div class="col-lg-12">
-   		    																		<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/jquery-logo.png">
+   		    																		<img class="center-block" src="/resources/img/tech-stack/jquery-logo.png">
    		    																	</div>
     		    																	<div class="col-lg-12">
-   		    																		<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/ajax-logo.png" style="padding-top: 10px;">	
+   		    																		<img class="center-block" src="/resources/img/tech-stack/ajax-logo.png" style="padding-top: 10px;">	
    		    																	</div>  
 	   		    																<div class="col-lg-12"> 
-   			    																	<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/freemarker-logo.png" style="padding-top: 20px; padding-bottom: 10px;">				
+   			    																	<img class="center-block" src="/resources/img/tech-stack/freemarker-logo.png" style="padding-top: 20px; padding-bottom: 10px;">				
    			    																</div> 	
     		    															</div>    		    													
    				    														<div class="col-lg-6" style="padding-top: 10px;"> 
-   			    																<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/html-css-js-bootstrap-logo.png">				
+   			    																<img class="center-block" src="/resources/img/tech-stack/html-css-js-bootstrap-logo.png">				
    			    															</div>    
    		    															</div> 		    												
    		    														</div>
     		    													<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px;">   			    													  		    												
    			    														<div class="col-lg-6"> 
-   			    															<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/spring-framework-logo.png">				
+   			    															<img class="center-block" src="/resources/img/tech-stack/spring-framework-logo.png">				
    			    														</div>    		    	
    		    															<div class="col-lg-6"> 
-   		    																<img class="center-block" src="/${paganiHistoryWeb}/resources/img/tech-stack/javaee-logo.png">				
+   		    																<img class="center-block" src="/resources/img/tech-stack/javaee-logo.png">				
 	   		    														</div>    		    												
    			    													</div>    		    												
    			    												</div>
@@ -505,7 +505,7 @@ function setPageLanguage(locale, mainForm)
               		document.children[0].innerHTML = data;    
               		createPagination();
               	}
-				else if (mainForm.action.search("/${paganiHistoryWeb}/${modelsSearchURL}") != -1)
+				else if (mainForm.action.search("/${modelsSearchURL}") != -1)
 				{
 					var contentSearchDto = {		
 							 				 ${pagNum} 			: 1,
@@ -536,7 +536,7 @@ function handleContentSearch(contentToSearch, mainForm)
 	         			   
 	$.ajax({            
         	type:'POST',
-	        url: "/${paganiHistoryWeb}/${modelsSearchURL}",
+	        url: "/${modelsSearchURL}",
     	    contentType :'application/json; charset=UTF-8',
         	data: JSON.stringify(contentSearchDto),
 	        beforeSend: function(xhr)
@@ -578,7 +578,7 @@ function handleContentSearch(contentToSearch, mainForm)
 				$("#main-car-list-div").append(noContentFoundElements);				
             }                      
 
-			window.history.pushState(null,'',"/${paganiHistoryWeb}/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage);			
+			window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage);			
 			setupContentSearchEventListeners();	
 		}
 		
@@ -623,7 +623,7 @@ function createContentSearchPagination(contentSearchDto)
 	         			 				   			
 	         			$.ajax({
         	        			type:'POST',
-	        					url: "/${paganiHistoryWeb}/${modelsSearchURL}",
+	        					url: "/${modelsSearchURL}",
     	    					contentType :'application/json; charset=UTF-8',
         						data: JSON.stringify(contentSearchDto),
                 				beforeSend: function(xhr)

@@ -38,7 +38,6 @@ public class BaseControllerData
 	/*************************
      **********Misc***********
      *************************/
-	public static final String PAGANI_HISTORY_WEB 				= "pagani-history-web";	
 	public static final String IMAGE_CONTENT_TYPE 				= "image/jpg";	
 	public static final String UNITS_OF_MEASURE   				= "unitsOfMeasure"; 
 	public static final String UNITS_OF_MEASURE_COOKIE_NAME  	= "def_units"; 	 

@@ -426,7 +426,7 @@
                         <#list pictureIds?chunk(2) as row>                       		  
                             <#list row as pictureId>                                								
                                 <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
-                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${paganiHistoryWeb}/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                	</a> 
                             </#list>
                         </#list>    
