@@ -23,6 +23,7 @@ echo "PATH" exported to ${PATH}
 # define some variables for Maven 3
 M2_HOME="$OPENSHIFT_DATA_DIR/.m2"
 export M2_HOME
+echo "M2_HOME" exported to ${M2_HOME}
 mkdir -p $M2_HOME
 mkdir -p $M2_HOME/repository
 echo -e  "<settings>\n   <localRepository>$OPENSHIFT_DATA_DIR/.m2/repository</localRepository>\n</settings>\n" > $M2_HOME/settings.xml
@@ -30,6 +31,7 @@ MVN_TGZ=apache-maven-3.3.3-bin.tar.gz
 MVN_URL=http://www.eu.apache.org/dist/maven/maven-3/3.3.3/binaries/$MVN_TGZ
 MVN_DIR=apache-maven-3.3.3
 export MVN_LINK=maven
+echo "MVN_LINK" exported to ${MVN_LINK}
 # download Maven3 to the data directory if it does not yet exist, extract it and create a symlink
 cd ${OPENSHIFT_DATA_DIR}
 if [[ ! -d $MVN_DIR ]]
@@ -41,4 +43,5 @@ then
 fi
 # call our own mvn script with the right settings
 cd $OPENSHIFT_REPO_DIR
+echo about to package pom.xml file
 ${OPENSHIFT_DATA_DIR}${MVN_LINK}/bin/mvn clean package -s .openshift/action_hooks/settings.xml -DskipTests=true -P prod
