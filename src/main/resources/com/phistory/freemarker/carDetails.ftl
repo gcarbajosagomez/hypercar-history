@@ -124,7 +124,7 @@
 		  									</p>
 	  									</dd>
   										<dt>
-											${getTextSource('car.bodyConfiguration')} :
+											${getTextSource('car.bodyShape')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
