@@ -46,7 +46,7 @@
 							$.getScript('/resources/javascript/lib/toucheffects.js', null);							
 												
         					$.cookiesDirective({
-            					privacyPolicyUri: '${cookiesPolicyURL}',
+            					privacyPolicyUri: '/${cookiesPolicyURL}',
             					position: 'bottom',
 								message: '${getTextSource('cookiesDirectiveMessage')}',
 								deleteAndBlockCookiesMessage: '${getTextSource('cookiesDirectiveMessage.deleteAndBlockCookiesMessage')}',
