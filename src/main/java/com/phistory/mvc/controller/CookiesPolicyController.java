@@ -17,10 +17,10 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = COOKIES_POLICY_URL,
-				method = RequestMethod.GET)
+@RequestMapping(value = COOKIES_POLICY_URL)
 public class CookiesPolicyController extends BaseController
 {		
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleDefault()
 	{
 		try
