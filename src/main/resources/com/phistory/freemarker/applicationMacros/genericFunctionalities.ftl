@@ -496,16 +496,16 @@ function setPageLanguage(locale, mainForm)
    			}
 	   })
 	   .done(function(data)
-	   {                      
+	   {           
+	        document.children[0].innerHTML = data;          
             <#--Pagination is only created if the language change is called from the cars page and if needed -->
             if ($('#car-list-div').length > 0)
             {
               	if (mainForm.action.search("${carsURL}") != -1)
-              	{	
-              		document.children[0].innerHTML = data;    
+              	{	              		
               		createPagination();
               	}
-				else if (mainForm.action.search("/${modelsSearchURL}") != -1)
+				else if (mainForm.action.search("${modelsSearchURL}") != -1)
 				{
 					var contentSearchDto = {		
 							 				 ${pagNum} 			: 1,
@@ -513,8 +513,7 @@ function setPageLanguage(locale, mainForm)
 							 				 ${contentToSearch} : $("#content-search-input")[0].value,
 							 				 searchTotalResults : $("#search-total-results")[0].value	
 	         			   				   }; 
-	         		
-	         		document.children[0].innerHTML = data;    	   				   
+	         		 	   				   
 					createContentSearchPagination(contentSearchDto);
 				}
             }
