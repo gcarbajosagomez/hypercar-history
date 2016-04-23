@@ -82,12 +82,10 @@ public class CmsBaseController extends BaseController
     public void fillBaseCmsModel(Model model)
     {
 		model.addAttribute("saveURL", 			SAVE_URL);
-		model.addAttribute("editURL", 			EDIT_URL);
 		model.addAttribute("deleteURL", 		DELETE_URL);
 		model.addAttribute("manufacturersURL",	MANUFACTURERS_URL);
 		model.addAttribute("loginURL", 	 		LOGIN_URL);
 		model.addAttribute("loggedIn", 	 		loggedIn);
-		model.addAttribute("cmsContext", 		CMS_CONTEXT);
     }
 	
 	@InitBinder

@@ -1,5 +1,7 @@
 package com.phistory.mvc.controller;
 
+import java.util.Optional;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,7 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.phistory.mvc.controller.util.HTTPUtil;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.dao.impl.CarDao;
 import com.tcp.data.dao.impl.ContentSearchDao;
@@ -34,6 +38,8 @@ public class BaseController extends BaseControllerData
 	private ContentSearchDao contentSearchDao;	
 	@Inject
 	private ModelFiller baseModelFiller;
+	@Inject
+	private HTTPUtil hTTPUtil;
 	
 	@ModelAttribute()
     public void fillBaseModel(Model model,
@@ -48,15 +54,32 @@ public class BaseController extends BaseControllerData
 	}
 	
 	/**
-	 * Extract the requested URI from the servlet request
+	 * Extract the requested URI from the {@link HttpServletRequest}
 	 * 
 	 * @param request
 	 * @return A string containing the requested URI if everything went well, an empty String otherwise
 	 */
 	private String extractRequestUriFromRequest(HttpServletRequest request)
 	{
-		String requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
+		StringBuilder requestedUri = new StringBuilder();
+		String requestQueryString = null;
 		
-		return request.getRequestURI().toString() + requestQueryString;
-	}	
+		if (request.getMethod().equals(RequestMethod.POST.name())) 
+		{
+			Optional<String> requestUriParamsOptional = this.hTTPUtil.extractRequestPayloadParamsFromRequest(request);
+			if (requestUriParamsOptional.isPresent())
+			{
+				requestQueryString = "?" + requestUriParamsOptional.get();
+			}
+		}
+		else
+		{            
+			requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
+		}
+		
+		requestedUri.append(request.getRequestURI().toString());
+		requestedUri.append(requestQueryString);
+		
+		return requestedUri.toString();
+	}
 }

@@ -147,3 +147,21 @@ function writeCarPreviews(data)
 					 
 	$('#car-list-div')[0].innerHTML = carListString;
 }
+
+
+function setupContentSearchEventListeners()
+{
+	$("#content-search-input").keypress(function( event )
+  	{  								
+  		if (event.which == 13)
+  			{  									
+     			event.preventDefault();
+     			handleContentSearch($("#content-search-input")[0].value, $('#main-form')[0]);
+  			}  	
+		});
+						
+	$( "#content-search-input" ).click(function()
+	{
+  		$( "#content-search-input" ).keypress();
+	});		
+}

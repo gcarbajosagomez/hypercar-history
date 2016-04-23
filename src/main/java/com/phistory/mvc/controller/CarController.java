@@ -1,9 +1,10 @@
 package com.phistory.mvc.controller;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +23,6 @@ import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 
-import static com.phistory.mvc.controller.BaseControllerData.*;
-
 /**
  * Controller to handle Cars URLs
  * 
@@ -33,7 +31,6 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = CARS)
 public class CarController extends BaseController
 {
 	@Inject
@@ -45,7 +42,8 @@ public class CarController extends BaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = {CARS_URL, CMS_CONTEXT + CARS},
+					method = RequestMethod.GET)
 	public ModelAndView handleCarsList(Model model,
 									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
 									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
@@ -68,7 +66,7 @@ public class CarController extends BaseController
 		}		
 	}
 	
-	@RequestMapping(value = "{" + ID + "}",
+	@RequestMapping(value = CARS_URL + "/" + "{" + ID + "}",
 		    		method = RequestMethod.GET)
 	public ModelAndView handleCarDetails(Model model,
 							  		  	 @PathVariable(ID) Long carId,
@@ -94,11 +92,10 @@ public class CarController extends BaseController
 		}
 	}
 	
-	@RequestMapping(method = RequestMethod.POST,
-					consumes = MediaType.APPLICATION_JSON,
-    				produces = MediaType.APPLICATION_JSON)
+	@RequestMapping(value = {CARS_URL + "/" + PAGINATION_URL, CMS_CONTEXT + CARS_URL + "/" + PAGINATION_URL},
+				    method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, Object> handlePagination(@RequestBody(required = true) CarsPaginationDto carsPaginationDto)
+	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{			
 		return carControllerUtil.createPaginationData(carsPaginationDto);
 	}	

@@ -78,7 +78,7 @@ public class IndexController extends BaseController
 			}
 		}
 		
-		randomPicIds.parallelStream().forEach(pictureId -> {
+		randomPicIds.forEach(pictureId -> {
 			Car car = getCarDao().getByPictureId(pictureId);
 			carNamesToPictureIds.put(car.getFriendlyName(), pictureId);
 		});

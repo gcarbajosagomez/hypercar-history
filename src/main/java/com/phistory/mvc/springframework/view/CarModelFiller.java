@@ -23,5 +23,6 @@ public class CarModelFiller extends BaseControllerData implements ModelFiller
 		model.addAttribute("unitsOfMeasureCookieName",  UNITS_OF_MEASURE_COOKIE_NAME);
 		model.addAttribute("unitsOfMeasureMetric", 	    UNITS_OF_MEASURE_METRIC);
 		model.addAttribute("unitsOfMeasureImperial",    UNITS_OF_MEASURE_IMPERIAL);		
+		model.addAttribute("paginationURL",    			PAGINATION_URL);		
 	}
 }

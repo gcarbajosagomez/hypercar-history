@@ -1,4 +1,5 @@
 <#include "applicationMacros/genericFunctionalities.ftl">
+<#include "applicationMacros/pagination.ftl">
 
 <@startPage getTextSource('title.allModels')/>
 

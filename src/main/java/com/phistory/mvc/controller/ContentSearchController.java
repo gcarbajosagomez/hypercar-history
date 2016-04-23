@@ -1,22 +1,19 @@
 package com.phistory.mvc.controller;
 
-import java.io.IOException;
+import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,8 +23,6 @@ import com.tcp.data.command.SearchCommand;
 import com.tcp.data.model.car.Car;
 import com.tcp.data.query.command.SimpleDataConditionCommand;
 import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType;
-
-import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Controller to handle ContentSearch URLs
@@ -45,11 +40,10 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(method = RequestMethod.POST,
-					produces = MediaType.APPLICATION_JSON)
+	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView handleModelsSearch(Model model, 
-										   @RequestBody(required = true) ContentSearchDto contentSearchDto)
+										   ContentSearchDto contentSearchDto)
 	{	
 		try
 		{
@@ -62,6 +56,7 @@ public class ContentSearchController extends BaseController implements Initializ
 			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getCarsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
 			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());
+			model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDto.getContentToSearch());
 			carModelFiller.fillModel(model);
 			pictureModelFiller.fillModel(model);
 		
@@ -73,25 +68,6 @@ public class ContentSearchController extends BaseController implements Initializ
 			
 			return new ModelAndView(ERROR_VIEW_NAME);
 		}	
-	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView handleModelsSearch(@RequestParam(defaultValue = "0", value = PAG_NUM, required = true) int pagNum,
-			  							   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage,
-			  							   HttpServletResponse httpServletResponse)
-	{		
-		try
-		{
-			httpServletResponse.sendRedirect(CARS_URL + "?" + PAG_NUM + "=" + pagNum + "&" + CARS_PER_PAGE + "=" + carsPerPage);
-			
-			return null;
-		}
-		catch (IOException ioe)
-		{
-			log.error(ioe.toString(), ioe);
-			
-			return new ModelAndView(ERROR_VIEW_NAME);
-		}
 	}
 	
 	/**

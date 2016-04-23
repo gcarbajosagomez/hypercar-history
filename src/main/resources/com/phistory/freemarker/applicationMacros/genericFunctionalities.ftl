@@ -1,4 +1,5 @@
 <#import "/spring.ftl" as spring />
+<#include "pagination.ftl">
 <#macro startPage title=''>      
     <!DOCTYPE html>
         <html lang="${getTextSource('paganiHistory.language')}" class="no-js">
@@ -170,13 +171,11 @@
               										<a>${getTextSource('contentSearch.search')}</a>
 												</div>
 												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding-top: 10px; padding-left: 20px;">
-													<input id="content-search-input" type="text" class="content-search-input"/>
+													<input id="content-search-input" type="text" class="content-search-input" value="<#if contentToSearchData??>${contentToSearchData}</#if>"/>
   													<label for="content-search-input">
 	  													<span class="glyphicon glyphicon-search search-icon"></span>
   													</label>
-  													<#if searchTotalResultsData??>
-														<input id="search-total-results" type="hidden" value="${searchTotalResultsData}"/>
-													</#if>
+  													<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>												
   												</div>
 											</div>              							
               							</li>								
@@ -298,6 +297,8 @@
     			</div>    	  
 			</body>			
         </html>
+        <@addSetPageLanguage/>
+        <@addHandleContentSearch/>	
 </#macro>
 
 <#macro getCarProductionLife car>
@@ -382,298 +383,139 @@
 	</#if>    
 </#macro>
 
-<#macro createCarsPagination chunkedModelsList>	
-    var options =
-    {
-	    bootstrapMajorVersion : 3,
-    	currentPage: ${pagNumData},
-    	alignment: 'left',
-        totalPages: <#if chunkedModelsList??><#if (chunkedModelsList?size <= 5)>${chunkedModelsList?size}<#else>5</#if><#else>1</#if>,
-    	useBootstrapTooltip: true,
-    	tooltipTitles:
-    	   	function(type,page,current)
-	       	{
-	       		switch (type) {
-                case "first":
-                    return "${getTextSource('pagination.goToFirstPage')} ";
-                case "prev":
-                    return "${getTextSource('pagination.goToPreviousPage')} ";
-                case "next":
-                    return "${getTextSource('pagination.goToNextPage')} ";
-                case "last":
-                    return "${getTextSource('pagination.goToLastPage')} ";
-                case "page":
-                    return "${getTextSource('pagination.goToPage')} " + page;
-                }
-	     	},        
-        onPageClicked:
-	       	function(e,originalEvent,type,page)
-	       	{      		
-	       		if (!ajaxCallBeingProcessed)
-	       		{	         			
-	       			ajaxCallBeingProcessed = true;
-	       			var paginationData = {
-	       									${pagNum} : page,
-	       									${carsPerPage} : ${carsPerPageData}
-	       							  	 };
-    	   	    	$.ajax({
-        	       			type: 'POST',
-                			url: "${carsURL}",
-               				dataType: 'json',
-               				contentType: 'application/json; charset=UTF-8',
-               				data: JSON.stringify(paginationData), 
-               				beforeSend: function(xhr)
-               				{
-								$('#main-car-list-div').block({ 
-									css: {         										
-        									border:         '0px solid', 
-        									backgroundColor:'rgba(94, 92, 92, 0)'
-    								},
-               						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-            					});
-            					
-									xhr = addCrsfTokenToAjaxRequest(xhr);
-  							}
-	                	  })	                	 
-	                	  .done(function (data)
-						  {    	            	 
-        	        	    	writeCarPreviews(data.cars);
-        	        	     	$('#main-car-list-div').unblock(); 
-        	        	     	ajaxCallBeingProcessed = false;
-        	        	 	    	
-        	        	     	if (data != null)
-        	        	     	{
-        	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNumData + "&${carsPerPage}=" + data.carsPerPageData); 
-								}
-						  });  
-				}                      
-            }
-    	}        
-
-    	$('#pagination-ul').bootstrapPaginator(options);
-    	$('#pagination-ul').addClass('cursor-pointer');
-</#macro>
-
-<script type='text/javascript'>
-
-function setPageLanguage(locale, mainForm)
-{  
-   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed) 
-   { 
-   		ajaxCallBeingProcessed = true;
-   		
-		if (mainForm.action.search("&lang=") != -1)
-		{
-			<#--The lang param must be removed from the URL before sending it -->
-			mainForm.action = mainForm.action.replace(/[&?]lang=e[ns]/,'');
-		}
-   		
-   		$.ajax({            
-        	type:'GET',
-	        url: mainForm.action,
-    	    contentType :'application/json; charset=UTF-8',
-        	data: { lang: locale },
-	        beforeSend: function(xhr)
-    	    {
-        	    if(locale == 'en')
-            	{
-	                $('#english-loading-gif').removeClass('sr-only');
-    	        }
-        	    else if(locale == 'es')
-            	{
-                	$('#spanish-loading-gif').removeClass('sr-only');
-	            }
-
-				$('#main-wrap-div').block({ 
-					css: {         										
-        					border:         '0px solid', 
-        					backgroundColor:'rgba(94, 92, 92, 0)'
-    				},
-                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-            	});
-
-				xhr = addCrsfTokenToAjaxRequest(xhr);
-   			}
-	   })
-	   .done(function(data)
-	   {           
-	        document.children[0].innerHTML = data;          
-            <#--Pagination is only created if the language change is called from the cars page and if needed -->
-            if ($('#car-list-div').length > 0)
-            {
-              	if (mainForm.action.search("${carsURL}") != -1)
-              	{	              		
-              		createPagination();
-              	}
-				else if (mainForm.action.search("${modelsSearchURL}") != -1)
+<#macro addSetPageLanguage>
+	<script type='text/javascript'>
+		function setPageLanguage(locale, mainForm)
+		{  
+		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed) 
+		   { 
+		   		ajaxCallBeingProcessed = true;
+		   		
+				if (mainForm.action.search("&lang=") != -1)
 				{
-					var contentSearchDto = {		
-							 				 ${pagNum} 			: 1,
-	         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
-							 				 ${contentToSearch} : $("#content-search-input")[0].value,
-							 				 searchTotalResults : $("#search-total-results")[0].value	
-	         			   				   }; 
-	         		 	   				   
-					createContentSearchPagination(contentSearchDto);
+					<#--The lang param must be removed from the URL before sending it -->
+					mainForm.action = mainForm.action.replace(/[&?]lang=e[ns]/,'');
 				}
-            }
-               
-            ajaxCallBeingProcessed = false;
-            setupContentSearchEventListeners();	
-			$('#main-wrap-div').unblock();           	
-	   });
-   }
-}	
-
-function handleContentSearch(contentToSearch, mainForm)
-{
-	var contentSearchDto = {		
-							 ${pagNum} : 1,
-	         				 ${carsPerPage} : <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
-							 ${contentToSearch} : contentToSearch
-	         			   }; 
-	         			   
-	$.ajax({            
-        	type:'POST',
-	        url: "/${modelsSearchURL}",
-    	    contentType :'application/json; charset=UTF-8',
-        	data: JSON.stringify(contentSearchDto),
-	        beforeSend: function(xhr)
-    	    {
-    	    	$('#main-container').block({ 
-					css: {         										
-        					border:         '0px solid', 
-        					backgroundColor:'rgba(94, 92, 92, 0)'
-    				},
-                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-            	});
-
-				xhr = addCrsfTokenToAjaxRequest(xhr);
-    	    }
-	 })
-	 .done(function(data)
-	 {      	    	
-       	if (data != null)
-      	{       		
-			document.children[0].innerHTML = data;
-			
-			contentSearchDto.searchTotalResults = $("#search-total-results")[0].value;			
-
-			<#--Pagination is only created if needed -->
-            if (contentSearchDto.searchTotalResults > 0)
-            {
-              	createContentSearchPagination(contentSearchDto);  
-            }
-            else
-            {
-            	<#--No content found -->
-				$("#car-pagination-main-div").remove();
-				$("#car-list-div").remove();
-
-										  var noContentFoundElements = "<div class='col-xs-12 well well-lg'>";
-				noContentFoundElements = noContentFoundElements.concat(		"<h3>${getTextSource('contentSearch.noContentFound')}</h3>");
-				noContentFoundElements = noContentFoundElements.concat("</div>");
-				
-				$("#main-car-list-div").append(noContentFoundElements);				
-            }                      
-
-			window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage);			
-			setupContentSearchEventListeners();	
-		}
+		   		
+		   		$.ajax({            
+		        	type:'GET',
+			        url: mainForm.action,
+		    	    contentType :'application/json; charset=UTF-8',
+		        	data: { lang: locale },
+			        beforeSend: function(xhr)
+		    	    {
+		        	    if(locale == 'en')
+		            	{
+			                $('#english-loading-gif').removeClass('sr-only');
+		    	        }
+		        	    else if(locale == 'es')
+		            	{
+		                	$('#spanish-loading-gif').removeClass('sr-only');
+			            }
 		
-		ajaxCallBeingProcessed = false;        	
-	});   
-}
+						$('#main-wrap-div').block({ 
+							css: {         										
+		        					border:         '0px solid', 
+		        					backgroundColor:'rgba(94, 92, 92, 0)'
+		    				},
+		                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+		            	});
+		
+						xhr = addCrsfTokenToAjaxRequest(xhr);
+		   			}
+			   })
+			   .done(function(data)
+			   {           
+			        document.children[0].innerHTML = data;
+					<#if requestURI?matches(carsURL) || requestURI?matches(carsURL)>      
+			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
+			            if ($('#car-list-div').length > 0)
+			            {
+			              	if (mainForm.action.search("/${carsURL}") != -1)
+			              	{	              		
+			              		<@createCarsPagination chunkedModelsList![]/>
+			              	}
+							else if (mainForm.action.search("/${modelsSearchURL}") != -1)
+							{
+								var contentSearchDto = {		
+										 				 ${pagNum} 			: 1,
+				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+										 				 ${contentToSearch} : $("#content-search-input")[0].value,
+										 				 searchTotalResults : $("#search-total-results")[0].value	
+				         			   				   }; 
+				         		 	   				   
+								<@createContentSearchPaginationFunction/>
+							}
+			            }
+					</#if>
+		               
+		            ajaxCallBeingProcessed = false;
+		            setupContentSearchEventListeners();	
+					$('#main-wrap-div').unblock();           	
+			   });
+		   }
+		}
+	</script>
+</#macro>	
 
-function createContentSearchPagination(contentSearchDto)
-{		
-		var options =
-    	{
-	    	bootstrapMajorVersion : 3,
-    	    currentPage: contentSearchDto.pagNum,
-    	    alignment: 'left',
-        	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${carsPerPage}),
-    	    useBootstrapTooltip: true,
-    	    tooltipTitles:
-    	    	function(type,page,current)
-	         	{
-	         		switch (type) {
-                    case "first":
-                        return "${getTextSource('pagination.goToFirstPage')} ";
-                    case "prev":
-                        return "${getTextSource('pagination.goToPreviousPage')} ";
-                    case "next":
-                        return "${getTextSource('pagination.goToNextPage')} ";
-                    case "last":
-                        return "${getTextSource('pagination.goToLastPage')} ";
-                    case "page":
-                        return "${getTextSource('pagination.goToPage')} " + page;
-                    }
-	         	},        
-        	onPageClicked:
-	         	function(e,originalEvent,type,page)
-	         	{      		
-	         		if (!ajaxCallBeingProcessed)
-	         		{	         			
-	         			ajaxCallBeingProcessed = true;
-
-	         			delete contentSearchDto.searchTotalResults; 
-	         			contentSearchDto.${pagNum} = page;  
-	         			 				   			
-	         			$.ajax({
-        	        			type:'POST',
-	        					url: "/${modelsSearchURL}",
-    	    					contentType :'application/json; charset=UTF-8',
-        						data: JSON.stringify(contentSearchDto),
-                				beforeSend: function(xhr)
-                				{
-									$('#main-car-list-div').block({ 
-										css: {         										
-        										border:         '0px solid', 
-        										backgroundColor:'rgba(94, 92, 92, 0)'
-    									},
-                						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-            						});      						
-
-									xhr = addCrsfTokenToAjaxRequest(xhr);
-  								}
-	                	  	  })	                	 
-	                	  	  .done(function (data)
-						  	  {    	            	 
-        	        	 	    	if (data != null)
-      								{
-      									document.children[0].innerHTML = data;      									
-        	        	 	    		$('#main-car-list-div').unblock();       	        	 	    		
-        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.carsPerPage);	
-    									options.currentPage = contentSearchDto.${pagNum};
-        	        	 	    		$('#pagination-ul').bootstrapPaginator(options);
-    									$('#pagination-ul').addClass('cursor-pointer');
-        	        	 	    		
-        	        	 	    		ajaxCallBeingProcessed = false;
-        	        	 	    	}
-						  	  });  
-					}                      
-            	}
-    	}        
-
-    	$('#pagination-ul').bootstrapPaginator(options);
-    	$('#pagination-ul').addClass('cursor-pointer');
-}
-
-function setupContentSearchEventListeners()
-{
-	$("#content-search-input").keypress(function( event )
-  	{  								
-  		if (event.which == 13)
-  			{  									
-     			event.preventDefault();
-     			handleContentSearch($("#content-search-input")[0].value, $('#main-form')[0]);
-  			}  	
-		});
+<#macro addHandleContentSearch>
+	<script type='text/javascript'>
+		function handleContentSearch(contentToSearch, mainForm)
+		{
+			var contentSearchDto = {		
+									 ${pagNum} : 1,
+			         				 ${carsPerPage} : <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+									 ${contentToSearch} : contentToSearch
+			         			   }; 
+			         			   
+			$.ajax({            
+		        	type:'GET',
+			        url: "/${modelsSearchURL}",
+		    	    data: contentSearchDto,
+			        beforeSend: function(xhr)
+		    	    {
+		    	    	$('#main-container').block({ 
+							css: {         										
+		        					border:         '0px solid', 
+		        					backgroundColor:'rgba(94, 92, 92, 0)'
+		    				},
+		                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+		            	});
+		
+						xhr = addCrsfTokenToAjaxRequest(xhr);
+		    	    }
+			 })
+			 .done(function(data)
+			 {      	    	
+		       	if (data != null)
+		      	{       		
+					document.children[0].innerHTML = data;
+					contentSearchDto.searchTotalResults = $("#search-total-results")[0].value;			
+		
+					<#--Pagination is only created if needed -->
+		            if (contentSearchDto.searchTotalResults > 0)
+		            {
+		              	<@createContentSearchPaginationFunction/>
+		            }
+		            else
+		            {
+		            	<#--No content found -->
+						$("#car-pagination-main-div").remove();
+						$("#car-list-div").remove();
+		
+												  var noContentFoundElements = "<div class='col-xs-12 well well-lg'>";
+						noContentFoundElements = noContentFoundElements.concat(		"<h3>${getTextSource('contentSearch.noContentFound')}</h3>");
+						noContentFoundElements = noContentFoundElements.concat("</div>");
 						
-	$( "#content-search-input" ).click(function()
-	{
-  		$( "#content-search-input" ).keypress();
-	});		
-}
-</script>
+						$("#main-car-list-div").append(noContentFoundElements);				
+		            }                      
+		
+					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage + "&${contentToSearch}=" + contentSearchDto.contentToSearch);			
+					setupContentSearchEventListeners();	
+				}
+				
+				ajaxCallBeingProcessed = false;        	
+			});   
+		}
+	</script>
+</#macro>
