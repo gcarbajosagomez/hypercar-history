@@ -11,11 +11,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.phistory.test.integration.mvc.springframework.config.IntegrationWebTestConfig;
+import com.phistory.Main;
 import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 
-//@SpringApplicationConfiguration(classes = IntegrationWebTestConfig.class)
-//@RunWith(SpringJUnit4ClassRunner.class)
+@SpringApplicationConfiguration(classes = Main.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class LoginTest implements InitializingBean
 {	
 	@Inject
@@ -28,7 +28,7 @@ public class LoginTest implements InitializingBean
 		loginPage.initializePage();	
 	}
 	
-	//@Test
+	@Test
 	public void testLogin() throws Exception
 	{
 		loginPage.typeUsername("u");

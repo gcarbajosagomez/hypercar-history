@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.pagani-history</groupId>
 	<artifactId>pagani-history-web</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<packaging>jar</packaging>
 	<name>Pagani History Web</name>
 	<developers>
@@ -35,11 +35,9 @@
 		<org.spring-boot.version>1.2.8.RELEASE</org.spring-boot.version>
 		<org.freemarker.version>2.3.23</org.freemarker.version>	
 		<org.projectlombok.version>1.16.6</org.projectlombok.version>
-		<org.assertj-core.version>1.7.0</org.assertj-core.version>
 		<commons.collection.version>3.2.1</commons.collection.version>
 		<mysql.connector.version>5.1.36</mysql.connector.version>	
-		<org.selenium.version>2.48.2</org.selenium.version>
-		<junit.version>4.12</junit.version>
+		<org.selenium.version>2.53.0</org.selenium.version>
 		<xml-apis.version>1.4.01</xml-apis.version>
 	</properties>
 
@@ -81,7 +79,7 @@
                 <configuration>
                 	<finalName>ROOT</finalName>
                 	<outputDirectory>deployments</outputDirectory>
-                	<excludeGroupIds>org.seleniumhq.selenium,junit,org.assertj,xml-apis</excludeGroupIds>
+                	<excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
               		<excludeArtifactIds>lombok</excludeArtifactIds>
               		<excludes>
               			<dependency>
@@ -273,6 +271,11 @@
     		<groupId>org.springframework.boot</groupId>
     		<artifactId>spring-boot-starter-log4j</artifactId>
     		<version>${org.spring-boot.version}</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-test</artifactId>
+    		<version>${org.spring-boot.version}</version>
 		</dependency>			
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -359,30 +362,6 @@
 			<artifactId>selenium-support</artifactId>
 			<version>${org.selenium.version}</version>
 			<classifier>sources</classifier>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		<dependency>
-  			<groupId>org.assertj</groupId>
-  			<artifactId>assertj-core</artifactId>
-  			<version>${org.assertj-core.version}</version>
-  			<scope>test</scope>
-		</dependency>
-		<dependency>
-  			<groupId>org.assertj</groupId>
-  			<artifactId>assertj-core</artifactId>
-  			<version>${org.assertj-core.version}</version>
-  			<classifier>javadoc</classifier>
 		</dependency>
 		<dependency>
 			<groupId>xml-apis</groupId>

@@ -1,22 +1,20 @@
 package com.phistory.test.integration.web.index;
 
-import java.util.Locale;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.stereotype.Component;
 
-import com.phistory.test.integration.web.BasePage;
-
-@Component
-public class IndexPage extends BasePage
+public class IndexPage
 {
+	private WebDriver webDriver;
+	
 	@FindBy(id = "index-jumbotron")
-	private WebElement indexJumbotronLocator;
+	private WebElement indexJumbotron;
 	@FindBy(id = "car-pictures-carousel")
 	private WebElement indexCarouselLocator;
 	@FindBy(className = "carousel-inner")
@@ -25,64 +23,40 @@ public class IndexPage extends BasePage
 	private WebElement leftArrowControlLocator;
 	@FindBy(id = "right-arrow-control")
 	private WebElement rightArrowControlLocator;
-	boolean carouselHasValidImages = true;
-
-	public void initializePage() throws Exception
-	{
-		getWebDriver().get(getBaseUrl() + "/index.html");
-        
-		String loginPageTitle = getMessageSource().getMessage("title.index", null, Locale.ENGLISH);
-		
-		if (loginPageTitle.contains(getWebDriver().getTitle()))
-		{
-            throw new IllegalStateException("This is not the index page");
-        }
-		
-		PageFactory.initElements(getWebDriver(), this);
+	
+	public IndexPage() {
+		super();
 	}
 
-    public IndexPage checkJumbotronIsDisplayed()
+	public IndexPage(WebDriver webDriver) {
+		this.webDriver = webDriver;	
+		this.initializePageElements();	
+	}  
+	
+	public void initializePageElements()
+	{
+		PageFactory.initElements(this.webDriver, this);
+	}
+	
+    public boolean isJumbotronDisplayed()
     {
-    	WebDriverWait wait = new WebDriverWait(getWebDriver(), 10);
-    	wait.until(ExpectedConditions.elementToBeClickable(indexJumbotronLocator));
-    	
-    	if (indexJumbotronLocator.isDisplayed())
-    	{
-    		return this;  
-    	}
-    	
-    	return null;
+    	return this.indexJumbotron.isDisplayed();
     }
     
-    public IndexPage checkCarouselIsDisplayed()
+    public boolean isCarouselDisplayed()
     {
-    	WebDriverWait wait = new WebDriverWait(getWebDriver(), 10);
-    	wait.until(ExpectedConditions.elementToBeClickable(indexCarouselLocator));
-    	
-    	if (indexCarouselLocator.isDisplayed())
-    	{
-    		return this;  
-    	}
-    	
-    	return null;
+    	return this.indexCarouselLocator.isDisplayed();
     }
     
-    public IndexPage checkCarouselHasValidImages()
-    {
-    	WebDriverWait wait = new WebDriverWait(getWebDriver(), 10);
-    	wait.until(ExpectedConditions.elementToBeClickable(indexCarouselLocator));
-    	
-    	if (carouselInnerDivLocator.isDisplayed())
-    	{	
-    		carouselInnerDivLocator.findElements(By.className("item")).parallelStream().forEach(item -> validateCarouselPicture(item));
+    public boolean carouselHasValidImages()
+    {    	
+    	List<WebElement> carouselItems = this.carouselInnerDivLocator.findElements(By.className("item"));	
+    	carouselItems.stream().filter(item -> this.validateCarouselPicture(item)).collect(Collectors.toList());
     		
-    		if (carouselHasValidImages) return this;  
-    	}
-    	
-    	return null;
+    	return !carouselItems.isEmpty();
     }
     
-    private void validateCarouselPicture(WebElement picture)
+    private boolean validateCarouselPicture(WebElement picture)
     {
 		String pictureDivId = picture.getAttribute("id");
 		
@@ -96,32 +70,37 @@ public class IndexPage extends BasePage
 				{
 					WebElement pictureCaption = picture.findElement(By.className("carousel-caption"));
 					
-					if (pictureCaption.getAttribute("innerHTML").isEmpty())
+					if (!pictureCaption.getAttribute("innerHTML").isEmpty())
 					{
-						carouselHasValidImages = false;
+						return true;
 					}
 				}
 			}
 		}
+		
+		return false;
     }
     
-    public IndexPage clickLeftCarouselControl()
-    {
-    	if (indexCarouselLocator.isDisplayed())
-    	{
-    		leftArrowControlLocator.click();
-    	}
-    	
-    	return null;
+    public boolean carouselHasAnActiveImage()
+    {    	
+    	WebElement activeImage = this.carouselInnerDivLocator.findElement(By.className("active"));	
+    		
+    	return activeImage != null;
     }
     
-    public IndexPage clickRightCarouselControl()
+    public void clickLeftCarouselControl()
     {
-    	if (indexCarouselLocator.isDisplayed())
+    	if (this.indexCarouselLocator.isDisplayed())
     	{
-    		rightArrowControlLocator.click();
+    		this.leftArrowControlLocator.click();
     	}
-    	
-    	return null;
     }
+    
+    public void clickRightCarouselControl()
+    {
+    	if (this.indexCarouselLocator.isDisplayed())
+    	{
+    		this.rightArrowControlLocator.click();
+    	}
+    } 	
 }

@@ -1,17 +1,15 @@
 package com.phistory.test.integration.web;
 
-import javax.inject.Inject;
-
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 public abstract class BasePage
-{
-	@Inject
-	private WebDriver webDriver;
-	@Inject
+{	
+	private WebDriver webDriver = new FirefoxDriver();
+	
 	private ResourceBundleMessageSource messageSource;
 	@Value("${page.baseUrl}")
 	private String baseUrl;
