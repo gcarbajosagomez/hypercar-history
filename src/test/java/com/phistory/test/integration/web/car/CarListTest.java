@@ -1,40 +1,82 @@
 package com.phistory.test.integration.web.car;
 
-import javax.inject.Inject;
+import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
+import static com.phistory.test.integration.web.BaseIntegrationTest.TEST_SERVER_HOST;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.InitializingBean;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.TestExecutionListeners;
+import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
+import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
 
 import com.phistory.Main;
 
 @SpringApplicationConfiguration(classes = Main.class)
-@RunWith(SpringJUnit4ClassRunner.class)
-public class CarListTest implements InitializingBean
+@WebAppConfiguration
+@IntegrationTest("server.port:0")
+@TestExecutionListeners(inheritListeners = false,
+						listeners = { DependencyInjectionTestExecutionListener.class,
+									  DirtiesContextTestExecutionListener.class })
+public class CarListTest extends AbstractTestNGSpringContextTests
 {	
-	@Inject
+	@Value("${local.server.port}")
+	private int port;
+	private WebDriver webDriver;
 	private CarListPage carListPage;
 
-	@Override
-	public void afterPropertiesSet() throws Exception {
-		carListPage.initializePage();	
+	@BeforeClass
+	public void before() throws Exception
+	{
+		this.webDriver = new FirefoxDriver();
+		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL);
+		this.carListPage = new CarListPage(this.webDriver);
 	}
 	
 	@Test
-	public void testCarList() throws Exception
+	public void test_car_list_is_present() throws Exception
 	{
-		Assert.assertTrue("Main car list div is not present", carListPage.isMainCarListDivPresent());
+		assertThat("Main car list div should be present", this.carListPage.isMainCarListDivPresent());
 	}
 	
-	@Test
-	public void testPagination() throws Exception
+	@Test(dependsOnMethods = "test_car_list_is_present")
+	public void test_there_are_cars_listed() throws Exception
 	{
-		Assert.assertTrue("Pagination div is not present", carListPage.isPaginationDivPresent());
-		Assert.assertTrue("Paginator doesn't contain any page", carListPage.isPaginatorPresent());
+		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), is(notNullValue()));
+	}
+	
+	@Test(dependsOnMethods = "test_car_list_is_present")
+	public void test_pagination_is_present() throws Exception
+	{
+		assertThat("Pagination should be present", this.carListPage.isPaginationDivPresent());
+		assertThat("Paginator should contain at least one page", this.carListPage.isPaginatorPresent());
+	}
+	
+	@Test(dependsOnMethods = "test_pagination_is_present")
+	public void test_paginate_fordward() throws Exception
+	{
+		String initialFirstCarListedDivId = this.carListPage.getFirstCarListedDivId();
 		
-		carListPage.paginate();
+		this.carListPage.paginate(2);
+		Thread.sleep(2000);
+		assertThat("After paginating cars listed should have changed", this.carListPage.getFirstCarListedDivId(), is(not(initialFirstCarListedDivId)));
+	}
+	
+	@AfterClass
+	public void after() 
+	{
+		if (this.webDriver != null)
+		{
+			this.webDriver.close();
+		}
 	}
 }

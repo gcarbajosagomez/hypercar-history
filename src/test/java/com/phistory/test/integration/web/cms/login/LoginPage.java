@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import com.phistory.test.integration.web.BasePage;
 
-@Component
 public class LoginPage extends BasePage
 {
 	@FindBy(id = "username-input")

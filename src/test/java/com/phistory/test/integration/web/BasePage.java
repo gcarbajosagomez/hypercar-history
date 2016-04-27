@@ -1,35 +1,31 @@
 package com.phistory.test.integration.web;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.support.ResourceBundleMessageSource;
+import lombok.extern.slf4j.Slf4j;
 
-public abstract class BasePage
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
+
+@Slf4j
+public class BasePage
 {	
-	private WebDriver webDriver = new FirefoxDriver();
+	private WebDriver webDriver;	
 	
-	private ResourceBundleMessageSource messageSource;
-	@Value("${page.baseUrl}")
-	private String baseUrl;
-	
-	public abstract void initializePage() throws Exception;
-	
-	public void initializePageElements() throws Exception
+	public BasePage(WebDriver webDriver)
 	{
-		PageFactory.initElements(getWebDriver(), this);	
+		this.webDriver = webDriver;
+	}
+
+	public void initializePageElements()
+	{
+		try
+		{
+			PageFactory.initElements(getWebDriver(), this);	
+		} catch (Exception e) {
+			log.error("There was an error while initializing page web elements", e);
+		}	
 	}
 	
 	public WebDriver getWebDriver() {
 		return webDriver;
-	}
-	
-	protected ResourceBundleMessageSource getMessageSource() {
-		return messageSource;
-	}
-
-	protected String getBaseUrl() {
-		return baseUrl;
 	}
 }

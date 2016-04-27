@@ -7,12 +7,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-public class IndexPage
+import com.phistory.test.integration.web.BasePage;
+
+public class IndexPage extends BasePage
 {
-	private WebDriver webDriver;
-	
 	@FindBy(id = "index-jumbotron")
 	private WebElement indexJumbotron;
 	@FindBy(id = "car-pictures-carousel")
@@ -23,19 +22,11 @@ public class IndexPage
 	private WebElement leftArrowControlLocator;
 	@FindBy(id = "right-arrow-control")
 	private WebElement rightArrowControlLocator;
-	
-	public IndexPage() {
-		super();
-	}
 
-	public IndexPage(WebDriver webDriver) {
-		this.webDriver = webDriver;	
-		this.initializePageElements();	
-	}  
-	
-	public void initializePageElements()
+	public IndexPage(WebDriver webDriver)
 	{
-		PageFactory.initElements(this.webDriver, this);
+		super(webDriver);	
+		super.initializePageElements();		
 	}
 	
     public boolean isJumbotronDisplayed()
@@ -83,9 +74,16 @@ public class IndexPage
     
     public boolean carouselHasAnActiveImage()
     {    	
-    	WebElement activeImage = this.carouselInnerDivLocator.findElement(By.className("active"));	
+    	WebElement activeImageDiv = this.carouselInnerDivLocator.findElement(By.className("active"));	
     		
-    	return activeImage != null;
+    	return activeImageDiv != null;
+    }
+    
+    public String getCarouselActiveImageDivId()
+    {    	
+    	WebElement activeImageDiv = this.carouselInnerDivLocator.findElement(By.className("active"));	
+    		
+    	return activeImageDiv.getAttribute("id");
     }
     
     public void clickLeftCarouselControl()
@@ -102,5 +100,5 @@ public class IndexPage
     	{
     		this.rightArrowControlLocator.click();
     	}
-    } 	
+    }
 }
