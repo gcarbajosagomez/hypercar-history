@@ -64,7 +64,7 @@ public class CarControllerUtil extends BaseController
             		{
 						try
 						{
-							throw new Exception(e.getMessage());
+							throw new Exception(e);
 						} catch (Exception e1) {}
 					} 
             	});
