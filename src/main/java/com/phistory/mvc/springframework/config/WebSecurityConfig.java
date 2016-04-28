@@ -22,8 +22,8 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 {
-	private static final String USER = "admin";
-	private static final String PASSWORD = "NederlandsLesVanavond2016";
+	public static final String CMS_LOGIN_USER		= "admin";
+	public static final String CMS_LOGIN_PASSWORD	= "NederlandsLesVanavond2016";
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception
@@ -49,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
 		auth.inMemoryAuthentication()
-		 	.withUser(USER)
-		 	.password(PASSWORD)
+		 	.withUser(CMS_LOGIN_USER)
+		 	.password(CMS_LOGIN_PASSWORD)
 		 	.roles("USER");
     }
 	

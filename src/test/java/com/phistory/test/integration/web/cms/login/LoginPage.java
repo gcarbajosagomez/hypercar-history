@@ -1,10 +1,8 @@
 package com.phistory.test.integration.web.cms.login;
 
-import java.util.Locale;
-
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.springframework.stereotype.Component;
 
 import com.phistory.test.integration.web.BasePage;
 
@@ -19,42 +17,43 @@ public class LoginPage extends BasePage
 	@FindBy(id = "logout-button")
 	private WebElement logoutButtonLocator;
 	
-	@Override
-	public void initializePage() throws Exception
+	public LoginPage(WebDriver webDriver) {
+		super(webDriver);
+		super.initializePageElements();		
+	}
+	
+	public boolean isUsernameInputDisplayed()
 	{
-		getWebDriver().get(getBaseUrl() + "/cms/login.html");
-     
-        String loginPageTitle = getMessageSource().getMessage("title.login", null, Locale.ENGLISH);
-		
-		if (loginPageTitle.contains(getWebDriver().getTitle()))
-		{
-            throw new IllegalStateException("This is not the CMS login page");
-        }
-		
-		initializePageElements();
+		return this.usernameLocator.isDisplayed();
+	}
+	
+	public boolean isPasswordInputDisplayed()
+	{
+		return this.passwordLocator.isDisplayed();
+	}
+	
+	public boolean isLoginButtonDisplayed()
+	{
+		return this.loginButtonLocator.isDisplayed();
 	}
 
-    public LoginPage typeUsername(String username)
+    public void typeUsername(String username)
     {
-    	usernameLocator.sendKeys(username);
-        return this;    
+    	this.usernameLocator.sendKeys(username);
     }
     
-    public LoginPage typePassword(String password)
+    public void typePassword(String password)
     {
-    	passwordLocator.sendKeys(password);
-        return this;    
+    	this.passwordLocator.sendKeys(password);
     }
     
-    public LoginPage clickLoginButton()
+    public void clickLoginButton()
     {
-    	loginButtonLocator.click();
-    	return this;
+    	this.loginButtonLocator.click();
     }
     
-    public LoginPage clickLogoutButton()
+    public void clickLogoutButton()
     {
-    	loginButtonLocator.click();
-        return this;    
+    	this.loginButtonLocator.click();
     }
 }
