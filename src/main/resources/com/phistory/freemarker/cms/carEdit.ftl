@@ -211,18 +211,23 @@
 			       <h3 class="text-left">${getTextSource('engine')}</h2>
 					
 				   <div>
-				   	   <a class="btn btn-info" onClick="loadEngineFromDB();">
+				   	    <a class="btn btn-info" onClick="loadEngineFromDB();">
 				   	   		<i class="fa fa-database"></i> ${getTextSource('cms.loadEngineFromDb')}
-				   	   	</a>
-				   	   	<a class="btn btn-success" onClick="saveOrEditEntity($('#main-form'), '${getTextSource('engine.confirmSaveOrEdit')}');">
-							<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.saveOrEditEngine')}
+				   	   	</a>				   	   
+				   	   	<a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.carForm.engineForm.id??>		
+																					onClick="editEngine();">
+																					<span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${getTextSource('cms.editEngine')}</span> 
+												   								<#else>
+												   		 							onClick="saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${getTextSource('engine.confirmSave')}');">
+																					<span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${getTextSource('cms.saveEngine')}</span> 
+												   								</#if>
 						</a>
 				   	   	<a class="btn btn-default" onClick="eraseEngineFormFields();">
 					   	   		<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.newEngine')}
 					   	</a>
 					   <#if CEFC.carForm.engineForm.id??>
-					   		<a class="btn btn-danger" onClick="deleteCar($(#main-form), '<@spring.url "/${cmsContext}${carsURL}/${deleteURL}"/>', "${getTextSource('car.confirmDelete')}");"/>
-								<span class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteEngine')}
+					   		<a id="engine-delete-link" class="btn btn-danger" onClick="deleteEntity($(#main-form), '<@spring.url "/${cmsContext}${enginesURL}/${CEFC.carForm.engineForm.id}/${deleteURL}"/>', "${getTextSource('engine.confirmDelete')}");"/>
+								<span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${getTextSource('cms.deleteEngine')}
 							</a>
 					   </#if>
 				   </div>
@@ -570,6 +575,8 @@
        		 $('#engine-code-selection-table').addClass('sr-only');
        		 $('#engine-id-dt').addClass('sr-only');
        		 $('#engine-id-dd').addClass('sr-only');
+       		 $('#engine-save-or-edit-link').attr("onClick","saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${getTextSource('engine.confirmSave')}')");
+			 $('#engine-save-or-edit-span').text(" ${getTextSource('cms.saveEngine')}");
         }
 
         function loadEngineById(engineId)
@@ -599,10 +606,12 @@
 				  	  })
 			          .done(function (data)
 					  {
-			          	 engine = data;
+			          	 var engine = data;
 						 $('#engine-main-div').unblock();       
 						
-		                 fillEngineInputValues(engine);
+		                 fillEngineInputValues(engine);		                 
+       		 			 $('#engine-save-or-edit-link').attr("onClick","editEngine()");
+			 			 $('#engine-save-or-edit-span').text(" ${getTextSource('cms.editEngine')}");
 		                 ajaxCallBeingProcessed = false;
 			          }); 
 			}
@@ -783,6 +792,31 @@
 			<#else>
 				saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${getTextSource('car.confirmSave')}');
 			</#if>
+		}
+		
+		function editEngine()
+		{
+			bootbox.confirm("${getTextSource('engine.confirmEdit')}", function(result)
+		    {
+				//OK button
+				if (result == true)
+				{
+					$.ajax({
+					    url: '/${cmsContext}${enginesURL}/${editURL}',
+					    type: 'POST',
+					    data: JSON.stringify(),
+					    contentType: 'application/json; charset=UTF-8',
+					    beforeSend: function(xhr)
+			    	    {
+					    	xhr = addCrsfTokenToAjaxRequest(xhr);
+			    	    }
+					})
+					.done(function(data)
+					{
+						data[${engine}];
+					});
+				}
+		    });
 		}
 
        	$(function()

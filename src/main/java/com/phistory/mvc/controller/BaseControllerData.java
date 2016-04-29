@@ -51,4 +51,5 @@ public class BaseControllerData
 	public static final String CONTENT_SEARCH_DTO       		= "contentSearchDto";
 	public static final String CONTENT_TO_SEARCH_DATA      		= "contentToSearchData";
 	public static final String CAR_DETAILS       				= "carDetails";
+	public static final String ENGINE                  			= "engine";  
 }

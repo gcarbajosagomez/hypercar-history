@@ -1,5 +1,7 @@
 package com.phistory.mvc.cms.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.ENGINE;
+
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -44,6 +46,7 @@ public class CarEditModelFIller implements ModelFiller
 		model.addAttribute("manufacturers", 				this.manufacturerDao.getAll());
     	model.addAttribute("engineLayouts", 				EngineLayout.values());
     	model.addAttribute("engines", 						this.engineDao.getAll());
+    	model.addAttribute("engine", 						ENGINE);
     	model.addAttribute("bodyShapes", 					CarBodyShape.values());
     	model.addAttribute("seatsConfigs", 					CarSeatsConfig.values());
     	model.addAttribute("brakeDiscMaterials", 			BrakeDiscMaterial.values());
