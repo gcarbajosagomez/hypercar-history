@@ -317,9 +317,9 @@
                            ${getTextSource('engine.maxPower')}      
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxPower", "class=form-control placeholder=${getTextSource('CV')}", "text"/>
+                           <@spring.formInput "CEFC.carForm.engineForm.maxPower", "class=form-control placeholder=${getTextSource('HP')}", "text"/>
                            <@spring.showErrors '<br>'/>  
-                      </dd> 
+                      </dd>                       
                       <dt>         
                            ${getTextSource('engine.maxRPM')}      
                       </dt>
@@ -327,6 +327,13 @@
                            <@spring.formInput "CEFC.carForm.engineForm.maxRPM", "class=form-control placeholder=${getTextSource('RPM')}", "text"/>
                            <@spring.showErrors '<br>'/>  
                       </dd>
+                      <dt>         
+                           ${getTextSource('engine.maxPowerRPM')}      
+                      </dt>
+                      <dd>
+                           <@spring.formInput "CEFC.carForm.engineForm.maxPowerRPM", "class=form-control placeholder=${getTextSource('RPM')}", "text"/>
+                           <@spring.showErrors '<br>'/>  
+                      </dd> 
                       <dt>         
                            ${getTextSource('engine.maxTorque')}
                       </dt>
@@ -607,31 +614,31 @@
        	   { 
        	  	 if (engine.id != null)
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.id.label').innerText = 		  engine.id;
-       	  	    document.getElementById('carForm.engineForm.id').value = 				  engine.id;
+       	  	    document.getElementById('carForm.engineForm.id.label').innerText 		= engine.id;
+       	  	    document.getElementById('carForm.engineForm.id').value 					= engine.id;
        	  	 }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.id.label').innerText = 		  "";	
-       	  	    document.getElementById('carForm.engineForm.id').value = 				  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.id.label').innerText 		= "";	
+       	  	    document.getElementById('carForm.engineForm.id').value 					= "";	
        	  	 }
        	  	
        	  	 if (engine.code != null)
        	  	 {
-                document.getElementById('carForm.engineForm.code').value = 				  engine.code;
+                document.getElementById('carForm.engineForm.code').value 				= engine.code;
              } 
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.code').value = 				  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.code').value 				= "";    	  	
        	  	 }
             
              if (engine.type != null)
        	  	 {
-          	    document.getElementById('carForm.engineForm.type').value = 				  engine.type;
+          	    document.getElementById('carForm.engineForm.type').value 				= engine.type;
           	 }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.type').value = 				  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.type').value 				= "";    	  	
        	  	 }
           	
           	 if (engine.cylinderDisposition != null)
@@ -645,65 +652,65 @@
           
              if (engine.numberOfCylinders != null)
        	     {
-       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value =   engine.numberOfCylinders;
+       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value 	= engine.numberOfCylinders;
        	  	 }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value =   "";    	  	
+       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value 	= "";    	  	
        	  	 }
        	  	
        	  	 if (engine.numberOfValves != null)
        	  	 {
-                document.getElementById('carForm.engineForm.numberOfValves').value = 	  engine.numberOfValves;
+                document.getElementById('carForm.engineForm.numberOfValves').value 		= engine.numberOfValves;
              }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.numberOfValves').value =      "";    	  	
+       	  	    document.getElementById('carForm.engineForm.numberOfValves').value 		= "";    	  	
        	  	 }
             
              if (engine.size != null)
        	  	 {
-                document.getElementById('carForm.engineForm.size').value = 			      engine.size;
+                document.getElementById('carForm.engineForm.size').value 				= engine.size;
              }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.size').value = 				  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.size').value 				= "";    	  	
        	  	 }
             
              if (engine.maxPower != null)
        	  	 {
-          	    document.getElementById('carForm.engineForm.maxPower').value = 			  engine.maxPower;
+          	    document.getElementById('carForm.engineForm.maxPower').value 			= engine.maxPower;
           	 }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxPower').value = 			  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.maxPower').value 			= "";    	  	
        	  	 }
           	
           	 if (engine.maxPowerRPM != null)
        	  	 {
-                document.getElementById('carForm.engineForm.maxRPM').value = 		      engine.maxPowerRPM;
+                document.getElementById('carForm.engineForm.maxPowerRPM').value 		= engine.maxPowerRPM;
              }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxRPM').value = 			  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.maxRPM').value 				= "";    	  	
        	  	 }
             
              if (engine.maxTorque != null)
        	  	 {
-                document.getElementById('carForm.engineForm.maxTorque').value = 		  engine.maxTorque;
+                document.getElementById('carForm.engineForm.maxTorque').value 			= engine.maxTorque;
              }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxTorque').value = 		  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.maxTorque').value 			= "";    	  	
        	  	 }
             
              if (engine.maxTorqueRPM != null)
        	  	 {
-                document.getElementById('carForm.engineForm.maxTorqueRPM').value = 		  engine.maxTorqueRPM;	
+                document.getElementById('carForm.engineForm.maxTorqueRPM').value 		= engine.maxTorqueRPM;	
              }
        	  	 else
        	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxTorqueRPM').value = 		  "";    	  	
+       	  	    document.getElementById('carForm.engineForm.maxTorqueRPM').value 		= "";    	  	
        	  	 }
            }
        }
