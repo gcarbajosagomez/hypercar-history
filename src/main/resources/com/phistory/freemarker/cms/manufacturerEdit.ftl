@@ -23,7 +23,7 @@
 	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
 			   </div>
 			   <div class="panel-body">
-			   	   <dl class="dl-horizontal text-left">
+			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
           		   	  <#if MEFC.manufacturerForm.id??>
             			  <dt>          
                 			  ${getTextSource('id')}

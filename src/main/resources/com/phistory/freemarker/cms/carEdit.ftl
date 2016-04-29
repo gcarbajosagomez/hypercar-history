@@ -33,7 +33,7 @@
 	       			<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newCar')}</a>   
 			   </div>
 			   <div class="panel-body">
-			   	   <dl class="dl-horizontal text-left">
+			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
 			      	  <#if CEFC.carForm.id??>
                       	<dt>         
                           	${getTextSource('id')}           
@@ -233,7 +233,7 @@
 				   </div>
 			   </div>
 			   <div id="engine-main-div" class="panel-body">	
-			   	   <dl id="engine-code-selection-table" class="dl-horizontal text-left sr-only">
+			   	   <dl id="engine-code-selection-table" class="dl-horizontal dl-horizontal-edit text-left sr-only">
 				      <dt>
 				   	       ${getTextSource('engine.codes')}                   
                    	       <#if engines?? && (engines?size > 0)>
@@ -248,7 +248,7 @@
                            </#if>
                       </dt>
                    </dl>					   
-                   <dl class="dl-horizontal text-left">                          
+                   <dl class="dl-horizontal dl-horizontal-edit text-left">                          
                       <dt id="engine-id-dt" class="<#if !CEFC.carForm.engineForm.id??>sr-only</#if>">         
                           ${getTextSource('id')}           
                       </dt>
@@ -361,7 +361,7 @@
 					<h3 class="text-left">${getTextSource('brakeSet')}</h2>						
 			   </div>
 			   <div class="panel-body">					   
-                   <dl class="dl-horizontal text-left">
+                   <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.carForm.brakeSetForm.id", ""/>
                        
                        <@writeBrakeEditFields CEFC.carForm.brakeSetForm.frontBrake "CEFC.carForm.brakeSetForm.frontBrake" "FRONT"/> 
@@ -374,7 +374,7 @@
 					<h3 class="text-left">${getTextSource('transmission')}</h2>
 			   </div>
 			   <div class="panel-body">
-				   <dl class="dl-horizontal text-left">
+				   <dl class="dl-horizontal dl-horizontal-edit text-left">
 				       <#if CEFC.carForm.transmissionForm?? && CEFC.carForm.transmissionForm.id??>
                            <dt>         
                                ${getTextSource('id')} 
@@ -413,7 +413,7 @@
 					<h3 class="text-left">${getTextSource('tyreSet')}</h2>						
 			   </div>
 			   <div class="panel-body">					   
-                   <dl class="dl-horizontal text-left">
+                   <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id", "class=form-control"/>
                        
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/> 
@@ -471,7 +471,7 @@
 		      <h4 class="text-left">${brakeTrain}</h2>						
 		  </div>
 		  <div class="panel-body">					   
-              <dl class="dl-horizontal text-left">
+              <dl class="dl-horizontal dl-horizontal-edit text-left">
                   <#if brake.id??>
                       <dt>         
                           ${getTextSource('id')}           
@@ -522,7 +522,7 @@
 		      <h4 class="text-left">${tyreTrain}</h2>						
 		  </div>
 		  <div class="panel-body">					   
-              <dl class="dl-horizontal text-left">
+              <dl class="dl-horizontal dl-horizontal-edit text-left">
                   <#if tyre.id??>
                       <dt>         
                           ${getTextSource('id')}         

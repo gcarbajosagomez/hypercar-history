@@ -326,6 +326,16 @@ html, body
 	margin-bottom: 3px;
 }
 
+.dl-horizontal-edit dd
+{
+	height: 38px; 
+}
+
+.dl-horizontal-edit dt
+{
+	height: 38px; 
+}
+
 @media (min-width: 768px)
 {
 	.dl-horizontal dt
