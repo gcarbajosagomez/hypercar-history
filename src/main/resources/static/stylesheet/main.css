@@ -213,18 +213,18 @@ html, body
 	min-width: 85%;
 }
 
-.car-preview > div
+.preview > div
 {	
 	padding: 0px;
 }
 
-.car-preview-div
+.preview-div
 {
 	background-color: #f5f5f5;
 	padding: 0px;
 }
 
-.car-preview-outer
+.preview-outer
 {
 	padding-right: 1.3% !important;
 	padding-left: 1.3% !important;
@@ -238,12 +238,12 @@ html, body
 	max-height: 420px;
 }
 
-.car-preview figure img 
+.preview figure img 
 {
 	z-index: 10;
 }
 
-.car-preview figcaption 
+.preview figcaption 
 {
 	height: 100%;
 	width: 100%;
@@ -257,17 +257,17 @@ html, body
 	box-shadow: 0 0 0 0px #2c3f52;
 }
 
-.no-touch .car-preview figure:hover figcaption,
-.car-preview figure.cs-hover figcaption 
+.no-touch .preview figure:hover figcaption,
+.preview figure.cs-hover figcaption 
 {
 	opacity: 1;
 	height: 110%;
 	box-shadow: 0 0 0 10px #2c3f52;
 }
 
-.car-preview figcaption h3,
-.car-preview figcaption span,
-.car-preview figcaption a 
+.preview figcaption h3,
+.preview figcaption span,
+.preview figcaption a 
 {
 	opacity: 0;
 	-webkit-transition: opacity 0s;
@@ -275,10 +275,10 @@ html, body
 	transition: opacity 0s;
 }
 
-.no-touch .car-preview figure:hover figcaption h3,
-.no-touch .car-preview figure:hover figcaption a,
-.car-preview figure.cs-hover figcaption h3,
-.car-preview figure.cs-hover figcaption a 
+.no-touch .preview figure:hover figcaption h3,
+.no-touch .preview figure:hover figcaption a,
+.preview figure.cs-hover figcaption h3,
+.preview figure.cs-hover figcaption a 
 {
 	-webkit-transition: opacity 0.3s 0.2s;
 	-moz-transition: opacity 0.3s 0.2s;
@@ -297,7 +297,7 @@ html, body
 	align-items: center;
 }
 
-.vertically-aligned-car-preview-div
+.vertically-aligned-preview-div
 {
 	min-height: 420px;
 	height: auto;
@@ -646,7 +646,7 @@ html, body
 		top: 50%;
 	}
 
-	.vertically-aligned-car-preview-div
+	.vertically-aligned-preview-div
 	{
 		min-height: 220px;
 		height: auto;
@@ -656,13 +656,13 @@ html, body
 		margin-bottom: 8%;	
 	}
 
-	.no-touch .car-preview figure:hover figcaption,
-	.car-preview figure.cs-hover figcaption 
+	.no-touch .preview figure:hover figcaption,
+	.preview figure.cs-hover figcaption 
 	{		
 		height: 120%;
 	}
 
-	.car-preview-outer
+	.preview-outer
 	{
 		padding-right: 2% !important;
 		padding-left: 2% !important;
