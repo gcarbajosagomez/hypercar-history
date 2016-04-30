@@ -290,7 +290,6 @@ html, body
 {
 	display: flex;
 	flex-direction: row;
-	-moz-flex-direction: column;
 	min-height: 100%;
 	max-height: 100%;
 	max-width: 100%;
@@ -666,5 +665,18 @@ html, body
 	{
 		padding-right: 2% !important;
 		padding-left: 2% !important;
+	}
+}
+
+/* Target Firefox only */
+@-moz-document url-prefix()
+{
+	/* TODO: investigate how CSS flex properties work in Firefox (http://stackoverflow.com/questions/27967090/how-do-you-prevent-an-image-from-expanding-beyond-its-container) */
+	.vertically-aligned-div
+	{
+		display: block;
+		min-height: 100%;
+		max-height: 100%;
+		max-width: 100%;
 	}
 }
