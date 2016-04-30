@@ -1,6 +1,8 @@
 package com.phistory.mvc.controller;
 
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +15,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -32,7 +33,8 @@ import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType
  */
 @Slf4j
 @Controller
-@RequestMapping(value = MODELS_SEARCH_URL)
+@RequestMapping(value = MODELS_SEARCH_URL,
+				method = HEAD)
 public class ContentSearchController extends BaseController implements InitializingBean
 {
 	@Inject
@@ -40,7 +42,7 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = GET)
 	@ResponseBody
 	public ModelAndView handleModelsSearch(Model model, 
 										   ContentSearchDto contentSearchDto)

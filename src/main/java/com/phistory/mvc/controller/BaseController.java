@@ -1,5 +1,8 @@
 package com.phistory.mvc.controller;
 
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -10,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.phistory.mvc.controller.util.HTTPUtil;
 import com.phistory.mvc.springframework.view.ModelFiller;
@@ -25,6 +28,7 @@ import com.tcp.data.dao.impl.PictureDao;
  *
  */
 @Slf4j
+@RequestMapping(method = HEAD)
 public class BaseController extends BaseControllerData
 {	
 	@Inject
@@ -64,7 +68,7 @@ public class BaseController extends BaseControllerData
 		StringBuilder requestedUri = new StringBuilder();
 		String requestQueryString = null;
 		
-		if (request.getMethod().equals(RequestMethod.POST.name())) 
+		if (request.getMethod().equals(POST.name())) 
 		{
 			Optional<String> requestUriParamsOptional = this.hTTPUtil.extractRequestPayloadParamsFromRequest(request);
 			if (requestUriParamsOptional.isPresent())

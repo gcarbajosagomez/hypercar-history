@@ -1,13 +1,13 @@
 package com.phistory.mvc.controller;
 
+import static com.phistory.mvc.controller.BaseControllerData.COOKIES_POLICY_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Controller to handle CookiesPolicy URLs
@@ -17,10 +17,11 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = COOKIES_POLICY_URL)
+@RequestMapping(value = COOKIES_POLICY_URL,
+						method = {GET, HEAD})
 public class CookiesPolicyController extends BaseController
 {		
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping
 	public ModelAndView handleDefault()
 	{
 		try

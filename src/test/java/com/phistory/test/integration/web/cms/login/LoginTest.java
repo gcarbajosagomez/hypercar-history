@@ -66,7 +66,7 @@ public class LoginTest extends AbstractTestNGSpringContextTests
 	}
 	
 	@Test(dependsOnGroups = "login")
-	public void test_login() throws Exception
+	public void test_perform_login() throws Exception
 	{
 		this.loginPage.typeUsername(CMS_LOGIN_USER);
 		this.loginPage.typePassword(CMS_LOGIN_PASSWORD);

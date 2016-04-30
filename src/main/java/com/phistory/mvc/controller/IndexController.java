@@ -1,5 +1,9 @@
 package com.phistory.mvc.controller;
 
+import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,13 +17,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
-
-import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Controller to handle Index URLs
@@ -29,7 +30,8 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = {"/", INDEX_URL})
+@RequestMapping(value = {"/", INDEX_URL},
+				method = HEAD)
 public class IndexController extends BaseController
 {	
 	@Inject
@@ -39,7 +41,7 @@ public class IndexController extends BaseController
 	@Inject
 	private Random previewPictureRandomGenerator;	
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = GET)
 	public ModelAndView handleDefault(Model model)
 	{		
 		try

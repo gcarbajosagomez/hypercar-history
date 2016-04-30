@@ -1,5 +1,10 @@
 package com.phistory.mvc.controller;
 
+import static com.phistory.mvc.controller.BaseControllerData.ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,14 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
-
-import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Controller to handle Picture URLs
@@ -27,13 +29,14 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = PICTURES_URL + "/{" + ACTION + "}")
+@RequestMapping(value = PICTURES_URL + "/{" + ACTION + "}",
+			    method = HEAD)
 public class PictureController extends BaseController
 {	
 	@Inject
     private PictureControllerUtil pictureControllerUtil;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = GET)
 	public void handleDefault(HttpServletRequest request,
 							  HttpServletResponse response,
 							  @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command)
