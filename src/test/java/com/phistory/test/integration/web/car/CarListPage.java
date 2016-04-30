@@ -26,17 +26,17 @@ public class CarListPage extends BasePage
 		super.initializePageElements();		
 	}
 	
-	public boolean isMainCarListDivPresent()
+	public boolean isMainCarListDivDisplayed()
 	{
 		return this.carListLocator.isDisplayed();
 	}
 	
-	public boolean isPaginationDivPresent()
+	public boolean isPaginationDivDisplayed()
 	{
 		return this.paginationDivLocator.isDisplayed();
 	}
 	
-	public boolean isPaginatorPresent()
+	public boolean isPaginatorDisplayed()
 	{
 		return this.paginationLocator.isDisplayed();
 	}

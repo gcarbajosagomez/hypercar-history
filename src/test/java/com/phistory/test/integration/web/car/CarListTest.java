@@ -43,25 +43,24 @@ public class CarListTest extends AbstractTestNGSpringContextTests
 	}
 	
 	@Test
-	public void test_car_list_is_present() throws Exception
+	public void test_car_list_is_displayed() throws Exception
 	{
-		assertThat("Main car list div should be present", this.carListPage.isMainCarListDivPresent());
+		assertThat("Main car list div should be displayed", this.carListPage.isMainCarListDivDisplayed());
 	}
 	
-	@Test(dependsOnMethods = "test_car_list_is_present")
 	public void test_there_are_cars_listed() throws Exception
 	{
 		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), is(notNullValue()));
 	}
 	
-	@Test(dependsOnMethods = "test_car_list_is_present")
-	public void test_pagination_is_present() throws Exception
+	@Test(dependsOnMethods = "test_car_list_is_displayed")
+	public void test_pagination_is_displayed() throws Exception
 	{
-		assertThat("Pagination should be present", this.carListPage.isPaginationDivPresent());
-		assertThat("Paginator should contain at least one page", this.carListPage.isPaginatorPresent());
+		assertThat("Pagination should be displayed", this.carListPage.isPaginationDivDisplayed());
+		assertThat("Paginator should contain at least one page", this.carListPage.isPaginatorDisplayed());
 	}
 	
-	@Test(dependsOnMethods = "test_pagination_is_present")
+	@Test(dependsOnMethods = "test_pagination_is_displayed")
 	public void test_paginate_fordward() throws Exception
 	{
 		String initialFirstCarListedDivId = this.carListPage.getFirstCarListedDivId();
