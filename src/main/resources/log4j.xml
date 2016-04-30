@@ -3,15 +3,15 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
  
 	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-	    <layout class="org.apache.log4j.PatternLayout">
+	    <layout class="org.apache.log4j.EnhancedPatternLayout">
 		<param name="ConversionPattern" 
-		  value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		  value="%d{yyyy-MM-dd HH:mm:ss}{GMT+2} %-5p %c{1}:%L - %m%n" />
 	    </layout>
 	</appender>
 	
 	<appender name="file" class="org.apache.log4j.RollingFileAppender">
 	   	<param name="append" value="false" />
-	   	<param name="maxFileSize" value="50MB" />
+	   	<param name="maxFileSize" value="100MB" />
 	   	<param name="maxBackupIndex" value="5" />
 	   	<param name="file" value="logs/pagani_history.log" />
 	   	<layout class="org.apache.log4j.PatternLayout">
