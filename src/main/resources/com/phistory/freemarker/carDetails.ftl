@@ -3,7 +3,7 @@
 <#if car??>
 	<#assign title>${getTextSource('pagani')} ${car.model} ${getTextSource('car.details.dataAndPictures')}</#assign>
 <#else>
-	<#assign title>''</#assign>
+	<#assign title>${getTextSource('title.noCarFound')}</#assign>
 </#if>
 
 <@startPage title/> 
