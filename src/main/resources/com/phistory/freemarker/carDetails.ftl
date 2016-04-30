@@ -494,7 +494,9 @@
 	  			</div>
 			</div>
 		<#else>
-			${getTextSource('car.noCar')}
+			<div class="panel panel-body col-lg-12">
+				<p class="col-lg-12 text-muted text-center">${getTextSource('car.noCarFound')}</p>
+			</div>			
 		</#if>		
 	</div>
 </div>

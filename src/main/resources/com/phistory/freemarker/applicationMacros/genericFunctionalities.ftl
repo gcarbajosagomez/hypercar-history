@@ -94,7 +94,7 @@
 											<h4 class="italic-font text-right" style="padding-right: 30px">${getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
           					   			<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          					   				<img class="main-logo" src="/resources/img/Pagani-Logo.png">
+          					   				<img class="main-logo" src="/resources/img/pagani-logo.png">
           					   			</div>
 	          					   	</div>
     	      					 </a>
@@ -115,7 +115,7 @@
           													    ${getTextSource('language.spanish')}
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/resources/img/Spain_flag.gif"/>' title="${getTextSource('language.spanish')}"/>
+          														<img class="language-flag" src='<@spring.url "/resources/img/spain_flag.jpg"/>' title="${getTextSource('language.spanish')}"/>
           													</div>
           													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>   
@@ -131,7 +131,7 @@
         	  													${getTextSource('language.english')}
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/resources/img/UK_flag.gif"/>' title="${getTextSource('language.english')}"/>
+          														<img class="language-flag" src='<@spring.url "/resources/img/uk_flag.jpg"/>' title="${getTextSource('language.english')}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">    										
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>  

@@ -28,7 +28,7 @@
 		<maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
 		
 		<javax.ee.version>7.0</javax.ee.version>
-		<com.thecarpedia.data.version>1.2.11</com.thecarpedia.data.version>
+		<com.the-carpedia-data.version>1.2.12</com.the-carpedia-data.version>
 		<com.fasterxml.jackson.core.version>2.6.1</com.fasterxml.jackson.core.version>
 		<org.springframework.version>4.2.0.RELEASE</org.springframework.version>
 		<org.springsecurity.version>4.0.2.RELEASE</org.springsecurity.version>
@@ -212,7 +212,7 @@
 		<dependency>
 			<groupId>com.the-carpedia</groupId>
 			<artifactId>the-carpedia-data</artifactId>
-			<version>${com.thecarpedia.data.version}</version>	
+			<version>${com.the-carpedia-data.version}</version>	
 		</dependency>	
 		<dependency>
 			<groupId>org.springframework</groupId>
