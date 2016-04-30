@@ -6,12 +6,17 @@
 <div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="row">
 		<div class="col-lg-2">
-			<div class="thumbnail list-group">
+			<div class="list-group" style="margin-top: 10px;">
 				<#list models as car>
     				<a class="list-group-item" href=${carsURL}/${car.id}>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
+				<#if models??>
+					<a class="list-group-item">
+    					<h5 class="text-center list-group-element">${models?size} ${getTextSource('models')}</h5>
+    				</a>
+    			</#if>
 			</div>
 		</div>
 		
