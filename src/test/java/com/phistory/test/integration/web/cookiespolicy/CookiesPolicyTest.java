@@ -15,6 +15,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -26,7 +27,8 @@ import com.phistory.Main;
 @TestExecutionListeners(inheritListeners = false,
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
-public class CookiesPolicyTest extends AbstractTestNGSpringContextTests {
+public class CookiesPolicyTest extends AbstractTestNGSpringContextTests
+{
 	@Value("${local.server.port}")
 	private int port;
 	private WebDriver webDriver;
@@ -81,5 +83,14 @@ public class CookiesPolicyTest extends AbstractTestNGSpringContextTests {
 		this.cookiesPolicyPage.clickAcceptCookiesButton();
 		Thread.sleep(1000);
 		assertThat("Cookies policy directive message div should be displayed", this.cookiesPolicyPage.isCookiesDirectiveMessageDivDisplayed(), is(false));
+	}
+	
+	@AfterClass
+	public void after() 
+	{
+		if (this.webDriver != null)
+		{
+			this.webDriver.close();
+		}
 	}
 }
