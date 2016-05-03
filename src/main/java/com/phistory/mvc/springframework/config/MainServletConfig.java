@@ -144,5 +144,6 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
         //so that the content of the resources directory is served as static content
 		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/");
 		registry.addResourceHandler("/robots.txt").addResourceLocations("classpath:/static/robots.txt");
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/static/img/favicon.ico");
     }
 }
