@@ -1,5 +1,9 @@
 package com.phistory.mvc.controller.cms;
 
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -10,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,13 +29,11 @@ import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
 
-import static com.phistory.mvc.controller.BaseControllerData.*;
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
-
 /**
  *
  * @author Gonzalo
  */
+@Secured(USER_ROLE)
 @Controller
 @RequestMapping(value = CMS_CONTEXT + PICTURES_URL)
 public class CmsPictureController extends CmsBaseController

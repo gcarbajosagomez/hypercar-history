@@ -1,6 +1,7 @@
 package com.phistory.test.integration.web.cms.car;
 
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 
 import com.phistory.test.integration.web.BasePage;
 
+@Slf4j
 public class CmsCarListPage extends BasePage
 {
 	@Getter
@@ -21,6 +23,15 @@ public class CmsCarListPage extends BasePage
 	
 	public boolean isMainCarListDivPresent()
 	{
-		return carListLocator.isDisplayed();
+		try
+		{
+			return carListLocator.isDisplayed();
+		} 
+		catch(Exception e)
+		{
+			log.error(e.toString());
+			
+			return false;
+		}
 	}
 }

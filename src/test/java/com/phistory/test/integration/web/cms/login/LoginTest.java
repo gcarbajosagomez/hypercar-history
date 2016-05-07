@@ -2,7 +2,6 @@ package com.phistory.test.integration.web.cms.login;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_PASSWORD;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
 import static com.phistory.test.integration.web.BaseIntegrationTest.TEST_SERVER_HOST;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,11 +31,11 @@ import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 									  DirtiesContextTestExecutionListener.class })
 public class LoginTest extends AbstractTestNGSpringContextTests
 {	
+	private static final String CMS_LOGIN_TEST_PASSWORD = "testPassword2016";
 	@Value("${local.server.port}")
 	private int port;
 	private WebDriver loginPageWebDriver;
 	private LoginPage loginPage;
-	private WebDriver cmsCarListWebDriver;
 	private CmsCarListPage cmsCarListPage;
 
 	@BeforeClass
@@ -50,31 +49,45 @@ public class LoginTest extends AbstractTestNGSpringContextTests
 	@Test(groups = "login")
 	public void test_username_input_is_displayed()
 	{
-		assertThat("Username input should be present", this.loginPage.isUsernameInputDisplayed());
+		assertThat("Username input should be displayed", this.loginPage.isUsernameInputDisplayed());
 	}
 	
 	@Test(groups = "login")
 	public void test_password_input_is_displayed()
 	{
-		assertThat("Password input should be present", this.loginPage.isPasswordInputDisplayed());
+		assertThat("Password input should be displayed", this.loginPage.isPasswordInputDisplayed());
 	}
 	
 	@Test(groups = "login")
 	public void test_login_button_is_displayed()
 	{
-		assertThat("Login button should be present", this.loginPage.isLoginButtonDisplayed());
+		assertThat("Login button should be displayed", this.loginPage.isLoginButtonDisplayed());
 	}
 	
 	@Test(dependsOnGroups = "login")
+	public void test_perform_login_with_wrong_credentials() throws Exception
+	{
+		this.loginPage.typeUsername(CMS_LOGIN_USER);
+		this.loginPage.typePassword("wrongPWD");
+		this.loginPage.clickLoginButton();
+		Thread.sleep(1000);
+		assertThat("Wrong credentials alert should be displayed", this.loginPage.isWrongCredentialsAlertDisplayed());
+		
+		this.loginPageWebDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
+		this.cmsCarListPage = new CmsCarListPage(this.loginPageWebDriver);
+		this.cmsCarListPage.initializePageElements();
+		test_username_input_is_displayed();
+	}
+	
+	@Test(dependsOnMethods = "test_perform_login_with_wrong_credentials")
 	public void test_perform_login() throws Exception
 	{
 		this.loginPage.typeUsername(CMS_LOGIN_USER);
-		this.loginPage.typePassword(CMS_LOGIN_PASSWORD);
+		this.loginPage.typePassword(CMS_LOGIN_TEST_PASSWORD);
 		this.loginPage.clickLoginButton();
 		Thread.sleep(1000);
-		this.cmsCarListWebDriver = new FirefoxDriver();
-		this.cmsCarListWebDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + "/" + CARS);
-		this.cmsCarListPage = new CmsCarListPage(this.cmsCarListWebDriver);
+		this.loginPageWebDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
+		this.cmsCarListPage = new CmsCarListPage(this.loginPageWebDriver);
 		this.cmsCarListPage.initializePageElements();
 		assertThat("Main car list div should be present after login", this.cmsCarListPage.isMainCarListDivPresent());
 	}

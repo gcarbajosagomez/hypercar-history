@@ -45,7 +45,7 @@ public class BaseController extends BaseControllerData
 	@Inject
 	private HTTPUtil hTTPUtil;
 	
-	@ModelAttribute()
+	@ModelAttribute
     public void fillBaseModel(Model model,
     						  HttpServletRequest request)
 	{

@@ -1,6 +1,8 @@
 package com.phistory.mvc.controller;
 
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CARS_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 import java.util.Map;
 
@@ -13,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -31,6 +32,8 @@ import com.phistory.mvc.springframework.view.ModelFiller;
  */
 @Slf4j
 @Controller
+@RequestMapping(value = CARS_URL,
+				method = {GET, HEAD})
 public class CarController extends BaseController
 {
 	@Inject
@@ -42,8 +45,7 @@ public class CarController extends BaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
 	
-	@RequestMapping(value = {CARS_URL, CMS_CONTEXT + CARS},
-					method = RequestMethod.GET)
+	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
 									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
 									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
@@ -66,8 +68,7 @@ public class CarController extends BaseController
 		}		
 	}
 	
-	@RequestMapping(value = CARS_URL + "/" + "{" + ID + "}",
-		    		method = RequestMethod.GET)
+	@RequestMapping(value = "/" + "{" + ID + "}")
 	public ModelAndView handleCarDetails(Model model,
 							  		  	 @PathVariable(ID) Long carId,
 							  		  	 @CookieValue(value = UNITS_OF_MEASURE_COOKIE_NAME,
@@ -92,8 +93,7 @@ public class CarController extends BaseController
 		}
 	}
 	
-	@RequestMapping(value = {CARS_URL + "/" + PAGINATION_URL, CMS_CONTEXT + CARS_URL + "/" + PAGINATION_URL},
-				    method = RequestMethod.GET)
+	@RequestMapping(value = "/" + PAGINATION_URL)
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{			

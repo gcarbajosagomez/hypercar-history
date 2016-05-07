@@ -141,7 +141,7 @@
           										</li>   							       
           									</ul>        							              						
               							</li>
-              							<#if loggedIn?? && loggedIn == true>
+              							<#if requestURI?contains("${cmsContext}") && loggedIn?? && loggedIn == true>
               								<li>
               									<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${getTextSource('cms')} <b class="caret"></b></a>              									
           										<ul class="dropdown-menu"> 

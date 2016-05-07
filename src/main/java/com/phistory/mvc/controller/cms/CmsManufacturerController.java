@@ -1,5 +1,9 @@
 package com.phistory.mvc.controller.cms;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -9,6 +13,7 @@ import javax.ws.rs.core.MediaType;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -27,8 +32,7 @@ import com.phistory.mvc.springframework.view.ManufacturerModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.Manufacturer;
 
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
-
+@Secured(USER_ROLE)
 @Controller
 @Slf4j
 @RequestMapping(value = CMS_CONTEXT + MANUFACTURERS)

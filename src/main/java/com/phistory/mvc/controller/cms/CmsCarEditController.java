@@ -1,5 +1,10 @@
 package com.phistory.mvc.controller.cms;
 
+import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.controller.BaseControllerData.ID;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+
 import java.util.Locale;
 
 import javax.inject.Inject;
@@ -7,6 +12,7 @@ import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,13 +30,11 @@ import com.phistory.mvc.controller.cms.util.CarControllerUtil;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 
-import static com.phistory.mvc.controller.BaseControllerData.*;
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
-
 /**
  *
  * @author Gonzalo
  */
+@Secured(USER_ROLE)
 @Controller
 @Slf4j
 @RequestMapping(value = CMS_CONTEXT + CARS + "/{" + ID + "}")

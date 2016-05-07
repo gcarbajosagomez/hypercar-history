@@ -1,17 +1,22 @@
 package com.phistory.mvc.controller.cms;
 
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.inject.Inject;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
@@ -29,14 +34,19 @@ import com.tcp.data.model.engine.Engine;
  * @author Gonzalo
  *
  */
-@Data
+@Controller
+@RequestMapping(value = CMS_CONTEXT)
 public class CmsBaseController extends BaseController
 {
-	private static boolean loggedIn = false;
+	@Setter
+	private boolean loggedIn = false;
+	@Getter
 	@Inject
     private ManufacturerDao manufacturerDao;
+	@Getter
 	@Inject
     private EngineDao engineDao;
+	@Getter
 	@Inject
 	private ResourceBundleMessageSource messageSource;
 	
@@ -76,16 +86,16 @@ public class CmsBaseController extends BaseController
     public static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
     public static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
     public static final String SUCCESS_MESSAGE  				= "successMessage"; 
+    public static final String LOGGEDIN  						= "loggedIn"; 
     
-	
-	@ModelAttribute(value = CMS_CONTEXT)
+	@ModelAttribute
     public void fillBaseCmsModel(Model model)
     {
 		model.addAttribute("saveURL", 			SAVE_URL);
 		model.addAttribute("deleteURL", 		DELETE_URL);
 		model.addAttribute("manufacturersURL",	MANUFACTURERS_URL);
 		model.addAttribute("loginURL", 	 		LOGIN_URL);
-		model.addAttribute("loggedIn", 	 		loggedIn);
+		model.addAttribute(LOGGEDIN, 	 		true);
     }
 	
 	@InitBinder
@@ -95,9 +105,5 @@ public class CmsBaseController extends BaseController
         binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<Engine, Long>(this.engineDao));
         binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(getPictureDao()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
-    }
-
-	public void setLoggedIn(boolean loggedIn) {
-		CmsBaseController.loggedIn = loggedIn;
-	}	
+    }	
 }

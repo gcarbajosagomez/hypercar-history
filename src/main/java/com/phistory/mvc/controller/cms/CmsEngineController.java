@@ -3,6 +3,7 @@ package com.phistory.mvc.controller.cms;
 import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -14,6 +15,7 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +35,7 @@ import com.tcp.data.model.engine.Engine;
  *
  * @author Gonzalo
  */
+@Secured(USER_ROLE)
 @Controller
 @Slf4j
 @RequestMapping(value = {CMS_CONTEXT + ENGINES_URL, CMS_CONTEXT + ENGINES_URL + "/{" + ID + "}"})
