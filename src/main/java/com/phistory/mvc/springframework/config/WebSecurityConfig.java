@@ -57,8 +57,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.passwordEncoder(passwordEncoder())
 		 	.withUser(CMS_LOGIN_USER)
 		 	.password(CMS_LOGIN_ENCRYPTED_PASSWORD)
-		 	.password("$2a$11$Rbt9Gh4W0HUYIEm9NiNh3.cMWZRN4rFSmSEKOUGb20EYqzWcAMGHm")
 		 	.roles("USER");
+		
+		auth.inMemoryAuthentication()
+			.passwordEncoder(passwordEncoder())
+			.withUser(CMS_LOGIN_USER)
+			.password("$2a$11$Rbt9Gh4W0HUYIEm9NiNh3.cMWZRN4rFSmSEKOUGb20EYqzWcAMGHm")
+			.roles("USER");
     }
 	
 	@Bean
