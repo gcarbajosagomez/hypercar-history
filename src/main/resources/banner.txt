@@ -1,0 +1,76 @@
+${AnsiColor.BRIGHT_BLUE}
+......................................... . . ....... ............. ..  ..  ............................................
+......................................~DNNNNNND8Z$7?+++......==MDD888OZZ7IIII7~.........................................
+..................................... +...............D......D...............O..........................................
+....................................:~,:=$Z,,DNMNDDDDD?~.....77MMMMMMNM=~Z~~~~~=~~~:....................................
+.................................~~~:::~~=++~~::::::::~+:O,$:8::,I$?DNO~Z$?+=+=======...................................
+................................+~~:~~~+++=+7ZN=Z??MNNDO$?+=====?I+MD+7O~=+=?I???+==+...................................
+...............................,?=~~~+I+=+7I8~D8DI$O8OZ$7I?I7$ZOOO88DDDDMOMMM?II??+=+:..................................
+...............................~?=$$7?+I7$Z$MMMMMMMMMNMMMNNMMMMMMMMMMMMMMM77$++?I?77$:..................................
+...............................~?~$77$+=O+7MMMMMMNNNMMOZNMMMMN8O88NNNNMMMMM7II~~~$77$:..................................
+...............................=+~+=?::I7$NMNNNMMNNND+?MMMMMNMO7ODNNMNMNNNNMI=8~7~~?=~..................................
+...............................I?7:$:=$,$NNMMMMMNONMMNZI7$Z$$778DDMNMMMNNMMMMI$N~~~~~:,.................................
+..............................,+~:::=8M$NNDNNNNDNNNNNDI+..O...I8NNNNNNNNNNNODNI~O=~~~~:,,...............................
+............................,,:=~::=IN?NDDNNNMZ7II8MNNNDMMMMMDNNNN8I7$7IZNNDDNO77$=~~~=:,,..............................
+...........................,,:~~~~=$N?N8NDN$ZZZOZZOO7MMMMMMMMMMN$ZZ$8NNNNN8DNMD.7ZI=~~~~:,,.............................
+..........................,,:~=~~=+$?I?DNNNZZOOOO8$8OMMMMMMMMMDNOOM$OOO$Z$MMMMMND77==~~==:,,............................
+.........................,,:~==~~+??I:8DNON$Z88D8D8O$NONMMMMMMZDOM MMMMMMMM8?NMMMII?+=~~==:,,...........................
+........................,,:~=+=~=??IZDMNM8N8OZZZO8O$ONDNN$DDDN$NNDMNMMMMMMNMMM=DND7I===~~=~:,...........................
+........................,:~=+===+?I7DDD88DNNDNZZZZZOZNNMMN8ZMNNMMMMMMMMMNMMM8MDDMD77$+~===+:,,..........................
+.......................,,:+7Z?=?ZI777NN8NDN8$O8MZZ$Z$888888888888DDNNNNNNNNNM+MMN777$?~=~~~~~==:........................
+.....................,=+==~~~:~~~$7777MMMMNMMMMMNNMN8O8888888888DDDDNMNNNNNMMMNI777?I~+II7777II?=,......................
+....................,I7$777777777?7777777NMMMMD88DMODNONNNNNNNMNNMMMMNMMMMMDZI7777II?II7777I777777?.....................
+................,,,.77$7777777777II?7+77777I$NMMMMMMMMMO8ODNMMMMMMMMMMDM$III777?7777?777IIIIII77777,,,,,,,.........,....
+..............,,,,,I$$777777777777+.77777I7II77IIIIIZNMMMNNNMN87IIIIIIIIIII?II777I.77IIIIIIIIIIII77Z,,,,,...............
+,,,,,,,,,.,.,,,,,,+$777777777777777?7777777777I?IIII7777NDNMMIM$77III?I7IIIIIIIII7+IIIIIIIIIIIIIIII$~:,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,::7$777777777777777I777777777IIIIIIIIIIIMMNMNNDIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII????I$$::,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,::$$7IIIII7I77777777777777IIIIIIIIIIIIIIINNNMMMIIIIIIIIIIIIIIIIIIIIIIIIIIIII??????I$$~::,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,:::$$7I???IIII777777777777IIIIIIIIIIIIIIIINZIZNIIIIIIIIIIIIIIIIIIIIIIIIIIIII??~~+++I$$=~::,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,:::=$$7I??MNIII777777777IIIIIIIIIIIIIIIIIIIIMNNNIIIIIIIIIIIIIIIIIIII7III$NI?I?NNMD=+I$$=~:::,,,,,,,,,,,,,,
+,,,,,,,,,,,,,::::7$$7I+DMNM?II8MN77777IIIIIIIIIIIIIIIIIIIIINDIIIIIIIIIIIIIIIIIIIIIIII?DMMI?MMNMN.?7$$?=~:::,,,,,,,,,,,,,
+,,,,,,,,,,,,::::~7Z$7IODMNMMIINMMM7777IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII7OMNNND?MZO$MM?7$$I=~:::,,,,,,,,,,,,,
+,,,,,,,,,,,::::~~7$$7INM.$NM?DDNMMD777IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIND,?DM?DDDN$NI7$$I=~~:::,,,,,,,,,,,,
+,,,,,,,,,,,::::~~7$$$7NOD7ZN?N7NO,OI77IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII?I?II?I8I88DM+ODDD+NI7$7I+=~::::,,,,,,,,,,,
+,,,,,,,,,:::::~~=I$$$7DMODN8+N8~,DN7I7IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII???III?IN7$ODN+IDMNMD7$$7I+=~~::::,,,,,,,,,,
+,,,,,,,,,,:::~~==+$$$$7MMNNN+MZOIMN7I7IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII??I?II?I8NNDM8++DMDDI7$$7?+=~~::::,,,,,,,,,,
+,,,,,,,,:::::~~=+?$$$$7:N$N++?NNNMD7I7I??IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII?????I?IINDNM?+++D=+I7$$7I+==~::::::,,,,,,,,
+,,,,,,,,::::~~==+?7$$$77I+?????MMNI7I7????IIIIIIIIIII?IIIIIIIIIIIIIIIIIIIIII???????III$????????I7$$$II?+=~~:::::::::,,:,
+,,,,,,:,::::~~==+?I$$$$77I????II?III7I??????IIIIIIIII??IIIIIIIIII?IIIIIIIII?I?????IIIIII??????II7$$7II?+=~~:::::::::::::
+::::::::::::~~=++?I7$$$77IIIIIIIIIII7I??????I?IIIIIIII??IIIIIIII??IIIIIIIIII??????IIIIIIIIIIIII7$$$IZ7?+=~~:::::::::::::
+:::::::::::~~~=+??I7$$$$77Z77IIIIIII7I???????IIIIIIIIII?IIIIIIII?IIIIIIIIII???????IIIIOZ7I8DD877$$7IZ7I+==~~::::::::::::
+:::::::::::~~~=++?I7$$$$77NDDD?I8III7I???II??IIIIIIIIII??IIIIIII?IIIIIIIIIIII?????IIII8$$?III77$77IM$7I?==~~::::::::::::
+:::::::::::~~~=++?ID8$$$$$777IIIIIIIIII??IIIIIIIIIIIIIII?IIIIII?IIIIIIIIIIIIIIII?IIIIIIIIII77777I7DM$7?+==~~::::::::::::
+:::::::::::~~~=++?I7D8$$$$77777777IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII7$777M$$I?+=~~~::::::::::::
+:::::::::::~~~==+?I7NNO$$Z77777777I7IIIIIIIIIIIIIIIIIIIIIIIIII?III??+???????II?IIIIII7Z$77II7777$MM$7I?+=~~~~:::::::::::
+:::::::::::~~~==++?I7NN$$$$777$77$$$$MD7IIIIIIIII?I?I?????I?II7??????IIIIIDMNMNMMMMM7II7$D77I77$MMZ7I?+==~~~~:::::::::::
+:::::::::::~~~~==+??I7NN$$7777?I7$$8OMMMMMMMMMMMMMNMNMMMMM7??IOMMMMMMMMMMMMMMMMMMMMMZ+7777777MMMMZ$I?++==~~~~~::::::::::
+::::::::::::~~~~==+?I7$DNNMM7$$$$$$$MMMMMMMMMMMMMMMMMMMMDN$7778MNMMMMMMMMMMMMMMMMMMMMMMNNNN.ONNDZ$I?++==~~~~~:::::::::::
+:::::::::::::~~~~==+?II$NMNDZ:.ONNNNMMMMMMMMMMMMMMMMMMMMMMN$7ZMNMMMMMMMMMMMMMMMNMNMNN8MNDDD8OZ$$7I?++==~~~~~~~::::::::::
+:::::::::::::~~~~~==++?II7$$ZOZDNNNNNNNDNNMNMMNNNNNMMMMNNMNNNOMDNMMNNNNMNDDDDD8OOOOOOOOOOZZ$$7I??++==~~~~~~~~:::::::::::
+:::::::::::::~:~~~~~===+???II77$$$$ZZZZOOOOOOOOOO888DDDDDNNDZNNND888OOOZZZZZZ$$$$$$$$7777III??++===~~~~~~~~~::::::::::::
+:::::::::::::::~~~~~~~~~====+++????III7777$$$$$$ZZZZOOO888888888OOZZZ$$$7777IIIIII??????+++=====~~~~~~~~~~~~::::::::::::
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~======+++??????IIII7777$$$ZZZZZZ$$$77III?????++++++========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~======++++++????IIIIIIIII????++++=========~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~========++++++++++=======~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~======~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                                                                                         GlassGiant.com
+
+${AnsiColor.MAGENTA}                                                                                  
+ _______                                          __        __    __  __              __                                   
+/       \                                        /  |      /  |  /  |/  |            /  |                                  
+$$$$$$$  | ______    ______    ______   _______  $$/       $$ |  $$ |$$/   _______  _$$ |_     ______    ______   __    __ 
+$$ |__$$ |/      \  /      \  /      \ /       \ /  |      $$ |__$$ |/  | /       |/ $$   |   /      \  /      \ /  |  /  |
+$$    $$/ $$$$$$  |/$$$$$$  | $$$$$$  |$$$$$$$  |$$ |      $$    $$ |$$ |/$$$$$$$/ $$$$$$/   /$$$$$$  |/$$$$$$  |$$ |  $$ |
+$$$$$$$/  /    $$ |$$ |  $$ | /    $$ |$$ |  $$ |$$ |      $$$$$$$$ |$$ |$$      \   $$ | __ $$ |  $$ |$$ |  $$/ $$ |  $$ |
+$$ |     /$$$$$$$ |$$ \__$$ |/$$$$$$$ |$$ |  $$ |$$ |      $$ |  $$ |$$ | $$$$$$  |  $$ |/  |$$ \__$$ |$$ |      $$ \__$$ |
+$$ |     $$    $$ |$$    $$ |$$    $$ |$$ |  $$ |$$ |      $$ |  $$ |$$ |/     $$/   $$  $$/ $$    $$/ $$ |      $$    $$ |
+$$/       $$$$$$$/  $$$$$$$ | $$$$$$$/ $$/   $$/ $$/       $$/   $$/ $$/ $$$$$$$/     $$$$/   $$$$$$/  $$/        $$$$$$$ |
+                   /  \__$$ |                                                                                    /  \__$$ |
+                   $$    $$/                                                                                     $$    $$/ 
+                    $$$$$$/                                                                                       $$$$$$/  
+
+
+${AnsiColor.YELLOW}
+Pagani History ${application.formatted.version} :: Running on Spring Boot ${spring-boot.version} ::${AnsiColor.DEFAULT}
+
