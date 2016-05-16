@@ -4,6 +4,7 @@ import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
@@ -47,7 +48,7 @@ public class CmsEngineController extends CmsBaseController
     @Inject
     private EngineControllerUtil engineControllerUtil;
 
-    @RequestMapping(method = POST,
+    @RequestMapping(method = GET,
     				produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public EngineForm handleListEngineById(@ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command)
@@ -74,13 +75,13 @@ public class CmsEngineController extends CmsBaseController
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
     															      new Object[]{engine.getFriendlyName()},
     															      Locale.getDefault());     
-    			model.addAttribute("successMessage", successMessage);
+    			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     			model.addAttribute(ENGINE, engine);
     		}		
     	}
     	catch (Exception e)
     	{
-    		model.addAttribute("exceptionMessage", e.toString());
+    		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
     	}
 
     	model.addAttribute(ENGINE, engine);
@@ -103,7 +104,7 @@ public class CmsEngineController extends CmsBaseController
     		catch (Exception e)
     		{
     			log.error(e.toString(), e);
-    			model.addAttribute("exceptionMessage", e.toString());
+    			model.addAttribute(EXCEPTION_MESSAGE, e.toString());
     		}
     	}
     }

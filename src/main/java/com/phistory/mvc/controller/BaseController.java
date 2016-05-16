@@ -1,9 +1,6 @@
 package com.phistory.mvc.controller;
 
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
-import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -11,11 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.phistory.mvc.controller.util.HTTPUtil;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.dao.impl.CarDao;
 import com.tcp.data.dao.impl.ContentSearchDao;
@@ -42,8 +39,9 @@ public class BaseController extends BaseControllerData
 	private ContentSearchDao contentSearchDao;	
 	@Inject
 	private ModelFiller baseModelFiller;
+	@Getter
 	@Inject
-	private HTTPUtil hTTPUtil;
+	private ResourceBundleMessageSource messageSource;
 	
 	@ModelAttribute
     public void fillBaseModel(Model model,
@@ -68,18 +66,23 @@ public class BaseController extends BaseControllerData
 		StringBuilder requestedUri = new StringBuilder();
 		String requestQueryString = null;
 		
-		if (request.getMethod().equals(POST.name())) 
-		{
-			Optional<String> requestUriParamsOptional = this.hTTPUtil.extractRequestPayloadParamsFromRequest(request);
-			if (requestUriParamsOptional.isPresent())
-			{
-				requestQueryString = "?" + requestUriParamsOptional.get();
-			}
-		}
-		else
-		{            
-			requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
-		}
+//		TODO: implement a two-time HTTP request body mechanism, since the way it was implemented, the body of the request can only be 
+		//read once, hence failing to reach the controllers as it came empty
+		//hint: http://stackoverflow.com/questions/34804205/how-can-i-read-request-body-multiple-times-in-spring-handlermethodargumentresol/34806876#34806876
+//		if (request.getMethod().equals(POST.name())) 
+//		{
+//			Optional<String> requestUriParamsOptional = this.hTTPUtil.extractRequestPayloadParamsFromRequest(request);
+//			if (requestUriParamsOptional.isPresent())
+//			{
+//				requestQueryString = "?" + requestUriParamsOptional.get();
+//			}
+//		}
+//		else
+//		{            
+//			requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
+//		}
+		
+		requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
 		
 		requestedUri.append(request.getRequestURI().toString());
 		requestedUri.append(requestQueryString);

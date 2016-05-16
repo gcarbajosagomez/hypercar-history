@@ -1,5 +1,7 @@
 <#import "/spring.ftl" as spring />
 <#include "pagination.ftl">
+<#include "contactUs.ftl">
+
 <#macro startPage title=''>      
     <!DOCTYPE html>
         <html lang="${getTextSource('paganiHistory.language')}" class="no-js">
@@ -64,7 +66,11 @@
 								linkColor: '#CA7300'
         					});	
         					
-        					setupContentSearchEventListeners();					
+        					setupContentSearchEventListeners();	
+        					
+        					$('#contact-us-modal-div').on('show.bs.modal', function (e) {
+    							setUpContactUsModal();
+							});				
     					});
     					
   						(function(i,s,o,g,r,a,m)
@@ -201,8 +207,8 @@
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<b>${getTextSource('footer.contactUs')}</b>
 								<p class="text-muted text-left">
-									${getTextSource('footer.contactUs.text')} <a href="mailto:${getTextSource('paganiHistory.emailAddress')}?subject=Feedback"><b>${getTextSource('paganiHistory.emailAddress')}</b></a>
-								</p>
+									${getTextSource('footer.contactUs.text')}
+								</p>								
 	        				</div>
     	  				</div>
       					<div class="row"> 
@@ -212,7 +218,8 @@
 									${getTextSource('footer.technologyStack.text')}       							   
 								</p>
 							
-								<div class="modal fade" id="technology-stack-modal-div" tabindex="-1" role="dialog" aria-labelledby="technology-stack-label" aria-hidden="true">
+								<@createContactUsDialog/>
+								<div id="technology-stack-modal-div" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="technology-stack-label" aria-hidden="true">
   									<div class="modal-dialog modal-lg">
     									<div class="modal-content">
       										<div class="modal-header">
@@ -369,16 +376,16 @@
 	</div>
 </#macro>
 
-<#macro addEditOperationResultMessage exceptionMessage, successMessage>
+<#macro addOperationResultMessage exceptionMessage, successMessage>
 	<#if exceptionMessage?has_content>
 		<div class="col-xs-12 alert alert-danger" role="alert">
 			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-			<span class="sr-only">Error:</span>${exceptionMessage}
+			<span class="sr-only">${getTextSource('error')}:</span>${exceptionMessage}
 		</div>
 	<#elseif successMessage?has_content>
 		<div class="col-xs-12 alert alert-success" role="info">
 			<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-			<span class="sr-only">Info:</span>${successMessage}
+			<span class="sr-only">${getTextSource('info')}:</span>${successMessage}
 		</div>
 	</#if>    
 </#macro>

@@ -65,7 +65,7 @@ public class CmsCarEditController extends CmsBaseController
     	catch (Exception ex)
     	{
     		log.error(ex.toString(), ex);
-    		model.addAttribute("exceptionMessage", ex.toString());
+    		model.addAttribute(EXCEPTION_MESSAGE, ex.toString());
     	}
 
     	return new ModelAndView(CAR_EDIT_VIEW_NAME);
@@ -85,18 +85,18 @@ public class CmsCarEditController extends CmsBaseController
         		String successMessage = getMessageSource().getMessage("entityEditedSuccessfully",
 						  											  new Object[]{car.getFriendlyName()},
 						  											  Locale.getDefault());     
-        		model.addAttribute("successMessage", successMessage);
+        		model.addAttribute(SUCCESS_MESSAGE, successMessage);
         	}
     		else
     		{
     			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
-    			model.addAttribute("exceptionMessage", errorMessage);
+    			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}
     	}
         catch (Exception e)
         {
         	log.error(e.toString(), e);
-        	model.addAttribute("exceptionMessage", e.toString());
+        	model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         	
         }
 		finally

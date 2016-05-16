@@ -26,9 +26,9 @@ function submitLoginForm(login)
 	$("#main-form").submit();
 }
 
-function saveEntity(url, saveMessage)
+function saveEntity(url, confirmSaveMessage)
 {		
-	bootbox.confirm(saveMessage, function(result)
+	bootbox.confirm(confirmSaveMessage, function(result)
     {
 		//OK button
 		if (result == true)
@@ -63,9 +63,9 @@ function saveEntity(url, saveMessage)
     });	   
 }
 
-function editEntity(url, editMessage)
+function editEntity(url, confirmEditMessage)
 {		
-	bootbox.confirm(editMessage, function(result)
+	bootbox.confirm(confirmEditMessage, function(result)
 	{
 		//OK button
 		if (result == true)
@@ -89,12 +89,17 @@ function editEntity(url, editMessage)
 	});	   
 }
 
-function submitEntityForm(form) {
-	var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));
+function setUpContactUsModal()
+{
+	$('#contact-us-error-alert-span').text('');
+	$('#contact-us-error-alert-div').addClass('hidden');
+	$('#contact-us-success-alert-span').text('');
+	$('#contact-us-success-alert-div').addClass('hidden');
 	
-	form.append(csrfData);
-	form.enctype="multipart/form-data";
-	form.submit();
+	$('#contact-us-subject')[0].value = '';
+   	$('#contact-us-sender-name')[0].value = '';
+   	$('#contact-us-sender-email')[0].value = '';
+   	$('#contact-us-message')[0].value = '';
 }
 
 function deleteEntity(url, deleteMessage)

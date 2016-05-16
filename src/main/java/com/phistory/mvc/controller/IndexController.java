@@ -4,20 +4,25 @@ import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+
 import javax.inject.Inject;
 
+
 import lombok.extern.slf4j.Slf4j;
+
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
@@ -80,9 +85,13 @@ public class IndexController extends BaseController
 			}
 		}
 		
-		randomPicIds.forEach(pictureId -> {
+		randomPicIds.forEach(pictureId ->
+		{
 			Car car = getCarDao().getByPictureId(pictureId);
-			carNamesToPictureIds.put(car.getFriendlyName(), pictureId);
+			StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName()).append(" ")
+														 .append(car.getModel());
+			
+			carNamesToPictureIds.put(pictureDescription.toString(), pictureId);
 		});
 		
 		return carNamesToPictureIds;

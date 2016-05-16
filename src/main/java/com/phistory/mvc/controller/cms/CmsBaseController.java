@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import lombok.Getter;
 import lombok.Setter;
 
-import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -45,10 +44,7 @@ public class CmsBaseController extends BaseController
     private ManufacturerDao manufacturerDao;
 	@Getter
 	@Inject
-    private EngineDao engineDao;
-	@Getter
-	@Inject
-	private ResourceBundleMessageSource messageSource;
+    private EngineDao engineDao;	
 	
 	/********************
      *******URLs*********
@@ -84,8 +80,6 @@ public class CmsBaseController extends BaseController
     public static final String MANUFACTURER_EDIT_VIEW_NAME 		= "/cms/manufacturerEdit"; 
     public static final String CAR_EDIT_FORM_COMMAND 		    = "CEFC"; 
     public static final String MANUFACTURER_EDIT_FORM_COMMAND 	= "MEFC"; 
-    public static final String EXCEPTION_MESSAGE 				= "exceptionMessage"; 
-    public static final String SUCCESS_MESSAGE  				= "successMessage"; 
     public static final String LOGGEDIN  						= "loggedIn"; 
     
 	@ModelAttribute

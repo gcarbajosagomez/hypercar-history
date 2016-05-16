@@ -81,7 +81,7 @@ public class CmsCarController extends CmsBaseController
         catch (Exception e)
         {
         	log.error(e.toString(), e);
-        	model.addAttribute("exceptionMessage", e.toString());
+        	model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         	
         	return new ModelAndView(ERROR_VIEW_NAME);
         }      
@@ -101,18 +101,18 @@ public class CmsCarController extends CmsBaseController
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 				  											  		  new Object[]{car.getFriendlyName()},
 				  											  		  Locale.getDefault());     
-    			model.addAttribute("successMessage", successMessage);
+    			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     		}
     		else
     		{
     			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
-    			model.addAttribute("exceptionMessage", errorMessage);
+    			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}		
     	}
     	catch (Exception e)
     	{
     		log.error(e.toString(), e);
-    		model.addAttribute("exceptionMessage", e.toString());
+    		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         }
     	finally
     	{

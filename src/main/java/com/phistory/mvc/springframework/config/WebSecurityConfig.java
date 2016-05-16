@@ -7,14 +7,14 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.LOGIN_URL;
 import static com.phistory.mvc.controller.cms.CmsBaseController.LOGOUT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.QUERY_STRING_SEPARATOR;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
@@ -30,6 +30,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	public static final String 	CMS_LOGIN_USER					= "admin";
 	public static final String 	USER_ROLE						= "ROLE_USER";
 	private static final String CMS_LOGIN_ENCRYPTED_PASSWORD	= "$2a$11$7FwmOPUQFJL.vrbS0xNETeAGU/4QlpWOuRM8Q8gD9lQlkM7MQGrHS";
+	@Inject
+	private PasswordEncoder passwordEncoder;
 	
 	@Override
     protected void configure(HttpSecurity http) throws Exception
@@ -54,21 +56,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception
 	{
 		auth.inMemoryAuthentication()
-			.passwordEncoder(passwordEncoder())
+			.passwordEncoder(this.passwordEncoder)
 		 	.withUser(CMS_LOGIN_USER)
 		 	.password(CMS_LOGIN_ENCRYPTED_PASSWORD)
 		 	.roles("USER");
 		
 		auth.inMemoryAuthentication()
-			.passwordEncoder(passwordEncoder())
+			.passwordEncoder(this.passwordEncoder)
 			.withUser(CMS_LOGIN_USER)
 			.password("$2a$11$Rbt9Gh4W0HUYIEm9NiNh3.cMWZRN4rFSmSEKOUGb20EYqzWcAMGHm")
 			.roles("USER");
     }
-	
-	@Bean
-	public PasswordEncoder passwordEncoder()
-	{		
-		return new BCryptPasswordEncoder(11);
-	}
 }

@@ -9,18 +9,8 @@
 <@startPage title/> 
 
 <div id="main-container" class="container">
-	<div class="row">			
-		<#if exceptionMessage??>
-			<div class="col-xs-12 alert alert-danger" role="alert">
-				<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-				<span class="sr-only">Error:</span>${exceptionMessage}
-			</div>
-		<#elseif successMessage??>
-			<div class="col-xs-12 alert alert-success" role="info">
-				<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-				<span class="sr-only">Info:</span>${successMessage}
-			</div>
-	   </#if>           	
+	<div class="row">
+	   <@addOperationResultMessage exceptionMessage!"", successMessage!""/>            	
 	   <div class="col-lg-6 col-sm-6 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
@@ -60,7 +50,7 @@
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.carForm.model", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>'/>  
+                           <@spring.showErrors '<br>', 'control-label has-error'/>  
                       </dd>
                       <dt>         
                            ${getTextSource('car.engineLayout')}
@@ -588,7 +578,7 @@
 	         	 $('.sr-only').removeClass('sr-only');	
        			
 	           	 $.ajax({
-	        			type: 'POST',
+	        			type: 'GET',
 	            	    url: '<@spring.url "/${cmsContext}${enginesURL}/"/>' + engineId,
 	                	contentType: 'application/json; charset=UTF-8',
 						beforeSend: function(xhr)

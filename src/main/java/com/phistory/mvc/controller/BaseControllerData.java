@@ -11,7 +11,8 @@ public class BaseControllerData
 	public static final String MODELS_SEARCH_URL  				= "modelsSearch";
 	public static final String PICTURES_URL 		 			= "pictures";
 	public static final String COOKIES_POLICY_URL 				= "cookiesPolicy"; 
-	public static final String PAGINATION_URL					= "pagination"; 
+	public static final String PAGINATION_URL					= "pagination";
+	public static final String CONTACT_US_URL					= "contactUs";
 	
 	/*************************
      ******Request params*****
@@ -52,4 +53,8 @@ public class BaseControllerData
 	public static final String CONTENT_TO_SEARCH_DATA      		= "contentToSearchData";
 	public static final String CAR_DETAILS       				= "carDetails";
 	public static final String ENGINE                  			= "engine";  
+	public static final String SUCCESS_MESSAGE         			= "successMessage";  
+	public static final String EXCEPTION_MESSAGE       			= "exceptionMessage";  
+	public static final String CONTACT_US_SUCCESS_MESSAGE       = "contactUsSuccessMessage";  
+	public static final String CONTACT_US_EXCEPTION_MESSAGE     = "contactUsExceptionMessage";  
 }

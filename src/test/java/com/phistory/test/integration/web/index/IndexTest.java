@@ -72,7 +72,7 @@ public class IndexTest extends AbstractTestNGSpringContextTests
 	{
 		String previousCarouselActiveImageDivId = this.indexPage.getCarouselActiveImageDivId();
 		this.indexPage.clickLeftCarouselControl();
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 		assertThat("Carousel should image should have slid after clicking left arrow",
 				   this.indexPage.getCarouselActiveImageDivId(),
 				   is(not(previousCarouselActiveImageDivId)));
@@ -83,7 +83,7 @@ public class IndexTest extends AbstractTestNGSpringContextTests
 	{
 		String previousCarouselActiveImageDivId = this.indexPage.getCarouselActiveImageDivId();
 		this.indexPage.clickRightCarouselControl();		
-		Thread.sleep(1000);
+		Thread.sleep(1500);
 		assertThat("Carousel should image should have slid after clicking right arrow",
 				   this.indexPage.getCarouselActiveImageDivId(),
 				   is(not(previousCarouselActiveImageDivId)));

@@ -12,7 +12,8 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.MediaType;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -68,44 +69,15 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public ResourceBundleMessageSource messageSource()
 	{
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource(); 
-		messageSource.setBasename("com/phistory/textsource/textSources");
-		
+		messageSource.setBasenames("com/phistory/textsource/textSources",
+								   "com/phistory/textsource/validationSources");		
 		return messageSource;
-	}
-	
-	@Bean
-	public ResourceBundleMessageSource validationMessageSource()
-	{
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource(); 
-		messageSource.setBasenames("com/phistory/textsource/validationSources");
-		
-		return messageSource;
-	}
-
-	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer)
-	{
-		configurer.favorPathExtension(false);
-		configurer.favorParameter(true);
-		configurer.parameterName("mediaType");
-		configurer.ignoreAcceptHeader(true);
-		configurer.useJaf(false);
-		configurer.defaultContentType(MediaType.APPLICATION_JSON);
-		configurer.mediaType("json", MediaType.APPLICATION_JSON);
 	}
 	
 	@Bean(name = "previewPictureRandomGenerator")	
 	public Random randomGenerator()
 	{		
-		Random randomGenerator = new Random();
-		
-		return randomGenerator;
-	}
-	
-	@Bean
-	public MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter()
-	{
-		return new MappingJackson2HttpMessageConverter();
+		return new Random();
 	}
 	
 	@Bean
@@ -122,20 +94,33 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		localeResolver.setCookieMaxAge(1209600);
 		
 		return localeResolver;
-	}		
+	}	
+	
+	@Bean
+	public PasswordEncoder passwordEncoder()
+	{		
+		return new BCryptPasswordEncoder(11);
+	}	
+
+	@Override
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer)
+	{
+		configurer.favorPathExtension(false);
+		configurer.favorParameter(true);
+		configurer.parameterName("mediaType");
+		configurer.ignoreAcceptHeader(true);
+		configurer.useJaf(false);
+		configurer.defaultContentType(MediaType.APPLICATION_JSON);
+		configurer.mediaType("json", MediaType.APPLICATION_JSON);
+	}
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry)
 	{
-		registry.addInterceptor(localeChangeInterceptor());
-	}
-	
-	private LocaleChangeInterceptor localeChangeInterceptor()
-	{
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName("lang");
 		
-		return localeChangeInterceptor;
+		registry.addInterceptor(localeChangeInterceptor);
 	}
 	
 	@Override
