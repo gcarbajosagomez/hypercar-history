@@ -5,6 +5,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 
+
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,16 +14,25 @@ import java.util.Map;
 import java.util.Random;
 
 
+
+
 import javax.inject.Inject;
+
+
 
 
 import lombok.extern.slf4j.Slf4j;
 
 
+
+
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+
 
 
 import com.phistory.mvc.springframework.view.ModelFiller;
@@ -37,7 +48,7 @@ import com.tcp.data.model.car.Car;
 @Controller
 @RequestMapping(value = {"/", INDEX_URL},
 				method = HEAD)
-public class IndexController extends BaseController
+public class IndexController extends BaseController implements InitializingBean
 {	
 	@Inject
 	private ModelFiller pictureModelFiller;	
@@ -45,6 +56,7 @@ public class IndexController extends BaseController
 	private ModelFiller carModelFiller;	
 	@Inject
 	private Random previewPictureRandomGenerator;	
+	private List<Long> picturesIds = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleDefault(Model model)
@@ -70,18 +82,17 @@ public class IndexController extends BaseController
 	 * @return
 	 */
 	private Map<String, Long> generateRandomCarNamesToPictureIds()
-	{		
-		List<Long> picturesIds = getPictureDao().getIdsByCarId(null);	
-		List<Long> randomPicIds = picturesIds;		
+	{	
+		List<Long> randomPicIds = this.picturesIds;		
 		Map<String, Long> carNamesToPictureIds = new HashMap<>();
 		
-		if (!picturesIds.isEmpty())
+		if (!this.picturesIds.isEmpty())
 		{
 			int upperIndexLimit = 9;
 			
-			if (picturesIds.size() > upperIndexLimit)
+			if (this.picturesIds.size() > upperIndexLimit)
 			{				
-				randomPicIds = generateRadomPictureIdsList(picturesIds, upperIndexLimit);				
+				randomPicIds = generateRadomPictureIdsList(this.picturesIds, upperIndexLimit);				
 			}
 		}
 		
@@ -138,5 +149,11 @@ public class IndexController extends BaseController
 		}
 		
 		return randomPictureIds;
+	}
+
+	@Override
+	public void afterPropertiesSet() throws Exception
+	{
+		this.picturesIds = super.getPictureDao().getIdsByCarId(null);			
 	}
 }
