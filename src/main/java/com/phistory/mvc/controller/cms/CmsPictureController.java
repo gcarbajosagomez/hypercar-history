@@ -5,7 +5,6 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,7 +63,7 @@ public class CmsPictureController extends CmsBaseController
             
             String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
 					  											  new Object[]{deletePreviewPicture ? "Preview picture" : "Picture"},
-					  											  Locale.getDefault());           
+					  											  LocaleContextHolder.getLocale());           
             
             resultMap.put("result", "success");  
             resultMap.put("message", successMessage);  

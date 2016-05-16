@@ -6,7 +6,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -23,6 +22,7 @@ import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
@@ -95,7 +95,7 @@ public class ContactUsController extends BaseController
 	
 				String successMessage = super.getMessageSource().getMessage("footer.contactUs.messageSentSuccessfully",
 																		    null,
-																		    Locale.getDefault());     
+																		    LocaleContextHolder.getLocale());     
 				
 				resultMessage.put(CONTACT_US_SUCCESS_MESSAGE, successMessage);	
 				log.info("'Contact Us' message from: " + replyTo + " sent successfully");		
@@ -104,7 +104,7 @@ public class ContactUsController extends BaseController
 			{
 				String validationErrorsMessage = super.getMessageSource().getMessage("footer.contactUs.mandatoryFieldsError",
 					    															 null,
-					    															 Locale.getDefault());   
+					    															 LocaleContextHolder.getLocale());   
 				
 				resultMessage.put(CONTACT_US_EXCEPTION_MESSAGE, validationErrorsMessage);
 			}
@@ -114,7 +114,7 @@ public class ContactUsController extends BaseController
 			log.error(me.toString(), me);
 			String errorMessage = super.getMessageSource().getMessage("footer.contactUs.error",
 					  												  null,
-					  												  Locale.getDefault()); 
+					  												  LocaleContextHolder.getLocale()); 
 			
 			resultMessage.put(CONTACT_US_EXCEPTION_MESSAGE, errorMessage);
 		}		

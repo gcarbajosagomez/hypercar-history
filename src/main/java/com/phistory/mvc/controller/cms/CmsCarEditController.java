@@ -5,13 +5,12 @@ import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,12 +83,12 @@ public class CmsCarEditController extends CmsBaseController
         		Car car = carControllerUtil.saveOrEditCar(command);  
         		String successMessage = getMessageSource().getMessage("entityEditedSuccessfully",
 						  											  new Object[]{car.getFriendlyName()},
-						  											  Locale.getDefault());     
+						  											  LocaleContextHolder.getLocale());     
         		model.addAttribute(SUCCESS_MESSAGE, successMessage);
         	}
     		else
     		{
-    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, Locale.getDefault());     
+    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, LocaleContextHolder.getLocale());     
     			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}
     	}
@@ -122,7 +121,7 @@ public class CmsCarEditController extends CmsBaseController
 				carControllerUtil.deleteCar(command);
 				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
 						  											  new Object[]{command.getCarForm().getManufacturer().getFriendlyName() + command.getCarForm().getModel()},
-						  											  Locale.getDefault());
+						  											  LocaleContextHolder.getLocale());
 
 				model.addAttribute(SUCCESS_MESSAGE, successMessage);
 				model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarFormEditCommand());

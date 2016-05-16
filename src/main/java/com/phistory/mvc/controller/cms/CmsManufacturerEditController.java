@@ -5,13 +5,12 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -73,7 +72,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 		
     			String successMessage = getMessageSource().getMessage("entityEditedSuccessfully",
 				  											  		  new Object[]{manufacturer.getFriendlyName()},
-				  											  		  Locale.getDefault());
+				  											  		  LocaleContextHolder.getLocale());
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     		}
     		catch (Exception e)
@@ -103,7 +102,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 				manufacturerControllerUtil.deleteManufacturer(command);
 				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
 						  											  new Object[]{command.getManufacturerForm().getName()},
-						  											  Locale.getDefault());
+						  											  LocaleContextHolder.getLocale());
 
 				model.addAttribute(SUCCESS_MESSAGE, successMessage);
 				model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, new ManufacturerFormEditCommand());

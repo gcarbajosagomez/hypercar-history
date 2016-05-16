@@ -8,13 +8,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -74,7 +73,7 @@ public class CmsEngineController extends CmsBaseController
 		
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
     															      new Object[]{engine.getFriendlyName()},
-    															      Locale.getDefault());     
+    															      LocaleContextHolder.getLocale());     
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     			model.addAttribute(ENGINE, engine);
     		}		
