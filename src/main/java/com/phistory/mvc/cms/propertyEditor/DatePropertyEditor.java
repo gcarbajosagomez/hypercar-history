@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.springframework.util.StringUtils;
+
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -30,7 +32,7 @@ public class DatePropertyEditor extends PropertyEditorSupport
             
             if (calendar != null)
             {            
-            	return dateFormat.format(calendar.getTime());  
+            	return this.dateFormat.format(calendar.getTime());  
             }
         }
         catch (Exception e)
@@ -46,11 +48,12 @@ public class DatePropertyEditor extends PropertyEditorSupport
     {
         try
         {
-            Date date = dateFormat.parse(text);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(date);
-            
-            setValue(calendar);
+            if(!StringUtils.isEmpty(text)) {
+            	Date date = this.dateFormat.parse(text);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                super.setValue(calendar);
+            }
         }
         catch (Exception e)
         {

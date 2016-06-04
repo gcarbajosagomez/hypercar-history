@@ -14,7 +14,7 @@
 	   <div class="col-lg-6 col-sm-6 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('car')}</h2>
+					<h3 class="text-left">${getTextSource('car')}</h3>
 					
 					<input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>${getTextSource('cms.editCar')}<#else>${getTextSource('cms.saveCar')}</#if>" onClick="saveOrEditCar();"/>
 					<#if CEFC.carForm.id??>
@@ -31,6 +31,8 @@
                       	<dd>
                         	<h5 class="text-muted">${CEFC.carForm.id}</h5>
                          	<@spring.formHiddenInput "CEFC.carForm.id", ""/>
+							<@spring.bind "CICEFC.carInternetContentForms[0].car"/> 
+							<input type="hidden" name="${spring.status.expression}" value="${CEFC.carForm.id}">							
                         </dd>
                       </#if>
                       <dt>         
@@ -198,7 +200,7 @@
 		   </div>
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-			       <h3 class="text-left">${getTextSource('engine')}</h2>
+			       <h3 class="text-left">${getTextSource('engine')}</h3>
 					
 				   <div>
 				   	    <a class="btn btn-info" onClick="loadEngineFromDB();">
@@ -348,7 +350,7 @@
 		   </div>
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('brakeSet')}</h2>						
+					<h3 class="text-left">${getTextSource('brakeSet')}</h3>						
 			   </div>
 			   <div class="panel-body">					   
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -361,7 +363,7 @@
 		   </div>	
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('transmission')}</h2>
+					<h3 class="text-left">${getTextSource('transmission')}</h3>
 			   </div>
 			   <div class="panel-body">
 				   <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -400,7 +402,7 @@
 		   </div> 
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('tyreSet')}</h2>						
+					<h3 class="text-left">${getTextSource('tyreSet')}</h3>						
 			   </div>
 			   <div class="panel-body">					   
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -409,6 +411,91 @@
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/> 
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.backTyre "CEFC.carForm.tyreSetForm.backTyre" "BACK"/>           
                    </dl>
+               </div>
+		   </div>	
+		   <div class="panel panel-default">
+			   <div class="panel-heading">
+					<h3 class="text-left">${getTextSource('car.internetContent')}</h3>	
+					
+					<a class="btn btn-info" onClick="addInternetContent()">
+      					<span class="glyphicon glyphicon-plus-sign"></span> ${getTextSource('cms.addCarInternetContent')}
+   					</a>					
+			   </div>
+			   <div id="internet-contents-main-panel-body" class="panel-body">
+				   <#if (CICEFC.carInternetContentForms?size > 0)>	
+					   <#list CICEFC.carInternetContentForms as carInternetContentForm>
+						   <#assign carInternetContentFormIndex = carInternetContentForm?index>
+				  		   <div class="well well-lg"> 		 
+			                   <dl class="dl-horizontal dl-horizontal-edit text-left">
+			                   		<dt>         
+			                             ${getTextSource('cms.car.internetContent.link')}   
+			                        </dt>
+									<dd>
+			                   			<@spring.formInput "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].link", "class=form-control", "text"/>
+									</dd>
+									<dt>         
+			                             ${getTextSource('cms.car.internetContent.type')}
+			                        </dt>
+			                        <dd>
+			                        	<@spring.bind "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].type"/>
+			
+										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+			                            	<#list carInternetContentTypes as carInternetContentType>
+			                                	<option value="${carInternetContentType}"<#if spring.status.value?? && carInternetContentType == spring.status.value?default("")>selected</#if>>${getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
+			                               	</#list>
+			                            </select> 
+									</dd>
+									<dt>         
+			                             ${getTextSource('cms.car.internetContent.contentLanguage')}   
+			                        </dt>
+									<dd>
+			                   			<@spring.bind "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].contentLanguage"/>
+			
+										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+			                            	<#list carInternetContentLanguages as language>
+			                                	<option value="${language}"<#if spring.status.value?? && language == spring.status.value?default("")>selected</#if>>${getTextSource('cms.car.internetContent.contentLanguage.${language}')}</option>
+			                               	</#list>
+			                            </select> 
+									</dd>						
+			                   </dl>
+						   </div>
+					   </#list>
+				   <#else>
+				   	   <div class="well well-lg"> 		 
+		                   <dl class="dl-horizontal dl-horizontal-edit text-left">
+		                   		<dt>         
+		                             ${getTextSource('cms.car.internetContent.link')}   
+		                        </dt>
+								<dd>
+		                   			<@spring.formInput "CICEFC.carInternetContentForms[0].link", "class=form-control", "text"/>
+								</dd>
+								<dt>         
+		                             ${getTextSource('cms.car.internetContent.type')}
+		                        </dt>
+		                        <dd>
+		                        	<@spring.bind "CICEFC.carInternetContentForms[0].type"/>
+		
+									<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+		                            	<#list carInternetContentTypes as carInternetContentType>
+		                                	<option value="${carInternetContentType}"<#if spring.status.value?? && carInternetContentType == spring.status.value?default("")>selected</#if>>${getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
+		                               	</#list>
+		                            </select> 
+								</dd>
+								<dt>         
+		                             ${getTextSource('cms.car.internetContent.contentLanguage')}   
+		                        </dt>
+								<dd>
+		                   			<@spring.bind "CICEFC.carInternetContentForms[0].contentLanguage"/>
+                           
+                           			<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                               			<#list carInternetContentLanguages as language>
+                                   			<option value="${language}"<#if spring.status.value?? && engineCylinderDisposition == spring.status.value?default("")>selected</#if>>${language}</option>
+                               			</#list>
+                           			</select> 
+								</dd>						
+		                   </dl>
+					   </div>
+				   </#if>	
                </div>
 		   </div>	  
 	   </div>
@@ -433,7 +520,7 @@
                             </#list>
                         </#list>    
                     <#elseif CEFC.carForm.id??>
-                 	    <h3 class="text-left">${getTextSource('noPicturesAvailable')}</h2>
+                 	    <h3 class="text-left">${getTextSource('noPicturesAvailable')}</h3>
          			</#if>             			   
                        
                     <table id="pictureUploadInputs">
@@ -458,7 +545,7 @@
 <#macro writeBrakeEditFields brake objectBindingPath brakeTrain>
       <div class="panel panel-default">
 	      <div class="panel-heading">
-		      <h4 class="text-left">${brakeTrain}</h2>						
+		      <h4 class="text-left">${brakeTrain}</h4>						
 		  </div>
 		  <div class="panel-body">					   
               <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -509,7 +596,7 @@
 <#macro writeTyreEditFields tyre objectBindingPath tyreTrain>
       <div class="panel panel-default">
 	      <div class="panel-heading">
-		      <h4 class="text-left">${tyreTrain}</h2>						
+		      <h4 class="text-left">${tyreTrain}</h4>						
 		  </div>
 		  <div class="panel-body">					   
               <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -764,7 +851,7 @@
 			reader.onload = function(e)
 			{
 				$numberOfCarPictures = $("[id^='car-picture-area']").length;
-				<!-- first car-picture-area is number 0 -->
+				<#-- first car-picture-area is number 0 -->
 				$numberOfCarPictures--;
 				var img = $('#car-picture-' + $numberOfCarPictures)[0];
 				img.src = reader.result;
@@ -807,6 +894,62 @@
 					});
 				}
 		    });
+		}
+
+		function addInternetContent()
+		{
+			internetContentNum = $("input[id^=carInternetContentForms][id$=link").length;
+			newInternetContentCarFormIdHiddenInput = $('<input>', {'type'  : 'hidden',
+																   'id'    : 'carInternetContentForms' + internetContentNum + '.car',													
+													      		   'name'  : 'carInternetContentForms[' + internetContentNum + '].car',
+													      		   'value' :  '<#if CEFC.carForm.id??>${CEFC.carForm.id}</#if>'});
+													      		   
+			newInternetContentWellDiv = $('<div>', {'class' : 'well well-lg'});
+			newInternetContentDl = $('<dl>', {'class' : 'dl-horizontal dl-horizontal-edit text-left'});	
+			newInternetContentLinkDt = $('<dt>');	
+			newInternetContentLinkDt.append('${getTextSource('cms.car.internetContent.link')}');	
+			newInternetContentDl.append(newInternetContentLinkDt);	
+			newInternetContentLinkDd = $('<dd>');	
+			newInternetContentLinkDd.append(newInternetContentCarFormIdHiddenInput);	
+			newInternetContentLinkDd.append($('<input>', {'type'  : 'text',
+													      'id'    : 'carInternetContentForms' + internetContentNum + '.link',													
+													      'name'  : 'carInternetContentForms[' + internetContentNum + '].link',
+													      'class' : 'form-control'}));
+													      
+			newInternetContentDl.append(newInternetContentLinkDd);
+			
+			newInternetContentTypeDt = $('<dt>');	
+			newInternetContentTypeDt.append('${getTextSource('cms.car.internetContent.type')}');
+			newInternetContentDl.append(newInternetContentTypeDt);	
+			newInternetContentTypeDd = $('<dd>');	
+			newInternetContentTypeSelect = $('<select>', {'id'    : 'carInternetContentForms' + internetContentNum + '.type',													
+													      'name'  : 'carInternetContentForms[' + internetContentNum + '].type',
+													      'class' : 'form-control'});
+													      	
+			<#list carInternetContentTypes as carInternetContentType>
+				newInternetContentTypeSelect.append($('<option>', {'value' : '${carInternetContentType}'}).text('${getTextSource('cms.car.internetContent.type.${carInternetContentType}')}'));
+			</#list>
+
+			newInternetContentTypeDd.append(newInternetContentTypeSelect);
+			newInternetContentDl.append(newInternetContentTypeDd);
+			
+			newInternetContentLanguageDt = $('<dt>');	
+			newInternetContentLanguageDt.append('${getTextSource('cms.car.internetContent.contentLanguage')}');
+			newInternetContentDl.append(newInternetContentLanguageDt);	
+			newInternetContentLanguageDd = $('<dd>');	
+			newInternetContentLanguageSelect = $('<select>', {'id'    : 'carInternetContentForms' + internetContentNum + '.contentLanguage',													
+													          'name'  : 'carInternetContentForms[' + internetContentNum + '].contentLanguage',
+													          'class' : 'form-control'});														               
+													               
+			<#list carInternetContentLanguages as language>
+				newInternetContentLanguageSelect.append($('<option>', {'value' : '${language}'}).text('${getTextSource('cms.car.internetContent.contentLanguage.${language}')}'));
+			</#list>
+													          
+			newInternetContentLanguageDd.append(newInternetContentLanguageSelect);
+			newInternetContentDl.append(newInternetContentLanguageDd);
+			
+			newInternetContentWellDiv.append(newInternetContentDl);			
+			$('#internet-contents-main-panel-body').append(newInternetContentWellDiv);
 		}
 
        	$(function()

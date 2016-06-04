@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.dao.impl.CarDao;
+import com.tcp.data.dao.impl.CarInternetContentDAO;
 import com.tcp.data.dao.impl.ContentSearchDao;
 import com.tcp.data.dao.impl.PictureDao;
 
@@ -37,6 +38,9 @@ public class BaseController extends BaseControllerData
 	@Inject
 	@Getter
 	private ContentSearchDao contentSearchDao;	
+	@Inject
+	@Getter
+	private CarInternetContentDAO carInternetContentDAO;	
 	@Inject
 	private ModelFiller baseModelFiller;
 	@Getter

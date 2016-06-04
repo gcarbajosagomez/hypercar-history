@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
+import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
 import com.phistory.mvc.controller.CarController;
 import com.phistory.mvc.controller.cms.util.CarControllerUtil;
@@ -72,9 +73,7 @@ public class CmsCarController extends CmsBaseController
     	{
     		CarFormEditCommand carFormEditCommand = new CarFormEditCommand();
     		model.addAttribute(CAR_EDIT_FORM_COMMAND, carFormEditCommand);
-    		carModelFiller.fillModel(model);
-    		carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
-    		pictureModelFiller.fillModel(model);
+    		this.fillModel(model, carFormEditCommand);
     		
     		return new ModelAndView(CAR_EDIT_VIEW_NAME);
     	}
@@ -90,17 +89,25 @@ public class CmsCarController extends CmsBaseController
     @RequestMapping(value = SAVE_URL,
 				    method = RequestMethod.POST)
     public ModelAndView handleSaveNewCar(Model model,
-							  		  	 @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand command,
-							  		  	 BindingResult result)
+							  		  	 @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
+							  		  	 BindingResult carFormEditCommandResult,
+							  		  	 @Valid @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditCommand carInternetContentEditCommand,
+							  		  	 BindingResult carInternetContentEditCommandResult)
     {
     	try
     	{
-    		if (!result.hasErrors())
+    		if (!carFormEditCommandResult.hasErrors())
     		{        	
-    			Car car = carControllerUtil.saveOrEditCar(command);  
+    			Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);  
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 				  											  		  new Object[]{car.getFriendlyName()},
-				  											  		  LocaleContextHolder.getLocale());     
+				  											  		  LocaleContextHolder.getLocale());
+    			
+    			if (!carInternetContentEditCommandResult.hasErrors())
+    			{
+    				carInternetContentEditCommand.getCarInternetContentForms().forEach(carInternetContentForm -> carInternetContentForm.setCar(car));
+    				this.carControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
+    			}
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     		}
     		else
@@ -116,11 +123,28 @@ public class CmsCarController extends CmsBaseController
         }
     	finally
     	{
-    		carModelFiller.fillModel(model);
-    		carEditModelFiller.fillCarEditModel(model, command);
-    		pictureModelFiller.fillModel(model);  
+    		this.fillModel(model, carFormEditCommand);
     	}
 		
 		return new ModelAndView(CAR_EDIT_VIEW_NAME);     	
+    }
+    
+    @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
+    public CarInternetContentEditCommand createCarInternetContentEditFormCommand()
+    { 
+    	return new CarInternetContentEditCommand();
+    } 
+    
+    /**
+     * Fill the supplied {@link Model}
+     * 
+     * @param model
+     * @param carFormEditCommand
+     */
+    private void fillModel(Model model, CarFormEditCommand carFormEditCommand)
+    {
+    	this.carModelFiller.fillModel(model);
+    	this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
+    	this.pictureModelFiller.fillModel(model);  
     }
 }

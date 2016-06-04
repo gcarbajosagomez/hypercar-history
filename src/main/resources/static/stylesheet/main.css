@@ -382,6 +382,8 @@ html, body
 	max-height: 865px;	
 	padding-left: 0px;
 	padding-right: 0px;
+	background-color: black;
+	border: 0px;
 }
 
 .carousel-inner > .item > a > img

@@ -47,11 +47,11 @@ public class GenericObjectPropertyEditor<TYPE extends GenericObject, IDENTIFIER 
         if (idText != null && !idText.isEmpty())
         {
             IDENTIFIER id = (IDENTIFIER) new Long(idText);
-            setValue(dao.getById(id));
+            super.setValue(this.dao.getById(id));
         }
         else
         {
-            setValue(null);
+        	super.setValue(null);
         }
     }
 }

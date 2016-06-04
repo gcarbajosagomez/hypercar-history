@@ -34,7 +34,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
      * Create a new ManufacturerForm out of the data contained in a Manufacturer
      */
     @Override
-    public ManufacturerForm createFormFromEntity(Manufacturer manufacturer) throws Exception
+    public ManufacturerForm createFormFromEntity(Manufacturer manufacturer)
     {
         try
         {
@@ -68,8 +68,9 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
         catch (Exception e)
         {
             log.error(e.toString(), e);
-            throw e;
         }
+        
+        return new ManufacturerForm();
     }
 
     /**
@@ -77,7 +78,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
      * @throws Exception 
      */
     @Override
-    public Manufacturer createEntityFromForm(ManufacturerForm manufacturerForm) throws Exception
+    public Manufacturer createEntityFromForm(ManufacturerForm manufacturerForm)
     {
         try
         {
@@ -105,7 +106,8 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
         catch (Exception e)
         {
             log.error(e.toString(), e);
-            throw e;
         }
+        
+		return new Manufacturer();
     }
 }

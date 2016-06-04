@@ -40,21 +40,23 @@ public class BaseControllerData
 	/*************************
      **********Misc***********
      *************************/
-	public static final String IMAGE_CONTENT_TYPE 				= "image/jpg";	
-	public static final String UNITS_OF_MEASURE   				= "unitsOfMeasure"; 
-	public static final String UNITS_OF_MEASURE_COOKIE_NAME  	= "def_units"; 	 
-	public static final String UNITS_OF_MEASURE_METRIC       	= "metric"; 		 
-	public static final String UNITS_OF_MEASURE_IMPERIAL     	= "imperial";
-	public static final String LANGUAGE_COOKIE_NAME   			= "def_lang"; 
-	public static final String ERROR_VIEW_NAME                  = "/error";  
-	public static final String CARS                   			= "cars";  
-	public static final String MODELS                   		= "models"; 
-	public static final String CONTENT_SEARCH_DTO       		= "contentSearchDto";
-	public static final String CONTENT_TO_SEARCH_DATA      		= "contentToSearchData";
-	public static final String CAR_DETAILS       				= "carDetails";
-	public static final String ENGINE                  			= "engine";  
-	public static final String SUCCESS_MESSAGE         			= "successMessage";  
-	public static final String EXCEPTION_MESSAGE       			= "exceptionMessage";  
-	public static final String CONTACT_US_SUCCESS_MESSAGE       = "contactUsSuccessMessage";  
-	public static final String CONTACT_US_EXCEPTION_MESSAGE     = "contactUsExceptionMessage";  
+	public static final String IMAGE_CONTENT_TYPE 					= "image/jpg";	
+	public static final String UNITS_OF_MEASURE   					= "unitsOfMeasure"; 
+	public static final String UNITS_OF_MEASURE_COOKIE_NAME  		= "def_units"; 	 
+	public static final String UNITS_OF_MEASURE_METRIC       		= "metric"; 		 
+	public static final String UNITS_OF_MEASURE_IMPERIAL     		= "imperial";
+	public static final String LANGUAGE_COOKIE_NAME   				= "def_lang"; 
+	public static final String ERROR_VIEW_NAME                  	= "/error";  
+	public static final String CARS                   				= "cars";  
+	public static final String MODELS                   			= "models"; 
+	public static final String CONTENT_SEARCH_DTO       			= "contentSearchDto";
+	public static final String CONTENT_TO_SEARCH_DATA      			= "contentToSearchData";
+	public static final String CAR_DETAILS       					= "carDetails";
+	public static final String ENGINE                  				= "engine";  
+	public static final String SUCCESS_MESSAGE         				= "successMessage";  
+	public static final String EXCEPTION_MESSAGE       				= "exceptionMessage";  
+	public static final String CONTACT_US_SUCCESS_MESSAGE       	= "contactUsSuccessMessage";  
+	public static final String CONTACT_US_EXCEPTION_MESSAGE     	= "contactUsExceptionMessage";   
+	public static final String YOUTUBE_VIDEO_IDS     				= "youtubeVideoIds";    
+	public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES	= "carInternetContentReviewArticles";  
 }

@@ -9,31 +9,30 @@
 <@startPage title/> 
 
 <div id="main-container" class="container">
-	<div class="panel panel-default main-panel row">
+	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
 				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@getCarProductionLife car/>)</h2>  
 			</div>
 			<div class="<#if pictureIds?? && (pictureIds?size > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
 				<#if pictureIds?? && (pictureIds?size > 0)>
-					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div" data-ride="carousel">
+					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div container" data-ride="carousel">
 						<#-- Indicators -->
 	  					<ol class="carousel-indicators">
   							<#list pictureIds as pictureId>
-    							<li data-target="#car-pictures-carousel" data-slide-to="${pictureId_index}" class="<#if pictureId_index == 0> active </#if>"></li>
+    							<li data-target="#car-pictures-carousel" data-slide-to="${pictureId?index}" class="<#if pictureId?is_first>active</#if>"></li>
     						</#list>
-	 					</ol>			
+	 					</ol>
 						<#-- Wrapper for slides -->
   						<div class="carousel-inner">    						
     						<#list pictureIds as pictureId>
-    							<div class="item <#if pictureId_index == 0> active </#if>" id="pic-div-${pictureId}">
+    							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
       								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" data-gallery>
 										<img src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}"> 
 									</a> 														
     							</div>
 	      					</#list>
-		    			</div>					
-				
+		    			</div>
 						<#-- Controls -->
   						<a class="left carousel-control" href="#car-pictures-carousel" data-slide="prev">
     						<span class="glyphicon glyphicon-chevron-left"></span>
@@ -42,19 +41,52 @@
     						<span class="glyphicon glyphicon-chevron-right"></span>
 	  					</a>
   					</div>
-
+  					<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
+  						<#assign youtubeVideosPresent = true>						
+					<#else>
+						<#assign youtubeVideosPresent = false>
+					</#if>
+					<#if youtubeVideosPresent == true>
+  						<div id="car-videos-carousel" class="carousel slide center-block vertically-aligned-div hidden container" data-ride="carousel"  style="height: 100%;">  						
+							<ol class="carousel-indicators">
+  								<#list youtubeVideoIds as videoId>
+    								<li data-target="#car-videos-carousel" data-slide-to="${videoId?index}" class="<#if videoId?is_first>active</#if>"></li>
+    							</#list>
+	 						</ol>
+							<div class="carousel-inner">							
+	    						<#list youtubeVideoIds as videoId>
+									<div id="${videoId}-video-div" class="item <#if videoId?is_first>active</#if>">
+	    								<div id="${videoId}-iframe-div" class="background"></div>	
+	    							</div>			
+		      					</#list>
+				    		</div>				    			
+							<#-- Controls -->
+	  						<a class="left carousel-control" href="#car-videos-carousel" data-slide="prev">
+	    						<span class="glyphicon glyphicon-chevron-left"></span>
+	  						</a>
+		  					<a class="right carousel-control" href="#car-videos-carousel" data-slide="next">
+	    						<span class="glyphicon glyphicon-chevron-right"></span>
+		  					</a>
+						</div>	
+					</#if>
 					<@addBlueImpGallery/>
   				<#else>
   					<h2 class="text-center">${getTextSource('noPicturesAvailable')}</h2>
   				</#if>
 			</div>
+			<#if youtubeVideosPresent = true>
+				<ul class="nav nav-tabs">
+					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(true)">${getTextSource('car.pictures')}</a></li>
+					<li id="show-videos-tab"  class="cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(false)">${getTextSource('car.videos')}</a></li>
+				</ul>
+			</#if>
 			<div id="main-car-details-div" class="panel-body col-lg-12">	
 				<div class="panel panel-default">
 					<div class="panel-body row">
-						<div class="col-lg-6 col-sm-12">		
+						<div class="col-lg-6 col-sm-12">						
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									<div class="row">
+									<div class="row"> 
 										<h2 class="col-lg-8 col-md-6 col-sm-6 col-xs-12 text-left">${car.model}</h2>
 										
 										<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 dropdown" style="margin-top: 20px; margin-bottom: 10px; padding-left: 0px;">										
@@ -574,62 +606,118 @@
 
 <script type="text/javascript">
 
-function setUnitsOfMeasure(unitsOfMeasure, mainForm)
-{
-	if ($.cookie('${unitsOfMeasureCookieName}') != unitsOfMeasure && !ajaxCallBeingProcessed)
+	function setUnitsOfMeasure(unitsOfMeasure, mainForm)
 	{
-		$.cookie('${unitsOfMeasureCookieName}', unitsOfMeasure, {path : '/', expires : 14});
-		ajaxCallBeingProcessed = true;
+		if ($.cookie('${unitsOfMeasureCookieName}') != unitsOfMeasure && !ajaxCallBeingProcessed)
+		{
+			$.cookie('${unitsOfMeasureCookieName}', unitsOfMeasure, {path : '/', expires : 14});
+			ajaxCallBeingProcessed = true;
+		
+			$.ajax({
+	             	type:'GET',
+	             	url: mainForm.action,            
+	             	dataType: 'html',
+					beforeSend: function()
+	    	    	{
+	        	    	if(unitsOfMeasure == '${unitsOfMeasureMetric}')
+	            		{
+		                	$('#metric-units-loading-gif').removeClass('sr-only');
+	    	        	}
+	        	    	else if(unitsOfMeasure == '${unitsOfMeasureImperial}')
+	            		{
+	                		$('#imperial-units-loading-gif').removeClass('sr-only');
+		            	}
 	
-		$.ajax({
-             	type:'GET',
-             	url: mainForm.action,            
-             	dataType: 'html',
-				beforeSend: function()
-    	    	{
-        	    	if(unitsOfMeasure == '${unitsOfMeasureMetric}')
-            		{
-	                	$('#metric-units-loading-gif').removeClass('sr-only');
-    	        	}
-        	    	else if(unitsOfMeasure == '${unitsOfMeasureImperial}')
-            		{
-                		$('#imperial-units-loading-gif').removeClass('sr-only');
-	            	}
+						$('#main-car-details-div').block({ 
+							css: {         										
+	        						border:         '0px solid', 
+	        						backgroundColor:'rgba(94, 92, 92, 0)'
+	    						 },
+	                		message: '<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-4x fa-spin blue"></i>' 
+	            		});
+	   				}
+	   		})
+	    	.done(function(data)
+	    	{
+	        	document.body.innerHTML = data;
+				ajaxCallBeingProcessed = false; 
+				$('#main-car-details-div').unblock();  
+	    	});
+	    }
+	}
+<#if youtubeVideosPresent == true>	
+		function hideOrShowPictures(show)
+		{
+			if (show)
+			{
+				$('#car-pictures-carousel').removeClass('hidden');
+				$('#show-pictures-tab').addClass('active');
+				$('#car-videos-carousel').addClass('hidden');
+				$('#show-videos-tab').removeClass('active');
+			}
+			else
+			{
+				$('#car-pictures-carousel').addClass('hidden');
+				$('#show-pictures-tab').removeClass('active');
+				$('#car-videos-carousel').removeClass('hidden');
+				$('#show-videos-tab').addClass('active');
+			}
+		}		
 
-					$('#main-car-details-div').block({ 
-						css: {         										
-        						border:         '0px solid', 
-        						backgroundColor:'rgba(94, 92, 92, 0)'
-    						 },
-                		message: '<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-4x fa-spin blue"></i>' 
-            		});
-   				}
-   		})
-    	.done(function(data)
-    	{
-        	document.body.innerHTML = data;
-			ajaxCallBeingProcessed = false; 
-			$('#main-car-details-div').unblock();  
-    	});
-    }
-}
-
-$(function()
-{
-	$('.carousel').carousel({
-  		interval: 8000
-	});
+	</script>
 	
-	$('.modal').on('show.bs.modal', function (e)
-	{
-  		$('.carousel').carousel('pause')
-	});
-	
-	$('.modal').on('hidden.bs.modal', function (e)
-	{
-  		$('.carousel').carousel({
-  			interval: 8000
+	<script src="/resources/javascript/lib/youtube-iframe-api.min.js"></script>
+	<script type="text/javascript">
+		 <#list youtubeVideoIds as videoId>
+		 	var player${videoId};
+		 </#list>		
+		 function onYouTubeIframeAPIReady() {		 	
+		 	<#list youtubeVideoIds as videoId>
+		     	player${videoId} = new YT.Player('${videoId}-iframe-div', {         
+					videoId: '${videoId}',
+					width: '100%',
+    				height: '600',					
+					events: {
+						'onStateChange': on${videoId}PlayerStateChange
+					}
+				});		 	
+		 	
+			 	function on${videoId}PlayerStateChange(event) {
+					switch(event.data){
+						case 1:
+							$('#car-videos-carousel').carousel('pause');
+							break;
+						case 2:
+							$('#car-videos-carousel').carousel({pause: false, interval: 8000});
+							break;
+					}
+				}
+			</#list>
+		}
+		
+		$('#car-videos-carousel').bind('slide.bs.carousel', function (e) {
+    		<#list youtubeVideoIds as videoId>		
+				player${videoId}.pauseVideo();
+    		</#list>
 		});
-	});
-})	
+</#if>
+	
+	$(function()
+	{
+		$('.carousel').carousel({
+	  		interval: 8000
+		});
+		
+		$('.modal').on('show.bs.modal', function (e)
+		{
+	  		$('.carousel').carousel('pause');
+		});
+		
+		$('.modal').on('hidden.bs.modal', function (e)
+		{
+	  		$('.carousel').carousel({
+	  			interval: 8000
+			});
+		});
+	})
 </script>

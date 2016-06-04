@@ -15,9 +15,11 @@ import com.tcp.data.dao.impl.EngineDao;
 import com.tcp.data.dao.impl.ManufacturerDao;
 import com.tcp.data.dao.impl.PictureDao;
 import com.tcp.data.model.DriveWheelType;
+import com.tcp.data.model.Language;
 import com.tcp.data.model.Picture;
 import com.tcp.data.model.brake.BrakeDiscMaterial;
 import com.tcp.data.model.car.CarBodyShape;
+import com.tcp.data.model.car.CarInternetContentType;
 import com.tcp.data.model.car.CarSeatsConfig;
 import com.tcp.data.model.car.EngineLayout;
 import com.tcp.data.model.engine.EngineCylinderDisposition;
@@ -54,6 +56,8 @@ public class CarEditModelFIller implements ModelFiller
     	model.addAttribute("engineTypes", 					EngineType.values());
     	model.addAttribute("engineCylinderDispositions",	EngineCylinderDisposition.values());
     	model.addAttribute("driveWheelTypes", 				DriveWheelType.values()); 
+    	model.addAttribute("carInternetContentTypes", 		CarInternetContentType.values()); 
+    	model.addAttribute("carInternetContentLanguages", 	Language.values()); 
 	}
 	
 	/**
@@ -65,6 +69,6 @@ public class CarEditModelFIller implements ModelFiller
 	public void fillCarEditModel(Model model, CarFormEditCommand command)
 	{
 		model.addAttribute("pictureIds", command.getCarForm().getId() != null ? this.pictureDao.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
-		fillModel(model);
+		this.fillModel(model);
 	}
 }
