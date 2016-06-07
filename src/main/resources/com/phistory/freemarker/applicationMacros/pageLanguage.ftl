@@ -41,26 +41,22 @@
 			   })
 			   .done(function(data)
 			   {           
-			        document.children[0].innerHTML = data;
-					<#if requestURI?matches(carsURL) || requestURI?matches(carsURL)>      
+			        document.children[0].innerHTML = data;			        
+					<#if requestURI?contains(carsURL) || requestURI?contains(modelsSearchURL)>      
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {
-			              	if (mainForm.action.search("/${carsURL}") != -1)
-			              	{	              		
+			              	<#if requestURI?contains(carsURL)>              		
 			              		<@createCarsPagination chunkedModelsList![]/>
-			              	}
-							else if (mainForm.action.search("/${modelsSearchURL}") != -1)
-							{
+			              	<#elseif requestURI?contains(modelsSearchURL)>
 								var contentSearchDto = {		
 										 				 ${pagNum} 			: 1,
 				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 										 				 ${contentToSearch} : $("#content-search-input")[0].value,
 										 				 searchTotalResults : $("#search-total-results")[0].value	
-				         			   				   }; 
-				         		 	   				   
+				         			   				   };				         		 	   				   
 								<@createContentSearchPaginationFunction/>
-							}
+							</#if>
 			            }
 					</#if>
 		               

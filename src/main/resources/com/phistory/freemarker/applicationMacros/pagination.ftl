@@ -4,7 +4,7 @@
 	    bootstrapMajorVersion : 3,
 		currentPage: ${pagNumData},
 		alignment: 'left',
-	    totalPages: <#if chunkedModelsList??><#if (chunkedModelsList?size <= 5)>${chunkedModelsList?size}<#else>5</#if><#else>1</#if>,
+	    totalPages: <#if chunkedModelsList??>${chunkedModelsList?size}<#else>1</#if>,
 		useBootstrapTooltip: true,
 		tooltipTitles:
 		   	function(type,page,current)
