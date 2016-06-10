@@ -76,7 +76,7 @@ public class LoginTest extends AbstractTestNGSpringContextTests
 		this.loginPageWebDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
 		this.cmsCarListPage = new CmsCarListPage(this.loginPageWebDriver);
 		this.cmsCarListPage.initializePageElements();
-		test_username_input_is_displayed();
+		this.test_username_input_is_displayed();
 	}
 	
 	@Test(dependsOnMethods = "test_perform_login_with_wrong_credentials")

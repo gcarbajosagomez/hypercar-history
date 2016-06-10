@@ -110,14 +110,14 @@
           					 
           					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
-          					 	<div class="collapse navbar-collapse well" id="main-navbar-collapse">
+          					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">          							
     	          						<li><a href='<@spring.url "/${carsURL}"/>'>${getTextSource('cars')}</a></li>              					
         	      						<li>              						
-	        	  							<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${getTextSource('language')} <b class="caret"></b></a>
+	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${getTextSource('language')} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu"> 
         	  									<li role="presentation">
-          											<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('es', $('#main-form')[0]);">
+          											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('es', $('#main-form')[0]);">
           												<div class="row language-selection-div">
           													<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left"> 
           													    ${getTextSource('language.spanish')}
@@ -133,7 +133,7 @@
         	  									</li>
           										<li role="separator" class="divider"></li>
           										<li role="presentation"> 
-          											<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);"> 
+          											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);"> 
 														<div class="row language-selection-div">
     	      												<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
         	  													${getTextSource('language.english')}
@@ -181,7 +181,7 @@
 												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding-top: 10px; padding-left: 20px;">
 													<input id="content-search-input" type="text" class="content-search-input" value="<#if contentToSearchData??>${contentToSearchData}</#if>"/>
   													<label for="content-search-input">
-	  													<span class="glyphicon glyphicon-search search-icon"></span>
+	  													<span id="content-search-span" class="glyphicon glyphicon-search search-icon"></span>
   													</label>
   													<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>												
   												</div>
