@@ -669,20 +669,20 @@
 	<script src="/resources/javascript/lib/youtube-iframe-api.min.js"></script>
 	<script type="text/javascript">
 		 <#list youtubeVideoIds as videoId>
-		 	var player${videoId};
+		 	var player${videoId?index};
 		 </#list>		
 		 function onYouTubeIframeAPIReady() {		 	
 		 	<#list youtubeVideoIds as videoId>
-		     	player${videoId} = new YT.Player('${videoId}-iframe-div', {         
+		     	player${videoId?index} = new YT.Player('${videoId}-iframe-div', {         
 					videoId: '${videoId}',
 					width: '100%',
     				height: '600',					
 					events: {
-						'onStateChange': on${videoId}PlayerStateChange
+						'onStateChange': on${videoId?index}PlayerStateChange
 					}
 				});		 	
 		 	
-			 	function on${videoId}PlayerStateChange(event) {
+			 	function on${videoId?index}PlayerStateChange(event) {
 					switch(event.data){
 						case 1:
 							$('#car-videos-carousel').carousel('pause');
@@ -697,7 +697,7 @@
 		
 		$('#car-videos-carousel').bind('slide.bs.carousel', function (e) {
     		<#list youtubeVideoIds as videoId>		
-				player${videoId}.pauseVideo();
+				player${videoId?index}.pauseVideo();
     		</#list>
 		});
 </#if>
