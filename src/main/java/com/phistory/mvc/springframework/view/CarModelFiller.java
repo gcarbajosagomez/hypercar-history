@@ -1,9 +1,15 @@
 package com.phistory.mvc.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.CAR_ID;
+import static com.phistory.mvc.controller.BaseControllerData.LOAD_CAR_PICTURE_ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.LOAD_CAR_PREVIEW_ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.PAGINATION_URL;
+import static com.phistory.mvc.controller.BaseControllerData.UNITS_OF_MEASURE_COOKIE_NAME;
+import static com.phistory.mvc.controller.BaseControllerData.UNITS_OF_MEASURE_IMPERIAL;
+import static com.phistory.mvc.controller.BaseControllerData.UNITS_OF_MEASURE_METRIC;
+
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-
-import com.phistory.mvc.controller.BaseControllerData;
 
 /**
  * Fills a Spring Framework Model with car related information
@@ -12,7 +18,7 @@ import com.phistory.mvc.controller.BaseControllerData;
  *
  */
 @Component
-public class CarModelFiller extends BaseControllerData implements ModelFiller
+public class CarModelFiller implements ModelFiller
 {	
 	@Override
 	public void fillModel(Model model)

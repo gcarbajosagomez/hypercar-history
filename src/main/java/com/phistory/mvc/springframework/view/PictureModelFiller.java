@@ -1,9 +1,10 @@
 package com.phistory.mvc.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURE_ID;
+
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-
-import com.phistory.mvc.controller.BaseControllerData;
 
 /**
  * Fills a Spring Framework Model with picture related information
@@ -12,7 +13,7 @@ import com.phistory.mvc.controller.BaseControllerData;
  *
  */
 @Component
-public class PictureModelFiller extends BaseControllerData implements ModelFiller
+public class PictureModelFiller implements ModelFiller
 {
 	@Override
 	public void fillModel(Model model) 

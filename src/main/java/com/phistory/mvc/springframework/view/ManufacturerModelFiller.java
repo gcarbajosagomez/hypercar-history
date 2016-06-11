@@ -1,11 +1,17 @@
 package com.phistory.mvc.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.LOAD_MANUFACTURER_LOGO_ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.MANUFACTURER_ID;
+import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_PER_PAGE;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_PER_PAGE_DATA;
+
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.phistory.mvc.controller.cms.CmsBaseController;
 import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import com.tcp.data.dao.impl.ManufacturerDao;
 
@@ -16,7 +22,7 @@ import com.tcp.data.dao.impl.ManufacturerDao;
  *
  */
 @Component
-public class ManufacturerModelFiller extends CmsBaseController implements ModelFiller
+public class ManufacturerModelFiller implements ModelFiller
 {
 	@Inject
 	private ManufacturerDao manufacturerDao;

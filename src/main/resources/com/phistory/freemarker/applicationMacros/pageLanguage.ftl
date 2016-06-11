@@ -46,7 +46,7 @@
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {
-			              	<#if requestURI?contains(carsURL)>              		
+			              	<#if requestURI?contains(carsURL) && (chunkedModelsList??)>              		
 			              		<@createCarsPagination chunkedModelsList![]/>
 			              	<#elseif requestURI?contains(modelsSearchURL)>
 								var contentSearchDto = {		

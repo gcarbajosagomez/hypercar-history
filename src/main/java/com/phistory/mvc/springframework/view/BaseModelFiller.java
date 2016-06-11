@@ -1,10 +1,20 @@
 package com.phistory.mvc.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.CARS_PER_PAGE;
+import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
+import static com.phistory.mvc.controller.BaseControllerData.CONTENT_TO_SEARCH;
+import static com.phistory.mvc.controller.BaseControllerData.COOKIES_POLICY_URL;
+import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
+import static com.phistory.mvc.controller.BaseControllerData.ID;
+import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
+import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_COOKIE_NAME;
+import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CmsBaseController.EDIT_URL;
+
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-
-import com.phistory.mvc.controller.BaseControllerData;
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 
 /**
  * Fills a Spring Framework Model with the basic information for the web context
@@ -13,7 +23,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
  *
  */
 @Component
-public class BaseModelFiller extends BaseControllerData implements ModelFiller
+public class BaseModelFiller implements ModelFiller
 {
 	@Override
 	public void fillModel(Model model)

@@ -1,6 +1,7 @@
 package com.phistory.mvc.model.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * DTO class that transports manufacturer pagination data 
@@ -9,6 +10,7 @@ import lombok.Data;
  *
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class ManufacturersPaginationDto extends PaginationDto
 {
 	private Integer manufacturersPerPage;

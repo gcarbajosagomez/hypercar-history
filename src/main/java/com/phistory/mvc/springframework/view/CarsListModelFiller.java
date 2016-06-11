@@ -31,7 +31,7 @@ public class CarsListModelFiller implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{		
-		model.addAttribute(MODELS, 	carDao.getDistinctModelsWithId());		
+		model.addAttribute(MODELS, 	this.carDao.getDistinctModelsWithId());		
 	}
 	
 	/**
