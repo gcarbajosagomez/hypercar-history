@@ -2,8 +2,6 @@ package com.phistory.mvc.model.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 
 /**
  * DTO class that transports pagination data 
@@ -13,12 +11,17 @@ import lombok.RequiredArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 public class PaginationDto
 {
-	@NonNull
-	private Integer pagNum;
+	private static final Integer PAG_NUM_DEFAULT_VALUE = 1;	
+
+	private Integer pagNum = PAG_NUM_DEFAULT_VALUE;
 	private int firstResult;
+
+	public PaginationDto(Integer pagNum) {
+		super();
+		this.pagNum = pagNum;
+	}
 	
 	/**
 	 * Calculate the index of the first result based on the number of the current page and items per page

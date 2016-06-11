@@ -6,6 +6,7 @@ import static com.tcp.data.model.car.CarInternetContentType.VIDEO;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -19,12 +20,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.phistory.mvc.controller.cms.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
+import com.phistory.mvc.controller.utils.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
@@ -55,13 +55,10 @@ public class CarController extends BaseController
 	
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
-									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
+									   CarsPaginationDto carsPaginationDto)
 	{		
 		try
 		{		
-			CarsPaginationDto carsPaginationDto = new CarsPaginationDto(pagNum, carsPerPage);
-			
 			this.carsListModelFiller.fillPaginatedModel(model, carsPaginationDto);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
@@ -113,7 +110,12 @@ public class CarController extends BaseController
 	@RequestMapping(value = "/" + PAGINATION_URL)
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
-	{			
-		return carControllerUtil.createPaginationData(carsPaginationDto);
+	{		
+		Map<String, Object> data = new HashMap<String, Object>();
+    	data.put(CARS, super.getCarDao().getByCriteria(this.carControllerUtil.createSearchCommand(carsPaginationDto)));
+    	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
+    	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
+    	
+		return data;
 	}	
 }

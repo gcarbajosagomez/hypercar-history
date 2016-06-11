@@ -34,7 +34,7 @@ import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
-import com.phistory.mvc.controller.cms.util.CarControllerUtil;
+import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
 import com.tcp.data.model.car.CarInternetContent;
@@ -50,7 +50,7 @@ import com.tcp.data.model.car.CarInternetContent;
 public class CmsCarEditController extends CmsBaseController
 {
     @Inject
-    private CarControllerUtil carControllerUtil;
+    private CMSCarControllerUtil carControllerUtil;
     @Inject
     private CarFormCreator carFormCreator;
     @Inject

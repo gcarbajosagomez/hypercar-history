@@ -42,7 +42,7 @@
 			   .done(function(data)
 			   {           
 			        document.children[0].innerHTML = data;			        
-					<#if requestURI?contains(carsURL) || requestURI?contains(modelsSearchURL)>      
+					<#if (requestURI?contains(carsURL) && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>      
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {

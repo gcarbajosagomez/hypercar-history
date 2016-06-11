@@ -1,9 +1,7 @@
 package com.phistory.mvc.controller.cms.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -14,10 +12,9 @@ import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
-import com.phistory.mvc.controller.BaseController;
+import com.phistory.mvc.controller.cms.CmsCarController;
+import com.phistory.mvc.controller.cms.CmsCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
-import com.tcp.data.command.SearchCommand;
 import com.tcp.data.dao.impl.CarDao;
 import com.tcp.data.dao.impl.CarInternetContentDAO;
 import com.tcp.data.model.Picture;
@@ -26,13 +23,13 @@ import com.tcp.data.model.car.Car;
 import com.tcp.data.model.car.CarInternetContent;
 
 /**
- * Set of utilities for the CarController class
+ * Set of utilities for {@link CmsCarController} and {@link CmsCarEditController}
  * 
  * @author gonzalo
  *
  */
 @Component 
-public class CarControllerUtil extends BaseController
+public class CMSCarControllerUtil
 {		
 	@Inject
 	private CarDao carDao;
@@ -160,42 +157,4 @@ public class CarControllerUtil extends BaseController
             this.carDao.delete(car);
         }
     }
-	
-	/**
-	 * Create the data needed to handle car pagination
-	 * 
-	 * @param carsPaginationDto
-	 * @return
-	 */
-	public Map<String, Object> createPaginationData(CarsPaginationDto carsPaginationDto)
-    {			
-    	Map<String, Object> data = new HashMap<String, Object>();
-    	data.put(CARS, this.carDao.getByCriteria(this.createSearchCommand(carsPaginationDto)));
-    	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
-    	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
-
-    	return data;
-    }
-	
-	/**
-	 * Create a search command to search for cars
-	 * 
-	 * @param paginationDto
-	 * @return
-	 */
-	public SearchCommand createSearchCommand(CarsPaginationDto carsPaginationDto)
-	{
-		Map<String, Boolean> orderByMap = new HashMap<>();
-		orderByMap.put("productionStartDate", Boolean.TRUE);
-		
-		carsPaginationDto.calculatePageFirstResult(carsPaginationDto.getCarsPerPage());
-		
-		return new SearchCommand(Car.class,
-								 null,
-								 null,
-								 null,
-								 orderByMap,
-								 carsPaginationDto.getFirstResult(),
-								 carsPaginationDto.getCarsPerPage());
-	}
 }

@@ -25,7 +25,7 @@ public class BaseModelFiller extends BaseControllerData implements ModelFiller
 		model.addAttribute("modelsSearchURL", 	   	MODELS_SEARCH_URL);
 		model.addAttribute("editURL", 				EDIT_URL);
 		model.addAttribute(ID, 				   		ID);
-		model.addAttribute(CARS_PER_PAGE, 		   	CARS_PER_PAGE);
+		model.addAttribute("carsPerPage", 		   	CARS_PER_PAGE);
 		model.addAttribute(PAG_NUM, 			   	PAG_NUM);
 		model.addAttribute(CONTENT_TO_SEARCH, 	   	CONTENT_TO_SEARCH);	
 		model.addAttribute("languageCookieName",	LANGUAGE_COOKIE_NAME);

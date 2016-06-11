@@ -19,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +26,7 @@ import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
 import com.phistory.mvc.controller.CarController;
-import com.phistory.mvc.controller.cms.util.CarControllerUtil;
+import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import com.tcp.data.model.car.Car;
@@ -47,14 +46,13 @@ public class CmsCarController extends CmsBaseController
 	@Inject
 	private CarEditModelFIller carEditModelFiller;
 	@Inject
-    private CarControllerUtil carControllerUtil;
+    private CMSCarControllerUtil carControllerUtil;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView handleCarsList(Model model,
-									   @RequestParam(defaultValue = "1", value = PAG_NUM, required = true) int pagNum,
-									   @RequestParam(defaultValue = "8", value = CARS_PER_PAGE, required = true) int carsPerPage)
+			   						   CarsPaginationDto carsPaginationDto)
 	{		
-		return this.carController.handleCarsList(model, pagNum, carsPerPage);
+		return this.carController.handleCarsList(model, carsPaginationDto);
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
