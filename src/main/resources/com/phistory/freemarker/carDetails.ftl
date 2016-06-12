@@ -61,10 +61,10 @@
 		      					</#list>
 				    		</div>				    			
 							<#-- Controls -->
-	  						<a class="left carousel-control" href="#car-videos-carousel" data-slide="prev">
+	  						<a class="left carousel-control" href="#car-videos-carousel" data-slide="prev" style="height: 50%; top: 25%;">
 	    						<span class="glyphicon glyphicon-chevron-left"></span>
 	  						</a>
-		  					<a class="right carousel-control" href="#car-videos-carousel" data-slide="next">
+		  					<a class="right carousel-control" href="#car-videos-carousel" data-slide="next" style="height: 50%; top: 25%;">
 	    						<span class="glyphicon glyphicon-chevron-right"></span>
 		  					</a>
 						</div>	
