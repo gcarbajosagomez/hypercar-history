@@ -8,6 +8,7 @@ import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_COOKIE_NAME;
+import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
 import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
@@ -40,5 +41,6 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute(CONTENT_TO_SEARCH, 	   	CONTENT_TO_SEARCH);	
 		model.addAttribute("languageCookieName",	LANGUAGE_COOKIE_NAME);
 		model.addAttribute("cmsContext", 			CMS_CONTEXT);
+		model.addAttribute("languageQueryString",	LANGUAGE_DATA);
 	}
 }

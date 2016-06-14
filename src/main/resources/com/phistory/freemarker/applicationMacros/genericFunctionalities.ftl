@@ -6,12 +6,12 @@
 
 <#macro startPage title=''>      
     <!DOCTYPE html>
-        <html lang="${getTextSource('paganiHistory.language')}" class="no-js">
+    	<#assign pageLanguage = getTextSource('paganiHistory.language')/>
+        <html lang="${pageLanguage}" class="no-js">
             <head>
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${getTextSource('paganiHistory')}</title>
             		<meta charset="UTF-8">
-					<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-					<meta http-equiv="Content-Language" content="${getTextSource('paganiHistory.language')}"> 
+					<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 					<meta name="description" content="${title}">
 					<#-- CRSF token to protect against cross site attacks -->
@@ -19,6 +19,7 @@
 					<#-- default header name is X-CSRF-TOKEN -->
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
 					 
+					<@addHrefLangInfo/>
 					<link rel="shortcut icon" href="/resources/img/favicon.ico">    				
         			<link rel="stylesheet" href="/resources/stylesheet/bootstrap.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-theme.min.css">

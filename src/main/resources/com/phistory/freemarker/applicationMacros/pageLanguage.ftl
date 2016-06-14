@@ -16,7 +16,7 @@
 		        	type:'GET',
 			        url: mainForm.action,
 		    	    contentType :'application/json; charset=UTF-8',
-		        	data: { lang: locale },
+		        	data: { ${languageQueryString}: locale },
 			        beforeSend: function(xhr)
 		    	    {
 		        	    if(locale == 'en')
@@ -67,4 +67,11 @@
 		   }
 		}
 	</script>
+</#macro>
+
+<#macro addHrefLangInfo>
+	<#assign pageLanguages = ['en', 'es']>
+	<#list pageLanguages as language>	
+		<link rel="alternate" hreflang="${language}" href="${requestURI}<#if requestURI?contains("?")>&<#else>?</#if>${languageQueryString}=${language}" />    
+	</#list>
 </#macro>

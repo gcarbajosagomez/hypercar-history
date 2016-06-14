@@ -27,6 +27,7 @@ public class BaseControllerData
     public static final String CARS_PER_PAGE_DATA    			= "carsPerPageData";
     public static final String CONTENT_TO_SEARCH     			= "contentToSearch";
     public static final String SEARCH_TOTAL_RESULTS_DATA 		= "searchTotalResultsData";
+    public static final String LANGUAGE_DATA					= "l";
 	
     /*************************
      **********Actions********

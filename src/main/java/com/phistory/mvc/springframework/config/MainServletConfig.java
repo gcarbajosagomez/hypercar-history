@@ -1,5 +1,7 @@
 package com.phistory.mvc.springframework.config;
 
+import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
+
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Random;
@@ -118,7 +120,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public void addInterceptors(InterceptorRegistry registry)
 	{
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
-		localeChangeInterceptor.setParamName("lang");
+		localeChangeInterceptor.setParamName(LANGUAGE_DATA);
 		
 		registry.addInterceptor(localeChangeInterceptor);
 	}
