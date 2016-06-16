@@ -68,6 +68,8 @@ public class CarForm
     private List<MultipartFile> pictureFiles;
     @NotNull(message = "The field above must not be blank.")
     private DriveWheelType driveWheel;
+    @NotNull(message = "The field must not be blank.")
+    private Boolean roadLegal;
 
     public CarForm()
     {

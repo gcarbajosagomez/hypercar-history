@@ -167,6 +167,18 @@
 													${getTextSource('car.seatsConfig.${car.carSeatsConfig}')?lower_case}											
 												</#if>
 											</p>
+										</dd>										
+  										<dt>
+											${getTextSource('car.roadLegal')} :
+										</dt>
+										<dd>
+											<p class="text-muted">
+												<#if car.roadLegal == true>
+													${getTextSource('yes')}	
+												<#else>		
+													${getTextSource('no')}								
+												</#if>
+											</p>
 										</dd>
   										<dt class="double-height">
   											${getTextSource('car.acceleration')} :<p class="text-muted">(

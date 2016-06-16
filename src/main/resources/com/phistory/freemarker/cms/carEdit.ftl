@@ -185,6 +185,17 @@
                            <@spring.showErrors '<br>'/>  
                       </dd>
                       <dt>         
+                           ${getTextSource('car.roadLegal')} 
+                      </dt>
+                      <dd>
+                           <@spring.bind "CEFC.carForm.roadLegal"/>
+                      
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">                              
+                           		<option value="true"<#if CEFC.carForm.roadLegal == true>selected</#if>>true</option>                       
+                           		<option value="false"<#if CEFC.carForm.roadLegal == false>selected</#if>>false</option>
+                           </select>
+                      </dd>
+                      <dt>         
                            ${getTextSource('car.previewImage')} 
                       </dt>
                       <dd>
