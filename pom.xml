@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion> 
 	<groupId>com.pagani-history</groupId>
 	<artifactId>pagani-history-web</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1</version>
 	<packaging>jar</packaging>
 	<name>Pagani History Web</name>
 	<developers>
