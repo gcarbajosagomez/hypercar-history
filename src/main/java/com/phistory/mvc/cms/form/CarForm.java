@@ -19,6 +19,7 @@ import com.tcp.data.model.Manufacturer;
 import com.tcp.data.model.car.CarBodyShape;
 import com.tcp.data.model.car.CarSeatsConfig;
 import com.tcp.data.model.car.EngineLayout;
+import com.tcp.data.model.car.ProductionType;
 
 /**
  * Car form
@@ -47,6 +48,8 @@ public class CarForm
     private Integer topSpeed;
     private Float acceleration;
     private Float fuelConsuption;
+    @NotNull(message = "The field must not be blank.")
+    private ProductionType productionType;
     private Calendar productionStartDate;
     private Calendar productionEndDate;
     @Digits(integer=8, fraction=4, message="The numeric field has a wrong format")

@@ -125,24 +125,14 @@
 								</div>
 								<div class="panel-body">
 									<dl class="dl-horizontal text-left">
- 			 							<dt>
- 			 								${getTextSource('car.weight')} :
- 		 								</dt>
-	  									<dd>
-  											<p class="text-muted">
-  												<#if unitsOfMeasure == unitsOfMeasureMetric>	
-													<@writeCarNumericData car.weight?default(-1)/>
-													<#if car.weight??>			
-														<em class="measure-unit-text">${getTextSource('Kg')}</em>	
-													</#if>		
-												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													<@writeNonDecimalCarNumericData (car.weight*2.20462)?default(-1)/>		
-													<#if car.weight??>			
-														<em class="measure-unit-text">${getTextSource('Lb')}</em>
-													</#if>	
-												</#if>
-  											</p>
-		  								</dd>
+										<dt>
+		  									${getTextSource('car.productionType')} :
+  										</dt>
+  										<dd>
+  											<p class="text-muted">  										
+  												${getTextSource('car.productionType.${car.productionType.getName()}')}  												
+				  							</p>
+  										</dd>
 		  								<dt>
 			  								${getTextSource('car.driveWheelType')} :
   										</dt>
@@ -243,6 +233,24 @@
 												</#if>
   											</p>
   										</dd>
+ 			 							<dt>
+ 			 								${getTextSource('car.weight')} :
+ 		 								</dt>
+	  									<dd>
+  											<p class="text-muted">
+  												<#if unitsOfMeasure == unitsOfMeasureMetric>	
+													<@writeCarNumericData car.weight?default(-1)/>
+													<#if car.weight??>			
+														<em class="measure-unit-text">${getTextSource('Kg')}</em>	
+													</#if>		
+												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
+													<@writeNonDecimalCarNumericData (car.weight*2.20462)?default(-1)/>		
+													<#if car.weight??>			
+														<em class="measure-unit-text">${getTextSource('Lb')}</em>
+													</#if>	
+												</#if>
+  											</p>
+		  								</dd>
 										<dt class="double-height">
 											${getTextSource('car.dimensions')} :<p class="text-muted">(${getTextSource('dimension.length')}/${getTextSource('dimension.width')}/${getTextSource('dimension.height')})</p>
 										</dt>										

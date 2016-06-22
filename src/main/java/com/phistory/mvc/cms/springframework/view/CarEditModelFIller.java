@@ -22,6 +22,7 @@ import com.tcp.data.model.car.CarBodyShape;
 import com.tcp.data.model.car.CarInternetContentType;
 import com.tcp.data.model.car.CarSeatsConfig;
 import com.tcp.data.model.car.EngineLayout;
+import com.tcp.data.model.car.ProductionType;
 import com.tcp.data.model.engine.EngineCylinderDisposition;
 import com.tcp.data.model.engine.EngineType;
 import com.tcp.data.model.transmission.TransmissionType;
@@ -48,7 +49,7 @@ public class CarEditModelFIller implements ModelFiller
 		model.addAttribute("manufacturers", 				this.manufacturerDao.getAll());
     	model.addAttribute("engineLayouts", 				EngineLayout.values());
     	model.addAttribute("engines", 						this.engineDao.getAll());
-    	model.addAttribute("engine", 						ENGINE);
+    	model.addAttribute(ENGINE, 							ENGINE);
     	model.addAttribute("bodyShapes", 					CarBodyShape.values());
     	model.addAttribute("seatsConfigs", 					CarSeatsConfig.values());
     	model.addAttribute("brakeDiscMaterials", 			BrakeDiscMaterial.values());
@@ -58,6 +59,7 @@ public class CarEditModelFIller implements ModelFiller
     	model.addAttribute("driveWheelTypes", 				DriveWheelType.values()); 
     	model.addAttribute("carInternetContentTypes", 		CarInternetContentType.values()); 
     	model.addAttribute("carInternetContentLanguages", 	Language.values()); 
+    	model.addAttribute("productionTypes", 				ProductionType.values()); 
 	}
 	
 	/**

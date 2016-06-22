@@ -13,7 +13,7 @@ import com.tcp.data.model.Picture;
 import com.tcp.data.model.car.Car;
 
 /**
- * Creates new Cars out of the data contained in CarForms and vice versa
+ * Creates new {@link Car}s out of the data contained in {@link CarForm}s and vice versa
  * 
  * @author Gonzalo
  */
@@ -33,7 +33,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
     private TyreSetFormCreator tyreSetFormCreator;
 
     /**
-     * Create a new CarForm out of the data contained in a Car
+     * Create a new {@link CarForm} out of the data contained in a {@link Car}
      */
     @Override
     public CarForm createFormFromEntity(Car car)
@@ -51,6 +51,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             							  car.getTopSpeed(),
             							  car.getAcceleration(),
             							  car.getFuelConsumption(),
+            							  car.getProductionType(),
             							  car.getProductionStartDate(),
             							  car.getProductionEndDate(),
             							  car.getWeight(),
@@ -88,16 +89,16 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             return carForm;
             
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            log.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new CarForm();
     }
 
     /**
-     * Create a new Car out of the data contained in a CarForm
+     * Create a new {@link Car} out of the data contained in a {@link CarForm}
      */
     @Override
     public Car createEntityFromForm(CarForm carForm)
@@ -114,6 +115,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             				  carForm.getTopSpeed(),
             				  carForm.getAcceleration(),
             				  carForm.getFuelConsuption(),
+            				  carForm.getProductionType(),
             				  carForm.getProductionStartDate(),
             				  carForm.getProductionEndDate(),
             				  carForm.getWeight(),
@@ -134,9 +136,9 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             return car;
             
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            log.error(ex.toString(), ex);
+            log.error(e.toString(), e);
         }
         
         return new Car();

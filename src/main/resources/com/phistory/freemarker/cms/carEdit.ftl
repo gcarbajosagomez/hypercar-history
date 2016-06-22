@@ -97,6 +97,20 @@
                            <@spring.showErrors '<br>'/>  
                       </dd>
                       <dt>         
+                           ${getTextSource('car.productionType')} 
+                      </dt>
+                      <dd>
+                           <@spring.bind "CEFC.carForm.productionType"/>                               
+                           
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                               <#list productionTypes as productionType>
+                                   <option value="${productionType}"<#if spring.status.value?? && productionType == spring.status.value?default("")>selected</#if>>${getTextSource('car.productionType.${productionType.getName()}')}</option>
+                               </#list>
+                           </select> 
+                           
+                           <@spring.showErrors '<br>'/>  
+                      </dd>
+                      <dt>         
                            ${getTextSource('car.productionStartDate')}
                       </dt>
                       <dd>    
