@@ -72,7 +72,7 @@ public class CarForm
     @NotNull(message = "The field above must not be blank.")
     private DriveWheelType driveWheel;
     @NotNull(message = "The field must not be blank.")
-    private Boolean roadLegal = false;
+    private Boolean roadLegal = true;
 
     public CarForm()
     {

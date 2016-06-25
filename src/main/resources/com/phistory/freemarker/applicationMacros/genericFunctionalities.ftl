@@ -26,7 +26,7 @@
                 	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
-        			<link rel="stylesheet" href="/resources/stylesheet/main.css">     			
+        			<link rel="stylesheet" href="/resources/stylesheet/main.min.css">     			
 					
             		<script src="/resources/javascript/lib/jquery.min.js"></script>	
             		<script src="/resources/javascript/lib/jquery.cookie.js"></script>

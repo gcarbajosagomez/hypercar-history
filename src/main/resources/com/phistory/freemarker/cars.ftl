@@ -100,7 +100,17 @@
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
 			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "' style='padding-bottom: 0px; padding-top: 0px;'>");
-			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
+			
+			var carModel = cars[i].model;
+			if (carModel.length < 33)
+			{
+				carRowString = carRowString.concat(						"<h3 class='text-center'>" + carModel + "</h3>");
+			}
+			else 
+			{
+				carRowString = carRowString.concat(						"<h3 class='text-center' style='margin-top: 285px;'>" + carModel + "</h3>");
+			}
+			
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	
 			carRowString = carRowString.concat(	  		"</figure>");   	
@@ -126,7 +136,11 @@
 				</div>
 				<figcaption>
 			 		<a href='<@spring.url "/${carsURL}/${car.id}"/>' style="padding-bottom: 0px; padding-top: 0px;">
-						<h3 class="text-center model-name">${car.model}</h3>
+						<#if (car.model?length < 33)>
+							<h3 class="text-center model-name">${car.model}</h3>
+						<#else>
+							<h3 class="text-center model-name" style="margin-top: 285px;">${car.model}</h3>
+						</#if>
 					</a>
 				</figcaption>
 			</figure>

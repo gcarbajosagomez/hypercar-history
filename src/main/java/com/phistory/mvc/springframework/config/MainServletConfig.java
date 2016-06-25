@@ -1,9 +1,11 @@
 package com.phistory.mvc.springframework.config;
 
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowire;
@@ -13,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -64,6 +65,10 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		freemarkerConfigurer.setTemplateLoaderPaths("classpath:/com/phistory/freemarker/");
 		freemarkerConfigurer.setDefaultEncoding("UTF-8");
 		
+		Properties properties = new Properties();
+		properties.setProperty("number_format", "0.##");
+		freemarkerConfigurer.setFreemarkerSettings(properties);
+		
 		return freemarkerConfigurer; 
 	}	
 	
@@ -112,8 +117,8 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		configurer.parameterName("mediaType");
 		configurer.ignoreAcceptHeader(true);
 		configurer.useJaf(false);
-		configurer.defaultContentType(MediaType.APPLICATION_JSON);
-		configurer.mediaType("json", MediaType.APPLICATION_JSON);
+		configurer.defaultContentType(APPLICATION_JSON);
+		configurer.mediaType("json", APPLICATION_JSON);
 	}
 	
 	@Override

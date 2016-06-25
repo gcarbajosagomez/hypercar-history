@@ -222,6 +222,7 @@ html, body
 {
 	background-color: #f5f5f5;
 	padding: 0px;
+	margin-bottom: 50px;
 }
 
 .preview-outer
@@ -486,7 +487,7 @@ html, body
 .grid figcaption h3 
 {		
 	color: #fff;
-	margin-top: 300px;
+	margin-top: 310px;
 }
 
 .grid figcaption a 
@@ -499,7 +500,7 @@ html, body
 	color: #fff;
 	position: absolute;
 	bottom: 5px;
-	top: 125px;
+	top: 115px;
 	left: 10px;
 }
 
@@ -646,7 +647,7 @@ html, body
 	.grid li 
 	{
 		width: 100%;
-		min-width: 300px;
+		min-width: 310px;
 	}
 
 	.grid figcaption h3 
