@@ -13,7 +13,12 @@
 		<#if car??>
 			<div class="panel-heading">
 				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@getCarProductionLife car/>)</h2>  
-			</div>
+			</div>			
+			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
+				<#assign youtubeVideosPresent = true>						
+			<#else>
+				<#assign youtubeVideosPresent = false>
+			</#if>
 			<div class="<#if pictureIds?? && (pictureIds?size > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
 				<#if pictureIds?? && (pictureIds?size > 0)>
 					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div container" data-ride="carousel">
@@ -41,11 +46,6 @@
     						<span class="glyphicon glyphicon-chevron-right"></span>
 	  					</a>
   					</div>
-  					<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
-  						<#assign youtubeVideosPresent = true>						
-					<#else>
-						<#assign youtubeVideosPresent = false>
-					</#if>
 					<#if youtubeVideosPresent == true>
   						<div id="car-videos-carousel" class="carousel slide center-block vertically-aligned-div hidden container" data-ride="carousel"  style="height: 100%;">  						
 							<ol class="carousel-indicators">
