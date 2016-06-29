@@ -39,7 +39,7 @@
         			<script src="/resources/javascript/lib/bootstrap-datepicker.js"></script>
         			<script src="/resources/javascript/lib/bootbox.min.js"></script>
 					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
-					<script src="/resources/javascript/main.js"></script>
+					<script src="/resources/javascript/main.min.js"></script>
 					
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
         			<script type='text/javascript'>						
