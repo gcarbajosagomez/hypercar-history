@@ -1,5 +1,6 @@
 package com.phistory.test.integration.web.footer;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +20,8 @@ public class FooterPage extends BasePage
 	
 	public void clickContactUsLink()
 	{
+		JavascriptExecutor jse = (JavascriptExecutor) super.getWebDriver();
+		jse.executeScript("window.scrollBy(0, 800)", "");
 		this.contactUsLink.click();
 	}
 }

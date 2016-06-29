@@ -8,6 +8,7 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class BasePage
 {	
+	protected static final Long WAIT_UNTIL_ELEMENT_CLICKABLE_SECONDS = 2L;
 	private WebDriver webDriver;	
 	
 	public BasePage(WebDriver webDriver)

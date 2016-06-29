@@ -1,26 +1,23 @@
 package com.phistory.test.integration.web.pagination;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
-import static com.phistory.test.integration.web.BaseIntegrationTest.TEST_SERVER_HOST;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.phistory.Main;
+import com.phistory.test.integration.web.BaseIntegrationTest;
 import com.phistory.test.integration.web.car.CarListPage;
 import com.phistory.test.integration.web.navbar.NavBarPage;
 
@@ -30,7 +27,7 @@ import com.phistory.test.integration.web.navbar.NavBarPage;
 @TestExecutionListeners(inheritListeners = false,
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
-public class PaginationTest extends AbstractTestNGSpringContextTests
+public class PaginationTest extends BaseIntegrationTest
 {
 	private static final String IRRELEVANT_CONTENT_TO_SEARCH = "zonda";
 	
@@ -38,12 +35,11 @@ public class PaginationTest extends AbstractTestNGSpringContextTests
 	private NavBarPage navBarPage;
 	@Value("${local.server.port}")
 	private int port;
-	private WebDriver webDriver;
 	
 	@BeforeClass
 	public void before() throws Exception
 	{
-		this.webDriver = new FirefoxDriver();
+		super.before();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL);
 		this.carListPage = new CarListPage(this.webDriver);
 	}

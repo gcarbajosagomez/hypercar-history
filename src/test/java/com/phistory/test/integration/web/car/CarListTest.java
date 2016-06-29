@@ -1,25 +1,23 @@
 package com.phistory.test.integration.web.car;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
-import static com.phistory.test.integration.web.BaseIntegrationTest.TEST_SERVER_HOST;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.notNullValue;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.phistory.Main;
+import com.phistory.test.integration.web.BaseIntegrationTest;
 
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration
@@ -27,17 +25,16 @@ import com.phistory.Main;
 @TestExecutionListeners(inheritListeners = false,
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
-public class CarListTest extends AbstractTestNGSpringContextTests
+public class CarListTest extends BaseIntegrationTest
 {	
 	@Value("${local.server.port}")
 	private int port;
-	private WebDriver webDriver;
 	private CarListPage carListPage;
 
 	@BeforeClass
 	public void before() throws Exception
 	{
-		this.webDriver = new FirefoxDriver();
+		super.before();		
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL);
 		this.carListPage = new CarListPage(this.webDriver);
 	}
@@ -50,7 +47,7 @@ public class CarListTest extends AbstractTestNGSpringContextTests
 	
 	public void test_there_are_cars_listed() throws Exception
 	{
-		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), is(notNullValue()));
+		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), equalTo(notNullValue()));
 	}
 	
 	@AfterClass

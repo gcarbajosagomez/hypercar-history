@@ -1,26 +1,23 @@
 package com.phistory.test.integration.web.index;
 
 import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
-import static com.phistory.test.integration.web.BaseIntegrationTest.TEST_SERVER_HOST;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.phistory.Main;
+import com.phistory.test.integration.web.BaseIntegrationTest;
 
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration
@@ -28,17 +25,16 @@ import com.phistory.Main;
 @TestExecutionListeners(inheritListeners = false,
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
-public class IndexTest extends AbstractTestNGSpringContextTests
+public class IndexTest extends BaseIntegrationTest
 {	
 	private IndexPage indexPage;
 	@Value("${local.server.port}")
 	private int port;
-	private WebDriver webDriver;
 	
 	@BeforeClass
 	public void before() throws Exception
 	{
-		this.webDriver = new FirefoxDriver();
+		super.before();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + INDEX_URL);
 		this.indexPage = new IndexPage(this.webDriver);
 	}
