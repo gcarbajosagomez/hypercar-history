@@ -81,8 +81,7 @@
 		              		<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 		            	</manifest>
 		            	<manifestEntries>
-		              		<url>${project.url}</url>
-		              		
+		              		<url>${project.url}</url>		              		
 		            	</manifestEntries>
 		        	</archive>
 		        </configuration>
@@ -155,7 +154,6 @@
 						<fileset>
 							<directory>deployments</directory>
 							<includes>
-								<include>*.war</include>
 								<include>*.jar</include>
 								<followSymlinks>false</followSymlinks>
 							</includes>
