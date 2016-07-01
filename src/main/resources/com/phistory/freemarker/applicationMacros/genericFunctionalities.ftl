@@ -300,7 +300,7 @@
       					</div>
       					<div class="row">       					
         					<p class="col-lg-12 text-muted text-center" style="padding-top: 30px">
-								${getTextSource('paganiHistory')} ${.now?string("yyyy")}. ${getTextSource('footer.allRightsReserved')}.
+								${getTextSource('paganiHistory')} 2015 - ${.now?string("yyyy")}. ${getTextSource('footer.allRightsReserved')}.
 							</p>
     	  				</div>
     				</div>     
