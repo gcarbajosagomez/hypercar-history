@@ -9,8 +9,12 @@ import com.phistory.test.integration.web.BasePage;
 
 public class FooterPage extends BasePage
 {	
+	private static final Integer PIXELS_TO_SCROLL_DOWN = 800;
+	
 	@FindBy(id = "contact-us-link")
 	private WebElement contactUsLink;
+	@FindBy(id = "technology-stack-link")
+	private WebElement technologyStackLink;
 	
 	public FooterPage(WebDriver webDriver)
 	{
@@ -20,8 +24,15 @@ public class FooterPage extends BasePage
 	
 	public void clickContactUsLink()
 	{
-		JavascriptExecutor jse = (JavascriptExecutor) super.getWebDriver();
-		jse.executeScript("window.scrollBy(0, 800)", "");
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) super.getWebDriver();
+		jsExecutor.executeScript("window.scrollBy(0, 800)", "");
 		this.contactUsLink.click();
+	}
+	
+	public void clickTechnologyStackLink()
+	{
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) super.getWebDriver();
+		jsExecutor.executeScript("window.scrollBy(0, " + PIXELS_TO_SCROLL_DOWN + ")", "");
+		this.technologyStackLink.click();
 	}
 }

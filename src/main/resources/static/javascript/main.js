@@ -170,3 +170,20 @@ function setupContentSearchEventListeners()
   		$( "#content-search-input" ).keypress();
 	});		
 }
+
+function openTechnologyStackModal()
+{			
+	$.ajax({
+	    url: "/technologyStack",
+	    type: 'GET',
+	    beforeSend: function(xhr)
+	    {
+	    	xhr = addCrsfTokenToAjaxRequest(xhr);
+	    }
+	})
+	.done(function(data)
+	{ 
+		$('#technology-stack-modal-div')[0].innerHTML = data; 
+		$('#technology-stack-modal-div').modal('show');
+	});
+}

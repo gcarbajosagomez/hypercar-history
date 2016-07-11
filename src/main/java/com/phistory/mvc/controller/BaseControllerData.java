@@ -5,14 +5,15 @@ public class BaseControllerData
 	/********************
      *******URLs*********
      ********************/
-	public static final String INDEX_URL   		 				= "index";
-	public static final String CARS_URL           				= "cars";
-	public static final String ENGINES_URL           			= "engines";
-	public static final String MODELS_SEARCH_URL  				= "modelsSearch";
-	public static final String PICTURES_URL 		 			= "pictures";
-	public static final String COOKIES_POLICY_URL 				= "cookiesPolicy"; 
-	public static final String PAGINATION_URL					= "pagination";
-	public static final String CONTACT_US_URL					= "contactUs";
+	public static final String INDEX_URL   		 	= "index";
+	public static final String CARS_URL           	= "cars";
+	public static final String ENGINES_URL          = "engines";
+	public static final String MODELS_SEARCH_URL  	= "modelsSearch";
+	public static final String PICTURES_URL 		= "pictures";
+	public static final String COOKIES_POLICY_URL 	= "cookiesPolicy"; 
+	public static final String PAGINATION_URL		= "pagination";
+	public static final String CONTACT_US_URL		= "contactUs";
+	public static final String TECHNOLOGY_STACK_URL	= "technologyStack";
 	
 	/*************************
      ******Request params*****

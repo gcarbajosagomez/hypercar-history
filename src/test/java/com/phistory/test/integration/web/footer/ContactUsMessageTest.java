@@ -44,13 +44,6 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 		this.footerPage = new FooterPage(this.webDriver);
 	}
 	
-	private void test_click_contact_us_link_should_display_contact_us_modal() throws InterruptedException
-	{
-		this.footerPage.clickContactUsLink();
-		Thread.sleep(1000);
-		assertThat("Contact Us message modal should be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(true));
-	}
-	
 	@Test(groups = "contactUsMessageTests")
 	public void test_initial_click_contact_us_link_should_display_contact_us_modal() throws InterruptedException
 	{
@@ -116,15 +109,26 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 	{
 		this.test_click_contact_us_link_should_display_contact_us_modal();
 		assertThat("Contact Us message modal should be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(true));
-		this.dismissContactUsModal();
+		this.contactUsPage.clickDismissContactUsModalButon();
+		Thread.sleep(1000);
+		assertThat("Contact Us message modal should not be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(false));
+	}
+	
+	private void test_click_contact_us_link_should_display_contact_us_modal() throws InterruptedException
+	{
+		this.footerPage.clickContactUsLink();
+		Thread.sleep(1000);
+		assertThat("Contact Us message modal should be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(true));
 	}
 	
 	@AfterMethod
 	public void dismissContactUsModal() throws InterruptedException
 	{
-		this.contactUsPage.clickCloseModalButon();
-		Thread.sleep(1000);
-		assertThat("Contact Us message modal should not be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(false));
+		if (this.contactUsPage.isDismissContactUsModalButonDisplayed())
+		{
+			this.contactUsPage.clickDismissContactUsModalButon();
+			Thread.sleep(1000);
+		}
 	}
 	
 	@AfterClass

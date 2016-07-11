@@ -11,7 +11,7 @@ public class ContactUsPage extends BasePage
 	@FindBy(id = "contact-us-main-div")
 	private WebElement contactUsMainDiv;	
 	@FindBy(className = "close")
-	private WebElement closeModalButon;
+	private WebElement dismissContactUsModalButon;
 	@FindBy(id = "contact-us-subject")
 	private WebElement contactUsSubjectInput;	
 	@FindBy(id = "contact-us-sender-name")
@@ -47,15 +47,23 @@ public class ContactUsPage extends BasePage
 		}
 	}
 	
-	public boolean isCloseModalButonDisplayed()
+	public boolean isDismissContactUsModalButonDisplayed()
 	{
 		try
 		{
-			return this.closeModalButon.isDisplayed();
+			return this.dismissContactUsModalButon.isDisplayed();
 		} 
-		catch (Exception e)
+		catch(Exception e)
 		{
 			return false;
+		}		
+	}
+	
+	public void clickDismissContactUsModalButon()
+	{
+		if (this.dismissContactUsModalButon.isDisplayed())
+		{
+			this.dismissContactUsModalButon.click();
 		}
 	}
 	
@@ -111,13 +119,5 @@ public class ContactUsPage extends BasePage
 	public void clickConfirmSendMessageButton()
 	{
 		this.contactUsConfirmSendMessageButton.click();
-	}
-	
-	public void clickCloseModalButon()
-	{
-		if (this.closeModalButon.isDisplayed())
-		{
-			this.closeModalButon.click();
-		}
 	}
 }

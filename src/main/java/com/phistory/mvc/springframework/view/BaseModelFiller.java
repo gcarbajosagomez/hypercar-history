@@ -13,6 +13,7 @@ import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
 import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.EDIT_URL;
+import static com.phistory.mvc.controller.cms.CmsBaseController.TECHNOLOGY_STACK_URL;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -35,6 +36,7 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("enginesURL", 		   	ENGINES_URL);	
 		model.addAttribute("modelsSearchURL", 	   	MODELS_SEARCH_URL);
 		model.addAttribute("editURL", 				EDIT_URL);
+		model.addAttribute("technologyStackURL", 	TECHNOLOGY_STACK_URL);
 		model.addAttribute(ID, 				   		ID);
 		model.addAttribute("carsPerPage", 		   	CARS_PER_PAGE);
 		model.addAttribute(PAG_NUM, 			   	PAG_NUM);
