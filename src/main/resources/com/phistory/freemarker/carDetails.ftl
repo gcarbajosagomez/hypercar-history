@@ -665,7 +665,7 @@
 	    	});
 	    }
 	}
-<#if youtubeVideosPresent == true>	
+	<#if youtubeVideosPresent == true>
 		function hideOrShowPictures(show)
 		{
 			if (show)
@@ -682,8 +682,7 @@
 				$('#car-videos-carousel').removeClass('hidden');
 				$('#show-videos-tab').addClass('active');
 			}
-		}		
-
+		}
 	</script>
 	
 	<script src="/resources/javascript/lib/youtube-iframe-api.min.js"></script>
@@ -720,7 +719,7 @@
 				player${videoId?index}.pauseVideo();
     		</#list>
 		});
-</#if>
+	</#if>
 	
 	$(function()
 	{

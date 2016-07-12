@@ -703,7 +703,7 @@
 								message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
 							});      						
 			
-							xhr = addCrsfTokenToAjaxRequest(xhr);
+							addCrsfTokenToAjaxRequest(xhr);
 						}
 				  	  })
 			          .done(function (data)
@@ -910,7 +910,7 @@
 					    contentType: 'application/json; charset=UTF-8',
 					    beforeSend: function(xhr)
 			    	    {
-					    	xhr = addCrsfTokenToAjaxRequest(xhr);
+					    	addCrsfTokenToAjaxRequest(xhr);
 			    	    }
 					})
 					.done(function(data)
