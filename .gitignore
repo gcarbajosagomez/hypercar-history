@@ -2,10 +2,9 @@
 /db
 /deployments
 /com.tcp.data.model.*
-.tern-project
 *.log
 /logs
-.fuse*
 /test-output
 /.idea/
 /*.iml
+/pagani-history-web.iml
