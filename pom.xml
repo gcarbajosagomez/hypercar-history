@@ -32,13 +32,14 @@
 		<javax.ee.version>7.0</javax.ee.version>
 		<javax.mail.version>1.4.7</javax.mail.version>
 		<com.the-carpedia-data.version>1.2.3</com.the-carpedia-data.version>
+		<com.google.guava.version>19.0</com.google.guava.version>
 		<org.springframework.version>4.2.3.RELEASE</org.springframework.version>
 		<org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
 		<org.spring-boot.version>1.3.5.RELEASE</org.spring-boot.version>
 		<org.freemarker.version>2.3.23</org.freemarker.version>	
 		<org.projectlombok.version>1.16.6</org.projectlombok.version>
 		<commons.collection.version>3.2.1</commons.collection.version>
-		<mysql.connector.version>5.1.36</mysql.connector.version>	
+		<mysql.connector.version>5.1.36</mysql.connector.version>
 		<org.selenium.version>2.53.0</org.selenium.version>
 		<org.mockito-all.version>1.10.19</org.mockito-all.version>
 		<org.testng-all.version>6.9.10</org.testng-all.version>
@@ -381,7 +382,19 @@
 			<version>${org.projectlombok.version}</version>
 			<classifier>javadoc</classifier>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${com.google.guava.version}</version>
+			<classifier>javadoc</classifier>
+		</dependency>
+
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>

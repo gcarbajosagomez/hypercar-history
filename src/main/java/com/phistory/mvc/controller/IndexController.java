@@ -4,18 +4,15 @@ import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 import javax.inject.Inject;
 
+import com.google.common.collect.HashMultimap;
+import com.tcp.data.model.Picture;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.beans.factory.InitializingBean;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,23 +31,31 @@ import com.tcp.data.model.car.Car;
 @Controller
 @RequestMapping(value = {"/", INDEX_URL},
 				method = HEAD)
-public class IndexController extends BaseController implements InitializingBean
-{	
-	@Inject
+public class IndexController extends BaseController
+{
+    private static final int HOURS_TO_LOAD_PICTURE_IDS_AFTER = 2;
+    private static final int MAX_NUMBER_PICTURES_TO_DISPLAY = 9;
+
+    @Inject
 	private ModelFiller pictureModelFiller;	
 	@Inject
 	private ModelFiller carModelFiller;	
 	@Inject
-	private Random previewPictureRandomGenerator;	
-	private List<Long> picturesIds = new ArrayList<>();
+	private Random previewPictureRandomGenerator;
+	private DateTime picturesLoadingTime;
+	private List<Long> pictureIds = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleDefault(Model model)
-	{		
+	{
 		try
-		{		
-			carModelFiller.fillModel(model);
-			pictureModelFiller.fillModel(model);
+		{
+            if (this.mustLoadPictureIds()) {
+                this.loadPictureIds();
+            }
+
+            this.carModelFiller.fillModel(model);
+            this.pictureModelFiller.fillModel(model);
 			model.addAttribute("carNamesToPictureIds", this.generateRandomCarNamesToPictureIds());	
 			
 			return new ModelAndView(INDEX_URL); 
@@ -67,58 +72,76 @@ public class IndexController extends BaseController implements InitializingBean
 	 * Generates a list of random car names to picture Ids
 	 * @return
 	 */
-	private Map<String, Long> generateRandomCarNamesToPictureIds()
+	private Map<String, Collection<Long>> generateRandomCarNamesToPictureIds()
 	{	
-		List<Long> randomPicIds = this.picturesIds;		
-		Map<String, Long> carNamesToPictureIds = new HashMap<>();
+		List<Long> randomPictureIds = new ArrayList<>();
+        HashMultimap<String, Long> carNamesToPictureIds = HashMultimap.create();
 		
-		if (!this.picturesIds.isEmpty())
+		if (!this.pictureIds.isEmpty())
 		{
-			int upperIndexLimit = 9;
-			
-			if (this.picturesIds.size() > upperIndexLimit)
+			if (this.pictureIds.size() > MAX_NUMBER_PICTURES_TO_DISPLAY)
 			{				
-				randomPicIds = this.generateRadomPictureIdsList(this.picturesIds, upperIndexLimit);				
+				randomPictureIds = this.generateRandomPictureIdsList(this.pictureIds);
 			}
+
+            randomPictureIds.forEach(pictureId ->
+            {
+                Car car = super.getCarDao().getByPictureId(pictureId);
+                StringBuilder pictureDescription =
+                        new StringBuilder(car.getManufacturer().getFriendlyName())
+                        .append(" ")
+                        .append(car.getModel());
+
+                carNamesToPictureIds.put(pictureDescription.toString(), pictureId);
+            });
 		}
 		
-		randomPicIds.forEach(pictureId ->
-		{
-			Car car = getCarDao().getByPictureId(pictureId);
-			StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName()).append(" ")
-														 .append(car.getModel());
-			
-			carNamesToPictureIds.put(pictureDescription.toString(), pictureId);
-		});
-		
-		return carNamesToPictureIds;
+		return carNamesToPictureIds.asMap();
 	}
+
+    /**
+     * Load all the {@link Car} {@link Picture} Ids there are on the DB
+     */
+    private void loadPictureIds() {
+        this.pictureIds = super.getPictureDao().getIdsByCarId(null);
+        Collections.shuffle(this.pictureIds);
+    }
+
+    /**
+     * Calculate whether or not the {@link List} of picture Ids must be loaded from the DB
+     *
+     * @return true if it must be loaded, false otherwise
+     */
+    private boolean mustLoadPictureIds()
+    {
+        DateTime now = DateTime.now();
+        if (this.picturesLoadingTime == null) {
+            this.picturesLoadingTime = now;
+            return true;
+        }
+        else if (this.picturesLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
+            return true;
+        }
+        return false;
+    }
 	
 	/**
-	 * Generates a list of random picture Ids out of all of the Picture Ids in the database
+	 * Generates a {@link List} of random {@link Picture} Ids out of all of the {@link Picture} Ids in the database.
 	 * 
 	 * @param pictureIds
-	 * @param numOfIdsToSelect
-	 * @return
+	 * @return A {@link List} of {@link IndexController#MAX_NUMBER_PICTURES_TO_DISPLAY} {@link Picture} Ids
 	 */
-	private List<Long> generateRadomPictureIdsList(List<Long> pictureIds, int numOfIdsToSelect)
+	private List<Long> generateRandomPictureIdsList(List<Long> pictureIds)
 	{
 		List<Long> randomPictureIds = new ArrayList<>();
 		int randomNumberMaxBound = pictureIds.size();
 		
-		for (int i = 0; i < numOfIdsToSelect; i++)
+		while(randomPictureIds.size() < MAX_NUMBER_PICTURES_TO_DISPLAY)
 		{	
 			int randomPictureIndex = previewPictureRandomGenerator.nextInt(randomNumberMaxBound);
 			randomPictureIds.add(pictureIds.get(randomPictureIndex));
 		}
 		
 		return randomPictureIds;
-	}
-
-	@Override
-	public void afterPropertiesSet() throws Exception
-	{
-		this.picturesIds = super.getPictureDao().getIdsByCarId(null);
-		Collections.shuffle(this.picturesIds);
 	}
 }

@@ -4,25 +4,29 @@
 
 <div id="main-container" class="container">
 	<div class="row">
-		<div id="index-jumbotron" class="jumbotron"> 			
-			<div class="<#if carNamesToPictureIds?? && (carNamesToPictureIds?size > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
-				<#if carNamesToPictureIds?? && (carNamesToPictureIds?size > 0)>
+		<div id="index-jumbotron" class="jumbotron">
+			<div class="thumbnail vertically-aligned-div car-pictures-carousel-div">
+				<#if (carNamesToPictureIds?size > 0)>
 					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div" data-ride="carousel">
 						<#-- Indicators -->
 	  					<ol class="carousel-indicators">
+                            <#assign pictureIndex = 0>
   							<#list carNamesToPictureIds?keys as carName>
-    							<li data-target="#car-pictures-carousel" data-slide-to="${carName_index}" class="<#if carName_index == 0> active </#if>"></li>
+                                <#list carNamesToPictureIds[carName] as pictureId>
+    							    <li data-target="#car-pictures-carousel" data-slide-to="${pictureIndex}" class="<#if pictureIndex == 0>active</#if>"></li>
+                                    <#assign pictureIndex++>
+                                </#list>
     						</#list>
-	 					</ol>						
+	 					</ol>
 						<#-- Wrapper for slides -->
-  						<div class="carousel-inner">    						
+  						<div class="carousel-inner">
     						<#list carNamesToPictureIds?keys as carName>
-    							<div class="item <#if carName_index == 0> active </#if>" id="pic-div-${carNamesToPictureIds[carName]}">
-      								<img src="${picturesURL}/${loadCarPictureAction}?${picId}=${carNamesToPictureIds[carName]}" alt="${carName}" >
-      								<div class="carousel-caption">
-        								${carName}		
-	      							</div>
-		      					</div>
+    						    <#list carNamesToPictureIds[carName] as pictureId>
+    							    <div class="item <#if carName_index == 0 && pictureId_index == 0> active </#if>">
+      								    <img src="${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${carName}">
+      								    <div class="carousel-caption">${carName}</div>
+		      					    </div>
+    		  				    </#list>
     		  				</#list>
       					</div>
       					<#-- Controls -->
@@ -33,7 +37,7 @@
     						<span class="glyphicon glyphicon-chevron-right"></span>
 	  					</a>
       				</div>
- 	     		</#if>   
+ 	     		</#if>
 			</div> 
 		</div>
 	</div>
