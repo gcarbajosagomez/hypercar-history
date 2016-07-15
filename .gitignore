@@ -1,5 +1,4 @@
 /target
-/db
 /deployments
 /com.tcp.data.model.*
 *.log
@@ -8,3 +7,4 @@
 /.idea/
 /*.iml
 /pagani-history-web.iml
+*.sql
