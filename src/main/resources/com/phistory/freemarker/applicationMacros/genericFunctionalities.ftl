@@ -102,7 +102,7 @@
 											<h1 class="italic-font">${getTextSource('paganiHistory')}</h1>
 											<h4 class="italic-font text-right" style="padding-right: 30px">${getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
-          					   			<div  class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          					   			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           					   				<img class="main-logo" src="/resources/img/pagani-logo.png">
           					   			</div>
 	          					   	</div>

@@ -43,8 +43,8 @@ html, body
 
 .main-logo
 {
-	height: 90px;
-	padding-top: 15px;
+    margin-top: 15px;
+	height: 75px;
 }
 
 .navbar-default .navbar-nav > li > div > div > a
@@ -88,10 +88,11 @@ html, body
     color: white;
     background: rgb(200, 200, 200);
     box-shadow: 0 0 0 5px rgb(61, 71, 82);
-    .content-search-input + label .search-icon
-    {
-       color: white;
-    }
+}
+
+.content-search-input + label .search-icon
+{
+	color: white;
 }
 
 .content-search-input:focus
@@ -102,15 +103,15 @@ html, body
     padding-left: 15px;
     cursor: text;
     width: 300px;
-    border: 1px auto;
-    border-radius: auto;
-    border-color: #BD1B1B;
-    background: rgb(255, 255, 255);
+	border-radius: auto;
+	border: 1px #BD1B1B;
+	background: rgb(255, 255, 255);
     color: #BD1B1B;
-    .content-search-input + label .search-icon
-    {
-        color: black;
-    }
+}
+
+.content-search-input + label .search-icon
+{
+    color: black;
 }
 
 @media (max-width: 575px)
@@ -519,7 +520,7 @@ html, body
 	html, body
 	{
   		height: 100%;
-  		font-size: 22px;
+  		font-size: 18px;
 	}
 	
 	.wrap   
@@ -537,7 +538,7 @@ html, body
 	.pagani-history-navbar .navbar-header
 	{
 		padding-top: 10px;
-		min-height: 110px;
+		min-height: 160px;
 	}
 	
 	.pagani-history-navbar .navbar-nav>li>a
@@ -551,11 +552,12 @@ html, body
 		width: 80%;		
 		max-width: 600px;
 	}
-	
-	.main-logo
-	{
-		height: 90px;
-	}
+
+    .main-logo
+    {
+        margin-top: 35px;
+        height: 75px;
+    }
 
 	.language-selection-div
 	{
@@ -592,10 +594,10 @@ html, body
 		height: 40px;
 		margin-bottom: 10px;
 	}
-	
+
 	a
 	{
-		font-size: 22px;
+		font-size: 18px;
 	}
 	
 	.language-flag
