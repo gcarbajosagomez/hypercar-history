@@ -3,8 +3,7 @@
 /com.tcp.data.model.*
 *.log
 /logs
-/test-output
 /.idea/
+.idea/
 /*.iml
-/pagani-history-web.iml
 *.sql
