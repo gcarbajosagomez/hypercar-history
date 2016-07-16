@@ -1,7 +1,7 @@
 <#include "applicationMacros/genericFunctionalities.ftl">
 
 <#if car??>
-	<#assign title>${getTextSource('pagani')} ${car.model} ${getTextSource('car.details.dataAndPictures')}</#assign>
+	<#assign title>${getTextSource('pagani')} ${car.model} ${getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
 <#else>
 	<#assign title>${getTextSource('title.noCarFound')}</#assign>
 </#if>
@@ -12,7 +12,7 @@
 	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
-				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@getCarProductionLife car/>)</h2>  
+				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@getCarProductionLife car/>)</h1>
 			</div>			
 			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
 				<#assign youtubeVideosPresent = true>						
@@ -150,11 +150,11 @@
 										</dt>
 										<dd>
 											<p class="text-muted">
-												<#if car.bodyShape??>
-													${getTextSource('car.bodyShape.${car.bodyShape}')}										
-												</#if>
 												<#if car.carSeatsConfig??>
-													${getTextSource('car.seatsConfig.${car.carSeatsConfig}')?lower_case}											
+													${getTextSource('car.seatsConfig.${car.carSeatsConfig}')}
+												</#if>
+												<#if car.bodyShape??>
+													${getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}
 												</#if>
 											</p>
 										</dd>										

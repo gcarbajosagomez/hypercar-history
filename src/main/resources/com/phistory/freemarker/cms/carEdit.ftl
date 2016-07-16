@@ -1,7 +1,7 @@
 <#include "../applicationMacros/genericFunctionalities.ftl">
 
 <#if CEFC.carForm.id??>
-	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${getTextSource('car.details.dataAndPictures')}</#assign>
+	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
 <#else>
 	<#assign title>${getTextSource('car.newCar')}</#assign>
 </#if>
