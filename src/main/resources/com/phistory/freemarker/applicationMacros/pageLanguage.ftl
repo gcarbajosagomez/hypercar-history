@@ -1,4 +1,7 @@
-<#macro addSetPageLanguage>
+<#import "/spring.ftl" as spring/>
+<#import "pagination.ftl" as pagination/>
+
+<#macro addSetPageLanguage chunkedModelsList=[]>
 	<script type='text/javascript'>
 		function setPageLanguage(locale, mainForm)
 		{  
@@ -46,16 +49,16 @@
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {
-			              	<#if requestURI?contains(carsURL) && (chunkedModelsList??)>              		
-			              		<@createCarsPagination chunkedModelsList![]/>
+			              	<#if requestURI?contains(carsURL) && (chunkedModelsList?size > 0)>
+			              		<@pagination.createCarsPagination chunkedModelsList/>
 			              	<#elseif requestURI?contains(modelsSearchURL)>
-								var contentSearchDto = {		
+								var contentSearchDto = {
 										 				 ${pagNum} 			: 1,
 				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 										 				 ${contentToSearch} : $("#content-search-input")[0].value,
-										 				 searchTotalResults : $("#search-total-results")[0].value	
-				         			   				   };				         		 	   				   
-								<@createContentSearchPaginationFunction/>
+										 				 searchTotalResults : $("#search-total-results")[0].value
+				         			   				   };
+								<@pagination.createContentSearchPaginationFunction/>
 							</#if>
 			            }
 					</#if>
@@ -82,3 +85,11 @@
 		</#if>
 	</#list>
 </#macro>
+
+<#function getTextSource text arguments=[""]>
+	<#assign message>
+		<@spring.messageArgs text arguments/>
+	</#assign>
+
+	<#return message/>
+</#function>

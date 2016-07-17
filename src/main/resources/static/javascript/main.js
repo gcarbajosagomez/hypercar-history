@@ -161,7 +161,7 @@ function setupContentSearchEventListeners()
   		if (event.which == 13)
   			{  									
      			event.preventDefault();
-     			handleContentSearch($("#content-search-input")[0].value, $('#main-form')[0]);
+     			handleContentSearch($("#content-search-input")[0].value);
   			}  	
 		});
 						
@@ -171,6 +171,7 @@ function setupContentSearchEventListeners()
 	});		
 }
 
+//this function is called from an <a> tag in the text sources files
 function openTechnologyStackModal()
 {			
 	$.ajax({

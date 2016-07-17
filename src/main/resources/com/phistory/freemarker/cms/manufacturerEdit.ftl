@@ -1,32 +1,34 @@
-<#include "../applicationMacros/genericFunctionalities.ftl">
+<#import "/spring.ftl" as spring/>
+<#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "../applicationMacros/pageLanguage.ftl" as language/>
 
 <#if MEFC.manufacturerForm.id??>
 	<#assign title>${MEFC.manufacturerForm.name}</#assign>
 <#else>
-	<#assign title>${getTextSource('manufacturer.newManufacturer')}</#assign>
+	<#assign title>${language.getTextSource('manufacturer.newManufacturer')}</#assign>
 </#if>
 
-<@startPage title/> 
+<@generic.startPage title/> 
 
 <div id="main-container" class="container">
 	<div class="row">		
-		<@addOperationResultMessage exceptionMessage!"", successMessage!""/>   
+		<@generic.addOperationResultMessage exceptionMessage!"", successMessage!""/>   
 	  	<div class="col-lg-9 col-sm-12 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${getTextSource('manufacturer')}</h2>
+					<h3 class="text-left">${language.getTextSource('manufacturer')}</h3>
 						
-					<input type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${getTextSource('cms.editManufacturer')}<#else>${getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
+					<input type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${language.getTextSource('cms.editManufacturer')}<#else>${language.getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
 					<#if MEFC.manufacturerForm.id??>
-						<input type="button" class="btn btn-danger" value="${getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${getTextSource('manufacturer.confirmDelete')}');"/>
+						<input type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${language.getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${getTextSource('cms.newManufacturer')}</a>             			
+	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newManufacturer')}</a>             			
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
           		   	  <#if MEFC.manufacturerForm.id??>
             			  <dt>          
-                			  ${getTextSource('id')}
+                			  ${language.getTextSource('id')}
                 		  </dt>
                 		  <dd>
 							  <h5 class="text-muted">${MEFC.manufacturerForm.id}</h5>
@@ -41,14 +43,14 @@
                            <@spring.showErrors '<br>'/>  
                		  </dd>
           			  <dt>
-             			   ${getTextSource('manufacturer.nationality')}
+             			   ${language.getTextSource('manufacturer.nationality')}
                		  </dt>                
                		  <dd>
                    		   <@spring.formInput "MEFC.manufacturerForm.nationality", "class=form-control", "text"/>
                    		   <@spring.showErrors '<br>'/> 
                		  </dd>           
           			  <dt>
-              			   ${getTextSource('manufacturer.story')}
+              			   ${language.getTextSource('manufacturer.story')}
                  	  </dt>
                  	  <div>
                		      <dd>               		  	   
@@ -57,7 +59,7 @@
                		      </dd>          
                		  </div> 
           			  <dt>
-               			   ${getTextSource('manufacturer.logo')}
+               			   ${language.getTextSource('manufacturer.logo')}
                 	  </dt>
               		  <dd>
                    	 	   <@spring.formInput "MEFC.manufacturerForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' size=20 onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
@@ -74,16 +76,16 @@
     </div>
 </div>
 
-<@endPage/>
+<@generic.endPage/>
 
 <script type="text/javascript">
 
 	function saveOrEditManufacturer()
 	{
 		<#if MEFC.manufacturerForm.id??>
-			editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${getTextSource('manufacturer.confirmEdit')}');
+			editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
 		<#else>
-			saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${getTextSource('manufacturer.confirmSave')}');
+			saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
 		</#if>
 	}
 

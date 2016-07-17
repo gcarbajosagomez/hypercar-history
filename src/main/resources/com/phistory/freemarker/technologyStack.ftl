@@ -1,11 +1,11 @@
-<#include "applicationMacros/genericFunctionalities.ftl">
+<#import "applicationMacros/pageLanguage.ftl" as language/>
 
 <div class="modal-dialog modal-lg">
 	<div class="modal-content">
 		<div class="modal-header">
 			<div class="row">
 				<div class="col-md-8 col-md-8 col-sm-10 col-xs-10">
-					<h3 class="modal-title">${getTextSource('footer.technologyStack')}</h3>
+					<h3 class="modal-title">${language.getTextSource('footer.technologyStack')}</h3>
 				</div>
 				<div class="col-md-4 col-sm-2 col-xs-2">                            
 					<button id="dismiss-technology-stack-modal-button" type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>			

@@ -1,6 +1,8 @@
-<#include "../applicationMacros/genericFunctionalities.ftl">
+<#import "/spring.ftl" as spring/>
+<#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "../applicationMacros/pageLanguage.ftl" as language/>
 
-<@startPage getTextSource('title.allManufacturers')/>   
+<@generic.startPage language.getTextSource('title.allManufacturers')/>   
 
 <div id="main-container" class="container panel panel-default main-container main-panel"> 
      <div class="row">
@@ -48,7 +50,7 @@
 							</#if>
 							<div class="<#if (chunkedManufacturersList?size == 1)>text-center<#else>text-right</#if> <#if (chunkedManufacturersList?size < 2)>col-lg-12 col-md-12 col-sm-12 col-xs-12<#else><#if (chunkedManufacturersList?size < 3)>col-lg-5<#else>col-lg-4</#if> col-md-5 col-sm-5 col-xs-12</#if>" style="height:56px; margin-bottom: 20px;">
 								<button id="manufacturers-per-page-menu" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
-    								${getTextSource('pagination.manufacturersPerPage')}
+    								${language.getTextSource('pagination.manufacturersPerPage')}
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="manufacturers-per-page-menu">
@@ -57,7 +59,7 @@
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=15">15</a></li>
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=20">20</a></li>
    									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${getTextSource('pagination.allManufacturers')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${language.getTextSource('pagination.allManufacturers')}</a></li>
   								</ul>
   							</div>
   						</div>
@@ -67,7 +69,7 @@
 		</div>
      </div>
 </div>
-<@endPage/>
+<@generic.endPage/>
 
 <#macro printManufacturerPreview manufacturer zIndex> 
 	<div class="thumbnail preview-div">		

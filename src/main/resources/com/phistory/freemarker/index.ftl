@@ -1,6 +1,7 @@
-<#include "applicationMacros/genericFunctionalities.ftl">
+<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "applicationMacros/pageLanguage.ftl" as language/>
 
-<@startPage getTextSource('title.index')/> 
+<@generic.startPage language.getTextSource('title.index')/>
 
 <div id="main-container" class="container">
 	<div class="row">
@@ -42,7 +43,7 @@
 		</div>
 	</div>
 </div>
-<@endPage/> 
+<@generic.endPage/>
 
 <script type="text/javascript">
 

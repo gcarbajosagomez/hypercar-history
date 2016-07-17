@@ -1,38 +1,39 @@
-<#include "../applicationMacros/genericFunctionalities.ftl">
+<#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "../applicationMacros/pageLanguage.ftl" as language/>
 
-<@startPage getTextSource('title.login')/>
+<@generic.startPage language.getTextSource('title.login')/>
 
 <div id="main-container" class="col-sm-offset-2">
 	<div class="row">
 		<div id="main-login-div" class="col-md-offset-2 col-md-offset-0 col-lg-8 col-sm-10 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body form-horizontal">
-					<@addOperationResultMessage error!"", logout!""/> 					
+					<@generic.addOperationResultMessage error!"", logout!""/>
 					<#if loggedIn?? && loggedIn == false> 
   						<div class="form-group">
-    						<label for="username-input" class="col-sm-2 control-label">${getTextSource('cms.login.user')}</label>
+    						<label for="username-input" class="col-sm-2 control-label">${language.getTextSource('cms.login.user')}</label>
 	    					<div class="col-sm-10">
-    	  						<input id="username-input" name="username" type="text" class="form-control" placeholder="${getTextSource('cms.login.user')}">
+    	  						<input id="username-input" name="username" type="text" class="form-control" placeholder="${language.getTextSource('cms.login.user')}">
     						</div>
   						</div>
   						<div class="form-group">
-    						<label for="password-input" class="col-sm-2 control-label">${getTextSource('cms.login.password')}</label>
+    						<label for="password-input" class="col-sm-2 control-label">${language.getTextSource('cms.login.password')}</label>
     						<div class="col-sm-10">
-	      						<input id="password-input" name="password" type="password" class="form-control" placeholder="${getTextSource('cms.login.password')}">
+	      						<input id="password-input" name="password" type="password" class="form-control" placeholder="${language.getTextSource('cms.login.password')}">
     						</div>
   						</div>
   						<div class="form-group">
     						<div class="col-sm-offset-2 col-sm-10">
-      							<button id="login-button" class="btn btn-success" onClick="submitLoginForm(true);">${getTextSource('cms.login')}</button>  						
+      							<button id="login-button" class="btn btn-success" onClick="submitLoginForm(true);">${language.getTextSource('cms.login')}</button>  						
     						</div>
   						</div>
 					</#if> 
 					<#if loggedIn?? && loggedIn == true>   
-						<button id="logout-button" class="btn btn-danger" onClick="submitLoginForm(false);">${getTextSource('cms.logout')}</button>
+						<button id="logout-button" class="btn btn-danger" onClick="submitLoginForm(false);">${language.getTextSource('cms.logout')}</button>
 					</#if>  
 				</div>
 			</div>
 		</div>		
 	</div>
 </div>
-<@endPage/>
+<@generic.endPage/>

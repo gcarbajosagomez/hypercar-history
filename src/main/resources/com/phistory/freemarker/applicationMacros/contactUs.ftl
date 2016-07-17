@@ -1,3 +1,5 @@
+<#import "pageLanguage.ftl" as language/>
+
 <#macro createContactUsDialog>
 	<div id="contact-us-modal-div" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contact-us-label" aria-hidden="true">
 		<div class="modal-dialog modal-lg">
@@ -5,7 +7,7 @@
 				<div class="modal-header">
 					<div class="row">
 						<div class="col-md-8 col-md-8 col-sm-10 col-xs-10">
-							<h3 class="modal-title">${getTextSource('footer.contactUs')}</h3>
+							<h3 class="modal-title">${language.getTextSource('footer.contactUs')}</h3>
 						</div>
 						<div class="col-md-4 col-sm-2 col-xs-2">                            
 							<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>			
@@ -24,23 +26,23 @@
 								<span class="sr-only"></span>
 							</div>													    							
 							<div class="form-group">
-								<label for="contact-us-subject">${getTextSource('footer.contactUs.subject')}:</label>
+								<label for="contact-us-subject">${language.getTextSource('footer.contactUs.subject')}:</label>
 								<input id="contact-us-subject" type="text" class="form-control">	    		    										
 							</div>
 							<div class="form-group">
-								<label for="contact-us-sender-name">${getTextSource('footer.contactUs.name')}:</label>
-								<input id="contact-us-sender-name" type="text" class="form-control" placeholder="${getTextSource('optional')}">	 										
+								<label for="contact-us-sender-name">${language.getTextSource('footer.contactUs.name')}:</label>
+								<input id="contact-us-sender-name" type="text" class="form-control" placeholder="${language.getTextSource('optional')}">	 										
 							</div>
 							<div class="form-group">
-								<label for="contact-us-sender-email">${getTextSource('footer.contactUs.email')}:</label>
-								<input id="contact-us-sender-email" type="email" class="form-control" placeholder="${getTextSource('optional')}">			    										
+								<label for="contact-us-sender-email">${language.getTextSource('footer.contactUs.email')}:</label>
+								<input id="contact-us-sender-email" type="email" class="form-control" placeholder="${language.getTextSource('optional')}">			    										
 							</div>
 							<div class="form-group">
-								<label for="contact-us-message">${getTextSource('footer.contactUs.message')}:</label>
+								<label for="contact-us-message">${language.getTextSource('footer.contactUs.message')}:</label>
 							  	<textarea id="contact-us-message" class="form-control" rows="12"></textarea>
 							</div>
 							<div class="form-group">    														
-								<button id="contact-us-send-message-button" class="btn btn-success" onClick="sendContactUsMessage('${getTextSource('footer.contactUs.confirmSend')}');">${getTextSource('footer.contactUs.sendMessage')}</button>  						
+								<button id="contact-us-send-message-button" class="btn btn-success" onClick="sendContactUsMessage('${language.getTextSource('footer.contactUs.confirmSend')}');">${language.getTextSource('footer.contactUs.sendMessage')}</button>  						
 							</div>
 						</div>
 					</div>
@@ -78,7 +80,7 @@
 			        					border:         '0px solid', 
 			        					backgroundColor:'rgba(94, 92, 92, 0)'
 			    				},
-			                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+			                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
 			            	});
 							
 							addCrsfTokenToAjaxRequest(xhr);

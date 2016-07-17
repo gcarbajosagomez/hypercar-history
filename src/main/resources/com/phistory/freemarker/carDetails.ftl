@@ -1,18 +1,19 @@
-<#include "applicationMacros/genericFunctionalities.ftl">
+<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "applicationMacros/pageLanguage.ftl" as language/>
 
 <#if car??>
-	<#assign title>${getTextSource('pagani')} ${car.model} ${getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
+	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
 <#else>
-	<#assign title>${getTextSource('title.noCarFound')}</#assign>
+	<#assign title>${language.getTextSource('title.noCarFound')}</#assign>
 </#if>
 
-<@startPage title/> 
+<@generic.startPage title/> 
 
 <div id="main-container" class="container">
 	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
-				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@getCarProductionLife car/>)</h1>
+				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@generic.getCarProductionLife car/>)</h1>
 			</div>			
 			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
 				<#assign youtubeVideosPresent = true>						
@@ -69,15 +70,15 @@
 		  					</a>
 						</div>	
 					</#if>
-					<@addBlueImpGallery/>
+					<@generic.addBlueImpGallery/>
   				<#else>
-  					<h2 class="text-center">${getTextSource('noPicturesAvailable')}</h2>
+  					<h2 class="text-center">${language.getTextSource('noPicturesAvailable')}</h2>
   				</#if>
 			</div>
 			<#if youtubeVideosPresent = true>
 				<ul class="nav nav-tabs">
-					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(true)">${getTextSource('car.pictures')}</a></li>
-					<li id="show-videos-tab"  class="cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(false)">${getTextSource('car.videos')}</a></li>
+					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(true)">${language.getTextSource('car.pictures')}</a></li>
+					<li id="show-videos-tab"  class="cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(false)">${language.getTextSource('car.videos')}</a></li>
 				</ul>
 			</#if>
 			<div id="main-car-details-div" class="panel-body col-lg-12">	
@@ -91,14 +92,14 @@
 										
 										<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 dropdown" style="margin-top: 20px; margin-bottom: 10px; padding-left: 0px;">										
 											<button class="btn btn-default dropdown-toggle" type="button" id="units-of-measure-dropdown" data-toggle="dropdown" aria-expanded="true">
-												${getTextSource('unitsOfMeasure')} <span class="caret"></span>
+												${language.getTextSource('unitsOfMeasure')} <span class="caret"></span>
   											</button>
           									<ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="units-of-measure-dropdown"> 
           										<li role="presentation">
 													<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setUnitsOfMeasure('${unitsOfMeasureMetric}', $('#main-form')[0]);" style="padding-right: 0px; padding-left: 0px;">
           												<div class="row" style="margin: 0px;">
           											    	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding-right: 0px;">									
-	          													${getTextSource('unitsOfMeasure.metric')}		
+	          													${language.getTextSource('unitsOfMeasure.metric')}		
 															</div>
 															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 center-block" style="padding-right: 0px; padding-top: 5px;">    										
           														<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>  
@@ -111,7 +112,7 @@
 													<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setUnitsOfMeasure('${unitsOfMeasureImperial}', $('#main-form')[0]);" style="padding-right: 0px; padding-left: 0px;">
 														<div class="row" style="margin: 0px;">        								
           													<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7" style="padding-right: 0px;">
-																${getTextSource('unitsOfMeasure.imperial')} 
+																${language.getTextSource('unitsOfMeasure.imperial')} 
 															</div>												
 															<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 center-block" style="padding-right: 0px; padding-top: 5px;">    										
           														<i id="imperial-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>  
@@ -126,56 +127,56 @@
 								<div class="panel-body">
 									<dl class="dl-horizontal text-left">
 										<dt>
-		  									${getTextSource('car.productionType')} :
+		  									${language.getTextSource('car.productionType')} :
   										</dt>
   										<dd>
   											<p class="text-muted">  										
-  												${getTextSource('car.productionType.${car.productionType.getName()}')}  												
+  												${language.getTextSource('car.productionType.${car.productionType.getName()}')}  												
 				  							</p>
   										</dd>
 		  								<dt>
-			  								${getTextSource('car.driveWheelType')} :
+			  								${language.getTextSource('car.driveWheelType')} :
   										</dt>
   										<dd>
 	  										<p class="text-muted">
   												<#if car.driveWheelType??>
-  													${getTextSource('car.driveWheelType.${car.driveWheelType}')}
+  													${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}
   												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
 		  									</p>
 	  									</dd>
   										<dt>
-											${getTextSource('car.bodyShape')} :
+											${language.getTextSource('car.bodyShape')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
 												<#if car.carSeatsConfig??>
-													${getTextSource('car.seatsConfig.${car.carSeatsConfig}')}
+													${language.getTextSource('car.seatsConfig.${car.carSeatsConfig}')}
 												</#if>
 												<#if car.bodyShape??>
-													${getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}
+													${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}
 												</#if>
 											</p>
 										</dd>										
   										<dt>
-											${getTextSource('car.roadLegal')} :
+											${language.getTextSource('car.roadLegal')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
 												<#if car.roadLegal == true>
-													${getTextSource('yes')}	
+													${language.getTextSource('yes')}	
 												<#else>		
-													${getTextSource('no')}								
+													${language.getTextSource('no')}								
 												</#if>
 											</p>
 										</dd>
   										<dt class="double-height">
-  											${getTextSource('car.acceleration')} :<p class="text-muted">(
+  											${language.getTextSource('car.acceleration')} :<p class="text-muted">(
   											<#if unitsOfMeasure == unitsOfMeasureMetric>	
-													${getTextSource('0-100Km/h')}
+													${language.getTextSource('0-100Km/h')}
 											<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													${getTextSource('0-62Mph')}
+													${language.getTextSource('0-62Mph')}
 											</#if>
 											)</p> 
 										</dt>								
@@ -183,104 +184,104 @@
 											<p class="text-muted">
 												<@writeCarNumericData car.acceleration?default(-1)/>
 												<#if car.acceleration??>
-													<em class="measure-unit-text">${getTextSource('S')}</em>
+													<em class="measure-unit-text">${language.getTextSource('S')}</em>
 												</#if>
 											</p>
 										</dd>										
 										<dt>
-											${getTextSource('car.topSpeed')} :
+											${language.getTextSource('car.topSpeed')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
 												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.topSpeed?default(-1)/>	
 													<#if car.topSpeed??>		
-														<em class="measure-unit-text">${getTextSource('Km/h')}</em>
+														<em class="measure-unit-text">${language.getTextSource('Km/h')}</em>
 													</#if>		
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.topSpeed*0.621371)?default(-1)/>
 													<#if car.topSpeed??>		
-														<em class="measure-unit-text">${getTextSource('Mph')}</em>
+														<em class="measure-unit-text">${language.getTextSource('Mph')}</em>
 													</#if>
 												</#if>	
 											</p>
 										</dd>
 										<dt>
-		  									${getTextSource('car.engineLayout')} :
+		  									${language.getTextSource('car.engineLayout')} :
   										</dt>
   										<dd>
   											<p class="text-muted">
   												<#if car.engineLayout??>
-  													${getTextSource('car.engineLayout.${car.engineLayout}')}
+  													${language.getTextSource('car.engineLayout.${car.engineLayout}')}
   												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
 				  							</p>
   										</dd>
   										<dt>
-		  									${getTextSource('car.specificPower')} :
+		  									${language.getTextSource('car.specificPower')} :
   										</dt>
   										<dd>
   											<p class="text-muted"> 
   												<#if car.weight??>
 													<#if unitsOfMeasure == unitsOfMeasureMetric>	
-														<@writeNonDecimalCarNumericData (car.engine.maxPower/(car.weight/1000))?default(-1)/><em class="measure-unit-text">${getTextSource('cvPerTonne')}</em>		
+														<@writeNonDecimalCarNumericData (car.engine.maxPower/(car.weight/1000))?default(-1)/><em class="measure-unit-text">${language.getTextSource('cvPerTonne')}</em>		
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														<@writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.weight/1000))?default(-1)/><em class="measure-unit-text">${getTextSource('hpPerTonne')}</em>	
+														<@writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.weight/1000))?default(-1)/><em class="measure-unit-text">${language.getTextSource('hpPerTonne')}</em>	
 													</#if>						  											
   												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
   											</p>
   										</dd>
  			 							<dt>
- 			 								${getTextSource('car.weight')} :
+ 			 								${language.getTextSource('car.weight')} :
  		 								</dt>
 	  									<dd>
   											<p class="text-muted">
   												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.weight?default(-1)/>
 													<#if car.weight??>			
-														<em class="measure-unit-text">${getTextSource('Kg')}</em>	
+														<em class="measure-unit-text">${language.getTextSource('Kg')}</em>	
 													</#if>		
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.weight*2.20462)?default(-1)/>		
 													<#if car.weight??>			
-														<em class="measure-unit-text">${getTextSource('Lb')}</em>
+														<em class="measure-unit-text">${language.getTextSource('Lb')}</em>
 													</#if>	
 												</#if>
   											</p>
 		  								</dd>
 										<dt class="double-height">
-											${getTextSource('car.dimensions')} :<p class="text-muted">(${getTextSource('dimension.length')}/${getTextSource('dimension.width')}/${getTextSource('dimension.height')})</p>
+											${language.getTextSource('car.dimensions')} :<p class="text-muted">(${language.getTextSource('dimension.length')}/${language.getTextSource('dimension.width')}/${language.getTextSource('dimension.height')})</p>
 										</dt>										
 										<dd class="double-height">
 											<p class="text-muted">
 												<#if car.length??>
-													${car.length}<em class="measure-unit-text">${getTextSource('MM')}</em>
+													${car.length}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
 													/
 												<#if car.width??>
-													${car.width}<em class="measure-unit-text">${getTextSource('MM')}</em>
+													${car.width}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
 													/
 												<#if car.height??>
-													${car.height}<em class="measure-unit-text">${getTextSource('MM')}</em>
+													${car.height}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${getTextSource('undefined')}
+													${language.getTextSource('undefined')}
 												</#if>
 											</p>
 										</dd>										
 										<dt class="double-height">
-											${getTextSource('car.fuelConsumption')} :<p class="text-muted">(
+											${language.getTextSource('car.fuelConsumption')} :<p class="text-muted">(
   											<#if unitsOfMeasure == unitsOfMeasureMetric>	
-													${getTextSource('L/100Km')}
+													${language.getTextSource('L/100Km')}
 											<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													${getTextSource('MPG')}
+													${language.getTextSource('MPG')}
 											</#if>
 											)</p> 
 										</dt>
@@ -289,50 +290,50 @@
 												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.fuelConsumption?default(-1)/>
 													<#if car.fuelConsumption??>
-														<em class="measure-unit-text">${getTextSource('L/100Km')}</em>
+														<em class="measure-unit-text">${language.getTextSource('L/100Km')}</em>
 													</#if>	
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.fuelConsumption/282.481)?default(-1)/>
 													<#if car.fuelConsumption??>
-														<em class="measure-unit-text">${getTextSource('MPG')}</em>
+														<em class="measure-unit-text">${language.getTextSource('MPG')}</em>
 													</#if>	
 												</#if>											
 											</p>
 										</dd>										
 										<dt>
-											${getTextSource('car.fuelTankCapacity')} :
+											${language.getTextSource('car.fuelTankCapacity')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
 												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.fuelTankCapacity?default(-1)/>
 													<#if car.fuelTankCapacity??>
-														<em class="measure-unit-text">${getTextSource('L')}</em>
+														<em class="measure-unit-text">${language.getTextSource('L')}</em>
 													</#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.fuelTankCapacity*0.219969)?default(-1)/>
 													<#if car.fuelTankCapacity??>
-														<em class="measure-unit-text">${getTextSource('Gal')}</em>
+														<em class="measure-unit-text">${language.getTextSource('Gal')}</em>
 													</#if>
 												</#if>												
 											</p>
 										</dd>
 										<dt>
-											${getTextSource('car.autonomy')} :
+											${language.getTextSource('car.autonomy')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
 												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<#if car.fuelConsumption?? && car.fuelTankCapacity??>													
-														<@writeNonDecimalCarNumericData ((car.fuelTankCapacity)/(car.fuelConsumption)*100)?default(-1)/><em class="measure-unit-text">${getTextSource('Km')}</em>
+														<@writeNonDecimalCarNumericData ((car.fuelTankCapacity)/(car.fuelConsumption)*100)?default(-1)/><em class="measure-unit-text">${language.getTextSource('Km')}</em>
 													<#else>
-														${getTextSource('undefined')}
+														${language.getTextSource('undefined')}
 													</#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<#if car.fuelConsumption?? && car.fuelTankCapacity??>													
-														<@writeNonDecimalCarNumericData ((car.fuelTankCapacity*0.219969)/(car.fuelConsumption/282.481)*100)?default(-1)/><em class="measure-unit-text">${getTextSource('Miles')}</em>
+														<@writeNonDecimalCarNumericData ((car.fuelTankCapacity*0.219969)/(car.fuelConsumption/282.481)*100)?default(-1)/><em class="measure-unit-text">${language.getTextSource('Miles')}</em>
 													<#else>
-														${getTextSource('undefined')}
+														${language.getTextSource('undefined')}
 													</#if>
 												</#if>												
 											</p>
@@ -344,27 +345,27 @@
 						<div class="col-lg-6 col-sm-12">	
 							<div class="panel panel-default">
 								<div class="panel-heading" style="min-height: 84px">
-									<h3 class="text-left car-details-panel-heading">${getTextSource('engine')}<em class="text-muted"> (${car.engine.code})</em></h3>
+									<h3 class="text-left car-details-panel-heading">${language.getTextSource('engine')}<em class="text-muted"> (${car.engine.code})</em></h3>
 								</div>
 								<div class="panel-body">
 									<dl class="dl-horizontal text-left">
 										<dt>
-  											${getTextSource('engine.displacement')} :
+  											${language.getTextSource('engine.displacement')} :
 			  							</dt>
   										<dd>
   											<#if car.engine.size??>
   												<p class="text-muted">  	
-  													${(car.engine.size/1000)?string("0.#")} <em class="measure-unit-text">${getTextSource('L')}</em> (${car.engine.size} <em class="measure-unit-text">${getTextSource('CM3')}</em>)
+  													${(car.engine.size/1000)?string("0.#")} <em class="measure-unit-text">${language.getTextSource('L')}</em> (${car.engine.size} <em class="measure-unit-text">${language.getTextSource('CM3')}</em>)
   												</p>
 	 		 								</#if>
   										</dd>
   										<dt>
-  											${getTextSource('engine.type')} :
+  											${language.getTextSource('engine.type')} :
 			  							</dt>
   										<dd>
   											<p class="text-muted">  												
   												<#if car.engine.type??>
-  													${getTextSource('engine.type.${car.engine.type}')}
+  													${language.getTextSource('engine.type.${car.engine.type}')}
   												</#if>
   												<#if car.engine.cylinderDisposition?? && car.engine.numberOfCylinders??>
 		  											${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}
@@ -372,84 +373,84 @@
 		  									</p>
 	  									</dd>
   										<dt>
-  											${getTextSource('engine.numberOfValves')} :
+  											${language.getTextSource('engine.numberOfValves')} :
   										</dt>	
 	 		 							<dd>
   											<p class="text-muted">
   												<@writeCarNumericData car.engine.numberOfValves?default(-1)/>
   												<#if car.engine.numberOfValves??>
-  													 (${car.engine.numberOfValves/car.engine.numberOfCylinders} ${getTextSource('engine.valvesPerCylinder')})
+  													 (${car.engine.numberOfValves/car.engine.numberOfCylinders} ${language.getTextSource('engine.valvesPerCylinder')})
  		 										</#if>
 	  										</p>
   										</dd>
   										<dt>
-		  									${getTextSource('engine.maxPower')} :
+		  									${language.getTextSource('engine.maxPower')} :
 	  									</dt>
   										<dd>
   											<p class="text-muted">
   												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.engine.maxPower?default(-1)/>
 		  											<#if car.engine.maxPower??>
-		  												<em class="measure-unit-text">${getTextSource('CV')}</em>
+		  												<em class="measure-unit-text">${language.getTextSource('CV')}</em>
 		  											</#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.engine.maxPower*0.9863)?default(-1)/>
 		  											<#if car.engine.maxPower??>
-		  												<em class="measure-unit-text">${getTextSource('HP')}</em>
+		  												<em class="measure-unit-text">${language.getTextSource('HP')}</em>
 		  											</#if>
 												</#if>												
   												<#if car.engine.maxPower??>	
-  												    (<@writeNonDecimalCarNumericData (car.engine.maxPower*0.736)?default(-1)/><em class="measure-unit-text">${getTextSource('KW')}</em>)			
+  												    (<@writeNonDecimalCarNumericData (car.engine.maxPower*0.736)?default(-1)/><em class="measure-unit-text">${language.getTextSource('KW')}</em>)			
 													<#if car.engine.maxPowerRPM??>
-  														<b>@</b> <@writeCarNumericData car.engine.maxPowerRPM?default(-1)/><em class="measure-unit-text">${getTextSource('RPM')}</em>
+  														<b>@</b> <@writeCarNumericData car.engine.maxPowerRPM?default(-1)/><em class="measure-unit-text">${language.getTextSource('RPM')}</em>
   													</#if>
   												</#if>						  										
 	  										</p>
   										</dd>
 	  									<dt>
-				  							${getTextSource('engine.maxTorque')} :
+				  							${language.getTextSource('engine.maxTorque')} :
   										</dt>
   										<dd>
   											<p class="text-muted">  
 												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													<@writeCarNumericData car.engine.maxTorque?default(-1)/>
 		  											<#if car.engine.maxTorque??>
-		  												<em class="measure-unit-text">${getTextSource('NM')}</em>
+		  												<em class="measure-unit-text">${language.getTextSource('NM')}</em>
 		  											</#if>
   													<#if car.engine.maxTorqueRPM??>
-  														<b>@</b> <@writeCarNumericData car.engine.maxTorqueRPM?default(-1)/><em class="measure-unit-text">${getTextSource('RPM')}</em>
+  														<b>@</b> <@writeCarNumericData car.engine.maxTorqueRPM?default(-1)/><em class="measure-unit-text">${language.getTextSource('RPM')}</em>
   													</#if>	
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<@writeNonDecimalCarNumericData (car.engine.maxTorque*0.737562149)?default(-1)/>
 		  											<#if car.engine.maxTorque??>
-		  												<em class="measure-unit-text">${getTextSource('LbFt')}</em>
+		  												<em class="measure-unit-text">${language.getTextSource('LbFt')}</em>
 		  											</#if>
   													<#if car.engine.maxTorqueRPM??>
-  														<b>@</b> <@writeCarNumericData car.engine.maxTorqueRPM?default(-1)/><em class="measure-unit-text">${getTextSource('RPM')}</em>
+  														<b>@</b> <@writeCarNumericData car.engine.maxTorqueRPM?default(-1)/><em class="measure-unit-text">${language.getTextSource('RPM')}</em>
   													</#if>	
 												</#if>							  									
 		  									</p>
   										</dd>
   										<dt>
-		  									${getTextSource('engine.maxRPM')} :
+		  									${language.getTextSource('engine.maxRPM')} :
   										</dt>
   										<dd>
   											<p class="text-muted">
   												<@writeCarNumericData car.engine.maxRPM?default(-1)/>
 		  										<#if car.engine.maxRPM??>
-  													 <em class="measure-unit-text">${getTextSource('RPM')}</em>
+  													 <em class="measure-unit-text">${language.getTextSource('RPM')}</em>
   												</#if>
 				  							</p>
   										</dd>
   										<dt>
-		  									${getTextSource('engine.specificOutput')} :
+		  									${language.getTextSource('engine.specificOutput')} :
   										</dt>
   										<dd>
   											<p class="text-muted"> 												
 		  										<#if unitsOfMeasure == unitsOfMeasureMetric>	
-													<@writeNonDecimalCarNumericData (car.engine.maxPower/(car.engine.size/1000))?default(-1)/><em class="measure-unit-text">${getTextSource('cvPerLitre')}</em>	 
+													<@writeNonDecimalCarNumericData (car.engine.maxPower/(car.engine.size/1000))?default(-1)/><em class="measure-unit-text">${language.getTextSource('cvPerLitre')}</em>	 
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													<@writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.engine.size/1000))?default(-1)/><em class="measure-unit-text">${getTextSource('hpPerLitre')}</em>	 
+													<@writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.engine.size/1000))?default(-1)/><em class="measure-unit-text">${language.getTextSource('hpPerLitre')}</em>	 
 												</#if>	 											
   											</p>
   										</dd>  										
@@ -461,7 +462,7 @@
 	  			</div>
 	  			<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="text-left car-details-panel-heading">${getTextSource('brakes')}</h3>
+						<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakes')}</h3>
 					</div>
 					<div class="panel-body row">
 						<div class="col-lg-1"></div>
@@ -483,22 +484,22 @@
 						<div class="col-lg-5 col-sm-12 col-xs-12">
 	  						<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="text-left car-details-panel-heading">${getTextSource('transmission')}</h3>
+									<h3 class="text-left car-details-panel-heading">${language.getTextSource('transmission')}</h3>
 								</div>
 								<div class="panel-body">
 									<dl class="dl-horizontal text-left">
   										<dt>
-  											${getTextSource('transmission.type')} :
+  											${language.getTextSource('transmission.type')} :
   										</dt>
 			  							<dd>
   											 <#if (car.transmission??) && (car.transmission.type??)>
   											 	<p class="text-muted">
-  											 		${getTextSource('transmission.type.${car.transmission.type}')}
+  											 		${language.getTextSource('transmission.type.${car.transmission.type}')}
  		 									 	</p>
 	  										 </#if>
   										</dd>
 				  						<dt>
-  											${getTextSource('transmission.numOfGears')} :
+  											${language.getTextSource('transmission.numOfGears')} :
   										</dt>
   										<dd>
 		  									<p class="text-muted">
@@ -514,12 +515,12 @@
 	  					<div class="col-lg-5 col-sm-12 col-xs-12">
 			  				<div class="panel panel-default">
 								<div class="panel-heading">
-									<h3 class="text-left car-details-panel-heading">${getTextSource('tyres')}</h3>
+									<h3 class="text-left car-details-panel-heading">${language.getTextSource('tyres')}</h3>
 								</div>
 								<div class="panel-body">
 									<dl class="dl-horizontal text-left">
 			  							<dt>
-  											${getTextSource('tyreSet.frontTyre')} :
+  											${language.getTextSource('tyreSet.frontTyre')} :
   										</dt>
   										<dd>
 		  									 <p class="text-muted">
@@ -529,7 +530,7 @@
 	  										 </p>
 				  						</dd>
   										<dt>
-  											${getTextSource('tyreSet.backTyre')} :
+  											${language.getTextSource('tyreSet.backTyre')} :
   										</dt>
  		 								<dd>
   											<p class="text-muted">
@@ -547,19 +548,19 @@
 			</div>
 		<#else>
 			<div class="panel panel-body col-lg-12">
-				<p class="col-lg-12 text-muted text-center">${getTextSource('car.noCarFound')}</p>
+				<p class="col-lg-12 text-muted text-center">${language.getTextSource('car.noCarFound')}</p>
 			</div>			
 		</#if>		
 	</div>
 </div>
 
-<@endPage/>
+<@generic.endPage/>
 
 <#macro writeCarNumericData data>
     <#if data != -1>
         ${data?string["0.#"]}
     <#else>
-        ${getTextSource('undefined')}
+        ${language.getTextSource('undefined')}
     </#if>
 </#macro>
 
@@ -567,7 +568,7 @@
     <#if data != -1>
         ${data?string["0"]}
     <#else>
-        ${getTextSource('undefined')}
+        ${language.getTextSource('undefined')}
     </#if>
 </#macro>
 
@@ -575,7 +576,7 @@
     <#if data != "">
         ${data}
     <#else>
-        ${getTextSource('undefined')}
+        ${language.getTextSource('undefined')}
     </#if>
 </#macro>
 
@@ -583,36 +584,36 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<#if brake.train = "FRONT">
-				<h3 class="text-left car-details-panel-heading">${getTextSource('brakeSet.front')}</h3>
+				<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakeSet.front')}</h3>
 			<#else>
-				<h3 class="text-left car-details-panel-heading">${getTextSource('brakeSet.back')}</h3>
+				<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakeSet.back')}</h3>
 			</#if>			
 		</div>
 		<div class="panel-body">
 			<dl class="dl-horizontal text-left">
   				<dt>
-  					${getTextSource('brake.disc.diameter')} :		
+  					${language.getTextSource('brake.disc.diameter')} :		
   				</dt>
   				<dd>
   					<p class="text-muted">
   						<@writeCarNumericData brake.discDiameter?default(-1)/>
   						<#if brake.discDiameter??>
-  							<em class="measure-unit-text">${getTextSource('MM')}</em>
+  							<em class="measure-unit-text">${language.getTextSource('MM')}</em>
   						</#if>
   					</p>
   				</dd>
   				<dt>
-  					${getTextSource('brake.disc.material')} :		
+  					${language.getTextSource('brake.disc.material')} :		
   				</dt>
   				<dd>
   					<#if brake.discMaterial??>
   						<p class="text-muted">
-  							${getTextSource('brake.disc.material.${brake.discMaterial}')}
+  							${language.getTextSource('brake.disc.material.${brake.discMaterial}')}
   						</p>
   					</#if>
   				</dd>
   				<dt>
-  					${getTextSource('brake.caliper.numOfPistons')} :		
+  					${language.getTextSource('brake.caliper.numOfPistons')} :		
   				</dt>
   				<dd>
   					<p class="text-muted">

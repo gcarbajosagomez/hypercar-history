@@ -1,7 +1,9 @@
-<#include "applicationMacros/genericFunctionalities.ftl">
-<#include "applicationMacros/pagination.ftl">
+<#import "/spring.ftl" as spring/>
+<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "applicationMacros/pageLanguage.ftl" as language/>
+<#import "applicationMacros/pagination.ftl" as pagination/>
 
-<@startPage getTextSource('title.allModels')/>
+<@generic.startPage language.getTextSource('title.allModels')/>
 
 <div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="row">
@@ -14,7 +16,7 @@
   				</#list> 
 				<#if models??>
 					<a class="list-group-item">
-    					<h5 class="text-center list-group-element">${models?size} ${getTextSource('models')}</h5>
+    					<h5 class="text-center list-group-element">${models?size} ${language.getTextSource('models')}</h5>
     				</a>
     			</#if>
 			</div>
@@ -54,7 +56,7 @@
 							</#if>
 							<div class="<#if (chunkedModelsList?size == 1)>text-center<#else>text-right</#if> <#if (chunkedModelsList?size < 2)>col-lg-12 col-md-12 col-sm-12 col-xs-12<#else><#if (chunkedModelsList?size < 3)>col-lg-5<#else>col-lg-4</#if> col-md-5 col-sm-5 col-xs-12</#if>" style="height:56px; margin-bottom: 20px;">
 								<button id="cars-per-page-menu" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
-    								${getTextSource('pagination.carsPerPage')}
+    								${language.getTextSource('pagination.carsPerPage')}
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-menu">
@@ -63,7 +65,7 @@
     								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>
     								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=20">20</a></li>
    									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${getTextSource('pagination.allCars')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${language.getTextSource('pagination.allCars')}</a></li>
   								</ul>
   							</div>
   						</div>
@@ -73,14 +75,14 @@
 		</div>		
 	</div>
 </div>
-<@endPage/>
+<@generic.endPage chunkedModelsList/>
 
 <script type='text/javascript'>
 	
 	<#if cars?? && (models?size > carsPerPageData)>
 		$( document ).ready(function()
 		{
-  			<@createCarsPagination chunkedModelsList/>
+  			<@pagination.createCarsPagination chunkedModelsList/>
 		});
 	</#if>
 	

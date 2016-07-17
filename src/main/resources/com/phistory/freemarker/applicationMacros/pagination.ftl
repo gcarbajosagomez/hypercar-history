@@ -1,25 +1,27 @@
-<#macro createCarsPagination chunkedModelsList>
+<#import "pageLanguage.ftl" as language/>
+
+<#macro createCarsPagination chunkedModelsList=[]>
 	var options =
    	{
 	    bootstrapMajorVersion : 3,
 		currentPage: ${pagNumData},
 		alignment: 'left',
-	    totalPages: <#if chunkedModelsList??>${chunkedModelsList?size}<#else>1</#if>,
+	    totalPages: <#if (chunkedModelsList?size > 0)>${chunkedModelsList?size}<#else>1</#if>,
 		useBootstrapTooltip: true,
 		tooltipTitles:
 		   	function(type,page,current)
 	       	{
 	       		switch (type) {
 	            case "first":
-	                return "${getTextSource('pagination.goToFirstPage')} ";
+	                return "${language.getTextSource('pagination.goToFirstPage')} ";
 	            case "prev":
-	                return "${getTextSource('pagination.goToPreviousPage')} ";
+	                return "${language.getTextSource('pagination.goToPreviousPage')} ";
 	            case "next":
-	                return "${getTextSource('pagination.goToNextPage')} ";
+	                return "${language.getTextSource('pagination.goToNextPage')} ";
 	            case "last":
-	                return "${getTextSource('pagination.goToLastPage')} ";
+	                return "${language.getTextSource('pagination.goToLastPage')} ";
 	            case "page":
-	                return "${getTextSource('pagination.goToPage')} " + page;
+	                return "${language.getTextSource('pagination.goToPage')} " + page;
 	            }
 	     	},        
 	    onPageClicked:
@@ -43,7 +45,7 @@
 	    									border:         '0px solid', 
 	    									backgroundColor:'rgba(94, 92, 92, 0)'
 									},
-	           						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+	           						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>'
 	        					});
 	        					
 									addCrsfTokenToAjaxRequest(xhr);
@@ -81,15 +83,15 @@
 	         	{
 	         		switch (type) {
                     case "first":
-                        return "${getTextSource('pagination.goToFirstPage')} ";
+                        return "${language.getTextSource('pagination.goToFirstPage')} ";
                     case "prev":
-                        return "${getTextSource('pagination.goToPreviousPage')} ";
+                        return "${language.getTextSource('pagination.goToPreviousPage')} ";
                     case "next":
-                        return "${getTextSource('pagination.goToNextPage')} ";
+                        return "${language.getTextSource('pagination.goToNextPage')} ";
                     case "last":
-                        return "${getTextSource('pagination.goToLastPage')} ";
+                        return "${language.getTextSource('pagination.goToLastPage')} ";
                     case "page":
-                        return "${getTextSource('pagination.goToPage')} " + page;
+                        return "${language.getTextSource('pagination.goToPage')} " + page;
                     }
 	         	},        
         	onPageClicked:
@@ -113,7 +115,7 @@
         										border:         '0px solid', 
         										backgroundColor:'rgba(94, 92, 92, 0)'
     									},
-                						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
+                						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
             						});      						
 
 									addCrsfTokenToAjaxRequest(xhr);
