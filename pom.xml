@@ -18,7 +18,7 @@
 	<inceptionYear>2014</inceptionYear>	
 	<url>www.paganihistory.com</url>
 
-	<properties>
+	<properties> 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<project.resources.path>src/main/resources</project.resources.path>
