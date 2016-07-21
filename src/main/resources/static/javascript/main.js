@@ -41,23 +41,25 @@ function saveEntity(url, confirmSaveMessage)
 		        contentType: false,
 		        beforeSend: function(xhr)
 	    	    {
-					xhr = addCrsfTokenToAjaxRequest(xhr);
+					addCrsfTokenToAjaxRequest(xhr);
 	    	    }
 			})
 			.done(function(data)
 			{
 				document.children[0].innerHTML = data; 	
-				$savedEntityId = $("input[id*='.id']")[0].value;
-				if ($savedEntityId.length > 0) 
+				var savedEntityId = $("input[id*='.id']")[0].value;
+				var urlReplacement = '';
+
+                if (savedEntityId.length > 0)
 				{
-					$urlReplacement = "/" + $savedEntityId + "/edit";
+					urlReplacement = "/" + savedEntityId + "/edit";
 				} 
 				else
 				{
-					$urlReplacement = "/edit";
+					urlReplacement = "/edit";
 				}
 				
-				window.history.pushState(null,'', url.replace("/save", $urlReplacement));		
+				window.history.pushState(null,'', url.replace("/save", urlReplacement));
 			});
 		}
     });	   
@@ -152,7 +154,6 @@ function writeCarPreviews(data)
 					 
 	$('#car-list-div')[0].innerHTML = carListString;
 }
-
 
 function setupContentSearchEventListeners()
 {

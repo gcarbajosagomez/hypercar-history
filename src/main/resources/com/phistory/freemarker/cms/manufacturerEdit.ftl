@@ -18,9 +18,9 @@
 			   <div class="panel-heading">
 					<h3 class="text-left">${language.getTextSource('manufacturer')}</h3>
 						
-					<input type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${language.getTextSource('cms.editManufacturer')}<#else>${language.getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
+					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${language.getTextSource('cms.editManufacturer')}<#else>${language.getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
 					<#if MEFC.manufacturerForm.id??>
-						<input type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${language.getTextSource('manufacturer.confirmDelete')}');"/>
+						<input id="delete-manufacturer-button" type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${language.getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
 	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newManufacturer')}</a>             			
 			   </div>

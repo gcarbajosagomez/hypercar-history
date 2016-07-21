@@ -31,10 +31,11 @@ public class CarDetailsTest extends BaseIntegrationTest
 	private int port;
 	private CarDetailsPage carDetailsPage;
 
-	@BeforeClass
-	public void before() throws Exception
+    @BeforeClass
+	@Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS + "/" + IRRELEVANT_CAR_ID);
 		this.carDetailsPage = new CarDetailsPage(this.webDriver);
 	}
@@ -50,9 +51,10 @@ public class CarDetailsTest extends BaseIntegrationTest
 	{
 		assertThat("Car pictures carousel should have images", this.carDetailsPage.carPicturesCarouselHasImages(), is(true));
 	}
-	
+
 	@AfterClass
-	public void after() 
+	@Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

@@ -5,6 +5,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.phistory.test.integration.web.navbar.NavBarPage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -27,40 +28,43 @@ import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
 public class LoginTest extends BaseIntegrationTest
-{	
-	private static final String CMS_LOGIN_TEST_PASSWORD = "testPassword2016";
+{
 	@Value("${local.server.port}")
 	private int port;
 	private LoginPage loginPage;
+	private NavBarPage navBarPage;
 	private CmsCarListPage cmsCarListPage;
+	private LoginTestUtils loginTestUtils;
 
-	@BeforeClass
-	public void before() throws Exception
+    @BeforeClass
+    @Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT);
 		this.loginPage = new LoginPage(this.webDriver);
+        this.loginTestUtils = new LoginTestUtils();
 	}
 	
-	@Test(groups = "login")
+	@Test(groups = "preLogin")
 	public void test_username_input_is_displayed()
 	{
 		assertThat("Username input should be displayed", this.loginPage.isUsernameInputDisplayed());
 	}
 	
-	@Test(groups = "login")
+	@Test(groups = "preLogin")
 	public void test_password_input_is_displayed()
 	{
 		assertThat("Password input should be displayed", this.loginPage.isPasswordInputDisplayed());
 	}
 	
-	@Test(groups = "login")
+	@Test(groups = "preLogin")
 	public void test_login_button_is_displayed()
 	{
 		assertThat("Login button should be displayed", this.loginPage.isLoginButtonDisplayed());
 	}
 	
-	@Test(dependsOnGroups = "login")
+	@Test(dependsOnGroups = "preLogin")
 	public void test_perform_login_with_wrong_credentials() throws Exception
 	{
 		this.loginPage.typeUsername(CMS_LOGIN_USER);
@@ -75,21 +79,28 @@ public class LoginTest extends BaseIntegrationTest
 		this.test_username_input_is_displayed();
 	}
 	
-	@Test(dependsOnMethods = "test_perform_login_with_wrong_credentials")
+	@Test(groups = {"login"}, dependsOnMethods = "test_perform_login_with_wrong_credentials")
 	public void test_perform_login() throws Exception
 	{
-		this.loginPage.typeUsername(CMS_LOGIN_USER);
-		this.loginPage.typePassword(CMS_LOGIN_TEST_PASSWORD);
-		this.loginPage.clickLoginButton();
-		Thread.sleep(1000);
-		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
-		this.cmsCarListPage = new CmsCarListPage(this.webDriver);
-		this.cmsCarListPage.initializePageElements();
+        this.loginTestUtils.performCMSLogin(this.loginPage);
+        Thread.sleep(1000);
+        webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
+        CmsCarListPage cmsCarListPage = new CmsCarListPage(webDriver);
+        cmsCarListPage.initializePageElements();
 		assertThat("Main car list div should be present after login", this.cmsCarListPage.isMainCarListDivPresent());
 	}
-	
-	@AfterClass
-	public void after() 
+
+	@Test(dependsOnGroups = "login")
+	public void test_cms_dropdown_toggle_is_displayed() throws Exception
+	{
+		this.navBarPage = new NavBarPage(this.webDriver);
+		this.navBarPage.initializePageElements();
+		assertThat("CMS dropdown toggle should be present after login", this.navBarPage.isCMSDropDownToggleDisplayed());
+	}
+
+    @AfterClass
+    @Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

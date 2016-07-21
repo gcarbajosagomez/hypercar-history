@@ -32,9 +32,10 @@ public class CarListTest extends BaseIntegrationTest
 	private CarListPage carListPage;
 
 	@BeforeClass
-	public void before() throws Exception
+	@Override
+	public void setupTest() throws Exception
 	{
-		super.before();		
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL);
 		this.carListPage = new CarListPage(this.webDriver);
 	}
@@ -49,9 +50,10 @@ public class CarListTest extends BaseIntegrationTest
 	{
 		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), equalTo(notNullValue()));
 	}
-	
-	@AfterClass
-	public void after() 
+
+    @AfterClass
+	@Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

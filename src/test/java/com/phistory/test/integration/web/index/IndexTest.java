@@ -32,9 +32,10 @@ public class IndexTest extends BaseIntegrationTest
 	private int port;
 	
 	@BeforeClass
-	public void before() throws Exception
+    @Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + INDEX_URL);
 		this.indexPage = new IndexPage(this.webDriver);
 	}
@@ -86,7 +87,8 @@ public class IndexTest extends BaseIntegrationTest
 	}
 	
 	@AfterClass
-	public void after() 
+	@Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

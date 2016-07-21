@@ -32,9 +32,10 @@ public class TechnologyStackTest extends BaseIntegrationTest
 	private FooterPage footerPage;
 	
 	@BeforeClass
-	public void before() throws Exception
+	@Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port);
 		this.technologyStackPage = new TechnologyStackPage(this.webDriver);
 		this.footerPage = new FooterPage(this.webDriver);
@@ -81,7 +82,8 @@ public class TechnologyStackTest extends BaseIntegrationTest
 	}
 	
 	@AfterClass
-	public void after() 
+    @Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

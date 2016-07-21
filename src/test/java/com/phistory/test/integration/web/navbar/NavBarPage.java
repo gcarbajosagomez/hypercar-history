@@ -17,6 +17,10 @@ public class NavBarPage extends BasePage
 	private WebElement spanishLanguageLink;
 	@FindBy(id = "english-language-link")
 	private WebElement englishLanguageLink;
+	@FindBy(id = "cms-dropdown-toggle")
+	private WebElement cmsDrowpDownToggle;
+	@FindBy(id = "new-manufacturer-link")
+    private WebElement newManufacturerLink;
 	@FindBy(className = "search-icon")
 	private WebElement contentSearchIcon;
 	@FindBy(id = "content-search-input")
@@ -57,6 +61,20 @@ public class NavBarPage extends BasePage
 	{
 		this.englishLanguageLink.click();
 	}
+
+    public boolean isCMSDropDownToggleDisplayed()
+    {
+        return this.cmsDrowpDownToggle.isDisplayed();
+    }
+
+	public void clickCMSDropDownToggle()
+	{
+		this.cmsDrowpDownToggle.click();
+	}
+
+    public void clickNewManufacturerLink() {
+        this.newManufacturerLink.click();
+    }
 	
 	public boolean isContentSearchIconDisplayed()
 	{

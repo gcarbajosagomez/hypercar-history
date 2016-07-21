@@ -34,11 +34,12 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 	private int port;
 	private ContactUsPage contactUsPage;
 	private FooterPage footerPage;
-	
+
 	@BeforeClass
-	public void before() throws Exception
+    @Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port);
 		this.contactUsPage = new ContactUsPage(this.webDriver);
 		this.footerPage = new FooterPage(this.webDriver);
@@ -132,7 +133,8 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 	}
 	
 	@AfterClass
-	public void after() 
+    @Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

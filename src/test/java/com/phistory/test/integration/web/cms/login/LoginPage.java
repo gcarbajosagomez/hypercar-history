@@ -17,7 +17,7 @@ public class LoginPage extends BasePage
 	@FindBy(id = "logout-button")
 	private WebElement logoutButtonLocator;
 	@FindBy(className = "alert-danger")
-	private WebElement wrongCredentialsAlert;
+	private WebElement wrongCredentialsAlertLocator;
 	
 	public LoginPage(WebDriver webDriver) {
 		super(webDriver);
@@ -61,6 +61,6 @@ public class LoginPage extends BasePage
 	
 	public boolean isWrongCredentialsAlertDisplayed()
 	{
-		return this.wrongCredentialsAlert.isDisplayed();
+		return this.wrongCredentialsAlertLocator.isDisplayed();
 	}
 }

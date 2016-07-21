@@ -31,9 +31,10 @@ public class CookiesPolicyTest extends BaseIntegrationTest
 	private CookiesPolicyPage cookiesPolicyPage;
 	
 	@BeforeClass
-	public void before() throws Exception
+	@Override
+	public void setupTest() throws Exception
 	{
-		super.before();
+		super.setupBaseTest();
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + COOKIES_POLICY_URL);
 		this.cookiesPolicyPage = new CookiesPolicyPage(this.webDriver);
 	}
@@ -67,7 +68,7 @@ public class CookiesPolicyTest extends BaseIntegrationTest
 	@Test(dependsOnGroups = "cookiesDirective")
 	public void test_cookies_policy_directive_message_is_not_dismissed_if_checkbox_is_not_checked() throws InterruptedException
 	{
-		Thread.sleep(2000);
+		Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
 		this.cookiesPolicyPage.clickAcceptCookiesButton();
 		test_cookies_policy_directive_message_div_is_displayed();
 	}
@@ -78,12 +79,13 @@ public class CookiesPolicyTest extends BaseIntegrationTest
 	{
 		this.cookiesPolicyPage.clickAcceptCookiesCheckbox();
 		this.cookiesPolicyPage.clickAcceptCookiesButton();
-		Thread.sleep(2000);
+		Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
 		assertThat("Cookies policy directive message div should be displayed", this.cookiesPolicyPage.isCookiesDirectiveMessageDivDisplayed(), equalTo(false));
 	}
 	
 	@AfterClass
-	public void after() 
+    @Override
+	public void tearDownTest()
 	{
 		if (this.webDriver != null)
 		{

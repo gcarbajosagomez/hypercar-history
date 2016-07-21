@@ -479,8 +479,8 @@
 			                   			<@spring.bind "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].contentLanguage"/>
 			
 										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-			                            	<#list carInternetContentLanguages as language>
-			                                	<option value="${language}"<#if spring.status.value?? && language == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${language}')}</option>
+			                            	<#list carInternetContentLanguages as contentLanguage>
+			                                	<option value="${contentLanguage}"<#if spring.status.value?? && contentLanguage == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
 			                               	</#list>
 			                            </select> 
 									</dd>						
@@ -515,8 +515,8 @@
 		                   			<@spring.bind "CICEFC.carInternetContentForms[0].contentLanguage"/>
                            
                            			<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                               			<#list carInternetContentLanguages as language>
-                                   			<option value="${language}"<#if spring.status.value?? && engineCylinderDisposition == spring.status.value?default("")>selected</#if>>${language}</option>
+                               			<#list carInternetContentLanguages as contentLanguage>
+                                   			<option value="${contentLanguage}"<#if spring.status.value?? && contentLanguage == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
                                			</#list>
                            			</select> 
 								</dd>						
@@ -968,8 +968,8 @@
 													          'name'  : 'carInternetContentForms[' + internetContentNum + '].contentLanguage',
 													          'class' : 'form-control'});														               
 													               
-			<#list carInternetContentLanguages as language>
-				newInternetContentLanguageSelect.append($('<option>', {'value' : '${language}'}).text('${language.getTextSource('cms.car.internetContent.contentLanguage.${language}')}'));
+			<#list carInternetContentLanguages as contentLanguage>
+				newInternetContentLanguageSelect.append($('<option>', {'value' : '${contentLanguage}'}).text('${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}'));
 			</#list>
 													          
 			newInternetContentLanguageDd.append(newInternetContentLanguageSelect);

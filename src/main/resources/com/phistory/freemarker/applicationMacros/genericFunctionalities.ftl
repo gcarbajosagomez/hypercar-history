@@ -151,13 +151,13 @@
               							</li>
               							<#if requestURI?contains("${cmsContext}") && loggedIn?? && loggedIn == true>
               								<li>
-              									<a class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
+              									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
           											<li role="presentation">
           												<a href='<@spring.url "/${cmsContext}${manufacturersURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listManufacturers')}</a>
 													</li>
 													<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')}</a>
+          												<a id="new-manufacturer-link" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')}</a>
 													</li>
 													<li role="separator" class="divider"></li>
         	  										<li role="presentation">
