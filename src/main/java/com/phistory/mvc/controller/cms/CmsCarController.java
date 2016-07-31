@@ -1,16 +1,14 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
+import com.phistory.mvc.cms.command.CarFormEditCommand;
+import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
+import com.phistory.mvc.controller.CarController;
+import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
+import com.phistory.mvc.springframework.view.ModelFiller;
+import com.tcp.data.model.car.Car;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -22,14 +20,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.phistory.mvc.cms.command.CarFormEditCommand;
-import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
-import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
-import com.phistory.mvc.controller.CarController;
-import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
-import com.phistory.mvc.springframework.view.ModelFiller;
-import com.tcp.data.model.car.Car;
+import javax.inject.Inject;
+import javax.validation.Valid;
+import java.util.Map;
+
+import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 
 @Secured(value = USER_ROLE)
 @Controller
@@ -44,7 +41,7 @@ public class CmsCarController extends CmsBaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
 	@Inject
-	private CarEditModelFIller carEditModelFiller;
+	private ModelFiller carEditModelFiller;
 	@Inject
     private CMSCarControllerUtil carControllerUtil;
 	
@@ -142,7 +139,7 @@ public class CmsCarController extends CmsBaseController
     private void fillModel(Model model, CarFormEditCommand carFormEditCommand)
     {
     	this.carModelFiller.fillModel(model);
-    	this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
+        ((CarEditModelFiller) this.carEditModelFiller).fillCarEditModel(model, carFormEditCommand);
     	this.pictureModelFiller.fillModel(model);  
     }
 }

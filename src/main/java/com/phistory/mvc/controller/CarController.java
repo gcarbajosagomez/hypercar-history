@@ -84,8 +84,8 @@ public class CarController extends BaseController
 		{	
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
-			model.addAttribute("car", super.getCarDao().getById(carId));		
-			model.addAttribute("pictureIds", super.getPictureDao().getIdsByCarId(carId));
+			model.addAttribute("car", super.getCarDao().getById(carId));
+			model.addAttribute(PICTURE_IDS, super.getPictureDao().getIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 			List<CarInternetContent> carInternetContents = super.getCarInternetContentDAO().getByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()

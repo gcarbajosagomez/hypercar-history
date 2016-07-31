@@ -17,12 +17,26 @@
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left">${language.getTextSource('car')}</h3>
-					
-					<input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>${language.getTextSource('cms.editCar')}<#else>${language.getTextSource('cms.saveCar')}</#if>" onClick="saveOrEditCar();"/>
-					<#if CEFC.carForm.id??>
-						<input type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteCar')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>', '${language.getTextSource('car.confirmDelete')}');"/>
-					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newCar')}</a>   
+
+                    <table>
+                        <tr>
+                            <td>
+                                <input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>${language.getTextSource('cms.editCar')}<#else>${language.getTextSource('cms.saveCar')}</#if>" onClick="saveOrEditCar();"/>
+                            </td>
+                            <#if CEFC.carForm.id??>
+                            <td>
+                                <a id="car-delete-link" class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>', '${language.getTextSource('car.confirmDelete')}');"/>
+                                    <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
+                                </a>
+                            </td>
+                        </#if>
+                            <td>
+                                <a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
+                                    <span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newCar')}
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -220,7 +234,7 @@
                           
                       <div id="car-preview-picture-area">                 	    
                       	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${CEFC.carForm.id}"/>'</#if>                                              
+                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img pull-right" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${CEFC.carForm.id}"/>'</#if>
                       </div>	                            
 				   </dl>
 			   </div>			
@@ -230,25 +244,37 @@
 			       <h3 class="text-left">${language.getTextSource('engine')}</h3>
 					
 				   <div>
-				   	    <a class="btn btn-info" onClick="loadEngineFromDB();">
-				   	   		<i class="fa fa-database"></i> ${language.getTextSource('cms.loadEngineFromDb')}
-				   	   	</a>				   	   
-				   	   	<a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.carForm.engineForm.id??>		
-																					onClick="editEngine();">
-																					<span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.editEngine')}</span> 
-												   								<#else>
-												   		 							onClick="saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}');">
-																					<span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.saveEngine')}</span> 
-												   								</#if>
-						</a>
-				   	   	<a class="btn btn-default" onClick="eraseEngineFormFields();">
-					   	   		<span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newEngine')}
-					   	</a>
-					   <#if CEFC.carForm.engineForm.id??>
-					   		<a id="engine-delete-link" class="btn btn-danger" onClick="deleteEntity($(#main-form), '<@spring.url "/${cmsContext}${enginesURL}/${CEFC.carForm.engineForm.id}/${deleteURL}"/>', "${language.getTextSource('engine.confirmDelete')}");"/>
-								<span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteEngine')}
-							</a>
-					   </#if>
+                       <table>
+                           <tr>
+                                <td>
+                                    <a class="btn btn-info" onClick="loadEngineFromDB();">
+				   	   		            <i class="fa fa-database"></i> ${language.getTextSource('cms.loadEngineFromDb')}
+				   	   	            </a>
+                                </td>
+                                <td>
+                                   <a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.carForm.engineForm.id??>
+																					            onClick="editEngine();">
+																					            <span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.editEngine')}</span>
+												   								            <#else>
+												   		 							            onClick="saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}');">
+																					            <span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.saveEngine')}</span>
+												   								            </#if>
+						            </a>
+                                </td>
+                                <#if CEFC.carForm.engineForm.id??>
+                                    <td>
+                                        <a id="engine-delete-link" class="btn btn-danger" onClick="deleteEntity($(#main-form), '<@spring.url "/${cmsContext}${enginesURL}/${CEFC.carForm.engineForm.id}/${deleteURL}"/>', "${language.getTextSource('engine.confirmDelete')}");"/>
+                                            <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteEngine')}
+                                        </a>
+                                    </td>
+                                </#if>
+                                <td>
+				   	   	            <a class="btn btn-default" onClick="eraseEngineFormFields();">
+					   	   		        <span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newEngine')}
+					   	            </a>
+                                </td>
+                           </tr>
+                       </table>
 				   </div>
 			   </div>
 			   <div id="engine-main-div" class="panel-body">	
@@ -539,13 +565,24 @@
                     <#if pictureIds?has_content>
 						<@generic.addBlueImpGallery/>
 
-                        <#list pictureIds?chunk(2) as row>                       		  
-                            <#list row as pictureId>                                								
-                                <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
-                             		<img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
-                               	</a> 
+                        <table style="width:100%">
+                            <#list pictureIds?chunk(2) as row>
+                                <#list row as pictureId>
+                                    <tr id="${pictureId}-picture-row">
+                                        <td style="width:70%">
+                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
+                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture preview-img" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                            </a>
+                                        </td>
+                                        <td style="width:30%">
+                                            <a id="picture-delete-link" class="btn btn-danger" onClick="deletePicture('${pictureId}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
+                                                <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </#list>
                             </#list>
-                        </#list>    
+                        </table>
                     <#elseif CEFC.carForm.id??>
                  	    <h3 class="text-left">${language.getTextSource('noPicturesAvailable')}</h3>
          			</#if>             			   

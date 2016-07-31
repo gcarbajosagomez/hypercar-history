@@ -1,22 +1,17 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
+import com.phistory.mvc.cms.command.CarFormEditCommand;
+import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.form.CarForm;
+import com.phistory.mvc.cms.form.CarInternetContentForm;
+import com.phistory.mvc.cms.form.creator.CarFormCreator;
+import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
+import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
+import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
+import com.phistory.mvc.springframework.view.ModelFiller;
+import com.tcp.data.model.car.Car;
+import com.tcp.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -27,17 +22,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.phistory.mvc.cms.command.CarFormEditCommand;
-import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
-import com.phistory.mvc.cms.form.CarForm;
-import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.creator.CarFormCreator;
-import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
-import com.phistory.mvc.cms.springframework.view.CarEditModelFIller;
-import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
-import com.phistory.mvc.springframework.view.ModelFiller;
-import com.tcp.data.model.car.Car;
-import com.tcp.data.model.car.CarInternetContent;
+import javax.inject.Inject;
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.controller.BaseControllerData.ID;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  *
@@ -58,7 +52,7 @@ public class CmsCarEditController extends CmsBaseController
     @Inject
 	private ModelFiller carModelFiller;
 	@Inject
-	private CarEditModelFIller carEditModelFiller;
+	private ModelFiller carEditModelFiller;
 	@Inject
 	private ModelFiller pictureModelFiller;
     
@@ -185,7 +179,7 @@ public class CmsCarEditController extends CmsBaseController
     private void fillModel(Model model, CarFormEditCommand carFormEditCommand)
     {
     	this.carModelFiller.fillModel(model);
-    	this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
+        ((CarEditModelFiller) this.carEditModelFiller).fillCarEditModel(model, carFormEditCommand);
     	this.pictureModelFiller.fillModel(model);  
     }
 }

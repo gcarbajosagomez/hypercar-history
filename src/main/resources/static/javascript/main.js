@@ -80,7 +80,7 @@ function editEntity(url, confirmEditMessage)
 		        contentType: false,
 				beforeSend: function(xhr)
 			    {
-					xhr = addCrsfTokenToAjaxRequest(xhr);
+					addCrsfTokenToAjaxRequest(xhr);
 			    }
 			})
 			.done(function(data)
@@ -116,13 +116,39 @@ function deleteEntity(url, deleteMessage)
 			    type: 'DELETE',
 			    beforeSend: function(xhr)
 	    	    {
-			    	xhr = addCrsfTokenToAjaxRequest(xhr);
+			    	addCrsfTokenToAjaxRequest(xhr);
 	    	    }
 			})
 			.done(function(data)
 			{
 				document.children[0].innerHTML = data; 		
 				window.history.pushState(null,'', url.replace(/\/[0-9]{1,}\/delete/, "/edit"));		
+			});
+		}
+    });
+}
+
+function deletePicture(pictureId, deleteMessage)
+{
+	bootbox.confirm(deleteMessage, function(result)
+    {
+		//OK button
+		if (result == true)
+		{
+			$.ajax({
+			    url: '/cms/pictures/' + pictureId + '/delete',
+			    type: 'DELETE',
+                dataType: 'text',
+			    beforeSend: function(xhr)
+	    	    {
+			    	addCrsfTokenToAjaxRequest(xhr);
+	    	    }
+			})
+			.done(function(data)
+			{
+				if (data.indexOf('successMessage : ') !== -1) {
+                    $('#' + pictureId + '-picture-row').remove();
+                }
 			});
 		}
     });
@@ -146,8 +172,7 @@ function writeCarPreviews(data)
 			}
 			
     		i++;
-    		
-    		zIndex = ((data.length - (i + 1)) + 1);
+			var zIndex = ((data.length - (i + 1)) + 1);
 			carListString = carListString.concat(writeCarListRow(auxCarRowList, zIndex));
 		}
 	}
@@ -180,7 +205,7 @@ function openTechnologyStackModal()
 	    type: 'GET',
 	    beforeSend: function(xhr)
 	    {
-	    	xhr = addCrsfTokenToAjaxRequest(xhr);
+	    	addCrsfTokenToAjaxRequest(xhr);
 	    }
 	})
 	.done(function(data)

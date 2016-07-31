@@ -12,6 +12,7 @@ import com.tcp.data.command.PictureDataCommand;
 import com.tcp.data.dao.impl.PictureDao;
 import com.tcp.data.model.Picture;
 import com.tcp.data.model.Picture.PictureType;
+import org.springframework.util.StringUtils;
 
 /**
  * Set of utilities for the PictureController class
@@ -28,7 +29,7 @@ public class PictureControllerUtil extends BaseControllerData
 	/**
 	 * Handle the save or edition of a Picture
 	 * 
-	 * @param command
+	 * @param pictureEditCommand
 	 * @throws Exception
 	 */
 	public void saveOrEditPicture(PictureEditCommand pictureEditCommand) throws Exception
@@ -85,40 +86,29 @@ public class PictureControllerUtil extends BaseControllerData
 	 */
 	public Picture loadPicture(PictureLoadCommand command) throws Exception
 	{
-		switch (command.getAction())
-		{
-			case LOAD_CAR_PICTURE_ACTION:
-			{
-				if (command.getPictureId() != null)
-				{
-					return pictureDao.getById(command.getPictureId());
-				}
+		String action = command.getAction();
 
-			}
-			case LOAD_CAR_PREVIEW_ACTION:
-			{
-				if (command.getCarId() != null)
-				{
-					return pictureDao.getCarPreview(command.getCarId());
-				}
-			}
-			case LOAD_MANUFACTURER_LOGO_ACTION:
-        	{
-        		if (command.getManufacturerId() != null)
-        		{
-        			return pictureDao.getManufacturerLogo(command.getManufacturerId());
-        		}
-        	}
-        	default:
-        	{
-        		if (command.getPictureId() != null)
-        		{
-        			return pictureDao.getById(command.getPictureId());
-        		}
-        	}
-		}
+        if (StringUtils.hasText(action)) {
+            switch (command.getAction()) {
+                case LOAD_CAR_PICTURE_ACTION: {
+                    if (command.getPictureId() != null) {
+                        return pictureDao.getById(command.getPictureId());
+                    }
+                }
+                case LOAD_CAR_PREVIEW_ACTION: {
+                    if (command.getCarId() != null) {
+                        return pictureDao.getCarPreview(command.getCarId());
+                    }
+                }
+                case LOAD_MANUFACTURER_LOGO_ACTION: {
+                    if (command.getManufacturerId() != null) {
+                        return pictureDao.getManufacturerLogo(command.getManufacturerId());
+                    }
+                }
+            }
+        }
 		
-		return null;
+		return pictureDao.getById(command.getPictureId());
 	}
 	
 	/**

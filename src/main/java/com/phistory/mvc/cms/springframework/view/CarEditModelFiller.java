@@ -1,11 +1,13 @@
 package com.phistory.mvc.cms.springframework.view;
 
+import static com.phistory.mvc.controller.BaseControllerData.*;
 import static com.phistory.mvc.controller.BaseControllerData.ENGINE;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.controller.BaseControllerData;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -34,7 +36,7 @@ import com.tcp.data.model.transmission.TransmissionType;
  *
  */
 @Component
-public class CarEditModelFIller implements ModelFiller
+public class CarEditModelFiller implements ModelFiller
 {
 	@Inject
 	private ManufacturerDao manufacturerDao;
@@ -70,7 +72,7 @@ public class CarEditModelFIller implements ModelFiller
 	 */
 	public void fillCarEditModel(Model model, CarFormEditCommand command)
 	{
-		model.addAttribute("pictureIds", command.getCarForm().getId() != null ? this.pictureDao.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
+		model.addAttribute(PICTURE_IDS, command.getCarForm().getId() != null ? this.pictureDao.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
 		this.fillModel(model);
 	}
 }

@@ -4,6 +4,7 @@ import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -49,7 +50,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 	private ModelFiller pictureModelFiller;
 
     @RequestMapping(value = EDIT_URL,
-    				method = RequestMethod.GET)
+    				method = GET)
     public ModelAndView handleEditManufacturer(Model model, @PathVariable(ID) Long manufacturerId)
     {
     	manufacturerModelFiller.fillModel(model);
@@ -59,7 +60,7 @@ public class CmsManufacturerEditController extends CmsBaseController
     }
     
     @RequestMapping(value = EDIT_URL,
-					method = {RequestMethod.POST, RequestMethod.PUT})
+					method = {POST, PUT})
     public ModelAndView handleEditManufacturer(Model model,
     										   @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
     										   BindingResult result)
@@ -90,10 +91,9 @@ public class CmsManufacturerEditController extends CmsBaseController
 	}
 
 	@RequestMapping(value = DELETE_URL,
-					method = RequestMethod.DELETE)
+					method = DELETE)
 	public ModelAndView handleDeleteManufacturer(Model model,
-									    		 @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
-									    		 BindingResult result)
+									    		 @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command)
 	{
 		if (command.getManufacturerForm() != null && command.getManufacturerForm().getId() != null)
 		{

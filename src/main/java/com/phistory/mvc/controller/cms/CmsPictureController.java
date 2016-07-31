@@ -1,33 +1,21 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.tcp.data.model.Picture;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
+
+import static com.phistory.mvc.controller.BaseControllerData.ID;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
  *
@@ -35,64 +23,42 @@ import com.tcp.data.model.Picture;
  */
 @Secured(USER_ROLE)
 @Controller
-@RequestMapping(value = CMS_CONTEXT + PICTURES_URL)
+@RequestMapping(value = CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
+@Slf4j
 public class CmsPictureController extends CmsBaseController
-{    
-    private Logger logger = LoggerFactory.getLogger(getClass());
+{
     @Inject
     private PictureControllerUtil pictureControllerUtil;
     
     @RequestMapping(value = DELETE_URL,
-    				method = RequestMethod.POST)
+    				method = DELETE)
     @ResponseBody
-    public String handleDeletePicture(Model model, 
-    						   		  HttpServletResponse response,
-    						   		  HttpServletRequest request,
-    						   		  @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command,
-    						   		  @RequestParam(value = DELETE_PREVIEW_PICTURE, required = true) boolean deletePreviewPicture) throws JsonProcessingException
+    public String handleDeletePicture(@ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND) PictureLoadCommand command)
     {
-    	Map<String, Object> resultMap = new HashMap<>();
-    	ObjectMapper objectMapper = new ObjectMapper();
-    	
-    	String jsonResultString = "";
-    	
         try
         {
-            Picture picture = pictureControllerUtil.loadPicture(command);
-            getPictureDao().delete(picture);
+            Picture picture = this.pictureControllerUtil.loadPicture(command);
+            super.getPictureDao().delete(picture);
             
             String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
-					  											  new Object[]{deletePreviewPicture ? "Preview picture" : "Picture"},
-					  											  LocaleContextHolder.getLocale());           
-            
-            resultMap.put("result", "success");  
-            resultMap.put("message", successMessage);  
+					  											  new Object[]{"Picture"},
+					  											  LocaleContextHolder.getLocale());
+
+            return SUCCESS_MESSAGE + " : " + successMessage;
         } 
         catch (Exception e)
         {        	
-            logger.error(e.getMessage(), e);
-            
-            resultMap.put("result", "fail");  
-            resultMap.put("message", e.getStackTrace().toString());
-        }      
-        
-        if (!deletePreviewPicture)
-        {
-        	resultMap.put("pictureIds", getPictureDao().getIdsByCarId(command.getCarId()));
+            log.error("There was an error while deleting picture; %s ", command.getPictureId(), e);
+            return EXCEPTION_MESSAGE + " : " + e.toString();
         }
-        	
-        jsonResultString = objectMapper.writeValueAsString(resultMap);
-        
-        return jsonResultString;
     }
 
-    @ModelAttribute(value = CMS_CONTEXT + PICTURE_LOAD_COMMAND_ACTION)
-    public PictureLoadCommand createCommand(@RequestParam(value = ACTION, required = false) String action,
+    @ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND)
+    public PictureLoadCommand createCommand(@PathVariable(ID)  Long pictureId,
     										@RequestParam(value = CAR_ID, required = false) Long carId,
-            								@RequestParam(value = MANUFACTURER_ID, required = false) Long manufacturerId,
-            								@RequestParam(value = PICTURE_ID, required = false) Long pictureId)
+            								@RequestParam(value = MANUFACTURER_ID, required = false) Long manufacturerId)
     {
-        PictureLoadCommand command = new PictureLoadCommand(action,
+        PictureLoadCommand command = new PictureLoadCommand(null,
         												    pictureId,
         												    carId,
         												    manufacturerId);

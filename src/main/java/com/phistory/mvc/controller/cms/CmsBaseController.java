@@ -40,8 +40,6 @@ import com.tcp.data.model.engine.Engine;
 @RequestMapping(value = CMS_CONTEXT)
 public class CmsBaseController extends BaseController
 {
-	@Setter
-	private boolean loggedIn = false;
 	@Getter
 	@Inject
     private ManufacturerDao manufacturerDao;
@@ -62,22 +60,24 @@ public class CmsBaseController extends BaseController
 	public static final String SAVE_URL 		 			= "save";
 	public static final String EDIT_URL 		 			= "edit";
     public static final String DELETE_URL  					= "delete";
-    public static final String CONTENT_LIST_URL  			= "contentList";
 	public static final String CARS_URL		           		= "cars";
-	public static final String MANUFACTURERS_URL			= "manufacturers"; 
-	public static final String PREVIEW_PICTURE_DELETE_URL	= "previewPictureDelete";
+	public static final String MANUFACTURERS_URL			= "manufacturers";
     
     /*************************
      ******Request params*****
      *************************/
-	public static final String QUERY_STRING_SEPARATOR	= "?";
-	public static final String LOGIN_SUCCESS 			= "success";
-	public static final String LOGIN_ERROR 				= "error";
-	public static final String LOGOUT 					= "logout";
+	public static final String QUERY_STRING_SEPARATOR		= "?";
+	public static final String LOGIN_SUCCESS 				= "success";
+	public static final String LOGIN_ERROR 					= "error";
+	public static final String LOGOUT 						= "logout";
     
     public static final String MANUFACTURERS_PER_PAGE  		= "manufacturersPerPage";
     public static final String MANUFACTURERS_PER_PAGE_DATA  = "manufacturersPerPageData";
-    public static final String DELETE_PREVIEW_PICTURE 		= "deletePreviewPicture";
+
+	/*************************
+     **********Actions********
+     *************************/
+    public static final String DELETE_CAR_PICTURE_ACTION    = "deleteCarPicture";
     
     /*************************
      **********Misc***********
@@ -88,17 +88,19 @@ public class CmsBaseController extends BaseController
 	public static final String CAR_EDIT_FORM_COMMAND 					= "CEFC";
 	public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND 	= "CICEFC";
 	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			= "MEFC";
-	public static final String LOGGEDIN 								= "loggedIn";
+	public static final String PICTURE_EDIT_FORM_COMMAND 			    = "PEFC";
+	public static final String LOGGED_IN 								= "loggedIn";
     
 	@ModelAttribute
     public void fillBaseCmsModel(Model model)
     {
-		model.addAttribute("saveURL", 			SAVE_URL);
-		model.addAttribute("deleteURL", 		DELETE_URL);
-		model.addAttribute("manufacturersURL",	MANUFACTURERS_URL);
-		model.addAttribute("loginURL", 	 		LOGIN_URL);
-		model.addAttribute(LOGGEDIN, 	 		true);
-    }
+		model.addAttribute("saveURL", 			        SAVE_URL);
+		model.addAttribute("deleteURL", 		        DELETE_URL);
+		model.addAttribute("manufacturersURL",	        MANUFACTURERS_URL);
+		model.addAttribute("loginURL", 	 		        LOGIN_URL);
+		model.addAttribute(LOGGED_IN, 	 		        true);
+		model.addAttribute("deleteCarPictureAction",    DELETE_CAR_PICTURE_ACTION);
+	}
 	
 	@InitBinder
     public void initBinder(WebDataBinder binder)

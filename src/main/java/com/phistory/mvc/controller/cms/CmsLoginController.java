@@ -33,25 +33,25 @@ public class CmsLoginController extends CmsBaseController
 			}			
 			else if (error != null)
 			{
-				model.addAttribute(LOGGEDIN, false);
+				model.addAttribute(LOGGED_IN, false);
 				model.addAttribute(LOGIN_ERROR, "Invalid username and password!");
 			}
 			else if (logout != null)
 			{
-				model.addAttribute(LOGGEDIN, false);
+				model.addAttribute(LOGGED_IN, false);
 				model.addAttribute(LOGOUT, "You've been logged out successfully.");
 			}
 			//we haven't logged in yet
 			else
 			{
-				model.addAttribute(LOGGEDIN, false);
+				model.addAttribute(LOGGED_IN, false);
 			}
 			
 			return new ModelAndView(CMS_CONTEXT + LOGIN_URL);
 		}
 		catch(Exception e)
 		{
-			model.addAttribute(LOGGEDIN, false);
+			model.addAttribute(LOGGED_IN, false);
 			log.error(e.toString(), e);
 				
 			return new ModelAndView(ERROR_VIEW_NAME);
