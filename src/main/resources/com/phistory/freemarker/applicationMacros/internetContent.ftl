@@ -1,3 +1,5 @@
+<#import "pageLanguage.ftl" as language/>
+
 <#macro addAddInternetContentFunctionScript>
 
 <script type="application/javascript">
