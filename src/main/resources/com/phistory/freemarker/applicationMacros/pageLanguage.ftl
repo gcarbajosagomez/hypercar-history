@@ -1,8 +1,9 @@
 <#import "/spring.ftl" as spring/>
 <#import "pagination.ftl" as pagination/>
+<#import "genericFunctionalities.ftl" as generic/>
 
 <#macro addSetPageLanguage chunkedModelsList=[]>
-	<script type='text/javascript'>
+	<script type='application/javascript'>
 		function setPageLanguage(locale, mainForm)
 		{  
 		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed) 
@@ -30,22 +31,15 @@
 		            	{
 		                	$('#spanish-loading-gif').removeClass('sr-only');
 			            }
-		
-						$('#main-wrap-div').block({ 
-							css: {         										
-		        					border:         '0px solid', 
-		        					backgroundColor:'rgba(94, 92, 92, 0)'
-		    				},
-		                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-		            	});
-		
-						addCrsfTokenToAjaxRequest(xhr);
+
+                        <@generic.addLoadingSpinnerToComponentScript "main-wrap-div"/>
+                        addCRSFTokenToAjaxRequest(xhr);
 		   			}
 			   })
 			   .done(function(data)
 			   {           
-			        document.children[0].innerHTML = data;			        
-					<#if (requestURI?contains(carsURL) && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>      
+			        document.children[0].innerHTML = data;
+					<#if (requestURI?matches("/" + carsURL + "([0-9]{0})") && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {

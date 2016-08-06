@@ -129,7 +129,7 @@ public class CmsCarEditController extends CmsBaseController
 			{
 				carControllerUtil.deleteCar(carFormEditCommand);
 				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
-						  											  new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() +
+						  											  new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() + " " +
 																				   carFormEditCommand.getCarForm().getModel()},
 						  											  LocaleContextHolder.getLocale());
 

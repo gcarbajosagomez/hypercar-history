@@ -1,8 +1,9 @@
 <#import "pagination.ftl" as pagination/>
 <#import "pageLanguage.ftl" as language/>
+<#import "genericFunctionalities.ftl" as generic/>
 
 <#macro addHandleContentSearch>
-	<script type='text/javascript'>
+	<script type='application/javascript'>
 		function handleContentSearch(contentToSearch)
 		{
 			var contentSearchDto = {		
@@ -17,15 +18,8 @@
 		    	    data: contentSearchDto,
 			        beforeSend: function(xhr)
 		    	    {
-		    	    	$('#main-container').block({ 
-							css: {         										
-		        					border:         '0px solid', 
-		        					backgroundColor:'rgba(94, 92, 92, 0)'
-		    				},
-		                	message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>'
-		            	});
-		
-						addCrsfTokenToAjaxRequest(xhr);
+						<@generic.addLoadingSpinnerToComponentScript "main-container"/>
+                        addCRSFTokenToAjaxRequest(xhr);
 		    	    }
 			 })
 			 .done(function(data)

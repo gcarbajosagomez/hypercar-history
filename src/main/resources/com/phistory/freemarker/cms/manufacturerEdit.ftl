@@ -1,6 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
+<#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 
 <#if MEFC.manufacturerForm.id??>
 	<#assign title>${MEFC.manufacturerForm.name}</#assign>
@@ -8,7 +9,7 @@
 	<#assign title>${language.getTextSource('manufacturer.newManufacturer')}</#assign>
 </#if>
 
-<@generic.startPage title/> 
+<@generic.startPage title/>
 
 <div id="main-container" class="container">
 	<div class="row">		
@@ -18,11 +19,20 @@
 			   <div class="panel-heading">
 					<h3 class="text-left">${language.getTextSource('manufacturer')}</h3>
 						
-					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>${language.getTextSource('cms.editManufacturer')}<#else>${language.getTextSource('cms.saveManufacturer')}</#if>" onClick="saveOrEditManufacturer();"/>
+					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>
+					                                                                                        ${language.getTextSource('cms.editManufacturer')}
+					                                                                                  <#else>
+					                                                                                        ${language.getTextSource('cms.saveManufacturer')}
+					                                                                                  </#if>"
+                                                                                               onClick="<#if MEFC.manufacturerForm.id??>
+                                                                                                            editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
+                                                                                                        <#else>
+                                                                                                            saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
+                                                                                                        </#if>"/>
 					<#if MEFC.manufacturerForm.id??>
 						<input id="delete-manufacturer-button" type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${language.getTextSource('manufacturer.confirmDelete')}');"/>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newManufacturer')}</a>             			
+	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newManufacturer')}</a>
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -78,35 +88,27 @@
 
 <@generic.endPage/>
 
-<script type="text/javascript">
+<script type="application/javascript">
 
-	function saveOrEditManufacturer()
-	{
-		<#if MEFC.manufacturerForm.id??>
-			editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
-		<#else>
-			saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
-		</#if>
-	}
+    function displayPreviewImageWhenFileSelected(previewFile) {
+        var reader = new FileReader();
 
-	function displayPreviewImageWhenFileSelected(previewFile)
-	{
-		var reader = new FileReader();
-	  
-		reader.onload = function(e)
-		{
-			var img = $('#manufacturer-preview-image')[0];
-			img.src = reader.result;
-		      					
-			$('#manufacturer-preview-picture-area').append(img);
-		}
-	  
-		reader.readAsDataURL(previewFile); 
-	}
-	
-	$(function()
-    {              								  		
-		$('#main-form')[0].enctype="multipart/form-data";
+        reader.onload = function (e) {
+            var img = $('#manufacturer-preview-image')[0];
+            img.src = reader.result;
+
+            $('#manufacturer-preview-picture-area').append(img);
+        }
+
+        reader.readAsDataURL(previewFile);
+    }
+
+    $(function () {
+        $('#main-form')[0].enctype = "multipart/form-data";
     });
 
 </script>
+
+<@crudOperations.addEditEntityFunctionScript/>
+<@crudOperations.addDeleteEntityFunctionScript/>
+<@crudOperations.addCreateEntityFunctionScript/>

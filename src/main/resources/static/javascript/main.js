@@ -1,4 +1,4 @@
-function addCrsfTokenToAjaxRequest(xhr)
+function addCRSFTokenToAjaxRequest(xhr)
 {
 	// CSRF token to protect against cross site attacks
 	var token = $("meta[name='_csrf']").attr("content");
@@ -26,71 +26,6 @@ function submitLoginForm(login)
 	$("#main-form").submit();
 }
 
-function saveEntity(url, confirmSaveMessage)
-{		
-	bootbox.confirm(confirmSaveMessage, function(result)
-    {
-		//OK button
-		if (result == true)
-		{
-			$.ajax({            
-	        	type:'POST',
-		        url: url,
-		        data: new FormData($("#main-form")[0]),
-		        processData: false,
-		        contentType: false,
-		        beforeSend: function(xhr)
-	    	    {
-					addCrsfTokenToAjaxRequest(xhr);
-	    	    }
-			})
-			.done(function(data)
-			{
-				document.children[0].innerHTML = data; 	
-				var savedEntityId = $("input[id*='.id']")[0].value;
-				var urlReplacement = '';
-
-                if (savedEntityId.length > 0)
-				{
-					urlReplacement = "/" + savedEntityId + "/edit";
-				} 
-				else
-				{
-					urlReplacement = "/edit";
-				}
-				
-				window.history.pushState(null,'', url.replace("/save", urlReplacement));
-			});
-		}
-    });	   
-}
-
-function editEntity(url, confirmEditMessage)
-{		
-	bootbox.confirm(confirmEditMessage, function(result)
-	{
-		//OK button
-		if (result == true)
-		{
-			$.ajax({            
-			  	type:'POST',
-				url: url,
-		        data: new FormData($("#main-form")[0]),
-		        processData: false,
-		        contentType: false,
-				beforeSend: function(xhr)
-			    {
-					addCrsfTokenToAjaxRequest(xhr);
-			    }
-			})
-			.done(function(data)
-			{
-				document.children[0].innerHTML = data; 
-			});
-		}
-	});	   
-}
-
 function setUpContactUsModal()
 {
 	$('#contact-us-error-alert-span').text('');
@@ -102,30 +37,6 @@ function setUpContactUsModal()
    	$('#contact-us-sender-name')[0].value = '';
    	$('#contact-us-sender-email')[0].value = '';
    	$('#contact-us-message')[0].value = '';
-}
-
-function deleteEntity(url, deleteMessage)
-{
-	bootbox.confirm(deleteMessage, function(result)
-    {
-		//OK button
-		if (result == true)
-		{
-			$.ajax({
-			    url: url,
-			    type: 'DELETE',
-			    beforeSend: function(xhr)
-	    	    {
-			    	addCrsfTokenToAjaxRequest(xhr);
-	    	    }
-			})
-			.done(function(data)
-			{
-				document.children[0].innerHTML = data; 		
-				window.history.pushState(null,'', url.replace(/\/[0-9]{1,}\/delete/, "/edit"));		
-			});
-		}
-    });
 }
 
 function deletePicture(pictureId, deleteMessage)
@@ -141,7 +52,7 @@ function deletePicture(pictureId, deleteMessage)
                 dataType: 'text',
 			    beforeSend: function(xhr)
 	    	    {
-			    	addCrsfTokenToAjaxRequest(xhr);
+			    	addCRSFTokenToAjaxRequest(xhr);
 	    	    }
 			})
 			.done(function(data)
@@ -205,7 +116,7 @@ function openTechnologyStackModal()
 	    type: 'GET',
 	    beforeSend: function(xhr)
 	    {
-	    	addCrsfTokenToAjaxRequest(xhr);
+	    	addCRSFTokenToAjaxRequest(xhr);
 	    }
 	})
 	.done(function(data)

@@ -3,7 +3,11 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
 
-<#macro startPage title=''>      
+<#macro startPage title=''>
+    <#assign requestIsCMS = false/>
+    <#if requestURI?contains(cmsContext)>
+	    <#assign requestIsCMS = true/>
+    </#if>
     <!DOCTYPE html>
     	<#assign lang = language.getTextSource('paganiHistory.language')/>
         <html lang="${lang}" class="no-js">
@@ -35,13 +39,15 @@
         			<script src="/resources/javascript/lib/bootstrap.min.js"></script>
         			<script src="/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
         			<script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
-        			<script src="/resources/javascript/lib/bootstrap-datepicker.js"></script>
         			<script src="/resources/javascript/lib/bootbox.min.js"></script>
 					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
-					<script src="/resources/javascript/main.min.js"></script>
+					<script src="/resources/javascript/main.js"></script>
+                    <#if requestIsCMS>
+                        <script src="/resources/javascript/lib/bootstrap-datepicker.min.js"></script>
+                    </#if>
 
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
-        			<script type='text/javascript'>
+        			<script type='application/javascript'>
 						var ajaxCallBeingProcessed = false;
 						document.addEventListener("touchstart", function(){}, true);
 
@@ -75,7 +81,7 @@
 							});
     					});
 
-                        <#if !requestURI?contains("${cmsContext}")>
+                        <#if !requestIsCMS>
                             <@addGoogleAnalyticsScript/>
                         </#if>
 					</script>
@@ -142,7 +148,7 @@
           										</li>
           									</ul>
               							</li>
-              							<#if requestURI?contains("${cmsContext}") && loggedIn?? && loggedIn == true>
+              							<#if requestIsCMS && (loggedIn?? && loggedIn)>
               								<li>
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
@@ -223,10 +229,10 @@
     	  				</div>
     				</div>
     			</div>
+				<@language.addSetPageLanguage chunkedModelsList/>
+				<@contentSearch.addHandleContentSearch/>
 			</body>
         </html>
-        <@language.addSetPageLanguage chunkedModelsList/>
-        <@contentSearch.addHandleContentSearch/>
 </#macro>
 
 <#macro getCarProductionLife car>
@@ -314,4 +320,16 @@
     (window,document,'script','//www.google-analytics.com/analytics.js','ga');
     ga('create', 'UA-59713760-1', 'auto');
     ga('send', 'pageview');
+</#macro>
+
+<#macro addLoadingSpinnerToComponentScript componentId>
+    $('#${componentId}').block({
+        css: {
+            border: '0px solid',
+            backgroundColor: 'rgba(94, 92, 92, 0)'
+        },
+        message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1>' +
+                     '<i id="loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
+                 '</div>'
+    });
 </#macro>

@@ -625,7 +625,7 @@
   	</div>
 </#macro>
 
-<script type="text/javascript">
+<script type="application/javascript">
 
 	function setUnitsOfMeasure(unitsOfMeasure, mainForm)
 	{
@@ -648,14 +648,9 @@
 	            		{
 	                		$('#imperial-units-loading-gif').removeClass('sr-only');
 		            	}
-	
-						$('#main-car-details-div').block({ 
-							css: {         										
-	        						border:         '0px solid', 
-	        						backgroundColor:'rgba(94, 92, 92, 0)'
-	    						 },
-	                		message: '<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-4x fa-spin blue"></i>' 
-	            		});
+
+                        <@generic.addLoadingSpinnerToComponentScript "main-car-details-div"/>
+
 	   				}
 	   		})
 	    	.done(function(data)
@@ -687,7 +682,7 @@
 	</script>
 	
 	<script src="/resources/javascript/lib/youtube-iframe-api.min.js"></script>
-	<script type="text/javascript">
+	<script type="application/javascript">
 		 <#list youtubeVideoIds as videoId>
 		 	var player${videoId?index};
 		 </#list>		

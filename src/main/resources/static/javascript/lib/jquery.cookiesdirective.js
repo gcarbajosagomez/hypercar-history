@@ -72,7 +72,7 @@
 		var elementId = String(settings.appendTo);
 		var sA = document.createElement("script");
 		sA.src = settings.uri;
-		sA.type = "text/javascript";
+		sA.type = "application/javascript";
 		sA.onload = sA.onreadystatechange = function() {
 			if ((!sA.readyState || sA.readyState == "loaded" || sA.readyState == "complete")) {
 				return;

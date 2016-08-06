@@ -1,4 +1,5 @@
 <#import "pageLanguage.ftl" as language/>
+<#import "genericFunctionalities.ftl" as generic/>
 
 <#macro createCarsPagination chunkedModelsList=[]>
 	var options =
@@ -40,16 +41,9 @@
 	           				data: paginationData, 
 	           				beforeSend: function(xhr)
 	           				{
-								$('#main-car-list-div').block({ 
-									css: {         										
-	    									border:         '0px solid', 
-	    									backgroundColor:'rgba(94, 92, 92, 0)'
-									},
-	           						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>'
-	        					});
-	        					
-									addCrsfTokenToAjaxRequest(xhr);
-								}
+                                <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+								addCRSFTokenToAjaxRequest(xhr);
+                            }
 	                	  })	                	 
 	                	  .done(function (data)
 						  {    	            	 
@@ -110,15 +104,8 @@
         						data: contentSearchDto,
                 				beforeSend: function(xhr)
                 				{
-									$('#main-car-list-div').block({ 
-										css: {         										
-        										border:         '0px solid', 
-        										backgroundColor:'rgba(94, 92, 92, 0)'
-    									},
-                						message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1><i id="pagination-loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i></div>' 
-            						});      						
-
-									addCrsfTokenToAjaxRequest(xhr);
+                                    <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+									addCRSFTokenToAjaxRequest(xhr);
   								}
 	                	  	  })	                	 
 	                	  	  .done(function (data)

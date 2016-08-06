@@ -72,7 +72,7 @@
 </div>
 <@generic.endPage chunkedModelsList/>
 
-<script type='text/javascript'>
+<script type='application/javascript'>
 	
 	<#if cars?? && (models?size > carsPerPageData)>
 		$( document ).ready(function()
