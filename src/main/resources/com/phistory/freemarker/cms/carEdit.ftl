@@ -2,6 +2,8 @@
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
+<#import "../applicationMacros/engine.ftl" as engine/>
+<#import "../applicationMacros/internetContent.ftl" as internetContent/>
 
 <#if CEFC.carForm.id??>
 	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
@@ -718,161 +720,6 @@
 
 <script type="application/javascript">
 
-        function loadEngineFromDB()
-        {
-             $('#engine-code-selection-table').removeClass('sr-only');
-        }
-
-        function eraseEngineFormFields()
-        {
-       		 <#--By loading a null Id we can easily erase all the inputs -->
-       		 fillEngineInputValues({});
-
-       		 $('#engine-code-selection-table').addClass('sr-only');
-       		 $('#engine-id-dt').addClass('sr-only');
-       		 $('#engine-id-dd').addClass('sr-only');
-       		 $('#engine-save-or-edit-link').attr("onClick","saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}')");
-			 $('#engine-save-or-edit-span').text(" ${language.getTextSource('cms.saveEngine')}");
-        }
-
-        function loadEngineById(engineId)
-        {
-       		 if (!ajaxCallBeingProcessed)
-	         {
-	             ajaxCallBeingProcessed = true;
-
-	         	 $('.sr-only').removeClass('sr-only');
-
-	           	 $.ajax({
-	        			type: 'GET',
-	            	    url: '<@spring.url "/${cmsContext}${enginesURL}/"/>' + engineId,
-	                	contentType: 'application/json; charset=UTF-8',
-						beforeSend: function(xhr)
-						{
-                            <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
-                            addCRSFTokenToAjaxRequest(xhr);
-						}
-				  	  })
-			          .done(function (data)
-					  {
-			          	 var engine = data;
-						 $('#engine-main-div').unblock();
-
-		                 fillEngineInputValues(engine);
-       		 			 $('#engine-save-or-edit-link').attr("onClick","editEngine()");
-			 			 $('#engine-save-or-edit-span').text(" ${language.getTextSource('cms.editEngine')}");
-		                 ajaxCallBeingProcessed = false;
-			          });
-			}
-        }
-
-        function fillEngineInputValues(engine)
-        {
-       	   if (engine != null)
-       	   {
-       	  	 if (engine.id != null)
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.id.label').innerText 		= engine.id;
-       	  	    document.getElementById('carForm.engineForm.id').value 					= engine.id;
-       	  	 }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.id.label').innerText 		= "";
-       	  	    document.getElementById('carForm.engineForm.id').value 					= "";
-       	  	 }
-
-       	  	 if (engine.code != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.code').value 				= engine.code;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.code').value 				= "";
-       	  	 }
-
-             if (engine.type != null)
-       	  	 {
-          	    document.getElementById('carForm.engineForm.type').value 				= engine.type;
-          	 }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.type').value 				= "";
-       	  	 }
-
-          	 if (engine.cylinderDisposition != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.cylinderDisposition').value = engine.cylinderDisposition;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.cylinderDisposition').value = "";
-       	  	 }
-
-             if (engine.numberOfCylinders != null)
-       	     {
-       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value 	= engine.numberOfCylinders;
-       	  	 }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.numberOfCylinders').value 	= "";
-       	  	 }
-
-       	  	 if (engine.numberOfValves != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.numberOfValves').value 		= engine.numberOfValves;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.numberOfValves').value 		= "";
-       	  	 }
-
-             if (engine.size != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.size').value 				= engine.size;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.size').value 				= "";
-       	  	 }
-
-             if (engine.maxPower != null)
-       	  	 {
-          	    document.getElementById('carForm.engineForm.maxPower').value 			= engine.maxPower;
-          	 }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxPower').value 			= "";
-       	  	 }
-
-          	 if (engine.maxPowerRPM != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.maxPowerRPM').value 		= engine.maxPowerRPM;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxRPM').value 				= "";
-       	  	 }
-
-             if (engine.maxTorque != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.maxTorque').value 			= engine.maxTorque;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxTorque').value 			= "";
-       	  	 }
-
-             if (engine.maxTorqueRPM != null)
-       	  	 {
-                document.getElementById('carForm.engineForm.maxTorqueRPM').value 		= engine.maxTorqueRPM;
-             }
-       	  	 else
-       	  	 {
-       	  	    document.getElementById('carForm.engineForm.maxTorqueRPM').value 		= "";
-       	  	 }
-           }
-       }
-
        function addPictureUploadBox()
        {
            var pictureUploadBoxNum = $("input[id^='carForm.pictureFiles']").length;
@@ -934,62 +781,6 @@
 			reader.readAsDataURL(previewFile);
 		}
 
-		function addInternetContent()
-		{
-            var internetContentNum = $("input[id^=carInternetContentForms][id$=link").length;
-            var newInternetContentCarFormIdHiddenInput = $('<input>', {'type'  : 'hidden',
-																       'id'    : 'carInternetContentForms' + internetContentNum + '.car',
-													      		       'name'  : 'carInternetContentForms[' + internetContentNum + '].car',
-													      		       'value' :  '<#if CEFC.carForm.id??>${CEFC.carForm.id}</#if>'});
-
-            var newInternetContentWellDiv = $('<div>', {'class' : 'well well-lg'});
-            var newInternetContentDl = $('<dl>', {'class' : 'dl-horizontal dl-horizontal-edit text-left'});
-            var newInternetContentLinkDt = $('<dt>');
-			newInternetContentLinkDt.append('${language.getTextSource('cms.car.internetContent.link')}');
-			newInternetContentDl.append(newInternetContentLinkDt);
-            var newInternetContentLinkDd = $('<dd>');
-			newInternetContentLinkDd.append(newInternetContentCarFormIdHiddenInput);
-			newInternetContentLinkDd.append($('<input>', {'type'  : 'text',
-													      'id'    : 'carInternetContentForms' + internetContentNum + '.link',
-													      'name'  : 'carInternetContentForms[' + internetContentNum + '].link',
-													      'class' : 'form-control'}));
-
-			newInternetContentDl.append(newInternetContentLinkDd);
-
-            var newInternetContentTypeDt = $('<dt>');
-			newInternetContentTypeDt.append('${language.getTextSource('cms.car.internetContent.type')}');
-			newInternetContentDl.append(newInternetContentTypeDt);
-            var newInternetContentTypeDd = $('<dd>');
-            var newInternetContentTypeSelect = $('<select>', {'id'    : 'carInternetContentForms' + internetContentNum + '.type',
-													          'name'  : 'carInternetContentForms[' + internetContentNum + '].type',
-													          'class' : 'form-control'});
-
-			<#list carInternetContentTypes as carInternetContentType>
-				newInternetContentTypeSelect.append($('<option>', {'value' : '${carInternetContentType}'}).text('${language.getTextSource('cms.car.internetContent.type.${carInternetContentType}')}'));
-			</#list>
-
-			newInternetContentTypeDd.append(newInternetContentTypeSelect);
-			newInternetContentDl.append(newInternetContentTypeDd);
-
-            var newInternetContentLanguageDt = $('<dt>');
-			newInternetContentLanguageDt.append('${language.getTextSource('cms.car.internetContent.contentLanguage')}');
-			newInternetContentDl.append(newInternetContentLanguageDt);
-            var newInternetContentLanguageDd = $('<dd>');
-            var newInternetContentLanguageSelect = $('<select>', {'id'    : 'carInternetContentForms' + internetContentNum + '.contentLanguage',
-													              'name'  : 'carInternetContentForms[' + internetContentNum + '].contentLanguage',
-													              'class' : 'form-control'});
-
-			<#list carInternetContentLanguages as contentLanguage>
-				newInternetContentLanguageSelect.append($('<option>', {'value' : '${contentLanguage}'}).text('${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}'));
-			</#list>
-
-			newInternetContentLanguageDd.append(newInternetContentLanguageSelect);
-			newInternetContentDl.append(newInternetContentLanguageDd);
-
-			newInternetContentWellDiv.append(newInternetContentDl);
-			$('#internet-contents-main-panel-body').append(newInternetContentWellDiv);
-		}
-
        	$(function() {
             $('.input-group.date').datepicker({
                 format: "yyyy-mm",
@@ -1008,3 +799,10 @@
 <@crudOperations.addEditEngineFunctionScript/>
 <@crudOperations.addDeleteEntityFunctionScript/>
 <@crudOperations.addCreateEntityFunctionScript/>
+
+<@engine.addLoadEngineFromDBScriptFunction/>
+<@engine.addEraseEngineFormFieldsScriptFunction/>
+<@engine.addLoadEngineByIdFunctionScript/>
+<@engine.addFillEngineInputValuesFunctionScript/>
+
+<@internetContent.addAddInternetContentFunctionScript/>
