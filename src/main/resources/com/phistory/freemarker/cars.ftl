@@ -55,11 +55,11 @@
 								</div>
 							</#if>
 							<div class="<#if (chunkedModelsList?size == 1)>text-center<#else>text-right</#if> <#if (chunkedModelsList?size < 2)>col-lg-12 col-md-12 col-sm-12 col-xs-12<#else><#if (chunkedModelsList?size < 3)>col-lg-5<#else>col-lg-4</#if> col-md-5 col-sm-5 col-xs-12</#if>" style="height:56px; margin-bottom: 20px;">
-								<button id="cars-per-page-menu" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
+								<button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
     								${language.getTextSource('pagination.carsPerPage')}
     								<span class="caret"></span>
   								</button>
-  								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-menu">
+  								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-dropdown">
 									<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=5">5</a></li>
     								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=10">10</a></li>
     								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>

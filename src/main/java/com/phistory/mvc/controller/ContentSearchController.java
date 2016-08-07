@@ -51,16 +51,16 @@ public class ContentSearchController extends BaseController implements Initializ
 		{
 			SearchCommand searchCommand = createSearchCommand(contentSearchDto);		
 		
-			com.tcp.data.dto.ContentSearchDto dataContentSearchDto = getContentSearchDao().hibernateSearchSearchContent(searchCommand);
+			com.tcp.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDao().hibernateSearchSearchContent(searchCommand);
 		
 			model.addAttribute(CARS, dataContentSearchDto.getResults());
-			model.addAttribute(MODELS, getCarDao().getDistinctModelsWithId());
+			model.addAttribute(MODELS, super.getCarDao().getDistinctModelsWithId());
 			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getCarsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
 			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());
 			model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDto.getContentToSearch());
-			carModelFiller.fillModel(model);
-			pictureModelFiller.fillModel(model);
+			this.carModelFiller.fillModel(model);
+			this.pictureModelFiller.fillModel(model);
 		
 			return new ModelAndView(CARS);
 		}
@@ -103,6 +103,6 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Override
 	public void afterPropertiesSet() throws Exception
 	{
-		getContentSearchDao().hibernateSearchIndexPreviouslyStoredDatabaseRecords();		
+		super.getContentSearchDao().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
 	}
 }

@@ -1,5 +1,6 @@
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
+<#import "applicationMacros/picture.ftl" as picture/>
 
 <#if car??>
 	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
@@ -70,7 +71,7 @@
 		  					</a>
 						</div>	
 					</#if>
-					<@generic.addBlueImpGallery/>
+					<@picture.addBlueImpGallery/>
   				<#else>
   					<h2 class="text-center">${language.getTextSource('noPicturesAvailable')}</h2>
   				</#if>

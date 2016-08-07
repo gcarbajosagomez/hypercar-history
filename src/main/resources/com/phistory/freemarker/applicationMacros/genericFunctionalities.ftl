@@ -2,6 +2,7 @@
 <#import "contactUs.ftl" as contactUs/>
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
+<#import "picture.ftl" as picture/>
 
 <#macro startPage title=''>
     <#assign requestIsCMS = false/>
@@ -97,7 +98,7 @@
           						 <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/>'>
           							<div class="row">
           								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-right: 0px;">
-											<h1 class="italic-font">${language.getTextSource('paganiHistory')}</h1>
+											<h1 class="italic-font" style="padding-left: 10px;">${language.getTextSource('paganiHistory')}</h1>
 											<h4 class="italic-font text-right" style="padding-right: 30px">${language.getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
           					   			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -107,7 +108,7 @@
     	      					 </a>
         	  				 </div>
 
-          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 25px; padding-right: 25px; margin-top: 20px;">
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
@@ -197,7 +198,7 @@
 						</form>
 					</div>
 
-					<div class="pagani-history-footer">
+					<div class="pagani-history-footer navbar">
 						<div class="row">
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<b>${language.getTextSource('footer.aboutUs')}</b>
@@ -212,8 +213,8 @@
 								</p>
 	        				</div>
     	  				</div>
-      					<div class="row">
-      						<div class="col-lg-12">
+      					<div class="row" style="padding-top: 30px">
+      						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       							<b>${language.getTextSource('footer.technologyStack')}</b>
       							<p class="text-muted text-left">
 									${language.getTextSource('footer.technologyStack.text')}
@@ -221,10 +222,17 @@
 								<@contactUs.createContactUsDialog/>
 								<div id="technology-stack-modal-div" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="technology-stack-label" aria-hidden="true"></div>
 							</div>
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <b>${language.getTextSource('title.cookiesPolicy')}</b>
+                                <p class="text-muted text-left">
+                                    ${language.getTextSource('footer.cookiesPolicy.text')}
+                                </p>
+                            </div>
       					</div>
-      					<div class="row">
-        					<p class="col-lg-12 text-muted text-center" style="padding-top: 30px">
-								${language.getTextSource('paganiHistory')} 2015 - ${.now?string("yyyy")}. ${language.getTextSource('footer.allRightsReserved')}.
+                        <div class="divider"></div>
+      					<div class="row" style="margin-bottom: 15px">
+        					<p class="col-lg-12 text-muted text-center" style="padding-top: 15px">
+								${language.getTextSource('paganiHistory')} 2015 - ${.now?string("yyyy")}. ${language.getTextSource('footer.allRightsReserved')}
 							</p>
     	  				</div>
     				</div>
@@ -256,43 +264,6 @@
 
 <#macro getYear date>
   ${date.time?string("yyyy")}
-</#macro>
-
-<#macro addBlueImpGallery>
-	<#-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-	<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false">
-    	<#-- The container for the modal slides -->
-    	<div class="slides"></div>
-    	<#-- Controls for the borderless lightbox -->
-    	<h3 class="title"></h3>
-    	<a class="prev">‹</a>
-    	<a class="next">›</a>
-    	<a class="close">×</a>
-    	<a class="play-pause"></a>
-    	<ol class="indicator"></ol>
-    	<#-- The modal dialog, which will be used to wrap the lightbox content -->
-    	<div class="modal fade">
-        	<div class="modal-dialog">
-           		<div class="modal-content">
-           			<div class="modal-header">
-           				<button type="button" class="close" aria-hidden="true">&times;</button>
-           				<h4 class="modal-title"></h4>
-           			</div>
-           			<div class="modal-body next"></div>
-           			<div class="modal-footer">
-           				<button type="button" class="btn btn-default pull-left prev">
-           					<i class="glyphicon glyphicon-chevron-left"></i>
-           					${language.getTextSource('previous')}
-           				</button>
-               			<button type="button" class="btn btn-primary next">
-                   			${language.getTextSource('next')}
-                   			<i class="glyphicon glyphicon-chevron-right"></i>
-               			</button>
-           			</div>
-        		</div>
-        	</div>
-    	</div>
-	</div>
 </#macro>
 
 <#macro addOperationResultMessage exceptionMessage, successMessage>

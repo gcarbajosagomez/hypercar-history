@@ -2,8 +2,10 @@ package com.phistory.test.integration.web.car;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +14,10 @@ import com.phistory.test.integration.web.BasePage;
 
 public class CarListPage extends BasePage
 {
-	@FindBy(id = "main-car-list-div")
+    private static final String LI_CSS_SELECTOR = "li";
+    private static final String CARS_PER_PAGE_OPTIONS_CSS_SELECTOR = "a[role='menuitem']";
+
+    @FindBy(id = "main-car-list-div")
 	private WebElement carListLocator;
 	@FindBy(id = "car-list-row")
 	private WebElement carListRowLocator;
@@ -20,8 +25,12 @@ public class CarListPage extends BasePage
 	private WebElement paginationDivLocator;
 	@FindBy(id = "pagination-ul")
 	private WebElement paginationLocator;
-	
-	public CarListPage(WebDriver webDriver) {
+    @FindBy(id = "cars-per-page-dropdown")
+    private WebElement carsPerPageDropDownLocator;
+    @FindBy(className = "dropdown-menu-right")
+    private WebElement carsPerPageDropDownMenuLocator;
+
+    public CarListPage(WebDriver webDriver) {
 		super(webDriver);
 		super.initializePageElements();		
 	}
@@ -43,14 +52,14 @@ public class CarListPage extends BasePage
 	
 	public boolean paginatorHasPages()
 	{
-		List<WebElement> pageSelectors = this.paginationLocator.findElements(By.cssSelector("li"));
+		List<WebElement> pageSelectors = this.paginationLocator.findElements(By.cssSelector(LI_CSS_SELECTOR));
 		
 		return pageSelectors.stream().anyMatch(page -> page.getAttribute("class").equals("active"));
 	}
 	
 	public void paginate(int pageNumber)
 	{
-		Optional<WebElement> inactivePageSelectors = this.paginationLocator.findElements(By.cssSelector("li"))
+		Optional<WebElement> inactivePageSelectors = this.paginationLocator.findElements(By.cssSelector(LI_CSS_SELECTOR))
 														  		       	   .stream()
 														  		           .filter(page -> !page.getAttribute("class").equals("active"))
 														  		           .filter(page -> page.getText().equals(String.valueOf(pageNumber)))
@@ -71,4 +80,27 @@ public class CarListPage extends BasePage
 		
 		return null;
 	}
+
+    public int getNumberOfCarsDisplayed() {
+        return this.carListLocator.findElements(By.className("preview-outer")).size();
+    }
+
+    public boolean isCarsPerPageDropDownDisplayed() {
+        return this.carsPerPageDropDownLocator.isDisplayed();
+    }
+
+    public void clickCarsPerPageDropDownButton() {
+        JavascriptExecutor jsExecutor = (JavascriptExecutor) super.getWebDriver();
+        jsExecutor.executeScript("window.scrollBy(0, 2500)", "");
+        this.carsPerPageDropDownLocator.click();
+    }
+
+    public int getNumberOfCarsPerPageOptionsDisplayed() {
+        return this.carsPerPageDropDownMenuLocator.findElements(By.cssSelector(CARS_PER_PAGE_OPTIONS_CSS_SELECTOR)).size();
+    }
+
+    public void clickNumberOfCarsPerPageOptionByValue(String value) {
+        List<WebElement> options = this.carsPerPageDropDownMenuLocator.findElements(By.cssSelector(CARS_PER_PAGE_OPTIONS_CSS_SELECTOR));
+        options.stream().filter(option -> option.getText().equals(value)).findFirst().get().click();
+    }
 }

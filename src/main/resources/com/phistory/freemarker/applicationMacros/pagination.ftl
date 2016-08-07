@@ -68,7 +68,7 @@
 		var options =
     	{
 	    	bootstrapMajorVersion : 3,
-    	    currentPage: contentSearchDto.pagNum,
+    	    currentPage: contentSearchDto.${pagNum},
     	    alignment: 'left',
         	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${carsPerPage}),
     	    useBootstrapTooltip: true,
@@ -114,7 +114,7 @@
       								{
       									document.children[0].innerHTML = data;      									
         	        	 	    		$('#main-car-list-div').unblock();       	        	 	    		
-        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.carsPerPage + "&${contentToSearch}=" + contentSearchDto.contentToSearch);	
+        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch});
     									options.currentPage = contentSearchDto.${pagNum};
         	        	 	    		$('#pagination-ul').bootstrapPaginator(options);
     									$('#pagination-ul').addClass('cursor-pointer');

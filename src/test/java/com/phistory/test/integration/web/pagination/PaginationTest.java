@@ -49,7 +49,8 @@ public class PaginationTest extends BaseIntegrationTest
 	public void test_pagination_is_displayed() throws Exception
 	{
 		assertThat("Pagination should be displayed", this.carListPage.isPaginationDivDisplayed());
-		assertThat("Paginator should contain at least one page", this.carListPage.isPaginatorDisplayed());
+		assertThat("Paginator should be displayed", this.carListPage.isPaginatorDisplayed());
+		assertThat("Paginator should contain at least one page", this.carListPage.paginatorHasPages());
 	}
 	
 	@Test(dependsOnMethods = "test_pagination_is_displayed")

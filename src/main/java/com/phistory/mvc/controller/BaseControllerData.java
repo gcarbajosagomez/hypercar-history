@@ -22,11 +22,11 @@ public class BaseControllerData
     public static final String CAR_ID          					= "carId";
     public static final String MANUFACTURER_ID          		= "manufacturerId";
     public static final String PICTURE_ID      					= "picId";
-    public static final String PAG_NUM      	  				= "pagNum";
+    public static final String PAG_NUM      	  				= "pn";
     public static final String PAG_NUM_DATA	  					= "pagNumData";
-    public static final String CARS_PER_PAGE  					= "carsPerPage";
+    public static final String CARS_PER_PAGE  					= "cpp";
     public static final String CARS_PER_PAGE_DATA    			= "carsPerPageData";
-    public static final String CONTENT_TO_SEARCH     			= "contentToSearch";
+    public static final String CONTENT_TO_SEARCH     			= "cts";
     public static final String SEARCH_TOTAL_RESULTS_DATA 		= "searchTotalResultsData";
     public static final String LANGUAGE_DATA					= "l";
 	

@@ -581,7 +581,7 @@
 			   </div>
 			   <div class="panel-body row">
                     <#if pictureIds?has_content>
-						<@generic.addBlueImpGallery/>
+						<@picture.addBlueImpGallery/>
 
                         <table style="width:100%">
                             <#list pictureIds?chunk(2) as row>

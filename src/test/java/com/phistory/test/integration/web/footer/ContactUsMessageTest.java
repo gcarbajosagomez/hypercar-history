@@ -110,7 +110,7 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 	{
 		this.test_click_contact_us_link_should_display_contact_us_modal();
 		assertThat("Contact Us message modal should be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(true));
-		this.contactUsPage.clickDismissContactUsModalButon();
+		this.contactUsPage.clickDismissContactUsModalButton();
 		Thread.sleep(1000);
 		assertThat("Contact Us message modal should not be displayed", this.contactUsPage.isContactUsMainDivDisplayed(), is(false));
 	}
@@ -125,9 +125,9 @@ public class ContactUsMessageTest extends BaseIntegrationTest
 	@AfterMethod
 	public void dismissContactUsModal() throws InterruptedException
 	{
-		if (this.contactUsPage.isDismissContactUsModalButonDisplayed())
+		if (this.contactUsPage.isDismissContactUsModalButtonDisplayed())
 		{
-			this.contactUsPage.clickDismissContactUsModalButon();
+			this.contactUsPage.clickDismissContactUsModalButton();
 			Thread.sleep(1000);
 		}
 	}

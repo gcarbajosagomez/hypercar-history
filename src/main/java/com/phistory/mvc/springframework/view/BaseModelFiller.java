@@ -39,8 +39,8 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("technologyStackURL", 	TECHNOLOGY_STACK_URL);
 		model.addAttribute(ID, 				   		ID);
 		model.addAttribute("carsPerPage", 		   	CARS_PER_PAGE);
-		model.addAttribute(PAG_NUM, 			   	PAG_NUM);
-		model.addAttribute(CONTENT_TO_SEARCH, 	   	CONTENT_TO_SEARCH);	
+		model.addAttribute("pagNum", 			   	PAG_NUM);
+		model.addAttribute("contentToSearch", 	   	CONTENT_TO_SEARCH);
 		model.addAttribute("languageCookieName",	LANGUAGE_COOKIE_NAME);
 		model.addAttribute("cmsContext", 			CMS_CONTEXT);
 		model.addAttribute("languageQueryString",	LANGUAGE_DATA);

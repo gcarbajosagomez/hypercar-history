@@ -70,12 +70,12 @@
 	<#assign pageLanguages = ['en', 'es']>
 	<#list pageLanguages as language>		
 		<#if requestURI?contains(languageQueryString + "=")>
-			<link rel="alternate" hreflang="${language}" href="${requestURI?replace(languageQueryString + "=" + "\\w{2}\\b", languageQueryString + "=" + language, 'r')}" />
+			<link rel="alternate" hreflang="${language}" href="${requestURI?replace(languageQueryString + "=" + "\\w{2}\\b", languageQueryString + "=" + language, 'r')}"/>
 			<#if requestURI?contains(language)>
-				<link rel="alternate" hreflang="${language}" href="${requestURI?replace("\\?" + languageQueryString + "=" + "\\w{2}\\b", '', 'r')}" />
+				<link rel="alternate" hreflang="${language}" href="${requestURI?replace("\\?" + languageQueryString + "=" + "\\w{2}\\b", '', 'r')}"/>
 			</#if>
 		<#else>
-			<link rel="alternate" hreflang="${language}" href="${requestURI}<#if requestURI?contains("?")>&<#else>?</#if>${languageQueryString}=${language}" />    
+			<link rel="alternate" hreflang="${language}" href="${requestURI}<#if requestURI?contains("?")>&<#else>?</#if>${languageQueryString}=${language}"/>
 		</#if>
 	</#list>
 </#macro>

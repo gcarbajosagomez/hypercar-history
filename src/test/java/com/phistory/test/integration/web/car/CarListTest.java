@@ -1,8 +1,9 @@
 package com.phistory.test.integration.web.car;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
+import static com.phistory.mvc.model.dto.PaginationDto.*;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -26,7 +27,10 @@ import com.phistory.test.integration.web.BaseIntegrationTest;
 						listeners = { DependencyInjectionTestExecutionListener.class,
 									  DirtiesContextTestExecutionListener.class })
 public class CarListTest extends BaseIntegrationTest
-{	
+{
+    private static final int INITIAL_NUMBER_OF_CARS_PER_PAGE_OPTIONS = 5;
+    private static final int IRRELEVANT_NUMBER_OF_CARS_PER_PAGE = 15;
+
 	@Value("${local.server.port}")
 	private int port;
 	private CarListPage carListPage;
@@ -45,11 +49,36 @@ public class CarListTest extends BaseIntegrationTest
 	{
 		assertThat("Main car list div should be displayed", this.carListPage.isMainCarListDivDisplayed());
 	}
-	
+
+	@Test
 	public void test_there_are_cars_listed() throws Exception
 	{
-		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), equalTo(notNullValue()));
+		assertThat("There should be at least one car listed", this.carListPage.getFirstCarListedDivId(), is(notNullValue()));
 	}
+
+    @Test
+    public void test_cars_per_page_drop_down_is_displayed() {
+        assertThat("Cars per page drop down should be displayed", this.carListPage.isCarsPerPageDropDownDisplayed());
+    }
+
+    @Test(dependsOnMethods = "test_cars_per_page_drop_down_is_displayed")
+    public void test_cars_per_page_drop_down_value_changes_number_of_cars_listed() throws InterruptedException {
+        assertThat("There should be " + ITEMS_PER_PAGE_DEFAULT_VALUE + " cars listed",
+                   this.carListPage.getNumberOfCarsDisplayed(),
+                   is(ITEMS_PER_PAGE_DEFAULT_VALUE));
+
+        this.carListPage.clickCarsPerPageDropDownButton();
+        Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
+        assertThat("There should be number of cars to list options displayed",
+                   this.carListPage.getNumberOfCarsPerPageOptionsDisplayed(),
+                   is(INITIAL_NUMBER_OF_CARS_PER_PAGE_OPTIONS));
+
+		this.carListPage.clickNumberOfCarsPerPageOptionByValue(String.valueOf(IRRELEVANT_NUMBER_OF_CARS_PER_PAGE));
+        Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
+        assertThat("There should be " + IRRELEVANT_NUMBER_OF_CARS_PER_PAGE + " cars listed",
+                   this.carListPage.getNumberOfCarsDisplayed(),
+                   is(IRRELEVANT_NUMBER_OF_CARS_PER_PAGE));
+    }
 
     @AfterClass
 	@Override

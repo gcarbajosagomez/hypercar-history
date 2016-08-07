@@ -51,11 +51,12 @@ public class BaseController extends BaseControllerData
     public void fillBaseModel(Model model,
     						  HttpServletRequest request)
 	{
-		String requestUri = extractRequestUriFromRequest(request);
-		log.info("Handling " + request.getMethod() + " request to URI " + requestUri);
+		String requestURI = extractRequestUriFromRequest(request);
+		log.info("Handling " + request.getMethod() + " request to URI " + requestURI);
 		
-		model.addAttribute("requestURI",  requestUri);		
-		
+		model.addAttribute("requestURI",  		requestURI);
+		model.addAttribute("requestIsCarsList",  requestURI.contains(CARS_URL));
+
 		baseModelFiller.fillModel(model);	
 	}
 	

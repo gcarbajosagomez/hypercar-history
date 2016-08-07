@@ -13,15 +13,17 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ContentSearchDto extends PaginationDto
+public class ContentSearchDto extends CarsPaginationDto
 {	
 	private String contentToSearch;
-	private Integer carsPerPage;
 
 	public ContentSearchDto(Integer pagNum, Integer carsPerPage, String contentToSearch)
 	{
-		super(pagNum);
-		this.carsPerPage = carsPerPage;
+		super(pagNum, carsPerPage);
+		this.contentToSearch = contentToSearch;
+	}
+
+	public void setCts(String contentToSearch) {
 		this.contentToSearch = contentToSearch;
 	}
 }

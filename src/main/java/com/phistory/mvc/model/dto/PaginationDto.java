@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PaginationDto
 {
-	private static final Integer PAG_NUM_DEFAULT_VALUE = 1;	
+    public static final Integer ITEMS_PER_PAGE_DEFAULT_VALUE = 8;
+	private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
 
 	private Integer pagNum = PAG_NUM_DEFAULT_VALUE;
 	private int firstResult;
@@ -22,7 +23,11 @@ public class PaginationDto
 		super();
 		this.pagNum = pagNum;
 	}
-	
+
+	public void setPn(Integer pagNum) {
+		this.pagNum = pagNum;
+	}
+
 	/**
 	 * Calculate the index of the first result based on the number of the current page and items per page
 	 * 
@@ -32,11 +37,11 @@ public class PaginationDto
 	{
 		firstResult = 0;
 		
-		int pagNum = getPagNum();
+		int pagNum = this.getPagNum();
 		
-    	if(itemsPerPage != null && pagNum > 1)
+    	if(itemsPerPage != null && this.pagNum > 1)
     	{
-    		firstResult = (pagNum - 1) * itemsPerPage;
+    		firstResult = (this.pagNum - 1) * itemsPerPage;
     	}
     	else
     	{

@@ -47,7 +47,7 @@
 						$("#main-car-list-div").append(noContentFoundElements);				
 		            }                      
 		
-					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.carsPerPage + "&${contentToSearch}=" + contentSearchDto.contentToSearch);			
+					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts);
 					setupContentSearchEventListeners();	
 				}
 				

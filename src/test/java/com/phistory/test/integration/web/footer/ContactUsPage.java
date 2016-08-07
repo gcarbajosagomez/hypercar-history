@@ -47,7 +47,7 @@ public class ContactUsPage extends BasePage
 		}
 	}
 	
-	public boolean isDismissContactUsModalButonDisplayed()
+	public boolean isDismissContactUsModalButtonDisplayed()
 	{
 		try
 		{
@@ -59,7 +59,7 @@ public class ContactUsPage extends BasePage
 		}		
 	}
 	
-	public void clickDismissContactUsModalButon()
+	public void clickDismissContactUsModalButton()
 	{
 		if (this.dismissContactUsModalButon.isDisplayed())
 		{
