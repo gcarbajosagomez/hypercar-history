@@ -108,7 +108,7 @@
     	      					 </a>
         	  				 </div>
 
-          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 25px; padding-right: 25px; margin-top: 20px;">
+          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 25px; padding-right: 25px">
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
