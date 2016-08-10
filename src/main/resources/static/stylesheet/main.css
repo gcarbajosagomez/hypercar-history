@@ -67,7 +67,7 @@ html, body {
     border-radius: 20px;
     border: none;
     cursor: pointer;
-    background: rgb(255, 255, 255);
+    background: #777;
 }
 
 .content-search-input + label .search-icon {
@@ -80,10 +80,6 @@ html, body {
     box-shadow: 0 0 0 5px rgb(61, 71, 82);
 }
 
-.content-search-input + label .search-icon {
-    color: white;
-}
-
 .content-search-input:focus {
     transition: width 0.6s cubic-bezier(0, 1.22, .66, 1.39), border-radius 0.6s, background 0.6s ease;
     outline: none;
@@ -93,12 +89,8 @@ html, body {
     width: 300px;
     border-radius: auto;
     border: 1px #BD1B1B;
-    background: rgb(255, 255, 255);
+    background-color: #777;
     color: #BD1B1B;
-}
-
-.content-search-input + label .search-icon {
-    color: black;
 }
 
 @media (max-width: 575px) {
@@ -119,7 +111,6 @@ html, body {
 .search-icon {
     position: relative;
     left: -30px;
-    color: white;
     cursor: pointer;
 }
 
@@ -154,7 +145,7 @@ html, body {
 }
 
 .pagani-history-footer {
-    height: 330px;
+    height: 350px;
     background-color: #f5f5f5;
     padding: 40px;
     margin-bottom: 20px;
@@ -451,7 +442,7 @@ html, body {
 
     html, body {
         height: 100%;
-        font-size: 18px;
+        font-size: 17px;
     }
 
     .wrap {
@@ -464,13 +455,26 @@ html, body {
         width: 95%;
     }
 
+    .pagani-history-navbar {
+        min-height: 10em;
+        margin-top: 10px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    @media (orientation: landscape) {
+        .pagani-history-navbar {
+            min-height: 8.5em;
+        }
+    }
+
     .pagani-history-navbar .navbar-header {
         padding-top: 10px;
-        min-height: 160px;
     }
 
     .pagani-history-navbar .navbar-nav > li > a {
-        padding-top: 30px;
+        padding-top: 15px;
+        padding-bottom: 15px;
     }
 
     .pagani-history-navbar-brand {
@@ -488,9 +492,46 @@ html, body {
         width: 230px;
     }
 
+    #search-container {
+         min-width: initial;
+    }
+
+    .content-search-input {
+        transition: none;
+        width: 9.3em;
+    }
+
+    @media (orientation: landscape) {
+        .content-search-input {
+            width: 14em;
+        }
+    }
+
+    .content-search-input:focus {
+        transition: none;
+        width: inherit;
+    }
+
+    .content-search-input:not(:focus) {
+        text-indent: 0px;
+    }
+
+    @media (orientation: landscape) {
+        .pagani-history-navbar {
+            min-height: 8.5em;
+        }
+    }
+
+    .language-selection-div {
+         margin-top: 10px;
+     }
+
     .pagani-history-footer {
         height: auto;
-        max-height: 750px;
+        padding: 25px;
+        border-radius: 4px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     @media (min-width: 768px) {
@@ -504,12 +545,12 @@ html, body {
     }
 
     .dl-horizontal dd {
-        height: 40px;
+        height: 25px;
         margin-bottom: 10px;
     }
 
     .dl-horizontal dt {
-        height: 40px;
+        height: 25px;
         margin-bottom: 10px;
     }
 
@@ -517,37 +558,41 @@ html, body {
         font-size: 18px;
     }
 
+    .panel-heading > h1 {
+        font-size: 1.875em;
+        font-weight: 600;
+        line-height: 1.3em;
+    }
+
     .language-flag {
         max-height: 55px;
         max-width: 55px;
     }
 
-    .model-list-group-element {
-        font-size: 20px;
+    .car-pictures-carousel-div {
+        height: 19em;
+        max-height: 19em;
+        margin-top: 20px;
     }
 
-    .car-model-name {
-        font-size: 36px;
+    .carousel-inner > .item > img {
+        max-height: 18em;
     }
 
-    .car-details-panel-heading-model {
-        font-size: 36px;
-    }
-
-    .car-details-panel-heading-model-small {
-        font-size: 26px;
+    .carousel-inner > .item > a > img {
+        max-height: 18em;
     }
 
     .car-details-panel-heading {
-        font-size: 32px;
+        font-size: 26px;
     }
 
     .close {
-        font-size: 50px;
+        font-size: 45px;
     }
 
     .modal-title {
-        font-size: 36px;
+        font-size: 30px;
     }
 
     .technology-stack-inner-logo-div {

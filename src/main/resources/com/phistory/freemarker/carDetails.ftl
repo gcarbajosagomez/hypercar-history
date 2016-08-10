@@ -526,7 +526,7 @@
   										<dd>
 		  									 <p class="text-muted">
   											 	<#if (car.tyreSet??) && (car.tyreSet.frontTyre??)>
-  											 		<@writeCarNumericData car.tyreSet.frontTyre.width?default(-1)/>/<@writeCarNumericData car.tyreSet.frontTyre.profile?default(-1)/>/ R<@writeCarNumericData car.tyreSet.frontTyre.rimDiameter?default(-1)/>
+  											 		<@writeCarNumericData car.tyreSet.frontTyre.width?default(-1)/>/<@writeCarNumericData car.tyreSet.frontTyre.profile?default(-1)/>/ <em class="measure-unit-text">R</em><@writeCarNumericData car.tyreSet.frontTyre.rimDiameter?default(-1)/>
   										 		</#if>
 	  										 </p>
 				  						</dd>
@@ -536,7 +536,7 @@
  		 								<dd>
   											<p class="text-muted">
   												<#if (car.tyreSet??) && (car.tyreSet.backTyre??)>
-  													<@writeCarNumericData car.tyreSet.backTyre.width?default(-1)/>/<@writeCarNumericData car.tyreSet.backTyre.profile?default(-1)/>/ R<@writeCarNumericData car.tyreSet.backTyre.rimDiameter?default(-1)/>
+  													<@writeCarNumericData car.tyreSet.backTyre.width?default(-1)/>/<@writeCarNumericData car.tyreSet.backTyre.profile?default(-1)/>/ <em class="measure-unit-text">R</em><@writeCarNumericData car.tyreSet.backTyre.rimDiameter?default(-1)/>
   												</#if>
   											</p>
 				  						</dd>
