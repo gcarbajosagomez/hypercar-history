@@ -30,7 +30,7 @@
                 	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
-        			<link rel="stylesheet" href="/resources/stylesheet/main.min.css">
+        			<link rel="stylesheet" href="/resources/stylesheet/main.css">
 
             		<script src="/resources/javascript/lib/jquery.min.js"></script>
             		<script src="/resources/javascript/lib/jquery.cookie.js"></script>
@@ -93,19 +93,21 @@
     	        		<nav class="navbar navbar-default pagani-history-navbar" role="navigation">
         	    		    <#-- Brand and toggle get grouped for better mobile display -->
           					<div class="navbar-header">
-          						 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse"></button>
-
           						 <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/>'>
           							<div class="row">
           								<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-right: 0px;">
 											<h1 class="italic-font" style="padding-left: 10px;">${language.getTextSource('paganiHistory')}</h1>
 											<h4 class="italic-font text-right" style="padding-right: 30px">${language.getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
-          					   			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+          					   			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 main-logo-container">
           					   				<img class="main-logo" src="/resources/img/pagani-logo.png">
           					   			</div>
 	          					   	</div>
     	      					 </a>
+
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+                                    <span class="glyphicon glyphicon-arrow-down"></span>
+                                </button>
         	  				 </div>
 
           					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 25px; padding-right: 25px">
@@ -113,6 +115,7 @@
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
     	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')}</a></li>
+                                        <div class="divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
@@ -150,6 +153,7 @@
           									</ul>
               							</li>
               							<#if requestIsCMS && (loggedIn?? && loggedIn)>
+                                            <div class="divider"></div>
               								<li>
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
@@ -173,6 +177,7 @@
           										</ul>
               								</li>
               							</#if>
+                                        <div class="divider"></div>
               							<li>
               								<div id="search-container">
               									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="padding-left: 0px; padding-right: 0px;">
