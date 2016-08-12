@@ -134,7 +134,7 @@
 	    	      										</div>
     	    	  									</a>
         	  									</li>
-          										<li role="separator" class="navbar-divider"></li>
+          										<li role="separator" class="divider"></li>
           										<li role="presentation">
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);">
 														<div class="row language-selection-div">
@@ -178,18 +178,14 @@
               								</li>
               							</#if>
                                         <div class="navbar-divider"></div>
-              							<li>
+              							<li class="search-container-li">
               								<div id="search-container">
-              									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="padding-left: 0px; padding-right: 0px;">
-              										<a>${language.getTextSource('contentSearch.search')}</a>
-												</div>
-												<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="padding-top: 10px; padding-left: 20px;">
-													<input id="content-search-input" type="text" class="content-search-input" value="<#if contentToSearchData??>${contentToSearchData}</#if>"/>
-  													<label for="content-search-input">
-	  													<span id="content-search-span" class="glyphicon glyphicon-search search-icon"></span>
-  													</label>
-  													<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>
-  												</div>
+												<a>${language.getTextSource('contentSearch.search')}</a>
+												<input id="content-search-input" type="text" class="content-search-input" value="<#if contentToSearchData??>${contentToSearchData}</#if>"/>
+												<label for="content-search-input">
+													<span id="content-search-span" class="glyphicon glyphicon-search search-icon"></span>
+												</label>
+												<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>
 											</div>
               							</li>
               						 </ul>

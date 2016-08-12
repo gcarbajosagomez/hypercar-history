@@ -8,7 +8,7 @@
 <div id="main-container" class="container panel panel-default cars-main-container main-panel">
 	<div class="row">
 		<div class="col-lg-2">
-			<div class="thumbnail list-group">
+			<div class="list-group">
 				<#list models as car>
     				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>

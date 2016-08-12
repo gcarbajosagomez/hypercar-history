@@ -89,13 +89,13 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row"> 
-										<h2 class="col-lg-8 col-md-6 col-sm-6 col-xs-12 text-left">${car.model}</h2>
+										<h2 class="col-lg-12 text-left">${car.model}</h2>
 										
-										<div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 dropdown" style="margin-top: 20px; margin-bottom: 10px; padding-left: 0px;">										
-											<button class="btn btn-default dropdown-toggle" type="button" id="units-of-measure-dropdown" data-toggle="dropdown" aria-expanded="true">
+										<div class="col-lg-12 dropdown">
+											<button id="units-of-measure-dropdown" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
 												${language.getTextSource('unitsOfMeasure')} <span class="caret"></span>
   											</button>
-          									<ul class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="units-of-measure-dropdown"> 
+          									<ul id="units-of-measure-dropdown-menu" class="dropdown-menu dropdown-menu" role="menu" aria-labelledby="units-of-measure-dropdown">
           										<li role="presentation">
 													<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setUnitsOfMeasure('${unitsOfMeasureMetric}', $('#main-form')[0]);" style="padding-right: 0px; padding-left: 0px;">
           												<div class="row" style="margin: 0px;">

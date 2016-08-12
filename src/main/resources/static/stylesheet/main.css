@@ -6,6 +6,14 @@ html, body {
     background-color: #777;
 }
 
+a:hover{
+    text-decoration: none !important;
+}
+
+#main-form {
+    margin: 20px;
+}
+
 .pagani-history-navbar .navbar-nav {
     width: 100%;
 }
@@ -32,6 +40,7 @@ html, body {
 }
 
 .pagani-history-navbar .navbar-nav > li > a,
+.pagani-history-navbar .navbar-nav > li > #search-container > a,
 .pagani-history-navbar .navbar-nav > li > div > div {
     padding-top: 22px;
     padding-bottom: 0px;
@@ -45,6 +54,10 @@ html, body {
 .pagani-history-navbar .navbar-nav > li {
     margin-top: 0.9em;
     margin-bottom: 1.7em;
+}
+
+.search-container-li {
+    margin-top: 0px !important;
 }
 
 .navbar-header {
@@ -70,13 +83,17 @@ html, body {
 .navbar-default .navbar-nav > li > div > div > a {
     color: #777;
     cursor: default;
-    text-decoration: none;
 }
 
 #search-container {
-    min-width: 520px;
+    min-width: 12em;
     width: auto;
     padding-left: 15px;
+    margin-top: 1.64em;
+}
+
+#search-container > a {
+    color: #777;
 }
 
 .content-search-input {
@@ -87,14 +104,12 @@ html, body {
     border: none;
     cursor: pointer;
     background: #ddd;
-}
-
-.content-search-input + label .search-icon {
-    color: black;
+    color: white;
+    margin-left: 10px;
+    padding-left: 15px;
 }
 
 .content-search-input:hover {
-    color: white;
     background: rgb(200, 200, 200);
     box-shadow: 0 0 0 5px rgb(61, 71, 82);
 }
@@ -103,13 +118,11 @@ html, body {
     transition: width 0.6s cubic-bezier(0, 1.22, .66, 1.39), border-radius 0.6s, background 0.6s ease;
     outline: none;
     box-shadow: none;
-    padding-left: 15px;
     cursor: text;
     width: 300px;
     border-radius: auto;
     border: 1px #BD1B1B;
     background-color: #777;
-    color: #BD1B1B;
 }
 
 @media (max-width: 575px) {
@@ -148,6 +161,10 @@ html, body {
 .measure-unit-text {
     color: #3E72B4;
     font-style: normal;
+}
+
+#main-container {
+    max-width: 95%;
 }
 
 .wrap {
@@ -228,6 +245,10 @@ html, body {
     max-height: 420px;
 }
 
+.resizable-img {
+    width: 100%
+}
+
 .preview figure img {
     z-index: 10;
 }
@@ -274,8 +295,8 @@ html, body {
 .vertically-aligned-div {
     display: flex;
     flex-direction: row;
-    min-height: 100%;
     max-height: 100%;
+    height: 100%;
     max-width: 100%;
     align-items: center;
 }
@@ -304,6 +325,15 @@ html, body {
 
 .panel-default > .panel-heading {
     border-color: rgba(0, 0, 0, 0.611765);
+}
+
+#units-of-measure-dropdown {
+    margin: 10px 10px 10px 0px;
+}
+
+#units-of-measure-dropdown-menu {
+    margin-top: 0px;
+    top: 45px;
 }
 
 .dl-horizontal dd {
@@ -354,6 +384,10 @@ html, body {
     border: 0px;
 }
 
+.carousel-inner {
+    max-height: 100%;
+}
+
 @media only screen and (max-width: 768px)   {
     .car-pictures-carousel-div {
         max-height: 35em;
@@ -362,12 +396,12 @@ html, body {
     }
 
     .carousel-inner > .item > img {
-        max-height: 29em;
+        max-height: 29em !important;
         height: 29em;
     }
 }
 
-@media only screen and (max-width: 531px)   {
+@media only screen and (max-width: 531px) {
     .car-pictures-carousel-div {
         max-height: 25em;
         height: 25em;
@@ -375,7 +409,7 @@ html, body {
     }
 
     .carousel-inner > .item > img {
-        max-height: 19em;
+        max-height: 19em !important;
         height: 19em;
     }
 }
@@ -383,8 +417,21 @@ html, body {
 .carousel-inner > .item > a > img {
     margin: 0 auto;
     width: auto;
+    max-width: 100%;
     max-height: 40em;
-    height: 40em;
+    height: auto;
+}
+
+@media only screen and (max-width: 768px)   {
+    .carousel-inner > .item > a > img {
+        max-height: 33em;
+    }
+}
+
+@media only screen and (max-width: 531px)   {
+    .carousel-inner > .item > a > img {
+        max-height: 23em;
+    }
 }
 
 .carousel-inner > .item > img {
@@ -495,7 +542,7 @@ html, body {
     visibility: hidden;
 }
 
-@media only screen and (max-width: 768px)   {
+@media only screen and (max-width: 767px)   {
     .navbar-divider {
         visibility: visible;
     }
@@ -504,6 +551,10 @@ html, body {
 .dropdown-menu .divider {
 
     background-color: #5e5e5e;
+}
+
+#main-login-div > .panel-default {
+    margin: 0px;
 }
 
 /*
@@ -554,6 +605,11 @@ html, body {
         }
     }
 
+    .pagani-history-navbar .navbar-nav > li {
+        margin-top: 0.1em;
+        margin-bottom: 0.1em;
+    }
+
     .pagani-history-navbar .navbar-nav > li > a {
         padding-top: 15px;
         padding-bottom: 15px;
@@ -580,22 +636,29 @@ html, body {
 
     .content-search-input {
         transition: none;
-        width: 9.3em;
+        width: 50%;
+        background-color: #777;
+        color: white;
+    }
+
+    .content-search-input:focus {
+         transition: none;
+         width: 50%;
+     }
+
+    .content-search-input:not(:focus) {
+        text-indent: 0px;
     }
 
     @media (orientation: landscape) {
         .content-search-input {
-            width: 14em;
+            width: 60%;
         }
-    }
 
-    .content-search-input:focus {
-        transition: none;
-        width: inherit;
-    }
-
-    .content-search-input:not(:focus) {
-        text-indent: 0px;
+        .content-search-input:focus {
+            transition: none;
+            width: 60%;
+        }
     }
 
     @media (orientation: landscape) {
@@ -679,11 +742,11 @@ html, body {
     }
 
     .carousel-inner > .item > img {
-        max-height: 18em;
+        max-height: 18em !important;
     }
 
     .carousel-inner > .item > a > img {
-        max-height: 18em;
+        max-height: 18em !important;
     }
 
     .car-details-panel-heading {
@@ -704,7 +767,6 @@ html, body {
 
     .grid li {
         width: 100%;
-        min-width: 310px;
     }
 
     .grid figcaption h3 {
