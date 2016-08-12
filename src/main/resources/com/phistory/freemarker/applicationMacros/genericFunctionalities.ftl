@@ -30,7 +30,7 @@
                 	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
-        			<link rel="stylesheet" href="/resources/stylesheet/main.css">
+        			<link rel="stylesheet" href="/resources/stylesheet/main.min.css">
 
             		<script src="/resources/javascript/lib/jquery.min.js"></script>
             		<script src="/resources/javascript/lib/jquery.cookie.js"></script>
@@ -105,17 +105,17 @@
 	          					   	</div>
     	      					 </a>
 
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
-                                    <span class="glyphicon glyphicon-arrow-down"></span>
-                                </button>
+								 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+                                 	<span class="glyphicon glyphicon-arrow-down"></span>
+                                 </button>
         	  				 </div>
 
-          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding-left: 25px; padding-right: 25px">
+          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
     	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')}</a></li>
-                                        <div class="divider"></div>
+                                        <div class="navbar-divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
@@ -134,7 +134,7 @@
 	    	      										</div>
     	    	  									</a>
         	  									</li>
-          										<li role="separator" class="divider"></li>
+          										<li role="separator" class="navbar-divider"></li>
           										<li role="presentation">
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);">
 														<div class="row language-selection-div">
@@ -153,7 +153,7 @@
           									</ul>
               							</li>
               							<#if requestIsCMS && (loggedIn?? && loggedIn)>
-                                            <div class="divider"></div>
+                                            <div class="navbar-divider"></div>
               								<li>
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
@@ -177,7 +177,7 @@
           										</ul>
               								</li>
               							</#if>
-                                        <div class="divider"></div>
+                                        <div class="navbar-divider"></div>
               							<li>
               								<div id="search-container">
               									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-1" style="padding-left: 0px; padding-right: 0px;">

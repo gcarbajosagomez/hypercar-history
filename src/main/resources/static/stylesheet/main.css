@@ -6,6 +6,10 @@ html, body {
     background-color: #777;
 }
 
+.pagani-history-navbar .navbar-nav {
+    width: 100%;
+}
+
 .pagani-history-navbar .navbar-nav > li > a:hover,
 .pagani-history-navbar .navbar-nav > li > div > div > a:hover,
 .pagani-history-navbar .navbar-nav > .open > a,
@@ -38,6 +42,11 @@ html, body {
     padding-left: 20px;
 }
 
+.pagani-history-navbar .navbar-nav > li {
+    margin-top: 0.9em;
+    margin-bottom: 1.7em;
+}
+
 .navbar-header {
     height: 8em;
 }
@@ -48,9 +57,14 @@ html, body {
 }
 
 .navbar-toggle {
-    top: 4.5em;
     margin-right: 5px;
     background-color:  #ddd;
+}
+
+@media (min-width: 532px) {
+    .navbar-toggle {
+        top: 4.5em;
+    }
 }
 
 .navbar-default .navbar-nav > li > div > div > a {
@@ -62,7 +76,6 @@ html, body {
 #search-container {
     min-width: 520px;
     width: auto;
-    min-height: 75px;
     padding-left: 15px;
 }
 
@@ -144,6 +157,11 @@ html, body {
     margin: 0 auto -300px;
     /* Pad bottom by footer height */
     padding: 0 0 300px;
+}
+
+.navbar-collapse-main-container {
+    padding-left: 25px;
+    padding-right: 25px;
 }
 
 #main-navbar-collapse {
@@ -328,28 +346,52 @@ html, body {
 }
 
 .car-pictures-carousel-div {
-    height: 865px;
-    max-height: 865px;
+    max-height: 46em;
+    height: 46em;
     padding-left: 0px;
     padding-right: 0px;
     background-color: black;
     border: 0px;
 }
 
+@media only screen and (max-width: 768px)   {
+    .car-pictures-carousel-div {
+        max-height: 35em;
+        height: 35em;
+        margin-top: 20px;
+    }
+
+    .carousel-inner > .item > img {
+        max-height: 29em;
+        height: 29em;
+    }
+}
+
+@media only screen and (max-width: 531px)   {
+    .car-pictures-carousel-div {
+        max-height: 25em;
+        height: 25em;
+        margin-top: 20px;
+    }
+
+    .carousel-inner > .item > img {
+        max-height: 19em;
+        height: 19em;
+    }
+}
+
 .carousel-inner > .item > a > img {
-    /*centers images in the carousel */
     margin: 0 auto;
     width: auto;
-    height: auto;
-    max-height: 850px;
+    max-height: 40em;
+    height: 40em;
 }
 
 .carousel-inner > .item > img {
-    /*centers images in the carousel */
-    margin: 0 auto;
+    margin: 3em auto;
     width: auto;
     height: auto;
-    max-height: 850px;
+    max-height: 40em;
 }
 
 #index-jumbotron {
@@ -444,6 +486,21 @@ html, body {
     overflow: hidden;
     background-color: #5e5e5e;
 }
+
+.navbar-divider {
+    height: 1px;
+    margin: 0px 0;
+    overflow: hidden;
+    background-color: #5e5e5e;
+    visibility: hidden;
+}
+
+@media only screen and (max-width: 768px)   {
+    .navbar-divider {
+        visibility: visible;
+    }
+}
+
 .dropdown-menu .divider {
 
     background-color: #5e5e5e;
@@ -616,8 +673,8 @@ html, body {
     }
 
     .car-pictures-carousel-div {
-        height: 19em;
         max-height: 19em;
+        height: 19em;
         margin-top: 20px;
     }
 
