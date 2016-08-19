@@ -14,7 +14,7 @@
 	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
-				 <h1 class="text-left">${car.manufacturer.name} ${car.model} (<@generic.getCarProductionLife car/>)</h1>
+				 <h1 class="text-left">${car.manufacturer.name}<br/> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
 			</div>			
 			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
 				<#assign youtubeVideosPresent = true>						

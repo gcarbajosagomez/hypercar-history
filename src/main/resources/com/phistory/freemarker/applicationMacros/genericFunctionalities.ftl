@@ -42,7 +42,7 @@
         			<script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/resources/javascript/lib/bootbox.min.js"></script>
 					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
-					<script src="/resources/javascript/main.js"></script>
+					<script src="/resources/javascript/main.min.js"></script>
                     <#if requestIsCMS>
                         <script src="/resources/javascript/lib/bootstrap-datepicker.min.js"></script>
                     </#if>
@@ -214,7 +214,7 @@
 								</p>
 	        				</div>
     	  				</div>
-      					<div class="row" style="padding-top: 30px">
+      					<div class="row lower-footer-row">
       						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
       							<b>${language.getTextSource('footer.technologyStack')}</b>
       							<p class="text-muted text-left">
@@ -244,28 +244,24 @@
         </html>
 </#macro>
 
-<#macro getCarProductionLife car>
-    <#if car.productionStartDate??>
-		<#assign productionStartYear><@getYear car.productionStartDate/></#assign>
-		${productionStartYear}
+<#function getCarProductionLifeTime car>
+    <#assign productionStartYear>${car.productionStartDate.time?string("yyyy")}</#assign>
+    <#assign productionEndYear>${car.productionEndDate.time?string("yyyy")}</#assign>
+    <#assign productionLifeTime = ""/>
+
+    <#if productionEndYear != "">
+        <#if productionStartYear != productionEndYear>
+            <#assign productionLifeTime>${productionStartYear} - ${productionEndYear}</#assign>
+        <#else>
+            <#assign productionLifeTime>${productionStartYear}</#assign>
+        </#if>
+    <#else>
+        <#assign productionLifeTime>
+            ${productionStartYear} - ${language.getTextSource('car.productionEndDate.inProduction')}
+        </#assign>
     </#if>
-
-    <#if car.productionEndDate??>
-		<#assign productionEndYear><@getYear car.productionEndDate/></#assign>
-	<#else>
-		<#assign productionEndYear></#assign>
-	</#if>
-
-    <#if (productionStartYear?string != "" && productionEndYear?string != "") && (productionStartYear?string != productionEndYear?string)>
-          - <@getYear car.productionEndDate/>
-    <#elseif productionEndYear?string == "">
-          - ${language.getTextSource('car.productionEndDate.inProduction')}
-    </#if>
-</#macro>
-
-<#macro getYear date>
-  ${date.time?string("yyyy")}
-</#macro>
+    <#return productionLifeTime/>
+</#function>
 
 <#macro addOperationResultMessage exceptionMessage, successMessage>
 	<#if exceptionMessage?has_content>

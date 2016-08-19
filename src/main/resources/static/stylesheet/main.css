@@ -10,10 +10,6 @@ a:hover{
     text-decoration: none !important;
 }
 
-#main-form {
-    margin: 20px;
-}
-
 .pagani-history-navbar .navbar-nav {
     width: 100%;
 }
@@ -29,9 +25,7 @@ a:hover{
 
 .pagani-history-navbar {
     min-height: 8em;
-    margin-top: 20px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin: 20px;
 }
 
 .pagani-history-navbar-brand {
@@ -199,6 +193,10 @@ a:hover{
     margin-right: 20px;
 }
 
+.lower-footer-row {
+    padding-top: 30px
+}
+
 .cars-list-group {
     padding-left: 4px;
 }
@@ -363,10 +361,7 @@ a:hover{
     }
 }
 
-.dl-horizontal dd.double-height {
-    height: 55px;
-}
-
+.dl-horizontal dd.double-height,
 .dl-horizontal dt.double-height {
     height: 55px;
 }
@@ -376,8 +371,8 @@ a:hover{
 }
 
 .car-pictures-carousel-div {
-    max-height: 46em;
-    height: 46em;
+    max-height: 48em;
+    height: 48em;
     padding-left: 0px;
     padding-right: 0px;
     background-color: black;
@@ -428,7 +423,7 @@ a:hover{
     }
 }
 
-@media only screen and (max-width: 531px)   {
+@media only screen and (max-width: 531px) {
     .carousel-inner > .item > a > img {
         max-height: 23em;
     }
@@ -439,6 +434,18 @@ a:hover{
     width: auto;
     height: auto;
     max-height: 40em;
+}
+
+.carousel-indicators {
+    bottom: 0px;
+    left: 42%;
+    width: 70%;
+}
+
+.carousel-caption {
+    right: 15%;
+    left: 10%;
+    padding-bottom: 0px;
 }
 
 #index-jumbotron {
@@ -549,7 +556,6 @@ a:hover{
 }
 
 .dropdown-menu .divider {
-
     background-color: #5e5e5e;
 }
 
@@ -594,9 +600,7 @@ a:hover{
 
     .pagani-history-navbar {
         min-height: 10em;
-        margin-top: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
+        margin: 10px;
     }
 
     @media (orientation: landscape) {
@@ -697,6 +701,11 @@ a:hover{
         border-radius: 4px;
         margin-left: 10px;
         margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .lower-footer-row {
+        padding-top: 0px
     }
 
     @media (min-width: 768px) {
@@ -712,6 +721,10 @@ a:hover{
     .dl-horizontal dd {
         height: 25px;
         margin-bottom: 10px;
+    }
+
+    .dl-horizontal dd.double-height {
+        height: inherit;
     }
 
     .dl-horizontal dt {
@@ -736,17 +749,17 @@ a:hover{
     }
 
     .car-pictures-carousel-div {
-        max-height: 19em;
-        height: 19em;
+        max-height: 24em;
+        height: 24em;
         margin-top: 20px;
     }
 
     .carousel-inner > .item > img {
-        max-height: 18em !important;
+        max-height: 17em !important;
     }
 
     .carousel-inner > .item > a > img {
-        max-height: 18em !important;
+        max-height: 17em !important;
     }
 
     .car-details-panel-heading {
