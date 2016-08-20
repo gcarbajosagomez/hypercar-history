@@ -21,6 +21,7 @@ import com.tcp.data.model.Picture;
 import com.tcp.data.model.Picture.PictureType;
 import com.tcp.data.model.car.Car;
 import com.tcp.data.model.car.CarInternetContent;
+import org.springframework.util.StringUtils;
 
 /**
  * Set of utilities for {@link CmsCarController} and {@link CmsCarEditController}
@@ -127,8 +128,10 @@ public class CMSCarControllerUtil
 			{
 				CarInternetContent carInternetContent = this.carInternetContentFormCreator.createEntityFromForm(carInternetContentForm);
 				carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
-				this.carInternetContentDAO.saveOrEdit(carInternetContent);
-				savedCarInternetContents.add(carInternetContent);				
+                if (StringUtils.hasText(carInternetContent.getLink())) {
+                    this.carInternetContentDAO.saveOrEdit(carInternetContent);
+                    savedCarInternetContents.add(carInternetContent);
+                }
 			} 
 			catch (Exception e)
 			{
