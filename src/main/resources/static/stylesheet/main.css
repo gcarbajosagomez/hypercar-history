@@ -566,6 +566,11 @@ a:hover{
     margin: 0px;
 }
 
+.cookies-policy-main-container {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
 /*
 *********************** Mobile Content ***********************
 */

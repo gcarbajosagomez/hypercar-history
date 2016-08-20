@@ -36,7 +36,7 @@
 					</ul>
 				</div>
                 <div id="car-pagination-main-div" class="col-lg-12">
-                    <div class="col-lg-6 col-md-7 col-sm-10 <#if requestIsDesktop>col-xs-10<#else>col-xs-12</#if> center-block well well-sm">
+                    <div class="col-lg-7 col-md-7 col-sm-10 <#if requestIsDesktop>col-xs-10<#else>col-xs-12</#if> center-block well well-sm">
                         <div id="pagination-row-div" class="row">
                             <div class="text-left col-lg-8 col-md-7 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
                                 <ul id="pagination-ul"></ul>

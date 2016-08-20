@@ -2,7 +2,7 @@
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 
 <@generic.startPage language.getTextSource('title.cookiesPolicy')/>
-	<div id="main-container" class="container">
+	<div id="main-container" class="container cookies-policy-main-container">
 		<div class="panel panel-body col-lg-12">
 			<h1>${language.getTextSource('title.cookiesPolicy')}<h1>
 			<br/>
