@@ -185,7 +185,6 @@ a:hover{
 }
 
 .pagani-history-footer {
-    height: 350px;
     background-color: #f5f5f5;
     padding: 40px;
     margin-bottom: 20px;
@@ -197,12 +196,16 @@ a:hover{
     padding-top: 30px
 }
 
+.main-car-list-container {
+    padding-right: 15px;
+}
+
 .cars-list-group {
     padding-left: 4px;
 }
 
-.car-picture-modal-dialog {
-    width: initial;
+#main-car-list-div {
+    margin-top: 10px;
 }
 
 .car-picture {
@@ -299,8 +302,8 @@ a:hover{
     align-items: center;
 }
 
-/* Target Firefox only */
-/* TODO: investigate how CSS flex properties work in Firefox (http://stackoverflow.com/questions/27967090/how-do-you-prevent-an-image-from-expanding-beyond-its-container) */
+/* Target Firefox only
+   TODO: investigate how CSS flex properties work in Firefox (http://stackoverflow.com/questions/27967090/how-do-you-prevent-an-image-from-expanding-beyond-its-container) */
 @-moz-document url-prefix() {
     .vertically-aligned-div {
         display: block;
@@ -580,8 +583,10 @@ a:hover{
     }
 
     #main-container {
-        min-width: 95%;
-        width: 95%;
+        margin-left: 10px;
+        margin-right: 10px;
+        max-width: initial;
+        width: initial;
     }
 
     .navbar-header {
@@ -706,6 +711,14 @@ a:hover{
 
     .lower-footer-row {
         padding-top: 0px
+    }
+
+    .main-car-list-container {
+        padding-right: initial;
+    }
+
+    #main-car-list-div {
+        margin-top: initial;
     }
 
     @media (min-width: 768px) {

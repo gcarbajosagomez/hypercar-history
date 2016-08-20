@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.mobile.device.Device;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,13 +50,15 @@ public class BaseController extends BaseControllerData
 	
 	@ModelAttribute
     public void fillBaseModel(Model model,
+							  Device device,
     						  HttpServletRequest request)
 	{
-		String requestURI = extractRequestUriFromRequest(request);
+		String requestURI = this.extractRequestUriFromRequest(request);
 		log.info("Handling " + request.getMethod() + " request to URI " + requestURI);
 		
-		model.addAttribute("requestURI",  		requestURI);
+		model.addAttribute("requestURI",  		 requestURI);
 		model.addAttribute("requestIsCarsList",  requestURI.contains(CARS_URL));
+		model.addAttribute("requestIsDesktop",   device.isNormal());
 
 		baseModelFiller.fillModel(model);	
 	}

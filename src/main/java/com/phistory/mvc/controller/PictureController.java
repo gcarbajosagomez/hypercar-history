@@ -37,8 +37,7 @@ public class PictureController extends BaseController
     private PictureControllerUtil pictureControllerUtil;
 	
 	@RequestMapping(method = GET)
-	public void handleDefault(HttpServletRequest request,
-							  HttpServletResponse response,
+	public void handleDefault(HttpServletResponse response,
 							  @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command)
 	{
 		try 

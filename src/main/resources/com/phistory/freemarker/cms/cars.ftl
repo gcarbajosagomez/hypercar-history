@@ -24,15 +24,7 @@
 						<#list cars?chunk(2) as row>	
 							<div id="car-list-row" class="row">
 								<#list row as car>
-									<div id="${car.manufacturer.name}-${car.model}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">	
-										<#assign zIndex = (car_index + 1) * (row_index + 1)>
-										<#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->		
-										<#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>		
-										<#if car_index == 0>
-											<#assign zIndex = (zIndex) - (1 * row_index)>
-										</#if>					
-										<@printCarPreview car zIndex/>										
-									</div>
+									<@printDesktopCarPreview car/>
 								</#list>
 							</div>
 						</#list>
@@ -42,14 +34,14 @@
 				<#assign chunkedModelsList = models?chunk(carsPerPageData)>
 				
 				<div class="col-lg-12" style="margin-top: 55px;">
-					<div class="<#if (chunkedModelsList?size < 2)>col-lg-3 col-md-3 col-sm-5 col-xs-6<#elseif (chunkedModelsList?size >= 3)>col-lg-7 col-md-7 col-sm-8 col-xs-10<#else>col-lg-6 col-md-6 col-sm-7 col-xs-8</#if> center-block well well-sm">
+					<div class="col-lg-6 col-md-6 col-sm-7 col-xs-8 center-block well well-sm">
 						<div id="pagination-row-div" class="row">
 							<#if (chunkedModelsList?size > 1)>					
-								<div class="text-left <#if (chunkedModelsList?size < 3)>col-lg-7<#else>col-lg-8</#if> col-md-7 col-sm-7 col-xs-12">									
+								<div class="text-left col-lg-8 col-md-7 col-sm-7 col-xs-8">
 									<ul id="pagination-ul"></ul>
 								</div>
 							</#if>
-							<div class="<#if (chunkedModelsList?size == 1)>text-center<#else>text-right</#if> <#if (chunkedModelsList?size < 2)>col-lg-12 col-md-12 col-sm-12 col-xs-12<#else><#if (chunkedModelsList?size < 3)>col-lg-5<#else>col-lg-4</#if> col-md-5 col-sm-5 col-xs-12</#if>" style="height:56px; margin-bottom: 20px;">
+							<div class="text-right col-lg-4 col-md-5 col-sm-5 col-xs-4" style="height:56px; margin-bottom: 20px;">
 								<button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
     								${language.getTextSource('pagination.carsPerPage')}
     								<span class="caret"></span>
@@ -114,19 +106,27 @@
        
 </script>
 
-<#macro printCarPreview car zIndex> 
-	<div class="thumbnail preview-div">		
-    	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
-        	<figure>
-				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
-               		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
-				</div>
-				<figcaption>
-			 		<a href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
-						<h3 class="text-center model-name">${car.model}</h3>
-					</a>
-				</figcaption>
-			</figure>
-    	</li>
-	</div>
+<#macro printDesktopCarPreview car>
+    <div id="${car.manufacturer.name}-${car.model}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
+        <#assign zIndex = (car_index + 1) * (row_index + 1)>
+		<#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->
+		<#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>
+		<#if car_index == 0>
+            <#assign zIndex = (zIndex) - (1 * row_index)>
+        </#if>
+        <div class="thumbnail preview-div">
+            <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
+                <figure>
+                    <div class="caption vertically-aligned-div vertically-aligned-preview-div">
+                        <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
+                    </div>
+                    <figcaption>
+                        <a href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+                            <h3 class="text-center model-name">${car.model}</h3>
+                        </a>
+                    </figcaption>
+                </figure>
+            </li>
+        </div>
+    </div>
 </#macro>  
