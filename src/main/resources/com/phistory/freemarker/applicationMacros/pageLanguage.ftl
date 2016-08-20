@@ -81,9 +81,6 @@
 </#macro>
 
 <#function getTextSource text arguments=[""]>
-	<#assign message>
-		<@spring.messageArgs text arguments/>
-	</#assign>
-
+	<#assign message><@spring.messageArgs text arguments/></#assign>
 	<#return message/>
 </#function>
