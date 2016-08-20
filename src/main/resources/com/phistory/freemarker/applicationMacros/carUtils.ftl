@@ -131,7 +131,10 @@
                     player${videoId?index} = new YT.Player('${videoId}-iframe-div', {
                         videoId: '${videoId}',
                         width: '100%',
-                        height: '600',
+                        height: '100%',
+                        playerVars: {rel: 0,
+                                     color: 'white',
+                                     controls: <#if requestIsDesktop>2<#else>0</#if>},
                         events: {
                             'onStateChange': on${videoId?index}PlayerStateChange
                         }
@@ -139,9 +142,15 @@
 
                     function on${videoId?index}PlayerStateChange(event) {
                         switch (event.data) {
+                            //ended
+                            case 0:
+                                $('#car-videos-carousel').carousel({pause: false, interval: 8000});
+                                break;
+                            //playing
                             case 1:
                                 $('#car-videos-carousel').carousel('pause');
                                 break;
+                            //paused
                             case 2:
                                 $('#car-videos-carousel').carousel({pause: false, interval: 8000});
                                 break;

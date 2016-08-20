@@ -25,13 +25,11 @@
 			<div class="<#if pictureIds?? && (pictureIds?size > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
 				<#if pictureIds?? && (pictureIds?size > 0)>
 					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div container" data-ride="carousel">
-						<#-- Indicators -->
 	  					<ol class="carousel-indicators">
   							<#list pictureIds as pictureId>
     							<li data-target="#car-pictures-carousel" data-slide-to="${pictureId?index}" class="<#if pictureId?is_first>active</#if>"></li>
     						</#list>
 	 					</ol>
-						<#-- Wrapper for slides -->
   						<div class="carousel-inner">    						
     						<#list pictureIds as pictureId>
     							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
@@ -41,7 +39,6 @@
     							</div>
 	      					</#list>
 		    			</div>
-						<#-- Controls -->
   						<a class="left carousel-control" href="#car-pictures-carousel" data-slide="prev">
     						<span class="glyphicon glyphicon-chevron-left"></span>
   						</a>
@@ -49,6 +46,9 @@
     						<span class="glyphicon glyphicon-chevron-right"></span>
 	  					</a>
   					</div>
+
+                    <@picture.addBlueImpGallery/>
+
 					<#if youtubeVideosPresent == true>
   						<div id="car-videos-carousel" class="carousel slide center-block vertically-aligned-div hidden container" data-ride="carousel">
 							<ol class="carousel-indicators">
@@ -58,31 +58,31 @@
 	 						</ol>
 							<div class="carousel-inner">							
 	    						<#list youtubeVideoIds as videoId>
-									<div id="${videoId}-video-div" class="item <#if videoId?is_first>active</#if>">
-	    								<div id="${videoId}-iframe-div" class="background"></div>	
+									<div id="${videoId}-video-div" class="item video-item <#if videoId?is_first>active</#if>">
+	    								<div id="${videoId}-iframe-div"></div>
 	    							</div>			
 		      					</#list>
-				    		</div>				    			
-							<#-- Controls -->
-	  						<a class="left carousel-control" href="#car-videos-carousel" data-slide="prev" style="height: 50%; top: 25%;">
+				    		</div>
+	  						<a class="left carousel-control video-carousel-control" href="#car-videos-carousel" data-slide="prev">
 	    						<span class="glyphicon glyphicon-chevron-left"></span>
 	  						</a>
-		  					<a class="right carousel-control" href="#car-videos-carousel" data-slide="next" style="height: 50%; top: 25%;">
+		  					<a class="right carousel-control video-carousel-control" href="#car-videos-carousel" data-slide="next">
 	    						<span class="glyphicon glyphicon-chevron-right"></span>
 		  					</a>
 						</div>	
 					</#if>
-					<@picture.addBlueImpGallery/>
   				<#else>
   					<h2 class="text-center">${language.getTextSource('noPicturesAvailable')}</h2>
   				</#if>
 			</div>
+
 			<#if youtubeVideosPresent = true>
 				<ul class="nav nav-tabs">
 					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(true)">${language.getTextSource('car.pictures')}</a></li>
 					<li id="show-videos-tab"  class="cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(false)">${language.getTextSource('car.videos')}</a></li>
 				</ul>
 			</#if>
+
 			<div id="main-car-details-div" class="panel-body col-lg-12">	
 				<div class="panel panel-default">
 					<div class="panel-body row">

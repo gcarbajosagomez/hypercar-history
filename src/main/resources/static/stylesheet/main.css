@@ -37,7 +37,7 @@ a:hover{
 .pagani-history-navbar .navbar-nav > li > #search-container > a,
 .pagani-history-navbar .navbar-nav > li > div > div {
     padding-top: 22px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 .pagani-history-navbar .navbar-nav > li > form {
@@ -51,7 +51,7 @@ a:hover{
 }
 
 .search-container-li {
-    margin-top: 0px !important;
+    margin-top: 0 !important;
 }
 
 .navbar-header {
@@ -176,8 +176,8 @@ a:hover{
 }
 
 #main-navbar-collapse {
-    padding-top: 0px;
-    padding-bottom: 0px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .language-selection-div {
@@ -225,12 +225,12 @@ a:hover{
 }
 
 .preview > div {
-    padding: 0px;
+    padding: 0;
 }
 
 .preview-div {
     background-color: #f5f5f5;
-    padding: 0px;
+    padding: 0;
     margin-bottom: 50px;
 }
 
@@ -278,7 +278,7 @@ a:hover{
     -webkit-transition: opacity 0.3s, height 0.3s, box-shadow 0.3s;
     -moz-transition: opacity 0.3s, height 0.3s, box-shadow 0.3s;
     transition: opacity 0.3s, height 0.3s, box-shadow 0.3s;
-    box-shadow: 0 0 0 0px #2c3f52;
+    box-shadow: 0 0 0 0 #2c3f52;
 }
 
 .no-touch .preview figure:hover figcaption,
@@ -335,7 +335,7 @@ a:hover{
     min-height: 420px;
     height: auto;
     max-height: 500px;
-    padding: 0px !important;
+    padding: 0 !important;
 }
 
 .main-panel {
@@ -347,11 +347,11 @@ a:hover{
 }
 
 #units-of-measure-dropdown {
-    margin: 10px 10px 10px 0px;
+    margin: 10px 10px 10px 0;
 }
 
 #units-of-measure-dropdown-menu {
-    margin-top: 0px;
+    margin-top: 0;
     top: 45px;
 }
 
@@ -394,10 +394,10 @@ a:hover{
 .car-pictures-carousel-div {
     max-height: 48em;
     height: 48em;
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
     background-color: black;
-    border: 0px;
+    border: 0;
 }
 
 .carousel-inner {
@@ -458,7 +458,7 @@ a:hover{
 }
 
 .carousel-indicators {
-    bottom: 0px;
+    bottom: 0;
     left: 42%;
     width: 70%;
 }
@@ -466,7 +466,7 @@ a:hover{
 .carousel-caption {
     right: 15%;
     left: 10%;
-    padding-bottom: 0px;
+    padding-bottom: 0;
 }
 
 #car-videos-carousel {
@@ -476,12 +476,21 @@ a:hover{
 }
 
 #car-videos-carousel > .carousel-inner {
-    max-height: 80%;
-    margin-bottom: 20%;
+    max-height: 100%;
+    height: 100%;
+}
+
+.video-item {
+    height: 95%;
+}
+
+.video-carousel-control {
+    height: 50%;
+    top: 25%;
 }
 
 #index-jumbotron {
-    padding: 0px;
+    padding: 0;
 }
 
 .language-flag {
@@ -507,12 +516,12 @@ a:hover{
 }
 
 .technology-stack-inner-logo div {
-    padding-right: 0px;
-    padding-left: 0px;
+    padding-right: 0;
+    padding-left: 0;
 }
 
 .grid {
-    padding: 2% 1% 0px 1%;
+    padding: 2% 1% 0 1%;
     margin: 0 auto;
     list-style: none;
     text-align: center;
@@ -575,7 +584,7 @@ a:hover{
 
 .navbar-divider {
     height: 1px;
-    margin: 0px 0;
+    margin: 0 0;
     overflow: hidden;
     background-color: #5e5e5e;
     visibility: hidden;
@@ -592,12 +601,12 @@ a:hover{
 }
 
 #main-login-div > .panel-default {
-    margin: 0px;
+    margin: 0;
 }
 
 .cookies-policy-main-container {
-    padding-left: 0px;
-    padding-right: 0px;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /*
@@ -690,7 +699,7 @@ a:hover{
      }
 
     .content-search-input:not(:focus) {
-        text-indent: 0px;
+        text-indent: 0;
     }
 
     @media (orientation: landscape) {
@@ -725,7 +734,7 @@ a:hover{
     }
 
     .main-logo-container {
-        padding-left: 0px;
+        padding-left: 0;
     }
 
     @media (orientation: landscape) {
@@ -744,7 +753,7 @@ a:hover{
     }
 
     .lower-footer-row {
-        padding-top: 0px
+        padding-top: 0
     }
 
     .main-car-list-container {
@@ -816,6 +825,10 @@ a:hover{
         }
     }
 
+    .video-item {
+        height: 90%;
+    }
+
     .car-details-panel-heading {
         font-size: 26px;
     }
@@ -849,7 +862,7 @@ a:hover{
         min-height: 220px;
         height: auto;
         max-height: 500px;
-        padding: 0px !important;
+        padding: 0 !important;
         margin-top: 8%;
         margin-bottom: 8%;
     }

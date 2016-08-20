@@ -24,7 +24,7 @@
 						<#list cars?chunk(2) as row>	
 							<div id="car-list-row" class="row">
 								<#list row as car>
-									<@printDesktopCarPreview car/>
+									<@printDesktopCarPreview car car_index row_index/>
 								</#list>
 							</div>
 						</#list>
@@ -106,7 +106,7 @@
        
 </script>
 
-<#macro printDesktopCarPreview car>
+<#macro printDesktopCarPreview car car_index row_index>
     <div id="${car.manufacturer.name}-${car.model}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
         <#assign zIndex = (car_index + 1) * (row_index + 1)>
 		<#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->
