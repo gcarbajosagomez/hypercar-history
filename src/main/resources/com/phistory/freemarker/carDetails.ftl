@@ -47,7 +47,7 @@
 	  					</a>
   					</div>
 
-                    <@picture.addPicturesGallery "images-gallery"/>
+                    <@picture.addPicturesGallery "images-gallery" "carousel-inner"/>
 
 					<#if youtubeVideosPresent == true>
 						<@picture.addOpenVideoGalleryFunctionScript "videos-gallery"/>

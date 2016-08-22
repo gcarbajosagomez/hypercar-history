@@ -581,14 +581,12 @@
 			   </div>
 			   <div class="panel-body row">
                     <#if pictureIds?has_content>
-						<@picture.addBlueImpGallery/>
-
-                        <table style="width:100%">
+                        <table>
                             <#list pictureIds?chunk(2) as row>
                                 <#list row as pictureId>
                                     <tr id="${pictureId}-picture-row">
                                         <td style="width:70%">
-                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" data-gallery>
+                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
                                                 <img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture preview-img resizable-img" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                             </a>
                                         </td>
@@ -601,6 +599,8 @@
                                 </#list>
                             </#list>
                         </table>
+                        <@picture.addPicturesGallery "images-gallery" "car-picture"/>
+
                     <#elseif CEFC.carForm.id??>
                  	    <h3 class="text-left">${language.getTextSource('noPicturesAvailable')}</h3>
          			</#if>

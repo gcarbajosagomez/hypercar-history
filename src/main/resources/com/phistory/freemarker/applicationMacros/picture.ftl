@@ -75,7 +75,7 @@
     </script>
 </#macro>
 
-<#macro addPicturesGallery galleryName>
+<#macro addPicturesGallery galleryName classNameToTriggerGallery>
     <div id="${galleryName}" class="blueimp-gallery blueimp-gallery-controls">
         <div class="slides"></div>
         <h3 class="title"></h3>
@@ -87,7 +87,7 @@
     </div>
 
     <script type="application/javascript">
-        $(".carousel-inner").click(function (event) {
+        $(".${classNameToTriggerGallery}").click(function (event) {
             event = event || window.event;
 
             var options = {container: '#${galleryName}',
@@ -139,7 +139,7 @@
                             container: '#${galleryName}',
                             fullScreen: true,
                             useBootstrapModal: false,
-                            youTubeClickToPlay: true,
+                            youTubeClickToPlay: <#if requestIsDesktop>false<#else>true</#if>,
                             youTubePlayerVars: {rel: 0}
                         }
                         blueimp.Gallery(galleryVideos, options);

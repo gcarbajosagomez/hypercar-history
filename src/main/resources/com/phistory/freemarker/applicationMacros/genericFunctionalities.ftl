@@ -40,7 +40,7 @@
                         <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
                         <script src="/static/javascript/lib/modernizr.custom.js"></script>
                     </#if>
-                    <#if requestIsCarDetails>
+                    <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">
                         <script src="/static/javascript/lib/jquery.blueimp-gallery.min.js"></script>
@@ -53,7 +53,7 @@
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
         			<script type='application/javascript'>
 						var ajaxCallBeingProcessed = false;
-//						<#if requestIsCars && !requestIsDesktop>
+						<#if requestIsCars && !requestIsDesktop>
                             <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
                             document.addEventListener("touchstart", function(){}, true);
                         </#if>
@@ -312,11 +312,15 @@
 
 <#macro identifyRequestURL>
     <#assign requestIsCMS = false/>
+    <#assign requestIsCarEdit = false/>
     <#assign requestIsCars = false/>
     <#assign requestIsCarDetails = false/>
 
     <#if requestURI?contains(cmsContext)>
         <#assign requestIsCMS = true/>
+        <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL)>
+            <#assign requestIsCarEdit = true/>
+        </#if>
     </#if>
 	<#if requestURI?contains(carsURL)>
         <#if requestURI?matches("/" + carsURL + "/([0-9]{1,})")>
