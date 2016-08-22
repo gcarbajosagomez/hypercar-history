@@ -1,13 +1,17 @@
 package com.phistory.mvc.springframework.config;
 
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
+import static com.phistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_URI;
+import static java.util.concurrent.TimeUnit.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import java.io.IOException;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
+import com.phistory.mvc.controller.BaseControllerData;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,6 +19,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.http.CacheControl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -25,6 +30,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
@@ -76,8 +82,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public ResourceBundleMessageSource messageSource()
 	{
 		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource(); 
-		messageSource.setBasenames("com/phistory/textsource/textSources",
-								   "com/phistory/textsource/validationSources");		
+		messageSource.setBasenames("com/phistory/textsource/textSources");
 		return messageSource;
 	}
 	
@@ -126,16 +131,19 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	{
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName(LANGUAGE_DATA);
-		
+        WebContentInterceptor webContentInterceptor = new WebContentInterceptor();
+        webContentInterceptor.setCacheControl(CacheControl.maxAge(30, MINUTES));
+
 		registry.addInterceptor(localeChangeInterceptor);
+		registry.addInterceptor(webContentInterceptor);
 	}
 	
 	@Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
         //so that the content of the resources directory is served as static content
-		registry.addResourceHandler("/resources/**").addResourceLocations("classpath:/static/");
-		registry.addResourceHandler("/robots.txt").addResourceLocations("classpath:/static/robots.txt");
-		registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/static/img/favicon.ico");
+		registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/");
+		registry.addResourceHandler("/robots.txt").addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "robots.txt");
+		registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "img/favicon.ico");
     }
 }

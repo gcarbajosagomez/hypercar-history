@@ -137,9 +137,9 @@
                     </#list>) {
                         var options = {
                             container: '#${galleryName}',
-                            fullScreen: false,
+                            fullScreen: true,
                             useBootstrapModal: false,
-                            youTubeClickToPlay: false,
+                            youTubeClickToPlay: true,
                             youTubePlayerVars: {rel: 0}
                         }
                         blueimp.Gallery(galleryVideos, options);

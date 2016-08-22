@@ -61,4 +61,5 @@ public class BaseControllerData
 	public static final String CONTACT_US_EXCEPTION_MESSAGE     	= "contactUsExceptionMessage";   
 	public static final String YOUTUBE_VIDEO_IDS     				= "youtubeVideoIds";    
 	public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES	= "carInternetContentReviewArticles";  
+	public static final String STATIC_RESOURCES_URI					= "/static/";
 }

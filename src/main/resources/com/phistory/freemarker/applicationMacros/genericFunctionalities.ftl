@@ -13,7 +13,6 @@
             <head>
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('paganiHistory')}</title>
             		<meta charset="UTF-8">
-					<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
 					<meta name="description" content="${title}">
 					<#-- CRSF token to protect against cross site attacks -->
@@ -22,43 +21,49 @@
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 					<@language.addHrefLangInfo/>
-					<link rel="shortcut icon" href="/resources/img/favicon.ico">
-        			<link rel="stylesheet" href="/resources/stylesheet/bootstrap.min.css">
-					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-theme.min.css">
-                	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/resources/stylesheet/main.min.css">
+					<link rel="shortcut icon" href="/static/img/favicon.ico">
+        			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
+					<link rel="stylesheet" href="/static/stylesheet/bootstrap-theme.min.css">
+                	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 
-            		<script src="/resources/javascript/lib/jquery.min.js"></script>
-            		<script src="/resources/javascript/lib/jquery.cookie.js"></script>
-            		<script src="/resources/javascript/lib/jquery.cookiesdirective.js"></script>
-            		<script src="/resources/javascript/lib/jquery.blockUI.js"></script>
-        			<script src="/resources/javascript/lib/bootstrap.min.js"></script>
-        			<script src="/resources/javascript/lib/bootbox.min.js"></script>
-					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
-					<script src="/resources/javascript/main.min.js"></script>
+            		<script src="/static/javascript/lib/jquery.min.js"></script>
+            		<script src="/static/javascript/lib/jquery.cookie.js"></script>
+            		<script src="/static/javascript/lib/jquery.cookiesdirective.js"></script>
+            		<script src="/static/javascript/lib/jquery.blockUI.js"></script>
+        			<script src="/static/javascript/lib/bootstrap.min.js"></script>
+        			<script src="/static/javascript/lib/bootbox.min.js"></script>
+
+					<script src="/static/javascript/main.js"></script>
 
                     <#if requestIsCars>
-                        <script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
+                        <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
+                        <script src="/static/javascript/lib/modernizr.custom.js"></script>
                     </#if>
                     <#if requestIsCarDetails>
-                        <link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
-                        <link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
-                        <script src="/resources/javascript/lib/jquery.blueimp-gallery.min.js"></script>
-                        <script src="/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
+                        <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">
+                        <script src="/static/javascript/lib/jquery.blueimp-gallery.min.js"></script>
+                        <script src="/static/javascript/lib/bootstrap-image-gallery.min.js"></script>
                     </#if>
                     <#if requestIsCMS>
-                        <script src="/resources/javascript/lib/bootstrap-datepicker.min.js"></script>
+                        <script src="/static/javascript/lib/bootstrap-datepicker.min.js"></script>
                     </#if>
 
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
         			<script type='application/javascript'>
 						var ajaxCallBeingProcessed = false;
-						document.addEventListener("touchstart", function(){}, true);
+//						<#if requestIsCars && !requestIsDesktop>
+                            <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
+                            document.addEventListener("touchstart", function(){}, true);
+                        </#if>
 
 						$(document).ready(function()
 						{
-							<#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
-							$.getScript('/resources/javascript/lib/toucheffects.js', null);
+                            <#if requestIsCars && !requestIsDesktop>
+                                <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
+                                $.getScript('/static/javascript/lib/toucheffects.js', null);
+                            </#if>
 
         					$.cookiesDirective({
             					privacyPolicyUri: '/${cookiesPolicyURL}',
@@ -103,7 +108,7 @@
 											<h4 class="italic-font text-right" style="padding-right: 30px">${language.getTextSource('paganiHistory.dataAndImages')}</h4>
 										</div>
           					   			<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 main-logo-container">
-          					   				<img class="main-logo" src="/resources/img/pagani-logo.png">
+          					   				<img class="main-logo" src="/static/img/pagani-logo.png">
           					   			</div>
 	          					   	</div>
     	      					 </a>
@@ -129,7 +134,7 @@
           													    ${language.getTextSource('language.spanish')}
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/resources/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')}"/>
           													</div>
           													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
@@ -145,7 +150,7 @@
         	  													${language.getTextSource('language.english')}
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/resources/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
@@ -312,7 +317,8 @@
 
     <#if requestURI?contains(cmsContext)>
         <#assign requestIsCMS = true/>
-    <#elseif requestURI?contains(carsURL)>
+    </#if>
+	<#if requestURI?contains(carsURL)>
         <#if requestURI?matches("/" + carsURL + "/([0-9]{1,})")>
             <#assign requestIsCarDetails = true/>
         <#else>

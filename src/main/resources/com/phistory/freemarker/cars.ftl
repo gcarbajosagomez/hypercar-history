@@ -29,11 +29,12 @@
 						<#list cars?chunk(2) as row>
 							<div id="car-list-row" class="row">
 								<#list row as car>
-									<#if requestIsDesktop>
+									<#--<#if requestIsDesktop>
                                         <@printDesktopCarPreview car car_index row_index/>
                                     <#else>
                                         <@printMobileCarPreview car/>
-                                    </#if>
+                                    </#if>-->
+                                    <@printDesktopCarPreview car car_index row_index/>
 								</#list>
 							</div>
 						</#list>
