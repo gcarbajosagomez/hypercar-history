@@ -748,4 +748,4 @@
 
 <@picture.addPictureUploadBoxFunctionScript/>
 <@picture.addDisplayPreviewImageWhenFileSelectedFunctionScript/>
-<@picture.addDisplayCarPictureWhenFileSelected/>
+<@picture.addDisplayCarPictureWhenFileSelectedFunctionScript/>

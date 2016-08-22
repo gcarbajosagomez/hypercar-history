@@ -15,7 +15,7 @@
 	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
-				 <h1 class="text-left">${car.manufacturer.name}<br/> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
+				 <h1 class="text-left">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
 			</div>			
 			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
 				<#assign youtubeVideosPresent = true>						
@@ -30,12 +30,12 @@
     							<li data-target="#car-pictures-carousel" data-slide-to="${pictureId?index}" class="<#if pictureId?is_first>active</#if>"></li>
     						</#list>
 	 					</ol>
-  						<div class="carousel-inner">    						
+  						<div class="carousel-inner">
     						<#list pictureIds as pictureId>
     							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
-      								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" data-gallery>
-										<img src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}"> 
-									</a> 														
+      								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" gallery="#images-gallery">
+										<img src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
+									</a>
     							</div>
 	      					</#list>
 		    			</div>
@@ -47,29 +47,10 @@
 	  					</a>
   					</div>
 
-                    <@picture.addBlueImpGallery/>
+                    <@picture.addPicturesGallery "images-gallery"/>
 
 					<#if youtubeVideosPresent == true>
-  						<div id="car-videos-carousel" class="carousel slide center-block vertically-aligned-div hidden container" data-ride="carousel">
-							<ol class="carousel-indicators">
-  								<#list youtubeVideoIds as videoId>
-    								<li data-target="#car-videos-carousel" data-slide-to="${videoId?index}" class="<#if videoId?is_first>active</#if>"></li>
-    							</#list>
-	 						</ol>
-							<div class="carousel-inner">							
-	    						<#list youtubeVideoIds as videoId>
-									<div id="${videoId}-video-div" class="item video-item <#if videoId?is_first>active</#if>">
-	    								<div id="${videoId}-iframe-div"></div>
-	    							</div>			
-		      					</#list>
-				    		</div>
-	  						<a class="left carousel-control video-carousel-control" href="#car-videos-carousel" data-slide="prev">
-	    						<span class="glyphicon glyphicon-chevron-left"></span>
-	  						</a>
-		  					<a class="right carousel-control video-carousel-control" href="#car-videos-carousel" data-slide="next">
-	    						<span class="glyphicon glyphicon-chevron-right"></span>
-		  					</a>
-						</div>	
+						<@picture.addOpenVideoGalleryFunctionScript "videos-gallery"/>
 					</#if>
   				<#else>
   					<h2 class="text-center">${language.getTextSource('noPicturesAvailable')}</h2>
@@ -78,8 +59,8 @@
 
 			<#if youtubeVideosPresent = true>
 				<ul class="nav nav-tabs">
-					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(true)">${language.getTextSource('car.pictures')}</a></li>
-					<li id="show-videos-tab"  class="cursor-pointer" role="presentation"><a onClick="hideOrShowPictures(false)">${language.getTextSource('car.videos')}</a></li>
+					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a>${language.getTextSource('car.pictures')}</a></li>
+					<li id="show-videos-tab" class="cursor-pointer" role="presentation"><a onClick="openVideoGallery()">${language.getTextSource('car.videos')}</a></li>
 				</ul>
 			</#if>
 
@@ -539,4 +520,3 @@
 </script>
 
 <@carUtils.addSetUnitsOfMeasureFunctionScript/>
-<@carUtils.addYoutubeVideosFunctionScript youtubeVideosPresent/>

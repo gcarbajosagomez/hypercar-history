@@ -5,6 +5,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -52,9 +53,10 @@ public class ContentSearchController extends BaseController implements Initializ
 			SearchCommand searchCommand = createSearchCommand(contentSearchDto);		
 		
 			com.tcp.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDao().hibernateSearchSearchContent(searchCommand);
+            List<Object> searchResults = dataContentSearchDto.getResults();
 		
-			model.addAttribute(CARS, dataContentSearchDto.getResults());
-			model.addAttribute(MODELS, super.getCarDao().getDistinctModelsWithId());
+			model.addAttribute(CARS, searchResults);
+			model.addAttribute(MODELS, searchResults);
 			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getCarsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
 			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());

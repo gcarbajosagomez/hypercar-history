@@ -5,11 +5,9 @@
 <#import "picture.ftl" as picture/>
 
 <#macro startPage title=''>
-    <#assign requestIsCMS = false/>
-    <#if requestURI?contains(cmsContext)>
-	    <#assign requestIsCMS = true/>
-    </#if>
-    <!DOCTYPE html>
+    <@identifyRequestURL/>
+
+	<!DOCTYPE html>
     	<#assign lang = language.getTextSource('paganiHistory.language')/>
         <html lang="${lang}" class="no-js">
             <head>
@@ -28,21 +26,26 @@
         			<link rel="stylesheet" href="/resources/stylesheet/bootstrap.min.css">
 					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-theme.min.css">
                 	<link rel="stylesheet" href="/resources/stylesheet/font-awesome.min.css">
-					<link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
-					<link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
         			<link rel="stylesheet" href="/resources/stylesheet/main.min.css">
 
             		<script src="/resources/javascript/lib/jquery.min.js"></script>
             		<script src="/resources/javascript/lib/jquery.cookie.js"></script>
             		<script src="/resources/javascript/lib/jquery.cookiesdirective.js"></script>
             		<script src="/resources/javascript/lib/jquery.blockUI.js"></script>
-					<script src="/resources/javascript/lib/jquery.blueimp-gallery.min.js"></script>
         			<script src="/resources/javascript/lib/bootstrap.min.js"></script>
-        			<script src="/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
-        			<script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/resources/javascript/lib/bootbox.min.js"></script>
 					<script src="/resources/javascript/lib/modernizr.custom.js"></script>
 					<script src="/resources/javascript/main.min.js"></script>
+
+                    <#if requestIsCars>
+                        <script src="/resources/javascript/lib/bootstrap-paginator.min.js"></script>
+                    </#if>
+                    <#if requestIsCarDetails>
+                        <link rel="stylesheet" href="/resources/stylesheet/blueimp-gallery.min.css">
+                        <link rel="stylesheet" href="/resources/stylesheet/bootstrap-image-gallery.min.css">
+                        <script src="/resources/javascript/lib/jquery.blueimp-gallery.min.js"></script>
+                        <script src="/resources/javascript/lib/bootstrap-image-gallery.min.js"></script>
+                    </#if>
                     <#if requestIsCMS>
                         <script src="/resources/javascript/lib/bootstrap-datepicker.min.js"></script>
                     </#if>
@@ -300,4 +303,20 @@
                      '<i id="loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
                  '</div>'
     });
+</#macro>
+
+<#macro identifyRequestURL>
+    <#assign requestIsCMS = false/>
+    <#assign requestIsCars = false/>
+    <#assign requestIsCarDetails = false/>
+
+    <#if requestURI?contains(cmsContext)>
+        <#assign requestIsCMS = true/>
+    <#elseif requestURI?contains(carsURL)>
+        <#if requestURI?matches("/" + carsURL + "/([0-9]{1,})")>
+            <#assign requestIsCarDetails = true/>
+        <#else>
+            <#assign requestIsCars = true/>
+        </#if>
+    </#if>
 </#macro>

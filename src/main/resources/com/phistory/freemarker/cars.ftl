@@ -103,7 +103,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "'");
+			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "'>");
 
 			if (carModel.length < 33)
 			{
