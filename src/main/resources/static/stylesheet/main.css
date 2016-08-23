@@ -374,6 +374,16 @@ a:hover{
     height: 38px;
 }
 
+@media (max-width: 768px) {
+    .dl-horizontal dt {
+        width: 100%;
+    }
+
+    .dl-horizontal dd {
+        margin-left: 0%;
+    }
+}
+
 @media (min-width: 768px) {
     .dl-horizontal dt {
         width: 45%;
