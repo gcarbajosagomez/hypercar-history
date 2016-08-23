@@ -348,6 +348,16 @@ a:hover{
     border-color: rgba(0, 0, 0, 0.611765);
 }
 
+.car-details-model-name {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+#main-car-details-div {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
 #units-of-measure-dropdown {
     margin: 10px 10px 10px 0;
 }
@@ -355,6 +365,14 @@ a:hover{
 #units-of-measure-dropdown-menu {
     margin-top: 0;
     top: 45px;
+}
+
+#main-car-details-div > .panel > .panel-body {
+    padding-bottom: 0;
+}
+
+.inner-car-details-panel-body {
+    padding-bottom: 0;
 }
 
 .dl-horizontal dd {
@@ -376,21 +394,21 @@ a:hover{
 
 @media (max-width: 768px) {
     .dl-horizontal dt {
-        width: 100%;
+        width: 100% !important;
     }
 
     .dl-horizontal dd {
-        margin-left: 0%;
+        margin-left: 0 !important;
     }
 }
 
 @media (min-width: 768px) {
     .dl-horizontal dt {
-        width: 45%;
+        width: 47%;
     }
 
     .dl-horizontal dd {
-        margin-left: 46%;
+        margin-left: 48%;
     }
 }
 
@@ -791,12 +809,21 @@ a:hover{
         margin-top: initial;
     }
 
+    .car-details-model-name {
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .car-details-panel-body {
+        padding: 0;
+    }
+
     .dl-horizontal dt {
          width: 100%;
      }
 
     .dl-horizontal dd {
-        margin-left: 0%;
+        margin-left: 0;
     }
 
     .dl-horizontal dd,

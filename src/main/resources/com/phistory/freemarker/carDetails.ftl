@@ -15,7 +15,7 @@
 	<div class="panel panel-default main-panel row" style="border:0px;">
 		<#if car??>
 			<div class="panel-heading">
-				 <h1 class="text-left">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
+				 <h1 class="text-left car-details-model-name">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
 			</div>			
 			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
 				<#assign youtubeVideosPresent = true>						
@@ -65,8 +65,8 @@
 			</#if>
 
 			<div id="main-car-details-div" class="panel-body col-lg-12">	
-				<div class="panel panel-default">
-					<div class="panel-body row">
+				<#if requestIsDesktop><div class="panel panel-default"></#if>
+					<div class="row panel-body car-details-panel-body">
 						<div class="col-lg-6 col-md-6 col-sm-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
@@ -107,7 +107,7 @@
           								</div>
           							</div>				 				
 								</div>
-								<div class="panel-body">
+								<div class="panel-body inner-car-details-panel-body">
 									<dl class="dl-horizontal text-left">
 										<dt>
 		  									${language.getTextSource('car.productionType')} :
@@ -303,7 +303,7 @@
 								<div class="panel-heading" style="min-height: 84px">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('engine')}<em class="text-muted"> (${car.engine.code})</em></h3>
 								</div>
-								<div class="panel-body">
+								<div class="panel-body inner-car-details-panel-body">
 									<dl class="dl-horizontal text-left">
 										<dt>
   											${language.getTextSource('engine.displacement')} :
@@ -400,13 +400,13 @@
   							</div>
 	  					</div>
 	  				</div>
-	  			</div>
+				<#if requestIsDesktop></div></#if>
 	  			<div class="panel panel-default">
 					<div class="panel-heading">
 						<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakes')}</h3>
 					</div>
-					<div class="panel-body row">
-						<div class="col-lg-1"></div>
+					<div class="row panel-body">
+                        <div class="col-lg-1"></div>
 						<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 							<#if (car.brakeSet??) && (car.brakeSet.frontBrake??)>
 								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
@@ -419,15 +419,15 @@
 	                	</div>
     	            </div>
   				</div>
-  				<div class="panel panel-default">
-					<div class="panel-body row">
-						<div class="col-lg-1"></div>
+				<#if requestIsDesktop><div class="panel panel-default"></#if>
+					<div class="row panel-body car-details-panel-body">
+                        <div class="col-lg-1"></div>
 						<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 	  						<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('transmission')}</h3>
 								</div>
-								<div class="panel-body">
+								<div class="panel-body inner-car-details-panel-body">
 									<dl class="dl-horizontal text-left">
   										<dt>
   											${language.getTextSource('transmission.type')} :
@@ -458,7 +458,7 @@
 								<div class="panel-heading">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('tyres')}</h3>
 								</div>
-								<div class="panel-body">
+								<div class="panel-body inner-car-details-panel-body">
 									<dl class="dl-horizontal text-left">
 			  							<dt>
   											${language.getTextSource('tyreSet.frontTyre')} :
@@ -485,7 +485,7 @@
   							</div>
   						</div>
 	 	 			</div>
-	  			</div>
+				<#if requestIsDesktop></div></#if>
 			</div>
 		<#else>
 			<div class="panel panel-body col-lg-12">

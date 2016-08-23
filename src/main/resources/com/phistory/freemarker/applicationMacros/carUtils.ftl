@@ -29,7 +29,7 @@
                 <h3 class="text-left car-details-panel-heading">${language.getTextSource('brakeSet.back')}</h3>
             </#if>
         </div>
-        <div class="panel-body">
+        <div class="panel-body inner-car-details-panel-body">
             <dl class="dl-horizontal text-left">
                 <dt>
                     ${language.getTextSource('brake.disc.diameter')} :
