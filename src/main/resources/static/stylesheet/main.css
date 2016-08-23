@@ -10,6 +10,10 @@ a:hover{
     text-decoration: none !important;
 }
 
+.border-radiused-img {
+    border-radius: 3px;
+}
+
 .pagani-history-navbar .navbar-nav {
     width: 100%;
 }
@@ -192,6 +196,7 @@ a:hover{
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
+    border-radius: 4px;
 }
 
 .lower-footer-row {
@@ -349,7 +354,7 @@ a:hover{
 }
 
 .car-details-model-name {
-    margin-top: 15px;
+    margin-top: 10px;
     margin-bottom: 15px;
 }
 
@@ -360,6 +365,7 @@ a:hover{
 
 .nav-tabs {
     margin-bottom: 1em;
+    width: 25%;
 }
 
 #units-of-measure-dropdown {
@@ -444,6 +450,11 @@ a:hover{
     min-height: initial;
 }
 
+#car-pictures-carousel {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .car-pictures-carousel-div {
     max-height: 48em;
     height: 48em;
@@ -451,6 +462,7 @@ a:hover{
     padding-right: 0;
     background-color: black;
     border: 0;
+    border-radius: 0px;
 }
 
 .carousel-inner {
@@ -689,7 +701,7 @@ a:hover{
 
     .pagani-history-navbar {
         min-height: 10em;
-        margin: 10px;
+        margin: 10px 10px 20px;
     }
 
     @media (orientation: landscape) {
@@ -783,7 +795,6 @@ a:hover{
     .pagani-history-footer {
         height: auto;
         padding: 25px;
-        border-radius: 4px;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 10px;
@@ -808,6 +819,16 @@ a:hover{
 
     .car-details-panel-body {
         padding: 0;
+    }
+
+    .nav-tabs {
+        width: 60%;
+    }
+
+    @media (orientation: landscape) {
+        .nav-tabs {
+            width: 40%;
+        }
     }
 
     .dl-horizontal dt {

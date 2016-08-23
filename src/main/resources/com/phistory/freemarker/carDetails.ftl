@@ -34,7 +34,7 @@
     						<#list pictureIds as pictureId>
     							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
       								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" gallery="#images-gallery">
-										<img src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
+										<img <#if requestIsDesktop>class="border-radiused-img"</#if> src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
 									</a>
     							</div>
 	      					</#list>

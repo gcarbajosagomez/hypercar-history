@@ -100,7 +100,9 @@
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
     		carRowString = carRowString.concat(	  	 	"<figure>");
 		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+		   	carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(				    "</a>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
 			carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "'>");
@@ -139,7 +141,9 @@
             carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
     		carRowString = carRowString.concat(     "<div class='thumbnail preview-div mobile-preview-div'>");
 		   	carRowString = carRowString.concat(		    "<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(			    "<img class='center-block img-thumbnail preview-img mobile-preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(		        "<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat(			        "<img class='center-block img-thumbnail preview-img mobile-preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(				"</a>");
             carRowString = carRowString.concat(		    "</div>");
 			carRowString = carRowString.concat(		    "<a href='/${carsURL}/" + cars[i].id + "'>");
             carRowString = carRowString.concat(			    "<h3 class='text-center'>" + carModel + "</h3>");
@@ -169,8 +173,10 @@
             <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                        <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
-                    </div>
+                        <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
+                        	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
+                    	</a>
+					</div>
                     <figcaption>
                         <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
                             <h3 class="text-center<#if (modelName?length > 33)> double-line-car-model-name</#if>">${modelName}</h3>
@@ -187,7 +193,9 @@
     <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
         <div class="thumbnail preview-div mobile-preview-div">
             <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                <img class="center-block img-thumbnail preview-img mobile-preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
+                <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
+                    <img class="center-block img-thumbnail preview-img mobile-preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
+                </a>
             </div>
             <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
                 <h3 class="text-center model-name">${modelName}</h3>

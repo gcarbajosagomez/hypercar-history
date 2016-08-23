@@ -32,12 +32,10 @@
             		<script src="/static/javascript/lib/jquery.cookiesdirective.js"></script>
             		<script src="/static/javascript/lib/jquery.blockUI.js"></script>
         			<script src="/static/javascript/lib/bootstrap.min.js"></script>
+                    <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
-					<script src="/static/javascript/main.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.js"></script>
-
-
-                        <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
+					<script src="/static/javascript/main.min.js"></script>
 
                     <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
@@ -53,16 +51,13 @@
         			<script type='application/javascript'>
 						var ajaxCallBeingProcessed = false;
 
-                            <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
-                            document.addEventListener("touchstart", function(){}, true);
-
+                        <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
+                        document.addEventListener("touchstart", function(){}, true);
 
 						$(document).ready(function()
 						{
-
-                                <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
-                                $.getScript('/static/javascript/lib/toucheffects.js', null);
-
+                            <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
+                            $.getScript('/static/javascript/lib/toucheffects.js', null);
 
         					$.cookiesDirective({
             					privacyPolicyUri: '/${cookiesPolicyURL}',
@@ -112,7 +107,7 @@
 	          					   	</div>
     	      					 </a>
 
-								 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar-collapse">
+								 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
                                  	<span class="glyphicon glyphicon-arrow-down"></span>
                                  </button>
         	  				 </div>
