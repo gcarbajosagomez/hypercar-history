@@ -781,14 +781,12 @@ a:hover{
         margin-top: initial;
     }
 
-    @media (min-width: 768px) {
-        .dl-horizontal dt {
-            width: 360px;
-        }
+    .dl-horizontal dt {
+         width: 100%;
+     }
 
-        .dl-horizontal dd {
-            margin-left: 369px;
-        }
+    .dl-horizontal dd {
+        margin-left: 0%;
     }
 
     .dl-horizontal dd,
