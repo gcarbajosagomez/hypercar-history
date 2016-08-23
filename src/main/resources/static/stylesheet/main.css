@@ -358,6 +358,10 @@ a:hover{
     padding-bottom: 0;
 }
 
+.nav-tabs {
+    margin-bottom: 1em;
+}
+
 #units-of-measure-dropdown {
     margin: 10px 10px 10px 0;
 }
@@ -488,18 +492,6 @@ a:hover{
     max-height: 40em;
     height: auto;
 }
-
-/*@media only screen and (max-width: 768px)   {
-    .carousel-inner > .item > a > img {
-        max-height: 33em;
-    }
-}
-
-@media only screen and (max-width: 531px) {
-    .carousel-inner > .item > a > img {
-        max-height: 23em;
-    }
-}*/
 
 .carousel-inner > .item > img,
 .carousel-inner > .item > a > img {
