@@ -1,4 +1,5 @@
 <#import "pageLanguage.ftl" as language/>
+<#import "picture.ftl" as picture/>
 <#import "genericFunctionalities.ftl" as generic/>
 
 <#function writeCarNumericData data>
@@ -65,7 +66,7 @@
     <script type="application/javascript">
         function setUnitsOfMeasure(unitsOfMeasure, mainForm)
         {
-            if ($.cookie('${unitsOfMeasureCookieName}') != unitsOfMeasure && !ajaxCallBeingProcessed)
+            if ($.cookie('${unitsOfMeasureCookieName}') !== unitsOfMeasure && !ajaxCallBeingProcessed)
             {
                 $.cookie('${unitsOfMeasureCookieName}', unitsOfMeasure, {path : '/', expires : 14});
                 ajaxCallBeingProcessed = true;
@@ -74,6 +75,7 @@
                             type:'GET',
                             url: mainForm.action,
                             dataType: 'html',
+                            cache: false,
                             beforeSend: function()
                             {
                                 if(unitsOfMeasure == '${unitsOfMeasureMetric}')
@@ -92,6 +94,7 @@
                         {
                             document.body.innerHTML = data;
                             ajaxCallBeingProcessed = false;
+                            <@picture.addPicturesGalleryFunctionScript "images-gallery" "carousel-inner"/>
                             $('#main-car-details-div').unblock();
                         });
             }

@@ -33,13 +33,12 @@
             		<script src="/static/javascript/lib/jquery.blockUI.js"></script>
         			<script src="/static/javascript/lib/bootstrap.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
-
 					<script src="/static/javascript/main.js"></script>
+                    <script src="/static/javascript/lib/modernizr.custom.js"></script>
 
-                    <#if requestIsCars>
+
                         <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
-                        <script src="/static/javascript/lib/modernizr.custom.js"></script>
-                    </#if>
+
                     <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">
@@ -53,17 +52,17 @@
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->
         			<script type='application/javascript'>
 						var ajaxCallBeingProcessed = false;
-						<#if requestIsCars && !requestIsDesktop>
+
                             <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
                             document.addEventListener("touchstart", function(){}, true);
-                        </#if>
+
 
 						$(document).ready(function()
 						{
-                            <#if requestIsCars && !requestIsDesktop>
+
                                 <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
                                 $.getScript('/static/javascript/lib/toucheffects.js', null);
-                            </#if>
+
 
         					$.cookiesDirective({
             					privacyPolicyUri: '/${cookiesPolicyURL}',
@@ -315,6 +314,7 @@
     <#assign requestIsCarEdit = false/>
     <#assign requestIsCars = false/>
     <#assign requestIsCarDetails = false/>
+    <#assign requestIsModelsSearch = false/>
 
     <#if requestURI?contains(cmsContext)>
         <#assign requestIsCMS = true/>
@@ -328,5 +328,8 @@
         <#else>
             <#assign requestIsCars = true/>
         </#if>
+    </#if>
+    <#if requestURI?contains(modelsSearchURL)>
+        <#assign requestIsModelsSearch = true/>
     </#if>
 </#macro>

@@ -87,19 +87,23 @@
     </div>
 
     <script type="application/javascript">
-        $(".${classNameToTriggerGallery}").click(function (event) {
-            event = event || window.event;
-
-            var options = {container: '#${galleryName}',
-                           event: event,
-                           fullScreen: true,
-                           useBootstrapModal: false,
-                           stretchImages: true};
-
-            var links = $("a[gallery='#${galleryName}']");
-            blueimp.Gallery(links, options);
-        });
+        <@addPicturesGalleryFunctionScript galleryName classNameToTriggerGallery/>
     </script>
+</#macro>
+
+<#macro addPicturesGalleryFunctionScript galleryName classNameToTriggerGallery>
+    $(".${classNameToTriggerGallery}").click(function (event) {
+        event = event || window.event;
+
+        var options = {container: '#${galleryName}',
+                       event: event,
+                       fullScreen: true,
+                       useBootstrapModal: false,
+                       stretchImages: true};
+
+        var links = $("a[gallery='#${galleryName}']");
+        blueimp.Gallery(links, options);
+    });
 </#macro>
 
 <#macro addOpenVideoGalleryFunctionScript galleryName>

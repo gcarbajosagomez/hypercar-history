@@ -103,7 +103,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].id + "'>");
+			carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "'>");
 
 			if (carModel.length < 33)
 			{
@@ -141,7 +141,7 @@
 		   	carRowString = carRowString.concat(		    "<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
             carRowString = carRowString.concat(			    "<img class='center-block img-thumbnail preview-img mobile-preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(		    "</div>");
-			carRowString = carRowString.concat(		    "<a href='${carsURL}/" + cars[i].id + "'>");
+			carRowString = carRowString.concat(		    "<a href='/${carsURL}/" + cars[i].id + "'>");
             carRowString = carRowString.concat(			    "<h3 class='text-center'>" + carModel + "</h3>");
 			carRowString = carRowString.concat(		    "</a>");
 			carRowString = carRowString.concat(	    "</div>");
@@ -172,8 +172,8 @@
                         <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
                     </div>
                     <figcaption>
-                        <a href='<@spring.url "${carsURL}/${car.id}"/>'>
-                            <h3 class="text-center <#if (modelName?length > 33)>double-line-car-model-name</#if>">${modelName}</h3>
+                        <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
+                            <h3 class="text-center<#if (modelName?length > 33)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>
                     </figcaption>
                 </figure>
@@ -189,7 +189,7 @@
             <div class="caption vertically-aligned-div vertically-aligned-preview-div">
                 <img class="center-block img-thumbnail preview-img mobile-preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
             </div>
-            <a href='<@spring.url "${carsURL}/${car.id}"/>'>
+            <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
                 <h3 class="text-center model-name">${modelName}</h3>
             </a>
         </div>
