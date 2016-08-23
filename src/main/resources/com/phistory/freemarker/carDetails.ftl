@@ -67,7 +67,7 @@
 			<div id="main-car-details-div" class="panel-body col-lg-12">	
 				<div class="panel panel-default">
 					<div class="panel-body row">
-						<div class="col-lg-6 col-sm-12">						
+						<div class="col-lg-6 col-md-6 col-sm-12">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row"> 
@@ -298,7 +298,7 @@
 								</div>	
 							</div>
 						</div>
-						<div class="col-lg-6 col-sm-12">	
+						<div class="col-lg-6 col-md-6 col-sm-12">
 							<div class="panel panel-default">
 								<div class="panel-heading" style="min-height: 84px">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('engine')}<em class="text-muted"> (${car.engine.code})</em></h3>
@@ -407,12 +407,12 @@
 					</div>
 					<div class="panel-body row">
 						<div class="col-lg-1"></div>
-						<div class="col-lg-5 col-sm-12 col-xs-12">		
+						<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 							<#if (car.brakeSet??) && (car.brakeSet.frontBrake??)>
 								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
 							</#if>
 						</div>
-						<div class="col-lg-5 col-sm-12 col-xs-12">
+						<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 							<#if (car.brakeSet??) && (car.brakeSet.backBrake??)>
                 				<@carUtils.writeCarBrakeInfo car.brakeSet.backBrake/>
                 			</#if>
@@ -422,7 +422,7 @@
   				<div class="panel panel-default">
 					<div class="panel-body row">
 						<div class="col-lg-1"></div>
-						<div class="col-lg-5 col-sm-12 col-xs-12">
+						<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 	  						<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('transmission')}</h3>
@@ -453,7 +453,7 @@
   								</div>
  		 					</div>
 	  					</div>
-	  					<div class="col-lg-5 col-sm-12 col-xs-12">
+	  					<div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
 			  				<div class="panel panel-default">
 								<div class="panel-heading">
 									<h3 class="text-left car-details-panel-heading">${language.getTextSource('tyres')}</h3>
