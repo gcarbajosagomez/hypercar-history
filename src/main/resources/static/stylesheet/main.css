@@ -42,18 +42,26 @@ a:hover{
 .pagani-history-navbar .navbar-nav > li > a,
 .pagani-history-navbar .navbar-nav > li > #search-container > a,
 .pagani-history-navbar .navbar-nav > li > div > div {
-    padding-top: 22px;
+    padding-top: 1em;
     padding-bottom: 0;
 }
 
-.pagani-history-navbar .navbar-nav > li > form {
-    padding-top: 15px;
-    padding-left: 20px;
+.pagani-history-navbar .navbar-nav > li {
+    margin-top: 0.5em;
+    margin-bottom: 1em;
 }
 
-.pagani-history-navbar .navbar-nav > li {
-    margin-top: 0.9em;
-    margin-bottom: 1.7em;
+@media (min-width: 768px) {
+    .pagani-history-navbar .navbar-nav > li > a,
+    .pagani-history-navbar .navbar-nav > li > #search-container > a,
+    .pagani-history-navbar .navbar-nav > li > div > div {
+        padding-top: 1.3em;
+    }
+
+    .pagani-history-navbar .navbar-nav > li {
+        margin-top: 0.85em;
+        margin-bottom: 1.7em;
+    }
 }
 
 .search-container-li {
@@ -89,7 +97,13 @@ a:hover{
     min-width: 12em;
     width: auto;
     padding-left: 15px;
-    margin-top: 1.64em;
+    margin-top: 1.5em;
+}
+
+@media (max-width: 768px) {
+    #search-container {
+        margin-top: 1.35em;
+    }
 }
 
 #search-container > a {
@@ -716,8 +730,14 @@ a:hover{
     }
 
     .pagani-history-navbar .navbar-nav > li > a {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 0.9em;
+        padding-bottom: 0.9em;
+    }
+
+    @media only screen and (min-width: 768px) {
+        .pagani-history-navbar .navbar-nav > li > a {
+            padding-top: 1.75em;
+        }
     }
 
     .pagani-history-navbar-brand {
@@ -737,6 +757,7 @@ a:hover{
 
     #search-container {
         min-width: initial;
+        margin-top: 1.2em;
     }
 
     .content-search-input {

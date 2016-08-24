@@ -97,8 +97,8 @@
 
         var options = {container: '#${galleryName}',
                        event: event,
-                       fullScreen: true,
                        useBootstrapModal: false,
+                       fullScreen: true,
                        stretchImages: true};
 
         var links = $("a[gallery='#${galleryName}']");
