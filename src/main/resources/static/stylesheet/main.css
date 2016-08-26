@@ -221,6 +221,12 @@ a:hover{
     padding-right: 15px;
 }
 
+@media (max-width: 1200px) {
+    .main-car-list-container {
+        padding-left: 15px;
+    }
+}
+
 .cars-list-group {
     padding-left: 4px;
 }
@@ -272,9 +278,9 @@ a:hover{
 
 .preview-img {
     width: auto;
-    max-width: 420px;
+    max-width: 400px;
     height: auto;
-    max-height: 420px;
+    max-height: 400px;
 }
 
 .mobile-preview-img {
@@ -329,7 +335,19 @@ a:hover{
 }
 
 .double-line-car-model-name {
-    margin-top: 285px !important;
+    margin-top: 63% !important;
+}
+
+@media (min-width: 991px) {
+    .double-line-car-model-name {
+        margin-top: 69% !important;
+    }
+}
+
+@media (max-width: 531px) {
+    .double-line-car-model-name {
+        margin-top: 70% !important;
+    }
 }
 
 .vertically-aligned-div {
@@ -370,6 +388,7 @@ a:hover{
 .car-details-model-name {
     margin-top: 10px;
     margin-bottom: 15px;
+    font-weight: 600;
 }
 
 #main-car-details-div {
@@ -625,12 +644,12 @@ a:hover{
     left: 0;
     padding: 20px;
     background: #2c3f52;
-    color: #ed4e6e;
 }
 
 .grid figcaption h3 {
     color: #fff;
-    margin-top: 310px;
+    margin-top: 300px;
+    font-weight: 600;
 }
 
 .grid figcaption a {
@@ -644,6 +663,7 @@ a:hover{
     bottom: 5px;
     top: 115px;
     left: 10px;
+    margin-right: 10px;
 }
 
 .divider {
@@ -935,21 +955,52 @@ a:hover{
     }
 
     .grid figcaption h3 {
-        margin-top: 100%;
-        font-size: 28px;
+        font-size: 110%;
+        position: relative;
+        bottom: -82%;
+        margin-top: 15px;
+    }
+
+    @media (orientation: landscape) {
+        .grid figcaption h3 {
+            bottom: -88%;
+        }
     }
 
     .grid figcaption a {
-        top: 50%;
+        top: initial;
+        min-height: 70%;
+        height: 40%;
+        bottom: 5%;
+        margin-right: 10px;
+    }
+
+    .preview-div {
+        margin-bottom: 100px;
     }
 
     .vertically-aligned-preview-div {
         min-height: 220px;
+        max-height: 300px;
         height: auto;
-        max-height: 500px;
         padding: 0 !important;
         margin-top: 8%;
         margin-bottom: 8%;
+    }
+
+    .vertically-aligned-preview-div > a {
+        width: 100%
+    }
+
+    .double-line-car-model-name {
+        bottom: -81% !important;
+        margin-top: initial !important;
+    }
+
+    @media (orientation: landscape) {
+        .double-line-car-model-name {
+            bottom: -86% !important;
+        }
     }
 
     .no-touch .preview figure:hover figcaption,
@@ -960,5 +1011,29 @@ a:hover{
     .preview-outer {
         padding-right: 2% !important;
         padding-left: 2% !important;
+        max-width: 480px;
+    }
+
+    .preview-img {
+        max-width: 99% !important;
+        max-height: 300px;
+        margin-left: 1% !important;
+        margin-right: 1% !important;
+    }
+
+    .preview figcaption {
+        opacity: initial;
+        min-height: 330px;
+        height: 120%;
+    }
+
+    .preview figcaption h3,
+    .preview figcaption span,
+    .preview figcaption a {
+        opacity: initial;
+    }
+
+    .grid figure {
+        position: static;
     }
 }

@@ -26,27 +26,23 @@
 			<#if (carsPerPageData >= 1)>
 				<div id="car-list-div" class="col-lg-12">
 					<ul class="grid preview">
-						<#list cars?chunk(2) as row>
-							<div id="car-list-row" class="row">
+                        <#list cars?chunk(2) as row>
+							<div id="car-list-row${row_index}" class="row">
 								<#list row as car>
-									<#if requestIsDesktop>
-                                        <@printDesktopCarPreview car car_index row_index/>
-                                    <#else>
-                                        <@printMobileCarPreview car/>
-                                    </#if>
+                                    <@printCarPreview car car_index row_index/>
 								</#list>
 							</div>
 						</#list>
 					</ul>
 				</div>
                 <div id="car-pagination-main-div" class="col-lg-12">
-                    <div class="col-lg-7 col-md-7 col-sm-10 <#if requestIsDesktop>col-xs-10<#else>col-xs-12</#if> center-block well well-sm">
+                    <div class="col-lg-7 col-md-8 col-sm-10 <#if requestIsDesktop>col-xs-11<#else>col-xs-12</#if> center-block well well-sm">
                         <div id="pagination-row-div" class="row">
-                            <div class="text-left col-lg-8 col-md-7 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
+                            <div class="text-left col-lg-8 col-md-8 <#if requestIsDesktop>col-sm-8 col-xs-12<#else>col-sm-12 col-xs-12</#if>">
                                 <ul id="pagination-ul"></ul>
                             </div>
-                            <div class="text-right col-lg-4 col-md-5 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
-                                <button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle <#if !requestIsDesktop>pull-left</#if>" style="padding: 10px; margin-top: 15px" data-toggle="dropdown">
+                            <div class="text-right col-lg-4 col-md-4 <#if requestIsDesktop>col-sm-4 col-xs-12<#else>col-sm-12 col-xs-12</#if>">
+                                <button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle pull-left" style="padding: 10px; margin-top: 15px" data-toggle="dropdown">
                                     ${language.getTextSource('pagination.carsPerPage')}
                                     <span class="caret"></span>
                                 </button>
@@ -80,94 +76,57 @@
 
 	function writeCarListRow(cars, zIndex)
     {
-    	<#if requestIsDesktop>
-            return writeDesktopCarListRow(cars, zIndex);
-        <#else>
-            return writeMobileCarListRow(cars);
-    	</#if>
-    }
+        var carRowString = "<div id='car-list-row' class='row'>";
+        carRowString = carRowString.concat("<ul class='grid preview'>");
 
-	function writeDesktopCarListRow(cars, zIndex)
-    {
-    	var carRowString = "<div id='car-list-row' class='row'>";
-    	carRowString = carRowString.concat("<ul class='grid preview'>");
-
-    	for (var i=0 ; i< cars.length; i++)
-    	{
+        for (var i=0 ; i< cars.length; i++)
+        {
             var carModel = cars[i].model;
-    		carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
-    		carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
-    		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
-    		carRowString = carRowString.concat(	  	 	"<figure>");
-		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-		   	carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
+            carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
+            carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
+            carRowString = carRowString.concat(	  	 	"<figure>");
+            carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
+            carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].id + "'>");
             carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				    "</a>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "'>");
 
-			if (carModel.length < 33)
-			{
-				carRowString = carRowString.concat(						"<h3 class='text-center'>" + carModel + "</h3>");
-			}
-			else
-			{
-				carRowString = carRowString.concat(						"<h3 class='text-center double-line-car-model-name'>" + carModel + "</h3>");
-			}
+            if (carModel.length < 33)
+            {
+                carRowString = carRowString.concat(						"<h3 class='text-center'>" + carModel + "</h3>");
+            }
+            else
+            {
+                carRowString = carRowString.concat(						"<h3 class='text-center double-line-car-model-name'>" + carModel + "</h3>");
+            }
 
-			carRowString = carRowString.concat(					"</a>");
+            carRowString = carRowString.concat(					"</a>");
             carRowString = carRowString.concat(				"</figcaption>");
-			carRowString = carRowString.concat(	  		"</figure>");
-			carRowString = carRowString.concat(	  	 "</li>");
-			carRowString = carRowString.concat(	  "</div>");
-			carRowString = carRowString.concat("</div>");
-    	}
+            carRowString = carRowString.concat(	  		"</figure>");
+            carRowString = carRowString.concat(	  	 "</li>");
+            carRowString = carRowString.concat(	  "</div>");
+            carRowString = carRowString.concat("</div>");
+        }
 
-		carRowString = carRowString.concat("</ul>");
-    	carRowString = carRowString.concat("</div>");
+        carRowString = carRowString.concat("</ul>");
+        carRowString = carRowString.concat("</div>");
 
-    	return carRowString;
+        return carRowString;
     }
-
-	function writeMobileCarListRow(cars)
-    {
-    	var carRowString = "<div id='car-list-row' class='row'>";
-    	carRowString = carRowString.concat("<ul class='grid preview'>");
-
-    	for (var i=0 ; i< cars.length; i++)
-    	{
-            var carModel = cars[i].model;
-            carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
-    		carRowString = carRowString.concat(     "<div class='thumbnail preview-div mobile-preview-div'>");
-		   	carRowString = carRowString.concat(		    "<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(		        "<a href='/${carsURL}/" + cars[i].id + "'>");
-            carRowString = carRowString.concat(			        "<img class='center-block img-thumbnail preview-img mobile-preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
-            carRowString = carRowString.concat(				"</a>");
-            carRowString = carRowString.concat(		    "</div>");
-			carRowString = carRowString.concat(		    "<a href='/${carsURL}/" + cars[i].id + "'>");
-            carRowString = carRowString.concat(			    "<h3 class='text-center'>" + carModel + "</h3>");
-			carRowString = carRowString.concat(		    "</a>");
-			carRowString = carRowString.concat(	    "</div>");
-			carRowString = carRowString.concat("</div>");
-    	}
-
-		carRowString = carRowString.concat("</ul>");
-    	carRowString = carRowString.concat("</div>");
-
-    	return carRowString;
-    }
-
 </script>
 
-<#macro printDesktopCarPreview car car_index row_index>
+<#macro printCarPreview car car_index row_index>
     <#assign modelName>${car.model}</#assign>
     <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
         <#assign zIndex = (car_index + 1) * (row_index + 1)>
         <#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->
         <#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>
-        <#if car_index == 0>
+        <#if requestIsDesktop && car_index == 0>
             <#assign zIndex = (zIndex) - (1 * row_index)>
+        <#else>
         </#if>
         <div class="thumbnail preview-div">
             <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
@@ -179,27 +138,12 @@
 					</div>
                     <figcaption>
                         <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
-                            <h3 class="text-center<#if (modelName?length > 33)> double-line-car-model-name</#if>">${modelName}</h3>
+                            <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
+                                            <#if (requestIsDesktop && modelName?length > 33) || (modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>
                     </figcaption>
                 </figure>
             </li>
-        </div>
-    </div>
-</#macro>
-
-<#macro printMobileCarPreview car>
-    <#assign modelName>${car.model}</#assign>
-    <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
-        <div class="thumbnail preview-div mobile-preview-div">
-            <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
-                    <img class="center-block img-thumbnail preview-img mobile-preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
-                </a>
-            </div>
-            <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
-                <h3 class="text-center model-name">${modelName}</h3>
-            </a>
         </div>
     </div>
 </#macro>
