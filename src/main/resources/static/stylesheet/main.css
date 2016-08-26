@@ -847,6 +847,7 @@ a:hover{
 
     .main-car-list-container {
         padding-right: initial;
+        padding-left: initial;
     }
 
     #main-car-list-div {
@@ -906,10 +907,15 @@ a:hover{
         border-radius: 4px;
     }
 
+    .main-panel > .car-pictures-carousel-div {
+        border-radius: initial !important;
+    }
+
     .car-pictures-carousel-div {
         max-height: 22em;
         height: 22em;
         margin-top: 20px;
+        border-radius: 4px;
     }
 
     @media (orientation: landscape) {
@@ -976,7 +982,7 @@ a:hover{
     }
 
     .preview-div {
-        margin-bottom: 100px;
+        margin-bottom: 30%;
     }
 
     .vertically-aligned-preview-div {

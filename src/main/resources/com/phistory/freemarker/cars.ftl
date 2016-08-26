@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		
-		<div id="main-car-list-div" class="col-lg-10 thumbnail">
+		<#if requestIsDesktop><div id="main-car-list-div" class="col-lg-10 thumbnail"></#if>
 			<#if (carsPerPageData >= 1)>
 				<div id="car-list-div" class="col-lg-12">
 					<ul class="grid preview">
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 			</#if>
-		</div>		
+        <#if requestIsDesktop></div></#if>
 	</div>
 </div>
 <#assign chunkedModelsList = models?chunk(carsPerPageData)>

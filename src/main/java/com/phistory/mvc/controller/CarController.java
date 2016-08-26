@@ -111,7 +111,7 @@ public class CarController extends BaseController
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{		
-		Map<String, Object> data = new HashMap<String, Object>();
+		Map<String, Object> data = new HashMap<>();
     	data.put(CARS, super.getCarDao().getByCriteria(this.carControllerUtil.createSearchCommand(carsPaginationDto)));
     	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
     	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		

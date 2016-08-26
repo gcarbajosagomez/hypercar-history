@@ -37,18 +37,26 @@
 	       							  	 };
 		   	    	$.ajax({
 	    	       			type: 'GET',
-	            			url: "${carsURL}/${paginationURL}",
+	            			url: "/${carsURL}/${paginationURL}",
 	           				data: paginationData, 
 	           				beforeSend: function(xhr)
 	           				{
-                                <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+                                <#if requestIsDesktop>
+                                    <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+                                <#else>
+                                    <@generic.addLoadingSpinnerToComponentScript "car-list-div"/>
+                                </#if>
 								addCRSFTokenToAjaxRequest(xhr);
                             }
 	                	  })	                	 
 	                	  .done(function (data)
 						  {    	            	 
 	    	        	    	writeCarPreviews(data.cars);
-	    	        	     	$('#main-car-list-div').unblock(); 
+                                <#if requestIsDesktop>
+	    	        	     	    $('#main-car-list-div').unblock();
+                                <#else>
+                                    $('#car-list-div').unblock();
+                                </#if>
 	    	        	     	ajaxCallBeingProcessed = false;
 	    	        	 	    	
 	    	        	     	if (data != null)
@@ -104,7 +112,11 @@
         						data: contentSearchDto,
                 				beforeSend: function(xhr)
                 				{
-                                    <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+                                    <#if requestIsDesktop>
+                                        <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
+                                    <#else>
+                                        <@generic.addLoadingSpinnerToComponentScript "car-list-div"/>
+                                    </#if>
 									addCRSFTokenToAjaxRequest(xhr);
   								}
 	                	  	  })	                	 
@@ -112,8 +124,12 @@
 						  	  {    	            	 
         	        	 	    	if (data != null)
       								{
-      									document.children[0].innerHTML = data;      									
-        	        	 	    		$('#main-car-list-div').unblock();       	        	 	    		
+      									document.children[0].innerHTML = data;
+                                        <#if requestIsDesktop>
+                                            $('#main-car-list-div').unblock();
+                                        <#else>
+                                            $('#car-list-div').unblock();
+                                        </#if>
         	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch});
     									options.currentPage = contentSearchDto.${pagNum};
         	        	 	    		$('#pagination-ul').bootstrapPaginator(options);

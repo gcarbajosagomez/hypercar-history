@@ -295,11 +295,15 @@
 <#macro addLoadingSpinnerToComponentScript componentId>
     $('#${componentId}').block({
         css: {
+			<#if requestIsDesktop>
+			    width: 100%,
+			</#if>
             border: '0px solid',
             backgroundColor: 'rgba(94, 92, 92, 0)'
         },
-        message: '<div class="row"><h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-12" style="color: #fff">${language.getTextSource('loading')}</h1>' +
-                     '<i id="loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-12 fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
+        message: '<div class="row" style="width: 320px; margin-left: -50px !important;">' +
+                     '<h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-<#if requestIsDesktop>12<#else>6</#if>" style="color: #fff">${language.getTextSource('loading')}</h1>' +
+                     '<i id="loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-<#if requestIsDesktop>12<#else>4</#if> fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
                  '</div>'
     });
 </#macro>
