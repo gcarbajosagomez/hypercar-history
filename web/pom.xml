@@ -84,6 +84,7 @@
                     </execution>
                 </executions>
                 <configuration>
+                    <mainClass>com.phistory.Main</mainClass>
                     <finalName>Pagani-History</finalName>
                     <outputDirectory>../deployments</outputDirectory>
                     <excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
@@ -157,7 +158,7 @@
 		<dependency>
 			<groupId>com.pagani-history</groupId>
 			<artifactId>pagani-history-data</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 			<exclusions>
         		<exclusion>
             		<groupId>org.springframework</groupId>
