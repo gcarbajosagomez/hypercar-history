@@ -97,7 +97,7 @@ a:hover{
     min-width: 12em;
     width: auto;
     padding-left: 15px;
-    margin-top: 1.5em;
+    margin-top: 1.65em;
 }
 
 @media (max-width: 768px) {
@@ -777,7 +777,7 @@ a:hover{
 
     #search-container {
         min-width: initial;
-        margin-top: 1.2em;
+        margin-top: 1.45em;
     }
 
     .content-search-input {

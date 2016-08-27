@@ -296,7 +296,7 @@
     $('#${componentId}').block({
         css: {
 			<#if requestIsDesktop>
-			    width: 100%,
+			    width: '100%',
 			</#if>
             border: '0px solid',
             backgroundColor: 'rgba(94, 92, 92, 0)'
