@@ -5,10 +5,10 @@
 
 	<modelVersion>4.0.0</modelVersion> 
 	<groupId>com.pagani-history</groupId>
-	<artifactId>pagani-history-web</artifactId>
+	<artifactId>pagani-history</artifactId>
 	<version>1.2.2</version>
-	<packaging>jar</packaging>
-	<name>Pagani History Web</name>
+	<packaging>pom</packaging>
+	<name>Pagani History</name>
 	<developers>
 		<developer>
 			<name>Gonzalo Carbajosa Gómez</name>
@@ -18,446 +18,83 @@
 	<inceptionYear>2014</inceptionYear>	
 	<url>www.paganihistory.com</url>
 
-	<properties> 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<project.resources.path>src/main/resources</project.resources.path>
-		
-		<java.version>1.8</java.version>
-		<maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
-		<maven.jar.plugin.version>2.6</maven.jar.plugin.version>
-		<maven.clean.plugin.version>2.5</maven.clean.plugin.version>
-		<maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
-		
-		<javax.ee.version>7.0</javax.ee.version>
-		<javax.mail.version>1.4.7</javax.mail.version>
-		<com.the-carpedia-data.version>1.2.4</com.the-carpedia-data.version>
-		<com.google.guava.version>19.0</com.google.guava.version>
-		<org.springframework.version>4.2.3.RELEASE</org.springframework.version>
-		<org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
-		<org.spring-boot.version>1.3.5.RELEASE</org.spring-boot.version>
-		<org.spring-mobile-device.version>1.1.5.RELEASE</org.spring-mobile-device.version>
-		<org.freemarker.version>2.3.23</org.freemarker.version>
-		<org.projectlombok.version>1.16.6</org.projectlombok.version>
-		<commons.collection.version>3.2.1</commons.collection.version>
-		<mysql.connector.version>5.1.36</mysql.connector.version>
-		<org.selenium.version>2.53.0</org.selenium.version>
-		<org.mockito-all.version>1.10.19</org.mockito-all.version>
-		<org.testng-all.version>6.9.10</org.testng-all.version>
-		<xml-apis.version>1.4.01</xml-apis.version>
+    <modules>
+        <module>web</module>
+        <module>data</module>
+    </modules>
+
+	<properties>
+        <java.version>1.8</java.version>
+
+        <maven.compiler.plugin.version>3.1</maven.compiler.plugin.version>
+        <maven.jar.plugin.version>2.6</maven.jar.plugin.version>
+        <maven.clean.plugin.version>2.5</maven.clean.plugin.version>
+
+        <org.projectlombok.version>1.16.6</org.projectlombok.version>
 	</properties>
 
-	<build>
-		<finalName>${project.name}-${project.version}</finalName>		
-		<resources>
-   		 	<resource>        		
-        		<directory>${project.resources.path}</directory>
-    		</resource>
-		</resources>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${maven.compiler.plugin.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-		    	<groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-jar-plugin</artifactId>
-		        <version>${maven.jar.plugin.version}</version>
-		        <configuration>
-		          	<archive>
-		            	<index>true</index>
-		            	<manifest>
-		              		<addClasspath>true</addClasspath>
-		              		<addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-		            	</manifest>
-		            	<manifestEntries>
-		              		<url>${project.url}</url>		              		
-		            	</manifestEntries>
-		        	</archive>
-		        </configuration>
-		    </plugin>
-			<plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${maven.spring-boot-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                	<finalName>ROOT</finalName>
-                	<outputDirectory>deployments</outputDirectory>
-                	<excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
-              		<excludeArtifactIds>lombok</excludeArtifactIds>
-              		<excludes>
-              			<dependency>
-							<groupId>javax</groupId>
-							<artifactId>javaee-web-api</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.apache.lucene</groupId>
-							<artifactId>lucene-core</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-webmvc</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-web</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-context</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-test</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-						<dependency>
-							<groupId>org.springframework.boot</groupId>
-							<artifactId>spring-boot</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-                        <dependency>
-                            <groupId>org.springframework.mobile</groupId>
-                            <artifactId>spring-mobile-device</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-						<dependency>
-							<groupId>org.freemarker</groupId>
-							<artifactId>freemarker</artifactId>
-							<classifier>javadoc</classifier>
-						</dependency>
-              		</excludes>
-                </configuration>
-            </plugin>
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>${maven.clean.plugin.version}</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>deployments</directory>
-							<includes>
-								<include>*.jar</include>
-								<followSymlinks>false</followSymlinks>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-	
-	<profiles>
-  		<profile>
-    		<id>dev</id>
-    		<activation>
-      			<activeByDefault>true</activeByDefault>
-    		</activation>
-    		<build>
-            	<resources>
-                	<resource>
-                    	<directory>${project.resources.path}/com/phistory/systemproperty/dev</directory>
-                    	<targetPath>com/phistory/systemproperty</targetPath>
-                	</resource>
-            	</resources>
-        	</build>
- 		</profile>
- 		<profile>
-    		<id>prod</id>
-    		<build>
-            	<resources>
-                	<resource>
-                    	<directory>${project.resources.path}/com/phistory/systemproperty/prod</directory>
-                    	<targetPath>com/phistory/systemproperty</targetPath>
-                	</resource>
-            	</resources>
-        	</build>
-  		</profile>
-	</profiles>
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven.compiler.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-jar-plugin</artifactId>
+                    <version>${maven.jar.plugin.version}</version>
+                    <configuration>
+                        <archive>
+                            <index>true</index>
+                            <manifest>
+                                <addClasspath>true</addClasspath>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            </manifest>
+                            <manifestEntries>
+                                <url>${project.url}</url>
+                            </manifestEntries>
+                        </archive>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>${maven.clean.plugin.version}</version>
+                    <configuration>
+                        <filesets>
+                            <fileset>
+                                <directory>deployments</directory>
+                                <includes>
+                                    <include>*.jar</include>
+                                    <followSymlinks>false</followSymlinks>
+                                </includes>
+                            </fileset>
+                        </filesets>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>${javax.ee.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>${javax.ee.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>${javax.mail.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>${javax.mail.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.the-carpedia</groupId>
-			<artifactId>the-carpedia-data</artifactId>
-			<version>${com.the-carpedia-data.version}</version>	
-			<exclusions>
-        		<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-web</artifactId>
-        		</exclusion>
-    		</exclusions>
-		</dependency>	
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${org.spring-boot.version}</version>
-			<exclusions>
-        		<exclusion>
-            		<groupId>org.springframework.boot</groupId>
-            		<artifactId>spring-boot-starter-logging</artifactId>
-        		</exclusion>
-    		</exclusions>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.mobile</groupId>
-			<artifactId>spring-mobile-device</artifactId>
-            <version>${org.spring-mobile-device.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.mobile</groupId>
-			<artifactId>spring-mobile-device</artifactId>
-            <version>${org.spring-mobile-device.version}</version>
-            <classifier>javadoc</classifier>
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${org.projectlombok.version}</version>
+            <scope>compile</scope>
         </dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>			
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>			
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-context-support</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-log4j</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-test</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-			
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>${org.springframework.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-				
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot</artifactId>
-			<version>${org.spring-boot.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-freemarker</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-security</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency> 
-    		<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-core</artifactId>
-    		<version>${org.springsecurity.version}</version>
-    		<classifier>javadoc</classifier>
-  		</dependency>
-  		
-  		<dependency> 
-    		<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-crypto</artifactId>
-    		<version>${org.springsecurity.version}</version>
-    		<classifier>javadoc</classifier>
-  		</dependency>
-  		
-  		<dependency>
-   			<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-config</artifactId>
-    		<version>${org.springsecurity.version}</version>
-    		<classifier>javadoc</classifier>		
-  		</dependency>
-  		
-  		<dependency>
-  			<groupId>org.springframework.security</groupId>
-    		<artifactId>spring-security-web</artifactId>
-    		<version>${org.springsecurity.version}</version>
-    		<classifier>javadoc</classifier>
-  		</dependency> 
-  		
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${org.freemarker.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${org.freemarker.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>${commons.collection.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<version>${org.projectlombok.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
+    </dependencies>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${com.google.guava.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${com.google.guava.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>
-
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${org.selenium.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-support</artifactId>
-			<version>${org.selenium.version}</version>
-			<classifier>sources</classifier>
-		</dependency>
-		
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>${xml-apis.version}</version>
-			<scope>test</scope>
-		</dependency>
-			
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${org.mockito-all.version}</version>
-			<scope>test</scope>
-		</dependency>	
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${org.mockito-all.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>	
-		
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${org.testng-all.version}</version>
-			<scope>test</scope>
-		</dependency>	
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${org.testng-all.version}</version>
-			<classifier>javadoc</classifier>
-		</dependency>	
-	</dependencies>
 </project>

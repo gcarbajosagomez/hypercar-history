@@ -5,5 +5,14 @@
 /logs
 /.idea/
 .idea/
-/*.iml
+web/*.iml
+data/*.iml
 *.sql
+data/src/test/
+data/target/
+web/com.tcp.data.model.car.Car/
+web/deployments/
+web/logs/
+web/src/main/java/
+web/src/test/java/
+web/target/
