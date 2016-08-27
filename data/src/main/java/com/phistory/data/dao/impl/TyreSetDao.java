@@ -1,13 +1,13 @@
-package com.tcp.data.dao.impl;
+package com.phistory.data.dao.impl;
 
 import java.util.List;
 
+import com.phistory.data.model.tyre.TyreSet;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tcp.data.dao.generic.Dao;
-import com.tcp.data.model.tyre.TyreSet;
+import com.phistory.data.dao.generic.Dao;
 
 /**
  *

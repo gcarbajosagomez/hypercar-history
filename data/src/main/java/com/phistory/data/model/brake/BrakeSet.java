@@ -1,4 +1,4 @@
-package com.tcp.data.model.brake;
+package com.phistory.data.model.brake;
 
 import java.io.Serializable;
 
@@ -22,8 +22,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.car.Car;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.car.Car;
 
 /**
  *

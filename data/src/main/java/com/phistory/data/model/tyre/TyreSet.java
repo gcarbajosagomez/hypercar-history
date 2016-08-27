@@ -1,4 +1,4 @@
-package com.tcp.data.model.tyre;
+package com.phistory.data.model.tyre;
 
 import java.io.Serializable;
 
@@ -15,14 +15,15 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.car.Car;
+import com.phistory.data.model.GenericObject;
+
 /**
  *main.java.
  * @author Gonzalo

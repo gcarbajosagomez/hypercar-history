@@ -1,4 +1,4 @@
-package com.tcp.data.dto;
+package com.phistory.data.dto;
 
 import java.util.List;
 

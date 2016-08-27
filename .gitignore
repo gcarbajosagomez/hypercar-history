@@ -1,6 +1,6 @@
 /target
 /deployments
-/com.tcp.data.model.*
+/com.phistory.data.model.*
 *.log
 /logs
 /.idea/
@@ -10,9 +10,10 @@ data/*.iml
 *.sql
 data/src/test/
 data/target/
-web/com.tcp.data.model.car.Car/
+web/Car/
 web/deployments/
 web/logs/
 web/src/main/java/
 web/src/test/java/
 web/target/
+data/src/main/java/com/tcp/

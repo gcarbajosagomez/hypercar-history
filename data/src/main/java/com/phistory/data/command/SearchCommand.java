@@ -1,6 +1,6 @@
-package com.tcp.data.command;
+package com.phistory.data.command;
 
-import com.tcp.data.query.command.SimpleDataConditionCommand;
+import com.phistory.data.query.command.SimpleDataConditionCommand;
 
 import java.util.List;
 import java.util.Map;

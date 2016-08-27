@@ -1,4 +1,4 @@
-package com.tcp.data.model;
+package com.phistory.data.model;
 
 /**
  * Enumeration of languages

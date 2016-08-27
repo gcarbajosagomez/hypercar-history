@@ -1,4 +1,4 @@
-package com.tcp.data.model.engine;
+package com.phistory.data.model.engine;
 
 import java.io.Serializable;
 
@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.tcp.data.model.GenericObject;
+import com.phistory.data.model.GenericObject;
 
 /**
  *

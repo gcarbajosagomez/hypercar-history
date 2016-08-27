@@ -1,12 +1,11 @@
-package com.tcp.data.command;
+package com.phistory.data.command;
 
+import com.phistory.data.model.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.springframework.web.multipart.MultipartFile;
-
-import com.tcp.data.model.Picture;
 
 @Data
 @AllArgsConstructor
@@ -14,5 +13,5 @@ import com.tcp.data.model.Picture;
 public class PictureDataCommand
 {
 	MultipartFile multipartFile;
-	Picture picture;	
+	Picture picture;
 }

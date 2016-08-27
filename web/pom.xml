@@ -18,8 +18,6 @@
 	<properties>
 		<project.resources.path>src/main/resources</project.resources.path>
 
-        <maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
-
 		<javax.ee.version>7.0</javax.ee.version>
 		<javax.mail.version>1.4.7</javax.mail.version>
 		<com.google.guava.version>19.0</com.google.guava.version>
@@ -72,72 +70,71 @@
             </resource>
         </resources>
         <plugins>
-            <plugin>
+			<plugin>
                 <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${maven.spring-boot-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <mainClass>com.phistory.Main</mainClass>
-                    <finalName>Pagani-History</finalName>
-                    <outputDirectory>../deployments</outputDirectory>
-                    <excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
-                    <excludeArtifactIds>lombok</excludeArtifactIds>
-                    <excludes>
-                        <dependency>
-                            <groupId>javax</groupId>
-                            <artifactId>javaee-web-api</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.apache.lucene</groupId>
-                            <artifactId>lucene-core</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-webmvc</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-web</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-context</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework</groupId>
-                            <artifactId>spring-test</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework.boot</groupId>
-                            <artifactId>spring-boot</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.springframework.mobile</groupId>
-                            <artifactId>spring-mobile-device</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                        <dependency>
-                            <groupId>org.freemarker</groupId>
-                            <artifactId>freemarker</artifactId>
-                            <classifier>javadoc</classifier>
-                        </dependency>
-                    </excludes>
-                </configuration>
-            </plugin>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>com.phistory.Main</mainClass>
+					<finalName>Pagani-History</finalName>
+					<outputDirectory>../deployments</outputDirectory>
+					<excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
+					<excludeArtifactIds>lombok</excludeArtifactIds>
+					<excludes>
+						<dependency>
+							<groupId>javax</groupId>
+							<artifactId>javaee-web-api</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.apache.lucene</groupId>
+							<artifactId>lucene-core</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-webmvc</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-web</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-context</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework</groupId>
+							<artifactId>spring-test</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework.boot</groupId>
+							<artifactId>spring-boot</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.springframework.mobile</groupId>
+							<artifactId>spring-mobile-device</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+						<dependency>
+							<groupId>org.freemarker</groupId>
+							<artifactId>freemarker</artifactId>
+							<classifier>javadoc</classifier>
+						</dependency>
+					</excludes>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
 

@@ -1,4 +1,4 @@
-package com.tcp.data.model.car;
+package com.phistory.data.model.car;
 
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
@@ -21,6 +21,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 
+import com.phistory.data.model.DriveWheelType;
+import com.phistory.data.model.Manufacturer;
+import com.phistory.data.model.brake.BrakeSet;
+import com.phistory.data.model.engine.Engine;
+import com.phistory.data.model.transmission.Transmission;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,13 +39,8 @@ import org.hibernate.search.annotations.Indexed;
 import org.hibernate.search.annotations.Store;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tcp.data.model.DriveWheelType;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.Manufacturer;
-import com.tcp.data.model.brake.BrakeSet;
-import com.tcp.data.model.engine.Engine;
-import com.tcp.data.model.transmission.Transmission;
-import com.tcp.data.model.tyre.TyreSet;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.tyre.TyreSet;
 
 /**
  *
@@ -129,7 +129,7 @@ public class Car implements Serializable, GenericObject
     @OneToOne(orphanRemoval = true)
     @Cascade(value = ALL)
     @JoinColumn(name = "car_brake_set_id", nullable = true, unique = true)
-    private BrakeSet brakeSet; 
+    private BrakeSet brakeSet;
     
     @OneToOne()
     @Cascade(value = ALL)

@@ -1,4 +1,4 @@
-package com.tcp.data.model.brake;
+package com.phistory.data.model.brake;
 
 import java.io.Serializable;
 
@@ -11,12 +11,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.phistory.data.model.GenericObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.tcp.data.model.GenericObject;
 
 /**
  *

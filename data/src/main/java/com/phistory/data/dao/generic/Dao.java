@@ -1,4 +1,4 @@
-package com.tcp.data.dao.generic;
+package com.phistory.data.dao.generic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,9 @@ import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import com.phistory.data.command.SearchCommand;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
 
 import org.hibernate.FlushMode;
@@ -24,11 +27,6 @@ import org.hibernate.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tcp.data.command.SearchCommand;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.query.command.SimpleDataConditionCommand;
-import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType;
 
 /**
  *
@@ -184,7 +182,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
     }
     
     private List<Predicate> processConditionMap(Map<String,
-    											SimpleDataConditionCommand> conditionMap,
+            SimpleDataConditionCommand> conditionMap,
     											Root<TYPE> entityRoot,
     											CriteriaBuilder criteriaBuilder)
     {
@@ -194,7 +192,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
         {
             SimpleDataConditionCommand conditionCommand = conditionMap.get(entityProperty);
                 
-            EntityConditionType entityConditionType = conditionCommand.getEntityConditionType();
+            SimpleDataConditionCommand.EntityConditionType entityConditionType = conditionCommand.getEntityConditionType();
                 
             Double doubleConditionValue;
             String stringConditionValue = "";

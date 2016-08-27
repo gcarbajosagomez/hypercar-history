@@ -1,6 +1,6 @@
-package com.tcp.data.model;
+package com.phistory.data.model;
 
-import com.tcp.data.model.car.Car;
+import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
 
-import static com.tcp.data.model.Picture.PictureType.PICTURE;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;

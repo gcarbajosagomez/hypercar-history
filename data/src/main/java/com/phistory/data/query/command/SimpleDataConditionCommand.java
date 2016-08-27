@@ -1,4 +1,4 @@
-package com.tcp.data.query.command;
+package com.phistory.data.query.command;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

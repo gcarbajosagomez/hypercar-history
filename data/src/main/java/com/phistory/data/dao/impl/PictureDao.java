@@ -1,4 +1,4 @@
-package com.tcp.data.dao.impl;
+package com.phistory.data.dao.impl;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -10,10 +10,10 @@ import org.hibernate.engine.jdbc.LobCreator;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tcp.data.command.PictureDataCommand;
-import com.tcp.data.dao.generic.Dao;
-import com.tcp.data.model.Picture;
-import com.tcp.data.model.Picture.PictureType;
+import com.phistory.data.command.PictureDataCommand;
+import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.model.Picture;
+import com.phistory.data.model.Picture.PictureType;
 
 /**
  *

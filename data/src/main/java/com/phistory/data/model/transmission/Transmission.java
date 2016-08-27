@@ -1,4 +1,4 @@
-package com.tcp.data.model.transmission;
+package com.phistory.data.model.transmission;
 
 import java.io.Serializable;
 
@@ -20,8 +20,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.car.Car;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.car.Car;
 /**
  *
  * @author Gonzalo

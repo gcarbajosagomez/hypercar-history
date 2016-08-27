@@ -1,4 +1,4 @@
-package com.tcp.data.model.transmission;
+package com.phistory.data.model.transmission;
 
 /**
  *

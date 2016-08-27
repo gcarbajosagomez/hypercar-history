@@ -1,4 +1,4 @@
-package com.tcp.data.mvc.springframework.config;
+package com.phistory.data.mvc.springframework.config;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,7 +42,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  *
  */
 @Configuration()
-@ComponentScan(basePackages = {"com.tcp.data.dao"})
+@ComponentScan(basePackages = {"com.phistory.data.dao"})
 @EnableTransactionManagement()
 @EnableCaching
 @Slf4j
@@ -138,7 +138,7 @@ public class SqlDatabaseConfig
     	
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(driverManagerDataSource());
-        entityManagerFactory.setPackagesToScan("com.tcp.data.model");
+        entityManagerFactory.setPackagesToScan("com.phistory.data.model");
         entityManagerFactory.setJpaProperties(this.createHibernateJpaProperties());
         
         HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
@@ -157,7 +157,7 @@ public class SqlDatabaseConfig
 		{
 			sessionFactoryBean = new LocalSessionFactoryBean();
 			sessionFactoryBean.setDataSource(driverManagerDataSource());
-			sessionFactoryBean.setPackagesToScan("com.tcp.data.model");
+			sessionFactoryBean.setPackagesToScan("com.phistory.data.model");
 			sessionFactoryBean.setHibernateProperties(createHibernateJpaProperties());
 		}        
         

@@ -1,7 +1,8 @@
-package com.tcp.data.dao.impl;
+package com.phistory.data.dao.impl;
 
-import com.tcp.data.dao.generic.Dao;
-import com.tcp.data.model.Visit;
+import com.phistory.data.model.Visit;
+import com.phistory.data.dao.generic.Dao;
+
 import java.util.List;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;

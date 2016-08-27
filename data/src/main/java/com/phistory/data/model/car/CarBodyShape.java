@@ -1,4 +1,4 @@
-package com.tcp.data.model.car;
+package com.phistory.data.model.car;
 
 /**
  * Enumeration of the different body shapes of a {@link Car}

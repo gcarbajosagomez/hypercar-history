@@ -1,4 +1,4 @@
-package com.tcp.data.model.car;
+package com.phistory.data.model.car;
 
 import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.EnumType.ORDINAL;
@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,9 +24,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.Language;
 
 /**
  * Represents a link to an internet content

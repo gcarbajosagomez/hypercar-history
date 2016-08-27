@@ -1,4 +1,4 @@
-package com.tcp.data.dao.impl;
+package com.phistory.data.dao.impl;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -8,6 +8,13 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.Order;
 
+import com.phistory.data.command.SearchCommand;
+import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dto.ContentSearchDto;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.car.Car;
+import com.phistory.data.model.engine.Engine;
+import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.lucene.search.Query;
@@ -20,14 +27,6 @@ import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.tcp.data.command.SearchCommand;
-import com.tcp.data.dao.generic.Dao;
-import com.tcp.data.dto.ContentSearchDto;
-import com.tcp.data.model.GenericObject;
-import com.tcp.data.model.car.Car;
-import com.tcp.data.model.engine.Engine;
-import com.tcp.data.query.command.SimpleDataConditionCommand;
 
 /**
  *

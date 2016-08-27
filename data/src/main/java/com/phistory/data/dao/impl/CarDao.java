@@ -1,19 +1,18 @@
-package com.tcp.data.dao.impl;
+package com.phistory.data.dao.impl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.phistory.data.query.command.SimpleDataConditionCommand;
 import org.hibernate.Query;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.tcp.data.command.SearchCommand;
-import com.tcp.data.dao.generic.Dao;
-import com.tcp.data.model.car.Car;
-import com.tcp.data.query.command.SimpleDataConditionCommand;
-import com.tcp.data.query.command.SimpleDataConditionCommand.EntityConditionType;
+import com.phistory.data.command.SearchCommand;
+import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.model.car.Car;
 
 /**
  *
@@ -55,7 +54,7 @@ public class CarDao extends Dao<Car, Long>
        
         Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<String, SimpleDataConditionCommand>();
         Object[] values = {new Double(carId)};
-        conditionMap.put("id", new SimpleDataConditionCommand((EntityConditionType.EQUAL), values));
+        conditionMap.put("id", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
 
         SearchCommand searchCommand = new SearchCommand(Car.class,
         												null,
@@ -81,7 +80,7 @@ public class CarDao extends Dao<Car, Long>
         
         Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<String, SimpleDataConditionCommand>();
         Object[] values = {new Double(manufacturerId)};
-        conditionMap.put("manufacturer", new SimpleDataConditionCommand((EntityConditionType.EQUAL), values));
+        conditionMap.put("manufacturer", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
 
         Map<String, Boolean> orderByMap = new LinkedHashMap<String, Boolean>();
         orderByMap.put("productionStartDate", Boolean.TRUE);

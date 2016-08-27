@@ -1,4 +1,4 @@
-package com.tcp.data.model.tyre;
+package com.phistory.data.model.tyre;
 
 /**
  *

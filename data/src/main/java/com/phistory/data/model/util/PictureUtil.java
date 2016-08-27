@@ -1,14 +1,13 @@
-package com.tcp.data.model.util;
+package com.phistory.data.model.util;
 
 import java.sql.Blob;
 
+import com.phistory.data.dao.generic.Dao;
 import lombok.extern.slf4j.Slf4j;
 
 import org.hibernate.Hibernate;
 import org.hibernate.engine.jdbc.LobCreator;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.tcp.data.dao.generic.Dao;
 
 /**
  *
