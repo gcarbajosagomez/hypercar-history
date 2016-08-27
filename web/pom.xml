@@ -15,9 +15,7 @@
 	<packaging>jar</packaging>
 	<name>Pagani History Web</name>
 
-	<properties> 
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+	<properties>
 		<project.resources.path>src/main/resources</project.resources.path>
 
         <maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
