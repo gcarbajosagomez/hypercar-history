@@ -86,8 +86,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <finalName>ROOT</finalName>
-                    <outputDirectory>deployments</outputDirectory>
+                    <finalName>Pagani-History</finalName>
+                    <outputDirectory>../deployments</outputDirectory>
                     <excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
                     <excludeArtifactIds>lombok</excludeArtifactIds>
                     <excludes>
