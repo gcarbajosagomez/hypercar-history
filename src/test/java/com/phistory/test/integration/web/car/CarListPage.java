@@ -19,7 +19,7 @@ public class CarListPage extends BasePage
 
     @FindBy(id = "main-car-list-div")
 	private WebElement carListLocator;
-	@FindBy(id = "car-list-row")
+	@FindBy(className = "car-list-row")
 	private WebElement carListRowLocator;
 	@FindBy(id = "pagination-row-div")
 	private WebElement paginationDivLocator;

@@ -27,7 +27,7 @@
 				<div id="car-list-div" class="col-lg-12">
 					<ul class="grid preview">
                         <#list cars?chunk(2) as row>
-							<div id="car-list-row${row_index}" class="row">
+							<div class="row car-list-row">
 								<#list row as car>
                                     <@printCarPreview car car_index row_index/>
 								</#list>
@@ -76,7 +76,7 @@
 
 	function writeCarListRow(cars, zIndex)
     {
-        var carRowString = "<div id='car-list-row' class='row'>";
+        var carRowString = "<div class='row car-list-row'>";
         carRowString = carRowString.concat("<ul class='grid preview'>");
 
         for (var i=0 ; i< cars.length; i++)
