@@ -81,7 +81,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>com.phistory.Main</mainClass>
+					<mainClass>${start-class}</mainClass>
 					<finalName>Pagani-History</finalName>
 					<outputDirectory>../deployments</outputDirectory>
 					<excludeGroupIds>org.seleniumhq.selenium</excludeGroupIds>
