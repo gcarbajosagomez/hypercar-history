@@ -17,7 +17,7 @@ then
 fi
 
 # export environment variables
-export JAVA_HOME=/etc/alternatives/java_sdk_1.8.0
+export JAVA_HOME=$OPENSHIFT_DATA_DIR$JDK_LINK
 echo "JAVA_HOME" exported to ${JAVA_HOME}
 export PATH=$JAVA_HOME/bin:$PATH
 echo "PATH" exported to ${PATH}
