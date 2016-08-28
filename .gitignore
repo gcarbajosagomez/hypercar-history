@@ -6,6 +6,7 @@
 .idea/
 web/*.iml
 data/*.iml
+pagani-history.iml
 *.sql
 data/src/test/
 data/target/
