@@ -1,11 +1,11 @@
 #!/bin/bash
-echo "build" action hook initializing!!
+echo "build" action hook initializing!! 
 
 # define some variables for JDK 8
 JDK_TGZ=jdk-8u60-linux-i586.tar.gz
 JDK_URL=http://download.oracle.com/otn-pub/java/jdk/8u60-b27/$JDK_TGZ
 JDK_DIR=jdk1.8.0_60
-JDK_LINK=jdk1.8 
+JDK_LINK=jdk1.8
 # download JDK1.8 to the data directory if it does not yet exist, extract it and create a symlink
 cd ${OPENSHIFT_DATA_DIR}
 if [[ ! -d $JDK_DIR ]]
