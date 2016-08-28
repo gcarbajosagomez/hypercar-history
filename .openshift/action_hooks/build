@@ -45,6 +45,8 @@ then
   ln -s $MVN_DIR $MVN_LINK
 fi
 
+${OPENSHIFT_DATA_DIR}${MVN_LINK}/bin/mvn -v
+
 # call our own mvn script with the right settings
 cd $OPENSHIFT_REPO_DIR
 echo about to package pom.xml file
