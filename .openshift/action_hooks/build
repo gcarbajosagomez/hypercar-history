@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "build" action hook initializing!! 
+echo "build" action hook initializing!!
 
 # define some variables for JDK 8
 JDK_TGZ=jdk-8u60-linux-i586.tar.gz
