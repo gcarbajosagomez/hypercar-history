@@ -8,7 +8,7 @@
 	<parent>
 		<groupId>com.pagani-history</groupId>
 		<artifactId>pagani-history</artifactId>
-		<version>1.2.2</version>
+		<version>1.2.3</version>
 	</parent>
 
 	<artifactId>pagani-history-data</artifactId>
