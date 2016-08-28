@@ -6,11 +6,10 @@
 .idea/
 web/*.iml
 data/*.iml
-pagani-history.iml
 *.sql
 data/src/test/
 data/target/
 web/src/main/java/
 web/src/test/java/
 web/target/
-data/src/main/java/com/tcp/
+/pagani-history.iml
