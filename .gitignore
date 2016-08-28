@@ -1,4 +1,3 @@
-/target
 /deployments
 /com.phistory.data.model.*
 *.log
@@ -10,9 +9,6 @@ data/*.iml
 *.sql
 data/src/test/
 data/target/
-web/Car/
-web/deployments/
-web/logs/
 web/src/main/java/
 web/src/test/java/
 web/target/
