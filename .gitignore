@@ -13,3 +13,6 @@ web/src/main/java/
 web/src/test/java/
 web/target/
 /pagani-history.iml
+/web/com.phistory.data.model.car.Car/
+web/com.phistory.data.model.car.Car/
+web/logs/
