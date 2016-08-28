@@ -1,46 +1,25 @@
 package com.phistory.data.model.car;
 
-import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.GenerationType.AUTO;
-import static org.hibernate.annotations.CascadeType.ALL;
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
-
-import java.io.Serializable;
-import java.util.Calendar;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.UniqueConstraint;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phistory.data.model.DriveWheelType;
+import com.phistory.data.model.GenericObject;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.brake.BrakeSet;
 import com.phistory.data.model.engine.Engine;
 import com.phistory.data.model.transmission.Transmission;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.GenericObject;
 import com.phistory.data.model.tyre.TyreSet;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Index;
+
+import javax.persistence.*;
+import java.util.Calendar;
+
+import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.GenerationType.AUTO;
+import static org.hibernate.annotations.CascadeType.ALL;
+import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
  *
@@ -51,15 +30,13 @@ import com.phistory.data.model.tyre.TyreSet;
 @Table(name = Car.CAR_TABLE_NAME,
        uniqueConstraints = @UniqueConstraint(columnNames = {"car_manufacturer_id", "car_model"}))
 @JsonIgnoreProperties(value = {"previewImage"})
-@Getter
-@Setter
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
-public class Car implements Serializable, GenericObject
+@AllArgsConstructor
+public class Car implements GenericObject
 {
     public static final String CAR_TABLE_NAME = "car";
-    private static final long serialVersionUID = 7919352931966461840L;
-    
+
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "car_id")
@@ -159,9 +136,9 @@ public class Car implements Serializable, GenericObject
 	@Override
 	public String getFriendlyName()
 	{
-		if (getManufacturer() != null)
+		if (this.getManufacturer() != null)
 		{
-			return new StringBuilder(getManufacturer().getName() + " " + getModel() + " (id: " + this.id + ")").toString();
+			return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")").toString();
 		}
 		
 		return null;

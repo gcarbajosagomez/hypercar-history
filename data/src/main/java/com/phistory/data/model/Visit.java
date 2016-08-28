@@ -1,19 +1,10 @@
 package com.phistory.data.model;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.persistence.*;
+import java.util.Calendar;
 
 /**
  *
@@ -23,10 +14,8 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "visit")
-public class Visit implements Serializable, GenericObject
+public class Visit implements GenericObject
 {
-    private static final long serialVersionUID = 3717603741285689555L;
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "visit_id")

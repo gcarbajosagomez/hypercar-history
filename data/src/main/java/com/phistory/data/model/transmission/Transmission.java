@@ -1,27 +1,14 @@
 package com.phistory.data.model.transmission;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.GenericObject;
-import com.phistory.data.model.car.Car;
+import javax.persistence.*;
 /**
  *
  * @author Gonzalo
@@ -33,10 +20,8 @@ import com.phistory.data.model.car.Car;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transmission implements Serializable, GenericObject
+public class Transmission implements GenericObject
 {
-    private static final long serialVersionUID = -1092366163400094540L;
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "transmission_id")

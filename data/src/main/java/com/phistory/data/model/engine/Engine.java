@@ -1,22 +1,12 @@
 package com.phistory.data.model.engine;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import com.phistory.data.model.GenericObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.phistory.data.model.GenericObject;
+import javax.persistence.*;
 
 /**
  *
@@ -28,10 +18,8 @@ import com.phistory.data.model.GenericObject;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Engine implements Serializable, GenericObject
+public class Engine implements GenericObject
 {
-    private static final long serialVersionUID = -1463000525545868760L;
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "engine_id")

@@ -19,8 +19,8 @@
 	<url>www.paganihistory.com</url>
 
     <modules>
-        <module>web</module>
         <module>data</module>
+        <module>web</module>
     </modules>
 
 	<properties>
@@ -91,6 +91,16 @@
             </plugin>
         </plugins>
     </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.pagani-history</groupId>
+                <artifactId>pagani-history-data</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>

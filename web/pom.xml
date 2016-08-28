@@ -172,13 +172,6 @@
 		<dependency>
 			<groupId>com.pagani-history</groupId>
 			<artifactId>pagani-history-data</artifactId>
-			<version>${project.version}</version>
-			<exclusions>
-        		<exclusion>
-            		<groupId>org.springframework</groupId>
-            		<artifactId>spring-web</artifactId>
-        		</exclusion>
-    		</exclusions>
 		</dependency>	
 		
 		<dependency>
@@ -222,8 +215,15 @@
     		<artifactId>spring-boot-starter-security</artifactId>
     		<version>${org.spring-boot.version}</version>
 		</dependency>
-  		
-		<dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${org.springframework.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
 			<groupId>org.freemarker</groupId>
 			<artifactId>freemarker</artifactId>
 			<version>${org.freemarker.version}</version>
@@ -254,13 +254,6 @@
 			<artifactId>selenium-java</artifactId>
 			<version>${org.selenium.version}</version>
 			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-support</artifactId>
-			<version>${org.selenium.version}</version>
-			<classifier>sources</classifier>
 		</dependency>
 		
 		<dependency>

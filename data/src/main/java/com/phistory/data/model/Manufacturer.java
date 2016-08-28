@@ -1,22 +1,13 @@
 package com.phistory.data.model;
 
-import java.io.Serializable;
-import java.sql.Blob;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.*;
+import java.sql.Blob;
 
 /**main.java.
  *
@@ -29,10 +20,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manufacturer implements Serializable, GenericObject
+public class Manufacturer implements GenericObject
 {
-    private static final long serialVersionUID = 1004179131340222927L;
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "manufacturer_id")

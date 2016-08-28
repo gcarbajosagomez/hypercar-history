@@ -8,7 +8,6 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.sql.Blob;
 
 import static javax.persistence.EnumType.ORDINAL;
@@ -26,7 +25,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Entity
 @Table(name = "picture",
        uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", "car_id", "picture_type"}))
-public class Picture implements Serializable, GenericObject
+public class Picture implements GenericObject
 {	
 	public enum PictureType
 	{
@@ -34,8 +33,6 @@ public class Picture implements Serializable, GenericObject
 		PICTURE
 	}
 
-    private static final long serialVersionUID = -4504149271758708940L;
-    //
     @Id
     @GeneratedValue(strategy = AUTO)
     @Column(name = "picture_id")

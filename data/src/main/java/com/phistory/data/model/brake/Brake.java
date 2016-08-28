@@ -1,21 +1,12 @@
 package com.phistory.data.model.brake;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
 import com.phistory.data.model.GenericObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 /**
  *
@@ -27,10 +18,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Brake implements Serializable, GenericObject
+public class Brake implements GenericObject
 {	
-    private static final long serialVersionUID = -4451996981295051537L;    
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "brake_id")

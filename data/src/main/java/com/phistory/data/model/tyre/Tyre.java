@@ -1,22 +1,12 @@
 package com.phistory.data.model.tyre;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
+import com.phistory.data.model.GenericObject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import com.phistory.data.model.GenericObject;
+import javax.persistence.*;
 
 /**
  *main.java.
@@ -28,10 +18,8 @@ import com.phistory.data.model.GenericObject;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tyre implements Serializable, GenericObject
+public class Tyre implements GenericObject
 {
-    private static final long serialVersionUID = -7487186443029126193L;
-    //
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tyre_id")

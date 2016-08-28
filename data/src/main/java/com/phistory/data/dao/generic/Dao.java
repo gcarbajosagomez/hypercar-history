@@ -63,8 +63,6 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
         CriteriaBuilder criteriaBuilder;
         CriteriaQuery criteriaQuery;
         
-        List<TYPE> results = null;        
-        
         EntityManager entityManager = createEntityManager();
         criteriaBuilder = entityManager.getCriteriaBuilder();
         criteriaQuery = criteriaBuilder.createQuery(searchCommand.getEntityClass());
@@ -99,10 +97,8 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
         {        	
         	query.setFirstResult(searchCommand.getFirstResult());
         }
-        
-        results = query.getResultList();
-        
-        return results;        
+
+        return query.getResultList();
     }
     
     /**
@@ -153,8 +149,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
      */
     protected EntityManager createEntityManager()
     {
-        EntityManager entityManager = null;  
-        entityManager = entityManagerFactory.createEntityManager(sessionFactory.getAllClassMetadata());         
+        EntityManager entityManager = entityManagerFactory.createEntityManager(sessionFactory.getAllClassMetadata());
        
         return entityManager;        
     }
@@ -280,14 +275,4 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
     		log.error(ie.toString(), ie);
 		}
     }
-    
-    public void setSessionFactory(SessionFactory sessionFactory)
-    {
-        this.sessionFactory = sessionFactory;
-    }
-    
-    public void setEntityManagerFactory(HibernateEntityManagerFactory entityManagerFactory)
-    {
-        this.entityManagerFactory = entityManagerFactory;
-    }    
 }
