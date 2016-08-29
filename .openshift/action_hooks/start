@@ -8,4 +8,4 @@ rm -rf ${OPENSHIFT_REPO_DIR}deployments/logs
 mkdir ${OPENSHIFT_REPO_DIR}deployments/logs
 cd ${OPENSHIFT_REPO_DIR}deployments
 
-nohup ${OPENSHIFT_DATA_DIR}jdk1.8/bin/java -jar Pagani-History.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP} 2>&1 &
+nohup ${OPENSHIFT_DATA_DIR}jdk1.8/bin/java -jar ROOT.jar --server.port=${OPENSHIFT_DIY_PORT} --server.address=${OPENSHIFT_DIY_IP} 2>&1 &

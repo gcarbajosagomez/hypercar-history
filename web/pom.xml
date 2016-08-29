@@ -99,7 +99,7 @@
 				</executions>
 				<configuration>
 					<mainClass>com.phistory.Main</mainClass>
-					<finalName>Pagani-History</finalName>
+					<finalName>ROOT</finalName>
 					<outputDirectory>../deployments</outputDirectory>
 					<excludeGroupIds>org.seleniumhq.selenium,org.projectlombok</excludeGroupIds>
 				</configuration>
