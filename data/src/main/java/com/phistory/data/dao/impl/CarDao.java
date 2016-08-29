@@ -25,25 +25,16 @@ public class CarDao extends Dao<Car, Long>
     @Override
     public List<Car> getAll()
     {
-        List<Car> cars = null;        
-        
         SearchCommand searchCommand = new SearchCommand(Car.class,
         												null,
         												null,
         												null,
         												null,
+                                                        null,
         												0,
         												0);
-        cars = getByCriteria(searchCommand);
+        List<Car> cars = super.getByCriteria(searchCommand);
         
-        return cars;        
-    }    
-   
-    public List<Car> getAllOrdered(SearchCommand searchCommand)
-    {
-        List<Car> cars = null;        
-                  
-        cars = getByCriteria(searchCommand);
         return cars;        
     }
 
@@ -52,7 +43,7 @@ public class CarDao extends Dao<Car, Long>
     {
         Car car = null;
        
-        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<String, SimpleDataConditionCommand>();
+        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<>();
         Object[] values = {new Double(carId)};
         conditionMap.put("id", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
 
@@ -61,6 +52,7 @@ public class CarDao extends Dao<Car, Long>
         												conditionMap,
         												null,
         												null,
+                                                        null,
         												0,
         												0);
         
@@ -74,43 +66,41 @@ public class CarDao extends Dao<Car, Long>
         return car;
     }
 
-    public List<Car> getByManufacturerId(Long manufacturerId)
+    public Car getByModelName(String modelName)
     {
-        List<Car> cars = null;        
-        
-        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<String, SimpleDataConditionCommand>();
-        Object[] values = {new Double(manufacturerId)};
-        conditionMap.put("manufacturer", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
+        Car car = null;
 
-        Map<String, Boolean> orderByMap = new LinkedHashMap<String, Boolean>();
-        orderByMap.put("productionStartDate", Boolean.TRUE);
+        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<>();
+        Object[] values = {modelName};
+        conditionMap.put(Car.MODEL_PROPERTY_NAME, new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
 
         SearchCommand searchCommand = new SearchCommand(Car.class,
         												null,
         												conditionMap,
         												null,
-        												orderByMap,
+        												null,
+                                                        null,
         												0,
         												0);
 
-        cars = getByCriteria(searchCommand);
-        
-        return cars;        
-    }    
-    
-	@SuppressWarnings("unchecked")
+        List<Car> results = getByCriteria(searchCommand);
+
+        if (!results.isEmpty())
+        {
+        	car = results.get(0);
+        }
+
+        return car;
+    }
+
 	public List<Car> getDistinctModelsWithId()
 	{
-    	List<Car> models = null;    	
-    	
     	Query q = getCurrentSession().createQuery("SELECT DISTINCT car.model AS model, car.id AS id"
                     					       + " FROM Car AS car"
                     						   + " ORDER BY car.productionStartDate ASC");
     		
     	q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
-    	models = q.list();
-       
-        return models;        
+    	return q.list();
     }
 	
 	public Car getByPictureId(Long pictureId)

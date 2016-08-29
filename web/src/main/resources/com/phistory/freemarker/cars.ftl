@@ -15,8 +15,8 @@
     				</a>
   				</#list> 
 				<#if models??>
-					<a class="list-group-item" href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">
-    					<h5 class="text-center list-group-element">${models?size} ${language.getTextSource('models')}</h5>
+					<a class="list-group-item" <#if requestIsCars>href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"</#if>>
+    					<h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')}</h5>
     				</a>
     			</#if>
 			</div>

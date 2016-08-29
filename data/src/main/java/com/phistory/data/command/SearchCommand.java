@@ -24,6 +24,7 @@ public class SearchCommand
     private Map<String, SimpleDataConditionCommand> conditionMap;
     private List<Order> orderByList;
     private Map<String, Boolean> orderByMap;
+    private List<String> projectedFields;
     private int firstResult;
     private int maxResults;
 }

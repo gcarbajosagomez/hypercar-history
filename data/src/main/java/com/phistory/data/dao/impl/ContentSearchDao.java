@@ -53,32 +53,6 @@ public class ContentSearchDao extends Dao<GenericObject, Long>
     {
     	super.hibernateSearchIndexPreviouslyStoredDatabaseRecords();
     }
-	
-    /**
-     * Search content identified by a given text
-     * 
-     * @param searchText
-     * @return
-     */
-    public List<GenericObject> searchContent(String searchText)
-    {
-        List<GenericObject> searchResults = null;
-        
-        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<String, SimpleDataConditionCommand>();
-        Object[] values = {searchText};
-        conditionMap.put("model", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.LIKE), values));
-
-        SearchCommand searchCommand = new SearchCommand(Car.class,
-        												null,
-        												conditionMap,
-        												null,
-        												null,
-        												0,
-        												0);
-        searchResults = getByCriteria(searchCommand);
-        
-        return searchResults;        
-    }
 		
     /**
      * Search content with Hibernate Search
@@ -86,7 +60,6 @@ public class ContentSearchDao extends Dao<GenericObject, Long>
      * @param searchCommand
      * @return ContentSearchDto filled with the content entities to search
      */
-	@SuppressWarnings("unchecked")
 	public ContentSearchDto hibernateSearchSearchContent(SearchCommand searchCommand)
 	{		
 		int totalResults = 0;
@@ -111,15 +84,16 @@ public class ContentSearchDao extends Dao<GenericObject, Long>
             SimpleDataConditionCommand conditionCommand = conditionMap.get(entityProperty);
 		
             Query luceneQuery = queryBuilder.keyword()
-								  .onField(entityProperty)
-								  .matching(conditionCommand.getConditionSingleValue())
-								  .createQuery();			
+								  			.onField(entityProperty)
+								  			.matching(conditionCommand.getConditionSingleValue())
+								  			.createQuery();
              
             //create a Hibernate Search query out of a Lucene one
             FullTextQuery query = fullTextEntityManager.createFullTextQuery(luceneQuery, searchCommand.getEntityClass());
            
-            query = applySortingToSearchQuery(searchCommand, query);
+            query = this.applySortingToSearchQuery(searchCommand, query);
             query.setFirstResult(searchCommand.getFirstResult());
+			query.setProjection(searchCommand.getProjectedFields().toArray(new String[]{}));
             
             if (searchCommand.getMaxResults() > 0)
             {
@@ -153,7 +127,7 @@ public class ContentSearchDao extends Dao<GenericObject, Long>
     	
     	if (orderByList != null && !orderByList.isEmpty())
     	{
-    		for (int i=0; i < orderByList.size(); i++)
+    		for (int i = 0; i < orderByList.size(); i++)
     		{
     			if (i > 0)
     			{

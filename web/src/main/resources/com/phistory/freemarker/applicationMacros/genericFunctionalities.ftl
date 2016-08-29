@@ -309,26 +309,26 @@
 </#macro>
 
 <#macro identifyRequestURL>
-    <#assign requestIsCMS = false/>
-    <#assign requestIsCarEdit = false/>
-    <#assign requestIsCars = false/>
-    <#assign requestIsCarDetails = false/>
-    <#assign requestIsModelsSearch = false/>
+    <#global requestIsCMS = false/>
+    <#global requestIsCarEdit = false/>
+    <#global requestIsCars = false/>
+    <#global requestIsCarDetails = false/>
+    <#global requestIsModelsSearch = false/>
 
     <#if requestURI?contains(cmsContext)>
-        <#assign requestIsCMS = true/>
+        <#global requestIsCMS = true/>
         <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL)>
-            <#assign requestIsCarEdit = true/>
+            <#global requestIsCarEdit = true/>
         </#if>
     </#if>
 	<#if requestURI?contains(carsURL)>
         <#if requestURI?matches("/" + carsURL + "/([0-9]{1,})")>
-            <#assign requestIsCarDetails = true/>
+            <#global requestIsCarDetails = true/>
         <#else>
-            <#assign requestIsCars = true/>
+            <#global requestIsCars = true/>
         </#if>
     </#if>
     <#if requestURI?contains(modelsSearchURL)>
-        <#assign requestIsModelsSearch = true/>
+        <#global requestIsModelsSearch = true/>
     </#if>
 </#macro>

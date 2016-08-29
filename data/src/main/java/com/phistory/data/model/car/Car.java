@@ -28,14 +28,16 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Entity
 @Indexed
 @Table(name = Car.CAR_TABLE_NAME,
-       uniqueConstraints = @UniqueConstraint(columnNames = {"car_manufacturer_id", "car_model"}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {"car_manufacturer_id", Car.MODEL_FIELD}))
 @JsonIgnoreProperties(value = {"previewImage"})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car implements GenericObject
 {
-    public static final String CAR_TABLE_NAME = "car";
+    public static final String CAR_TABLE_NAME       = "car";
+    public static final String MODEL_FIELD          = "car_model";
+    public static final String MODEL_PROPERTY_NAME  = "model";
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -46,9 +48,9 @@ public class Car implements GenericObject
     @Cascade(value = SAVE_UPDATE)
     @JoinColumn(name = "car_manufacturer_id", nullable = false)
     private Manufacturer manufacturer;
-    
-    @Column(name = "car_model", nullable = false)
-    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
+
+    @Column(name = MODEL_FIELD, nullable = false)
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
     private String model;
     
     @Column(name = "car_engine_layout", nullable = false)
