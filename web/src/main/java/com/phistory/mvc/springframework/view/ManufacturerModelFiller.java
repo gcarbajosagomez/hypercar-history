@@ -1,19 +1,16 @@
 package com.phistory.mvc.springframework.view;
 
-import static com.phistory.mvc.controller.BaseControllerData.LOAD_MANUFACTURER_LOGO_ACTION;
-import static com.phistory.mvc.controller.BaseControllerData.MANUFACTURER_ID;
-import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
-import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_PER_PAGE;
-import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_PER_PAGE_DATA;
-
-import javax.inject.Inject;
-
+import com.phistory.data.dao.impl.ManufacturerDao;
+import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
-import com.phistory.data.dao.impl.ManufacturerDao;
+import javax.inject.Inject;
+
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
+import static com.phistory.mvc.controller.BaseControllerData.MANUFACTURER_ID;
+import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 
 /**
  * Fills a Spring Framework Model with manufacturer related information
@@ -30,9 +27,9 @@ public class ManufacturerModelFiller implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute(MANUFACTURERS, 	  			   manufacturerDao.getAll());
-		model.addAttribute(MANUFACTURER_ID,   			   MANUFACTURER_ID);
-		model.addAttribute("loadManufacturerLogoAction",   LOAD_MANUFACTURER_LOGO_ACTION);
+		model.addAttribute(MANUFACTURERS, 	  			   	manufacturerDao.getAll());
+		model.addAttribute(MANUFACTURER_ID,   			   	MANUFACTURER_ID);
+		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
 	}
 	
 	/**

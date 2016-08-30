@@ -33,10 +33,7 @@ public class BaseControllerData
     /*************************
      **********Actions********
      *************************/
-	public static final String ACTION               		  	= "action";
-	public static final String LOAD_CAR_PICTURE_ACTION     		= "picture";
-    public static final String LOAD_CAR_PREVIEW_ACTION     		= "preview";
-    public static final String LOAD_MANUFACTURER_LOGO_ACTION 	= "logo";
+	public static final String PICTURE_LOAD_ACTION_ACTION 		= "action";
 	public static final String PICTURE_LOAD_COMMAND_ACTION 		= "pictureLoadCommand";
 	
 	/*************************

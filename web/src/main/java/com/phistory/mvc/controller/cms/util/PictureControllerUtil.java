@@ -86,29 +86,25 @@ public class PictureControllerUtil extends BaseControllerData
 	 */
 	public Picture loadPicture(PictureLoadCommand command) throws Exception
 	{
-		String action = command.getAction();
-
-        if (StringUtils.hasText(action)) {
-            switch (command.getAction()) {
-                case LOAD_CAR_PICTURE_ACTION: {
-                    if (command.getPictureId() != null) {
-                        return pictureDao.getById(command.getPictureId());
-                    }
+        switch (command.getAction()) {
+            case LOAD_CAR_PICTURE: {
+                if (command.getPictureId() != null) {
+                    return pictureDao.getById(command.getPictureId());
                 }
-                case LOAD_CAR_PREVIEW_ACTION: {
-                    if (command.getCarId() != null) {
-                        return pictureDao.getCarPreview(command.getCarId());
-                    }
+            }
+            case LOAD_CAR_PREVIEW: {
+                if (command.getCarId() != null) {
+                    return pictureDao.getCarPreview(command.getCarId());
                 }
-                case LOAD_MANUFACTURER_LOGO_ACTION: {
-                    if (command.getManufacturerId() != null) {
-                        return pictureDao.getManufacturerLogo(command.getManufacturerId());
-                    }
+            }
+            case LOAD_MANUFACTURER_LOGO: {
+                if (command.getManufacturerId() != null) {
+                    return pictureDao.getManufacturerLogo(command.getManufacturerId());
                 }
             }
         }
-		
-		return pictureDao.getById(command.getPictureId());
+
+        return pictureDao.getById(command.getPictureId());
 	}
 	
 	/**

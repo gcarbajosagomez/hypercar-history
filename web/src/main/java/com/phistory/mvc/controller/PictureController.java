@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller;
 
-import static com.phistory.mvc.controller.BaseControllerData.ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURE_LOAD_ACTION_ACTION;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -8,13 +8,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import com.phistory.mvc.command.PictureLoadAction;
+import com.phistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
@@ -28,7 +28,7 @@ import com.phistory.data.model.Picture;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = PICTURES_URL + "/{" + ACTION + "}",
+@RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION_ACTION + "}",
 			    method = HEAD)
 public class PictureController extends BaseController
 {	
@@ -42,7 +42,7 @@ public class PictureController extends BaseController
 		try 
 		{
 			Picture picture = pictureControllerUtil.loadPicture(command);
-			pictureControllerUtil.printPictureToResponse(picture, response);
+			this.pictureControllerUtil.printPictureToResponse(picture, response);
 		} 
 		catch (Exception e)
 		{
@@ -51,16 +51,16 @@ public class PictureController extends BaseController
 	}
 
 	@ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
-	public PictureLoadCommand createCommand(@PathVariable(ACTION) String action,
-											@RequestParam(value = CAR_ID, required = false) Long carId,
-											@RequestParam(value = MANUFACTURER_ID, required = false) Long manufacturerId,
-											@RequestParam(value = PICTURE_ID, required = false) Long pictureId)
+	public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION_ACTION) PictureLoadAction 	loadAction,
+											@RequestParam(value = CAR_ID, required = false) Long 			carId,
+											@RequestParam(value = MANUFACTURER_ID, required = false) Long 	manufacturerId,
+											@RequestParam(value = PICTURE_ID, required = false) Long 		pictureId)
 	{
 		PictureLoadCommand command = new PictureLoadCommand();
 		
 		try
 		{
-			command = new PictureLoadCommand(action, pictureId, manufacturerId, carId);
+			command = new PictureLoadCommand(loadAction, pictureId, manufacturerId, carId);
 		}
 		catch (Exception e)
 		{
@@ -68,5 +68,10 @@ public class PictureController extends BaseController
 		}		
 		
 		return command;
+	}
+
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		dataBinder.registerCustomEditor(PictureLoadAction.class, new PictureLoadActionPropertyEditor());
 	}
 }

@@ -15,8 +15,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PictureLoadCommand
 {	
-	private String action;
-	private Long pictureId;
-	private Long manufacturerId;
-	private Long carId;
+	private PictureLoadAction action;
+	private Long 			  pictureId;
+	private Long 			  manufacturerId;
+	private Long 			  carId;
 }

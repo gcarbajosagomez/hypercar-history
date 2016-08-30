@@ -104,9 +104,9 @@ public class CmsBaseController extends BaseController
 	@InitBinder
     public void initBinder(WebDataBinder binder)
     {
-		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<Manufacturer, Long>(this.manufacturerDao));
-		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<Car, Long>(this.carDAO));
-        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<Engine, Long>(this.engineDao));
+		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDao));
+		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
+        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDao));
         binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDao()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
     }	
