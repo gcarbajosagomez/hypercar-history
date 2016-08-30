@@ -24,7 +24,7 @@
 		
 		<#if requestIsDesktop><div id="main-car-list-div" class="col-lg-10 thumbnail"></#if>
 			<#if (carsPerPageData >= 1)>
-				<div id="car-list-div" class="col-lg-12">
+				<div id="car-list-div" class="col-lg-<#if requestIsDesktop>12<#else>10</#if>">
 					<ul class="grid preview">
                         <#list cars?chunk(2) as row>
 							<div class="row car-list-row">
@@ -82,7 +82,7 @@
         for (var i=0 ; i< cars.length; i++)
         {
             var carModel = cars[i].model;
-            carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
+            carRowString = carRowString.concat("<div id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div' class='col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>'>");
             carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
             carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
             carRowString = carRowString.concat(	  	 	"<figure>");
@@ -120,7 +120,7 @@
 
 <#macro printCarPreview car car_index row_index>
     <#assign modelName>${car.model}</#assign>
-    <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer">
+    <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>">
         <#assign zIndex = (car_index + 1) * (row_index + 1)>
         <#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->
         <#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>
