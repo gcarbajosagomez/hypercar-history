@@ -51,15 +51,9 @@ public class ContentSearchController extends BaseController implements Initializ
 		{
             ContentSearchDto clonedContentSearchDto = contentSearchDto.clone();
             clonedContentSearchDto.setCarsPerPage(0);
-			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto, Arrays.asList(Car.MODEL_PROPERTY_NAME));
+			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
 			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDao().hibernateSearchSearchContent(searchCommand);
-            List<Car> searchResults = dataContentSearchDto.getResults()
-                                                              .stream()
-                                                              .map(result ->  {
-                                                                    String modelName = String.valueOf(((Object[]) result)[0]);
-                                                                    return super.getCarDao().getByModelName(modelName);
-                                                              })
-                                                              .collect(Collectors.toList());
+            List<Object> searchResults = dataContentSearchDto.getResults();
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
             model.addAttribute(MODELS, searchResults);
@@ -86,11 +80,12 @@ public class ContentSearchController extends BaseController implements Initializ
 	 * @param contentSearchDto
 	 * @return
 	 */
-	private SearchCommand createSearchCommand(ContentSearchDto contentSearchDto, List<String> projectedFields)
+	private SearchCommand createSearchCommand(ContentSearchDto contentSearchDto)
 	{	
 		Map<String, Boolean> orderByMap = new HashMap<>();
-		orderByMap.put("productionStartDate", Boolean.TRUE);		
-		
+		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
+		orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
+
 		SimpleDataConditionCommand simpleDataConditionCommand = new SimpleDataConditionCommand(EntityConditionType.LIKE,
 																							   new Object[]{contentSearchDto.getContentToSearch()});
 		
@@ -103,12 +98,12 @@ public class ContentSearchController extends BaseController implements Initializ
 								 dataConditionMap,
 								 null,
 								 orderByMap,
-								 projectedFields,
+								 Collections.EMPTY_LIST,
                                  paginationFirstResult,
 								 contentSearchDto.getCarsPerPage());
 	}
 
-    private List<Car> extractModelsListFromSearchResults(List<Car> searchResults, ContentSearchDto contentSearchDto) {
+    private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDto contentSearchDto) {
         int fromIndex = contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
         int toIndex = contentSearchDto.getCarsPerPage();
 

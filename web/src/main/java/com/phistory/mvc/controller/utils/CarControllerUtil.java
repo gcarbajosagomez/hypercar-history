@@ -28,7 +28,7 @@ public class CarControllerUtil
 	public SearchCommand createSearchCommand(CarsPaginationDto carsPaginationDto)
 	{
 		Map<String, Boolean> orderByMap = new HashMap<>();
-		orderByMap.put("productionStartDate", Boolean.TRUE);
+		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
 		
 		int paginationFirstResult = carsPaginationDto.calculatePageFirstResult(carsPaginationDto.getCarsPerPage());
 		

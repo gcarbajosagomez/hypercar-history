@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.Order;
@@ -144,11 +146,13 @@ public class ContentSearchDao extends Dao<GenericObject, Long>
     	
     	if (orderByMap != null && !orderByMap.isEmpty())
     	{
-    		for (String orderBy : orderByMap.keySet())
-    		{
-    			Sort sort = new Sort(new SortField(orderBy, Type.STRING));    		
-    			searchQuery.setSort(sort);
-    		}
+            List<SortField> sortFields = orderByMap.keySet()
+                                                   .stream()
+                                                   .map((orderBy) -> new SortField(orderBy, Type.STRING))
+                                                   .collect(Collectors.toList());
+
+            Sort sort = new Sort(sortFields.toArray(new SortField[]{}));
+			searchQuery.setSort(sort);
     	}
     	
     	return searchQuery;    	

@@ -66,38 +66,12 @@ public class CarDao extends Dao<Car, Long>
         return car;
     }
 
-    public Car getByModelName(String modelName)
-    {
-        Car car = null;
-
-        Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<>();
-        Object[] values = {modelName};
-        conditionMap.put(Car.MODEL_PROPERTY_NAME, new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
-
-        SearchCommand searchCommand = new SearchCommand(Car.class,
-        												null,
-        												conditionMap,
-        												null,
-        												null,
-                                                        null,
-        												0,
-        												0);
-
-        List<Car> results = getByCriteria(searchCommand);
-
-        if (!results.isEmpty())
-        {
-        	car = results.get(0);
-        }
-
-        return car;
-    }
-
 	public List<Car> getDistinctModelsWithId()
 	{
     	Query q = getCurrentSession().createQuery("SELECT DISTINCT car.model AS model, car.id AS id"
                     					       + " FROM Car AS car"
-                    						   + " ORDER BY car.productionStartDate ASC");
+                    						   + " ORDER BY car.productionStartDate ASC,"
+                                               + "          car.model ASC");
     		
     	q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
     	return q.list();
