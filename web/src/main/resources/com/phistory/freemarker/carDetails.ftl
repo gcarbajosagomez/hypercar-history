@@ -125,7 +125,7 @@
   												<#if car.driveWheelType??>
   													${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}
   												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
 		  									</p>
 	  									</dd>
@@ -188,7 +188,7 @@
   												<#if car.engineLayout??>
   													${language.getTextSource('car.engineLayout.${car.engineLayout}')}
   												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
 				  							</p>
   										</dd>
@@ -204,7 +204,7 @@
                                                         ${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.weight/1000))?default(-1)}<em class="measure-unit-text">${language.getTextSource('hpPerTonne')}</em>
 													</#if>						  											
   												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
   											</p>
   										</dd>
@@ -228,19 +228,19 @@
 												<#if car.length??>
 													${car.length}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
 													/
 												<#if car.width??>
 													${car.width}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
 													/
 												<#if car.height??>
 													${car.height}<em class="measure-unit-text">${language.getTextSource('MM')}</em>
 												<#else>
-													${language.getTextSource('undefined')}
+													${language.getTextSource('unknown')}
 												</#if>
 											</p>
 										</dd>										
@@ -283,13 +283,13 @@
 													<#if car.fuelConsumption?? && car.fuelTankCapacity??>
                                                         ${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)?default(-1))}<em class="measure-unit-text">${language.getTextSource('Km')}</em>
 													<#else>
-														${language.getTextSource('undefined')}
+														${language.getTextSource('unknown')}
 													</#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<#if car.fuelConsumption?? && car.fuelTankCapacity??>
                                                         ${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity*0.219969)/(car.fuelConsumption/282.481)*100)?default(-1))}<em class="measure-unit-text">${language.getTextSource('Miles')}</em>
 													<#else>
-														${language.getTextSource('undefined')}
+														${language.getTextSource('unknown')}
 													</#if>
 												</#if>												
 											</p>
@@ -520,3 +520,4 @@
 </script>
 
 <@carUtils.addSetUnitsOfMeasureFunctionScript/>
+<@carUtils.addCarStructuredMetadata/>

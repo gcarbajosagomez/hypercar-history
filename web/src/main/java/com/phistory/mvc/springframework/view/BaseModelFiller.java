@@ -37,6 +37,7 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("modelsSearchURL", 	   	MODELS_SEARCH_URL);
 		model.addAttribute("editURL", 				EDIT_URL);
 		model.addAttribute("technologyStackURL", 	TECHNOLOGY_STACK_URL);
+		model.addAttribute("siteURL", 				"http://www.paganihistory.com");
 		model.addAttribute(ID, 				   		ID);
 		model.addAttribute("carsPerPage", 		   	CARS_PER_PAGE);
 		model.addAttribute("pagNum", 			   	PAG_NUM);

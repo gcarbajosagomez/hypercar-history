@@ -1,12 +1,13 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "picture.ftl" as picture/>
 <#import "genericFunctionalities.ftl" as generic/>
+<#import "/spring.ftl" as spring/>
 
 <#function writeCarNumericData data>
     <#if data != -1>
         <#assign numericData>${data?string["0.#"]}</#assign>
     <#else>
-        <#assign numericData>${language.getTextSource('undefined')}</#assign>
+        <#assign numericData>${language.getTextSource('unknown')}</#assign>
     </#if>
     <#return numericData/>
 </#function>
@@ -15,7 +16,7 @@
     <#if data != -1>
         <#assign numericData>${data?string["0"]}</#assign>
     <#else>
-        <#assign numericData>${language.getTextSource('undefined')}</#assign>
+        <#assign numericData>${language.getTextSource('unknown')}</#assign>
     </#if>
     <#return numericData/>
 </#function>
@@ -97,6 +98,65 @@
                             <@picture.addPicturesGalleryFunctionScript "images-gallery" "carousel-inner"/>
                             $('#main-car-details-div').unblock();
                         });
+            }
+        }
+    </script>
+</#macro>
+
+<#macro addCarStructuredMetadata>
+    <script type="application/ld+json">
+        {
+            "@context":"http://schema.org/",
+            "@type":"BreadcrumbList",
+            "itemListElement": [{
+                    "@type":"ListItem",
+                    "position":1,
+                    "item": {
+                        "@id":"${siteURL}/",
+                        "name":"Home"
+                    }
+                },
+                {
+                    "@type":"ListItem",
+                    "position":2,
+                    "item": {
+                        "@id":"${siteURL}/${carsURL}/",
+                        "name":"${language.getTextSource('structuredData.carsURL')}"
+                    }
+                },
+                {
+                    "@type":"ListItem",
+                    "position":3,
+                    "item": {
+                        "@id":"${siteURL}${requestURI}/",
+                        "name":"${language.getTextSource('pagani')} ${car.model}"
+                    }
+                }]
+        }
+    </script>
+
+    <script type="application/ld+json">
+        {
+            "@context":"http://schema.org/",
+            "@type" : "Car",
+            "url" : "${siteURL}${requestURI}/",
+            "manufacturer" : "${language.getTextSource('pagani')}",
+            "name" : "${language.getTextSource('pagani')} ${car.model}",
+            "model" : "${car.model}",
+            "category" : "${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
+            "bodyType" : "${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
+            "description" : "${language.getTextSource('pagani')} ${car.model}",
+            "image" : "${siteURL}/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}/",
+            "numberOfForwardGears" : "${writeCarNumericData (car.transmission.numOfGears?default(-1))}",
+            "driveWheelConfiguration" : "${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
+            "accelerationTime" : "${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
+            "speed" : "${carUtils.writeCarNumericData (car.topSpeed?default(-1))}<#if car.topSpeed??>${language.getTextSource('Km/h')}</#if>",
+            "productionDate" : "${car.productionStartDate.time?string("yyyy")}",
+            "weight" : "${carUtils.writeCarNumericData (car.weight?default(-1))}<#if car.weight??>${language.getTextSource('Kg')}</#if>"
+            "vehicleEngine" : {
+                "@type": "EngineSpecification",
+                "name" : "${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}",
+                "description" : "${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}"
             }
         }
     </script>

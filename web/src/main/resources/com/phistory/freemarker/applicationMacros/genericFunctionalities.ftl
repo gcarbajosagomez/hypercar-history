@@ -19,6 +19,15 @@
 					<meta name="_csrf" content="${_csrf.token}"/>
 					<#-- default header name is X-CSRF-TOKEN -->
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
+                    <script type="application/ld+json">
+                    {
+                        "@context":"http://schema.org/",
+                        "@type":"Organization",
+                        "name" : "${language.getTextSource('paganiHistory')}",
+                        "url":"${siteURL}",
+                        "logo":"${siteURL}/static/img/pagani-logo.png"
+                    }
+                    </script>
 
 					<@language.addHrefLangInfo/>
 					<link rel="shortcut icon" href="/static/img/favicon.ico">
@@ -301,9 +310,9 @@
             border: '0px solid',
             backgroundColor: 'rgba(94, 92, 92, 0)'
         },
-        message: '<div class="row" style="width: 320px; margin-left: -50px !important;">' +
-                     '<h1 class="col-lg-6 col-md-6 col-sm-12 col-xs-<#if requestIsDesktop>12<#else>6</#if>" style="color: #fff">${language.getTextSource('loading')}</h1>' +
-                     '<i id="loading-gif" class="col-lg-4 col-md-4 col-sm-12 col-xs-<#if requestIsDesktop>12<#else>4</#if> fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
+        message: '<div class="row" style="<#if requestIsDesktop>width: 60%; margin-left: 40%<#else>width: 320px; margin-left: -50px</#if> !important;">' +
+                     '<h1 class="<#if requestIsDesktop>col-lg-4 col-md-6 col-sm-12 col-xs-12<#else>col-lg-4 col-md-6 col-sm-12 col-xs-6</#if>" style="color: #fff">${language.getTextSource('loading')}</h1>' +
+                     '<i id="loading-gif" class="<#if requestIsDesktop>col-lg-2 col-md-4 col-sm-12 col-xs-12<#else>col-lg-4 col-md-4 col-sm-12 col-xs-4</#if> fa fa-circle-o-notch fa-4x fa-spin blue"></i>' +
                  '</div>'
     });
 </#macro>

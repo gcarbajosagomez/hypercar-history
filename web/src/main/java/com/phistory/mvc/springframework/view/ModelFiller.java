@@ -15,5 +15,5 @@ public interface ModelFiller
 	 * 
 	 * @param model
 	 */
-	public void fillModel(Model model);
+	 void fillModel(Model model);
 }

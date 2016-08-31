@@ -60,7 +60,7 @@ public class BaseController extends BaseControllerData
 		model.addAttribute("requestIsCarsList",  requestURI.contains(CARS_URL));
 		model.addAttribute("requestIsDesktop",   device.isNormal());
 
-		baseModelFiller.fillModel(model);	
+		this.baseModelFiller.fillModel(model);
 	}
 	
 	/**
