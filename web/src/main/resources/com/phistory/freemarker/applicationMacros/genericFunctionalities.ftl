@@ -22,10 +22,20 @@
                     <script type="application/ld+json">
                     {
                         "@context":"http://schema.org/",
-                        "@type":"Organization",
-                        "name" : "${language.getTextSource('paganiHistory')}",
+                        "@type":"WebSite",
+                        "name":"${language.getTextSource('paganiHistory')}",
                         "url":"${siteURL}",
-                        "logo":"${siteURL}/static/img/pagani-logo.png"
+                        "about":"${language.getTextSource('footer.aboutUs.text')}",
+                        "keywords":"${language.getTextSource('pagani')}, ${language.getTextSource('structuredData.carsURL')}",
+                        "potentialAction": {
+                            "@type":"SearchAction",
+                            "target":"${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
+                            "query-input": {
+                                "@type":"PropertyValueSpecification",
+                                "valueName":"contentToSearch",
+                                "valueRequired":"http://schema.org/True"
+                            }
+                        }
                     }
                     </script>
 

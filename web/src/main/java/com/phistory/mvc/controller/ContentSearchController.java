@@ -1,16 +1,12 @@
 package com.phistory.mvc.controller;
 
-import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
-
-import java.util.*;
-import java.util.stream.Collectors;
-
-import javax.inject.Inject;
-
+import com.phistory.data.command.SearchCommand;
+import com.phistory.data.model.car.Car;
+import com.phistory.data.query.command.SimpleDataConditionCommand;
+import com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType;
+import com.phistory.mvc.model.dto.ContentSearchDto;
+import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.phistory.mvc.model.dto.ContentSearchDto;
-import com.phistory.mvc.springframework.view.ModelFiller;
-import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.car.Car;
-import com.phistory.data.query.command.SimpleDataConditionCommand;
-import com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType;
+import javax.inject.Inject;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
  * Controller to handle ContentSearch URLs

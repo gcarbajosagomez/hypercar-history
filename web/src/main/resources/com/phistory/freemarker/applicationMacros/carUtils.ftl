@@ -138,25 +138,25 @@
     <script type="application/ld+json">
         {
             "@context":"http://schema.org/",
-            "@type" : "Car",
-            "url" : "${siteURL}${requestURI}/",
-            "manufacturer" : "${language.getTextSource('pagani')}",
-            "name" : "${language.getTextSource('pagani')} ${car.model}",
-            "model" : "${car.model}",
-            "category" : "${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
-            "bodyType" : "${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
-            "description" : "${language.getTextSource('pagani')} ${car.model}",
-            "image" : "${siteURL}/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}/",
-            "numberOfForwardGears" : "${writeCarNumericData (car.transmission.numOfGears?default(-1))}",
-            "driveWheelConfiguration" : "${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
-            "accelerationTime" : "${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
-            "speed" : "${carUtils.writeCarNumericData (car.topSpeed?default(-1))}<#if car.topSpeed??>${language.getTextSource('Km/h')}</#if>",
-            "productionDate" : "${car.productionStartDate.time?string("yyyy")}",
-            "weight" : "${carUtils.writeCarNumericData (car.weight?default(-1))}<#if car.weight??>${language.getTextSource('Kg')}</#if>"
-            "vehicleEngine" : {
+            "@type":"Car",
+            "url":"${siteURL}${requestURI}/",
+            "manufacturer":"${language.getTextSource('pagani')}",
+            "name":"${language.getTextSource('pagani')} ${car.model}",
+            "model":"${car.model}",
+            "category":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
+            "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
+            "description":"${language.getTextSource('pagani')} ${car.model}",
+            "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}/",
+            "numberOfForwardGears":"${writeCarNumericData (car.transmission.numOfGears?default(-1))}",
+            "driveWheelConfiguration":"${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
+            "accelerationTime":"${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
+            "speed":"${carUtils.writeCarNumericData (car.topSpeed?default(-1))}<#if car.topSpeed??>${language.getTextSource('Km/h')}</#if>",
+            "productionDate":"${car.productionStartDate.time?string("yyyy")}",
+            "weight":"${carUtils.writeCarNumericData (car.weight?default(-1))}<#if car.weight??>${language.getTextSource('Kg')}</#if>",
+            "vehicleEngine": {
                 "@type": "EngineSpecification",
-                "name" : "${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}",
-                "description" : "${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}"
+                "name":"${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}",
+                "description":"${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}"
             }
         }
     </script>

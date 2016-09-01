@@ -1,4 +1,4 @@
-package com.phistory.mvc.controller.utils;
+package com.phistory.mvc.controller.util;
 
 import java.util.HashMap;
 import java.util.Map;

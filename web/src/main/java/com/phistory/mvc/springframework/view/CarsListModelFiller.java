@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.phistory.mvc.controller.utils.CarControllerUtil;
+import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.data.dao.impl.CarDao;
 

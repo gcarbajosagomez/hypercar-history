@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
-import com.phistory.mvc.controller.utils.CarControllerUtil;
+import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
