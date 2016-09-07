@@ -78,8 +78,16 @@ a:hover{
 }
 
 .navbar-toggle {
-    margin-right: 5px;
+    padding: 5px 0px 0px 2px !important;
     background-color:  #ddd;
+    position: relative !important;
+    width: 45px !important;
+    height: 45px !important;
+    cursor: pointer;
+}
+
+.navbar-toggle i {
+    font-size: 35px !important;
 }
 
 @media (min-width: 532px) {
@@ -97,7 +105,7 @@ a:hover{
     min-width: 12em;
     width: auto;
     padding-left: 15px;
-    margin-top: 1.65em;
+    margin-top: 1.55em;
 }
 
 @media (max-width: 768px) {
@@ -165,7 +173,7 @@ a:hover{
 }
 
 .blue {
-    color: #00B8FF;
+    color: #337ab7;
 }
 
 .italic-font {
@@ -696,6 +704,40 @@ a:hover{
     padding-right: 0;
 }
 
+.toggle-button {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    z-index: 100;
+    text-decoration: none;
+    color: #ffffff;
+    background: #337ab7 none;
+    border-radius: 4px;
+}
+
+.toggle-button:hover {
+    background-color: #23547D !important;
+    color: #ffffff !important;
+}
+
+.toggle-button i {
+    font-size: 45px;
+    padding-left: 4px;
+    padding-right: 3px;
+}
+
+.toggle-button i:hover {
+    color: #ffffff !important;
+}
+
+.back-to-top {
+    display: none;
+}
+
 /*
 *********************** Mobile Content ***********************
 */
@@ -725,6 +767,10 @@ a:hover{
 
     .navbar-toggle {
         top: 6.6em;
+        padding: 5px 0px 0px 2px !important;
+        margin-right: 0.8% !important;
+        margin-bottom: 0px !important;
+        margin-top: 0px !important;
     }
 
     @media (orientation: landscape) {
@@ -1041,5 +1087,16 @@ a:hover{
 
     .grid figure {
         position: static;
+    }
+
+    .toggle-button {
+        width: 50px !important;
+        height: 50px !important;
+        margin-right: 5px;
+    }
+
+    .toggle-button i {
+        font-size: 40px;
+        padding: 2px 0px 0px 6px;
     }
 }

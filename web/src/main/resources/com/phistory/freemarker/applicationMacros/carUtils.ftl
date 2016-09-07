@@ -146,7 +146,7 @@
             "category":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
             "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
             "description":"${language.getTextSource('pagani')} ${car.model}",
-            "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}/",
+            "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}",
             "numberOfForwardGears":"${writeCarNumericData (car.transmission.numOfGears?default(-1))}",
             "driveWheelConfiguration":"${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
             "accelerationTime":"${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
