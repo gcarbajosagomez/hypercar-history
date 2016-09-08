@@ -125,16 +125,8 @@
         	    		    <#-- Brand and toggle get grouped for better mobile display -->
           					<div class="navbar-header">
                                 <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/>'>
-                                    <div class="row">
-                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8" style="padding-right: 0px;">
-                                            <h1 class="italic-font" style="padding-left: 10px;">${language.getTextSource('paganiHistory')}</h1>
-                                            <h4 class="italic-font text-right" style="padding-right: 30px">${language.getTextSource('paganiHistory.dataAndImages')}</h4>
-                                        </div>
-                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 main-logo-container">
-                                            <img class="main-logo" src="/static/img/pagani-logo.png">
-                                        </div>
-                                    </div>
-                                </a>
+									<img class="main-logo" src="/static/img/pagani-history-logo.png">
+								</a>
 
                                 <a class="toggle-button navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
                                     <i id="navbar-toggle-arrow" class="fa fa-arrow-down" aria-hidden="true"></i>

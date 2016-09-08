@@ -36,7 +36,8 @@ a:hover{
 
 .pagani-history-navbar-brand {
     padding-top: 3px;
-    min-height: 100px;
+    height: 100% !important;
+    width: 100% !important;
 }
 
 .pagani-history-navbar .navbar-nav > li > a,
@@ -69,12 +70,13 @@ a:hover{
 }
 
 .navbar-header {
-    height: 8em;
+    height: 15em;
+    width: 100%;
 }
 
 .main-logo {
-    margin-top: 15px;
-    height: 75px;
+    margin-top: 5px;
+    height: 100%;
 }
 
 .navbar-toggle {
@@ -88,12 +90,6 @@ a:hover{
 
 .navbar-toggle i {
     font-size: 35px !important;
-}
-
-@media (min-width: 532px) {
-    .navbar-toggle {
-        top: 4.5em;
-    }
 }
 
 .navbar-default .navbar-nav > li > div > div > a {
@@ -201,6 +197,7 @@ a:hover{
 .navbar-collapse-main-container {
     padding-left: 25px;
     padding-right: 25px;
+    padding-top: 10px;
 }
 
 #main-navbar-collapse {
@@ -762,21 +759,15 @@ a:hover{
     }
 
     .navbar-header {
-        height: 8em;
+        height: 11em;
     }
 
     .navbar-toggle {
-        top: 6.6em;
         padding: 5px 0px 0px 2px !important;
         margin-right: 0.8% !important;
         margin-bottom: 0px !important;
         margin-top: 0px !important;
-    }
-
-    @media (orientation: landscape) {
-        .navbar-toggle {
-            top: 5.1em;
-        }
+        top: 75%;
     }
 
     .pagani-history-navbar {
@@ -808,13 +799,11 @@ a:hover{
 
     .pagani-history-navbar-brand {
         font-size: 26px;
-        width: 80%;
-        max-width: 600px;
+        width: 80% !important;
     }
 
     .main-logo {
-        margin-top: 35px;
-        height: 75px;
+        margin-top: 10px;
     }
 
     .language-selection-div {
@@ -866,16 +855,6 @@ a:hover{
     @media (orientation: landscape) {
         #main-navbar-collapse {
             margin-top: 1.5em;
-        }
-    }
-
-    .main-logo-container {
-        padding-left: 0;
-    }
-
-    @media (orientation: landscape) {
-        .main-logo-container {
-            padding-left: 15px;
         }
     }
 
