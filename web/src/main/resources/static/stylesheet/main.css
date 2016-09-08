@@ -800,10 +800,25 @@ a:hover{
     .pagani-history-navbar-brand {
         font-size: 26px;
         width: 80% !important;
+        padding-bottom: 0px;
+        padding-right: 0px;
+    }
+
+    @media (orientation: landscape) {
+        .pagani-history-navbar-brand {
+            height: 92% !important;
+        }
     }
 
     .main-logo {
         margin-top: 10px;
+        height: 100%;
+    }
+
+    @media (orientation: portrait) {
+        .main-logo {
+            height: 80%;
+        }
     }
 
     .language-selection-div {
@@ -1069,13 +1084,15 @@ a:hover{
     }
 
     .toggle-button {
-        width: 50px !important;
-        height: 50px !important;
+        max-width: 50px;
+        max-height: 50px;
+        width: 15% !important;
+        height: 25% !important;
         margin-right: 5px;
     }
 
     .toggle-button i {
         font-size: 40px;
-        padding: 2px 0px 0px 6px;
+        padding: 2px 0px 0px 10%;
     }
 }
