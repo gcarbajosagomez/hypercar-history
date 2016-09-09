@@ -3,6 +3,7 @@ package com.phistory.mvc.controller.cms;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -19,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
@@ -36,7 +38,7 @@ import com.phistory.data.model.Manufacturer;
 @Secured(USER_ROLE)
 @Controller
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS + "/{" + ID + "}")
+@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS_URL + "/{" + ID + "}")
 public class CmsManufacturerEditController extends CmsBaseController
 {
     @Inject
@@ -60,6 +62,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 
     @RequestMapping(value = EDIT_URL,
 					method = {POST, PUT})
+	@ResponseBody
     public ModelAndView handleEditManufacturer(Model model,
     										   @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
     										   BindingResult result)
@@ -91,6 +94,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 
 	@RequestMapping(value = DELETE_URL,
 					method = DELETE)
+    @ResponseBody
 	public ModelAndView handleDeleteManufacturer(Model model,
 									    		 @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command)
 	{

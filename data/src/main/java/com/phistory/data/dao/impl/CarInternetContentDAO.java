@@ -19,25 +19,19 @@ import com.phistory.data.model.car.CarInternetContent;
 @Repository
 public class CarInternetContentDAO extends Dao<CarInternetContent, Long>
 {
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<CarInternetContent> getAll()
 	{
-		List<CarInternetContent> carInternetContents = null;        
-	    carInternetContents = super.getCurrentSession().createQuery("FROM CarInternetContent").list();
-	        
-	    return carInternetContents;     
+	    return  super.getCurrentSession().createQuery("FROM CarInternetContent").list();
 	}
 
 	@Override
 	public CarInternetContent getById(Long id)
 	{
-		CarInternetContent carInternetContent = null;
-        
         Query q = getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
                                                + " WHERE internetContent.id = :id");
         q.setParameter("id", id);
-        carInternetContent = (CarInternetContent) q.uniqueResult();
+		CarInternetContent carInternetContent = (CarInternetContent) q.uniqueResult();
         
         return carInternetContent; 
 	}
@@ -49,15 +43,12 @@ public class CarInternetContentDAO extends Dao<CarInternetContent, Long>
 	 * @param carId
 	 * @return The {@link List<CarInternetContent>} if everything went well, null otherwise
 	 */
-	@SuppressWarnings("unchecked")
 	public List<CarInternetContent> getByCarId(Long carId)
 	{
-		List<CarInternetContent> carInternetContents = null;
-        
         Query q = getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
                                                + " WHERE internetContent.car.id = :carId");
         q.setParameter("carId", carId);
-        carInternetContents = q.list();
+		List<CarInternetContent> carInternetContents = q.list();
         
         return carInternetContents; 
 	}

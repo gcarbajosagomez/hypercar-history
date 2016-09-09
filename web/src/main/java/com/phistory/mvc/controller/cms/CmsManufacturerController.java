@@ -2,6 +2,7 @@ package com.phistory.mvc.controller.cms;
 
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
+import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static javax.ws.rs.core.MediaType.*;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -35,7 +36,7 @@ import com.phistory.data.model.Manufacturer;
 @Secured(USER_ROLE)
 @Controller
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS)
+@RequestMapping(value = CMS_CONTEXT + MANUFACTURERS_URL)
 public class CmsManufacturerController extends CmsBaseController
 {
 	@Inject
@@ -101,14 +102,17 @@ public class CmsManufacturerController extends CmsBaseController
     
     @RequestMapping(value = SAVE_URL,
 					method = POST)
+    @ResponseBody
     public ModelAndView handleSaveNewManufacturer(Model model,
 									   		   	  @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
 									   		   	  BindingResult result)
     {
+		log.info("saving manufacturer");
     	if (!result.hasErrors())
     	{    
     		try
     		{
+				log.info("saving manufacturer_2");
     			Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
 		
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",

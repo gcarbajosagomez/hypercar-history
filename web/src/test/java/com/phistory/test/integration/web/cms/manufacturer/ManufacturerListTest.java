@@ -27,7 +27,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @IntegrationTest("server.port:0")
 @TestExecutionListeners(inheritListeners = false,
         listeners = { DependencyInjectionTestExecutionListener.class,
-                DirtiesContextTestExecutionListener.class })
+                      DirtiesContextTestExecutionListener.class })
 public class ManufacturerListTest extends BaseIntegrationTest
 {
     @Value("${local.server.port}")

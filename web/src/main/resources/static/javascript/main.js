@@ -65,6 +65,32 @@ function deletePicture(pictureId, deleteMessage)
     });
 }
 
+function deleteCarInternetContent(carInternetContentId, deleteMessage)
+{
+	bootbox.confirm(deleteMessage, function(result)
+    {
+		//OK button
+		if (result == true)
+		{
+			$.ajax({
+			    url: '/cms/carInternetContents/' + carInternetContentId + '/delete',
+			    type: 'DELETE',
+                dataType: 'text',
+			    beforeSend: function(xhr)
+	    	    {
+			    	addCRSFTokenToAjaxRequest(xhr);
+	    	    }
+			})
+			.done(function(data)
+			{
+				if (data.indexOf('successMessage : ') !== -1) {
+                    $('#car-internet-content-div-' + carInternetContentId).remove();
+                }
+			});
+		}
+    });
+}
+
 function writeCarPreviews(data)
 {
 	var auxCarRowList = new Array();

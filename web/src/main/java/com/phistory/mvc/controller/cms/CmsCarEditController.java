@@ -20,12 +20,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
@@ -76,41 +78,35 @@ public class CmsCarEditController extends CmsBaseController
 
     @RequestMapping(value = EDIT_URL,
     				method = {POST, PUT})
+	@ResponseBody
     public ModelAndView handleEditCar(Model model,
     								  @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
 							  		  BindingResult carFormEditCommandResult,
 							  		  @Valid @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditCommand carInternetContentEditCommand,
-							  		  BindingResult carInternetContentEditCommandResult)
-    {
-    	try
-    	{
-    		if (!carFormEditCommandResult.hasErrors())
-    		{        	
+							  		  BindingResult carInternetContentEditCommandResult) {
+    	try {
+    		if (!carFormEditCommandResult.hasErrors()) {
     			Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);  
     			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
 				  											  		  new Object[]{car.getFriendlyName()},
 				  											  		  LocaleContextHolder.getLocale());
     			
-    			if (!carInternetContentEditCommandResult.hasErrors())
-    			{
-    				this.carControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
+    			if (!carInternetContentEditCommandResult.hasErrors()) {
+    				this.saveCarInternetEditCommand(carInternetContentEditCommand);
     			}
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
         	}
-    		else
-    		{
+    		else {
     			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, LocaleContextHolder.getLocale());     
     			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}
     	}
-        catch (Exception e)
-        {
+        catch (Exception e) {
         	log.error(e.toString(), e);
         	model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         	
         }
-		finally
-		{
+		finally {
 			this.fillModel(model, carFormEditCommand);
 		}
         
@@ -119,15 +115,13 @@ public class CmsCarEditController extends CmsBaseController
 
 	@RequestMapping(value = DELETE_URL,
 					method = DELETE)
+    @ResponseBody
 	public ModelAndView handleDeleteCar(Model model,
 										@ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
-										BindingResult result)
-	{
-		if (!result.hasErrors())
-		{
-			try
-			{
-				carControllerUtil.deleteCar(carFormEditCommand);
+										BindingResult result) {
+		if (!result.hasErrors()) {
+			try {
+				this.carControllerUtil.deleteCar(carFormEditCommand);
 				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
 						  											  new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() + " " +
 																				   carFormEditCommand.getCarForm().getModel()},
@@ -136,13 +130,11 @@ public class CmsCarEditController extends CmsBaseController
 				model.addAttribute(SUCCESS_MESSAGE, successMessage);
 				model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarFormEditCommand());
 			}
-			catch (Exception e)
-			{
+			catch (Exception e) {
 				log.error(e.toString(), e);
 				model.addAttribute(EXCEPTION_MESSAGE, e.toString());
 			}
-			finally 
-			{
+			finally {
 				this.fillModel(model, carFormEditCommand);
 			}
 		}
@@ -181,5 +173,20 @@ public class CmsCarEditController extends CmsBaseController
     	this.carModelFiller.fillModel(model);
         ((CarEditModelFiller) this.carEditModelFiller).fillCarEditModel(model, carFormEditCommand);
     	this.pictureModelFiller.fillModel(model);  
+    }
+
+    /**
+     * Persist the supplied {@link CarInternetContentEditCommand} and update itself with the persisted results
+     *
+     * @param carInternetContentEditCommand
+     * @throws Exception
+     */
+    private void saveCarInternetEditCommand(CarInternetContentEditCommand carInternetContentEditCommand) throws Exception {
+        List<CarInternetContent> persistedCarInternetContents = this.carControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
+        List<CarInternetContentForm> updatedCarInternetContentForms =
+                persistedCarInternetContents.stream()
+                                            .map(carInternetContent -> this.carInternetContentFormCreator.createFormFromEntity(carInternetContent))
+                                            .collect(Collectors.toList());
+        carInternetContentEditCommand.setCarInternetContentForms(updatedCarInternetContentForms);
     }
 }

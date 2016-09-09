@@ -27,6 +27,7 @@ import java.util.Map;
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @Secured(value = USER_ROLE)
 @Controller
@@ -45,7 +46,7 @@ public class CmsCarController extends CmsBaseController
 	@Inject
     private CMSCarControllerUtil carControllerUtil;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = GET)
 	public ModelAndView handleCarsList(Model model,
 			   						   CarsPaginationDto carsPaginationDto)
 	{		
@@ -53,7 +54,7 @@ public class CmsCarController extends CmsBaseController
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
-		    		method = RequestMethod.GET)
+		    		method = GET)
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{			
@@ -61,7 +62,7 @@ public class CmsCarController extends CmsBaseController
 	}	
 	
     @RequestMapping(value = EDIT_URL,
-				    method = RequestMethod.GET)
+				    method = GET)
     public ModelAndView handleNewCar(Model model)
     {
     	try
@@ -82,7 +83,7 @@ public class CmsCarController extends CmsBaseController
     }
     
     @RequestMapping(value = SAVE_URL,
-				    method = RequestMethod.POST)
+				    method = POST)
     public ModelAndView handleSaveNewCar(Model model,
 							  		  	 @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
 							  		  	 BindingResult carFormEditCommandResult,

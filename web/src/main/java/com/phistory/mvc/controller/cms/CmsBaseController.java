@@ -61,7 +61,8 @@ public class CmsBaseController extends BaseController
     public static final String DELETE_URL  					= "delete";
 	public static final String CARS_URL		           		= "cars";
 	public static final String MANUFACTURERS_URL			= "manufacturers";
-    
+	public static final String CAR_INTERNET_CONTENTS_URL    = "carInternetContents";
+
     /*************************
      ******Request params*****
      *************************/

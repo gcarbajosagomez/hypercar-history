@@ -496,7 +496,7 @@
 				   <#if (CICEFC.carInternetContentForms?size > 0)>
 					   <#list CICEFC.carInternetContentForms as carInternetContentForm>
 						   <#assign carInternetContentFormIndex = carInternetContentForm?index>
-				  		   <div class="well well-lg">
+				  		   <div id="car-internet-content-div<#if carInternetContentForm.id??>-${carInternetContentForm.id}</#if>" class="well well-lg">
 			                   <dl class="dl-horizontal dl-horizontal-edit text-left">
 			                   		<dt>
 			                             ${language.getTextSource('cms.car.internetContent.link')}
@@ -528,6 +528,15 @@
 			                               	</#list>
 			                            </select>
 									</dd>
+                                    <#if carInternetContentForm.id??>
+                                        <dt>
+			                            </dt>
+                                        <dd>
+                                            <a class="btn btn-danger" onClick="deleteCarInternetContent('${carInternetContentForm.id}', '${language.getTextSource('cms.car.internetContent.confirmDelete')}');"/>
+                                                <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCarInternetContent')}
+                                            </a>
+                                        </dd>
+                                    </#if>
 			                   </dl>
 						   </div>
 					   </#list>

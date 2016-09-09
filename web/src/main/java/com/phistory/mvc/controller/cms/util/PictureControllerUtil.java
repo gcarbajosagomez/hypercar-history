@@ -102,6 +102,11 @@ public class PictureControllerUtil extends BaseControllerData
                     return pictureDao.getManufacturerLogo(command.getManufacturerId());
                 }
             }
+			default: {
+				if (command.getPictureId() != null) {
+					return pictureDao.getById(command.getPictureId());
+				}
+			}
         }
 
         return pictureDao.getById(command.getPictureId());

@@ -28,7 +28,7 @@ import static org.hamcrest.core.IsEqual.equalTo;
 @IntegrationTest("server.port:0")
 @TestExecutionListeners(inheritListeners = false,
         listeners = { DependencyInjectionTestExecutionListener.class,
-                DirtiesContextTestExecutionListener.class })
+                      DirtiesContextTestExecutionListener.class })
 @Test(dependsOnGroups = {"login"})
 public class ManufacturerEditTest extends BaseIntegrationTest
 {
@@ -82,7 +82,7 @@ public class ManufacturerEditTest extends BaseIntegrationTest
         assertThat("Successful new manufacturer alert should be displayed", this.manufacturerPage.nameInputHasContent(), equalTo(false));
     }
 
-    /*@Test(dependsOnMethods = {"test_open_new_manufacturer_page"})
+    @Test(dependsOnMethods = {"test_open_new_manufacturer_page"})
     public void test_save_new_manufacturer() throws InterruptedException
     {
        this.manufacturerPage.typeName(IRRELEVANT_MANUFACTURER_NAME);
@@ -94,7 +94,7 @@ public class ManufacturerEditTest extends BaseIntegrationTest
        this.confirmModalPage = new ConfirmModalPage(this.webDriver);
        this.confirmModalPage.clickOKButton();
        Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
-        assertThat("Successful new manufacturer alert should be displayed", this.manufacturerPage.isSuccessAlertDisplayed());
+       assertThat("Successful new manufacturer alert should be displayed", this.manufacturerPage.isSuccessAlertDisplayed());
     }
 
     @Test(dependsOnMethods= {"test_save_new_manufacturer"})
@@ -107,7 +107,7 @@ public class ManufacturerEditTest extends BaseIntegrationTest
         this.confirmModalPage.clickOKButton();
         Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
         assertThat("Successful manufacturer deleted alert should be displayed", this.manufacturerPage.isSuccessAlertDisplayed());
-    }*/
+    }
 
     @AfterClass
     @Override

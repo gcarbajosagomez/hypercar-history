@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
