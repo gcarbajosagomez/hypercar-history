@@ -19,7 +19,6 @@
                             addCRSFTokenToAjaxRequest(xhr);
                         }
                     }).done(function (data) {
-                        alert("2");
                         document.children[0].innerHTML = data;
                         var savedEntityId = $("input[id*='.id']")[0].value;
                         var urlReplacement = '';

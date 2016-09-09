@@ -28,7 +28,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Entity
 @Indexed
 @Table(name = Car.CAR_TABLE_NAME,
-       uniqueConstraints = @UniqueConstraint(columnNames = {"car_manufacturer_id", Car.MODEL_FIELD}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
 @JsonIgnoreProperties(value = {"previewImage"})
 @Data
 @NoArgsConstructor
@@ -37,6 +37,8 @@ public class Car implements GenericObject
 {
     public static final String CAR_TABLE_NAME                       = "car";
     public static final String MODEL_FIELD                          = "car_model";
+    public static final String MANUFACTURER_ID_FIELD                = "car_manufacturer_id";
+    public static final String ENGINE_ID_FIELD                      = "car_engine_id";
     public static final String MODEL_PROPERTY_NAME                  = "model";
     public static final String PRODUCTION_START_DATE_PROPERTY_NAME  = "productionStartDate";
 
@@ -47,7 +49,7 @@ public class Car implements GenericObject
 
     @ManyToOne
     @Cascade(value = SAVE_UPDATE)
-    @JoinColumn(name = "car_manufacturer_id", nullable = false)
+    @JoinColumn(name = MANUFACTURER_ID_FIELD, nullable = false)
     private Manufacturer manufacturer;
 
     @Column(name = MODEL_FIELD, nullable = false)
@@ -59,7 +61,7 @@ public class Car implements GenericObject
 
     @ManyToOne
     @Cascade(value = SAVE_UPDATE)
-    @JoinColumn(name = "car_engine_id", nullable = true)
+    @JoinColumn(name = ENGINE_ID_FIELD, nullable = true)
     //Do not change nullable to false as otherwise Hibernate won't be able to persist the entity
     //since right before persisting it the engine is null
     private Engine engine;
