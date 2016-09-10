@@ -146,7 +146,7 @@
           											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('es', $('#main-form')[0]);">
           												<div class="row language-selection-div">
           													<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
-          													    <#if requestIsDesktop><h5><#else><h4></#if>${language.getTextSource('language.spanish')}<#if requestIsDesktop></h5><#else></h4></#if>
+          													    <h4>${language.getTextSource('language.spanish')}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')}"/>
@@ -162,7 +162,7 @@
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);">
 														<div class="row language-selection-div">
     	      												<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
-																<#if requestIsDesktop><h5><#else><h4></#if>${language.getTextSource('language.english')}<#if requestIsDesktop></h5><#else></h4></#if>
+																<h4>${language.getTextSource('language.english')}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')}"/>

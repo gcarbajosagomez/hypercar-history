@@ -18,11 +18,18 @@ a:hover{
     width: 100%;
 }
 
+.pagani-history-navbar .navbar-nav > li > a,
+.pagani-history-navbar .navbar-nav > li > #search-container > a {
+    font-size: 18px;
+}
+
 .pagani-history-navbar .navbar-nav > li > a:hover,
 .pagani-history-navbar .navbar-nav > li > div > div > a:hover,
 .pagani-history-navbar .navbar-nav > .open > a,
 .pagani-history-navbar .navbar-nav > .open > a:hover,
 .pagani-history-navbar .navbar-nav > .open > a:focus,
+.language-selection-div > div > h4:hover,
+.language-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
     color: #337ab7;
@@ -38,6 +45,12 @@ a:hover{
     padding-top: 3px;
     height: 100% !important;
     width: 100% !important;
+}
+
+@media (max-width: 768px) {
+    .pagani-history-navbar-brand {
+        width: 80% !important;
+    }
 }
 
 .pagani-history-navbar .navbar-nav > li > a,
@@ -82,10 +95,12 @@ a:hover{
 .navbar-toggle {
     padding: 5px 0px 0px 2px !important;
     background-color:  #ddd;
+    border-color: initial !important;
     position: relative !important;
     width: 45px !important;
     height: 45px !important;
     cursor: pointer;
+    margin-top: 26.4%;
 }
 
 .navbar-toggle i {
@@ -97,11 +112,15 @@ a:hover{
     cursor: default;
 }
 
+.open > a {
+    height: 53px;
+}
+
 #search-container {
     min-width: 12em;
     width: auto;
     padding-left: 15px;
-    margin-top: 1.55em;
+    margin-top: 1.7em;
 }
 
 @media (max-width: 768px) {
@@ -760,6 +779,7 @@ a:hover{
 
     .navbar-header {
         height: 11em;
+        width: 100% !important;
     }
 
     .navbar-toggle {
@@ -768,6 +788,7 @@ a:hover{
         margin-bottom: 0px !important;
         margin-top: 0px !important;
         top: 75%;
+        right: 5px !important;
     }
 
     .pagani-history-navbar {
@@ -797,6 +818,11 @@ a:hover{
         }
     }
 
+    .pagani-history-navbar .navbar-nav > li > a,
+    .pagani-history-navbar .navbar-nav > li > #search-container > a {
+        font-size: 15px;
+    }
+
     .pagani-history-navbar-brand {
         font-size: 26px;
         width: 80% !important;
@@ -823,6 +849,10 @@ a:hover{
 
     .language-selection-div {
         width: 230px;
+    }
+
+    .language-selection-div > div > h4 {
+        font-size: 15px;
     }
 
     #search-container {
@@ -864,7 +894,7 @@ a:hover{
     }
 
     #main-navbar-collapse {
-        margin-top: 2em;
+        margin-top: 0.5em;
     }
 
     @media (orientation: landscape) {
@@ -942,8 +972,8 @@ a:hover{
     }
 
     .language-flag {
-        max-height: 55px;
-        max-width: 55px;
+        max-height: 45px;
+        max-width: 45px;
         border-radius: 4px;
     }
 
