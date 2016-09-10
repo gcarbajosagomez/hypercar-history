@@ -4,7 +4,7 @@
 <#import "applicationMacros/carUtils.ftl" as carUtils/>
 
 <#if car??>
-	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
+	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title')?lower_case}</#assign>
 <#else>
 	<#assign title>${language.getTextSource('title.noCarFound')}</#assign>
 </#if>

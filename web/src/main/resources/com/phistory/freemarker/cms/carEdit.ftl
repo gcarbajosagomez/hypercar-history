@@ -7,7 +7,7 @@
 <#import "../applicationMacros/picture.ftl" as picture/>
 
 <#if CEFC.carForm.id??>
-	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.dataAndPictures')?lower_case}</#assign>
+	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.title')?lower_case}</#assign>
 <#else>
 	<#assign title>${language.getTextSource('car.newCar')}</#assign>
 </#if>
