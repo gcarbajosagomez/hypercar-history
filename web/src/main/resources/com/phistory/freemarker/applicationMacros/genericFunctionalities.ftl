@@ -141,7 +141,7 @@
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
     	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')?upper_case}</a></li>
-                                        <div class="navbar-divider divider"></div>
+                                        <div class="divider navbar-divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
@@ -179,7 +179,7 @@
           									</ul>
               							</li>
               							<#if requestIsCMS && (loggedIn?? && loggedIn)>
-                                            <div class="navbar-divider"></div>
+                                            <div class="divider navbar-divider"></div>
               								<li>
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')?upper_case} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
@@ -203,7 +203,7 @@
           										</ul>
               								</li>
               							</#if>
-                                        <div class="navbar-divider"></div>
+                                        <div class="divider navbar-divider"></div>
               							<li class="search-container-li">
               								<div id="search-container">
 												<a>${language.getTextSource('contentSearch.search')?upper_case}</a>
