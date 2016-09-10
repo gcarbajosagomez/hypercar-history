@@ -1,5 +1,6 @@
 package com.phistory.mvc.controller.cms;
 
+import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
 import com.phistory.data.model.Picture;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
+import static com.phistory.mvc.command.PictureLoadAction.*;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
@@ -38,6 +40,7 @@ public class CmsPictureController extends CmsBaseController
     {
         try
         {
+            command.setAction(LOAD_CAR_PICTURE);
             Picture picture = this.pictureControllerUtil.loadPicture(command);
             super.getPictureDao().delete(picture);
             
