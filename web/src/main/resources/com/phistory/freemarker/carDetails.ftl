@@ -155,13 +155,14 @@
 											</p>
 										</dd>
   										<dt class="double-height">
-  											${language.getTextSource('car.acceleration')} :<p class="text-muted">(
+  											${language.getTextSource('car.acceleration')} :
+										    <p class="text-muted">
   											    <#if unitsOfMeasure == unitsOfMeasureMetric>
-													${language.getTextSource('0-100Km/h')}
+													(${language.getTextSource('0-100Km/h')})
 											    <#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													${language.getTextSource('0-62Mph')}
+													(${language.getTextSource('0-62Mph')})
 											    </#if>
-											)</p> 
+											</p>
 										</dt>								
 										<dd class="double-height">
 											<p class="text-muted">
@@ -245,13 +246,14 @@
 											</p>
 										</dd>										
 										<dt class="double-height">
-											${language.getTextSource('car.fuelConsumption')} :<p class="text-muted">(
-  											<#if unitsOfMeasure == unitsOfMeasureMetric>
-													${language.getTextSource('L/100Km')}
-											<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-													${language.getTextSource('MPG')}
-											</#if>
-											)</p>
+											${language.getTextSource('car.fuelConsumption')} :
+                                            <p class="text-muted">
+                                                <#if unitsOfMeasure == unitsOfMeasureMetric>
+                                                        (${language.getTextSource('L/100Km')})
+                                                <#elseif unitsOfMeasure == unitsOfMeasureImperial>
+                                                        (${language.getTextSource('MPG')})
+                                                </#if>
+											</p>
 										</dt>
 										<dd class="double-height">
 											<p class="text-muted">

@@ -6,7 +6,7 @@
 <div id="main-container" class="container">
 	<div class="row">
 		<div id="index-jumbotron" class="jumbotron">
-			<div class="thumbnail vertically-aligned-div car-pictures-carousel-div">
+			<div class="thumbnail vertically-aligned-div car-pictures-carousel-div index-car-pictures-carousel-div">
 				<#if (carNamesToPictureIds?size > 0)>
 					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div" data-ride="carousel">
 						<#-- Indicators -->

@@ -596,7 +596,7 @@
                                     <tr id="${pictureId}-picture-row">
                                         <td style="width:70%">
                                             <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
-                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail car-picture preview-img resizable-img" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                             </a>
                                         </td>
                                         <td style="width:30%">
@@ -617,10 +617,14 @@
                     <table id="pictureUploadInputs">
                         <@spring.bind "CEFC.carForm.pictureFiles"/>
                         <tr>
-                            <td><input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0]" onChange="displayCarPictureWhenFileSelected(this.files[0]);" class="form-control" accept="image/*" size="10"/></td>
+                            <td>
+                                <input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0]" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
+                            </td>
+                        </tr>
+                        <tr>
                             <td>
                             	<div id="car-picture-area-0">
-                            		<img id="car-picture-0" class="thumbnail preview-img resizable-img">
+                            		<img id="car-picture-0" class="thumbnail resizable-img">
                       			</div>
                       		</td>
                         </tr>

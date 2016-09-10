@@ -45,6 +45,9 @@
 					<link rel="stylesheet" href="/static/stylesheet/bootstrap-theme.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
+				    <#if !requestIsDesktop>
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+				    </#if>
 
             		<script src="/static/javascript/lib/jquery.min.js"></script>
             		<script src="/static/javascript/lib/jquery.cookie.js"></script>
@@ -137,21 +140,21 @@
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
-    	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')}</a></li>
-                                        <div class="navbar-divider"></div>
+    	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')?upper_case}</a></li>
+                                        <div class="navbar-divider divider"></div>
         	      						<li>
-	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')} <b class="caret"></b></a>
+	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
         	  									<li role="presentation">
           											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('es', $('#main-form')[0]);">
           												<div class="row language-selection-div">
-          													<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
-          													    <h4>${language.getTextSource('language.spanish')}</h4>
+          													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+          													    <h4>${language.getTextSource('language.spanish')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')?upper_case}"/>
           													</div>
-          													<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
+          													<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
     	      												</div>
 	    	      										</div>
@@ -161,11 +164,11 @@
           										<li role="presentation">
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);">
 														<div class="row language-selection-div">
-    	      												<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 text-left">
-																<h4>${language.getTextSource('language.english')}</h4>
+    	      												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
+																<h4>${language.getTextSource('language.english')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')?upper_case}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
@@ -178,24 +181,24 @@
               							<#if requestIsCMS && (loggedIn?? && loggedIn)>
                                             <div class="navbar-divider"></div>
               								<li>
-              									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')} <b class="caret"></b></a>
+              									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')?upper_case} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
           											<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${manufacturersURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listManufacturers')}</a>
+          												<a href='<@spring.url "/${cmsContext}${manufacturersURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listManufacturers')?upper_case}</a>
 													</li>
 													<li role="presentation">
-          												<a id="new-manufacturer-link" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')}</a>
+          												<a id="new-manufacturer-link" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')?upper_case}</a>
 													</li>
 													<li role="separator" class="divider"></li>
         	  										<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${carsURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listCars')}</a>
+          												<a href='<@spring.url "/${cmsContext}${carsURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listCars')?upper_case}</a>
 													</li>
 													<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newCar')}</a>
+          												<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newCar')?upper_case}</a>
 													</li>
 													<li role="separator" class="divider"></li>
 													<li role="presentation">
-          												<a onClick="submitLoginForm(false);" class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.logout')}</a>
+          												<a onClick="submitLoginForm(false);" class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.logout')?upper_case}</a>
 													</li>
           										</ul>
               								</li>
@@ -203,7 +206,7 @@
                                         <div class="navbar-divider"></div>
               							<li class="search-container-li">
               								<div id="search-container">
-												<a>${language.getTextSource('contentSearch.search')}</a>
+												<a>${language.getTextSource('contentSearch.search')?upper_case}</a>
 												<input id="content-search-input" type="text" class="content-search-input" value="<#if contentToSearchData??>${contentToSearchData}</#if>"/>
 												<label for="content-search-input">
 													<span id="content-search-span" class="glyphicon glyphicon-search search-icon"></span>
@@ -225,13 +228,13 @@
 					<div class="pagani-history-footer navbar">
 						<div class="row">
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-								<b>${language.getTextSource('footer.aboutUs')}</b>
+								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>
 								<p class="text-muted text-left">
 									${language.getTextSource('footer.aboutUs.text')}
 								</p>
         					</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-								<b>${language.getTextSource('footer.contactUs')}</b>
+                                <h4>${language.getTextSource('footer.contactUs')?upper_case}</h4>
 								<p class="text-muted text-left">
 									${language.getTextSource('footer.contactUs.text')}
 								</p>
@@ -239,7 +242,7 @@
     	  				</div>
       					<div class="row lower-footer-row">
       						<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-      							<b>${language.getTextSource('footer.technologyStack')}</b>
+                                <h4>${language.getTextSource('footer.technologyStack')?upper_case}</h4>
       							<p class="text-muted text-left">
 									${language.getTextSource('footer.technologyStack.text')}
 								</p>
@@ -247,7 +250,7 @@
 								<div id="technology-stack-modal-div" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="technology-stack-label" aria-hidden="true"></div>
 							</div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <b>${language.getTextSource('title.cookiesPolicy')}</b>
+                                <h4>${language.getTextSource('title.cookiesPolicy')?upper_case}</h4>
                                 <p class="text-muted text-left">
                                     ${language.getTextSource('footer.cookiesPolicy.text')}
                                 </p>
