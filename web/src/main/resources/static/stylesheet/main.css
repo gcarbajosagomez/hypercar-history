@@ -297,11 +297,6 @@ a:hover{
     margin-top: 10px;
 }
 
-.car-picture {
-    display: block;
-    margin: auto;
-}
-
 .center-block {
     float: none !important
 }
