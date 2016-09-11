@@ -361,6 +361,12 @@
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
+                           ${language.getTextSource('engine.cylinderBankAngle')}
+                      </dt>
+                      <dd>
+                           <@spring.formInput "CEFC.carForm.engineForm.cylinderBankAngle", "class=form-control", "text"/>
+                      </dd>
+                      <dt>
                            ${language.getTextSource('engine.numberOfCylinders')}
                       </dt>
                       <dd>

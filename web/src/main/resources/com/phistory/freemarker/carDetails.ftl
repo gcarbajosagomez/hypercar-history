@@ -328,6 +328,9 @@
   												<#if car.engine.cylinderDisposition?? && car.engine.numberOfCylinders??>
 		  											${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}
 	  											</#if>
+  												<#if car.engine.cylinderBankAngle??>
+		  											${car.engine.cylinderBankAngle}º
+	  											</#if>
 		  									</p>
 	  									</dd>
   										<dt>

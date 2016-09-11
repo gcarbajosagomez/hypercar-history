@@ -24,30 +24,44 @@ public class Engine implements GenericObject
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "engine_id")
     private Long id;
+
     @Column(name = "engine_code", nullable = true)
     private String code;
+
     @Column(name = "engine_size", nullable = false)
-    private Long size;
+    private Integer size;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "engine_type", nullable = false)
     private EngineType type;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "engine_cylinder_disposition", nullable = false)
     private EngineCylinderDisposition cylinderDisposition;
+
+    @Column(name = "engine_cylinder_bank_angle", nullable = true)
+    private Integer cylinderBankAngle;
+
     @Column(name = "engine_number_of_cylinders", nullable = false)
-    private Long numberOfCylinders;
+    private Integer numberOfCylinders;
+
     @Column(name = "engine_number_of_valves", nullable = true)
-    private Long numberOfValves;
+    private Integer numberOfValves;
+
     @Column(name = "engine_max_power", nullable = true)
-    private Long maxPower;
+    private Integer maxPower;
+
     @Column(name = "engine_max_rpm", nullable = true)
-    private Long maxRPM;
+    private Integer maxRPM;
+
     @Column(name = "engine_max_power_rpm", nullable = true)
-    private Long maxPowerRPM;
+    private Integer maxPowerRPM;
+
     @Column(name = "engine_max_torque", nullable = true)
-    private Long maxTorque;
+    private Integer maxTorque;
+
     @Column(name = "engine_max_torque_rpm", nullable = true)
-    private Long maxTorqueRPM;
+    private Integer maxTorqueRPM;
 
     @Override
     public Long getId() {

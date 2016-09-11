@@ -22,17 +22,18 @@ public class EngineForm
     private Long id;
     private String code;
     @NotNull(message = "The field must not be blank.")
-    private Long size;
+    private Integer size;
     @NotNull(message = "The field must not be blank.")
     private EngineType type;
     @NotNull(message = "The field must not be blank.")
     private EngineCylinderDisposition cylinderDisposition;
+    private Integer cylinderBankAngle;
     @NotNull(message = "The field must not be blank.")
-    private Long numberOfCylinders;
-    private Long numberOfValves;
-    private Long maxPower;
-    private Long maxRPM;
-    private Long maxPowerRPM;
-    private Long maxTorque;
-    private Long maxTorqueRPM;
+    private Integer numberOfCylinders;
+    private Integer numberOfValves;
+    private Integer maxPower;
+    private Integer maxRPM;
+    private Integer maxPowerRPM;
+    private Integer maxTorque;
+    private Integer maxTorqueRPM;
 }
