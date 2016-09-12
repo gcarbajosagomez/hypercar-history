@@ -536,6 +536,20 @@ a:hover{
     }
 }
 
+.body-materials-dd {
+    height: 60px !important;
+    margin-bottom: 100px !important;
+}
+
+.body-material-dt {
+    width: 20% !important;
+}
+
+.body-material-dd {
+    margin-left: 21% !important;
+    margin-bottom: 10px !important;
+}
+
 .carousel {
     min-height: initial;
 }
@@ -766,4 +780,8 @@ a:hover{
 .back-to-top {
     display: none;
     opacity: 0.8;
+}
+
+.car-edit-container {
+    width: 95%;
 }

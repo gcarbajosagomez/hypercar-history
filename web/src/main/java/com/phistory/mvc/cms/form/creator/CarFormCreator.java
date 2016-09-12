@@ -2,6 +2,7 @@ package com.phistory.mvc.cms.form.creator;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.cms.command.CarBodyMaterial;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
@@ -11,6 +12,13 @@ import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.data.dao.impl.PictureDao;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
+import org.springframework.util.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Creates new {@link Car}s out of the data contained in {@link CarForm}s and vice versa
@@ -21,6 +29,8 @@ import com.phistory.data.model.car.Car;
 @Component
 public class CarFormCreator implements EntityFormCreator<Car, CarForm>
 {
+    public static final String CAR_BODY_MATERIAL_STRING_SEPARATOR = "-";
+
     @Inject
     private PictureDao pictureDao;
     @Inject
@@ -40,12 +50,25 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
     {
         try
         {
-        	
+        	List<CarBodyMaterial> bodyMaterials = new ArrayList<>();
+            String bodyMaterialsString = car.getBodyMaterials();
+
+            if (StringUtils.hasText(bodyMaterialsString)) {
+                if (bodyMaterialsString.contains(CAR_BODY_MATERIAL_STRING_SEPARATOR)) {
+                    bodyMaterials = Stream.of(bodyMaterialsString.split(CAR_BODY_MATERIAL_STRING_SEPARATOR))
+                                          .map(CarBodyMaterial::map)
+                                          .collect(Collectors.toList());
+                } else {
+                    bodyMaterials.add(CarBodyMaterial.map(bodyMaterialsString));
+                }
+            }
+
             CarForm carForm = new CarForm(car.getId(),
             							  car.getManufacturer(),
             							  car.getModel(),
             							  car.getEngineLayout(),
-            							  engineFormCreator.createFormFromEntity(car.getEngine()),
+            							  this.engineFormCreator.createFormFromEntity(car.getEngine()),
+                                          bodyMaterials,
             							  car.getBodyShape(),
             							  car.getCarSeatsConfig(),
             							  car.getTopSpeed(),
@@ -58,10 +81,10 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             							  car.getLength(),
             							  car.getWidth(),
             							  car.getHeight(),
-            							  brakeSetFormCreator.createFormFromEntity(car.getBrakeSet()),
-            							  transmissionFormCreator.createFormFromEntity(car.getTransmission()),
+										  this.brakeSetFormCreator.createFormFromEntity(car.getBrakeSet()),
+									      this.transmissionFormCreator.createFormFromEntity(car.getTransmission()),
             							  car.getFuelTankCapacity(),
-            							  tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
+									      this.tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
             							  null, 
             							  null,
             							  car.getDriveWheelType(),
@@ -87,7 +110,6 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             	}
             }
             return carForm;
-            
         }
         catch (Exception e)
         {
@@ -105,16 +127,32 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
     {
         try
         {
+            List<String> carBodyMaterialsStrings = carForm.getBodyMaterials().stream()
+                                                                             .map(carBodyMaterial -> {
+                                                                                 if (carBodyMaterial != null) {
+                                                                                     return carBodyMaterial.getName();
+                                                                                 }
+                                                                                 return null;
+                                                                             })
+                                                                             .filter(Objects::nonNull)
+                                                                             .collect(Collectors.toList());
+
+            String carBodyMaterials = null;
+            if (!carBodyMaterialsStrings.isEmpty()) {
+                carBodyMaterials = String.join(CAR_BODY_MATERIAL_STRING_SEPARATOR, carBodyMaterialsStrings);
+            }
+
             Car car = new Car(carForm.getId(),
             				  carForm.getManufacturer(),
             				  carForm.getModel(),
             				  carForm.getEngineLayout(),
-            				  engineFormCreator.createEntityFromForm(carForm.getEngineForm()),
+							  this.engineFormCreator.createEntityFromForm(carForm.getEngineForm()),
+                              carBodyMaterials,
             				  carForm.getBodyShape(),
             				  carForm.getSeatsConfig(),
             				  carForm.getTopSpeed(),
             				  carForm.getAcceleration(),
-            				  carForm.getFuelConsuption(),
+            				  carForm.getFuelConsumption(),
             				  carForm.getProductionType(),
             				  carForm.getProductionStartDate(),
             				  carForm.getProductionEndDate(),
@@ -122,10 +160,10 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             				  carForm.getLength(),
             				  carForm.getWidth(),
             				  carForm.getHeight(),
-            				  brakeSetFormCreator.createEntityFromForm(carForm.getBrakeSetForm()),
-            				  transmissionFormCreator.createEntityFromForm(carForm.getTransmissionForm()),
+							  this.brakeSetFormCreator.createEntityFromForm(carForm.getBrakeSetForm()),
+							  this.transmissionFormCreator.createEntityFromForm(carForm.getTransmissionForm()),
             				  carForm.getFuelTankCapacity(),
-            				  tyreSetFormCreator.createEntityFromForm(carForm.getTyreSetForm()),
+							  this.tyreSetFormCreator.createEntityFromForm(carForm.getTyreSetForm()),
             				  carForm.getDriveWheel(),
             				  carForm.getRoadLegal());
             
@@ -134,7 +172,6 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             car.getTyreSet().setCar(car);
 
             return car;
-            
         }
         catch (Exception e)
         {

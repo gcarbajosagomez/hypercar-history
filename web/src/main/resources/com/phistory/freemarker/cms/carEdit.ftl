@@ -14,7 +14,7 @@
 
 <@generic.startPage title/>
 
-<div id="main-container" class="container">
+<div id="main-container" class="container car-edit-container">
 	<div class="row">
 	   <@generic.addOperationResultMessage exceptionMessage!"", successMessage!""/>
 	   <div class="col-lg-6 col-sm-6 col-xs-12">
@@ -72,7 +72,7 @@
 
                            <select name="${spring.status.expression}" class="form-control">
                               <#list manufacturers as manufacturer>
-                                 <option value="${manufacturer.id}"<#if spring.status.value?? && manufacturer.id == spring.status.value?default(-1)?number> selected</#if>>${manufacturer.name}</option>
+                                 <option value="${manufacturer.id}" <#if spring.status.value?? && manufacturer.id == spring.status.value?default(-1)?number> selected</#if>>${manufacturer.name}</option>
                               </#list>
                            </select>
                       </dd>
@@ -91,11 +91,45 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineLayouts as engineLayout>
-                                   <option value="${engineLayout}"<#if spring.status.value?? && engineLayout == spring.status.value?default("")>selected</#if>>${language.getTextSource('car.engineLayout.${engineLayout}')}<option>
+                                   <option value="${engineLayout}" <#if spring.status.value?? && engineLayout == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineLayout.${engineLayout}')}</option>
                                </#list>
                            </select>
 
                            <@spring.showErrors '<br>'/>
+                      </dd>
+                      <dt>
+                           ${language.getTextSource('car.bodyMaterials')}
+                      </dt>
+                      <dd class="body-materials-dd">
+                          <div class="well">
+                              <dl class="dl-horizontal dl-horizontal-edit text-left">
+                                    <dt class="body-material-dt">
+                                        1
+                                    </dt>
+                                    <dd class="body-material-dd">
+                                        <@spring.bind "CEFC.carForm.bodyMaterials"/>
+                                        <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
+                                            <option value="" selected></option>
+                                           
+                                            <#list bodyMaterials as bodyMaterial>
+                                                <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 0) && bodyMaterial == CEFC.carForm.bodyMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            </#list>
+                                        </select>
+                                    </dd>
+                                    <dt class="body-material-dt">
+                                        2
+                                    </dt>
+                                    <dd class="body-material-dd">
+                                        <select id="${spring.status.expression}[1]" name="${spring.status.expression}[1]" class="form-control">
+                                            <option value="" selected></option>
+
+                                            <#list bodyMaterials as bodyMaterial>
+                                               <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 1) && bodyMaterial == CEFC.carForm.bodyMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            </#list>
+                                        </select>
+                                    </dd>
+                              </dl>
+                          </div>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.bodyShape')}
@@ -105,7 +139,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list bodyShapes as bodyShape>
-                                   <option value="${bodyShape}"<#if spring.status.value?? && bodyShape == spring.status.value?default("")>selected</#if>>${language.getTextSource('car.bodyShape.${bodyShape}')}</option>
+                                   <option value="${bodyShape}" <#if spring.status.value?? && bodyShape == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.bodyShape.${bodyShape}')}</option>
                                </#list>
                            </select>
 
@@ -119,7 +153,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list seatsConfigs as seatsConfig>
-                                   <option value="${seatsConfig}"<#if spring.status.value?? && seatsConfig == spring.status.value?default("")>selected</#if>>${language.getTextSource('car.seatsConfig.${seatsConfig}')}</option>
+                                   <option value="${seatsConfig}" <#if spring.status.value?? && seatsConfig == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.seatsConfig.${seatsConfig}')}</option>
                                </#list>
                            </select>
 
@@ -133,7 +167,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list productionTypes as productionType>
-                                   <option value="${productionType}"<#if spring.status.value?? && productionType == spring.status.value?default("")>selected</#if>>${language.getTextSource('car.productionType.${productionType.getName()}')}</option>
+                                   <option value="${productionType}" <#if spring.status.value?? && productionType == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.productionType.${productionType.getName()}')}</option>
                                </#list>
                            </select>
 
@@ -210,7 +244,7 @@
                            ${language.getTextSource('car.fuelConsumption')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.fuelConsuption", "class=form-control placeholder=${language.getTextSource('L/100Km')}", "text"/>
+                           <@spring.formInput "CEFC.carForm.fuelConsumption", "class=form-control placeholder=${language.getTextSource('L/100Km')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
@@ -221,7 +255,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list driveWheelTypes as driveWheelType>
-                                   <option value="${driveWheelType}"<#if spring.status.value?? && driveWheelType == spring.status.value?default("")>selected</#if>>${language.getTextSource('car.driveWheelType.${driveWheelType}')}</option>
+                                   <option value="${driveWheelType}" <#if spring.status.value?? && driveWheelType == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.driveWheelType.${driveWheelType}')}</option>
                                </#list>
                            </select>
 
@@ -234,8 +268,8 @@
                            <@spring.bind "CEFC.carForm.roadLegal"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                           		<option value="true"<#if CEFC.carForm.roadLegal == true>selected</#if>>true</option>
-                           		<option value="false"<#if CEFC.carForm.roadLegal == false>selected</#if>>false</option>
+                           		<option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>true</option>
+                           		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>false</option>
                            </select>
                       </dd>
                       <dt>
@@ -304,7 +338,7 @@
 								   <select class="form-control" onChange="loadEngineById(this.value);">
                               			<option value="">
                                         <#list engines as engine>
-                                        	<option value="${engine.id}"<#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
+                                        	<option value="${engine.id}" <#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
                                       	</#list>
                                    <select>
                                </dd>
@@ -340,7 +374,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineTypes as engineType>
-                                   <option value="${engineType}"<#if spring.status.value?? && engineType == spring.status.value?default("")>selected</#if>>${language.getTextSource('engine.type.${engineType}')}</option>
+                                   <option value="${engineType}" <#if spring.status.value?? && engineType == spring.status.value?default("")> selected</#if>>${language.getTextSource('engine.type.${engineType}')}</option>
                                </#list>
                            </select>
 
@@ -354,7 +388,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineCylinderDispositions as engineCylinderDisposition>
-                                   <option value="${engineCylinderDisposition}"<#if spring.status.value?? && engineCylinderDisposition == spring.status.value?default("")>selected</#if>>${engineCylinderDisposition}</option>
+                                   <option value="${engineCylinderDisposition}" <#if spring.status.value?? && engineCylinderDisposition == spring.status.value?default("")> selected</#if>>${engineCylinderDisposition}</option>
                                </#list>
                            </select>
 
@@ -461,7 +495,7 @@
 
                              <select name="${spring.status.expression}" class="form-control">
                                  <#list transmissionTypes as transmissionType>
-                                     <option value="${transmissionType}"<#if spring.status.value?? && transmissionType == spring.status.value>selected</#if>><h3 class="capitalizedText">${language.getTextSource('transmission.type.${transmissionType}')}</h3></option>
+                                     <option value="${transmissionType}" <#if spring.status.value?? && transmissionType == spring.status.value>selected</#if>><h3 class="capitalizedText">${language.getTextSource('transmission.type.${transmissionType}')}</h3></option>
                                  </#list>
                              </select>
 
@@ -518,7 +552,7 @@
 
 										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 			                            	<#list carInternetContentTypes as carInternetContentType>
-			                                	<option value="${carInternetContentType}"<#if spring.status.value?? && carInternetContentType == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
+			                                	<option value="${carInternetContentType}" <#if spring.status.value?? && carInternetContentType == spring.status.value?default("")> selected</#if>>${language.getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
 			                               	</#list>
 			                            </select>
 									</dd>
@@ -530,7 +564,7 @@
 
 										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 			                            	<#list carInternetContentLanguages as contentLanguage>
-			                                	<option value="${contentLanguage}"<#if spring.status.value?? && contentLanguage == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
+			                                	<option value="${contentLanguage}" <#if spring.status.value?? && contentLanguage == spring.status.value?default("")> selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
 			                               	</#list>
 			                            </select>
 									</dd>
@@ -563,7 +597,7 @@
 
 									<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 		                            	<#list carInternetContentTypes as carInternetContentType>
-		                                	<option value="${carInternetContentType}"<#if spring.status.value?? && carInternetContentType == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
+		                                	<option value="${carInternetContentType}" <#if spring.status.value?? && carInternetContentType == spring.status.value?default("")> selected</#if>>${language.getTextSource('cms.car.internetContent.type.${carInternetContentType}')}</option>
 		                               	</#list>
 		                            </select>
 								</dd>
@@ -575,7 +609,7 @@
 
                            			<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                			<#list carInternetContentLanguages as contentLanguage>
-                                   			<option value="${contentLanguage}"<#if spring.status.value?? && contentLanguage == spring.status.value?default("")>selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
+                                   			<option value="${contentLanguage}" <#if spring.status.value?? && contentLanguage == spring.status.value?default("")> selected</#if>>${language.getTextSource('cms.car.internetContent.contentLanguage.${contentLanguage.getName()}')}</option>
                                			</#list>
                            			</select>
 								</dd>
@@ -676,7 +710,7 @@
 
                        <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                            <#list brakeDiscMaterials as brakeDiscMaterial>
-                               <option value="${brakeDiscMaterial}"<#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")>selected</#if>>${language.getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
+                               <option value="${brakeDiscMaterial}" <#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")> selected</#if>>${language.getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
                            </#list>
                        </select>
 

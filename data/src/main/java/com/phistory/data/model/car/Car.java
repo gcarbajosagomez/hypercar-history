@@ -66,6 +66,9 @@ public class Car implements GenericObject
     //since right before persisting it the engine is null
     private Engine engine;
 
+    @Column(name = "car_body_materials", nullable = true)
+    private String bodyMaterials;
+
     @Enumerated(ORDINAL)
     @Column(name = "car_body_shape", nullable = false)
     private CarBodyShape bodyShape;

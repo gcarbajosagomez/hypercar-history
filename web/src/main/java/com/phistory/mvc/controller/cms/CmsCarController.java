@@ -63,14 +63,11 @@ public class CmsCarController extends CmsBaseController
 	
     @RequestMapping(value = EDIT_URL,
 				    method = GET)
-    public ModelAndView handleNewCar(Model model)
+    public ModelAndView handleNewCar(Model model, @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand)
     {
     	try
     	{
-    		CarFormEditCommand carFormEditCommand = new CarFormEditCommand();
-    		model.addAttribute(CAR_EDIT_FORM_COMMAND, carFormEditCommand);
     		this.fillModel(model, carFormEditCommand);
-    		
     		return new ModelAndView(CAR_EDIT_VIEW_NAME);
     	}
         catch (Exception e)

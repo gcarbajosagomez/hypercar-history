@@ -130,6 +130,24 @@
 		  									</p>
 	  									</dd>
   										<dt>
+											${language.getTextSource('car.bodyMaterials')} :
+										</dt>
+										<dd>
+											<p class="text-muted">
+												<#if car.bodyMaterials??>
+												    <#assign bodyMaterials = car.bodyMaterials?split(carBodyMaterialsStringSeparator)>
+												    <#list bodyMaterials as bodyMaterial>
+                                                        ${language.getTextSource('car.bodyMaterial.${bodyMaterial}')}
+												        <#if bodyMaterial?has_next>
+												           ${carBodyMaterialsStringSeparator}
+												        </#if>
+												    </#list>
+												<#else>
+													${language.getTextSource('unknown')}
+												</#if>
+											</p>
+										</dd>
+  										<dt>
 											${language.getTextSource('car.bodyShape')} :
 										</dt>
 										<dd>
@@ -141,7 +159,7 @@
 													${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}
 												</#if>
 											</p>
-										</dd>										
+										</dd>
   										<dt>
 											${language.getTextSource('car.roadLegal')} :
 										</dt>
