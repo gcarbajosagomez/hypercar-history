@@ -42,17 +42,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 		http        
         .authorizeRequests()
         	.antMatchers("/*").permitAll()
-            .antMatchers("/" + CMS_CONTEXT + "*").authenticated()
+            .antMatchers("/" + CMS_CONTEXT + "**").authenticated()
             .and()
         .formLogin()
         	.loginPage("/" + CMS_CONTEXT + LOGIN_URL)
         	.defaultSuccessUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGIN_SUCCESS)
             .failureUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGIN_ERROR)
-            .permitAll().and()
+            .permitAll()
+            .and()
 		.logout()
 			.logoutUrl("/" + CMS_CONTEXT + LOGIN_URL + "/" + LOGOUT)
 			.logoutSuccessUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGOUT)
 			.permitAll();
+
+        http.antMatcher("/" + CMS_CONTEXT + "**").headers().defaultsDisabled().cacheControl();
     }
 
 	@Override
