@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 
 import lombok.Getter;
 
@@ -92,8 +93,9 @@ public class CmsBaseController extends BaseController
 	public static final String LOGGED_IN 								= "loggedIn";
     
 	@ModelAttribute
-    public void fillBaseCmsModel(Model model)
+    public void fillBaseCmsModel(Model model, HttpServletResponse response)
     {
+        this.setNotCacheHeadersToResponse(response);
 		model.addAttribute("saveURL", 			        SAVE_URL);
 		model.addAttribute("deleteURL", 		        DELETE_URL);
 		model.addAttribute("manufacturersURL",	        MANUFACTURERS_URL);
@@ -110,5 +112,15 @@ public class CmsBaseController extends BaseController
         binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDao));
         binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDao()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
-    }	
+    }
+
+    /**
+     * Set the necessary HTTP headers to the supplied {@link HttpServletResponse} so that it's not cached by browsers
+     * @param response
+     */
+    private void setNotCacheHeadersToResponse(HttpServletResponse response) {
+        response.setHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
+        response.setHeader("Pragma", "no-cache");
+        response.setHeader("Expires", "0");
+    }
 }

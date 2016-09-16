@@ -25,6 +25,6 @@ public enum PictureLoadAction {
     public static PictureLoadAction map(String name) {
         return Stream.of(PictureLoadAction.values()).filter(action -> action.getName().toLowerCase().equals(name.toLowerCase()))
                                                     .findFirst()
-                                                    .get();
+                                                    .orElseGet(null);
     }
 }

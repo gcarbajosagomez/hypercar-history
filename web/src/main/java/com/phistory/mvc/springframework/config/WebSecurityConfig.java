@@ -55,7 +55,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 			.logoutSuccessUrl("/" + CMS_CONTEXT + LOGIN_URL + QUERY_STRING_SEPARATOR + LOGOUT)
 			.permitAll();
 
-        http.antMatcher("/" + CMS_CONTEXT + "**").headers().defaultsDisabled().cacheControl();
+        http.headers().disable();
     }
 
 	@Override
