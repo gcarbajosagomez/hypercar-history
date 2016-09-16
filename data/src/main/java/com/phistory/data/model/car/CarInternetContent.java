@@ -67,8 +67,7 @@ public class CarInternetContent implements GenericObject
     @Column(name = "content_language", nullable = false)
     private Language contentLanguage;
 
-	@ManyToOne
-	@Cascade(value = SAVE_UPDATE)
+	@ManyToOne(fetch = LAZY)
     @JoinColumn(name = "content_car_id", nullable = false)
     private Car car;
 

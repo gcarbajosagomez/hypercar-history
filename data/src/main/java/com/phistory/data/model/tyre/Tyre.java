@@ -8,6 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.EnumType.*;
+import static javax.persistence.GenerationType.*;
+
 /**
  *main.java.
  * @author Gonzalo
@@ -21,7 +24,7 @@ import javax.persistence.*;
 public class Tyre implements GenericObject
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = AUTO)
     @Column(name = "tyre_id")
     private Long id;
     @Column(name = "tyre_width", nullable = true)
@@ -30,7 +33,7 @@ public class Tyre implements GenericObject
     private Long profile;
     @Column(name = "rim_diameter", nullable = true)
     private Long rimDiameter;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(ORDINAL)
     @Column(name = "tyre_train", nullable = false)
     private CarTyreTrain train;
 

@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+
+import static javax.persistence.FetchType.*;
+
 /**
  *
  * @author Gonzalo
@@ -26,12 +29,12 @@ public class Transmission implements GenericObject
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "transmission_id")
     private Long id;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(value = EnumType.ORDINAL)
     @Column(name = "transmission_type", nullable = false)
     private TransmissionType type;
     @Column(name = "transmission_num_of_gears", nullable = false)
     private Integer numOfGears;
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = LAZY)
     @JoinColumn(name = "transmission_car_id", nullable = true)
     private Car car;
 

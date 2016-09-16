@@ -10,6 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.FetchType.*;
+
 /**
  *main.java.
  * @author Gonzalo
@@ -28,13 +31,13 @@ public class TyreSet implements GenericObject
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tyre_set_id")
     private Long id;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = ALL)
     @JoinColumn(name = "front_tyre_id", nullable = false, unique = true)
     private Tyre frontTyre;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = ALL)
     @JoinColumn(name = "back_tyre_id", nullable = false, unique = true)
     private Tyre backTyre;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = ALL, fetch = LAZY)
     @JoinColumn(name = "tyre_set_car_id", nullable = true)
     private Car car;
 

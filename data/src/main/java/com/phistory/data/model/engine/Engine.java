@@ -8,6 +8,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.EnumType.*;
+
 /**
  *
  * @author Gonzalo
@@ -31,11 +33,11 @@ public class Engine implements GenericObject
     @Column(name = "engine_size", nullable = false)
     private Integer size;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(ORDINAL)
     @Column(name = "engine_type", nullable = false)
     private EngineType type;
 
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(ORDINAL)
     @Column(name = "engine_cylinder_disposition", nullable = false)
     private EngineCylinderDisposition cylinderDisposition;
 

@@ -18,6 +18,7 @@ import java.util.Calendar;
 
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.TemporalType.*;
 import static org.hibernate.annotations.CascadeType.ALL;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
@@ -91,12 +92,12 @@ public class Car implements GenericObject
     private ProductionType productionType;
 
     @Column(name = "car_production_start_date", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(DATE)
     @Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
     private Calendar productionStartDate;
 
     @Column(name = "car_production_end_date", nullable = true)
-    @Temporal(TemporalType.DATE)
+    @Temporal(DATE)
     private Calendar productionEndDate;
 
     @Column(name = "car_weight", nullable = true)

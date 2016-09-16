@@ -11,6 +11,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
@@ -38,7 +39,7 @@ public class Picture implements GenericObject
     @Column(name = "picture_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @Cascade(value = SAVE_UPDATE)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
