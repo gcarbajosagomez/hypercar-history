@@ -40,7 +40,7 @@ a:hover{
 
 .pagani-history-navbar {
     min-height: 8em;
-    margin: 20px;
+    margin: 20px 20px 30px;
     background: #ffffff none !important;
 }
 
@@ -567,7 +567,6 @@ a:hover{
     background-color: black;
     border: 0;
     border-radius: 0px;
-    margin-top: 10px;
 }
 
 .index-car-pictures-carousel-div,
