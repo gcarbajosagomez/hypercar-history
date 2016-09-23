@@ -272,7 +272,19 @@
                            		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>false</option>
                            </select>
                       </dd>
-                      <dt>
+                       <dt>
+                            ${language.getTextSource('cms.car.descriptionES')}
+                       </dt>
+                       <dd class="resizable-dd">
+                            <@spring.formTextarea "CEFC.carForm.descriptionES", "class=form-control cols='50' rows='6'"/>
+                       </dd>
+                       <dt>
+                            ${language.getTextSource('cms.car.descriptionEN')}
+                       </dt>
+                       <dd class="resizable-dd">
+                            <@spring.formTextarea "CEFC.carForm.descriptionEN", "class=form-control cols='50' rows='6'"/>
+                       </dd>
+                       <dt>
                            ${language.getTextSource('car.previewImage')}
                       </dt>
                       <dd>

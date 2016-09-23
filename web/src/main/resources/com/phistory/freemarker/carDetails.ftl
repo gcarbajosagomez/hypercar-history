@@ -34,7 +34,7 @@
     						<#list pictureIds as pictureId>
     							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
       								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" gallery="#images-gallery">
-										<img <#if requestIsDesktop>class="border-radiused-img"</#if> src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
+										<img <#if requestIsDesktop>class="border-radiused-img img-responsive"</#if> src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
 									</a>
     							</div>
 	      					</#list>
@@ -64,7 +64,16 @@
 				</ul>
 			</#if>
 
-			<div id="main-car-details-div" class="panel-body col-lg-12">	
+			<div id="main-car-details-div" class="panel-body col-lg-12">
+                <#if car.descriptionES?? ||  car.descriptionEN??>
+                    <div class="well">
+                        <#if car.descriptionES?? && lang == "es">
+                            ${generic.normalizeJavaString(car.descriptionES?j_string)}
+                        <#elseif car.descriptionEN?? && lang == "en">
+                            ${generic.normalizeJavaString(car.descriptionEN?j_string)}
+                        </#if>
+                    </div>
+                </#if>
 				<#if requestIsDesktop><div class="panel panel-default"></#if>
 					<div class="row panel-body car-details-panel-body">
 						<div class="col-lg-6 col-md-6 col-sm-12">

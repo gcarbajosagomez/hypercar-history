@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mobile.device.Device;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import com.phistory.data.dao.impl.CarInternetContentDAO;
 import com.phistory.data.dao.impl.ContentSearchDao;
 import com.phistory.data.dao.impl.PictureDao;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.LocaleResolver;
 
 /**
  * Base controller that contains common data and functionality 

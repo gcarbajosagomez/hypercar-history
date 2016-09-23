@@ -8,7 +8,7 @@
     <@identifyRequestURL/>
 
 	<!DOCTYPE html>
-    	<#assign lang = language.getTextSource('paganiHistory.language')/>
+    	<#global lang = language.getTextSource('paganiHistory.language')/>
         <html lang="${lang}" class="no-js">
             <head>
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('paganiHistory')}</title>
@@ -125,7 +125,6 @@
               	<div id="main-wrap-div">
 	            	<div class="wrap">
     	        		<nav class="navbar navbar-default pagani-history-navbar" role="navigation">
-        	    		    <#-- Brand and toggle get grouped for better mobile display -->
           					<div class="navbar-header">
                                 <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
 									<img class="main-logo" src="/static/img/pagani-history-logo.png">
@@ -137,7 +136,6 @@
         	  				 </div>
 
           					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
-          					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
     	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('cars')?upper_case}</a></li>
@@ -385,3 +383,7 @@
         });
     </script>
 </#macro>
+
+<#function normalizeJavaString string>
+    <#return string?replace("\\r\\n", "</p><p>")/>
+</#function>

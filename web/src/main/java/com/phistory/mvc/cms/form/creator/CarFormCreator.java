@@ -88,7 +88,9 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             							  null, 
             							  null,
             							  car.getDriveWheelType(),
-            							  car.getRoadLegal());
+            							  car.getRoadLegal(),
+                                          car.getDescriptionES(),
+                                          car.getDescriptionEN());
             
             if (car.getId() != null)
             {
@@ -165,7 +167,9 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             				  carForm.getFuelTankCapacity(),
 							  this.tyreSetFormCreator.createEntityFromForm(carForm.getTyreSetForm()),
             				  carForm.getDriveWheel(),
-            				  carForm.getRoadLegal());
+            				  carForm.getRoadLegal(),
+                              carForm.getDescriptionES(),
+                              carForm.getDescriptionEN());
             
             car.getTransmission().setCar(car);
             car.getBrakeSet().setCar(car);

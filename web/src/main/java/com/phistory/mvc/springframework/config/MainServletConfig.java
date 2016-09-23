@@ -1,40 +1,29 @@
 package com.phistory.mvc.springframework.config;
 
-import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
-import static com.phistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_URI;
-import static java.util.concurrent.TimeUnit.*;
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
-import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.Random;
-
+import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.http.CacheControl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
-import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.Random;
 
-import freemarker.template.TemplateException;
+import static com.phistory.mvc.controller.BaseControllerData.*;
+import static java.util.Locale.ENGLISH;
+import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
  * Configuration class for creating the main servlet's beans 
@@ -48,7 +37,9 @@ import freemarker.template.TemplateException;
 @Import(SqlDatabaseConfig.class)
 @PropertySource(value= "classpath:com/phistory/systemproperty/systemProperties.properties", ignoreResourceNotFound= false)
 public class MainServletConfig extends WebMvcConfigurerAdapter
-{		
+{
+    private static final Integer TWO_WEEKS_SECONDS = 1209600;
+
 	@Bean(name="viewResolver", autowire=Autowire.BY_NAME)
 	public FreeMarkerViewResolver internalResourceViewResolver()
 	{
@@ -94,14 +85,14 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public LocaleResolver localeResolver()
 	{
 		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
-		localeResolver.setDefaultLocale(Locale.ENGLISH);
+		localeResolver.setDefaultLocale(ENGLISH);
 		//in order for the cookie to be accessible via Javascript for example
 		localeResolver.setCookieHttpOnly(false);
 		localeResolver.setCookieName("def_lang");
 		localeResolver.setCookieSecure(false);
 		localeResolver.setCookiePath("/");
 		//2 weeks
-		localeResolver.setCookieMaxAge(1209600);
+		localeResolver.setCookieMaxAge(TWO_WEEKS_SECONDS);
 		
 		return localeResolver;
 	}	
@@ -131,6 +122,10 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		localeChangeInterceptor.setParamName(LANGUAGE_DATA);
         WebContentInterceptor webContentInterceptor = new WebContentInterceptor();
         webContentInterceptor.setCacheControl(CacheControl.maxAge(30, MINUTES));
+		Properties cacheMappings = new Properties();
+        cacheMappings.setProperty("/" + CARS_URL + "/*", "-1");
+        cacheMappings.setProperty("/" + PICTURES_URL + "/*", TWO_WEEKS_SECONDS.toString());
+        webContentInterceptor.setCacheMappings(cacheMappings);
 
 		registry.addInterceptor(localeChangeInterceptor);
 		registry.addInterceptor(webContentInterceptor);

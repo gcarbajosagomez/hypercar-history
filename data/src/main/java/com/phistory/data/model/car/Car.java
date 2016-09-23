@@ -137,6 +137,12 @@ public class Car implements GenericObject
     @Column(name = "car_road_legal", nullable = false, columnDefinition = "tinyint(1) default 1")
     private Boolean roadLegal;
 
+    @Column(name = "car_description_es", nullable = true)
+    private String descriptionES;
+
+    @Column(name = "car_description_en", nullable = true)
+    private String descriptionEN;
+
     @Override
     public Long getId() {
         return id;

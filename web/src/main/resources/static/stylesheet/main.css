@@ -550,6 +550,13 @@ a:hover{
     margin-bottom: 10px !important;
 }
 
+.resizable-dd {
+    resize: vertical;
+    overflow: auto;
+    min-height: 150px;
+    height: inherit !important;
+}
+
 .carousel {
     min-height: initial;
 }

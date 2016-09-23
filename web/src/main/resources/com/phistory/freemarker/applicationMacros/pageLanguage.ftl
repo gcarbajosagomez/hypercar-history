@@ -10,10 +10,10 @@
 		   { 
 		   		ajaxCallBeingProcessed = true;
 		   		
-				if (mainForm.action.search("&lang=") != -1)
+				if (mainForm.action.search(/[&?]${languageQueryString}=/) != -1)
 				{
 					<#--The lang param must be removed from the URL before sending it -->
-					mainForm.action = mainForm.action.replace(/[&?]lang=e[ns]/,'');
+					mainForm.action = mainForm.action.replace(/[&?]${languageQueryString}=e[ns]/,'');
 				}
 		   		
 		   		$.ajax({            

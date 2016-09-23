@@ -62,12 +62,10 @@
           			  <dt>
               			   ${language.getTextSource('manufacturer.story')}
                  	  </dt>
-                 	  <div>
-               		      <dd>               		  	   
-                   		   		<@spring.formTextarea "MEFC.manufacturerForm.story", "class=form-control cols='50' rows='1'"/>
-                   		   		<@spring.showErrors '<br>'/>                   		 
-               		      </dd>          
-               		  </div> 
+					  <dd class="resizable-dd">
+                   	  		<@spring.formTextarea "MEFC.manufacturerForm.story", "class=form-control cols='50' rows='6'"/>
+                   		   	<@spring.showErrors '<br>'/>
+               		  </dd>
           			  <dt>
                			   ${language.getTextSource('manufacturer.logo')}
                 	  </dt>

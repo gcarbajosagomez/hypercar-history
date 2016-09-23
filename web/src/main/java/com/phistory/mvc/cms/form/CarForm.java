@@ -101,6 +101,10 @@ public class CarForm
     @NotNull(message = "The field must not be blank.")
     private Boolean roadLegal = true;
 
+    private String descriptionES;
+
+    private String descriptionEN;
+
     public CarForm()
     {
         this.engineForm         = new EngineForm();

@@ -24,7 +24,7 @@
     						<#list carNamesToPictureIds?keys as carName>
     						    <#list carNamesToPictureIds[carName] as pictureId>
     							    <div id="pic-div-${pictureId}" class="item <#if carName_index == 0 && pictureId_index == 0> active </#if>">
-      								    <img <#if requestIsDesktop>class="border-radiused-img"</#if> src="${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${carName}">
+      								    <img <#if requestIsDesktop>class="border-radiused-img img-responsive"</#if> src="${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${carName}">
       								    <div class="carousel-caption">${carName}</div>
 		      					    </div>
     		  				    </#list>
