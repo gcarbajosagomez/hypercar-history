@@ -11,6 +11,7 @@ import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_COOKIE_NAM
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
 import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM;
+import static com.phistory.mvc.controller.BaseControllerData.DO_NOT_TRACK_REQUEST_PARAM;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CmsBaseController.EDIT_URL;
 import static com.phistory.mvc.controller.cms.CmsBaseController.TECHNOLOGY_STACK_URL;
@@ -45,5 +46,6 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("languageCookieName",	LANGUAGE_COOKIE_NAME);
 		model.addAttribute("cmsContext", 			CMS_CONTEXT);
 		model.addAttribute("languageQueryString",	LANGUAGE_DATA);
+		model.addAttribute("doNotTrackParam",		DO_NOT_TRACK_REQUEST_PARAM);
 	}
 }

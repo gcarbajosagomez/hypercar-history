@@ -29,7 +29,8 @@ public class BaseControllerData
     public static final String CONTENT_TO_SEARCH     			= "cts";
     public static final String SEARCH_TOTAL_RESULTS_DATA 		= "searchTotalResultsData";
     public static final String LANGUAGE_DATA					= "l";
-	
+    public static final String DO_NOT_TRACK_REQUEST_PARAM		= "dnt";
+
     /*************************
      **********Actions********
      *************************/

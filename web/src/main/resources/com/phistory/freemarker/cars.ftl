@@ -10,12 +10,12 @@
 		<div class="col-lg-2">
 			<div class="list-group" style="margin-top: 10px;">
 				<#list models as car>
-    				<a class="list-group-item" href=${carsURL}/${car.id}>
+    				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
 				<#if models??>
-					<a class="list-group-item" <#if requestIsCars>href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"</#if>>
+					<a class="list-group-item" <#if requestIsCars>href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'</#if>>
     					<h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')}</h5>
     				</a>
     			</#if>
@@ -47,12 +47,12 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-<#if requestIsDesktop>right<#else>left</#if>" role="menu" aria-labelledby="cars-per-page-dropdown">
-                                    <li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=5">5</a></li>
-                                    <li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=10">10</a></li>
-                                    <li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>
-                                    <li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=20">20</a></li>
+                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=5"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>5</a></li>
+                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=10"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>10</a></li>
+                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=15"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>15</a></li>
+                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=20"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>20</a></li>
                                     <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${language.getTextSource('pagination.allCars')}</a></li>
+                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>${language.getTextSource('pagination.allCars')}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -132,14 +132,15 @@
             <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                        <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
-                        	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/>' alt="${car.manufacturer.name} ${modelName}">
+                        <a href='<@spring.url "/${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
+                                 alt="${car.manufacturer.name} ${modelName}">
                     	</a>
 					</div>
                     <figcaption>
-                        <a href='<@spring.url "/${carsURL}/${car.id}"/>'>
+                        <a href='<@spring.url "/${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
                             <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
-                                            <#if (requestIsDesktop && modelName?length > 33) || (modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
+                                            <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>
                     </figcaption>
                 </figure>

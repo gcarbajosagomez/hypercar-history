@@ -61,7 +61,7 @@
 	    	        	 	    	
 	    	        	     	if (data != null)
 	    	        	     	{
-	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNumData + "&${carsPerPage}=" + data.carsPerPageData); 
+	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNumData + "&${carsPerPage}=" + data.carsPerPageData<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 								}
 						  });  
 				}                      
@@ -130,7 +130,7 @@
                                         <#else>
                                             $('#car-list-div').unblock();
                                         </#if>
-        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch});
+        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch}<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
     									options.currentPage = contentSearchDto.${pagNum};
         	        	 	    		$('#pagination-ul').bootstrapPaginator(options);
     									$('#pagination-ul').addClass('cursor-pointer');

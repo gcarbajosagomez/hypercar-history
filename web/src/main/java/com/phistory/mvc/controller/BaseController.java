@@ -19,6 +19,7 @@ import com.phistory.data.dao.impl.CarDao;
 import com.phistory.data.dao.impl.CarInternetContentDAO;
 import com.phistory.data.dao.impl.ContentSearchDao;
 import com.phistory.data.dao.impl.PictureDao;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Base controller that contains common data and functionality 
@@ -51,14 +52,16 @@ public class BaseController extends BaseControllerData
 	@ModelAttribute
     public void fillBaseModel(Model model,
 							  Device device,
-    						  HttpServletRequest request)
+    						  HttpServletRequest request,
+							  @RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt)
 	{
 		String requestURI = this.extractRequestUriFromRequest(request);
 		log.info("Handling " + request.getMethod() + " request to URI " + requestURI);
 		
-		model.addAttribute("requestURI",  		 requestURI);
-		model.addAttribute("requestIsCarsList",  requestURI.contains(CARS_URL));
-		model.addAttribute("requestIsDesktop",   device.isNormal());
+		model.addAttribute("requestURI",  		requestURI);
+		model.addAttribute("requestIsCarsList", requestURI.contains(CARS_URL));
+		model.addAttribute("requestIsDesktop",  device.isNormal());
+		model.addAttribute("doNotTrack",        dnt);
 
 		this.baseModelFiller.fillModel(model);
 	}

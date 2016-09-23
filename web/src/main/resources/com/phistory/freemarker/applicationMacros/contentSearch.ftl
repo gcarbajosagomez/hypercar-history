@@ -14,7 +14,7 @@
 			         			   
 			$.ajax({            
 		        	type:'GET',
-			        url: "/${modelsSearchURL}",
+			        url: "/${modelsSearchURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>",
 		    	    data: contentSearchDto,
 			        beforeSend: function(xhr)
 		    	    {
@@ -47,7 +47,7 @@
 						$("#main-car-list-div").append(noContentFoundElements);				
 		            }                      
 		
-					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts);
+					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 					setupContentSearchEventListeners();	
 				}
 				

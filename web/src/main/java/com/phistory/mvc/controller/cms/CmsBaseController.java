@@ -38,20 +38,7 @@ import com.phistory.data.model.engine.Engine;
  */
 @Controller
 @RequestMapping(value = CMS_CONTEXT)
-public class CmsBaseController extends BaseController
-{
-	@Getter
-	@Inject
-    private ManufacturerDao manufacturerDao;
-	@Getter
-	@Inject
-    private EngineDao engineDao;	
-	@Inject
-    private CarDao carDAO;
-	@Getter
-	@Inject
-    private CarInternetContentDAO carInternetContentDAO;	
-	
+public class CmsBaseController extends BaseController {
 	/********************
      *******URLs*********
      ********************/
@@ -91,8 +78,24 @@ public class CmsBaseController extends BaseController
 	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			= "MEFC";
 	public static final String PICTURE_EDIT_FORM_COMMAND 			    = "PEFC";
 	public static final String LOGGED_IN 								= "loggedIn";
-    
-	@ModelAttribute
+
+    private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
+    private static final String PRAGMA_HTTP_HEADER = "Pragma";
+    private static final String EXPIRES_HTTP_HEADER = "Expires";
+
+    @Getter
+    @Inject
+    private ManufacturerDao manufacturerDao;
+    @Getter
+    @Inject
+    private EngineDao engineDao;
+    @Inject
+    private CarDao carDAO;
+    @Getter
+    @Inject
+    private CarInternetContentDAO carInternetContentDAO;
+
+    @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response)
     {
         this.setNotCacheHeadersToResponse(response);
@@ -119,8 +122,8 @@ public class CmsBaseController extends BaseController
      * @param response
      */
     private void setNotCacheHeadersToResponse(HttpServletResponse response) {
-        response.setHeader("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate");
-        response.setHeader("Pragma", "no-cache");
-        response.setHeader("Expires", "0");
+        response.setHeader(CACHE_CONTROL_HTTP_HEADER, "no-cache, no-store, max-age=0, must-revalidate");
+        response.setHeader(PRAGMA_HTTP_HEADER, "no-cache");
+        response.setHeader(EXPIRES_HTTP_HEADER, "0");
     }
 }

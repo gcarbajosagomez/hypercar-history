@@ -92,7 +92,7 @@
                             $.getScript('/static/javascript/lib/toucheffects.js', null);
 
         					$.cookiesDirective({
-            					privacyPolicyUri: '/${cookiesPolicyURL}',
+            					privacyPolicyUri: '/${cookiesPolicyURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>',
             					position: 'bottom',
 								message: '${language.getTextSource('cookiesDirectiveMessage')}',
 								deleteAndBlockCookiesMessage: '${language.getTextSource('cookiesDirectiveMessage.deleteAndBlockCookiesMessage')}',
@@ -116,7 +116,7 @@
 							});
     					});
 
-                        <#if !requestIsCMS>
+                        <#if !requestIsCMS && !doNotTrack>
                             <@addGoogleAnalyticsScript/>
                         </#if>
 					</script>
@@ -127,7 +127,7 @@
     	        		<nav class="navbar navbar-default pagani-history-navbar" role="navigation">
         	    		    <#-- Brand and toggle get grouped for better mobile display -->
           					<div class="navbar-header">
-                                <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/>'>
+                                <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
 									<img class="main-logo" src="/static/img/pagani-history-logo.png">
 								</a>
 
@@ -140,7 +140,7 @@
           					 	<#-- Collect the nav links, forms, and other content for toggling -->
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
-    	          						<li><a href='<@spring.url "/${carsURL}"/>'>${language.getTextSource('cars')?upper_case}</a></li>
+    	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('cars')?upper_case}</a></li>
                                         <div class="divider navbar-divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
@@ -152,7 +152,8 @@
           													    <h4>${language.getTextSource('language.spanish')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/>' title="${language.getTextSource('language.spanish')?upper_case}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
+                                                                     title="${language.getTextSource('language.spanish')?upper_case}"/>
           													</div>
           													<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
@@ -168,7 +169,8 @@
 																<h4>${language.getTextSource('language.english')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/>' title="${language.getTextSource('language.english')?upper_case}"/>
+          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
+                                                                     title="${language.getTextSource('language.english')?upper_case}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
