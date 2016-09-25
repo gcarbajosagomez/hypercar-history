@@ -3,6 +3,7 @@
 <#import "genericFunctionalities.ftl" as generic/>
 
 <#macro addSetPageLanguage chunkedModelsList=[]>
+
 	<script type='application/javascript'>
 		function setPageLanguage(locale, mainForm)
 		{  
@@ -32,6 +33,7 @@
 		                	$('#spanish-loading-gif').removeClass('sr-only');
 			            }
 
+                        window.history.pushState(null, '', mainForm.action);
                         <@generic.addLoadingSpinnerToComponentScript "main-wrap-div"/>
                         addCRSFTokenToAjaxRequest(xhr);
 		   			}

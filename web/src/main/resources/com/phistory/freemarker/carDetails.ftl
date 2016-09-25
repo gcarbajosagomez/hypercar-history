@@ -68,9 +68,9 @@
                 <#if car.descriptionES?? ||  car.descriptionEN??>
                     <div class="well">
                         <#if car.descriptionES?? && lang == "es">
-                            ${generic.normalizeJavaString(car.descriptionES?j_string)}
+                            ${generic.normalizeCarDescriptionString(car.descriptionES?j_string)}
                         <#elseif car.descriptionEN?? && lang == "en">
-                            ${generic.normalizeJavaString(car.descriptionEN?j_string)}
+                            ${generic.normalizeCarDescriptionString(car.descriptionEN?j_string)}
                         </#if>
                     </div>
                 </#if>

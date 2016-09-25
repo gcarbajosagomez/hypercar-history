@@ -342,12 +342,12 @@
 
     <#if requestURI?contains(cmsContext)>
         <#global requestIsCMS = true/>
-        <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL)>
+        <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL + ".{0,}")>
             <#global requestIsCarEdit = true/>
         </#if>
     </#if>
 	<#if requestURI?contains(carsURL)>
-        <#if requestURI?matches("/" + carsURL + "/([0-9]{1,})")>
+        <#if requestURI?matches("/" + carsURL + "/([0-9]{1,}).{0,}")>
             <#global requestIsCarDetails = true/>
         <#else>
             <#global requestIsCars = true/>
@@ -384,6 +384,8 @@
     </script>
 </#macro>
 
-<#function normalizeJavaString string>
-    <#return string?replace("\\r\\n", "</p><p>")/>
+<#function normalizeCarDescriptionString string>
+    <#assign normalizedString>${string?replace("\\r\\n", "<br/>")}</#assign>
+    <#assign normalizedString>${normalizedString?replace("(.)(.{0,})", "<d class=\"big-text\">$1</d><d>$2</d>", "r")}</#assign>
+    <#return normalizedString/>
 </#function>

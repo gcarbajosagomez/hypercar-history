@@ -10,6 +10,11 @@ a:hover{
     text-decoration: none !important;
 }
 
+.big-text {
+    font-size: 32px;
+    font-weight: bold;
+}
+
 .border-radiused-img {
     border-radius: 3px;
 }
