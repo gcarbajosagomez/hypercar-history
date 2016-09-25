@@ -45,7 +45,7 @@ a:hover{
 
 .pagani-history-navbar {
     min-height: 8em;
-    margin: 20px 20px 30px;
+    margin: 20px 20px 20px;
     background: #ffffff none !important;
 }
 
@@ -278,6 +278,7 @@ a:hover{
 
 .pagani-history-footer h4 {
     color: #337ab7;
+    font-weight: bold;
 }
 
 .lower-footer-row {
@@ -437,6 +438,14 @@ a:hover{
     height: auto;
     max-height: 500px;
     padding: 0 !important;
+}
+
+.list-group {
+    margin-top: 10px;
+}
+
+.list-group > a > h5 {
+    color: #337ab7;
 }
 
 .main-panel {

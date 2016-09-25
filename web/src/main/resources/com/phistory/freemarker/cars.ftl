@@ -8,7 +8,7 @@
 <div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="main-car-list-container row">
 		<div class="col-lg-2">
-			<div class="list-group" style="margin-top: 10px;">
+			<div class="list-group">
 				<#list models as car>
     				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
