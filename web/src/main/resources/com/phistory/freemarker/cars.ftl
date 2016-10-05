@@ -3,7 +3,7 @@
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 <#import "applicationMacros/pagination.ftl" as pagination/>
 
-<@generic.startPage language.getTextSource('title.allModels')/>
+<@generic.startPage language.getTextSource('title.allModels', [models?size])/>
 
 <div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="main-car-list-container row">
