@@ -36,13 +36,13 @@
 					</ul>
 				</div>
                 <div id="car-pagination-main-div" class="col-lg-12">
-                    <div class="col-lg-7 col-md-8 col-sm-10 <#if requestIsDesktop>col-xs-11<#else>col-xs-12</#if> center-block well well-sm">
+                    <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12 center-block well well-sm">
                         <div id="pagination-row-div" class="row">
-                            <div class="text-left col-lg-8 col-md-8 <#if requestIsDesktop>col-sm-8 col-xs-12<#else>col-sm-12 col-xs-12</#if>">
+                            <div class="text-left col-lg-8 col-md-8 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
                                 <ul id="pagination-ul"></ul>
                             </div>
-                            <div class="text-right col-lg-4 col-md-4 <#if requestIsDesktop>col-sm-4 col-xs-12<#else>col-sm-12 col-xs-12</#if>">
-                                <button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle pull-left" style="padding: 10px; margin-top: 15px" data-toggle="dropdown">
+                            <div class="text-right col-lg-4 col-md-4 <#if requestIsDesktop>col-sm-4 col-xs-4<#else>col-sm-12 col-xs-12</#if>">
+                                <button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle <#if requestIsDesktop>pull-right<#else>pull-left</#if>" data-toggle="dropdown">
                                     ${language.getTextSource('pagination.carsPerPage')}
                                     <span class="caret"></span>
                                 </button>
