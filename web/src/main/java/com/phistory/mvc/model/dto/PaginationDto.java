@@ -29,7 +29,7 @@ public class PaginationDto
 	}
 
 	/**
-	 * Calculate the index of the first result based on the number of the current page and items per page
+	 * Calculate the index (0 based) of the first result based on the number of the current page and items per page
 	 * 
 	 * @param itemsPerPage
 	 */
@@ -37,7 +37,11 @@ public class PaginationDto
 	{
 		if(itemsPerPage != null && this.pagNum > 1)
     	{
-    		return (this.pagNum - 1) * itemsPerPage;
+    		int firstResult = (this.pagNum - 1) * itemsPerPage;
+			if (firstResult > 0) {
+                //it's 0 based
+                return firstResult--;
+            }
     	}
 		return 0;
 	}

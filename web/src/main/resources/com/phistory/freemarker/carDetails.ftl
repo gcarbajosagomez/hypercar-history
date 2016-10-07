@@ -379,7 +379,7 @@
   												<#if unitsOfMeasure == unitsOfMeasureMetric>	
 													${carUtils.writeCarNumericData (car.engine.maxPower?default(-1))}<#if car.engine.maxPower??><em class="measure-unit-text">${language.getTextSource('CV')}</em></#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-                                                    ${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)?default(-1))}<#if car.engine.maxPower??><em class="measure-unit-text">${language.getTextSource('HP')}</em></#if>
+                                                    ${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)?default(-1))}<#if car.engine.maxPower??><em class="measure-unit-text">${language.getTextSource('BHP')}</em></#if>
 												</#if>												
   												<#if car.engine.maxPower??>	
   												    (${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.736)?default(-1))}<em class="measure-unit-text">${language.getTextSource('KW')}</em>)

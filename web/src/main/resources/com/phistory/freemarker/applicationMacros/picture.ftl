@@ -19,7 +19,7 @@
             var newCarPictureAreaDiv = $('<div>', {'id': 'car-picture-area-' + numberOfCarPictureAreas});
             newCarPictureAreaDiv.append($('<img>', {
                 'id': 'car-picture-' + numberOfCarPictureAreas,
-                'class': "preview-img resizable-img car-picture"
+                'class': "thumbnail resizable-img"
             }));
 
             var pictureFileInputTd = $('<td>');

@@ -104,12 +104,11 @@ public class ContentSearchController extends BaseController implements Initializ
 
     private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDto contentSearchDto) {
         int fromIndex = contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
-        int toIndex = contentSearchDto.getCarsPerPage();
+        int toIndex = fromIndex + contentSearchDto.getCarsPerPage();
 
         if (toIndex > searchResults.size()) {
             toIndex = searchResults.size();
         }
-        toIndex = fromIndex + toIndex;
         return searchResults.subList(fromIndex, toIndex);
     }
 	

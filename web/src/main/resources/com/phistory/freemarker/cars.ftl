@@ -70,8 +70,18 @@
 	<#if cars?? && (models?size > carsPerPageData)>
 		$( document ).ready(function()
 		{
-  			<@pagination.createCarsPagination chunkedModelsList/>
-		});
+            <#if requestIsCars && (chunkedModelsList?size > 0)>
+                <@pagination.createCarsPagination chunkedModelsList/>
+            <#elseif requestIsModelsSearch>
+                var contentSearchDto = {
+                                        ${pagNum} 			: 1,
+                                        ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+                                        ${contentToSearch} : $("#content-search-input")[0].value,
+                                        searchTotalResults : $("#search-total-results")[0].value
+                };
+                <@pagination.createContentSearchPaginationFunction/>
+            </#if>
+		    });
 	</#if>
 
 	function writeCarListRow(cars, zIndex)

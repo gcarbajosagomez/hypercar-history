@@ -437,7 +437,7 @@
                            ${language.getTextSource('engine.maxPower')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxPower", "class=form-control placeholder=${language.getTextSource('HP')}", "text"/>
+                           <@spring.formInput "CEFC.carForm.engineForm.maxPower", "class=form-control placeholder=${language.getTextSource('CV')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>

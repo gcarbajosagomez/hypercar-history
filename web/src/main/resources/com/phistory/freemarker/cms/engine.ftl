@@ -94,6 +94,13 @@
                 document.getElementById('carForm.engineForm.cylinderDisposition').value = "";
             }
 
+            if (engine.cylinderBankAngle != null) {
+                document.getElementById('carForm.engineForm.cylinderBankAngle').value = engine.cylinderBankAngle;
+            }
+            else {
+                document.getElementById('carForm.engineForm.cylinderBankAngle').value = "";
+            }
+
             if (engine.numberOfCylinders != null) {
                 document.getElementById('carForm.engineForm.numberOfCylinders').value = engine.numberOfCylinders;
             }

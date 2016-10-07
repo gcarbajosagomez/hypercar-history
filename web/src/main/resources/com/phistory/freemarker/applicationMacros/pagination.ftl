@@ -2,7 +2,7 @@
 <#import "genericFunctionalities.ftl" as generic/>
 
 <#macro createCarsPagination chunkedModelsList=[]>
-	var options =
+	var paginationOptions =
    	{
 	    bootstrapMajorVersion : 3,
 		currentPage: ${pagNumData},
@@ -68,12 +68,12 @@
 	    	}
 	}        
 
-	$('#pagination-ul').bootstrapPaginator(options);
+	$('#pagination-ul').bootstrapPaginator(paginationOptions);
 	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
 
 <#macro createContentSearchPaginationFunction>
-		var options =
+		var paginationOptions =
     	{
 	    	bootstrapMajorVersion : 3,
     	    currentPage: contentSearchDto.${pagNum},
@@ -131,8 +131,8 @@
                                             $('#car-list-div').unblock();
                                         </#if>
         	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch}<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
-    									options.currentPage = contentSearchDto.${pagNum};
-        	        	 	    		$('#pagination-ul').bootstrapPaginator(options);
+    									paginationOptions.currentPage = contentSearchDto.${pagNum};
+        	        	 	    		$('#pagination-ul').bootstrapPaginator(paginationOptions);
     									$('#pagination-ul').addClass('cursor-pointer');
         	        	 	    		
         	        	 	    		ajaxCallBeingProcessed = false;
@@ -143,6 +143,6 @@
             	}
     	}        
 
-    	$('#pagination-ul').bootstrapPaginator(options);
+    	$('#pagination-ul').bootstrapPaginator(paginationOptions);
     	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
