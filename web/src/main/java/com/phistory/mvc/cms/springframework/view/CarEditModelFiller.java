@@ -52,7 +52,7 @@ public class CarEditModelFiller implements ModelFiller
     	model.addAttribute("engineLayouts", 				EngineLayout.values());
     	model.addAttribute("engines", 						this.engineDao.getAll());
     	model.addAttribute(ENGINE, 							ENGINE);
-    	model.addAttribute("bodyMaterials", 				CarBodyMaterial.values());
+    	model.addAttribute("chassisMaterials", 				CarBodyMaterial.values());
     	model.addAttribute("bodyShapes", 					CarBodyShape.values());
     	model.addAttribute("seatsConfigs", 					CarSeatsConfig.values());
     	model.addAttribute("brakeDiscMaterials", 			BrakeDiscMaterial.values());

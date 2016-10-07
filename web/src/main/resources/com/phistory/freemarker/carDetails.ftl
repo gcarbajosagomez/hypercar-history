@@ -139,16 +139,16 @@
 		  									</p>
 	  									</dd>
   										<dt>
-											${language.getTextSource('car.bodyMaterials')} :
+											${language.getTextSource('car.chassisMaterials')} :
 										</dt>
 										<dd>
 											<p class="text-muted">
-												<#if car.bodyMaterials??>
-												    <#assign bodyMaterials = car.bodyMaterials?split(carBodyMaterialsStringSeparator)>
-												    <#list bodyMaterials as bodyMaterial>
+												<#if car.chassisMaterials??>
+												    <#assign chassisMaterials = car.chassisMaterials?split(carchassisMaterialsStringSeparator)>
+												    <#list chassisMaterials as bodyMaterial>
                                                         ${language.getTextSource('car.bodyMaterial.${bodyMaterial}')}
 												        <#if bodyMaterial?has_next>
-												           ${carBodyMaterialsStringSeparator}
+												           ${carchassisMaterialsStringSeparator}
 												        </#if>
 												    </#list>
 												<#else>

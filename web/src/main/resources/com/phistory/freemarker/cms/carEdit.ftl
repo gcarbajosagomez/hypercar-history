@@ -98,7 +98,7 @@
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
-                           ${language.getTextSource('car.bodyMaterials')}
+                           ${language.getTextSource('car.chassisMaterials')}
                       </dt>
                       <dd class="body-materials-dd">
                           <div class="well">
@@ -107,12 +107,12 @@
                                         1
                                     </dt>
                                     <dd class="body-material-dd">
-                                        <@spring.bind "CEFC.carForm.bodyMaterials"/>
+                                        <@spring.bind "CEFC.carForm.chassisMaterials"/>
                                         <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
                                             <option value="" selected></option>
                                            
-                                            <#list bodyMaterials as bodyMaterial>
-                                                <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 0) && bodyMaterial == CEFC.carForm.bodyMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            <#list chassisMaterials as bodyMaterial>
+                                                <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 0) && bodyMaterial == CEFC.carForm.chassisMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
@@ -123,8 +123,8 @@
                                         <select id="${spring.status.expression}[1]" name="${spring.status.expression}[1]" class="form-control">
                                             <option value="" selected></option>
 
-                                            <#list bodyMaterials as bodyMaterial>
-                                               <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 1) && bodyMaterial == CEFC.carForm.bodyMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            <#list chassisMaterials as bodyMaterial>
+                                               <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 1) && bodyMaterial == CEFC.carForm.chassisMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>

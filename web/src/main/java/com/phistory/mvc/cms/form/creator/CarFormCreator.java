@@ -50,16 +50,16 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
     {
         try
         {
-        	List<CarBodyMaterial> bodyMaterials = new ArrayList<>();
-            String bodyMaterialsString = car.getBodyMaterials();
+        	List<CarBodyMaterial> chassisMaterials = new ArrayList<>();
+            String chassisMaterialsString = car.getChassisMaterials();
 
-            if (StringUtils.hasText(bodyMaterialsString)) {
-                if (bodyMaterialsString.contains(CAR_BODY_MATERIAL_STRING_SEPARATOR)) {
-                    bodyMaterials = Stream.of(bodyMaterialsString.split(CAR_BODY_MATERIAL_STRING_SEPARATOR))
+            if (StringUtils.hasText(chassisMaterialsString)) {
+                if (chassisMaterialsString.contains(CAR_BODY_MATERIAL_STRING_SEPARATOR)) {
+                    chassisMaterials = Stream.of(chassisMaterialsString.split(CAR_BODY_MATERIAL_STRING_SEPARATOR))
                                           .map(CarBodyMaterial::map)
                                           .collect(Collectors.toList());
                 } else {
-                    bodyMaterials.add(CarBodyMaterial.map(bodyMaterialsString));
+                    chassisMaterials.add(CarBodyMaterial.map(chassisMaterialsString));
                 }
             }
 
@@ -68,7 +68,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             							  car.getModel(),
             							  car.getEngineLayout(),
             							  this.engineFormCreator.createFormFromEntity(car.getEngine()),
-                                          bodyMaterials,
+                                          chassisMaterials,
             							  car.getBodyShape(),
             							  car.getCarSeatsConfig(),
             							  car.getTopSpeed(),
@@ -129,7 +129,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
     {
         try
         {
-            List<String> carBodyMaterialsStrings = carForm.getBodyMaterials().stream()
+            List<String> carchassisMaterialsStrings = carForm.getChassisMaterials().stream()
                                                                              .map(carBodyMaterial -> {
                                                                                  if (carBodyMaterial != null) {
                                                                                      return carBodyMaterial.getName();
@@ -139,9 +139,9 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
                                                                              .filter(Objects::nonNull)
                                                                              .collect(Collectors.toList());
 
-            String carBodyMaterials = null;
-            if (!carBodyMaterialsStrings.isEmpty()) {
-                carBodyMaterials = String.join(CAR_BODY_MATERIAL_STRING_SEPARATOR, carBodyMaterialsStrings);
+            String carchassisMaterials = null;
+            if (!carchassisMaterialsStrings.isEmpty()) {
+                carchassisMaterials = String.join(CAR_BODY_MATERIAL_STRING_SEPARATOR, carchassisMaterialsStrings);
             }
 
             Car car = new Car(carForm.getId(),
@@ -149,7 +149,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm>
             				  carForm.getModel(),
             				  carForm.getEngineLayout(),
 							  this.engineFormCreator.createEntityFromForm(carForm.getEngineForm()),
-                              carBodyMaterials,
+                              carchassisMaterials,
             				  carForm.getBodyShape(),
             				  carForm.getSeatsConfig(),
             				  carForm.getTopSpeed(),

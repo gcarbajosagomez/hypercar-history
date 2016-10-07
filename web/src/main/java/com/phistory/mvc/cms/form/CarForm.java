@@ -47,7 +47,7 @@ public class CarForm
     @NotNull(message = "The field must not be blank.")
     private EngineForm engineForm;
 
-    private List<CarBodyMaterial> bodyMaterials;
+    private List<CarBodyMaterial> chassisMaterials;
 
     @NotNull(message = "The field must not be blank.")
     private CarBodyShape bodyShape;

@@ -26,6 +26,6 @@ public class CarModelFiller implements ModelFiller
 		model.addAttribute("unitsOfMeasureMetric", 	    		UNITS_OF_MEASURE_METRIC);
 		model.addAttribute("unitsOfMeasureImperial",    		UNITS_OF_MEASURE_IMPERIAL);
 		model.addAttribute("paginationURL",    					PAGINATION_URL);
-		model.addAttribute("carBodyMaterialsStringSeparator", 	CAR_BODY_MATERIAL_STRING_SEPARATOR);
+		model.addAttribute("carchassisMaterialsStringSeparator", 	CAR_BODY_MATERIAL_STRING_SEPARATOR);
 	}
 }
