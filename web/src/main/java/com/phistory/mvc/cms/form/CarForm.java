@@ -7,7 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 
-import com.phistory.mvc.cms.command.CarBodyMaterial;
+import com.phistory.mvc.cms.command.CarMaterial;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -47,7 +47,9 @@ public class CarForm
     @NotNull(message = "The field must not be blank.")
     private EngineForm engineForm;
 
-    private List<CarBodyMaterial> chassisMaterials;
+    private List<CarMaterial> chassisMaterials;
+
+    private List<CarMaterial> bodyMaterials;
 
     @NotNull(message = "The field must not be blank.")
     private CarBodyShape bodyShape;

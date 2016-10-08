@@ -5,16 +5,16 @@ import com.phistory.data.model.car.Car;
 import java.util.stream.Stream;
 
 /**
- * Enumeration of the different materials a {@link Car}'s body can be made of
+ * Enumeration of the different materials a {@link Car} can be made of
  *
  * Created by gonzalo on 9/11/16.
  */
-public enum CarBodyMaterial {
+public enum CarMaterial {
     CARBON_FIBER("carbonFiber"), ALUMINIUM("aluminium"), TITANIUM("titanium"), FIBER_GLASS("fiberGlass"), STEEL("steel");
 
     private String name;
 
-    CarBodyMaterial(String name) {
+    CarMaterial(String name) {
         this.name = name;
     }
 
@@ -22,8 +22,8 @@ public enum CarBodyMaterial {
         return name;
     }
 
-    public static CarBodyMaterial map(String name) {
-        return Stream.of(CarBodyMaterial.values())
+    public static CarMaterial map(String name) {
+        return Stream.of(CarMaterial.values())
                      .filter(carBodyMaterial -> carBodyMaterial.getName().toLowerCase().equals(name.toLowerCase()))
                      .findFirst()
                      .get();

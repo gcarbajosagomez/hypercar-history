@@ -100,31 +100,65 @@
                       <dt>
                            ${language.getTextSource('car.chassisMaterials')}
                       </dt>
-                      <dd class="body-materials-dd">
+                      <dd class="car-materials-dd">
                           <div class="well">
                               <dl class="dl-horizontal dl-horizontal-edit text-left">
-                                    <dt class="body-material-dt">
+                                    <dt class="car-material-dt">
                                         1
                                     </dt>
-                                    <dd class="body-material-dd">
+                                    <dd class="car-material-dd">
                                         <@spring.bind "CEFC.carForm.chassisMaterials"/>
                                         <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
                                             <option value="" selected></option>
                                            
-                                            <#list chassisMaterials as bodyMaterial>
-                                                <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 0) && bodyMaterial == CEFC.carForm.chassisMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            <#list carMaterials as material>
+                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.carForm.chassisMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
-                                    <dt class="body-material-dt">
+                                    <dt class="car-material-dt">
                                         2
                                     </dt>
-                                    <dd class="body-material-dd">
+                                    <dd class="car-material-dd">
                                         <select id="${spring.status.expression}[1]" name="${spring.status.expression}[1]" class="form-control">
                                             <option value="" selected></option>
 
-                                            <#list chassisMaterials as bodyMaterial>
-                                               <option value="${bodyMaterial}" <#if spring.status.value?? && (spring.status.value?length > 1) && bodyMaterial == CEFC.carForm.chassisMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.bodyMaterial.${bodyMaterial.getName()}')}</option>
+                                            <#list carMaterials as material>
+                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.carForm.chassisMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                            </#list>
+                                        </select>
+                                    </dd>
+                              </dl>
+                          </div>
+                      </dd>
+                      <dt>
+                           ${language.getTextSource('car.bodyMaterials')}
+                      </dt>
+                      <dd class="car-materials-dd">
+                          <div class="well">
+                              <dl class="dl-horizontal dl-horizontal-edit text-left">
+                                    <dt class="car-material-dt">
+                                        1
+                                    </dt>
+                                    <dd class="car-material-dd">
+                                        <@spring.bind "CEFC.carForm.bodyMaterials"/>
+                                        <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
+                                            <option value="" selected></option>
+
+                                            <#list carMaterials as material>
+                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.carForm.bodyMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                            </#list>
+                                        </select>
+                                    </dd>
+                                    <dt class="car-material-dt">
+                                        2
+                                    </dt>
+                                    <dd class="car-material-dd">
+                                        <select id="${spring.status.expression}[1]" name="${spring.status.expression}[1]" class="form-control">
+                                            <option value="" selected></option>
+
+                                            <#list carMaterials as material>
+                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.carForm.bodyMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>

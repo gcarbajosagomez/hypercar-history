@@ -144,11 +144,29 @@
 										<dd>
 											<p class="text-muted">
 												<#if car.chassisMaterials??>
-												    <#assign chassisMaterials = car.chassisMaterials?split(carchassisMaterialsStringSeparator)>
-												    <#list chassisMaterials as bodyMaterial>
-                                                        ${language.getTextSource('car.bodyMaterial.${bodyMaterial}')}
+												    <#assign bodyMaterials = car.chassisMaterials?split(carMaterialsStringSeparator)>
+												    <#list bodyMaterials as bodyMaterial>
+                                                        ${language.getTextSource('car.material.${bodyMaterial}')}
 												        <#if bodyMaterial?has_next>
-												           ${carchassisMaterialsStringSeparator}
+												           ${carMaterialsStringSeparator}
+												        </#if>
+												    </#list>
+												<#else>
+													${language.getTextSource('unknown')}
+												</#if>
+											</p>
+										</dd>
+  										<dt>
+											${language.getTextSource('car.bodyMaterials')} :
+										</dt>
+										<dd>
+											<p class="text-muted">
+												<#if car.bodyMaterials??>
+												    <#assign bodyMaterials = car.bodyMaterials?split(carMaterialsStringSeparator)>
+												    <#list bodyMaterials as bodyMaterial>
+                                                        ${language.getTextSource('car.material.${bodyMaterial}')}
+												        <#if bodyMaterial?has_next>
+												           ${carMaterialsStringSeparator}
 												        </#if>
 												    </#list>
 												<#else>

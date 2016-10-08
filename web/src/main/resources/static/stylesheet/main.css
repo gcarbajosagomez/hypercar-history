@@ -550,16 +550,16 @@ a:hover{
     }
 }
 
-.body-materials-dd {
+.car-materials-dd {
     height: 60px !important;
     margin-bottom: 100px !important;
 }
 
-.body-material-dt {
+.car-material-dt {
     width: 20% !important;
 }
 
-.body-material-dd {
+.car-material-dd {
     margin-left: 21% !important;
     margin-bottom: 10px !important;
 }

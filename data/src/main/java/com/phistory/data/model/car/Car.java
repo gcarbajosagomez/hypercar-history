@@ -70,6 +70,9 @@ public class Car implements GenericObject
     @Column(name = "car_chassis_materials", nullable = true)
     private String chassisMaterials;
 
+    @Column(name = "car_body_materials", nullable = true)
+    private String bodyMaterials;
+
     @Enumerated(ORDINAL)
     @Column(name = "car_body_shape", nullable = false)
     private CarBodyShape bodyShape;

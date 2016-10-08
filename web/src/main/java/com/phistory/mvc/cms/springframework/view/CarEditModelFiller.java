@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import com.phistory.mvc.cms.command.CarBodyMaterial;
+import com.phistory.mvc.cms.command.CarMaterial;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -52,7 +52,7 @@ public class CarEditModelFiller implements ModelFiller
     	model.addAttribute("engineLayouts", 				EngineLayout.values());
     	model.addAttribute("engines", 						this.engineDao.getAll());
     	model.addAttribute(ENGINE, 							ENGINE);
-    	model.addAttribute("chassisMaterials", 				CarBodyMaterial.values());
+    	model.addAttribute("carMaterials", 					CarMaterial.values());
     	model.addAttribute("bodyShapes", 					CarBodyShape.values());
     	model.addAttribute("seatsConfigs", 					CarSeatsConfig.values());
     	model.addAttribute("brakeDiscMaterials", 			BrakeDiscMaterial.values());
