@@ -96,7 +96,7 @@ public class CMSCarControllerUtil
             	
             	command.getCarForm().getPreviewPictureEditCommand().setPicture(previewPicture);
             	
-            	this.pictureControllerUtil.saveOrEditPicture(command.getCarForm().getPreviewPictureEditCommand());          
+            	this.pictureControllerUtil.saveOrEditPicture(command.getCarForm().getPreviewPictureEditCommand());
             }
             
             if(command.getCarForm().getId() == null)

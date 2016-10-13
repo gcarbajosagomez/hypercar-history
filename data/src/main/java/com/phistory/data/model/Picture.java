@@ -39,7 +39,7 @@ public class Picture implements GenericObject
     @Column(name = "picture_id")
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne
     @Cascade(value = SAVE_UPDATE)
     @JoinColumn(name = "car_id", nullable = false)
     private Car car;
@@ -59,6 +59,6 @@ public class Picture implements GenericObject
 
 	@Override
 	public String getFriendlyName() {
-		return null;
+		return new StringBuilder("Picture - ").append(this.type.toString()).append(" ").append(" (carId: ").append(this.car.getId()).append(")").toString();
 	}
 }

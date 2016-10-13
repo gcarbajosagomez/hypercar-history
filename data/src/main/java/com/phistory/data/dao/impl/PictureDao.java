@@ -82,14 +82,12 @@ public class PictureDao extends Dao<Picture, Long>
 
     public Picture getCarPreview(Long carId)
     {
-        Picture picture = new Picture();
-        
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.car.id = :carId"
                                                + " AND picture.type = " + PictureType.PREVIEW_PICTURE.ordinal());
 
         q.setParameter("carId", carId);
-        picture = (Picture) q.uniqueResult();
+        Picture picture = (Picture) q.uniqueResult();
                   
         return picture;        
     }

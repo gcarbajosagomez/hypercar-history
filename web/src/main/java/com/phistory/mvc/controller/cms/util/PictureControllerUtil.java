@@ -13,6 +13,7 @@ import com.phistory.data.dao.impl.PictureDao;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.Picture.PictureType;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * Set of utilities for the PictureController class
@@ -34,48 +35,17 @@ public class PictureControllerUtil extends BaseControllerData
 	 */
 	public void saveOrEditPicture(PictureEditCommand pictureEditCommand) throws Exception
     {
-    	if (pictureEditCommand.getPictureFile() != null && pictureEditCommand.getPictureFile().getSize() > 0)
+        MultipartFile pictureFile = pictureEditCommand.getPictureFile();
+        Picture picture = pictureEditCommand.getPicture();
+
+    	if (pictureFile != null && pictureFile.getSize() > 0)
         {      
-    		PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureEditCommand.getPictureFile(), null);
-    				
-    		if(pictureEditCommand.getPicture().getType().equals(PictureType.PREVIEW_PICTURE))
-    		{
-    			//we'll override the existing preview picture if any, avoiding creating multiple previews for a given car
-    			Picture previewPicture = checkIfPreviewImageExistsForCar(pictureEditCommand);
-    			
-    			if (previewPicture == null)
-    			{
-    				previewPicture = pictureEditCommand.getPicture();
-    			}
-    			
-    			pictureDataCommand.setPicture(previewPicture);
-    		}
-    		else
-    		{
-    			pictureDataCommand.setPicture(pictureEditCommand.getPicture());
-    		}    		
-    																	   
-            pictureDao.saveOrEditPicture(pictureDataCommand);
+    		PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, null);
+            pictureDataCommand.setPicture(picture);
+            this.pictureDao.saveOrEditPicture(pictureDataCommand);
+            pictureEditCommand.setPicture(this.pictureDao.getCarPreview(picture.getCar().getId()));
         }
     }
-	
-	/**
-	 * Check whether or not a preview image for a given car already exists in the database. There can only be one preview image per car
-	 * 
-	 * @param pictureEditCommand
-	 * @return The preview picture if there is already one in the DB, null otherwise
-	 */
-	private Picture checkIfPreviewImageExistsForCar(PictureEditCommand pictureEditCommand)
-	{
-		Long carId = pictureEditCommand.getPicture().getCar().getId();
-		
-		if (carId != null)
-		{
-			return pictureDao.getCarPreview(carId);
-		}
-		
-		return null;
-	}
 	
 	/**
 	 * Load a picture depending on the action being performed
@@ -89,22 +59,22 @@ public class PictureControllerUtil extends BaseControllerData
         switch (command.getAction()) {
             case LOAD_CAR_PICTURE: {
                 if (command.getPictureId() != null) {
-                    return pictureDao.getById(command.getPictureId());
+                    return this.pictureDao.getById(command.getPictureId());
                 }
             }
             case LOAD_CAR_PREVIEW: {
                 if (command.getCarId() != null) {
-                    return pictureDao.getCarPreview(command.getCarId());
+                    return this.pictureDao.getCarPreview(command.getCarId());
                 }
             }
             case LOAD_MANUFACTURER_LOGO: {
                 if (command.getManufacturerId() != null) {
-                    return pictureDao.getManufacturerLogo(command.getManufacturerId());
+                    return this.pictureDao.getManufacturerLogo(command.getManufacturerId());
                 }
             }
 			default: {
 				if (command.getPictureId() != null) {
-					return pictureDao.getById(command.getPictureId());
+					return this.pictureDao.getById(command.getPictureId());
 				}
 			}
         }
