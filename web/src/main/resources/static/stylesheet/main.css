@@ -696,9 +696,10 @@ a:hover{
 }
 
 .technology-stack .row {
-    margin-top: 30px;
+    margin-top: 10px;
     margin-left: 10px;
     margin-right: 10px;
+    border-color: #337ab7 !important;
 }
 
 .technology-stack-inner-logo div {

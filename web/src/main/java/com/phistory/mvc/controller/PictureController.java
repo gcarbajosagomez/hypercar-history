@@ -51,13 +51,13 @@ public class PictureController extends BaseController
 		try 
 		{
             if (this.mustLoadPictures()) {
-                this.loadPictureIds();
+                this.loadPictures();
             }
 
 			Picture picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
             //the car has been just added and its pictures have not been cached yet or a picture has been added and needs to be cached
             if (picture == null) {
-                this.loadPictureIds();
+                this.loadPictures();
                 picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
             }
 			this.pictureControllerUtil.printPictureToResponse(picture, response);
@@ -94,7 +94,7 @@ public class PictureController extends BaseController
 	}
 
 	/**
-	 * Calculate whether or not the {@link List} of picture must be loaded from the DB
+	 * Calculate whether or not the {@link List} of {@link Picture} must be loaded from the DB
 	 *
 	 * @return true if it must be loaded, false otherwise
 	 */
@@ -114,7 +114,7 @@ public class PictureController extends BaseController
     /**
      * Load all the {@link Car} {@link Picture} there are on the DB
      */
-    private void loadPictureIds() {
+    private void loadPictures() {
         this.pictures = super.getPictureDao().getAll();
     }
 }

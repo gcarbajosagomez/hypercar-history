@@ -15,57 +15,42 @@
 		<div class="modal-body" style="background-color: rgba(0, 0, 0, 0.611765);">
 			<div class="thumbnail row technology-stack" style="margin-bottom: 0px;">
 				<div class="col-lg-12" style="padding-top: 10px;">     		    									
-					<img src="/static/img/tech-stack/openshift-logo.png">   										
-					<div class="thumbnail row technology-stack-inner-logo">
-						<div class="col-lg-12" style="margin-top: 10px;"> 
-							<div class="row" style="margin-top: 10px;"> 
-								<div class="col-lg-4" style="padding-bottom: 10px;">
-									<img class="center-block" src="/static/img/tech-stack/wildfly-logo.png">
-								</div>  			    												
-								<div class="col-lg-4" style="padding-bottom: 10px;">
-									<img class="center-block" src="/static/img/tech-stack/git-logo.png">
-								</div>
-								<div class="col-lg-4" style="padding: 10px;">
-									<img class="center-block" src="/static/img/tech-stack/maven-logo.png">
-								</div>
-							</div>
-							<div class="thumbnail">
-								<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px; margin-bottom: 10px;">   		    														
-									<div class="col-lg-6"> 
-										<img class="center-block" src="/static/img/tech-stack/hibernate-logo.png">
-									</div>
-									<div class="col-lg-6" style="padding-top: 10px;"> 
-										<img class="center-block" src="/static/img/tech-stack/mysql-logo.png">
-									</div>
-								</div>
-								<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px; margin-bottom: 10px;">
-									<div class="col-lg-12">  														
-										<div class="col-lg-6" style="padding-top: 10px;">
-											<div class="col-lg-12">
-												<img class="center-block" src="/static/img/tech-stack/jquery-logo.png">
-											</div>
-												<div class="col-lg-12">
-												<img class="center-block" src="/static/img/tech-stack/ajax-logo.png" style="padding-top: 10px;">	
-											</div>  
-											<div class="col-lg-12"> 
-												<img class="center-block" src="/static/img/tech-stack/freemarker-logo.png" style="padding-top: 20px; padding-bottom: 10px;">				
-											</div> 	
-										</div>    		    													
-										<div class="col-lg-6" style="padding-top: 10px;"> 
-											<img class="center-block" src="/static/img/tech-stack/html-css-js-bootstrap-logo.png">				
-										</div>    
-									</div> 		    												
-								</div>
-								<div class="thumbnail row technology-stack-inner-logo" style="margin-top: 10px;">   			    													  		    												
-									<div class="col-lg-6"> 
-										<img class="center-block" src="/static/img/tech-stack/spring-framework-logo.png">				
-									</div>    		    	
-									<div class="col-lg-6"> 
-										<img class="center-block" src="/static/img/tech-stack/javaee-logo.png">				
-									</div>    		    												
-								</div>    		    												
-							</div>
-						</div>
+					<img src="/static/img/tech-stack/openshift-logo.png">
+					<div class="row technology-stack-inner-logo">
+                        <div class="thumbnail row technology-stack-inner-logo" style="margin-bottom: 10px;">
+                            <div class="col-lg-6" style="padding-top:10px;">
+                                <img class="center-block" src="/static/img/tech-stack/hibernate-logo.png">
+                            </div>
+                            <div class="col-lg-6" style="padding-top: 10px;">
+                                <img class="center-block" src="/static/img/tech-stack/mysql-logo.png">
+                            </div>
+                        </div>
+                        <div class="thumbnail row technology-stack-inner-logo" style="margin-bottom: 10px;">
+                            <div class="col-lg-12">
+                                <div class="col-lg-6" style="padding-top: 10px;">
+                                    <div class="col-lg-12">
+                                        <img class="center-block" src="/static/img/tech-stack/jquery-logo.png">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <img class="center-block" src="/static/img/tech-stack/ajax-logo.png" style="padding-top: 10px;">
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <img class="center-block" src="/static/img/tech-stack/freemarker-logo.png" style="padding-top: 20px; padding-bottom: 10px;">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6" style="padding-top: 35px;">
+                                    <img class="center-block" src="/static/img/tech-stack/html-css-js-bootstrap-logo.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thumbnail row technology-stack-inner-logo">
+                            <div class="col-lg-6" style="padding-top:30px;">
+                                <img class="center-block" src="/static/img/tech-stack/spring-framework-logo.png">
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="center-block" src="/static/img/tech-stack/java8-logo.png">
+                            </div>
+                        </div>
 					</div>
 				</div>
 			</div>
