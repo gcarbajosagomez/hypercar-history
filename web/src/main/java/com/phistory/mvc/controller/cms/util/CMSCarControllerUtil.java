@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.controller.util.PictureControllerUtil;
 import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;

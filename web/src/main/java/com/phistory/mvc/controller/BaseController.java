@@ -1,27 +1,23 @@
 package com.phistory.mvc.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
-
+import com.phistory.data.dao.impl.CarDao;
+import com.phistory.data.dao.impl.CarInternetContentDAO;
+import com.phistory.data.dao.impl.ContentSearchDao;
+import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mobile.device.Device;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.phistory.mvc.springframework.view.ModelFiller;
-import com.phistory.data.dao.impl.CarDao;
-import com.phistory.data.dao.impl.CarInternetContentDAO;
-import com.phistory.data.dao.impl.ContentSearchDao;
-import com.phistory.data.dao.impl.PictureDao;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.LocaleResolver;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
  * Base controller that contains common data and functionality 

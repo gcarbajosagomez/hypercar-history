@@ -42,7 +42,7 @@ public class IndexController extends BaseController
 	private ModelFiller carModelFiller;	
 	@Inject
 	private Random previewPictureRandomGenerator;
-	private DateTime picturesLoadingTime;
+	private DateTime pictureIdsLoadingTime;
 	private List<Long> pictureIds = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
@@ -87,10 +87,9 @@ public class IndexController extends BaseController
             randomPictureIds.forEach(pictureId ->
             {
                 Car car = super.getCarDao().getByPictureId(pictureId);
-                StringBuilder pictureDescription =
-                        new StringBuilder(car.getManufacturer().getFriendlyName())
-                        .append(" ")
-                        .append(car.getModel());
+                StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName())
+                        							.append(" ")
+                        							.append(car.getModel());
 
                 carNamesToPictureIds.put(pictureDescription.toString(), pictureId);
             });
@@ -115,11 +114,11 @@ public class IndexController extends BaseController
     private boolean mustLoadPictureIds()
     {
         DateTime now = DateTime.now();
-        if (this.picturesLoadingTime == null) {
-            this.picturesLoadingTime = now;
+        if (this.pictureIdsLoadingTime == null) {
+            this.pictureIdsLoadingTime = now;
             return true;
         }
-        else if (this.picturesLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
+        else if (this.pictureIdsLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
             return true;
         }
         return false;
@@ -138,7 +137,7 @@ public class IndexController extends BaseController
 		
 		while(randomPictureIds.size() < MAX_NUMBER_PICTURES_TO_DISPLAY)
 		{	
-			int randomPictureIndex = previewPictureRandomGenerator.nextInt(randomNumberMaxBound);
+			int randomPictureIndex = this.previewPictureRandomGenerator.nextInt(randomNumberMaxBound);
 			randomPictureIds.add(pictureIds.get(randomPictureIndex));
 		}
 		

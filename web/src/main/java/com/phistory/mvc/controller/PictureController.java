@@ -8,17 +8,22 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import com.phistory.data.model.car.Car;
 import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import com.phistory.mvc.command.PictureLoadCommand;
-import com.phistory.mvc.controller.cms.util.PictureControllerUtil;
+import com.phistory.mvc.controller.util.PictureControllerUtil;
 import com.phistory.data.model.Picture;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller to handle Picture URLs
@@ -31,9 +36,13 @@ import com.phistory.data.model.Picture;
 @RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION_ACTION + "}",
 			    method = HEAD)
 public class PictureController extends BaseController
-{	
+{
+    private static final int MINUTES_TO_LOAD_PICTURES_AFTER = 10;
+
 	@Inject
     private PictureControllerUtil pictureControllerUtil;
+	private DateTime picturesLoadingTime;
+	private List<Picture> pictures = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
 	public void handleDefault(HttpServletResponse response,
@@ -41,14 +50,23 @@ public class PictureController extends BaseController
 	{
 		try 
 		{
-			Picture picture = pictureControllerUtil.loadPicture(command);
+            if (this.mustLoadPictures()) {
+                this.loadPictureIds();
+            }
+
+			Picture picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
+            //the car has been just added and its pictures have not been cached yet or a picture has been added and needs to be cached
+            if (picture == null) {
+                this.loadPictureIds();
+                picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
+            }
 			this.pictureControllerUtil.printPictureToResponse(picture, response);
 		} 
 		catch (Exception e)
 		{
 			log.error(e.getMessage(), e);
 		}
-	}
+    }
 
 	@ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
 	public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION_ACTION) PictureLoadAction 	loadAction,
@@ -74,4 +92,29 @@ public class PictureController extends BaseController
 	public void initBinder(WebDataBinder dataBinder) {
 		dataBinder.registerCustomEditor(PictureLoadAction.class, new PictureLoadActionPropertyEditor());
 	}
+
+	/**
+	 * Calculate whether or not the {@link List} of picture must be loaded from the DB
+	 *
+	 * @return true if it must be loaded, false otherwise
+	 */
+	private boolean mustLoadPictures()
+	{
+		DateTime now = DateTime.now();
+		if (this.picturesLoadingTime == null) {
+			this.picturesLoadingTime = now;
+			return true;
+		}
+		else if (this.picturesLoadingTime.plusMinutes(MINUTES_TO_LOAD_PICTURES_AFTER).isBefore(now.toInstant())) {
+			return true;
+		}
+		return false;
+	}
+
+    /**
+     * Load all the {@link Car} {@link Picture} there are on the DB
+     */
+    private void loadPictureIds() {
+        this.pictures = super.getPictureDao().getAll();
+    }
 }
