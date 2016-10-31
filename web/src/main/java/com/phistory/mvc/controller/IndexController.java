@@ -42,7 +42,7 @@ public class IndexController extends BaseController
 	private ModelFiller carModelFiller;	
 	@Inject
 	private Random previewPictureRandomGenerator;
-	private DateTime pictureIdsLoadingTime;
+	private DateTime pictureIdsLoadingTime = DateTime.now().withMillisOfDay(0);
 	private List<Long> pictureIds = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
@@ -114,11 +114,7 @@ public class IndexController extends BaseController
     private boolean mustLoadPictureIds()
     {
         DateTime now = DateTime.now();
-        if (this.pictureIdsLoadingTime == null) {
-            this.pictureIdsLoadingTime = now;
-            return true;
-        }
-        else if (this.pictureIdsLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
+        if (this.pictureIdsLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
             return true;
         }
         return false;

@@ -71,7 +71,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
             
         if (searchCommand.getOrderByMap() != null)
         {
-            processOrderByMap(searchCommand.getOrderByMap(), entityRoot, criteriaBuilder, criteriaQuery);
+            criteriaQuery = this.processOrderByMap(searchCommand.getOrderByMap(), entityRoot, criteriaBuilder, criteriaQuery);
         }
         else if (searchCommand.getOrderByList() != null)
         {
@@ -80,7 +80,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
             
         if (searchCommand.getConditionMap() != null)
         {
-           for (Predicate predicate : processConditionMap(searchCommand.getConditionMap(), entityRoot, criteriaBuilder))
+           for (Predicate predicate : this.processConditionMap(searchCommand.getConditionMap(), entityRoot, criteriaBuilder))
            {
         	   criteriaQuery = criteriaQuery.where(predicate);
            }
@@ -154,16 +154,16 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
         return entityManager;        
     }
     
-    private void processOrderByMap(Map<String, Boolean> orderByMap, 
+    private CriteriaQuery<?> processOrderByMap(Map<String, Boolean> orderByMap,
     		                       Root<TYPE> entityRoot,
     		                       CriteriaBuilder criteriaBuilder,
     		                       CriteriaQuery<?> criteriaQuery)
     {
-        List<Order> orders = new ArrayList<Order>();
+        List<Order> orders = new ArrayList<>();
         
         for (String entityProperty : orderByMap.keySet())
         {
-            if (orderByMap.get(entityProperty) == Boolean.TRUE)
+            if (orderByMap.get(entityProperty))
             {
                 orders.add(criteriaBuilder.asc(entityRoot.get(entityProperty)));
             }
@@ -173,7 +173,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
             }
         }
         
-        criteriaQuery = criteriaQuery.orderBy(orders);
+        return criteriaQuery.orderBy(orders);
     }
     
     private List<Predicate> processConditionMap(Map<String,
@@ -181,7 +181,7 @@ public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
     											Root<TYPE> entityRoot,
     											CriteriaBuilder criteriaBuilder)
     {
-        List<Predicate> conditionPredicates = new ArrayList<Predicate>();        
+        List<Predicate> conditionPredicates = new ArrayList<>();
         	
         for (String entityProperty : conditionMap.keySet())
         {

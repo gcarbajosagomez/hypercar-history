@@ -30,11 +30,7 @@ public class PictureDao extends Dao<Picture, Long>
 	@Override
     public List<Picture> getAll()
     {
-        List<Picture> pictures = null;
-        
-        pictures = getCurrentSession().createQuery("FROM Picture").list();
-            
-        return pictures;        
+        return super.getCurrentSession().createQuery("FROM Picture").list();
     }
 
     /**
@@ -43,12 +39,10 @@ public class PictureDao extends Dao<Picture, Long>
     @Override
     public Picture getById(Long id)
     {
-        Picture picture = null;
-        
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.id = :id");
         q.setParameter("id", id);
-        picture = (Picture) q.uniqueResult();
+        Picture picture = (Picture) q.uniqueResult();
                
         return picture;        
     }
@@ -56,8 +50,6 @@ public class PictureDao extends Dao<Picture, Long>
     @SuppressWarnings("unchecked")
 	public List<Long> getIdsByCarId(Long carId)
     {
-        List<Long> ids = null;
-        
         StringBuilder stringBuilder = new StringBuilder("SELECT picture.id"
                                                      + " FROM Picture AS picture"
                                                      + " WHERE picture.type = " + PictureType.PICTURE.ordinal());
@@ -74,10 +66,8 @@ public class PictureDao extends Dao<Picture, Long>
         {
             q.setParameter("carId", carId);
         }
-            
-        ids = q.list();
-                  
-        return ids;       
+
+        return q.list();
     }
 
     public Picture getCarPreview(Long carId)
@@ -118,12 +108,21 @@ public class PictureDao extends Dao<Picture, Long>
         saveOrEdit(picture);
     }
     
-    public void deleteByCarId(Long carId)
+    public Long count()
     {       
-        Query q = getCurrentSession().createQuery("DELETE FROM Picture AS picture"
-                                               + " WHERE picture.car.id = :carId");
+        return (Long) super.getCurrentSession()
+                           .createQuery("SELECT COUNT (picture.car.id) FROM Picture AS picture")
+                           .uniqueResult();
+    }
 
-        q.setParameter("carId", carId);        
-        q.executeUpdate();
+    public List<Picture> getPaginated(int firstResult, int limit)
+    {
+        Query query = super.getCurrentSession()
+                           .createQuery("FROM Picture AS picture");
+
+        query.setFirstResult(firstResult);
+        query.setMaxResults(limit);
+
+        return query.list();
     }
 }

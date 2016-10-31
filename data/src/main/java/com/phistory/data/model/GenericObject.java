@@ -6,6 +6,8 @@ package com.phistory.data.model;
  */
 public interface GenericObject
 {
+    String ENTITY_ID_PROPERTY_NAME = "id";
+
     Long getId();
     
     String getFriendlyName();

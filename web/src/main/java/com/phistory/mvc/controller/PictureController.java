@@ -8,12 +8,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
+import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.joda.time.DateTime;
+import org.joda.time.Instant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +25,9 @@ import com.phistory.mvc.controller.util.PictureControllerUtil;
 import com.phistory.data.model.Picture;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Controller to handle Picture URLs
@@ -41,7 +45,7 @@ public class PictureController extends BaseController
 
 	@Inject
     private PictureControllerUtil pictureControllerUtil;
-	private DateTime picturesLoadingTime;
+	private DateTime picturesLoadingTime = DateTime.now().withMillisOfDay(0);
 	private List<Picture> pictures = new ArrayList<>();
 	
 	@RequestMapping(method = GET)
@@ -101,11 +105,7 @@ public class PictureController extends BaseController
 	private boolean mustLoadPictures()
 	{
 		DateTime now = DateTime.now();
-		if (this.picturesLoadingTime == null) {
-			this.picturesLoadingTime = now;
-			return true;
-		}
-		else if (this.picturesLoadingTime.plusMinutes(MINUTES_TO_LOAD_PICTURES_AFTER).isBefore(now.toInstant())) {
+		if (this.picturesLoadingTime.plusMinutes(MINUTES_TO_LOAD_PICTURES_AFTER).isBefore(now.toInstant())) {
 			return true;
 		}
 		return false;
@@ -115,6 +115,16 @@ public class PictureController extends BaseController
      * Load all the {@link Car} {@link Picture} there are on the DB
      */
     private void loadPictures() {
-        this.pictures = super.getPictureDao().getAll();
+        Long pictureCount = super.getPictureDao().count();
+        int halfPictureCount = (pictureCount.intValue() / 2);
+        if (pictureCount % 2 != 0) {
+            //to round down an odd number
+            halfPictureCount--;
+        }
+        //first half
+        this.pictures = super.getPictureDao().getPaginated(0, halfPictureCount);
+        //second half
+        this.pictures.addAll(super.getPictureDao().getPaginated(halfPictureCount,
+                             pictureCount.intValue()));
     }
 }

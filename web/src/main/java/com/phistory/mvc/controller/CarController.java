@@ -1,5 +1,6 @@
 package com.phistory.mvc.controller;
 
+import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
@@ -109,7 +110,8 @@ public class CarController extends BaseController
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{		
 		Map<String, Object> data = new HashMap<>();
-    	data.put(CARS, super.getCarDao().getByCriteria(this.carControllerUtil.createSearchCommand(carsPaginationDto)));
+		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDto);
+    	data.put(CARS, super.getCarDao().getByCriteria(searchCommand));
     	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
     	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
     	
