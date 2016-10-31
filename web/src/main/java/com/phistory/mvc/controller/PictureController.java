@@ -1,33 +1,26 @@
 package com.phistory.mvc.controller;
 
-import static com.phistory.mvc.controller.BaseControllerData.PICTURE_LOAD_ACTION_ACTION;
-import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
-
-import com.phistory.data.command.SearchCommand;
+import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.command.PictureLoadAction;
+import com.phistory.mvc.command.PictureLoadCommand;
+import com.phistory.mvc.controller.util.PictureControllerUtil;
 import com.phistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.joda.time.DateTime;
-import org.joda.time.Instant;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import com.phistory.mvc.command.PictureLoadCommand;
-import com.phistory.mvc.controller.util.PictureControllerUtil;
-import com.phistory.data.model.Picture;
-
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURE_LOAD_ACTION_ACTION;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
  * Controller to handle Picture URLs
@@ -106,6 +99,7 @@ public class PictureController extends BaseController
 	{
 		DateTime now = DateTime.now();
 		if (this.picturesLoadingTime.plusMinutes(MINUTES_TO_LOAD_PICTURES_AFTER).isBefore(now.toInstant())) {
+            this.picturesLoadingTime = now;
 			return true;
 		}
 		return false;
@@ -116,15 +110,20 @@ public class PictureController extends BaseController
      */
     private void loadPictures() {
         Long pictureCount = super.getPictureDao().count();
-        int halfPictureCount = (pictureCount.intValue() / 2);
-        if (pictureCount % 2 != 0) {
-            //to round down an odd number
-            halfPictureCount--;
+        int numberOfPartialPicturesLoad = 5;
+        Double partialPictureCountDouble = (pictureCount.doubleValue() / numberOfPartialPicturesLoad);
+        partialPictureCountDouble = Math.floor(partialPictureCountDouble);
+        int partialPictureCount = new Double(partialPictureCountDouble).intValue();
+
+        this.pictures = super.getPictureDao().getPaginated(0, partialPictureCount);
+
+        for(int i = 2; i < numberOfPartialPicturesLoad; i++) {
+            this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
+                                                                    partialPictureCountDouble.intValue()));
+            partialPictureCount = partialPictureCount + partialPictureCountDouble.intValue();
         }
-        //first half
-        this.pictures = super.getPictureDao().getPaginated(0, halfPictureCount);
-        //second half
-        this.pictures.addAll(super.getPictureDao().getPaginated(halfPictureCount,
-                             pictureCount.intValue()));
+
+        this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
+                                                                pictureCount.intValue()));
     }
 }

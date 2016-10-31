@@ -118,7 +118,8 @@ public class PictureDao extends Dao<Picture, Long>
     public List<Picture> getPaginated(int firstResult, int limit)
     {
         Query query = super.getCurrentSession()
-                           .createQuery("FROM Picture AS picture");
+                           .createQuery("FROM Picture AS picture"
+                                     + " ORDER BY picture.id");
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);

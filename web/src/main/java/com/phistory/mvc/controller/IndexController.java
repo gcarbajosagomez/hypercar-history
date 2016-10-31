@@ -115,6 +115,7 @@ public class IndexController extends BaseController
     {
         DateTime now = DateTime.now();
         if (this.pictureIdsLoadingTime.plusHours(HOURS_TO_LOAD_PICTURE_IDS_AFTER).isBefore(now.toInstant())) {
+			this.pictureIdsLoadingTime = now;
             return true;
         }
         return false;
