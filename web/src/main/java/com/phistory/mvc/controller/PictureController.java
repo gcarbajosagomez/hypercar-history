@@ -108,7 +108,7 @@ public class PictureController extends BaseController
     /**
      * Load all the {@link Car} {@link Picture} there are on the DB
      */
-    private void loadPictures() {
+    private void loadPictures() throws InterruptedException {
         Long pictureCount = super.getPictureDao().count();
         int numberOfPartialPicturesLoad = 5;
         Double partialPictureCountDouble = (pictureCount.doubleValue() / numberOfPartialPicturesLoad);
@@ -118,6 +118,7 @@ public class PictureController extends BaseController
         this.pictures = super.getPictureDao().getPaginated(0, partialPictureCount);
 
         for(int i = 2; i < numberOfPartialPicturesLoad; i++) {
+            Thread.sleep(500);
             this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
                                                                     partialPictureCountDouble.intValue()));
             partialPictureCount = partialPictureCount + partialPictureCountDouble.intValue();
