@@ -78,6 +78,7 @@ public class CmsBaseController extends BaseController {
 	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			= "MEFC";
 	public static final String PICTURE_EDIT_FORM_COMMAND 			    = "PEFC";
 	public static final String LOGGED_IN 								= "loggedIn";
+	public static final String DATE_FORMAT 								= "yyyy-MM";
 
     private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
     private static final String PRAGMA_HTTP_HEADER = "Pragma";
@@ -114,7 +115,7 @@ public class CmsBaseController extends BaseController {
 		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
         binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDao));
         binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDao()));
-        binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat("yyyy-MM")));
+        binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 
     /**

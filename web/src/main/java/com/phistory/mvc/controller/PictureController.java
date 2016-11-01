@@ -91,7 +91,7 @@ public class PictureController extends BaseController
 	}
 
 	/**
-	 * Calculate whether or not the {@link List} of {@link Picture} must be loaded from the DB
+	 * Calculate whether or not the {@link List} of {@link Picture}s must be loaded from the DB
 	 *
 	 * @return true if it must be loaded, false otherwise
 	 */
@@ -106,9 +106,9 @@ public class PictureController extends BaseController
 	}
 
     /**
-     * Load all the {@link Car} {@link Picture} there are on the DB
+     * Load all the {@link Car} {@link Picture}s there are on the DB
      */
-    private void loadPictures() throws InterruptedException {
+    private void loadPictures() {
         Long pictureCount = super.getPictureDao().count();
         int numberOfChunks = 20;
         Double chunkSizeDouble = (pictureCount.doubleValue() / numberOfChunks);

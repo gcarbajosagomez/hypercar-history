@@ -1,6 +1,8 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.data.command.SearchCommand;
+import com.phistory.data.model.Picture;
+import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
@@ -8,6 +10,7 @@ import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,6 +44,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 				method = {GET, HEAD})
 public class CarController extends BaseController
 {
+    private static final int MINUTES_TO_LOAD_CARS_AFTER = 5;
+
 	@Inject
 	private CarControllerUtil carControllerUtil;
 	@Inject
@@ -50,14 +56,23 @@ public class CarController extends BaseController
 	private ModelFiller pictureModelFiller;
 	@Inject
 	private CarInternetContentUtils carInternetContentUtils;
-	
+    private DateTime carsLoadingTime = DateTime.now().withMillisOfDay(0);
+    private List<Car> cars = new ArrayList<>();
+    private List<CarInternetContent> carInternetContents = new ArrayList<>();
+
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
 									   CarsPaginationDto carsPaginationDto)
 	{		
 		try
-		{		
-			this.carsListModelFiller.fillPaginatedModel(model, carsPaginationDto);
+		{
+            if (this.mustLoadCars()) {
+                this.loadCars();
+            }
+
+			this.carsListModelFiller.fillPaginatedModel(model,
+														carsPaginationDto,
+														this.cars);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
 			
@@ -79,13 +94,19 @@ public class CarController extends BaseController
 							  		  	 			  required=false) String unitsOfMeasure)
 	{
 		try
-		{	
+		{
+            if (this.mustLoadCars()) {
+                this.loadCars();
+                this.loadCarInternetContents();
+            }
+
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
-			model.addAttribute("car", super.getCarDao().getById(carId));
+			model.addAttribute("car", this.carControllerUtil.loadCarById(this.cars, carId));
 			model.addAttribute(PICTURE_IDS, super.getPictureDao().getIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
-			List<CarInternetContent> carInternetContents = super.getCarInternetContentDAO().getByCarId(carId);
+
+            List<CarInternetContent> carInternetContents = this.carControllerUtil.getCarInternetContentsByCarId(this.carInternetContents, carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());
@@ -116,5 +137,34 @@ public class CarController extends BaseController
     	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
     	
 		return data;
-	}	
+	}
+
+    /**
+     * Calculate whether or not the {@link List} of {@link Car}s must be loaded from the DB
+     *
+     * @return true if it must be loaded, false otherwise
+     */
+    private boolean mustLoadCars()
+    {
+        DateTime now = DateTime.now();
+        if (this.carsLoadingTime.plusMinutes(MINUTES_TO_LOAD_CARS_AFTER).isBefore(now.toInstant())) {
+            this.carsLoadingTime = now;
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Load all the {@link Car}s there are on the DB
+     */
+    private void loadCars() {
+        this.cars = super.getCarDao().getAll();
+    }
+
+    /**
+     * Load all the {@link CarInternetContent}s there are on the DB
+     */
+    private void loadCarInternetContents() {
+        this.carInternetContents = super.getCarInternetContentDAO().getAll();
+    }
 }

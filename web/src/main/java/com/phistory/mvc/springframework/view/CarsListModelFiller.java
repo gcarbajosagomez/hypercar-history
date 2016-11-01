@@ -7,12 +7,15 @@ import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
 
 import javax.inject.Inject;
 
+import com.phistory.data.model.car.Car;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.data.dao.impl.CarDao;
+
+import java.util.List;
 
 /**
  * Fills a Spring Framework Model with cars list related information
@@ -40,9 +43,9 @@ public class CarsListModelFiller implements ModelFiller
 	 * @param model
 	 * @param carsPaginationDto
 	 */
-	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto)
+	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto, List<Car> cars)
 	{
-		model.addAttribute(CARS, 				this.carDao.getByCriteria(this.carControllerUtil.createSearchCommand(carsPaginationDto)));
+		model.addAttribute(CARS, 				this.carControllerUtil.loadCarsBySearchCommand(cars, carsPaginationDto));
 		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDto.getCarsPerPage());
 		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDto.getPagNum());
 		
