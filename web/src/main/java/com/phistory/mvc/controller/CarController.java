@@ -44,7 +44,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 				method = {GET, HEAD})
 public class CarController extends BaseController
 {
-    private static final int MINUTES_TO_LOAD_CARS_AFTER = 5; 
+    private static final int MINUTES_TO_LOAD_CARS_AFTER = 5;
 
 	@Inject
 	private CarControllerUtil carControllerUtil;
@@ -165,6 +165,6 @@ public class CarController extends BaseController
      * Load all the {@link CarInternetContent}s there are on the DB
      */
     private void loadCarInternetContents() {
-        this.carInternetContents = super.getCarInternetContentDAO().getAll();
+        this.carInternetContents = super.getCarInternetContentDAO().getAllProjected();
     }
 }

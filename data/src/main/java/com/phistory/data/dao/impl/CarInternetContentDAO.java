@@ -25,6 +25,17 @@ public class CarInternetContentDAO extends Dao<CarInternetContent, Long>
 	    return  super.getCurrentSession().createQuery("FROM CarInternetContent").list();
 	}
 
+	public List<CarInternetContent> getAllProjected()
+	{
+	    return  super.getCurrentSession().createQuery("SELECT internetContent.id,"
+                                                          + " internetContent.link,"
+                                                          + " internetContent.type,"
+                                                          + " internetContent.contentLanguage,"
+                                                          + " internetContent.car.id"
+                                                   + " FROM CarInternetContent AS internetContent")
+                                         .list();
+	}
+
 	@Override
 	public CarInternetContent getById(Long id)
 	{
