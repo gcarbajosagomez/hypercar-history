@@ -110,7 +110,7 @@ public class PictureController extends BaseController
      */
     private void loadPictures() throws InterruptedException {
         Long pictureCount = super.getPictureDao().count();
-        int numberOfChunks = 10;
+        int numberOfChunks = 20;
         Double chunkSizeDouble = (pictureCount.doubleValue() / numberOfChunks);
         chunkSizeDouble = Math.floor(chunkSizeDouble);
         int chunkSize = new Double(chunkSizeDouble).intValue();
@@ -118,7 +118,6 @@ public class PictureController extends BaseController
         this.pictures = super.getPictureDao().getPaginated(0, chunkSize);
 
         for(int i = 2; i < numberOfChunks; i++) {
-            Thread.sleep(10000);
             this.pictures.addAll(super.getPictureDao().getPaginated(chunkSize,
                                                                     chunkSizeDouble.intValue()));
             chunkSize = chunkSize + chunkSizeDouble.intValue();
