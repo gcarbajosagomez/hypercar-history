@@ -133,7 +133,8 @@ public class InMemoryEntityStorage {
      * @return The resulting {@link List<Long>}
      */
     public List<Long> getPictureIdsByCarId(Long carId) {
-        return this.pictures.parallelStream()
+        return this.pictures
+                   .parallelStream()
                    .filter(picture -> picture.getCar().getId().equals(carId))
                    .map(Picture::getId)
                    .collect(Collectors.toList());

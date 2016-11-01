@@ -133,7 +133,7 @@
                                 });
                             })<#if videoId?has_next>,</#if>
                     </#list>)
-                    .done(function (<#list youtubeVideoIds as videoId>${videoId?string?replace("-", "")}<#if videoId?has_next>,</#if></#list>) {
+                    .done(function (<#list youtubeVideoIds as videoId>video${videoId?index}<#if videoId?has_next>,</#if></#list>) {
                         var options = {
                             container: '#${galleryName}',
                             fullScreen: true,
