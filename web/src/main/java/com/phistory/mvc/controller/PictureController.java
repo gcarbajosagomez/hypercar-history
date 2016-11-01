@@ -110,7 +110,7 @@ public class PictureController extends BaseController
      */
     private void loadPictures() throws InterruptedException {
         Long pictureCount = super.getPictureDao().count();
-        int numberOfPartialPicturesLoad = 5;
+        int numberOfPartialPicturesLoad = 7;
         Double partialPictureCountDouble = (pictureCount.doubleValue() / numberOfPartialPicturesLoad);
         partialPictureCountDouble = Math.floor(partialPictureCountDouble);
         int partialPictureCount = new Double(partialPictureCountDouble).intValue();
@@ -118,7 +118,7 @@ public class PictureController extends BaseController
         this.pictures = super.getPictureDao().getPaginated(0, partialPictureCount);
 
         for(int i = 2; i < numberOfPartialPicturesLoad; i++) {
-            Thread.sleep(500);
+            Thread.sleep(1000);
             this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
                                                                     partialPictureCountDouble.intValue()));
             partialPictureCount = partialPictureCount + partialPictureCountDouble.intValue();
