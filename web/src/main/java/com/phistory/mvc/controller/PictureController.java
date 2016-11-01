@@ -110,21 +110,21 @@ public class PictureController extends BaseController
      */
     private void loadPictures() throws InterruptedException {
         Long pictureCount = super.getPictureDao().count();
-        int numberOfPartialPicturesLoad = 7;
-        Double partialPictureCountDouble = (pictureCount.doubleValue() / numberOfPartialPicturesLoad);
-        partialPictureCountDouble = Math.floor(partialPictureCountDouble);
-        int partialPictureCount = new Double(partialPictureCountDouble).intValue();
+        int numberOfChunks = 10;
+        Double chunkSizeDouble = (pictureCount.doubleValue() / numberOfChunks);
+        chunkSizeDouble = Math.floor(chunkSizeDouble);
+        int chunkSize = new Double(chunkSizeDouble).intValue();
 
-        this.pictures = super.getPictureDao().getPaginated(0, partialPictureCount);
+        this.pictures = super.getPictureDao().getPaginated(0, chunkSize);
 
-        for(int i = 2; i < numberOfPartialPicturesLoad; i++) {
-            Thread.sleep(1000);
-            this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
-                                                                    partialPictureCountDouble.intValue()));
-            partialPictureCount = partialPictureCount + partialPictureCountDouble.intValue();
+        for(int i = 2; i < numberOfChunks; i++) {
+            Thread.sleep(10000);
+            this.pictures.addAll(super.getPictureDao().getPaginated(chunkSize,
+                                                                    chunkSizeDouble.intValue()));
+            chunkSize = chunkSize + chunkSizeDouble.intValue();
         }
 
-        this.pictures.addAll(super.getPictureDao().getPaginated(partialPictureCount,
+        this.pictures.addAll(super.getPictureDao().getPaginated(chunkSize,
                                                                 pictureCount.intValue()));
     }
 }
