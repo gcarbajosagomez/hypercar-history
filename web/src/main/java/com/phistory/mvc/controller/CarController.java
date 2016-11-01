@@ -12,10 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
@@ -64,11 +61,7 @@ public class CarController extends BaseController
 	{		
 		try
 		{
-            if (this.mustLoadCars()) {
-                this.inMemoryEntityStorage.loadCars();
-            }
-
-			this.carsListModelFiller.fillPaginatedModel(model,
+            this.carsListModelFiller.fillPaginatedModel(model,
 														carsPaginationDto);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
@@ -92,12 +85,6 @@ public class CarController extends BaseController
 	{
 		try
 		{
-            if (this.mustLoadCars()) {
-                this.inMemoryEntityStorage.loadCars();
-                this.inMemoryEntityStorage.loadCarInternetContents();
-                this.inMemoryEntityStorage.loadPictures();
-            }
-
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
 
@@ -136,6 +123,15 @@ public class CarController extends BaseController
     	
 		return data;
 	}
+
+    @ModelAttribute
+    public void loadEntities() {
+        if (this.mustLoadCars()) {
+            this.inMemoryEntityStorage.loadCars();
+            this.inMemoryEntityStorage.loadCarInternetContents();
+            this.inMemoryEntityStorage.loadPictures();
+        }
+    }
 
     /**
      * Calculate whether or not the {@link List} of {@link Car}s must be loaded from the DB

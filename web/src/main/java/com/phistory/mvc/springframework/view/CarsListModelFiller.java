@@ -45,6 +45,6 @@ public class CarsListModelFiller implements ModelFiller
 		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDto.getCarsPerPage());
 		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDto.getPagNum());
 		
-		fillModel(model);
+		this.fillModel(model);
 	}
 }
