@@ -1,7 +1,6 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.data.model.Picture;
-import com.phistory.data.model.car.Car;
 import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.util.PictureControllerUtil;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
@@ -38,8 +36,10 @@ public class PictureController extends BaseController
 
 	@Inject
     private PictureControllerUtil pictureControllerUtil;
+	@Inject
+    private InMemoryEntityStorage inMemoryEntityStorage;
 	private DateTime picturesLoadingTime = DateTime.now().withMillisOfDay(0);
-	private List<Picture> pictures = new ArrayList<>();
+
 	
 	@RequestMapping(method = GET)
 	public void handleDefault(HttpServletResponse response,
@@ -48,14 +48,14 @@ public class PictureController extends BaseController
 		try 
 		{
             if (this.mustLoadPictures()) {
-                this.loadPictures();
+                this.inMemoryEntityStorage.loadPictures();
             }
 
-			Picture picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
+			Picture picture = this.inMemoryEntityStorage.loadPicture(command);
             //the car has been just added and its pictures have not been cached yet or a picture has been added and needs to be cached
             if (picture == null) {
-                this.loadPictures();
-                picture = this.pictureControllerUtil.loadPicture(command, this.pictures);
+                this.inMemoryEntityStorage.loadPictures();
+                picture = this.inMemoryEntityStorage.loadPicture(command);
             }
 			this.pictureControllerUtil.printPictureToResponse(picture, response);
 		} 
@@ -104,26 +104,4 @@ public class PictureController extends BaseController
 		}
 		return false;
 	}
-
-    /**
-     * Load all the {@link Car} {@link Picture}s there are on the DB
-     */
-    private void loadPictures() {
-        Long pictureCount = super.getPictureDao().count();
-        int numberOfChunks = 20;
-        Double chunkSizeDouble = (pictureCount.doubleValue() / numberOfChunks);
-        chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int chunkSize = new Double(chunkSizeDouble).intValue();
-
-        this.pictures = super.getPictureDao().getPaginated(0, chunkSize);
-
-        for(int i = 2; i < numberOfChunks; i++) {
-            this.pictures.addAll(super.getPictureDao().getPaginated(chunkSize,
-                                                                    chunkSizeDouble.intValue()));
-            chunkSize = chunkSize + chunkSizeDouble.intValue();
-        }
-
-        this.pictures.addAll(super.getPictureDao().getPaginated(chunkSize,
-                                                                pictureCount.intValue()));
-    }
 }

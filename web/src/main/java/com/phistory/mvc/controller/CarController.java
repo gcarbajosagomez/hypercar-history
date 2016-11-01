@@ -1,7 +1,6 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +54,9 @@ public class CarController extends BaseController
 	private ModelFiller pictureModelFiller;
 	@Inject
 	private CarInternetContentUtils carInternetContentUtils;
+	@Inject
+	private InMemoryEntityStorage inMemoryEntityStorage;
     private DateTime carsLoadingTime = DateTime.now().withMillisOfDay(0);
-    private List<Car> cars = new ArrayList<>();
-    private List<CarInternetContent> carInternetContents = new ArrayList<>();
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
@@ -67,12 +65,11 @@ public class CarController extends BaseController
 		try
 		{
             if (this.mustLoadCars()) {
-                this.loadCars();
+                this.inMemoryEntityStorage.loadCars();
             }
 
 			this.carsListModelFiller.fillPaginatedModel(model,
-														carsPaginationDto,
-														this.cars);
+														carsPaginationDto);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
 			
@@ -91,31 +88,32 @@ public class CarController extends BaseController
 							  		  	 @PathVariable(ID) Long carId,
 							  		  	 @CookieValue(value = UNITS_OF_MEASURE_COOKIE_NAME,
 							  		  	 			  defaultValue = UNITS_OF_MEASURE_METRIC,
-							  		  	 			  required=false) String unitsOfMeasure)
+							  		  	 			  required = false) String unitsOfMeasure)
 	{
 		try
 		{
             if (this.mustLoadCars()) {
-                this.loadCars();
-                this.loadCarInternetContents();
+                this.inMemoryEntityStorage.loadCars();
+                this.inMemoryEntityStorage.loadCarInternetContents();
+                this.inMemoryEntityStorage.loadPictures();
             }
 
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
-			model.addAttribute("car", this.carControllerUtil.loadCarById(this.cars, carId));
-			model.addAttribute(PICTURE_IDS, super.getPictureDao().getIdsByCarId(carId));
-			model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = this.carControllerUtil.getCarInternetContentsByCarId(this.carInternetContents, carId);
+			model.addAttribute(CAR,                 this.inMemoryEntityStorage.loadCarById(carId));
+			model.addAttribute(PICTURE_IDS,         this.inMemoryEntityStorage.getPictureIdsByCarId(carId));
+			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
+
+            List<CarInternetContent> carInternetContents = this.inMemoryEntityStorage.getCarInternetContentsByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());
 					   											 
-			model.addAttribute(YOUTUBE_VIDEO_IDS, this.carInternetContentUtils.extractYoutubeVideoIds(videos));
-			
-			model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES, carInternetContents.stream()
-																						.filter(content -> content.getType().equals(REVIEW_ARTICLE))
-																						.collect(Collectors.toList()));
+			model.addAttribute(YOUTUBE_VIDEO_IDS,                       this.carInternetContentUtils.extractYoutubeVideoIds(videos));
+			model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES,    carInternetContents.stream()
+																						   .filter(content -> content.getType().equals(REVIEW_ARTICLE))
+																						   .collect(Collectors.toList()));
 			return new ModelAndView(CAR_DETAILS);
 		}
 		catch(Exception e)
@@ -132,9 +130,9 @@ public class CarController extends BaseController
 	{		
 		Map<String, Object> data = new HashMap<>();
 		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDto);
-    	data.put(CARS, super.getCarDao().getByCriteria(searchCommand));
-    	data.put(CARS_PER_PAGE_DATA, carsPaginationDto.getCarsPerPage());
-    	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
+    	data.put(CARS,                  super.getCarDao().getByCriteria(searchCommand));
+    	data.put(CARS_PER_PAGE_DATA,    carsPaginationDto.getCarsPerPage());
+    	data.put(PAG_NUM_DATA,          carsPaginationDto.getPagNum());
     	
 		return data;
 	}
@@ -152,19 +150,5 @@ public class CarController extends BaseController
             return true;
         }
         return false;
-    }
-
-    /**
-     * Load all the {@link Car}s there are on the DB
-     */
-    private void loadCars() {
-        this.cars = super.getCarDao().getAll();
-    }
-
-    /**
-     * Load all the {@link CarInternetContent}s there are on the DB
-     */
-    private void loadCarInternetContents() {
-        this.carInternetContents = super.getCarInternetContentDAO().getAllProjected();
     }
 }

@@ -48,6 +48,7 @@ public class BaseControllerData
 	public static final String LANGUAGE_COOKIE_NAME   				= "def_lang"; 
 	public static final String ERROR_VIEW_NAME                  	= "/error";  
 	public static final String CARS                   				= "cars";
+	public static final String CAR                					= "car";
 	public static final String PICTURE_IDS                   		= "pictureIds";
     public static final String MODELS                   			= "models";
 	public static final String CONTENT_TO_SEARCH_DATA      			= "contentToSearchData";

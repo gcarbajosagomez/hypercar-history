@@ -68,7 +68,7 @@ public class CarDao extends Dao<Car, Long>
 
 	public List<Car> getDistinctModelsWithId()
 	{
-    	Query q = getCurrentSession().createQuery("SELECT DISTINCT car.model AS model, car.id AS id"
+    	Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.id AS id"
                     					       + " FROM Car AS car"
                     						   + " ORDER BY car.productionStartDate ASC,"
                                                + "          car.model ASC");
@@ -79,8 +79,8 @@ public class CarDao extends Dao<Car, Long>
 	
 	public Car getByPictureId(Long pictureId)
 	{
-		Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.manufacturer as manufacturer"
-			       							   + " FROM Car AS car, Picture AS picture, Manufacturer as manufacturer"
+		Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.manufacturer AS manufacturer"
+			       							   + " FROM Car AS car, Picture AS picture, Manufacturer AS manufacturer"
 			       							   + " WHERE picture.id = :pictureId"
 			       							   + " AND picture.car.id = car.id"
 			       							   + " AND car.manufacturer.id = manufacturer.id");

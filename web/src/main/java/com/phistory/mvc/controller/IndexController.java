@@ -42,8 +42,10 @@ public class IndexController extends BaseController
 	private ModelFiller carModelFiller;	
 	@Inject
 	private Random previewPictureRandomGenerator;
-	private DateTime pictureIdsLoadingTime = DateTime.now().withMillisOfDay(0);
+	@Inject
+	private InMemoryEntityStorage inMemoryEntityStorage;
 	private List<Long> pictureIds = new ArrayList<>();
+	private DateTime pictureIdsLoadingTime = DateTime.now().withMillisOfDay(0);
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleDefault(Model model)
@@ -86,7 +88,7 @@ public class IndexController extends BaseController
 
             randomPictureIds.forEach(pictureId ->
             {
-                Car car = super.getCarDao().getByPictureId(pictureId);
+                Car car = this.inMemoryEntityStorage.getCarByPictureId(pictureId);
                 StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName())
                         							.append(" ")
                         							.append(car.getModel());
@@ -102,7 +104,8 @@ public class IndexController extends BaseController
      * Load all the {@link Car} {@link Picture} Ids there are on the DB
      */
     private void loadPictureIds() {
-        this.pictureIds = super.getPictureDao().getIdsByCarId(null);
+        this.inMemoryEntityStorage.loadPictures();;
+        this.pictureIds = this.inMemoryEntityStorage.getAllPictureIds();
         Collections.shuffle(this.pictureIds);
     }
 

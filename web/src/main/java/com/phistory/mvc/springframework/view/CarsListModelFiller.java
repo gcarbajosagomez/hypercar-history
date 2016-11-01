@@ -1,21 +1,15 @@
 package com.phistory.mvc.springframework.view;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.BaseControllerData.CARS_PER_PAGE_DATA;
-import static com.phistory.mvc.controller.BaseControllerData.MODELS;
-import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
-
-import javax.inject.Inject;
-
-import com.phistory.data.model.car.Car;
+import com.phistory.data.dao.impl.CarDao;
+import com.phistory.mvc.controller.InMemoryEntityStorage;
+import com.phistory.mvc.controller.util.CarControllerUtil;
+import com.phistory.mvc.model.dto.CarsPaginationDto;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.phistory.mvc.controller.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
-import com.phistory.data.dao.impl.CarDao;
+import javax.inject.Inject;
 
-import java.util.List;
+import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Fills a Spring Framework Model with cars list related information
@@ -30,11 +24,13 @@ public class CarsListModelFiller implements ModelFiller
 	private CarDao carDao;
 	@Inject
 	private CarControllerUtil carControllerUtil;
+	@Inject
+	private InMemoryEntityStorage inMemoryEntityStorage;
 	
 	@Override
 	public void fillModel(Model model)
 	{		
-		model.addAttribute(MODELS, this.carDao.getDistinctModelsWithId());
+		model.addAttribute(MODELS, this.inMemoryEntityStorage.getCars());
 	}
 	
 	/**
@@ -43,9 +39,9 @@ public class CarsListModelFiller implements ModelFiller
 	 * @param model
 	 * @param carsPaginationDto
 	 */
-	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto, List<Car> cars)
+	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto)
 	{
-		model.addAttribute(CARS, 				this.carControllerUtil.loadCarsBySearchCommand(cars, carsPaginationDto));
+		model.addAttribute(CARS, 				this.inMemoryEntityStorage.loadCarsBySearchCommand(carsPaginationDto));
 		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDto.getCarsPerPage());
 		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDto.getPagNum());
 		
