@@ -1,33 +1,17 @@
 package com.phistory.data.model.car;
 
-import static javax.persistence.CascadeType.DETACH;
-import static javax.persistence.CascadeType.REMOVE;
-import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.FetchType.LAZY;
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
-import static org.hibernate.annotations.OnDeleteAction.CASCADE;
-import static org.hibernate.annotations.OnDeleteAction.NO_ACTION;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.phistory.data.model.GenericObject;
 import com.phistory.data.model.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
+
+import javax.persistence.*;
+
+import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.FetchType.LAZY;
 
 /**
  * Represents a link to an internet content
@@ -84,5 +68,12 @@ public class CarInternetContent implements GenericObject
 																  .append(this.contentLanguage.getName())
 																  .append(")");
 		return stringBuilder.toString();
+	}
+
+	public void setCarId(Long carId) {
+		if (this.car == null) {
+            this.car = new Car();
+        }
+        this.car.setId(carId);
 	}
 }

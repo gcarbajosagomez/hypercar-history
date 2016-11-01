@@ -1,13 +1,13 @@
 package com.phistory.data.dao.impl;
 
-import java.util.List;
-
+import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.model.car.CarInternetContent;
 import org.hibernate.Query;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.phistory.data.dao.generic.Dao;
-import com.phistory.data.model.car.CarInternetContent;
+import java.util.List;
 
 /**
  * Data Access Object class for {@link CarInternetContent}s
@@ -27,13 +27,15 @@ public class CarInternetContentDAO extends Dao<CarInternetContent, Long>
 
 	public List<CarInternetContent> getAllProjected()
 	{
-	    return  super.getCurrentSession().createQuery("SELECT internetContent.id,"
-                                                          + " internetContent.link,"
-                                                          + " internetContent.type,"
-                                                          + " internetContent.contentLanguage,"
-                                                          + " internetContent.car.id"
-                                                   + " FROM CarInternetContent AS internetContent")
-                                         .list();
+         return super.getCurrentSession()
+                    .createQuery("SELECT internetContent.id AS id,"
+                                     + " internetContent.link AS link,"
+                                     + " internetContent.type AS type,"
+                                     + " internetContent.contentLanguage AS contentLanguage,"
+                                     + " internetContent.car.id AS carId"
+                              + " FROM CarInternetContent AS internetContent")
+                    .setResultTransformer(Transformers.aliasToBean(CarInternetContent.class))
+                    .list();
 	}
 
 	@Override
