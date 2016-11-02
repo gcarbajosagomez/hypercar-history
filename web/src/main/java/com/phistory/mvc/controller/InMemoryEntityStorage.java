@@ -122,7 +122,7 @@ public class InMemoryEntityStorage {
      */
     public List<CarInternetContent> getCarInternetContentsByCarId(Long carId) {
         return this.carInternetContents.stream()
-                .filter(internetContent -> internetContent.getCar().getId().equals(carId))
+                .filter(internetContent -> internetContent.getCar() != null && internetContent.getCar().getId().equals(carId))
                 .collect(Collectors.toList());
     }
 
@@ -135,7 +135,7 @@ public class InMemoryEntityStorage {
     public List<Long> getPictureIdsByCarId(Long carId) {
         return this.pictures
                    .stream()
-                   .filter(picture -> picture.getCar().getId().equals(carId))
+                   .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
                    .map(Picture::getId)
                    .collect(Collectors.toList());
     }
@@ -161,7 +161,7 @@ public class InMemoryEntityStorage {
                 if (carId != null) {
                     return this.pictures.stream()
                                .filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
-                               .filter(picture -> picture.getCar().getId().equals(carId))
+                               .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
                                .findFirst()
                                .orElse(null);
                 }

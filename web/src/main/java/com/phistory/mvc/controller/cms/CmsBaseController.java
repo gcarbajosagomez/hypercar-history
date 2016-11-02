@@ -70,19 +70,21 @@ public class CmsBaseController extends BaseController {
     /*************************
      **********Misc***********
      *************************/
-	public static final String MANUFACTURERS 							= "manufacturers";
-	public static final String CAR_EDIT_VIEW_NAME 						= "/cms/carEdit";
-	public static final String MANUFACTURER_EDIT_VIEW_NAME 				= "/cms/manufacturerEdit";
-	public static final String CAR_EDIT_FORM_COMMAND 					= "CEFC";
-	public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND 	= "CICEFC";
-	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			= "MEFC";
-	public static final String PICTURE_EDIT_FORM_COMMAND 			    = "PEFC";
-	public static final String LOGGED_IN 								= "loggedIn";
-	public static final String DATE_FORMAT 								= "yyyy-MM";
+	public static final String MANUFACTURERS 							    = "manufacturers";
+	public static final String CAR_EDIT_VIEW_NAME 						    = "/cms/carEdit";
+	public static final String MANUFACTURER_EDIT_VIEW_NAME 				    = "/cms/manufacturerEdit";
+	public static final String CAR_EDIT_FORM_COMMAND 					    = "CEFC";
+	public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND 	    = "CICEFC";
+	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			    = "MEFC";
+	public static final String PICTURE_EDIT_FORM_COMMAND 			        = "PEFC";
+	public static final String LOGGED_IN 								    = "loggedIn";
+	public static final String DATE_FORMAT 								    = "yyyy-MM";
+	public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE     = "entitySavedSuccessfully";
+	public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE       = "entityContainedErrors";
 
-    private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
-    private static final String PRAGMA_HTTP_HEADER = "Pragma";
-    private static final String EXPIRES_HTTP_HEADER = "Expires";
+    private static final String CACHE_CONTROL_HTTP_HEADER   = "Cache-Control";
+    private static final String PRAGMA_HTTP_HEADER          = "Pragma";
+    private static final String EXPIRES_HTTP_HEADER         = "Expires";
 
     @Getter
     @Inject

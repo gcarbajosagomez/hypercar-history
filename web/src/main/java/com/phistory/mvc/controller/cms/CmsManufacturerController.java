@@ -115,7 +115,7 @@ public class CmsManufacturerController extends CmsBaseController
 				log.info("saving manufacturer_2");
     			Manufacturer manufacturer = manufacturerControllerUtil.saveOrEditManufacturer(command, model);
 		
-    			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+    			String successMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
 				  											  		  new Object[]{manufacturer.getFriendlyName()},
 				  											  		  LocaleContextHolder.getLocale());
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);   			

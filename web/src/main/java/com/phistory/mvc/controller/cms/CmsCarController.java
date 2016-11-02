@@ -25,6 +25,7 @@ import javax.validation.Valid;
 import java.util.Map;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -33,10 +34,8 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Controller
 @RequestMapping(value = CMS_CONTEXT + CARS)
 @Slf4j
-public class CmsCarController extends CmsBaseController
+public class CmsCarController extends CarController
 {
-	@Inject
-    private CarController carController;
 	@Inject
 	private ModelFiller carModelFiller;
 	@Inject
@@ -50,7 +49,7 @@ public class CmsCarController extends CmsBaseController
 	public ModelAndView handleCarsList(Model model,
 			   						   CarsPaginationDto carsPaginationDto)
 	{		
-		return this.carController.handleCarsList(model, carsPaginationDto);
+		return super.handleCarsList(model, carsPaginationDto);
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
@@ -58,7 +57,7 @@ public class CmsCarController extends CmsBaseController
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
 	{			
-		return this.carController.handlePagination(carsPaginationDto);
+		return super.handlePagination(carsPaginationDto);
 	}	
 	
     @RequestMapping(value = EDIT_URL,
@@ -92,7 +91,7 @@ public class CmsCarController extends CmsBaseController
     		if (!carFormEditCommandResult.hasErrors())
     		{        	
     			Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);  
-    			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+    			String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
 				  											  		  new Object[]{car.getFriendlyName()},
 				  											  		  LocaleContextHolder.getLocale());
     			
@@ -105,7 +104,7 @@ public class CmsCarController extends CmsBaseController
     		}
     		else
     		{
-    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, LocaleContextHolder.getLocale());     
+    			String errorMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE, null, LocaleContextHolder.getLocale());
     			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}		
     	}

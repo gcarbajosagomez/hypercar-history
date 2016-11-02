@@ -87,7 +87,7 @@ public class CmsCarEditController extends CmsBaseController
     	try {
     		if (!carFormEditCommandResult.hasErrors()) {
     			Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);  
-    			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+    			String successMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
 				  											  		  new Object[]{car.getFriendlyName()},
 				  											  		  LocaleContextHolder.getLocale());
     			
@@ -97,7 +97,9 @@ public class CmsCarEditController extends CmsBaseController
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
         	}
     		else {
-    			String errorMessage = getMessageSource().getMessage("entityContainedErrors", null, LocaleContextHolder.getLocale());     
+    			String errorMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
+																	null,
+																	LocaleContextHolder.getLocale());
     			model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
     		}
     	}

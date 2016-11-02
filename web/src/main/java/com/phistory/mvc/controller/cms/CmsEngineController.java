@@ -71,7 +71,7 @@ public class CmsEngineController extends CmsBaseController
     		{ 			
     			getEngineDao().saveOrEdit(engine);
 		
-    			String successMessage = getMessageSource().getMessage("entitySavedSuccessfully",
+    			String successMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
     															      new Object[]{engine.getFriendlyName()},
     															      LocaleContextHolder.getLocale());     
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
