@@ -82,7 +82,7 @@ public class InMemoryEntityStorage {
      * @return The {@link Car} found if any, null otherwise
      */
     public Car loadCarById(Long id) {
-        return this.cars.parallelStream()
+        return this.cars.stream()
                 .filter(car -> car.getId().equals(id))
                 .findFirst()
                 .orElse(null);
@@ -95,7 +95,7 @@ public class InMemoryEntityStorage {
      * @return The resulting {@link List<Car>}
      */
     public List<Car> loadCarsBySearchCommand(CarsPaginationDto paginationDTO) {
-        return this.cars.parallelStream()
+        return this.cars.stream()
                 .skip(paginationDTO.getFirstResult())
                 .limit(paginationDTO.getCarsPerPage())
                 .sorted((car1, car2) -> {
@@ -107,7 +107,7 @@ public class InMemoryEntityStorage {
     }
 
     public Car getCarByPictureId(Long pictureId) {
-        return this.pictures.parallelStream()
+        return this.pictures.stream()
                             .filter(picture -> picture.getId().equals(pictureId))
                             .map(Picture::getCar)
                             .findFirst()
@@ -121,7 +121,7 @@ public class InMemoryEntityStorage {
      * @return The resulting {@link List<CarInternetContent>}
      */
     public List<CarInternetContent> getCarInternetContentsByCarId(Long carId) {
-        return this.carInternetContents.parallelStream()
+        return this.carInternetContents.stream()
                 .filter(internetContent -> internetContent.getCar().getId().equals(carId))
                 .collect(Collectors.toList());
     }
@@ -134,7 +134,7 @@ public class InMemoryEntityStorage {
      */
     public List<Long> getPictureIdsByCarId(Long carId) {
         return this.pictures
-                   .parallelStream()
+                   .stream()
                    .filter(picture -> picture.getCar().getId().equals(carId))
                    .map(Picture::getId)
                    .collect(Collectors.toList());
@@ -159,7 +159,7 @@ public class InMemoryEntityStorage {
             }
             case LOAD_CAR_PREVIEW: {
                 if (carId != null) {
-                    return this.pictures.parallelStream()
+                    return this.pictures.stream()
                                .filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
                                .filter(picture -> picture.getCar().getId().equals(carId))
                                .findFirst()
@@ -187,7 +187,7 @@ public class InMemoryEntityStorage {
      * @return the {@link List} of {@link Picture} ids
      */
     public List<Long> getAllPictureIds() {
-        return this.pictures.parallelStream()
+        return this.pictures.stream()
                             .map(Picture::getId)
                             .collect(Collectors.toList());
     }
@@ -199,9 +199,9 @@ public class InMemoryEntityStorage {
      * @return The {@link Picture} if found, null otherwise
      */
     private Picture findById(Long pictureId) {
-        return this.pictures.parallelStream()
-                   .filter(picture -> picture.getId().equals(pictureId))
-                   .findFirst()
-                   .orElse(null);
+        return this.pictures.stream()
+                            .filter(picture -> picture.getId().equals(pictureId))
+                            .findFirst()
+                            .orElse(null);
     }
 }
