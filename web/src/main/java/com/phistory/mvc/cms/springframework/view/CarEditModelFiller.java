@@ -13,9 +13,9 @@ import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.springframework.view.ModelFiller;
-import com.phistory.data.dao.impl.EngineDao;
-import com.phistory.data.dao.impl.ManufacturerDao;
-import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.data.dao.sql.impl.EngineDAO;
+import com.phistory.data.dao.sql.impl.ManufacturerDAO;
+import com.phistory.data.dao.sql.impl.PictureDAO;
 import com.phistory.data.model.DriveWheelType;
 import com.phistory.data.model.Language;
 import com.phistory.data.model.Picture;
@@ -39,18 +39,18 @@ import com.phistory.data.model.transmission.TransmissionType;
 public class CarEditModelFiller implements ModelFiller
 {
 	@Inject
-	private ManufacturerDao manufacturerDao;
+	private ManufacturerDAO manufacturerDAO;
 	@Inject
-	private EngineDao engineDao;
+	private EngineDAO engineDAO;
 	@Inject
-	private PictureDao pictureDao;
+	private PictureDAO pictureDAO;
 	
 	@Override
 	public void fillModel(Model model) 
 	{
-		model.addAttribute("manufacturers", 				this.manufacturerDao.getAll());
+		model.addAttribute("manufacturers", 				this.manufacturerDAO.getAll());
     	model.addAttribute("engineLayouts", 				EngineLayout.values());
-    	model.addAttribute("engines", 						this.engineDao.getAll());
+    	model.addAttribute("engines", 						this.engineDAO.getAll());
     	model.addAttribute(ENGINE, 							ENGINE);
     	model.addAttribute("carMaterials", 					CarMaterial.values());
     	model.addAttribute("bodyShapes", 					CarBodyShape.values());
@@ -73,7 +73,7 @@ public class CarEditModelFiller implements ModelFiller
 	 */
 	public void fillCarEditModel(Model model, CarFormEditCommand command)
 	{
-		model.addAttribute(PICTURE_IDS, command.getCarForm().getId() != null ? this.pictureDao.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
+		model.addAttribute(PICTURE_IDS, command.getCarForm().getId() != null ? this.pictureDAO.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
 		this.fillModel(model);
 	}
 }

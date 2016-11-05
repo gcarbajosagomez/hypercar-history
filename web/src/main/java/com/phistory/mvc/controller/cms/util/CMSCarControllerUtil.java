@@ -16,8 +16,8 @@ import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.controller.cms.CmsCarController;
 import com.phistory.mvc.controller.cms.CmsCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
-import com.phistory.data.dao.impl.CarDao;
-import com.phistory.data.dao.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.CarDAO;
+import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.Picture.PictureType;
 import com.phistory.data.model.car.Car;
@@ -34,7 +34,7 @@ import org.springframework.util.StringUtils;
 public class CMSCarControllerUtil
 {		
 	@Inject
-	private CarDao carDao;
+	private CarDAO carDAO;
 	@Inject
 	private CarInternetContentDAO carInternetContentDAO;
 	@Inject
@@ -58,7 +58,7 @@ public class CMSCarControllerUtil
         if (command.getCarForm() != null)
         {
             Car car = this.carFormCreator.createEntityFromForm(command.getCarForm());            
-            this.carDao.saveOrEdit(car);      
+            this.carDAO.saveOrEdit(car);
 
             if (command.getCarForm().getPictureFiles() != null)
             {
@@ -158,7 +158,7 @@ public class CMSCarControllerUtil
         if (command.getCarForm() != null)
         {        	
             Car car = carFormCreator.createEntityFromForm(command.getCarForm());            
-            this.carDao.delete(car);
+            this.carDAO.delete(car);
         }
     }
 }

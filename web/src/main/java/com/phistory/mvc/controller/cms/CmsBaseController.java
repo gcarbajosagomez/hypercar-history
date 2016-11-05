@@ -21,10 +21,10 @@ import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.PreviewPicturePropertyEditor;
 import com.phistory.mvc.controller.BaseController;
-import com.phistory.data.dao.impl.CarDao;
-import com.phistory.data.dao.impl.CarInternetContentDAO;
-import com.phistory.data.dao.impl.EngineDao;
-import com.phistory.data.dao.impl.ManufacturerDao;
+import com.phistory.data.dao.sql.impl.CarDAO;
+import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.EngineDAO;
+import com.phistory.data.dao.sql.impl.ManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
@@ -80,6 +80,7 @@ public class CmsBaseController extends BaseController {
 	public static final String LOGGED_IN 								    = "loggedIn";
 	public static final String DATE_FORMAT 								    = "yyyy-MM";
 	public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE     = "entitySavedSuccessfully";
+	public static final String ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE   = "entityDeletedSuccessfully";
 	public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE       = "entityContainedErrors";
 
     private static final String CACHE_CONTROL_HTTP_HEADER   = "Cache-Control";
@@ -88,12 +89,12 @@ public class CmsBaseController extends BaseController {
 
     @Getter
     @Inject
-    private ManufacturerDao manufacturerDao;
+    private ManufacturerDAO manufacturerDAO;
     @Getter
     @Inject
-    private EngineDao engineDao;
+    private EngineDAO engineDAO;
     @Inject
-    private CarDao carDAO;
+    private CarDAO carDAO;
     @Getter
     @Inject
     private CarInternetContentDAO carInternetContentDAO;
@@ -113,10 +114,10 @@ public class CmsBaseController extends BaseController {
 	@InitBinder
     public void initBinder(WebDataBinder binder)
     {
-		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDao));
+		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDAO));
 		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
-        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDao));
-        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDao()));
+        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDAO));
+        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDAO()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 

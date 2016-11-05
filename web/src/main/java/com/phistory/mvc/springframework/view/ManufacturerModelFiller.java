@@ -1,6 +1,6 @@
 package com.phistory.mvc.springframework.view;
 
-import com.phistory.data.dao.impl.ManufacturerDao;
+import com.phistory.data.dao.sql.impl.ManufacturerDAO;
 import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -22,12 +22,12 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 public class ManufacturerModelFiller implements ModelFiller
 {
 	@Inject
-	private ManufacturerDao manufacturerDao;
+	private ManufacturerDAO manufacturerDAO;
 
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute(MANUFACTURERS, 	  			   	manufacturerDao.getAll());
+		model.addAttribute(MANUFACTURERS, 	  			   	manufacturerDAO.getAll());
 		model.addAttribute(MANUFACTURER_ID,   			   	MANUFACTURER_ID);
 		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
 	}

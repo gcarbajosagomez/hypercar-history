@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
-import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.data.dao.sql.impl.PictureDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.util.PictureUtil;
@@ -28,7 +28,7 @@ import com.phistory.data.model.util.PictureUtil;
 public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, ManufacturerForm>
 {
     @Inject
-    private PictureDao pictureDao;
+    private PictureDAO pictureDAO;
 
     /**
      * Create a new ManufacturerForm out of the data contained in a Manufacturer
@@ -48,7 +48,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             	try
             	{
             		PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-            		Optional<Picture> carPreview = Optional.of(pictureDao.getManufacturerLogo(manufacturer.getId()));
+            		Optional<Picture> carPreview = Optional.of(pictureDAO.getManufacturerLogo(manufacturer.getId()));
             		
             		if (carPreview.isPresent())
             		{
@@ -92,7 +92,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
         	        	
         	if ((logoFile.isPresent() && logoFile.get().getSize() > 0) && (!logo.isPresent() || (logo.isPresent() && logo.get().length() == 0)))
         	{        		
-        		logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), pictureDao));
+        		logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), pictureDAO));
         	}
         	
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),

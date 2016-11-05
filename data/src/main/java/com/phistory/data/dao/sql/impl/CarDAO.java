@@ -1,4 +1,4 @@
-package com.phistory.data.dao.impl;
+package com.phistory.data.dao.sql.impl;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import com.phistory.data.model.car.Car;
 
 /**
@@ -20,7 +20,7 @@ import com.phistory.data.model.car.Car;
  */
 @Transactional
 @Repository
-public class CarDao extends Dao<Car, Long>
+public class CarDAO extends DAO<Car, Long>
 {		
     @Override
     public List<Car> getAll()

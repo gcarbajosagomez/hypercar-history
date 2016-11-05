@@ -51,7 +51,7 @@ public class ContentSearchController extends BaseController implements Initializ
             ContentSearchDto clonedContentSearchDto = contentSearchDto.clone();
             clonedContentSearchDto.setCarsPerPage(0);
 			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
-			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDao().hibernateSearchSearchContent(searchCommand);
+			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDAO().hibernateSearchSearchContent(searchCommand);
             List<Object> searchResults = dataContentSearchDto.getResults();
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
@@ -115,6 +115,6 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Override
 	public void afterPropertiesSet() throws Exception
 	{
-		super.getContentSearchDao().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
+		super.getContentSearchDAO().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
 	}
 }

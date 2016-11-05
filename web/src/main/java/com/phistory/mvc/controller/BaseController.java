@@ -1,9 +1,9 @@
 package com.phistory.mvc.controller;
 
-import com.phistory.data.dao.impl.CarDao;
-import com.phistory.data.dao.impl.CarInternetContentDAO;
-import com.phistory.data.dao.impl.ContentSearchDao;
-import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.data.dao.sql.impl.CarDAO;
+import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.ContentSearchDAO;
+import com.phistory.data.dao.sql.impl.PictureDAO;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -31,16 +31,25 @@ public class BaseController extends BaseControllerData
 {	
 	@Inject
 	@Getter
-	private CarDao carDao;
+	private CarDAO carDAO;
+    @Inject
+	@Getter
+	private com.phistory.data.dao.inmemory.CarDAO inMemoryCarDAO;
 	@Inject
 	@Getter
-	private PictureDao pictureDao;
+	private PictureDAO pictureDAO;
 	@Inject
 	@Getter
-	private ContentSearchDao contentSearchDao;	
+	private com.phistory.data.dao.inmemory.PictureDAO inMemoryPictureDAO;
 	@Inject
 	@Getter
-	private CarInternetContentDAO carInternetContentDAO;	
+	private ContentSearchDAO contentSearchDAO;
+	@Inject
+	@Getter
+	private CarInternetContentDAO carInternetContentDAO;
+	@Inject
+	@Getter
+	private com.phistory.data.dao.inmemory.CarInternetContentDAO inMemoryCarInternetContentDAO;
 	@Inject
 	private ModelFiller baseModelFiller;
 	@Getter

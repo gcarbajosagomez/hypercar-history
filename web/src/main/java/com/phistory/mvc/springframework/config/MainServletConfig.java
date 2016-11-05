@@ -1,5 +1,4 @@
 package com.phistory.mvc.springframework.config;
-
 import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowire;

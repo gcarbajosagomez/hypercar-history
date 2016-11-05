@@ -1,14 +1,14 @@
 package com.phistory.mvc.cms.propertyEditor;
 
-import com.phistory.data.dao.generic.Dao;
-import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.sql.impl.PictureDAO;
 import com.phistory.data.model.Picture;
 
 public class PreviewPicturePropertyEditor extends GenericObjectPropertyEditor<Picture, Long>
 {
-	public PreviewPicturePropertyEditor(Dao<Picture, Long> dao)
+	public PreviewPicturePropertyEditor(DAO<Picture, Long> DAO)
 	{
-		super(dao);		
+		super(DAO);
 	}
 	
 	@Override
@@ -17,7 +17,7 @@ public class PreviewPicturePropertyEditor extends GenericObjectPropertyEditor<Pi
         if (idText != null && !idText.isEmpty())
         {
             Long carId = new Long(idText);
-            setValue(((PictureDao)dao).getCarPreview(carId));
+            setValue(((PictureDAO) DAO).getCarPreview(carId));
         }
         else
         {

@@ -2,7 +2,6 @@ package com.phistory.mvc.controller.cms;
 
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS;
 import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
@@ -103,7 +102,7 @@ public class CmsManufacturerEditController extends CmsBaseController
 			try
 			{
 				manufacturerControllerUtil.deleteManufacturer(command);
-				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
+				String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
 						  											  new Object[]{command.getManufacturerForm().getName()},
 						  											  LocaleContextHolder.getLocale());
 
@@ -128,7 +127,7 @@ public class CmsManufacturerEditController extends CmsBaseController
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId)
     {
-    	Manufacturer manufacturer = getManufacturerDao().getById(manufacturerId);
+    	Manufacturer manufacturer = getManufacturerDAO().getById(manufacturerId);
         ManufacturerForm manufacturerForm = new ManufacturerForm();
 		try
 		{

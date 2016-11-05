@@ -124,7 +124,7 @@ public class CmsCarEditController extends CmsBaseController
 		if (!result.hasErrors()) {
 			try {
 				this.carControllerUtil.deleteCar(carFormEditCommand);
-				String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
+				String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
 						  											  new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() + " " +
 																				   carFormEditCommand.getCarForm().getModel()},
 						  											  LocaleContextHolder.getLocale());
@@ -147,7 +147,7 @@ public class CmsCarEditController extends CmsBaseController
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId)
     {
-        Car car = getCarDao().getById(carId);
+        Car car = getCarDAO().getById(carId);
         CarForm carForm = this.carFormCreator.createFormFromEntity(car);  
         CarFormEditCommand command = new CarFormEditCommand(carForm);
         

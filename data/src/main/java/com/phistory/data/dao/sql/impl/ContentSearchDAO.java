@@ -1,20 +1,17 @@
-package com.phistory.data.dao.impl;
+package com.phistory.data.dao.sql.impl;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.Order;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import com.phistory.data.dto.ContentSearchDto;
 import com.phistory.data.model.GenericObject;
-import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 @Slf4j
-public class ContentSearchDao extends Dao<GenericObject, Long>
+public class ContentSearchDAO extends DAO<GenericObject, Long>
 {		
     @Override
     public List<GenericObject> getAll()

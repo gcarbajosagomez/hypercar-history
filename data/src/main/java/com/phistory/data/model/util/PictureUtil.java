@@ -2,7 +2,7 @@ package com.phistory.data.model.util;
 
 import java.sql.Blob;
 
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import lombok.extern.slf4j.Slf4j;
 
 import org.hibernate.Hibernate;
@@ -16,12 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 public class PictureUtil
 {
-    public static Blob createPictureFromMultipartFile(MultipartFile file, Dao<?, Long> dao)
+    public static Blob createPictureFromMultipartFile(MultipartFile file, DAO<?, Long> DAO)
     {
         Blob picture = null;
         try
         {
-            LobCreator lobCreator = Hibernate.getLobCreator(dao.openSession());
+            LobCreator lobCreator = Hibernate.getLobCreator(DAO.openSession());
             picture = lobCreator.createBlob(file.getInputStream(), -1);
         } 
         catch (Exception e)

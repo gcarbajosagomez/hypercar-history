@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller.cms;
 
-import com.phistory.data.dao.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @Controller
 @Slf4j
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
-public class CarInternetContentEditController extends CmsBaseController {
+public class CmsCarInternetContentEditController extends CmsBaseController {
 
     @Autowired
     private CarInternetContentDAO carInternetContentDAO;
@@ -40,7 +40,7 @@ public class CarInternetContentEditController extends CmsBaseController {
         try {
             this.carInternetContentDAO.delete(carInternetContent);
 
-            String successMessage = getMessageSource().getMessage("entityDeletedSuccessfully",
+            String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
                                                                   new Object[]{"Car internet content"},
                                                                   LocaleContextHolder.getLocale());
 

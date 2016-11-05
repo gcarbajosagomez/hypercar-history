@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.car.Car;
+import com.phistory.data.dao.inmemory.PictureDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
@@ -9,10 +9,12 @@ import com.phistory.mvc.model.dto.CarsPaginationDto;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
@@ -52,8 +54,7 @@ public class CarController extends BaseController
 	@Inject
 	private CarInternetContentUtils carInternetContentUtils;
 	@Inject
-	private InMemoryEntityStorage inMemoryEntityStorage;
-    private DateTime carsLoadingTime = DateTime.now().withMillisOfDay(0);
+	private PictureDAO inMemoryPictureDAO;
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
@@ -88,11 +89,11 @@ public class CarController extends BaseController
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
 
-			model.addAttribute(CAR,                 this.inMemoryEntityStorage.loadCarById(carId));
-			model.addAttribute(PICTURE_IDS,         this.inMemoryEntityStorage.getPictureIdsByCarId(carId));
+			model.addAttribute(CAR,                 super.getInMemoryCarDAO().loadCarById(carId));
+			model.addAttribute(PICTURE_IDS,         this.inMemoryPictureDAO.getPictureIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = this.inMemoryEntityStorage.getCarInternetContentsByCarId(carId);
+            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getCarInternetContentsByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());
@@ -117,34 +118,10 @@ public class CarController extends BaseController
 	{		
 		Map<String, Object> data = new HashMap<>();
 		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDto);
-    	data.put(CARS,                  super.getCarDao().getByCriteria(searchCommand));
+    	data.put(CARS,                  super.getCarDAO().getByCriteria(searchCommand));
     	data.put(CARS_PER_PAGE_DATA,    carsPaginationDto.getCarsPerPage());
     	data.put(PAG_NUM_DATA,          carsPaginationDto.getPagNum());
     	
 		return data;
 	}
-
-    @ModelAttribute
-    public void loadEntities() {
-        if (this.mustLoadCars()) {
-            this.inMemoryEntityStorage.loadCars();
-            this.inMemoryEntityStorage.loadCarInternetContents();
-            this.inMemoryEntityStorage.loadPictures();
-        }
-    }
-
-    /**
-     * Calculate whether or not the {@link List} of {@link Car}s must be loaded from the DB
-     *
-     * @return true if it must be loaded, false otherwise
-     */
-    private boolean mustLoadCars()
-    {
-        DateTime now = DateTime.now();
-        if (this.carsLoadingTime.plusMinutes(MINUTES_TO_LOAD_CARS_AFTER).isBefore(now.toInstant())) {
-            this.carsLoadingTime = now;
-            return true;
-        }
-        return false;
-    }
 }

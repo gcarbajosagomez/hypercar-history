@@ -1,4 +1,4 @@
-package com.phistory.data.dao.impl;
+package com.phistory.data.dao.sql.impl;
 
 import java.io.IOException;
 import java.sql.Blob;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.Picture.PictureType;
 
@@ -21,7 +21,7 @@ import com.phistory.data.model.Picture.PictureType;
  */
 @Transactional
 @Repository
-public class PictureDao extends Dao<Picture, Long>
+public class PictureDAO extends DAO<Picture, Long>
 {
 	/**
 	 * {@inheritDoc}
@@ -47,7 +47,6 @@ public class PictureDao extends Dao<Picture, Long>
         return picture;        
     }
 
-    @SuppressWarnings("unchecked")
 	public List<Long> getIdsByCarId(Long carId)
     {
         StringBuilder stringBuilder = new StringBuilder("SELECT picture.id"
@@ -97,7 +96,7 @@ public class PictureDao extends Dao<Picture, Long>
         return picture;        
     }
 
-    public void saveOrEditPicture(PictureDataCommand pictureEditCommand) throws IOException
+    public void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException
     {        
         LobCreator lobCreator = Hibernate.getLobCreator(getCurrentSession());
         Blob pictureBlob = lobCreator.createBlob(pictureEditCommand.getMultipartFile().getInputStream(), -1);

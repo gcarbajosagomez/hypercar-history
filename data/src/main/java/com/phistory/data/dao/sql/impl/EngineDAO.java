@@ -1,8 +1,8 @@
-package com.phistory.data.dao.impl;
+package com.phistory.data.dao.sql.impl;
 
 import java.util.List;
 
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import com.phistory.data.model.engine.Engine;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public class EngineDao extends Dao<Engine, Long>
+public class EngineDAO extends DAO<Engine, Long>
 {
 	@SuppressWarnings("unchecked")
 	@Override

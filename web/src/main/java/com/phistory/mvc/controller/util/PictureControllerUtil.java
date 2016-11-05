@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller.util;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.impl.PictureDao;
+import com.phistory.data.dao.sql.impl.PictureDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.command.PictureLoadCommand;
@@ -11,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+
+import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * Set of utilities for the PictureController class
@@ -22,7 +24,9 @@ import javax.servlet.http.HttpServletResponse;
 public class PictureControllerUtil extends BaseControllerData
 {	
 	@Inject
-	private PictureDao pictureDao;
+	private PictureDAO pictureDAO;
+    @Inject
+	private com.phistory.data.dao.inmemory.PictureDAO inMemoryPictureDAO;
 	
 	/**
 	 * Handle the save or edition of a Picture
@@ -39,8 +43,8 @@ public class PictureControllerUtil extends BaseControllerData
         {      
     		PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, null);
             pictureDataCommand.setPicture(picture);
-            this.pictureDao.saveOrEditPicture(pictureDataCommand);
-            pictureEditCommand.setPicture(this.pictureDao.getCarPreview(picture.getCar().getId()));
+            this.pictureDAO.saveOrEdit(pictureDataCommand);
+            pictureEditCommand.setPicture(this.pictureDAO.getCarPreview(picture.getCar().getId()));
         }
     }
 	
@@ -56,27 +60,27 @@ public class PictureControllerUtil extends BaseControllerData
         switch (command.getAction()) {
             case LOAD_CAR_PICTURE: {
                 if (command.getPictureId() != null) {
-                    return this.pictureDao.getById(command.getPictureId());
+                    return this.pictureDAO.getById(command.getPictureId());
                 }
             }
             case LOAD_CAR_PREVIEW: {
                 if (command.getCarId() != null) {
-                    return this.pictureDao.getCarPreview(command.getCarId());
+                    return this.pictureDAO.getCarPreview(command.getCarId());
                 }
             }
             case LOAD_MANUFACTURER_LOGO: {
                 if (command.getManufacturerId() != null) {
-                    return this.pictureDao.getManufacturerLogo(command.getManufacturerId());
+                    return this.pictureDAO.getManufacturerLogo(command.getManufacturerId());
                 }
             }
 			default: {
 				if (command.getPictureId() != null) {
-					return this.pictureDao.getById(command.getPictureId());
+					return this.pictureDAO.getById(command.getPictureId());
 				}
 			}
         }
 
-        return pictureDao.getById(command.getPictureId());
+        return pictureDAO.getById(command.getPictureId());
 	}
 	
 	/**
@@ -101,5 +105,46 @@ public class PictureControllerUtil extends BaseControllerData
 		}
 		
 		return response;
+	}
+
+	/**
+	 * Load a {@link Picture} from the DB depending on the action being performed
+	 *
+	 * @param command
+	 * @return
+	 */
+	public Picture loadPicture(PictureLoadCommand command)
+	{
+		Long pictureId = command.getPictureId();
+		Long carId = command.getCarId();
+
+		switch (command.getAction()) {
+			case LOAD_CAR_PICTURE: {
+				if (pictureId != null) {
+                    this.inMemoryPictureDAO.getById(pictureId);
+				}
+			}
+			case LOAD_CAR_PREVIEW: {
+				if (carId != null) {
+					return this.inMemoryPictureDAO.getPictures().stream()
+							.filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
+							.filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
+							.findFirst()
+							.orElse(null);
+				}
+			}
+			case LOAD_MANUFACTURER_LOGO: {
+				if (command.getManufacturerId() != null) {
+					return pictureDAO.getManufacturerLogo(command.getManufacturerId());
+				}
+			}
+			default: {
+				if (command.getPictureId() != null) {
+                    this.inMemoryPictureDAO.getById(pictureId);
+				}
+			}
+		}
+
+		return this.inMemoryPictureDAO.getById(pictureId);
 	}
 }

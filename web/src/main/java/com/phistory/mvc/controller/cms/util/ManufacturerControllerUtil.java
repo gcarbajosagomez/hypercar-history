@@ -13,7 +13,7 @@ import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
 import com.phistory.mvc.controller.cms.CmsBaseController;
 import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.impl.ManufacturerDao;
+import com.phistory.data.dao.sql.impl.ManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 
@@ -27,7 +27,7 @@ import com.phistory.data.model.car.Car;
 public class ManufacturerControllerUtil extends CmsBaseController
 {
 	@Inject()
-	private ManufacturerDao manufacturerDao;
+	private ManufacturerDAO manufacturerDAO;
 	@Inject()
 	private ManufacturerFormCreator manufacturerFormCreator;
 	
@@ -43,7 +43,7 @@ public class ManufacturerControllerUtil extends CmsBaseController
         if(command.getManufacturerForm() != null)
         {
             Manufacturer manufacturer = manufacturerFormCreator.createEntityFromForm(command.getManufacturerForm());
-            manufacturerDao.saveOrEdit(manufacturer);
+            manufacturerDAO.saveOrEdit(manufacturer);
             
             if(command.getManufacturerForm().getId() == null)
             {
@@ -68,7 +68,7 @@ public class ManufacturerControllerUtil extends CmsBaseController
         if (command.getManufacturerForm() != null)
         {
             Manufacturer manufacturer = manufacturerFormCreator.createEntityFromForm(command.getManufacturerForm());            
-            manufacturerDao.delete(manufacturer);
+            manufacturerDAO.delete(manufacturer);
         }
     }
     
@@ -81,7 +81,7 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	public Map<String, Object> createPaginationData(ManufacturersPaginationDto carsPaginationDto)
     {			
     	Map<String, Object> data = new HashMap<String, Object>();
-    	data.put(MANUFACTURERS, manufacturerDao.getByCriteria(createSearchCommand(carsPaginationDto)));
+    	data.put(MANUFACTURERS, manufacturerDAO.getByCriteria(createSearchCommand(carsPaginationDto)));
     	data.put(MANUFACTURERS_PER_PAGE_DATA, carsPaginationDto.getManufacturersPerPage());
     	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
 

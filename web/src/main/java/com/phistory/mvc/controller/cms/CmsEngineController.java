@@ -69,7 +69,7 @@ public class CmsEngineController extends CmsBaseController
     	{    		
     		if (!result.hasErrors())
     		{ 			
-    			getEngineDao().saveOrEdit(engine);
+    			getEngineDAO().saveOrEdit(engine);
 		
     			String successMessage = getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
     															      new Object[]{engine.getFriendlyName()},
@@ -115,7 +115,7 @@ public class CmsEngineController extends CmsBaseController
 
         if (engineId != null)
         {
-            Engine engine = getEngineDao().getById(engineId);
+            Engine engine = getEngineDAO().getById(engineId);
             EngineForm engineForm = engineFormCreator.createFormFromEntity(engine);
             command.setEngineForm(engineForm);
         }

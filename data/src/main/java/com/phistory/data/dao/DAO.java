@@ -1,4 +1,4 @@
-package com.phistory.data.dao.generic;
+package com.phistory.data.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 @Slf4j
-public abstract class Dao<TYPE extends GenericObject, IDENTIFIER>
+public abstract class DAO<TYPE extends GenericObject, IDENTIFIER>
 {
     @Autowired
     private SessionFactory sessionFactory;

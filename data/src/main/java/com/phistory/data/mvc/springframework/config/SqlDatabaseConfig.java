@@ -41,7 +41,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author gonzalo
  *
  */
-@Configuration()
+@Configuration
 @ComponentScan(basePackages = {"com.phistory.data.dao"})
 @EnableTransactionManagement()
 @EnableCaching

@@ -1,6 +1,6 @@
-package com.phistory.data.dao.impl;
+package com.phistory.data.dao.sql.impl;
 
-import com.phistory.data.dao.generic.Dao;
+import com.phistory.data.dao.DAO;
 import com.phistory.data.model.car.CarInternetContent;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
@@ -17,7 +17,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public class CarInternetContentDAO extends Dao<CarInternetContent, Long>
+public class CarInternetContentDAO extends DAO<CarInternetContent, Long>
 {
 	@Override
 	public List<CarInternetContent> getAll()
