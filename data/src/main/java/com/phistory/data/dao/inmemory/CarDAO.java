@@ -24,7 +24,7 @@ import java.util.List;
 public class CarDAO implements InMemoryDAO<Car> {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
-    private static final int LOAD_ENTITIES_DELAY = 15000;
+    private static final int LOAD_ENTITIES_INITIAL_DELAY = 15000;
 
     @Autowired
     private PictureDAO inMemoryPictureDAO;
@@ -33,7 +33,7 @@ public class CarDAO implements InMemoryDAO<Car> {
     @Getter
     private List<Car> cars;
 
-    @Scheduled(initialDelay = LOAD_ENTITIES_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in-memory");

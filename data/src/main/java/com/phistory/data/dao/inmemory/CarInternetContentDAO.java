@@ -3,7 +3,6 @@ package com.phistory.data.dao.inmemory;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -26,14 +25,14 @@ import java.util.stream.Collectors;
 public class CarInternetContentDAO implements InMemoryDAO<CarInternetContent> {
     public static final String BEAN_NAME = "inMemoryCarInternetContentDAO";
 
-    private static final int LOAD_ENTITIES_DELAY = 20000;
+    private static final int LOAD_ENTITIES_INITIAL_DELAY = 20000;
 
     @Autowired
     private com.phistory.data.dao.sql.impl.CarInternetContentDAO carInternetContentDAO;
     @Getter
     private List<CarInternetContent> carInternetContents = new ArrayList<>();
 
-    @Scheduled(initialDelay = LOAD_ENTITIES_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in-memory");
