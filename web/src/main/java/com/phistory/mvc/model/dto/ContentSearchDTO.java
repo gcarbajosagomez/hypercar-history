@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ContentSearchDto extends CarsPaginationDto
+public class ContentSearchDTO extends CarsPaginationDTO
 {	
 	private String contentToSearch;
 
-	public ContentSearchDto(Integer pagNum, Integer carsPerPage, String contentToSearch)
+	public ContentSearchDTO(Integer pagNum, Integer carsPerPage, String contentToSearch)
 	{
 		super(pagNum, carsPerPage);
 		this.contentToSearch = contentToSearch;
@@ -27,8 +27,8 @@ public class ContentSearchDto extends CarsPaginationDto
 		this.contentToSearch = contentToSearch;
 	}
 
-	public ContentSearchDto clone() {
-		return new ContentSearchDto(this.getPagNum(),
+	public ContentSearchDTO clone() {
+		return new ContentSearchDTO(this.getPagNum(),
                                     this.getCarsPerPage(),
                                     this.contentToSearch);
 	}

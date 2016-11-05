@@ -11,11 +11,11 @@ import lombok.EqualsAndHashCode;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ManufacturersPaginationDto extends PaginationDto
+public class ManufacturersPaginationDTO extends PaginationDTO
 {
 	private Integer manufacturersPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;;
 
-	public ManufacturersPaginationDto(Integer pagNum, Integer manufacturersPerPage) {
+	public ManufacturersPaginationDTO(Integer pagNum, Integer manufacturersPerPage) {
 		super(pagNum);
 		this.manufacturersPerPage = manufacturersPerPage;
 	}

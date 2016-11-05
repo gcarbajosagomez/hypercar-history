@@ -1,10 +1,9 @@
 package com.phistory.data.dto;
 
-import java.util.List;
-
-import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor

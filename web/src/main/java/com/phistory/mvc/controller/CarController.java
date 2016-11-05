@@ -5,7 +5,7 @@ import com.phistory.data.dao.inmemory.PictureDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDTO;
 import com.phistory.mvc.springframework.view.CarsListModelFiller;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
@@ -58,12 +58,12 @@ public class CarController extends BaseController
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
-									   CarsPaginationDto carsPaginationDto)
+									   CarsPaginationDTO carsPaginationDTO)
 	{		
 		try
 		{
             this.carsListModelFiller.fillPaginatedModel(model,
-														carsPaginationDto);
+					carsPaginationDTO);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
 			
@@ -114,13 +114,13 @@ public class CarController extends BaseController
 	
 	@RequestMapping(value = "/" + PAGINATION_URL)
 	@ResponseBody
-	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
+	public Map<String, Object> handlePagination(CarsPaginationDTO carsPaginationDTO)
 	{		
 		Map<String, Object> data = new HashMap<>();
-		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDto);
+		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDTO);
     	data.put(CARS,                  super.getCarDAO().getByCriteria(searchCommand));
-    	data.put(CARS_PER_PAGE_DATA,    carsPaginationDto.getCarsPerPage());
-    	data.put(PAG_NUM_DATA,          carsPaginationDto.getPagNum());
+    	data.put(CARS_PER_PAGE_DATA,    carsPaginationDTO.getCarsPerPage());
+    	data.put(PAG_NUM_DATA,          carsPaginationDTO.getPagNum());
     	
 		return data;
 	}

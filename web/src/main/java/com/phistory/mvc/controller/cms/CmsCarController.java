@@ -1,13 +1,13 @@
 package com.phistory.mvc.controller.cms;
 
+import com.phistory.data.model.car.Car;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
 import com.phistory.mvc.controller.CarController;
 import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDTO;
 import com.phistory.mvc.springframework.view.ModelFiller;
-import com.phistory.data.model.car.Car;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
@@ -16,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,9 +25,9 @@ import java.util.Map;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 import static com.phistory.mvc.controller.cms.CmsBaseController.*;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Secured(value = USER_ROLE)
 @Controller
@@ -47,17 +46,17 @@ public class CmsCarController extends CarController
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleCarsList(Model model,
-			   						   CarsPaginationDto carsPaginationDto)
+			   						   CarsPaginationDTO carsPaginationDTO)
 	{		
-		return super.handleCarsList(model, carsPaginationDto);
+		return super.handleCarsList(model, carsPaginationDTO);
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
 		    		method = GET)
 	@ResponseBody
-	public Map<String, Object> handlePagination(CarsPaginationDto carsPaginationDto)
+	public Map<String, Object> handlePagination(CarsPaginationDTO carsPaginationDTO)
 	{			
-		return super.handlePagination(carsPaginationDto);
+		return super.handlePagination(carsPaginationDTO);
 	}	
 	
     @RequestMapping(value = EDIT_URL,

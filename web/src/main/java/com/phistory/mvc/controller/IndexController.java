@@ -1,25 +1,21 @@
 package com.phistory.mvc.controller;
 
-import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
-
-import java.util.*;
-
-import javax.inject.Inject;
-
 import com.google.common.collect.HashMultimap;
 import com.phistory.data.model.Picture;
+import com.phistory.data.model.car.Car;
+import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-
-import org.joda.time.DateTime;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.phistory.mvc.springframework.view.ModelFiller;
-import com.phistory.data.model.car.Car;
+import javax.inject.Inject;
+import java.util.*;
+
+import static com.phistory.mvc.controller.BaseControllerData.INDEX_URL;
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
  * Controller to handle Index URLs

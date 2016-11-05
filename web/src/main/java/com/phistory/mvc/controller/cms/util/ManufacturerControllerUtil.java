@@ -5,13 +5,13 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.model.dto.ManufacturersPaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
 import com.phistory.mvc.controller.cms.CmsBaseController;
-import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.sql.impl.ManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
@@ -78,7 +78,7 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	 * @param carsPaginationDto
 	 * @return
 	 */
-	public Map<String, Object> createPaginationData(ManufacturersPaginationDto carsPaginationDto)
+	public Map<String, Object> createPaginationData(ManufacturersPaginationDTO carsPaginationDto)
     {			
     	Map<String, Object> data = new HashMap<String, Object>();
     	data.put(MANUFACTURERS, manufacturerDAO.getByCriteria(createSearchCommand(carsPaginationDto)));
@@ -91,15 +91,15 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	/**
 	 * Create a search command to search for manufacturers
 	 * 
-	 * @param manufacturersPaginationDto
+	 * @param manufacturersPaginationDTO
 	 * @return
 	 */
-	public static SearchCommand createSearchCommand(ManufacturersPaginationDto manufacturersPaginationDto)
+	public static SearchCommand createSearchCommand(ManufacturersPaginationDTO manufacturersPaginationDTO)
 	{
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put("name", Boolean.TRUE);
 
-		int paginationFirstResult = manufacturersPaginationDto.calculatePageFirstResult(manufacturersPaginationDto.getManufacturersPerPage());
+		int paginationFirstResult = manufacturersPaginationDTO.calculatePageFirstResult(manufacturersPaginationDTO.getManufacturersPerPage());
 		
 		return new SearchCommand(Manufacturer.class,
 								 null,
@@ -108,6 +108,6 @@ public class ManufacturerControllerUtil extends CmsBaseController
 								 orderByMap,
 				  				 null,
 								 paginationFirstResult,
-								 manufacturersPaginationDto.getManufacturersPerPage());
+								 manufacturersPaginationDTO.getManufacturersPerPage());
 	}
 }

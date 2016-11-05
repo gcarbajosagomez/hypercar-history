@@ -6,9 +6,9 @@ package com.phistory.mvc.cms.form.creator;
  * @author Gonzalo
  *
  * @param <ENTITY> The entity type
- * @param <ENTITYFORM> The entity form type
+ * @param <ENTITY_FORM> The entity form type
  */
-public interface EntityFormCreator<ENTITY, ENTITYFORM>
+public interface EntityFormCreator<ENTITY, ENTITY_FORM>
 {
 	/**
 	 * Create a new entity form out of the data contained in an entity
@@ -16,7 +16,7 @@ public interface EntityFormCreator<ENTITY, ENTITYFORM>
 	 * @param entity 
 	 * @return The entity form created
 	 */
-	public ENTITYFORM createFormFromEntity(ENTITY entity);
+	ENTITY_FORM createFormFromEntity(ENTITY entity);
 	
 	/**
 	 * Create a new entity out of the data contained in an entity form
@@ -24,5 +24,5 @@ public interface EntityFormCreator<ENTITY, ENTITYFORM>
 	 * @param entityForm
 	 * @return The entity created
 	 */
-	public ENTITY createEntityFromForm(ENTITYFORM entityForm);
+	ENTITY createEntityFromForm(ENTITY_FORM entityForm);
 }

@@ -4,7 +4,7 @@ import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType;
-import com.phistory.mvc.model.dto.ContentSearchDto;
+import com.phistory.mvc.model.dto.ContentSearchDTO;
 import com.phistory.mvc.springframework.view.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -44,11 +44,11 @@ public class ContentSearchController extends BaseController implements Initializ
 	@RequestMapping(method = GET)
 	@ResponseBody
 	public ModelAndView handleModelsSearch(Model model, 
-										   ContentSearchDto contentSearchDto)
+										   ContentSearchDTO contentSearchDto)
 	{	
 		try
 		{
-            ContentSearchDto clonedContentSearchDto = contentSearchDto.clone();
+            ContentSearchDTO clonedContentSearchDto = contentSearchDto.clone();
             clonedContentSearchDto.setCarsPerPage(0);
 			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
 			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDAO().hibernateSearchSearchContent(searchCommand);
@@ -79,7 +79,7 @@ public class ContentSearchController extends BaseController implements Initializ
 	 * @param contentSearchDto
 	 * @return
 	 */
-	private SearchCommand createSearchCommand(ContentSearchDto contentSearchDto)
+	private SearchCommand createSearchCommand(ContentSearchDTO contentSearchDto)
 	{	
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
@@ -102,7 +102,7 @@ public class ContentSearchController extends BaseController implements Initializ
 								 contentSearchDto.getCarsPerPage());
 	}
 
-    private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDto contentSearchDto) {
+    private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDTO contentSearchDto) {
         int fromIndex = contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
         int toIndex = fromIndex + contentSearchDto.getCarsPerPage();
 

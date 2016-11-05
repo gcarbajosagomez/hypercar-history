@@ -1,7 +1,7 @@
 package com.phistory.mvc.springframework.view;
 
 import com.phistory.data.dao.sql.impl.ManufacturerDAO;
-import com.phistory.mvc.model.dto.ManufacturersPaginationDto;
+import com.phistory.mvc.model.dto.ManufacturersPaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -36,12 +36,12 @@ public class ManufacturerModelFiller implements ModelFiller
 	 * Fill the model with paginated manufacturer data
 	 * 
 	 * @param model
-	 * @param manufacturersPaginationDto
+	 * @param manufacturersPaginationDTO
 	 */
-	public void fillPaginatedModel(Model model, ManufacturersPaginationDto manufacturersPaginationDto)
+	public void fillPaginatedModel(Model model, ManufacturersPaginationDTO manufacturersPaginationDTO)
 	{
-		model.addAttribute(MANUFACTURERS_PER_PAGE_DATA,   manufacturersPaginationDto.getManufacturersPerPage());
-		model.addAttribute(PAG_NUM_DATA, 	    		  manufacturersPaginationDto.getPagNum());
+		model.addAttribute(MANUFACTURERS_PER_PAGE_DATA,   manufacturersPaginationDTO.getManufacturersPerPage());
+		model.addAttribute(PAG_NUM_DATA, 	    		  manufacturersPaginationDTO.getPagNum());
 		model.addAttribute(MANUFACTURERS_PER_PAGE, 		  MANUFACTURERS_PER_PAGE);
 		
 		fillModel(model);

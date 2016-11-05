@@ -1,6 +1,6 @@
 package com.phistory.test.unit.mvc.model.dto;
 
-import com.phistory.mvc.model.dto.PaginationDto;
+import com.phistory.mvc.model.dto.PaginationDTO;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -10,7 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Created by gonzalo on 10/8/16.
  */
-public class PaginationDtoTest {
+public class PaginationDTOTest {
     private static final Integer IRRELEVANT_LOW_ITEMS_PER_PAGE = 3;
     private static final Integer IRRELEVANT_HIGH_ITEMS_PER_PAGE = 50;
     private static final Integer FIRST_PAGE_NUM = 1;
@@ -35,7 +35,7 @@ public class PaginationDtoTest {
 
     @Test(dataProvider = "pageFirstResults")
     public void testCalculatePageFirstResult(Integer itemsPerPage, Integer pagNum, Integer expectedResult) {
-        PaginationDto paginationDto = new PaginationDto(pagNum);
-        assertThat(paginationDto.calculatePageFirstResult(itemsPerPage), is(expectedResult));
+        PaginationDTO paginationDTO = new PaginationDTO(pagNum);
+        assertThat(paginationDTO.calculatePageFirstResult(itemsPerPage), is(expectedResult));
     }
 }

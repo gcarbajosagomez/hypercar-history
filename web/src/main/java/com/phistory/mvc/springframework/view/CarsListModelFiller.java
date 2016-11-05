@@ -3,7 +3,7 @@ package com.phistory.mvc.springframework.view;
 import com.phistory.data.dao.inmemory.CarDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.controller.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDto;
+import com.phistory.mvc.model.dto.CarsPaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -38,13 +38,13 @@ public class CarsListModelFiller implements ModelFiller
 	 * Fill the model with paginated car data
 	 * 
 	 * @param model
-	 * @param carsPaginationDto
+	 * @param carsPaginationDTO
 	 */
-	public void fillPaginatedModel(Model model, CarsPaginationDto carsPaginationDto)
+	public void fillPaginatedModel(Model model, CarsPaginationDTO carsPaginationDTO)
 	{
-		model.addAttribute(CARS, 				this.loadCarsBySearchCommand(carsPaginationDto));
-		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDto.getCarsPerPage());
-		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDto.getPagNum());
+		model.addAttribute(CARS, 				this.loadCarsBySearchCommand(carsPaginationDTO));
+		model.addAttribute(CARS_PER_PAGE_DATA, 	carsPaginationDTO.getCarsPerPage());
+		model.addAttribute(PAG_NUM_DATA, 	    carsPaginationDTO.getPagNum());
 		
 		this.fillModel(model);
 	}
@@ -55,7 +55,7 @@ public class CarsListModelFiller implements ModelFiller
 	 * @param paginationDTO
 	 * @return The resulting {@link List<Car>}
 	 */
-	public List<Car> loadCarsBySearchCommand(CarsPaginationDto paginationDTO) {
+	public List<Car> loadCarsBySearchCommand(CarsPaginationDTO paginationDTO) {
 		return this.inMemoryCarDAO.getCars()
                                          .stream()
                                          .skip(paginationDTO.getFirstResult())

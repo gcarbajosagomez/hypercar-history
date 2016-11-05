@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class PaginationDto
+public class PaginationDTO
 {
     public static final Integer ITEMS_PER_PAGE_DEFAULT_VALUE = 8;
 	private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
@@ -19,7 +19,7 @@ public class PaginationDto
 	private Integer pagNum = PAG_NUM_DEFAULT_VALUE;
 	private int firstResult;
 
-	public PaginationDto(Integer pagNum) {
+	public PaginationDTO(Integer pagNum) {
 		super();
 		this.pagNum = pagNum;
 	}

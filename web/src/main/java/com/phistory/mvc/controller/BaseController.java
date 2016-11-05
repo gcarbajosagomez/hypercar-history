@@ -82,25 +82,7 @@ public class BaseController extends BaseControllerData
 	private String extractRequestUriFromRequest(HttpServletRequest request)
 	{
 		StringBuilder requestedUri = new StringBuilder();
-		String requestQueryString = null;
-		
-//		TODO: implement a two-time HTTP request body mechanism, since the way it was implemented, the body of the request can only be 
-		//read once, hence failing to reach the controllers as it came empty
-		//hint: http://stackoverflow.com/questions/34804205/how-can-i-read-request-body-multiple-times-in-spring-handlermethodargumentresol/34806876#34806876
-//		if (request.getMethod().equals(POST.name())) 
-//		{
-//			Optional<String> requestUriParamsOptional = this.hTTPUtil.extractRequestPayloadParamsFromRequest(request);
-//			if (requestUriParamsOptional.isPresent())
-//			{
-//				requestQueryString = "?" + requestUriParamsOptional.get();
-//			}
-//		}
-//		else
-//		{            
-//			requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
-//		}
-		
-		requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
+		String requestQueryString = (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
 		
 		requestedUri.append(request.getRequestURI().toString());
 		requestedUri.append(requestQueryString);

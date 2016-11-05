@@ -1,9 +1,6 @@
 package com.phistory.test.integration.web.car;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
+import com.phistory.Main;
 import com.phistory.test.integration.web.BaseIntegrationTest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
@@ -16,8 +13,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.phistory.Main;
-import com.phistory.test.integration.web.BaseIntegrationTest;
+import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration

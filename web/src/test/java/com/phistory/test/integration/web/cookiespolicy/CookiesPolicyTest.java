@@ -1,10 +1,7 @@
 package com.phistory.test.integration.web.cookiespolicy;
 
-import static com.phistory.mvc.controller.BaseControllerData.COOKIES_POLICY_URL;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-
-import com.phistory.test.integration.web.cookiespolicy.CookiesPolicyPage;
+import com.phistory.Main;
+import com.phistory.test.integration.web.BaseIntegrationTest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -16,8 +13,9 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.phistory.Main;
-import com.phistory.test.integration.web.BaseIntegrationTest;
+import static com.phistory.mvc.controller.BaseControllerData.COOKIES_POLICY_URL;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration

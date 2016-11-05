@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class CarsPaginationDto extends PaginationDto
+public class CarsPaginationDTO extends PaginationDTO
 {
     private Integer carsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
 
-	public CarsPaginationDto(Integer pagNum, Integer carsPerPage) {
+	public CarsPaginationDTO(Integer pagNum, Integer carsPerPage) {
 		super(pagNum);
 		this.carsPerPage = carsPerPage;
 	}

@@ -1,7 +1,7 @@
 package com.phistory.test.integration.web.car;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
-import static com.phistory.mvc.model.dto.PaginationDto.*;
+import static com.phistory.mvc.model.dto.PaginationDTO.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;

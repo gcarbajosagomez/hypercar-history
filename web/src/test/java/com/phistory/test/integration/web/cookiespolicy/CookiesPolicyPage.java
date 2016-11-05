@@ -6,8 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.phistory.test.integration.web.BasePage;
-
 public class CookiesPolicyPage extends BasePage
 {
 	@FindBy(id = "cookiesdirective")

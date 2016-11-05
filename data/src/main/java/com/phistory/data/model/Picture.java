@@ -11,7 +11,6 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.FetchType.*;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
