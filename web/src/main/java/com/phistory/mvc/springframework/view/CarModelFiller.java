@@ -5,6 +5,7 @@ import org.springframework.ui.Model;
 
 import static com.phistory.mvc.cms.form.creator.CarFormCreator.CAR_MATERIAL_STRING_SEPARATOR;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
@@ -20,7 +21,7 @@ public class CarModelFiller implements ModelFiller
 	public void fillModel(Model model)
 	{
 		model.addAttribute(CAR_ID, 			   	        		CAR_ID);
-		model.addAttribute("loadCarPreviewAction", 				LOAD_CAR_PICTURE.getName());
+		model.addAttribute("loadCarPreviewAction", 				LOAD_CAR_PREVIEW.getName());
 		model.addAttribute("loadCarPictureAction",      		LOAD_CAR_PICTURE.getName());
 		model.addAttribute("unitsOfMeasureCookieName",  		UNITS_OF_MEASURE_COOKIE_NAME);
 		model.addAttribute("unitsOfMeasureMetric", 	    		UNITS_OF_MEASURE_METRIC);

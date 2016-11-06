@@ -44,6 +44,8 @@ public class LoginTest extends BaseIntegrationTest
 		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT);
 		this.loginPage = new LoginPage(this.webDriver);
         this.loginTestUtils = new LoginTestUtils();
+        //to let for DB entities to be loaded in-memory
+		Thread.sleep(25000);
 	}
 	
 	@Test(groups = "preLogin")
@@ -90,7 +92,7 @@ public class LoginTest extends BaseIntegrationTest
 		assertThat("Main car list div should be present after login", this.cmsCarListPage.isMainCarListDivPresent());
 	}
 
-	@Test(dependsOnGroups = "login")
+	@Test(dependsOnGroups = "login", dependsOnMethods = "test_perform_login")
 	public void test_cms_dropdown_toggle_is_displayed() throws Exception
 	{
 		this.navBarPage = new NavBarPage(this.webDriver);

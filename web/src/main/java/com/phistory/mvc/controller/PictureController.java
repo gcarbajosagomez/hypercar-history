@@ -51,15 +51,13 @@ public class PictureController extends BaseController
 
 	@ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
 	public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION_ACTION) PictureLoadAction 	loadAction,
-											@RequestParam(value = CAR_ID, required = false) Long 			carId,
-											@RequestParam(value = MANUFACTURER_ID, required = false) Long 	manufacturerId,
-											@RequestParam(value = PICTURE_ID, required = false) Long 		pictureId)
+											@RequestParam(value = ID, required = false) Long 				pictureId)
 	{
 		PictureLoadCommand command = new PictureLoadCommand();
 		
 		try
 		{
-			command = new PictureLoadCommand(loadAction, pictureId, manufacturerId, carId);
+			command = new PictureLoadCommand(loadAction, pictureId);
 		}
 		catch (Exception e)
 		{

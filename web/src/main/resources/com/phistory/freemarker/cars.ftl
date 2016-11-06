@@ -98,7 +98,7 @@
             carRowString = carRowString.concat(	  	 	"<figure>");
             carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
             carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].id + "'>");
-            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${carId}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				    "</a>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
@@ -143,7 +143,7 @@
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
                         <a href='<@spring.url "/${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-                        	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
+                        	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
                                  alt="${car.manufacturer.name} ${modelName}">
                     	</a>
 					</div>

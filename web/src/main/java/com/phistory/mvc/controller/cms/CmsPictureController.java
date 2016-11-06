@@ -50,20 +50,16 @@ public class CmsPictureController extends CmsBaseController
         } 
         catch (Exception e)
         {        	
-            log.error("There was an error while deleting picture; %s ", command.getPictureId(), e);
+            log.error("There was an error while deleting picture; %s ", command.getEntityId(), e);
             return EXCEPTION_MESSAGE + " : " + e.toString();
         }
     }
 
     @ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND)
-    public PictureLoadCommand createCommand(@PathVariable(ID)  Long pictureId,
-    										@RequestParam(value = CAR_ID, required = false) Long carId,
-            								@RequestParam(value = MANUFACTURER_ID, required = false) Long manufacturerId)
+    public PictureLoadCommand createCommand(@PathVariable(ID)  Long entityId)
     {
         PictureLoadCommand command = new PictureLoadCommand(null,
-        												    pictureId,
-        												    carId,
-        												    manufacturerId);
+        												    entityId);
         
         return command;
     }

@@ -6,17 +6,14 @@ import lombok.NoArgsConstructor;
 
 /**
  * Command class to load pictures
- * 
- * @author Gonzalo
  *
+ * @author Gonzalo
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PictureLoadCommand
-{	
-	private PictureLoadAction action;
-	private Long 			  pictureId;
-	private Long 			  manufacturerId;
-	private Long 			  carId;
+public class PictureLoadCommand {
+
+    private PictureLoadAction action;
+    private Long              entityId;
 }

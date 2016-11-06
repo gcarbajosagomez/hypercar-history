@@ -33,8 +33,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping(value = CMS_CONTEXT + CARS)
 @Slf4j
-public class CmsCarController extends CarController
+public class CmsCarController extends CmsBaseController
 {
+	@Inject
+    private CarController carController;
 	@Inject
 	private ModelFiller carModelFiller;
 	@Inject
@@ -48,7 +50,7 @@ public class CmsCarController extends CarController
 	public ModelAndView handleCarsList(Model model,
 			   						   CarsPaginationDTO carsPaginationDTO)
 	{		
-		return super.handleCarsList(model, carsPaginationDTO);
+		return this.carController.handleCarsList(model, carsPaginationDTO);
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
@@ -56,7 +58,7 @@ public class CmsCarController extends CarController
 	@ResponseBody
 	public Map<String, Object> handlePagination(CarsPaginationDTO carsPaginationDTO)
 	{			
-		return super.handlePagination(carsPaginationDTO);
+		return this.carController.handlePagination(carsPaginationDTO);
 	}	
 	
     @RequestMapping(value = EDIT_URL,

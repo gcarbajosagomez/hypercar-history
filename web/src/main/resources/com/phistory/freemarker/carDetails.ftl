@@ -33,8 +33,8 @@
   						<div class="carousel-inner">
     						<#list pictureIds as pictureId>
     							<div id="pic-div-${pictureId}" class="item <#if pictureId?is_first>active</#if>">
-      								<a href="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" title="${car.manufacturer.name} ${car.model}" gallery="#images-gallery">
-										<img <#if requestIsDesktop>class="border-radiused-img img-responsive"</#if> src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
+      								<a href="/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}" title="${car.manufacturer.name} ${car.model}" gallery="#images-gallery">
+										<img <#if requestIsDesktop>class="border-radiused-img img-responsive"</#if> src="/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}" alt="${car.manufacturer.name} ${car.model}">
 									</a>
     							</div>
 	      					</#list>

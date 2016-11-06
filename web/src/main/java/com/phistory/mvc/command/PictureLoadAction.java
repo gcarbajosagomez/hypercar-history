@@ -1,7 +1,9 @@
 package com.phistory.mvc.command;
 
 import com.phistory.data.model.Picture;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 /**
@@ -9,6 +11,7 @@ import java.util.stream.Stream;
  *
  * Created by gonzalo on 8/30/16.
  */
+@Slf4j
 public enum PictureLoadAction {
     LOAD_CAR_PICTURE("picture"), LOAD_CAR_PREVIEW("preview"), LOAD_MANUFACTURER_LOGO("logo");
 
@@ -23,8 +26,12 @@ public enum PictureLoadAction {
     }
 
     public static PictureLoadAction map(String name) {
-        return Stream.of(PictureLoadAction.values()).filter(action -> action.getName().toLowerCase().equals(name.toLowerCase()))
-                                                    .findFirst()
-                                                    .orElseGet(null);
+        Optional<PictureLoadAction> action = Stream.of(PictureLoadAction.values())
+                                                   .filter(value -> value.getName().toLowerCase().equals(name.toLowerCase()))
+                                                   .findFirst();
+        if (!action.isPresent()) {
+            log.error("No PictureLoadAction found for name: {}", name);
+            return null;
+        } return action.get();
     }
 }

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
+
 /**
  * {@link Picture} {@link InMemoryDAO}
  *
@@ -55,8 +57,7 @@ public class PictureDAO implements InMemoryDAO<Picture> {
     }
 
     /**
-     * Get a {@link List} of {@link Picture#id} whose {@link Picture#car#id} matches the supplied {@code carId
-     * }
+     * Get a {@link List} of {@link Picture#id} whose {@link Picture#car#id} matches the supplied {@code carId}
      *
      * @param carId
      * @return The resulting {@link List<Long>}
@@ -81,7 +82,7 @@ public class PictureDAO implements InMemoryDAO<Picture> {
     }
 
     /**
-     * Get the {@link Picture} whose {@link Picture#id} matches the supplied pictureId
+     * Get the {@link Picture} whose {@link Picture#id} matches the supplied {@code pictureId}
      *
      * @param pictureId
      * @return The {@link Picture} if found, null otherwise
@@ -91,5 +92,19 @@ public class PictureDAO implements InMemoryDAO<Picture> {
                             .filter(picture -> picture.getId().equals(pictureId))
                             .findFirst()
                             .orElse(null);
+    }
+
+    /**
+     * Get the preview {@link Picture} for the supplied {@code carId}
+     *
+     * @param carId
+     * @return
+     */
+    public Picture loadPreview(Long carId) {
+        return this.getPictures().stream()
+                                 .filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
+                                 .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
+                                 .findFirst()
+                                 .orElse(null);
     }
 }
