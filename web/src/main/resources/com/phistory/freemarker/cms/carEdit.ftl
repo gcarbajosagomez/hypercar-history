@@ -681,8 +681,8 @@
                                 <#list row as pictureId>
                                     <tr id="${pictureId}-picture-row">
                                         <td style="width:70%">
-                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
-                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${picId}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
+                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
                                             </a>
                                         </td>
                                         <td style="width:30%">
