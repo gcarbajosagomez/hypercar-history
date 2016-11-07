@@ -327,7 +327,7 @@
 
                       <div id="car-preview-picture-area">
                       	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>
-                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img resizable-img pull-right" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${carId}=${CEFC.carForm.id}"/>'</#if>/>
+                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img resizable-img pull-right" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${CEFC.carForm.id}"/>'</#if>/>
                       </div>
 				   </dl>
 			   </div>
