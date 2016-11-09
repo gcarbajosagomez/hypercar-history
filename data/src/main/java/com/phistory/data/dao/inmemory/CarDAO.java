@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * {@link Car} {@link InMemoryDAO}
@@ -30,7 +31,6 @@ public class CarDAO implements InMemoryDAO<Car> {
     private PictureDAO inMemoryPictureDAO;
     @Autowired
     private com.phistory.data.dao.sql.impl.CarDAO sqlCarDAO;
-    @Getter
     private List<Car> cars;
 
     @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
@@ -60,5 +60,16 @@ public class CarDAO implements InMemoryDAO<Car> {
                         .filter(car -> car.getId().equals(id))
                         .findFirst()
                         .orElse(null);
+    }
+
+    /**
+     * Get all {@link Car}s ordered by their {@link Car#productionStartDate} descending
+     *
+     * @return
+     */
+    public List<Car> getAllOrderedByProductionStartDate() {
+        return this.cars.stream()
+                        .sorted((car1, car2) -> car1.getProductionStartDate().compareTo(car2.getProductionStartDate()))
+                        .collect(Collectors.toList());
     }
 }

@@ -26,8 +26,8 @@ import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
 import com.phistory.mvc.controller.cms.util.ManufacturerControllerUtil;
-import com.phistory.mvc.springframework.view.ManufacturerModelFiller;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.data.model.Manufacturer;
 
 /**

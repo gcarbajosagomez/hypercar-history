@@ -3,7 +3,7 @@ package com.phistory.mvc.controller.util;
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.controller.CarController;
-import com.phistory.mvc.model.dto.CarsPaginationDTO;
+import com.phistory.mvc.model.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -24,12 +24,12 @@ public class CarControllerUtil
 	 * @param carsPaginationDTO
 	 * @return
 	 */
-	public SearchCommand createSearchCommand(CarsPaginationDTO carsPaginationDTO)
+	public SearchCommand createSearchCommand(PaginationDTO carsPaginationDTO)
 	{
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
 		
-		int paginationFirstResult = carsPaginationDTO.calculatePageFirstResult(carsPaginationDTO.getCarsPerPage());
+		int paginationFirstResult = carsPaginationDTO.getFirstResult();
 		
 		return new SearchCommand(Car.class,
 								 null,
@@ -38,6 +38,6 @@ public class CarControllerUtil
 								 orderByMap,
 								 null,
 								 paginationFirstResult,
-								 carsPaginationDTO.getCarsPerPage());
+								 carsPaginationDTO.getItemsPerPage());
 	}
 }

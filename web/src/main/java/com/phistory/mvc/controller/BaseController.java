@@ -4,7 +4,7 @@ import com.phistory.data.dao.sql.impl.CarDAO;
 import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
 import com.phistory.data.dao.sql.impl.ContentSearchDAO;
 import com.phistory.data.dao.sql.impl.PictureDAO;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.ResourceBundleMessageSource;

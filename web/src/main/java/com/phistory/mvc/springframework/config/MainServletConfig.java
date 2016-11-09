@@ -123,6 +123,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
         webContentInterceptor.setCacheControl(CacheControl.maxAge(30, MINUTES));
 		Properties cacheMappings = new Properties();
         cacheMappings.setProperty("/" + CARS_URL + "/*", "-1");
+        cacheMappings.setProperty("/" + MODELS_SEARCH_URL + "/*", "-1");
         cacheMappings.setProperty("/" + PICTURES_URL + "/*", TWO_WEEKS_SECONDS.toString());
         webContentInterceptor.setCacheMappings(cacheMappings);
 

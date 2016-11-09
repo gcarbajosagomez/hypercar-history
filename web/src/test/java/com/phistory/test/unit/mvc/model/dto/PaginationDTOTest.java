@@ -35,7 +35,7 @@ public class PaginationDTOTest {
 
     @Test(dataProvider = "pageFirstResults")
     public void testCalculatePageFirstResult(Integer itemsPerPage, Integer pagNum, Integer expectedResult) {
-        PaginationDTO paginationDTO = new PaginationDTO(pagNum);
-        assertThat(paginationDTO.calculatePageFirstResult(itemsPerPage), is(expectedResult));
+        PaginationDTO paginationDTO = new PaginationDTO(pagNum, itemsPerPage);
+        assertThat(paginationDTO.getFirstResult(), is(expectedResult));
     }
 }

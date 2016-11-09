@@ -5,7 +5,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import com.phistory.mvc.model.dto.ManufacturersPaginationDTO;
+import com.phistory.mvc.model.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -75,15 +75,15 @@ public class ManufacturerControllerUtil extends CmsBaseController
     /**
 	 * Create the data needed to handle manufacturer pagination
 	 * 
-	 * @param carsPaginationDto
+	 * @param paginationDTO
 	 * @return
 	 */
-	public Map<String, Object> createPaginationData(ManufacturersPaginationDTO carsPaginationDto)
+	public Map<String, Object> createPaginationData(PaginationDTO paginationDTO)
     {			
     	Map<String, Object> data = new HashMap<String, Object>();
-    	data.put(MANUFACTURERS, manufacturerDAO.getByCriteria(createSearchCommand(carsPaginationDto)));
-    	data.put(MANUFACTURERS_PER_PAGE_DATA, carsPaginationDto.getManufacturersPerPage());
-    	data.put(PAG_NUM_DATA, carsPaginationDto.getPagNum());		
+    	data.put(MANUFACTURERS, manufacturerDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
+    	data.put(MANUFACTURERS_PER_PAGE_DATA, paginationDTO.getItemsPerPage());
+    	data.put(PAG_NUM_DATA, paginationDTO.getPagNum());
 
     	return data;
     }
@@ -94,12 +94,12 @@ public class ManufacturerControllerUtil extends CmsBaseController
 	 * @param manufacturersPaginationDTO
 	 * @return
 	 */
-	public static SearchCommand createSearchCommand(ManufacturersPaginationDTO manufacturersPaginationDTO)
+	public static SearchCommand createSearchCommand(PaginationDTO manufacturersPaginationDTO)
 	{
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put("name", Boolean.TRUE);
 
-		int paginationFirstResult = manufacturersPaginationDTO.calculatePageFirstResult(manufacturersPaginationDTO.getManufacturersPerPage());
+		int paginationFirstResult = manufacturersPaginationDTO.getFirstResult();
 		
 		return new SearchCommand(Manufacturer.class,
 								 null,
@@ -108,6 +108,6 @@ public class ManufacturerControllerUtil extends CmsBaseController
 								 orderByMap,
 				  				 null,
 								 paginationFirstResult,
-								 manufacturersPaginationDTO.getManufacturersPerPage());
+								 manufacturersPaginationDTO.getItemsPerPage());
 	}
 }

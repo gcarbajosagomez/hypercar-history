@@ -57,7 +57,7 @@
                     <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.js"></script>
-					<script src="/static/javascript/main.min.js"></script>
+					<script src="/static/javascript/main.js"></script>
 
                     <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">

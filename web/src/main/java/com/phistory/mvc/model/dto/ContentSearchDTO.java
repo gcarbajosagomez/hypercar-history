@@ -1,7 +1,6 @@
 package com.phistory.mvc.model.dto;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -11,9 +10,8 @@ import lombok.NoArgsConstructor;
  *
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class ContentSearchDTO extends CarsPaginationDTO
+public class ContentSearchDTO extends PaginationDTO
 {	
 	private String contentToSearch;
 
@@ -29,7 +27,7 @@ public class ContentSearchDTO extends CarsPaginationDTO
 
 	public ContentSearchDTO clone() {
 		return new ContentSearchDTO(this.getPagNum(),
-                                    this.getCarsPerPage(),
+                                    this.getItemsPerPage(),
                                     this.contentToSearch);
 	}
 }

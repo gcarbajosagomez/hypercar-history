@@ -1,4 +1,4 @@
-package com.phistory.mvc.springframework.view;
+package com.phistory.mvc.springframework.view.filler;
 
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;

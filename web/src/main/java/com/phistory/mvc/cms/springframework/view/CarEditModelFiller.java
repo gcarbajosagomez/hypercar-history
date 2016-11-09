@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.data.dao.sql.impl.EngineDAO;
 import com.phistory.data.dao.sql.impl.ManufacturerDAO;
 import com.phistory.data.dao.sql.impl.PictureDAO;

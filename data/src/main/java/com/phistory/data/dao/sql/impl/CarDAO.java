@@ -38,6 +38,16 @@ public class CarDAO extends DAO<Car, Long>
         return cars;        
     }
 
+	public List<Car> getAllOrderedByProductionStartDate() {
+		Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.id AS id"
+				+ " FROM Car AS car"
+				+ " ORDER BY car.productionStartDate ASC,"
+				+ "          car.model ASC");
+
+		q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
+		return q.list();
+	}
+
     @Override
     public Car getById(Long carId)
     {
@@ -64,17 +74,6 @@ public class CarDAO extends DAO<Car, Long>
         } 
         
         return car;
-    }
-
-	public List<Car> getDistinctModelsWithId()
-	{
-    	Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.id AS id"
-                    					       + " FROM Car AS car"
-                    						   + " ORDER BY car.productionStartDate ASC,"
-                                               + "          car.model ASC");
-    		
-    	q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
-    	return q.list();
     }
 	
 	public Car getByPictureId(Long pictureId)

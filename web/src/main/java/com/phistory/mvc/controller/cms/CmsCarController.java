@@ -6,8 +6,8 @@ import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
 import com.phistory.mvc.controller.CarController;
 import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
-import com.phistory.mvc.model.dto.CarsPaginationDTO;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
@@ -48,17 +48,17 @@ public class CmsCarController extends CmsBaseController
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleCarsList(Model model,
-			   						   CarsPaginationDTO carsPaginationDTO)
+			   						   PaginationDTO PaginationDTO)
 	{		
-		return this.carController.handleCarsList(model, carsPaginationDTO);
+		return this.carController.handleCarsList(model, PaginationDTO);
 	}
 	
 	@RequestMapping(value = {"/" + PAGINATION_URL},
 		    		method = GET)
 	@ResponseBody
-	public Map<String, Object> handlePagination(CarsPaginationDTO carsPaginationDTO)
+	public void handlePagination(Model model, PaginationDTO PaginationDTO)
 	{			
-		return this.carController.handlePagination(carsPaginationDTO);
+		this.carController.handlePagination(model, PaginationDTO);
 	}	
 	
     @RequestMapping(value = EDIT_URL,

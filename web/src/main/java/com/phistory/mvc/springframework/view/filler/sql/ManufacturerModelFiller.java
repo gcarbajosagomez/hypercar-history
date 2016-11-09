@@ -1,7 +1,8 @@
-package com.phistory.mvc.springframework.view;
+package com.phistory.mvc.springframework.view.filler.sql;
 
 import com.phistory.data.dao.sql.impl.ManufacturerDAO;
-import com.phistory.mvc.model.dto.ManufacturersPaginationDTO;
+import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -27,7 +28,7 @@ public class ManufacturerModelFiller implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute(MANUFACTURERS, 	  			   	manufacturerDAO.getAll());
+		model.addAttribute(MANUFACTURERS, 	  			   	this.manufacturerDAO.getAll());
 		model.addAttribute(MANUFACTURER_ID,   			   	MANUFACTURER_ID);
 		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
 	}
@@ -38,9 +39,9 @@ public class ManufacturerModelFiller implements ModelFiller
 	 * @param model
 	 * @param manufacturersPaginationDTO
 	 */
-	public void fillPaginatedModel(Model model, ManufacturersPaginationDTO manufacturersPaginationDTO)
+	public void fillPaginatedModel(Model model, PaginationDTO manufacturersPaginationDTO)
 	{
-		model.addAttribute(MANUFACTURERS_PER_PAGE_DATA,   manufacturersPaginationDTO.getManufacturersPerPage());
+		model.addAttribute(MANUFACTURERS_PER_PAGE_DATA,   manufacturersPaginationDTO.getItemsPerPage());
 		model.addAttribute(PAG_NUM_DATA, 	    		  manufacturersPaginationDTO.getPagNum());
 		model.addAttribute(MANUFACTURERS_PER_PAGE, 		  MANUFACTURERS_PER_PAGE);
 		

@@ -1,4 +1,4 @@
-package com.phistory.mvc.springframework.view;
+package com.phistory.mvc.springframework.view.filler;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_PER_PAGE;
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;

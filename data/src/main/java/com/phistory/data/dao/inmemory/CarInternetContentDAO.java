@@ -45,7 +45,7 @@ public class CarInternetContentDAO implements InMemoryDAO<CarInternetContent> {
      * @param carId
      * @return The resulting {@link List<CarInternetContent>}
      */
-    public List<CarInternetContent> getCarInternetContentsByCarId(Long carId) {
+    public List<CarInternetContent> getByCarId(Long carId) {
         return this.carInternetContents.stream()
                                        .filter(internetContent -> internetContent.getCar() != null && internetContent.getCar().getId().equals(carId))
                                        .collect(Collectors.toList());

@@ -8,7 +8,7 @@ import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
 import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;

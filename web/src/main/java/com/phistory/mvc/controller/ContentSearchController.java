@@ -5,7 +5,7 @@ import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType;
 import com.phistory.mvc.model.dto.ContentSearchDTO;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
@@ -49,14 +49,14 @@ public class ContentSearchController extends BaseController implements Initializ
 		try
 		{
             ContentSearchDTO clonedContentSearchDto = contentSearchDto.clone();
-            clonedContentSearchDto.setCarsPerPage(0);
+            clonedContentSearchDto.setItemsPerPage(0);
 			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
 			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDAO().hibernateSearchSearchContent(searchCommand);
             List<Object> searchResults = dataContentSearchDto.getResults();
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
             model.addAttribute(MODELS, searchResults);
-			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getCarsPerPage());
+			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getItemsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
 			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());
 			model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDto.getContentToSearch());
@@ -90,7 +90,7 @@ public class ContentSearchController extends BaseController implements Initializ
 		
 		Map<String, SimpleDataConditionCommand> dataConditionMap = new HashMap<>();
 		dataConditionMap.put(Car.MODEL_PROPERTY_NAME, simpleDataConditionCommand);
-        int paginationFirstResult = contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
+        int paginationFirstResult = contentSearchDto.getFirstResult();
 		
 		return new SearchCommand(Car.class,
 								 null,
@@ -99,12 +99,12 @@ public class ContentSearchController extends BaseController implements Initializ
 								 orderByMap,
 								 Collections.EMPTY_LIST,
                                  paginationFirstResult,
-								 contentSearchDto.getCarsPerPage());
+								 contentSearchDto.getItemsPerPage());
 	}
 
     private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDTO contentSearchDto) {
-        int fromIndex = contentSearchDto.calculatePageFirstResult(contentSearchDto.getCarsPerPage());
-        int toIndex = fromIndex + contentSearchDto.getCarsPerPage();
+        int fromIndex = contentSearchDto.getFirstResult();
+        int toIndex = fromIndex + contentSearchDto.getItemsPerPage();
 
         if (toIndex > searchResults.size()) {
             toIndex = searchResults.size();

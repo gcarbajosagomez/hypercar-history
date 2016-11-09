@@ -3,9 +3,9 @@ package com.phistory.mvc.controller.cms;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.controller.cms.util.ManufacturerControllerUtil;
-import com.phistory.mvc.model.dto.ManufacturersPaginationDTO;
-import com.phistory.mvc.springframework.view.ManufacturerModelFiller;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
@@ -46,7 +46,7 @@ public class CmsManufacturerController extends CmsBaseController
     {    
 		try
     	{
-			ManufacturersPaginationDTO manufacturersPaginationDTO = new ManufacturersPaginationDTO(pagNum, manufacturersPerPage);
+			PaginationDTO manufacturersPaginationDTO = new PaginationDTO(pagNum, manufacturersPerPage);
     	
 			manufacturerModelFiller.fillPaginatedModel(model, manufacturersPaginationDTO);
 			pictureModelFiller.fillModel(model);
@@ -65,9 +65,9 @@ public class CmsManufacturerController extends CmsBaseController
 		    		consumes = APPLICATION_JSON,
 		    		produces = APPLICATION_JSON)
     @ResponseBody
-    public Map<String, Object> handlePagination(@RequestBody(required = true) ManufacturersPaginationDTO manufacturersPaginationDTO)
+    public Map<String, Object> handlePagination(@RequestBody(required = true) PaginationDTO paginationDTO)
     {			
-    	return manufacturerControllerUtil.createPaginationData(manufacturersPaginationDTO);
+    	return manufacturerControllerUtil.createPaginationData(paginationDTO);
     }
     
     @RequestMapping(value = EDIT_URL,

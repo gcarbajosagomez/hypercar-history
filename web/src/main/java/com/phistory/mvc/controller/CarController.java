@@ -1,13 +1,12 @@
 package com.phistory.mvc.controller;
 
-import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.inmemory.PictureDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
-import com.phistory.mvc.model.dto.CarsPaginationDTO;
-import com.phistory.mvc.springframework.view.CarsListModelFiller;
-import com.phistory.mvc.springframework.view.ModelFiller;
+import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,14 +40,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 				method = {GET, HEAD})
 public class CarController extends BaseController
 {
-    private static final int MINUTES_TO_LOAD_CARS_AFTER = 5;
 
 	@Inject
 	private CarControllerUtil carControllerUtil;
 	@Inject
 	private ModelFiller carModelFiller;
 	@Inject
-	private CarsListModelFiller carsListModelFiller;
+	private CarListModelFiller inMemoryCarsListModelFiller;
 	@Inject
 	private ModelFiller pictureModelFiller;
 	@Inject
@@ -58,12 +56,11 @@ public class CarController extends BaseController
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
-									   CarsPaginationDTO carsPaginationDTO)
+									   PaginationDTO PaginationDTO)
 	{		
 		try
 		{
-            this.carsListModelFiller.fillPaginatedModel(model,
-					carsPaginationDTO);
+            this.inMemoryCarsListModelFiller.fillPaginatedModel(model, PaginationDTO);
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
 			
@@ -93,7 +90,7 @@ public class CarController extends BaseController
 			model.addAttribute(PICTURE_IDS,         this.inMemoryPictureDAO.getPictureIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getCarInternetContentsByCarId(carId);
+            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());
@@ -114,14 +111,17 @@ public class CarController extends BaseController
 	
 	@RequestMapping(value = "/" + PAGINATION_URL)
 	@ResponseBody
-	public Map<String, Object> handlePagination(CarsPaginationDTO carsPaginationDTO)
-	{		
+	public Map<String, Object> handlePagination(Model model, PaginationDTO PaginationDTO)
+	{
+        this.inMemoryCarsListModelFiller.fillPaginatedModel(model, PaginationDTO);
+
+		Map<String, Object> modelMap = model.asMap();
 		Map<String, Object> data = new HashMap<>();
-		SearchCommand searchCommand = this.carControllerUtil.createSearchCommand(carsPaginationDTO);
-    	data.put(CARS,                  super.getCarDAO().getByCriteria(searchCommand));
-    	data.put(CARS_PER_PAGE_DATA,    carsPaginationDTO.getCarsPerPage());
-    	data.put(PAG_NUM_DATA,          carsPaginationDTO.getPagNum());
-    	
+    	data.put(CARS,                  modelMap.get(CARS));
+    	data.put(CARS_PER_PAGE_DATA,    modelMap.get(CARS_PER_PAGE_DATA));
+    	data.put(PAG_NUM_DATA,          modelMap.get(PAG_NUM_DATA));
+
+        //the model cannot be returned, because Spring tries to render the cars/pagination view otherwise
 		return data;
 	}
 }
