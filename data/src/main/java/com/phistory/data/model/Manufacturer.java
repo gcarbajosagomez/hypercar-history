@@ -20,7 +20,7 @@ import java.sql.Blob;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manufacturer implements GenericObject
+public class Manufacturer implements GenericEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

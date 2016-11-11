@@ -14,7 +14,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +35,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 @Slf4j
-public abstract class DAO<TYPE extends GenericObject, IDENTIFIER>
+public abstract class SQLDAO<TYPE extends GenericEntity, IDENTIFIER>
 {
     @Autowired
     private SessionFactory sessionFactory;
@@ -56,8 +56,7 @@ public abstract class DAO<TYPE extends GenericObject, IDENTIFIER>
      * @return The given entity
      */
     public abstract TYPE getById(IDENTIFIER id);
-    
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
 	public List<TYPE> getByCriteria(SearchCommand searchCommand)
     {
         CriteriaBuilder criteriaBuilder;

@@ -9,9 +9,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.Order;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.dto.ContentSearchDto;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.engine.Engine;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Repository
 @Slf4j
-public class ContentSearchDAO extends DAO<GenericObject, Long>
+public class SQLContentSearchDAO extends SQLDAO<GenericEntity, Long>
 {		
     @Override
-    public List<GenericObject> getAll()
+    public List<GenericEntity> getAll()
     {
         throw new UnsupportedOperationException("Not supported yet.");
     }

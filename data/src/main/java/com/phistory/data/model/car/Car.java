@@ -2,7 +2,7 @@ package com.phistory.data.model.car;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phistory.data.model.DriveWheelType;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.brake.BrakeSet;
 import com.phistory.data.model.engine.Engine;
@@ -34,7 +34,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car implements GenericObject
+public class Car implements GenericEntity
 {
     public static final String CAR_TABLE_NAME                       = "car";
     public static final String MODEL_FIELD                          = "car_model";

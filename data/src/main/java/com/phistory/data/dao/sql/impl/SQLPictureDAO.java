@@ -11,9 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.Picture.PictureType;
+
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
  *
@@ -21,7 +23,7 @@ import com.phistory.data.model.Picture.PictureType;
  */
 @Transactional
 @Repository
-public class PictureDAO extends DAO<Picture, Long>
+public class SQLPictureDAO extends SQLDAO<Picture, Long>
 {
 	/**
 	 * {@inheritDoc}
@@ -41,7 +43,7 @@ public class PictureDAO extends DAO<Picture, Long>
     {
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.id = :id");
-        q.setParameter("id", id);
+        q.setParameter(ID_FIELD, id);
         Picture picture = (Picture) q.uniqueResult();
                
         return picture;        

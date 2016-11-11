@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.CarForm;
-import com.phistory.data.dao.sql.impl.PictureDAO;
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
 import org.springframework.util.StringUtils;
@@ -31,7 +31,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
     public static final String CAR_MATERIAL_STRING_SEPARATOR = "-";
 
     @Inject
-    private PictureDAO pictureDAO;
+    private SQLPictureDAO SQLPictureDAO;
     @Inject
     private BrakeSetFormCreator brakeSetFormCreator;
     @Inject
@@ -83,7 +83,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
             if (car.getId() != null) {
                 try {
                     PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-                    Picture carPreview = pictureDAO.getCarPreview(car.getId());
+                    Picture carPreview = SQLPictureDAO.getCarPreview(car.getId());
 
                     if (carPreview != null) {
                         pictureEditCommand.setPicture(carPreview);

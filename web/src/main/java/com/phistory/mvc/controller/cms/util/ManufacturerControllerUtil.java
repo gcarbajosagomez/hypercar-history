@@ -13,7 +13,7 @@ import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
 import com.phistory.mvc.controller.cms.CmsBaseController;
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.sql.impl.ManufacturerDAO;
+import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 
@@ -27,7 +27,7 @@ import com.phistory.data.model.car.Car;
 public class ManufacturerControllerUtil extends CmsBaseController
 {
 	@Inject()
-	private ManufacturerDAO manufacturerDAO;
+	private SQLManufacturerDAO manufacturerDAO;
 	@Inject()
 	private ManufacturerFormCreator manufacturerFormCreator;
 	

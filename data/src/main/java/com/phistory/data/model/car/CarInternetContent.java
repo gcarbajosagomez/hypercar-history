@@ -1,6 +1,6 @@
 package com.phistory.data.model.car;
 
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Language;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +27,7 @@ import static javax.persistence.FetchType.LAZY;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarInternetContent implements GenericObject
+public class CarInternetContent implements GenericEntity
 {
 	public static final String CAR_INTERNET_CONTENT_TABLE_NAME = "car_internet_content";
 	

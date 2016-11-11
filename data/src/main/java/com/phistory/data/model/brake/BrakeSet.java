@@ -1,7 +1,7 @@
 package com.phistory.data.model.brake;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +24,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class BrakeSet implements GenericObject
+public class BrakeSet implements GenericEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller;
 
-import com.phistory.data.dao.inmemory.PictureDAO;
+import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
@@ -52,24 +52,20 @@ public class CarController extends BaseController
 	@Inject
 	private CarInternetContentUtils carInternetContentUtils;
 	@Inject
-	private PictureDAO inMemoryPictureDAO;
+	private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,
-									   PaginationDTO PaginationDTO)
+									   PaginationDTO paginationDTO)
 	{		
 		try
 		{
-            this.inMemoryCarsListModelFiller.fillPaginatedModel(model, PaginationDTO);
-			this.carModelFiller.fillModel(model);
-			this.pictureModelFiller.fillModel(model);
-			
+            this.carControllerUtil.fillCarListModel(this.inMemoryCarsListModelFiller, model, paginationDTO);
 			return new ModelAndView();
 		}
 		catch(Exception e)
 		{
 			log.error(e.toString(), e);
-			
 			return new ModelAndView(ERROR_VIEW_NAME);
 		}		
 	}
@@ -86,11 +82,11 @@ public class CarController extends BaseController
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
 
-			model.addAttribute(CAR,                 super.getInMemoryCarDAO().loadCarById(carId));
-			model.addAttribute(PICTURE_IDS,         this.inMemoryPictureDAO.getPictureIdsByCarId(carId));
+			model.addAttribute(CAR,                 super.getInMemoryInMemoryCarDAO().loadCarById(carId));
+			model.addAttribute(PICTURE_IDS,         this.inMemoryInMemoryPictureDAO.getPictureIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getByCarId(carId);
+            List<CarInternetContent> carInternetContents = super.getInMemoryInMemoryCarInternetContentDAO().getByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());
@@ -111,9 +107,9 @@ public class CarController extends BaseController
 	
 	@RequestMapping(value = "/" + PAGINATION_URL)
 	@ResponseBody
-	public Map<String, Object> handlePagination(Model model, PaginationDTO PaginationDTO)
+	public Map<String, Object> handlePagination(Model model, PaginationDTO paginationDTO)
 	{
-        this.inMemoryCarsListModelFiller.fillPaginatedModel(model, PaginationDTO);
+        this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);
 
 		Map<String, Object> modelMap = model.asMap();
 		Map<String, Object> data = new HashMap<>();

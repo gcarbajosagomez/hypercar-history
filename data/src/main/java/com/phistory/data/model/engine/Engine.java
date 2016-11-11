@@ -1,6 +1,6 @@
 package com.phistory.data.model.engine;
 
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +20,7 @@ import static javax.persistence.EnumType.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Engine implements GenericObject
+public class Engine implements GenericEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

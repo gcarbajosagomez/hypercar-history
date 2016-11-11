@@ -54,7 +54,7 @@ public class CmsCarEditController extends CmsBaseController
     @Inject
 	private ModelFiller carModelFiller;
 	@Inject
-	private ModelFiller carEditModelFiller;
+	private CarEditModelFiller carEditModelFiller;
 	@Inject
 	private ModelFiller pictureModelFiller;
     
@@ -173,7 +173,7 @@ public class CmsCarEditController extends CmsBaseController
     private void fillModel(Model model, CarFormEditCommand carFormEditCommand)
     {
     	this.carModelFiller.fillModel(model);
-        ((CarEditModelFiller) this.carEditModelFiller).fillCarEditModel(model, carFormEditCommand);
+        this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
     	this.pictureModelFiller.fillModel(model);  
     }
 

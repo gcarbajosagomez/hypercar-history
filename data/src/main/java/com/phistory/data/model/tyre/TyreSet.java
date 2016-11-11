@@ -1,7 +1,7 @@
 package com.phistory.data.model.tyre;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,7 +25,7 @@ import static javax.persistence.FetchType.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TyreSet implements GenericObject
+public class TyreSet implements GenericEntity
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -4,8 +4,10 @@ package com.phistory.data.model;
  *
  * @author Gonzalo
  */
-public interface GenericObject
+public interface GenericEntity
 {
+    String ID_FIELD = "id";
+
     Long getId();
     
     String getFriendlyName();

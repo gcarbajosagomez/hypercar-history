@@ -1,6 +1,6 @@
 package com.phistory.data.dao.sql.impl;
 
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import org.hibernate.Query;
 import org.hibernate.transform.Transformers;
@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
  * Data Access Object class for {@link CarInternetContent}s
@@ -17,7 +19,7 @@ import java.util.List;
  */
 @Transactional
 @Repository
-public class CarInternetContentDAO extends DAO<CarInternetContent, Long>
+public class SQLCarInternetContentDAO extends SQLDAO<CarInternetContent, Long>
 {
 	@Override
 	public List<CarInternetContent> getAll()
@@ -43,7 +45,7 @@ public class CarInternetContentDAO extends DAO<CarInternetContent, Long>
 	{
         Query q = getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
                                                + " WHERE internetContent.id = :id");
-        q.setParameter("id", id);
+        q.setParameter(ID_FIELD, id);
 		CarInternetContent carInternetContent = (CarInternetContent) q.uniqueResult();
         
         return carInternetContent; 

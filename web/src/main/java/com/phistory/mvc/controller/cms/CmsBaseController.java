@@ -21,10 +21,10 @@ import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.PreviewPicturePropertyEditor;
 import com.phistory.mvc.controller.BaseController;
-import com.phistory.data.dao.sql.impl.CarDAO;
-import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
-import com.phistory.data.dao.sql.impl.EngineDAO;
-import com.phistory.data.dao.sql.impl.ManufacturerDAO;
+import com.phistory.data.dao.sql.impl.SQLCarDAO;
+import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.SQLEngineDAO;
+import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
@@ -89,15 +89,15 @@ public class CmsBaseController extends BaseController {
 
     @Getter
     @Inject
-    private ManufacturerDAO manufacturerDAO;
+    private SQLManufacturerDAO manufacturerDAO;
     @Getter
     @Inject
-    private EngineDAO engineDAO;
+    private SQLEngineDAO engineDAO;
     @Inject
-    private CarDAO carDAO;
+    private SQLCarDAO carDAO;
     @Getter
     @Inject
-    private CarInternetContentDAO carInternetContentDAO;
+    private SQLCarInternetContentDAO carInternetContentDAO;
 
     @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response)
@@ -117,7 +117,7 @@ public class CmsBaseController extends BaseController {
 		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDAO));
 		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
         binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDAO));
-        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getPictureDAO()));
+        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getSQLPictureDAO()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 

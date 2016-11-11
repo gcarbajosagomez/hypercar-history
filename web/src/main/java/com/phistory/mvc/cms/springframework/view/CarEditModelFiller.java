@@ -13,9 +13,9 @@ import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
-import com.phistory.data.dao.sql.impl.EngineDAO;
-import com.phistory.data.dao.sql.impl.ManufacturerDAO;
-import com.phistory.data.dao.sql.impl.PictureDAO;
+import com.phistory.data.dao.sql.impl.SQLEngineDAO;
+import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.DriveWheelType;
 import com.phistory.data.model.Language;
 import com.phistory.data.model.Picture;
@@ -39,11 +39,11 @@ import com.phistory.data.model.transmission.TransmissionType;
 public class CarEditModelFiller implements ModelFiller
 {
 	@Inject
-	private ManufacturerDAO manufacturerDAO;
+	private SQLManufacturerDAO manufacturerDAO;
 	@Inject
-	private EngineDAO engineDAO;
+	private SQLEngineDAO engineDAO;
 	@Inject
-	private PictureDAO pictureDAO;
+	private SQLPictureDAO SQLPictureDAO;
 	
 	@Override
 	public void fillModel(Model model) 
@@ -73,7 +73,7 @@ public class CarEditModelFiller implements ModelFiller
 	 */
 	public void fillCarEditModel(Model model, CarFormEditCommand command)
 	{
-		model.addAttribute(PICTURE_IDS, command.getCarForm().getId() != null ? this.pictureDAO.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
+		model.addAttribute(PICTURE_IDS, command.getCarForm().getId() != null ? this.SQLPictureDAO.getIdsByCarId(command.getCarForm().getId()) : new ArrayList<Picture>());
 		this.fillModel(model);
 	}
 }

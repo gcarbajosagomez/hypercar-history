@@ -61,7 +61,7 @@ public class IndexController extends BaseController {
         HashMultimap<String, Long> carNamesToPictureIds = HashMultimap.create();
 
         List<Long> pictureIds = new ArrayList<>();
-        pictureIds.addAll(super.getInMemoryPictureDAO().getAllPictureIds());
+        pictureIds.addAll(super.getInMemoryInMemoryPictureDAO().getAllPictureIds());
         Collections.shuffle(pictureIds);
 
         if (pictureIds.size() > MAX_NUMBER_PICTURES_TO_DISPLAY) {
@@ -70,7 +70,7 @@ public class IndexController extends BaseController {
 
         randomPictureIds.forEach(pictureId ->
         {
-            Car car = super.getInMemoryCarDAO().getCarByPictureId(pictureId);
+            Car car = super.getInMemoryInMemoryCarDAO().getCarByPictureId(pictureId);
             StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName())
                     .append(" ")
                     .append(car.getModel());

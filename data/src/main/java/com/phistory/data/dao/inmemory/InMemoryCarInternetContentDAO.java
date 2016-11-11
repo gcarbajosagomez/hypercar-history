@@ -1,5 +1,6 @@
 package com.phistory.data.dao.inmemory;
 
+import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +19,17 @@ import java.util.stream.Collectors;
  *
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = CarInternetContentDAO.BEAN_NAME)
+@Repository(value = InMemoryCarInternetContentDAO.BEAN_NAME)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
-public class CarInternetContentDAO implements InMemoryDAO<CarInternetContent> {
+public class InMemoryCarInternetContentDAO implements InMemoryDAO<CarInternetContent> {
     public static final String BEAN_NAME = "inMemoryCarInternetContentDAO";
 
     private static final int LOAD_ENTITIES_INITIAL_DELAY = 20000;
 
     @Autowired
-    private com.phistory.data.dao.sql.impl.CarInternetContentDAO carInternetContentDAO;
+    private com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO carInternetContentDAO;
     @Getter
     private List<CarInternetContent> carInternetContents = new ArrayList<>();
 

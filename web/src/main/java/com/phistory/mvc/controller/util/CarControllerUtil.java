@@ -1,13 +1,13 @@
 package com.phistory.mvc.controller.util;
 
-import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.car.Car;
 import com.phistory.mvc.controller.CarController;
 import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Inject;
 
 /**
  * Set of utilities for {@link CarController}
@@ -17,27 +17,22 @@ import java.util.Map;
  */
 @Component
 public class CarControllerUtil
-{		
-	/**
-	 * Create a search command to search for cars
-	 * 
-	 * @param carsPaginationDTO
-	 * @return
-	 */
-	public SearchCommand createSearchCommand(PaginationDTO carsPaginationDTO)
-	{
-		Map<String, Boolean> orderByMap = new HashMap<>();
-		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
-		
-		int paginationFirstResult = carsPaginationDTO.getFirstResult();
-		
-		return new SearchCommand(Car.class,
-								 null,
-								 null,
-								 null,
-								 orderByMap,
-								 null,
-								 paginationFirstResult,
-								 carsPaginationDTO.getItemsPerPage());
-	}
+{
+    @Inject
+    private ModelFiller carModelFiller;
+    @Inject
+    private ModelFiller pictureModelFiller;
+
+    /**
+     * Fills the supplied {@link Model} with the necessary data to handle car list requests
+     *
+     * @param carListModelFiller
+     * @param model
+     * @param paginationDTO
+     */
+	public void fillCarListModel(CarListModelFiller carListModelFiller, Model model, PaginationDTO paginationDTO) {
+        carListModelFiller.fillPaginatedModel(model, paginationDTO);
+        this.carModelFiller.fillModel(model);
+        this.pictureModelFiller.fillModel(model);
+    }
 }

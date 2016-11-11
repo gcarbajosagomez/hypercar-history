@@ -1,6 +1,6 @@
 package com.phistory.data.model.brake;
 
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Brake implements GenericObject
+public class Brake implements GenericEntity
 {	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

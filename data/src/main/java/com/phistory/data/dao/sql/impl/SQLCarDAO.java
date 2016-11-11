@@ -11,8 +11,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.car.Car;
+
+import static com.phistory.data.model.GenericEntity.*;
 
 /**
  *
@@ -20,7 +22,7 @@ import com.phistory.data.model.car.Car;
  */
 @Transactional
 @Repository
-public class CarDAO extends DAO<Car, Long>
+public class SQLCarDAO extends SQLDAO<Car, Long>
 {		
     @Override
     public List<Car> getAll()
@@ -55,7 +57,7 @@ public class CarDAO extends DAO<Car, Long>
        
         Map<String, SimpleDataConditionCommand> conditionMap = new LinkedHashMap<>();
         Object[] values = {new Double(carId)};
-        conditionMap.put("id", new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
+        conditionMap.put(ID_FIELD, new SimpleDataConditionCommand((SimpleDataConditionCommand.EntityConditionType.EQUAL), values));
 
         SearchCommand searchCommand = new SearchCommand(Car.class,
         												null,

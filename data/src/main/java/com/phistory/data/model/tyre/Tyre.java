@@ -1,6 +1,6 @@
 package com.phistory.data.model.tyre;
 
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.model.GenericEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,7 @@ import static javax.persistence.GenerationType.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tyre implements GenericObject
+public class Tyre implements GenericEntity
 {
     @Id
     @GeneratedValue(strategy = AUTO)

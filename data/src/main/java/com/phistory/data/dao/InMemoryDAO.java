@@ -1,11 +1,8 @@
-package com.phistory.data.dao.inmemory;
-
-import org.springframework.scheduling.annotation.EnableScheduling;
+package com.phistory.data.dao;
 
 /**
  * Created by gonzalo on 11/4/16.
  */
-@EnableScheduling
 public interface InMemoryDAO<TYPE> {
     int LOAD_ENTITIES_DELAY = 600000;
 

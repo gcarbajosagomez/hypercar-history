@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller.cms;
 
-import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 public class CmsCarInternetContentEditController extends CmsBaseController {
 
     @Autowired
-    private CarInternetContentDAO carInternetContentDAO;
+    private SQLCarInternetContentDAO carInternetContentDAO;
 
     @RequestMapping(value = DELETE_URL,
                     method = DELETE)

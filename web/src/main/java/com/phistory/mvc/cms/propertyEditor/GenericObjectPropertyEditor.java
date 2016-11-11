@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.propertyEditor;
 
-import com.phistory.data.dao.DAO;
-import com.phistory.data.model.GenericObject;
+import com.phistory.data.dao.SQLDAO;
+import com.phistory.data.model.GenericEntity;
 
 import java.beans.PropertyEditorSupport;
 
@@ -9,13 +9,13 @@ import java.beans.PropertyEditorSupport;
  *
  * @author Gonzalo
  */
-public class GenericObjectPropertyEditor<TYPE extends GenericObject, IDENTIFIER> extends PropertyEditorSupport
+public class GenericObjectPropertyEditor<TYPE extends GenericEntity, IDENTIFIER> extends PropertyEditorSupport
 {
-    protected DAO<TYPE, IDENTIFIER> DAO;
+    protected SQLDAO<TYPE, IDENTIFIER> SQLDAO;
 
-    public GenericObjectPropertyEditor(DAO<TYPE, IDENTIFIER> DAO)
+    public GenericObjectPropertyEditor(SQLDAO<TYPE, IDENTIFIER> SQLDAO)
     {
-        this.DAO = DAO;
+        this.SQLDAO = SQLDAO;
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +46,7 @@ public class GenericObjectPropertyEditor<TYPE extends GenericObject, IDENTIFIER>
         if (idText != null && !idText.isEmpty())
         {
             IDENTIFIER id = (IDENTIFIER) new Long(idText);
-            super.setValue(this.DAO.getById(id));
+            super.setValue(this.SQLDAO.getById(id));
         }
         else
         {

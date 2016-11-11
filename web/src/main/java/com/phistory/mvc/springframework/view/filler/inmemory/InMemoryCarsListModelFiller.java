@@ -1,6 +1,6 @@
 package com.phistory.mvc.springframework.view.filler.inmemory;
 
-import com.phistory.data.dao.inmemory.CarDAO;
+import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
@@ -22,18 +22,18 @@ import static com.phistory.mvc.controller.BaseControllerData.MODELS;
 @Component(value = "inMemoryCarsListModelFiller")
 public class InMemoryCarsListModelFiller extends CarListModelFiller {
     @Inject
-    private CarDAO carDAO;
+    private InMemoryCarDAO inMemoryCarDAO;
 
     @Override
     public void fillModel(Model model) {
-        model.addAttribute(MODELS, this.carDAO.getAllOrderedByProductionStartDate());
+        model.addAttribute(MODELS, this.inMemoryCarDAO.getAllOrderedByProductionStartDate());
     }
 
     @Override
-    public void fillPaginatedModel(Model model, PaginationDTO PaginationDTO) {
-        super.fillPaginatedModel(model, PaginationDTO);
+    public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
+        super.fillPaginatedModel(model, paginationDTO);
         this.fillModel(model);
-        model.addAttribute(CARS, this.loadCarsBySearchCommand(PaginationDTO));
+        model.addAttribute(CARS, this.loadCarsBySearchCommand(paginationDTO));
     }
 
     /**
@@ -43,7 +43,7 @@ public class InMemoryCarsListModelFiller extends CarListModelFiller {
      * @return The resulting {@link List<Car>}
      */
     public List<Car> loadCarsBySearchCommand(PaginationDTO paginationDTO) {
-        return this.carDAO.getAllOrderedByProductionStartDate()
+        return this.inMemoryCarDAO.getAllOrderedByProductionStartDate()
                           .stream()
                           .skip(paginationDTO.getFirstResult())
                           .limit(paginationDTO.getItemsPerPage())

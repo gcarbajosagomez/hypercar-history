@@ -1,6 +1,7 @@
 package com.phistory.mvc.controller.util;
 
-import com.phistory.data.dao.sql.impl.PictureDAO;
+import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.BaseControllerData;
@@ -17,9 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class PictureControllerUtil extends BaseControllerData {
     @Inject
-    private PictureDAO pictureDAO;
+    private SQLPictureDAO sqlSQLPictureDAO;
     @Inject
-    private com.phistory.data.dao.inmemory.PictureDAO inMemoryPictureDAO;
+    private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
 
     /**
      * Load a {@link Picture} from the DB depending on the action being performed
@@ -32,27 +33,27 @@ public class PictureControllerUtil extends BaseControllerData {
         switch (command.getAction()) {
             case LOAD_CAR_PICTURE: {
                 if (command.getEntityId() != null) {
-                    return this.pictureDAO.getById(command.getEntityId());
+                    return this.sqlSQLPictureDAO.getById(command.getEntityId());
                 }
             }
             case LOAD_CAR_PREVIEW: {
                 if (command.getEntityId() != null) {
-                    return this.pictureDAO.getCarPreview(command.getEntityId());
+                    return this.sqlSQLPictureDAO.getCarPreview(command.getEntityId());
                 }
             }
             case LOAD_MANUFACTURER_LOGO: {
                 if (command.getEntityId() != null) {
-                    return this.pictureDAO.getManufacturerLogo(command.getEntityId());
+                    return this.sqlSQLPictureDAO.getManufacturerLogo(command.getEntityId());
                 }
             }
 			default: {
 				if (command.getEntityId() != null) {
-					return this.pictureDAO.getById(command.getEntityId());
+					return this.sqlSQLPictureDAO.getById(command.getEntityId());
 				}
 			}
         }
 
-        return pictureDAO.getById(command.getEntityId());
+        return sqlSQLPictureDAO.getById(command.getEntityId());
     }
 
     /**
@@ -90,26 +91,41 @@ public class PictureControllerUtil extends BaseControllerData {
 		switch (command.getAction()) {
 			case LOAD_CAR_PICTURE: {
 				if (pictureId != null) {
-                    return this.inMemoryPictureDAO.getById(pictureId);
+                    return this.loadById(pictureId);
 				}
+                break;
 			}
 			case LOAD_CAR_PREVIEW: {
 				if (carId != null) {
-					return this.inMemoryPictureDAO.loadPreview(carId);
+                    Picture picture = this.inMemoryInMemoryPictureDAO.getCarPreview(carId);
+                    if (picture == null) {
+                        picture = this.sqlSQLPictureDAO.getCarPreview(pictureId);
+                    }
+                    return picture;
 				}
+                break;
 			}
 			case LOAD_MANUFACTURER_LOGO: {
 				if (command.getEntityId() != null) {
-					return pictureDAO.getManufacturerLogo(command.getEntityId());
+					return sqlSQLPictureDAO.getManufacturerLogo(command.getEntityId());
 				}
+                break;
 			}
 			default: {
-				if (carId != null) {
-                    return this.inMemoryPictureDAO.getById(pictureId);
+				if (pictureId != null) {
+                    return this.loadById(pictureId);
 				}
 			}
 		}
 
-		return this.inMemoryPictureDAO.getById(pictureId);
+		return this.sqlSQLPictureDAO.getById(pictureId);
 	}
+
+    private Picture loadById(Long pictureId) {
+        Picture picture = this.inMemoryInMemoryPictureDAO.getById(pictureId);
+        if (picture == null) {
+            picture = this.sqlSQLPictureDAO.getById(pictureId);
+        }
+        return picture;
+    }
 }

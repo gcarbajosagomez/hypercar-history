@@ -1,5 +1,6 @@
 package com.phistory.data.dao.inmemory;
 
+import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.model.Picture;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,17 +21,17 @@ import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
  *
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = PictureDAO.BEAN_NAME)
+@Repository(value = InMemoryPictureDAO.BEAN_NAME)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
-public class PictureDAO implements InMemoryDAO<Picture> {
-    public static final String BEAN_NAME = "inMemoryPictureDAO";
+public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
+    public static final String BEAN_NAME = "InMemoryPictureDAO";
 
     private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 20;
 
     @Autowired
-    private com.phistory.data.dao.sql.impl.PictureDAO sqlPictureDAO;
+    private com.phistory.data.dao.sql.impl.SQLPictureDAO sqlSQLPictureDAO;
     @Getter
     private List<Picture> pictures = new ArrayList<>();
 
@@ -38,21 +39,21 @@ public class PictureDAO implements InMemoryDAO<Picture> {
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
-        Long pictureCount = this.sqlPictureDAO.count();
+        Long pictureCount = this.sqlSQLPictureDAO.count();
 
         Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
         chunkSizeDouble = Math.floor(chunkSizeDouble);
         int chunkSize = new Double(chunkSizeDouble).intValue();
 
-        this.pictures = this.sqlPictureDAO.getPaginated(0, chunkSize);
+        this.pictures = this.sqlSQLPictureDAO.getPaginated(0, chunkSize);
 
         for (int i = 2; i < NUMBER_OF_CHUNKS_TO_LOAD_PICTURES; i++) {
-            this.getPictures().addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+            this.getPictures().addAll(this.sqlSQLPictureDAO.getPaginated(chunkSize,
                                                                       chunkSizeDouble.intValue()));
             chunkSize = chunkSize + chunkSizeDouble.intValue();
         }
 
-        this.getPictures().addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+        this.getPictures().addAll(this.sqlSQLPictureDAO.getPaginated(chunkSize,
                                                pictureCount.intValue()));
     }
 
@@ -100,7 +101,7 @@ public class PictureDAO implements InMemoryDAO<Picture> {
      * @param carId
      * @return
      */
-    public Picture loadPreview(Long carId) {
+    public Picture getCarPreview(Long carId) {
         return this.getPictures().stream()
                                  .filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
                                  .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))

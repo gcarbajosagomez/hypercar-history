@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller.cms.util;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.sql.impl.PictureDAO;
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.controller.cms.CmsPictureController;
@@ -19,7 +19,7 @@ import javax.inject.Inject;
 public class CMSPictureControllerUtil {
 
     @Inject
-    private PictureDAO pictureDAO;
+    private SQLPictureDAO SQLPictureDAO;
 
     /**
      * Handle the save or edition of a {@link Picture}
@@ -34,8 +34,8 @@ public class CMSPictureControllerUtil {
         if (pictureFile != null && pictureFile.getSize() > 0) {
             PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, null);
             pictureDataCommand.setPicture(picture);
-            this.pictureDAO.saveOrEdit(pictureDataCommand);
-            pictureEditCommand.setPicture(this.pictureDAO.getCarPreview(picture.getCar().getId()));
+            this.SQLPictureDAO.saveOrEdit(pictureDataCommand);
+            pictureEditCommand.setPicture(this.SQLPictureDAO.getCarPreview(picture.getCar().getId()));
         }
     }
 }

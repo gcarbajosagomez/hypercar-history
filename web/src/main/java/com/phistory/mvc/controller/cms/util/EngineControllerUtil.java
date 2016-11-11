@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.creator.EngineFormCreator;
-import com.phistory.data.dao.sql.impl.EngineDAO;
+import com.phistory.data.dao.sql.impl.SQLEngineDAO;
 import com.phistory.data.model.engine.Engine;
 
 /**
@@ -19,7 +19,7 @@ import com.phistory.data.model.engine.Engine;
 public class EngineControllerUtil {
 	
 	@Inject
-	private EngineDAO engineDAO;
+	private SQLEngineDAO engineDAO;
 	@Inject()
 	private EngineFormCreator engineFormCreator;
 	

@@ -40,7 +40,7 @@ public class CmsPictureController extends CmsBaseController
         {
             command.setAction(LOAD_CAR_PICTURE);
             Picture picture = this.pictureControllerUtil.loadPictureFromDB(command);
-            super.getPictureDAO().delete(picture);
+            super.getSQLPictureDAO().delete(picture);
             
             String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
 					  											  new Object[]{"Picture"},

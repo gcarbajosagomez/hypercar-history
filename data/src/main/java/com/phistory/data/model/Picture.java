@@ -25,7 +25,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Entity
 @Table(name = "picture",
        uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", "car_id", "picture_type"}))
-public class Picture implements GenericObject
+public class Picture implements GenericEntity
 {	
 	public enum PictureType
 	{

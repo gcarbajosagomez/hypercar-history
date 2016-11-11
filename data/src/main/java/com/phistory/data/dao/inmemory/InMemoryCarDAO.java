@@ -1,8 +1,8 @@
 package com.phistory.data.dao.inmemory;
 
+import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,19 @@ import java.util.stream.Collectors;
  *
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = CarDAO.BEAN_NAME)
+@Repository(value = InMemoryCarDAO.BEAN_NAME)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
-public class CarDAO implements InMemoryDAO<Car> {
+public class InMemoryCarDAO implements InMemoryDAO<Car> {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
     private static final int LOAD_ENTITIES_INITIAL_DELAY = 15000;
 
     @Autowired
-    private PictureDAO inMemoryPictureDAO;
+    private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
     @Autowired
-    private com.phistory.data.dao.sql.impl.CarDAO sqlCarDAO;
+    private com.phistory.data.dao.sql.impl.SQLCarDAO sqlCarDAO;
     private List<Car> cars;
 
     @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
@@ -41,7 +41,7 @@ public class CarDAO implements InMemoryDAO<Car> {
     }
 
     public Car getCarByPictureId(Long pictureId) {
-        return this.inMemoryPictureDAO.getPictures()
+        return this.inMemoryInMemoryPictureDAO.getPictures()
                                       .stream()
                                       .filter(picture -> picture.getId().equals(pictureId))
                                       .map(Picture::getCar)

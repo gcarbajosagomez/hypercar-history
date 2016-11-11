@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller.cms.util;
 
-import com.phistory.data.dao.sql.impl.CarDAO;
-import com.phistory.data.dao.sql.impl.CarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.SQLCarDAO;
+import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
@@ -34,9 +34,9 @@ import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
 public class CMSCarControllerUtil {
 
     @Inject
-    private CarDAO carDAO;
+    private SQLCarDAO carDAO;
     @Inject
-    private CarInternetContentDAO carInternetContentDAO;
+    private SQLCarInternetContentDAO carInternetContentDAO;
     @Inject
     private CarFormCreator carFormCreator;
     @Inject

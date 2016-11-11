@@ -7,7 +7,9 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
+
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
  *
@@ -15,7 +17,7 @@ import com.phistory.data.dao.DAO;
  */
 @Transactional
 @Repository
-public class ManufacturerDAO extends DAO<Manufacturer, Long>
+public class SQLManufacturerDAO extends SQLDAO<Manufacturer, Long>
 {
 	/**
 	 * {@inheritDoc}
@@ -24,7 +26,8 @@ public class ManufacturerDAO extends DAO<Manufacturer, Long>
 	@Override
     public List<Manufacturer> getAll() {
         return getCurrentSession().createQuery("FROM Manufacturer AS manufacturer"
-                                            + " ORDER BY manufacturer.name ASC").list();
+                                            + " ORDER BY manufacturer.name ASC")
+                                  .list();
     }
 
     /**
@@ -35,7 +38,7 @@ public class ManufacturerDAO extends DAO<Manufacturer, Long>
     {
         Query q = getCurrentSession().createQuery("FROM Manufacturer AS manufacturer"
                                                + " WHERE manufacturer.id = :id");
-        q.setParameter("id", id);
+        q.setParameter(ID_FIELD, id);
         return (Manufacturer) q.uniqueResult();
     }
 }

@@ -6,7 +6,9 @@ import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
 import com.phistory.mvc.controller.CarController;
 import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
+import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,7 +23,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Map;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 import static com.phistory.mvc.controller.cms.CmsBaseController.*;
@@ -42,23 +43,36 @@ public class CmsCarController extends CmsBaseController
 	@Inject
 	private ModelFiller pictureModelFiller;
 	@Inject
-	private ModelFiller carEditModelFiller;
+	private CarEditModelFiller carEditModelFiller;
 	@Inject
-    private CMSCarControllerUtil carControllerUtil;
+    private CarListModelFiller sqlCarsListModelFiller;
+	@Inject
+    private CMSCarControllerUtil cmsCarControllerUtil;
+	@Inject
+    private CarControllerUtil carControllerUtil;
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleCarsList(Model model,
-			   						   PaginationDTO PaginationDTO)
-	{		
-		return this.carController.handleCarsList(model, PaginationDTO);
-	}
-	
+			   						   PaginationDTO paginationDTO)
+	{
+        try
+        {
+            this.carControllerUtil.fillCarListModel(this.sqlCarsListModelFiller, model, paginationDTO);
+            return new ModelAndView();
+        }
+        catch(Exception e)
+        {
+            log.error(e.toString(), e);
+            return new ModelAndView(ERROR_VIEW_NAME);
+        }
+    }
+
 	@RequestMapping(value = {"/" + PAGINATION_URL},
 		    		method = GET)
 	@ResponseBody
-	public void handlePagination(Model model, PaginationDTO PaginationDTO)
+	public void handlePagination(Model model, PaginationDTO paginationDTO)
 	{			
-		this.carController.handlePagination(model, PaginationDTO);
+		this.carController.handlePagination(model, paginationDTO);
 	}	
 	
     @RequestMapping(value = EDIT_URL,
@@ -91,7 +105,7 @@ public class CmsCarController extends CmsBaseController
     	{
     		if (!carFormEditCommandResult.hasErrors())
     		{        	
-    			Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);  
+    			Car car = this.cmsCarControllerUtil.saveOrEditCar(carFormEditCommand);
     			String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
 				  											  		  new Object[]{car.getFriendlyName()},
 				  											  		  LocaleContextHolder.getLocale());
@@ -99,7 +113,7 @@ public class CmsCarController extends CmsBaseController
     			if (!carInternetContentEditCommandResult.hasErrors())
     			{
     				carInternetContentEditCommand.getCarInternetContentForms().forEach(carInternetContentForm -> carInternetContentForm.setCar(car));
-    				this.carControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
+    				this.cmsCarControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
     			}
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     		}
@@ -137,7 +151,7 @@ public class CmsCarController extends CmsBaseController
     private void fillModel(Model model, CarFormEditCommand carFormEditCommand)
     {
     	this.carModelFiller.fillModel(model);
-        ((CarEditModelFiller) this.carEditModelFiller).fillCarEditModel(model, carFormEditCommand);
+        this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
     	this.pictureModelFiller.fillModel(model);  
     }
 }

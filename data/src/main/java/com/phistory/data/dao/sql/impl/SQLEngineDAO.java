@@ -2,11 +2,13 @@ package com.phistory.data.dao.sql.impl;
 
 import java.util.List;
 
-import com.phistory.data.dao.DAO;
+import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.engine.Engine;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
  *
@@ -14,28 +16,21 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Transactional
 @Repository
-public class EngineDAO extends DAO<Engine, Long>
+public class SQLEngineDAO extends SQLDAO<Engine, Long>
 {
 	@SuppressWarnings("unchecked")
 	@Override
     public List<Engine> getAll()
     {
-        List<Engine> engines = null;        
-        engines = getCurrentSession().createQuery("FROM Engine").list();
-        
-        return engines;        
+        return super.getCurrentSession().createQuery("FROM Engine").list();
     }
     
     @Override
     public Engine getById(Long id)
     {
-        Engine engine = null;
-        
         Query q = getCurrentSession().createQuery("FROM Engine AS engine"
                                                + " WHERE engine.id = :id");
-        q.setParameter("id", id);
-        engine = (Engine) q.uniqueResult();
-        
-        return engine;        
+        q.setParameter(ID_FIELD, id);
+        return (Engine) q.uniqueResult();
     }
 }

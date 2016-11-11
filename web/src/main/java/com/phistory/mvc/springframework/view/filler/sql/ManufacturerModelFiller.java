@@ -1,6 +1,6 @@
 package com.phistory.mvc.springframework.view.filler.sql;
 
-import com.phistory.data.dao.sql.impl.ManufacturerDAO;
+import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
@@ -23,7 +23,7 @@ import static com.phistory.mvc.controller.cms.CmsBaseController.*;
 public class ManufacturerModelFiller implements ModelFiller
 {
 	@Inject
-	private ManufacturerDAO manufacturerDAO;
+	private SQLManufacturerDAO manufacturerDAO;
 
 	@Override
 	public void fillModel(Model model)
