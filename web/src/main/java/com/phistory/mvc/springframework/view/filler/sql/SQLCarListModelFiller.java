@@ -39,8 +39,6 @@ public class SQLCarListModelFiller extends CarListModelFiller {
         model.addAttribute(CARS, this.carDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
     }
 
-
-
     /**
      * Create a search command to search for cars
      *

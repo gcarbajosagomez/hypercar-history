@@ -14,53 +14,44 @@ import javax.inject.Inject;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
- *
  * @author Gonzalo
  */
+@Slf4j
 @Secured(USER_ROLE)
 @Controller
 @RequestMapping(value = CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
-@Slf4j
-public class CmsPictureController extends CmsBaseController
-{
+public class CMSPictureController extends CMSBaseController {
     @Inject
     private PictureControllerUtil pictureControllerUtil;
-    
+
     @RequestMapping(value = DELETE_URL,
-    				method = DELETE)
+                    method = DELETE)
     @ResponseBody
-    public String handleDeletePicture(@ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND) PictureLoadCommand command)
-    {
-        try
-        {
+    public String handleDeletePicture(@ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND) PictureLoadCommand command) {
+        try {
             command.setAction(LOAD_CAR_PICTURE);
             Picture picture = this.pictureControllerUtil.loadPictureFromDB(command);
             super.getSQLPictureDAO().delete(picture);
-            
-            String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-					  											  new Object[]{"Picture"},
-					  											  LocaleContextHolder.getLocale());
+
+            String successMessage = super.getMessageSource()
+                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
+                                                     new Object[]{"Picture"},
+                                                     LocaleContextHolder.getLocale());
 
             return SUCCESS_MESSAGE + " : " + successMessage;
-        } 
-        catch (Exception e)
-        {        	
-            log.error("There was an error while deleting picture; %s ", command.getEntityId(), e);
+        } catch (Exception e) {
+            log.error("There was an error while deleting picture; {} ", command.getEntityId(), e);
             return EXCEPTION_MESSAGE + " : " + e.toString();
         }
     }
 
     @ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND)
-    public PictureLoadCommand createCommand(@PathVariable(ID)  Long entityId)
-    {
-        PictureLoadCommand command = new PictureLoadCommand(null,
-        												    entityId);
-        
-        return command;
+    public PictureLoadCommand createCommand(@PathVariable(ID) Long entityId) {
+        return new PictureLoadCommand(null, entityId);
     }
 }

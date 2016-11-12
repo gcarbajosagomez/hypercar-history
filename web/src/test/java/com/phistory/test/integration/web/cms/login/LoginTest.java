@@ -1,7 +1,7 @@
 package com.phistory.test.integration.web.cms.login;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
 import static org.hamcrest.MatcherAssert.assertThat;
 

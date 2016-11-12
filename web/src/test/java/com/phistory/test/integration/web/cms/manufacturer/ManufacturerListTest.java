@@ -15,8 +15,8 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CmsBaseController.MANUFACTURERS_URL;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.MANUFACTURERS_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 /**

@@ -25,7 +25,7 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+import static com.phistory.mvc.controller.cms.CMSBaseController.*;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -34,7 +34,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Controller
 @RequestMapping(value = CMS_CONTEXT + CARS)
 @Slf4j
-public class CmsCarController extends CmsBaseController
+public class CMSCarController extends CMSBaseController
 {
 	@Inject
     private CarController carController;
@@ -125,7 +125,7 @@ public class CmsCarController extends CmsBaseController
     	}
     	catch (Exception e)
     	{
-    		log.error(e.toString(), e);
+    		log.error("There was an error while trying to save new car with model: {}", carFormEditCommand.getCarForm().getModel(), e);
     		model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         }
     	finally

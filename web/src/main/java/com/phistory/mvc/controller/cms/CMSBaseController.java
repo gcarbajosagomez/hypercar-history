@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,7 +38,7 @@ import com.phistory.data.model.engine.Engine;
  */
 @Controller
 @RequestMapping(value = CMS_CONTEXT)
-public class CmsBaseController extends BaseController {
+public class CMSBaseController extends BaseController {
 	/********************
      *******URLs*********
      ********************/
@@ -80,6 +80,7 @@ public class CmsBaseController extends BaseController {
 	public static final String LOGGED_IN 								    = "loggedIn";
 	public static final String DATE_FORMAT 								    = "yyyy-MM";
 	public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE     = "entitySavedSuccessfully";
+	public static final String ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE    = "entityEditedSuccessfully";
 	public static final String ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE   = "entityDeletedSuccessfully";
 	public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE       = "entityContainedErrors";
 

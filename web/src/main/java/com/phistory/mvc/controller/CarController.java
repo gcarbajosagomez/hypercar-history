@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import static com.phistory.data.model.car.CarInternetContentType.REVIEW_ARTICLE;
 import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CARS_URL;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CARS_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 

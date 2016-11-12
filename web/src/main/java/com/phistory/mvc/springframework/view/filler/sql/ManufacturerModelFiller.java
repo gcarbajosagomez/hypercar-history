@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
 import static com.phistory.mvc.controller.BaseControllerData.MANUFACTURER_ID;
 import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
-import static com.phistory.mvc.controller.cms.CmsBaseController.*;
+import static com.phistory.mvc.controller.cms.CMSBaseController.*;
 
 /**
  * Fills a Spring Framework Model with manufacturer related information

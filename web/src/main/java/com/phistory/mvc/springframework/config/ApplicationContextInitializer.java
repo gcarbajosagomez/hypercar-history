@@ -13,33 +13,31 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 /**
  * Context initializer class
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
-public class ApplicationContextInitializer implements WebApplicationInitializer
-{	
-	@Override
-    public void onStartup(ServletContext container) throws ServletException
-	{
-		// Create the 'root' Spring application context
-	    AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
-	    rootContext.register(WebSecurityConfig.class);
+public class ApplicationContextInitializer implements WebApplicationInitializer {
 
-	    // Manage the lifecycle of the root application context
-	    container.addListener(new ContextLoaderListener(rootContext));
-	      
-	    // security filter
-	    FilterRegistration.Dynamic securityFilter = container.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain"));
-	    securityFilter.addMappingForUrlPatterns(null, false, "*");
+    @Override
+    public void onStartup(ServletContext container) throws ServletException {
+        // Create the 'root' Spring application context
+        AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
+        rootContext.register(WebSecurityConfig.class);
 
-	    // Create the dispatcher servlet's Spring application context
-	    AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
-	    dispatcherContext.register(MainServletConfig.class);
+        // Manage the lifecycle of the root application context
+        container.addListener(new ContextLoaderListener(rootContext));
 
-	    // Register and map the dispatcher servlet
-	    ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
-	    dispatcher.setLoadOnStartup(1);
-	    dispatcher.addMapping("*");
+        // security filter
+        FilterRegistration.Dynamic securityFilter = container.addFilter("springSecurityFilterChain", new DelegatingFilterProxy("springSecurityFilterChain"));
+        securityFilter.addMappingForUrlPatterns(null, false, "*");
+
+        // Create the dispatcher servlet's Spring application context
+        AnnotationConfigWebApplicationContext dispatcherContext = new AnnotationConfigWebApplicationContext();
+        dispatcherContext.register(MainServletConfig.class);
+
+        // Register and map the dispatcher servlet
+        ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("*");
     }
 }

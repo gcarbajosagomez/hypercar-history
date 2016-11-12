@@ -1,12 +1,12 @@
 package com.phistory.mvc.springframework.config;
 
 import static com.phistory.mvc.controller.BaseControllerData.*;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CmsBaseController.LOGIN_ERROR;
-import static com.phistory.mvc.controller.cms.CmsBaseController.LOGIN_SUCCESS;
-import static com.phistory.mvc.controller.cms.CmsBaseController.LOGIN_URL;
-import static com.phistory.mvc.controller.cms.CmsBaseController.LOGOUT;
-import static com.phistory.mvc.controller.cms.CmsBaseController.QUERY_STRING_SEPARATOR;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_ERROR;
+import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_SUCCESS;
+import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_URL;
+import static com.phistory.mvc.controller.cms.CMSBaseController.LOGOUT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.QUERY_STRING_SEPARATOR;
 
 import javax.inject.Inject;
 

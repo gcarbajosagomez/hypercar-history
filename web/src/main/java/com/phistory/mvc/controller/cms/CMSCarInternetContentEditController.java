@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CAR_INTERNET_CONTENTS_URL;
-import static com.phistory.mvc.controller.cms.CmsBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
@@ -24,10 +24,10 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
  * Created by gonzalo on 9/9/16.
  */
 @Secured(USER_ROLE)
-@Controller
 @Slf4j
+@Controller
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
-public class CmsCarInternetContentEditController extends CmsBaseController {
+public class CMSCarInternetContentEditController extends CMSBaseController {
 
     @Autowired
     private SQLCarInternetContentDAO carInternetContentDAO;
@@ -40,9 +40,10 @@ public class CmsCarInternetContentEditController extends CmsBaseController {
         try {
             this.carInternetContentDAO.delete(carInternetContent);
 
-            String successMessage = getMessageSource().getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                                  new Object[]{"Car internet content"},
-                                                                  LocaleContextHolder.getLocale());
+            String successMessage = super.getMessageSource()
+                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
+                                                     new Object[]{"Car internet content"},
+                                                     LocaleContextHolder.getLocale());
 
             return SUCCESS_MESSAGE + " : " + successMessage;
         }

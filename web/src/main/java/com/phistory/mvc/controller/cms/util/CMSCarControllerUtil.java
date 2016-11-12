@@ -11,8 +11,8 @@ import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
-import com.phistory.mvc.controller.cms.CmsCarController;
-import com.phistory.mvc.controller.cms.CmsCarEditController;
+import com.phistory.mvc.controller.cms.CMSCarController;
+import com.phistory.mvc.controller.cms.CMSCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -21,12 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.phistory.data.model.Picture.PictureType.PICTURE;
 import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
 
 /**
- * Set of utilities for {@link CmsCarController} and {@link CmsCarEditController}
+ * Set of utilities for {@link CMSCarController} and {@link CMSCarEditController}
  *
  * @author gonzalo
  */
@@ -95,6 +96,21 @@ public class CMSCarControllerUtil {
         }
 
         return null;
+    }
+
+    /**
+     * Persist the supplied {@link CarInternetContentEditCommand} and update itself with the persisted results
+     *
+     * @param carInternetContentEditCommand
+     * @throws Exception
+     */
+    private void saveCarInternetEditCommand(CarInternetContentEditCommand carInternetContentEditCommand) throws Exception {
+        List<CarInternetContent> persistedCarInternetContents = this.saveOrEditCarInternetContents(carInternetContentEditCommand);
+        List<CarInternetContentForm> updatedCarInternetContentForms =
+                persistedCarInternetContents.stream()
+                                            .map(this.carInternetContentFormCreator::createFormFromEntity)
+                                            .collect(Collectors.toList());
+        carInternetContentEditCommand.setCarInternetContentForms(updatedCarInternetContentForms);
     }
 
     /**

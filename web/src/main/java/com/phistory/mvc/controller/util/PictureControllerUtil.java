@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Component
 public class PictureControllerUtil extends BaseControllerData {
+
     @Inject
     private SQLPictureDAO sqlSQLPictureDAO;
     @Inject
@@ -46,11 +47,11 @@ public class PictureControllerUtil extends BaseControllerData {
                     return this.sqlSQLPictureDAO.getManufacturerLogo(command.getEntityId());
                 }
             }
-			default: {
-				if (command.getEntityId() != null) {
-					return this.sqlSQLPictureDAO.getById(command.getEntityId());
-				}
-			}
+            default: {
+                if (command.getEntityId() != null) {
+                    return this.sqlSQLPictureDAO.getById(command.getEntityId());
+                }
+            }
         }
 
         return sqlSQLPictureDAO.getById(command.getEntityId());
@@ -88,38 +89,38 @@ public class PictureControllerUtil extends BaseControllerData {
         Long pictureId = command.getEntityId();
         Long carId = command.getEntityId();
 
-		switch (command.getAction()) {
-			case LOAD_CAR_PICTURE: {
-				if (pictureId != null) {
+        switch (command.getAction()) {
+            case LOAD_CAR_PICTURE: {
+                if (pictureId != null) {
                     return this.loadById(pictureId);
-				}
+                }
                 break;
-			}
-			case LOAD_CAR_PREVIEW: {
-				if (carId != null) {
+            }
+            case LOAD_CAR_PREVIEW: {
+                if (carId != null) {
                     Picture picture = this.inMemoryInMemoryPictureDAO.getCarPreview(carId);
                     if (picture == null) {
                         picture = this.sqlSQLPictureDAO.getCarPreview(pictureId);
                     }
                     return picture;
-				}
+                }
                 break;
-			}
-			case LOAD_MANUFACTURER_LOGO: {
-				if (command.getEntityId() != null) {
-					return sqlSQLPictureDAO.getManufacturerLogo(command.getEntityId());
-				}
+            }
+            case LOAD_MANUFACTURER_LOGO: {
+                if (command.getEntityId() != null) {
+                    return sqlSQLPictureDAO.getManufacturerLogo(command.getEntityId());
+                }
                 break;
-			}
-			default: {
-				if (pictureId != null) {
+            }
+            default: {
+                if (pictureId != null) {
                     return this.loadById(pictureId);
-				}
-			}
-		}
+                }
+            }
+        }
 
-		return this.sqlSQLPictureDAO.getById(pictureId);
-	}
+        return this.sqlSQLPictureDAO.getById(pictureId);
+    }
 
     private Picture loadById(Long pictureId) {
         Picture picture = this.inMemoryInMemoryPictureDAO.getById(pictureId);

@@ -10,18 +10,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Controller to handle requests to Technology Stack URLs
- * 
- * @author Gonzalo
  *
+ * @author Gonzalo
  */
 @Controller
 @RequestMapping(value = TECHNOLOGY_STACK_URL,
-				method = {GET, HEAD})
-public class TechnologyStackController
-{
-	@RequestMapping
-	public ModelAndView handleDefault()
-	{
-		return new ModelAndView();
-	}
+                method = {GET, HEAD})
+public class TechnologyStackController {
+
+    @RequestMapping
+    public ModelAndView handleDefault() {
+        return new ModelAndView();
+    }
 }

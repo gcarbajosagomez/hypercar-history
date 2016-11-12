@@ -4,14 +4,14 @@ import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Picture;
 import com.phistory.mvc.cms.command.PictureEditCommand;
-import com.phistory.mvc.controller.cms.CmsPictureController;
+import com.phistory.mvc.controller.cms.CMSPictureController;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 
 /**
- * Set of utilities for {@link CmsPictureController}
+ * Set of utilities for {@link CMSPictureController}
  *
  * Created by gonzalo on 11/5/16.
  */

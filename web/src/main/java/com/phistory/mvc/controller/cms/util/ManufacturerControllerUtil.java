@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
-import com.phistory.mvc.controller.cms.CmsBaseController;
+import com.phistory.mvc.controller.cms.CMSBaseController;
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
@@ -24,7 +24,7 @@ import com.phistory.data.model.car.Car;
  *
  */
 @Component 
-public class ManufacturerControllerUtil extends CmsBaseController
+public class ManufacturerControllerUtil extends CMSBaseController
 {
 	@Inject()
 	private SQLManufacturerDAO manufacturerDAO;
