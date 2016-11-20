@@ -4,7 +4,7 @@
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 <#import "../applicationMacros/internetContent.ftl" as internetContent/>
-<#import "../applicationMacros/picture.ftl" as picture/>
+<#import "../applicationMacros/picture.ftl" as pictureUtil/>
 
 <#if CEFC.carForm.id??>
 	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.title')?lower_case}</#assign>
@@ -675,36 +675,45 @@
    					</a>
 			   </div>
 			   <div class="panel-body row">
-                    <#if pictureIds?has_content>
+                    <#if CEFC.carForm.pictureFileEditCommands?has_content>
                         <table>
-                            <#list pictureIds?chunk(2) as row>
-                                <#list row as pictureId>
-                                    <tr id="${pictureId}-picture-row">
-                                        <td style="width:70%">
-                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
-                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${pictureId}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
-                                            </a>
-                                        </td>
-                                        <td style="width:30%">
-                                            <a id="picture-delete-link" class="btn btn-danger" onClick="deletePicture('${pictureId}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
-                                                <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </#list>
+                            <#list CEFC.carForm.pictureFileEditCommands as pictureCommand>
+                                <#assign picture = pictureCommand.picture/>
+                                <tr id="${picture.id}-picture-row">
+                                    <td style="width:70%">
+                                        <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
+                                            <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                        </a>
+                                    </td>
+                                    <td style="width:30%">
+                                        <#assign galleryPositionPictureIndex = pictureCommand?index + 1/>
+
+                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.id"/>
+                                        <input type="hidden" name="${spring.status.expression}" value="${picture.id}">
+
+                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.galleryPosition"/>
+                                        <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" value="${picture.galleryPosition}"><br/>
+                                        <a id="picture-delete-link" class="btn btn-danger pull-right" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
+                                            <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
+                                        </a>
+                                    </td>
+                                </tr>
                             </#list>
                         </table>
-                        <@picture.addPicturesGallery "images-gallery" "car-picture"/>
+                        <@pictureUtil.addPicturesGallery "images-gallery" "car-picture"/>
 
                     <#elseif CEFC.carForm.id??>
                  	    <h3 class="text-left">${language.getTextSource('noPicturesAvailable')}</h3>
          			</#if>
 
                     <table id="pictureUploadInputs">
-                        <@spring.bind "CEFC.carForm.pictureFiles"/>
+                        <@spring.bind "CEFC.carForm.pictureFileEditCommands"/>
                         <tr>
                             <td>
-                                <input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0]" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
+                                <input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0].pictureFile" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
+                            </td>
+                            <td>
+                                <input id="${spring.status.expression}[0].picture.galleryPosition" type="text" value="0" name="${spring.status.expression}[0].picture.galleryPosition">
                             </td>
                         </tr>
                         <tr>
@@ -829,6 +838,22 @@
                 autoclose: true
             });
 
+            $("input[name='carForm.pictureFileEditCommands[0].picture.galleryPosition']").TouchSpin({
+                verticalbuttons: true,
+                verticalupclass: 'glyphicon glyphicon-plus',
+                verticaldownclass: 'glyphicon glyphicon-minus'
+            });
+
+            <#list pictures as pictureId>
+                <#assign galleryPositionPictureIndex = pictureId?index + 1/>
+
+                $("input[name='carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.galleryPosition']").TouchSpin({
+                    verticalbuttons: true,
+                    verticalupclass: 'glyphicon glyphicon-plus',
+                    verticaldownclass: 'glyphicon glyphicon-minus'
+                });
+            </#list>
+
             $('#main-form')[0].enctype = "multipart/form-data";
         });
 </script>
@@ -845,6 +870,6 @@
 
 <@internetContent.addAddInternetContentFunctionScript/>
 
-<@picture.addPictureUploadBoxFunctionScript/>
-<@picture.addDisplayPreviewImageWhenFileSelectedFunctionScript/>
-<@picture.addDisplayCarPictureWhenFileSelectedFunctionScript/>
+<@pictureUtil.addPictureUploadBoxFunctionScript/>
+<@pictureUtil.addDisplayPreviewImageWhenFileSelectedFunctionScript/>
+<@pictureUtil.addDisplayCarPictureWhenFileSelectedFunctionScript/>

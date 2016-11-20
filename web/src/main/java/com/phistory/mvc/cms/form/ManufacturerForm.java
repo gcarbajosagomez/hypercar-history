@@ -1,12 +1,11 @@
 package com.phistory.mvc.cms.form;
 
+import com.phistory.mvc.cms.command.PictureEditCommand;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
-import com.phistory.mvc.cms.command.PictureEditCommand;
 
 /**
  * Manufacturer form

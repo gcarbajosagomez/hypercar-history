@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 /**
  * Set of utilities for {@link CMSPictureController}
- *
+ * <p>
  * Created by gonzalo on 11/5/16.
  */
 @Component
@@ -22,20 +22,45 @@ public class CMSPictureControllerUtil {
     private SQLPictureDAO SQLPictureDAO;
 
     /**
-     * Handle the save or edition of a {@link Picture}
+     * Handle the saving or edition of a {@link Picture}
      *
      * @param pictureEditCommand
      * @throws Exception
      */
-    public void saveOrEditPicture(PictureEditCommand pictureEditCommand) throws Exception {
+    public void saveOrUpdatePicture(PictureEditCommand pictureEditCommand) throws Exception {
         MultipartFile pictureFile = pictureEditCommand.getPictureFile();
         Picture picture = pictureEditCommand.getPicture();
 
         if (pictureFile != null && pictureFile.getSize() > 0) {
-            PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, null);
-            pictureDataCommand.setPicture(picture);
-            this.SQLPictureDAO.saveOrEdit(pictureDataCommand);
-            pictureEditCommand.setPicture(this.SQLPictureDAO.getCarPreview(picture.getCar().getId()));
+            this.saveNewPicture(pictureEditCommand);
+        } else if (pictureFile == null || (pictureFile != null && pictureFile.getSize() == 0)) {
+            this.updatePictureGalleryPosition(picture);
         }
+
+        pictureEditCommand.setPicture(this.SQLPictureDAO.getCarPreview(picture.getCar().getId()));
+    }
+
+    /**
+     * Save a new {@link Picture}
+     *
+     * @param pictureEditCommand
+     * @throws Exception
+     */
+    public void saveNewPicture(PictureEditCommand pictureEditCommand) throws Exception {
+        MultipartFile pictureFile = pictureEditCommand.getPictureFile();
+        Picture picture = pictureEditCommand.getPicture();
+        PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, picture);
+        this.SQLPictureDAO.saveOrEdit(pictureDataCommand);
+    }
+
+    /**
+     * Update the supplied {@link Picture#galleryPosition}
+     *
+     * @param picture
+     * @throws Exception
+     */
+    public void updatePictureGalleryPosition(Picture picture) throws Exception {
+        PictureDataCommand pictureDataCommand = new PictureDataCommand(null, picture);
+        this.SQLPictureDAO.updateGalleryPosition(pictureDataCommand.getPicture());
     }
 }

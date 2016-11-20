@@ -26,6 +26,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @Controller
 @RequestMapping(value = CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
 public class CMSPictureController extends CMSBaseController {
+
     @Inject
     private PictureControllerUtil pictureControllerUtil;
 

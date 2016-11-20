@@ -16,7 +16,6 @@ import com.phistory.mvc.controller.cms.CMSCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -59,14 +58,15 @@ public class CMSCarControllerUtil {
             Car car = this.carFormCreator.createEntityFromForm(command.getCarForm());
             this.carDAO.saveOrEdit(car);
 
-            if (command.getCarForm().getPictureFiles() != null) {
-                for (MultipartFile file : command.getCarForm().getPictureFiles()) {
-                    Picture picture = new Picture(null,
+            if (command.getCarForm().getPictureFileEditCommands() != null) {
+                for (PictureEditCommand editCommand : command.getCarForm().getPictureFileEditCommands()) {
+                    Picture picture = new Picture(editCommand.getPicture().getId(),
                                                   car,
                                                   null,
-                                                  PICTURE);
+                                                  PICTURE,
+                                                  editCommand.getPicture().getGalleryPosition());
                     try {
-                        this.cmsPictureControllerUtil.saveOrEditPicture(new PictureEditCommand(picture, file));
+                        this.cmsPictureControllerUtil.saveOrUpdatePicture(new PictureEditCommand(picture, editCommand.getPictureFile()));
                     } catch (Exception e) {
                         throw e;
                     }
@@ -80,11 +80,12 @@ public class CMSCarControllerUtil {
                     previewPicture = new Picture(null,
                                                  car,
                                                  null,
-                                                 PREVIEW_PICTURE);
+                                                 PREVIEW_PICTURE,
+                                                 previewPicture.getGalleryPosition());
                 }
 
                 command.getCarForm().getPreviewPictureEditCommand().setPicture(previewPicture);
-                this.cmsPictureControllerUtil.saveOrEditPicture(command.getCarForm().getPreviewPictureEditCommand());
+                this.cmsPictureControllerUtil.saveNewPicture(command.getCarForm().getPreviewPictureEditCommand());
             }
 
             if (command.getCarForm().getId() == null) {
@@ -104,7 +105,7 @@ public class CMSCarControllerUtil {
      * @param carInternetContentEditCommand
      * @throws Exception
      */
-    private void saveCarInternetEditCommand(CarInternetContentEditCommand carInternetContentEditCommand) throws Exception {
+    public void saveCarInternetEditCommand(CarInternetContentEditCommand carInternetContentEditCommand) throws Exception {
         List<CarInternetContent> persistedCarInternetContents = this.saveOrEditCarInternetContents(carInternetContentEditCommand);
         List<CarInternetContentForm> updatedCarInternetContentForms =
                 persistedCarInternetContents.stream()

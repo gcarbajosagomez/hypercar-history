@@ -37,6 +37,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 public class Car implements GenericEntity
 {
     public static final String CAR_TABLE_NAME                       = "car";
+    public static final String CAR_ID_FIELD                         = "car_id";
     public static final String MODEL_FIELD                          = "car_model";
     public static final String MANUFACTURER_ID_FIELD                = "car_manufacturer_id";
     public static final String ENGINE_ID_FIELD                      = "car_engine_id";
@@ -45,7 +46,7 @@ public class Car implements GenericEntity
 
     @Id
     @GeneratedValue(strategy = AUTO)
-    @Column(name = "car_id")
+    @Column(name = CAR_ID_FIELD)
     private Long id;
 
     @ManyToOne

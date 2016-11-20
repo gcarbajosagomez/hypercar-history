@@ -3,11 +3,11 @@ package com.phistory.mvc.cms.form.creator;
 import javax.inject.Inject;
 
 import com.phistory.mvc.cms.command.CarMaterial;
+import com.phistory.mvc.cms.command.PictureEditCommand;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 
-import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Picture;

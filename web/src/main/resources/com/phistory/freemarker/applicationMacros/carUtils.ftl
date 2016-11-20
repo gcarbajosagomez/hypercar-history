@@ -141,7 +141,7 @@
             "@type":"Car",
             "url":"${siteURL}${requestURI}/",
             "manufacturer":"${language.getTextSource('pagani')}",
-            "name":"${language.getTextSource('pagani')} ${car.model}",
+            "name":"${car.model}",
             "model":"${car.model}",
             "category":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
             "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",

@@ -3,10 +3,7 @@ package com.phistory.data.model.transmission;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 

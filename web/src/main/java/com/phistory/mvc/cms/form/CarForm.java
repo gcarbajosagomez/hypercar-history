@@ -12,7 +12,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.data.model.DriveWheelType;
@@ -95,7 +94,7 @@ public class CarForm
 
     private PictureEditCommand previewPictureEditCommand;
 
-    private List<MultipartFile> pictureFiles;
+    private List<PictureEditCommand> pictureFileEditCommands;
 
     @NotNull(message = "The field above must not be blank.")
     private DriveWheelType driveWheel;

@@ -4,12 +4,12 @@
 
     <script type="application/javascript">
         function addPictureUploadBox() {
-            var pictureUploadBoxNum = $("input[id^='carForm.pictureFiles']").length;
+            var pictureUploadBoxNum = $("input[id^='carForm.pictureFileEditCommands']").length;
             var numberOfCarPictureAreas = $("[id^='car-picture-area']").length;
             var newPictureUploadBox = $('<input>', {
                 'type': 'file',
-                'id': 'carForm.pictureFiles[' + pictureUploadBoxNum + ']',
-                'name': 'carForm.pictureFiles[' + pictureUploadBoxNum + ']',
+                'id': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + ']',
+                'name': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + ']',
                 'onChange': 'displayCarPictureWhenFileSelected(this.files[0],' + numberOfCarPictureAreas + ');',
                 'accept': 'image/*',
                 'size': '10',

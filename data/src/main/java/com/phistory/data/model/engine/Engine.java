@@ -1,10 +1,7 @@
 package com.phistory.data.model.engine;
 
 import com.phistory.data.model.GenericEntity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -16,8 +13,7 @@ import static javax.persistence.EnumType.*;
  */
 @Entity
 @Table(name = "engine")
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Engine implements GenericEntity

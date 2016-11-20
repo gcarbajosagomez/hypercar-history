@@ -6,12 +6,12 @@ import java.util.Optional;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.cms.command.PictureEditCommand;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Manufacturer;

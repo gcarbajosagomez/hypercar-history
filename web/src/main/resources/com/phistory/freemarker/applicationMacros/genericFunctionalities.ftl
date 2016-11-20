@@ -48,6 +48,9 @@
 				    <#if !requestIsDesktop>
                         <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
 				    </#if>
+	                <#if requestIsCMS>
+                        <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
+                    </#if>
 
             		<script src="/static/javascript/lib/jquery.min.js"></script>
             		<script src="/static/javascript/lib/jquery.cookie.js"></script>
@@ -67,6 +70,7 @@
                     </#if>
                     <#if requestIsCMS>
                         <script src="/static/javascript/lib/bootstrap-datepicker.min.js"></script>
+                        <script src="/static/javascript/lib/jquery.bootstrap-touchspin.min.js"></script>
                     </#if>
 
         			<#-- since this file is imported at the beginning of each template, and then this macro is called, this function must be called after jQuery has been loaded -->

@@ -175,8 +175,7 @@ public abstract class SQLDAO<TYPE extends GenericEntity, IDENTIFIER>
         return criteriaQuery.orderBy(orders);
     }
     
-    private List<Predicate> processConditionMap(Map<String,
-            SimpleDataConditionCommand> conditionMap,
+    private List<Predicate> processConditionMap(Map<String, SimpleDataConditionCommand> conditionMap,
     											Root<TYPE> entityRoot,
     											CriteriaBuilder criteriaBuilder)
     {

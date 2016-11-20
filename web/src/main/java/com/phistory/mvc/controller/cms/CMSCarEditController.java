@@ -1,9 +1,11 @@
 package com.phistory.mvc.controller.cms;
 
+import com.phistory.data.model.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
@@ -26,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
@@ -80,7 +83,7 @@ public class CMSCarEditController extends CMSBaseController {
                                                          LocaleContextHolder.getLocale());
 
                 if (!carInternetContentEditCommandResult.hasErrors()) {
-                    this.carControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
+                    this.carControllerUtil.saveCarInternetEditCommand(carInternetContentEditCommand);
                 }
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } else {
@@ -131,9 +134,13 @@ public class CMSCarEditController extends CMSBaseController {
 
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
-        Car car = getCarDAO().getById(carId);
+        Car car = super.getCarDAO().getById(carId);
         CarForm carForm = this.carFormCreator.createFormFromEntity(car);
         CarFormEditCommand command = new CarFormEditCommand(carForm);
+        List<Picture> pictures = super.getSQLPictureDAO().getByCarId(carId);
+        List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
+        pictures.stream().forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
+        command.getCarForm().setPictureFileEditCommands(pictureFileEditCommands);
 
         return command;
     }

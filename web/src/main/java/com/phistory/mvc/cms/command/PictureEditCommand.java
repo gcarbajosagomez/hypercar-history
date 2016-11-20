@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.phistory.data.model.Picture;
 
 /**
- * Command class to edit a Picture
+ * Command class to edit a {@link Picture}
  *
  * @author Gonzalo
  */

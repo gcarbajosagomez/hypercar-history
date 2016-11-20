@@ -10,6 +10,8 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.sql.Blob;
 
+import static com.phistory.data.model.Picture.PictureType.*;
+import static com.phistory.data.model.car.Car.*;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
@@ -24,7 +26,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @NoArgsConstructor
 @Entity
 @Table(name = "picture",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", "car_id", "picture_type"}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", CAR_ID_FIELD, "picture_type"}))
 public class Picture implements GenericEntity
 {	
 	public enum PictureType
@@ -40,7 +42,7 @@ public class Picture implements GenericEntity
 
     @ManyToOne
     @Cascade(value = SAVE_UPDATE)
-    @JoinColumn(name = "car_id", nullable = false)
+    @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 
     @Column(name = "img", nullable = false)
@@ -49,7 +51,10 @@ public class Picture implements GenericEntity
 
     @Column(name = "picture_type", nullable = false)
     @Enumerated(ORDINAL)
-    private PictureType type = PictureType.PICTURE;
+    private PictureType type = PICTURE;
+
+    @Column(name = "picture_gallery_position", nullable = false, unique = true)
+    private Integer galleryPosition;
 
     @Override
     public Long getId() {

@@ -1,15 +1,13 @@
 package com.phistory.data.command;
 
 import com.phistory.data.query.command.SimpleDataConditionCommand;
-
-import java.util.List;
-import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.persistence.criteria.Order;
 import javax.persistence.criteria.Selection;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.List;
+import java.util.Map;
 
 /**
  *

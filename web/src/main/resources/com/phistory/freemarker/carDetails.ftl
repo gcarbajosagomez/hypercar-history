@@ -66,7 +66,7 @@
 
 			<div id="main-car-details-div" class="panel-body col-lg-12">
                 <#if car.descriptionES?? ||  car.descriptionEN??>
-                    <div class="well">
+                    <div class="well car-description-well">
                         <#if car.descriptionES?? && lang == "es">
                             ${generic.normalizeCarDescriptionString(car.descriptionES?j_string)}
                         <#elseif car.descriptionEN?? && lang == "en">
