@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.Manufacturer;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
 
 /**

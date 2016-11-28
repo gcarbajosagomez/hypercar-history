@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller.cms;
 
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
@@ -28,7 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;

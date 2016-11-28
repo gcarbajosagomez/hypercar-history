@@ -1,7 +1,7 @@
 package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.dao.InMemoryDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,11 +43,11 @@ public class InMemoryCarDAO implements InMemoryDAO<Car> {
 
     public Car getCarByPictureId(Long pictureId) {
         return this.inMemoryInMemoryPictureDAO.getPictures()
-                                      .stream()
-                                      .filter(picture -> picture.getId().equals(pictureId))
-                                      .map(Picture::getCar)
-                                      .findFirst()
-                                      .orElse(null);
+                                              .stream()
+                                              .filter(picture -> picture.getId().equals(pictureId))
+                                              .map(Picture::getCar)
+                                              .findFirst()
+                                              .orElse(null);
     }
 
     /**
@@ -69,7 +70,7 @@ public class InMemoryCarDAO implements InMemoryDAO<Car> {
      */
     public List<Car> getAllOrderedByProductionStartDate() {
         return this.cars.stream()
-                        .sorted((car1, car2) -> car1.getProductionStartDate().compareTo(car2.getProductionStartDate()))
+                        .sorted(Comparator.comparing(Car::getProductionStartDate))
                         .collect(Collectors.toList());
     }
 }

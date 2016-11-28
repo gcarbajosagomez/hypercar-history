@@ -2,12 +2,13 @@ package com.phistory.mvc.controller.cms.util;
 
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
+import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
@@ -22,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.phistory.data.model.Picture.PictureType.PICTURE;
-import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
+import static com.phistory.data.model.picture.PictureType.PICTURE;
+import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * Set of utilities for {@link CMSCarController} and {@link CMSCarEditController}
@@ -55,11 +56,14 @@ public class CMSCarControllerUtil {
      */
     public Car saveOrEditCar(CarFormEditCommand command) throws Exception {
         if (command.getCarForm() != null) {
-            Car car = this.carFormCreator.createEntityFromForm(command.getCarForm());
+            CarForm carForm = command.getCarForm();
+            List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
+            PictureEditCommand previewPictureEditCommand = carForm.getPreviewPictureEditCommand();
+            Car car = this.carFormCreator.createEntityFromForm(carForm);
             this.carDAO.saveOrEdit(car);
 
-            if (command.getCarForm().getPictureFileEditCommands() != null) {
-                for (PictureEditCommand editCommand : command.getCarForm().getPictureFileEditCommands()) {
+            if (pictureFileEditCommands != null) {
+                for (PictureEditCommand editCommand : pictureFileEditCommands) {
                     Picture picture = new Picture(editCommand.getPicture().getId(),
                                                   car,
                                                   null,
@@ -73,8 +77,8 @@ public class CMSCarControllerUtil {
                 }
             }
 
-            if (command.getCarForm().getPreviewPictureEditCommand().getPictureFile() != null) {
-                Picture previewPicture = command.getCarForm().getPreviewPictureEditCommand().getPicture();
+            if (previewPictureEditCommand.getPictureFile() != null) {
+                Picture previewPicture = previewPictureEditCommand.getPicture();
 
                 if (previewPicture == null) {
                     previewPicture = new Picture(null,
@@ -84,11 +88,11 @@ public class CMSCarControllerUtil {
                                                  previewPicture.getGalleryPosition());
                 }
 
-                command.getCarForm().getPreviewPictureEditCommand().setPicture(previewPicture);
-                this.cmsPictureControllerUtil.saveNewPicture(command.getCarForm().getPreviewPictureEditCommand());
+                previewPictureEditCommand.setPicture(previewPicture);
+                this.cmsPictureControllerUtil.saveNewPicture(previewPictureEditCommand);
             }
 
-            if (command.getCarForm().getId() == null) {
+            if (carForm.getId() == null) {
                 //After the car has been saved, we need to recreate the carForm with all the newly assigned ids
                 command.setCarForm(this.carFormCreator.createFormFromEntity(car));
             }

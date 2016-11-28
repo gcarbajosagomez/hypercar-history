@@ -14,7 +14,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
-import com.phistory.data.model.DriveWheelType;
+import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.CarBodyShape;
 import com.phistory.data.model.car.CarSeatsConfig;

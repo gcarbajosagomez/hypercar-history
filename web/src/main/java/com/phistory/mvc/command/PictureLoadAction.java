@@ -1,6 +1,6 @@
 package com.phistory.mvc.command;
 
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Optional;

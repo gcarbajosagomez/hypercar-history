@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller;
 
 import com.google.common.collect.HashMultimap;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;

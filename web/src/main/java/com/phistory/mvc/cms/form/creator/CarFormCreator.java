@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import org.springframework.util.StringUtils;
 

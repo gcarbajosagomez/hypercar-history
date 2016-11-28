@@ -1,5 +1,6 @@
-package com.phistory.data.model;
+package com.phistory.data.model.picture;
 
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,14 +11,16 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.sql.Blob;
 
-import static com.phistory.data.model.Picture.PictureType.*;
+import static com.phistory.data.model.picture.PictureType.*;
 import static com.phistory.data.model.car.Car.*;
+import static com.phistory.data.model.picture.PictureType.*;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
- *main.java.
+ * main.java.
+ *
  * @author Gonzalo
  */
 @Getter
@@ -26,14 +29,9 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @NoArgsConstructor
 @Entity
 @Table(name = "picture",
-       uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", CAR_ID_FIELD, "picture_type"}))
-public class Picture implements GenericEntity
-{	
-	public enum PictureType
-	{
-		PREVIEW_PICTURE,
-		PICTURE
-	}
+        uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", CAR_ID_FIELD, "picture_type"}))
+
+public class Picture implements GenericEntity {
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -61,8 +59,19 @@ public class Picture implements GenericEntity
         return id;
     }
 
-	@Override
-	public String getFriendlyName() {
-		return new StringBuilder("Picture - ").append(this.type.toString()).append(" ").append(" (carId: ").append(this.car.getId()).append(")").toString();
-	}
+    @Override
+    public String getFriendlyName() {
+        StringBuilder builder = new StringBuilder("Picture - ")
+                .append(this.type)
+                .append(" ");
+
+        Long carId = this.getCar().getId();
+        if (carId != null) {
+            builder.append(" (carId: ")
+                   .append(carId)
+                   .append(")");
+        }
+
+        return builder.toString();
+    }
 }

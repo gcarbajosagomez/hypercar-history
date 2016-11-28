@@ -2,7 +2,7 @@ package com.phistory.mvc.controller.util;
 
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.BaseControllerData;
 import org.springframework.stereotype.Component;

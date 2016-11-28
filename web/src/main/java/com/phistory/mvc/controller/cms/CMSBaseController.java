@@ -26,7 +26,7 @@ import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.dao.sql.impl.SQLEngineDAO;
 import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
 

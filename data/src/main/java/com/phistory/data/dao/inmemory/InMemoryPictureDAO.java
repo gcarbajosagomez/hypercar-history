@@ -1,7 +1,7 @@
 package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.dao.InMemoryDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -11,10 +11,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
+import static com.phistory.data.model.picture.PictureType.*;
+import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * {@link Picture} {@link InMemoryDAO}
@@ -54,7 +56,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
         }
 
         this.getPictures().addAll(this.sqlSQLPictureDAO.getPaginated(chunkSize,
-                                               pictureCount.intValue()));
+                                                                     pictureCount.intValue()));
     }
 
     /**
@@ -64,11 +66,11 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
      * @return The resulting {@link List<Long>}
      */
     public List<Long> getPictureIdsByCarId(Long carId) {
-        return this.pictures
-                   .stream()
-                   .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
-                   .map(Picture::getId)
-                   .collect(Collectors.toList());
+        return this.pictures.stream()
+                            .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId) && picture.getType().equals(PICTURE))
+                            .sorted(Comparator.comparing(Picture::getGalleryPosition))
+                            .map(Picture::getId)
+                            .collect(Collectors.toList());
     }
 
     /**

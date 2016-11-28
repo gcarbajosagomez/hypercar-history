@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller;
 
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.util.PictureControllerUtil;

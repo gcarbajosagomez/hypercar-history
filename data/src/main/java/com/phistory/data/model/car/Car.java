@@ -1,7 +1,7 @@
 package com.phistory.data.model.car;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.DriveWheelType;
+import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.brake.BrakeSet;

@@ -1,6 +1,6 @@
 package com.phistory.data.command;
 
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

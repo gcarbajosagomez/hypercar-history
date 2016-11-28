@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 
 /**
  * Command class to edit a {@link Picture}

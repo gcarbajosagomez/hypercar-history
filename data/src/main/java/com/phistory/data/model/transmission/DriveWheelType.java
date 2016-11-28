@@ -1,4 +1,4 @@
-package com.phistory.data.model;
+package com.phistory.data.model.transmission;
 
 /**
  *

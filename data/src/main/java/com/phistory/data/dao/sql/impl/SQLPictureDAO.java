@@ -2,7 +2,7 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.SQLDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.engine.jdbc.LobCreator;
@@ -14,8 +14,8 @@ import java.sql.Blob;
 import java.util.List;
 
 import static com.phistory.data.model.GenericEntity.ID_FIELD;
-import static com.phistory.data.model.Picture.PictureType.PICTURE;
-import static com.phistory.data.model.Picture.PictureType.PREVIEW_PICTURE;
+import static com.phistory.data.model.picture.PictureType.PICTURE;
+import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * @author Gonzalo
@@ -91,9 +91,11 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
         Query q = super.getCurrentSession()
                        .createQuery("UPDATE Picture"
                                  + " SET galleryPosition = :galleryPosition"
-                                 + " WHERE car = :car");
+                                 + " WHERE id = :id"
+                                 + " AND car = :car");
 
         q.setParameter("galleryPosition", picture.getGalleryPosition());
+        q.setParameter("id", picture.getId());
         q.setParameter("car", picture.getCar());
         q.executeUpdate();
     }

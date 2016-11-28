@@ -2,7 +2,7 @@ package com.phistory.mvc.controller.cms;
 
 import com.phistory.mvc.command.PictureLoadCommand;
 import com.phistory.mvc.controller.util.PictureControllerUtil;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;

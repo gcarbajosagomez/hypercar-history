@@ -2,7 +2,7 @@ package com.phistory.mvc.cms.propertyEditor;
 
 import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
-import com.phistory.data.model.Picture;
+import com.phistory.data.model.picture.Picture;
 
 public class PreviewPicturePropertyEditor extends GenericObjectPropertyEditor<Picture, Long>
 {
