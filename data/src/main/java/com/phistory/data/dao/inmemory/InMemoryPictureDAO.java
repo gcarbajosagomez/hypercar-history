@@ -1,6 +1,7 @@
 package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.dao.InMemoryDAO;
+import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -105,8 +106,10 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
      */
     public Picture getCarPreview(Long carId) {
         return this.getPictures().stream()
-                                 .filter(picture -> picture.getType().equals(PREVIEW_PICTURE))
-                                 .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
+                                 .filter(picture -> {
+                                     Car car = picture.getCar();
+                                     return picture.getType().equals(PREVIEW_PICTURE) && (car != null && car.getId().equals(carId));
+                                 })
                                  .findFirst()
                                  .orElse(null);
     }
