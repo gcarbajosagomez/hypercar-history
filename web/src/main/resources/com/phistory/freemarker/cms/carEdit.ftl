@@ -678,26 +678,28 @@
                     <#if CEFC.carForm.pictureFileEditCommands?has_content>
                         <table>
                             <#list CEFC.carForm.pictureFileEditCommands as pictureCommand>
+                                <#assign commandIndex = pictureCommand?index/>
                                 <#assign picture = pictureCommand.picture/>
-                                <tr id="${picture.id}-picture-row">
-                                    <td style="width:70%">
-                                        <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
-                                            <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
-                                        </a>
-                                    </td>
-                                    <td style="width:30%">
-                                        <#assign galleryPositionPictureIndex = pictureCommand?index + 1/>
+                                <#if picture.id?? && (picture.id > 0)>
+                                    <#assign pictureId = picture.id/>
+                                    <tr id="${picture.id}-picture-row">
+                                        <td style="width:70%">
+                                            <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
+                                                <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                            </a>
+                                        </td>
+                                        <td style="width:30%">
+                                            <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.id"/>
+                                            <input type="hidden" name="${spring.status.expression}" value="${picture.id}">
 
-                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.id"/>
-                                        <input type="hidden" name="${spring.status.expression}" value="${picture.id}">
-
-                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.galleryPosition"/>
-                                        <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" value="${picture.galleryPosition}"><br/>
-                                        <a id="picture-delete-link" class="btn btn-danger pull-right" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
-                                            <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
-                                        </a>
-                                    </td>
-                                </tr>
+                                            <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.galleryPosition"/>
+                                            <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" <#if picture.galleryPosition??>value="${picture.galleryPosition}"</#if><br/>
+                                            <a id="picture-delete-link" class="btn btn-danger pull-right" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
+                                                <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </#if>
                             </#list>
                         </table>
                         <@pictureUtil.addPicturesGallery "images-gallery" "car-picture"/>
@@ -706,14 +708,15 @@
                  	    <h3 class="text-left">${language.getTextSource('noPicturesAvailable')}</h3>
          			</#if>
 
-                    <table id="pictureUploadInputs">
+                    <table id="pictureUploadInputs" style="width:100%">
+                        <#assign pictureIndex>${CEFC.carForm.pictureFileEditCommands?size}</#assign>
                         <@spring.bind "CEFC.carForm.pictureFileEditCommands"/>
                         <tr>
-                            <td>
-                                <input type="file" id="${spring.status.expression}" name="${spring.status.expression}[0].pictureFile" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
+                            <td style="width:80%">
+                                <input type="file" id="${spring.status.expression}[${pictureIndex}].pictureFile" name="${spring.status.expression}[${pictureIndex}].pictureFile" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
                             </td>
-                            <td>
-                                <input id="${spring.status.expression}[0].picture.galleryPosition" type="text" value="0" name="${spring.status.expression}[0].picture.galleryPosition">
+                            <td style="width:20%; padding-left:40px">
+                                <input id="${spring.status.expression}[${pictureIndex}].picture.galleryPosition" type="text" class="pull-right" name="${spring.status.expression}[${pictureIndex}].picture.galleryPosition">
                             </td>
                         </tr>
                         <tr>
@@ -832,28 +835,12 @@
             $('.input-group.date').datepicker({
                 format: "yyyy-mm",
                 endDate: "0y",
-                endDate: "0y",
                 startView: 2,
                 minViewMode: 2,
                 autoclose: true
             });
 
-            $("input[name='carForm.pictureFileEditCommands[0].picture.galleryPosition']").TouchSpin({
-                verticalbuttons: true,
-                verticalupclass: 'glyphicon glyphicon-plus',
-                verticaldownclass: 'glyphicon glyphicon-minus'
-            });
-
-            <#list pictures as pictureId>
-                <#assign galleryPositionPictureIndex = pictureId?index + 1/>
-
-                $("input[name='carForm.pictureFileEditCommands[${galleryPositionPictureIndex}].picture.galleryPosition']").TouchSpin({
-                    verticalbuttons: true,
-                    verticalupclass: 'glyphicon glyphicon-plus',
-                    verticaldownclass: 'glyphicon glyphicon-minus'
-                });
-            </#list>
-
+            setupPictureGalleryPositionInputs();
             $('#main-form')[0].enctype = "multipart/form-data";
         });
 </script>

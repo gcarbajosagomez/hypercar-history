@@ -15,6 +15,7 @@ import com.phistory.data.model.car.Car;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -31,7 +32,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
     public static final String CAR_MATERIAL_STRING_SEPARATOR = "-";
 
     @Inject
-    private SQLPictureDAO SQLPictureDAO;
+    private SQLPictureDAO sqlPictureDAO;
     @Inject
     private BrakeSetFormCreator brakeSetFormCreator;
     @Inject
@@ -50,40 +51,45 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
             List<CarMaterial> chassisMaterials = this.parseMaterialsStringToList(car.getChassisMaterials());
             List<CarMaterial> bodyMaterials = this.parseMaterialsStringToList(car.getBodyMaterials());
 
-            CarForm carForm = new CarForm(  car.getId(),
-                                            car.getManufacturer(),
-                                            car.getModel(),
-                                            car.getEngineLayout(),
-                                            this.engineFormCreator.createFormFromEntity(car.getEngine()),
-                                            chassisMaterials,
-                                            bodyMaterials,
-                                            car.getBodyShape(),
-                                            car.getCarSeatsConfig(),
-                                            car.getTopSpeed(),
-                                            car.getAcceleration(),
-                                            car.getFuelConsumption(),
-                                            car.getProductionType(),
-                                            car.getProductionStartDate(),
-                                            car.getProductionEndDate(),
-                                            car.getWeight(),
-                                            car.getLength(),
-                                            car.getWidth(),
-                                            car.getHeight(),
-                                            this.brakeSetFormCreator.createFormFromEntity(car.getBrakeSet()),
-                                            this.transmissionFormCreator.createFormFromEntity(car.getTransmission()),
-                                            car.getFuelTankCapacity(),
-                                            this.tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
-                                            null,
-                                            null,
-                                            car.getDriveWheelType(),
-                                            car.getRoadLegal(),
-                                            car.getDescriptionES(),
-                                            car.getDescriptionEN());
+            List<Picture> pictures = this.sqlPictureDAO.getByCarId(car.getId());
+            List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
+            pictures.stream()
+                    .forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
+
+            CarForm carForm = new CarForm(car.getId(),
+                                          car.getManufacturer(),
+                                          car.getModel(),
+                                          car.getEngineLayout(),
+                                          this.engineFormCreator.createFormFromEntity(car.getEngine()),
+                                          chassisMaterials,
+                                          bodyMaterials,
+                                          car.getBodyShape(),
+                                          car.getCarSeatsConfig(),
+                                          car.getTopSpeed(),
+                                          car.getAcceleration(),
+                                          car.getFuelConsumption(),
+                                          car.getProductionType(),
+                                          car.getProductionStartDate(),
+                                          car.getProductionEndDate(),
+                                          car.getWeight(),
+                                          car.getLength(),
+                                          car.getWidth(),
+                                          car.getHeight(),
+                                          this.brakeSetFormCreator.createFormFromEntity(car.getBrakeSet()),
+                                          this.transmissionFormCreator.createFormFromEntity(car.getTransmission()),
+                                          car.getFuelTankCapacity(),
+                                          this.tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
+                                          new PictureEditCommand(),
+                                          pictureFileEditCommands,
+                                          car.getDriveWheelType(),
+                                          car.getRoadLegal(),
+                                          car.getDescriptionES(),
+                                          car.getDescriptionEN());
 
             if (car.getId() != null) {
                 try {
                     PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-                    Picture carPreview = SQLPictureDAO.getCarPreview(car.getId());
+                    Picture carPreview = sqlPictureDAO.getCarPreview(car.getId());
 
                     if (carPreview != null) {
                         pictureEditCommand.setPicture(carPreview);

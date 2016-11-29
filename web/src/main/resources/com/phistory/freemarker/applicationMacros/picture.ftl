@@ -4,12 +4,12 @@
 
     <script type="application/javascript">
         function addPictureUploadBox() {
-            var pictureUploadBoxNum = $("input[id^='carForm.pictureFileEditCommands']").length;
+            var pictureUploadBoxNum = $("input[id$='picture.galleryPosition']").length;
             var numberOfCarPictureAreas = $("[id^='car-picture-area']").length;
             var newPictureUploadBox = $('<input>', {
                 'type': 'file',
-                'id': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + ']',
-                'name': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + ']',
+                'id': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].pictureFile',
+                'name': 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].pictureFile',
                 'onChange': 'displayCarPictureWhenFileSelected(this.files[0],' + numberOfCarPictureAreas + ');',
                 'accept': 'image/*',
                 'size': '10',
@@ -22,17 +22,34 @@
                 'class': "thumbnail resizable-img"
             }));
 
-            var pictureFileInputTd = $('<td>');
+            var galleryPositionInputId = 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].picture.galleryPosition';
+            var newGalleryPositionInput = $('<input>', {
+                'type': 'text',
+                'id': galleryPositionInputId,
+                'name': galleryPositionInputId,
+                'size': '10',
+                'class': 'pull-right form-control'
+            });
+
+            var pictureFileInputTd = $('<td>', {'style': 'width:80%'});
             pictureFileInputTd.append(newPictureUploadBox);
+            var galleryPositionInputTd = $('<td>', {'style': 'width:20%; padding-left:40px'});
+            galleryPositionInputTd.append(newGalleryPositionInput);
             var pictureAreaTd = $('<td>');
             pictureAreaTd.append(newCarPictureAreaDiv);
             var pictureFileInputTr = $('<tr>');
             pictureFileInputTr.append(pictureFileInputTd);
+            pictureFileInputTr.append(galleryPositionInputTd);
             var pictureAreaTr = $('<tr>');
             pictureAreaTr.append(pictureAreaTd);
 
             $('#pictureUploadInputs').find('tbody').append(pictureFileInputTr);
             $('#pictureUploadInputs').find('tbody').append(pictureAreaTr);
+            $("input[name='" + galleryPositionInputId + "']").TouchSpin({
+                verticalbuttons: true,
+                verticalupclass: 'glyphicon glyphicon-plus',
+                verticaldownclass: 'glyphicon glyphicon-minus'
+            });
         }
     </script>
 </#macro>

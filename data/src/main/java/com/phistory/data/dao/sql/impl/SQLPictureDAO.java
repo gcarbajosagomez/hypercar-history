@@ -3,6 +3,7 @@ package com.phistory.data.dao.sql.impl;
 import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.picture.Picture;
+import com.phistory.data.model.picture.PictureType;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.engine.jdbc.LobCreator;
@@ -105,6 +106,23 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
                            .createQuery("SELECT COUNT (picture.car.id)"
                                      + " FROM Picture AS picture")
                            .uniqueResult();
+    }
+
+    /**
+     * Count the number of {@link PictureType#PICTURE}s belonging to the supplied carId
+     *
+     * @param carId
+     * @return
+     */
+    public Long countPicturesByCarId(Long carId) {
+        Query query = super.getCurrentSession()
+                           .createQuery("SELECT COUNT (picture.car.id)"
+                                     + " FROM Picture AS picture"
+                                     + " WHERE picture.car.id = :carId"
+                                     + " AND picture.type =" + PICTURE.ordinal());
+
+        query.setParameter("carId", carId);
+        return (Long) query.uniqueResult();
     }
 
     public List<Picture> getPaginated(int firstResult, int limit) {

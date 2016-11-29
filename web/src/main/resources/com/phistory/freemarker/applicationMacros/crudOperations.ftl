@@ -20,6 +20,11 @@
                         }
                     }).done(function (data) {
                         document.children[0].innerHTML = data;
+
+                        <#if requestIsCarEdit>
+                            setupPictureGalleryPositionInputs();
+                        </#if>
+
                         var savedEntityId = $("input[id*='.id']")[0].value;
                         var urlReplacement = '';
 
@@ -29,7 +34,6 @@
                         else {
                             urlReplacement = "/${editURL}";
                         }
-
                         window.history.pushState(null, '', url.replace("/${saveURL}", urlReplacement));
                         $('#main-container').unblock();
                     });
@@ -59,6 +63,11 @@
                             })
                             .done(function (data) {
                                 document.children[0].innerHTML = data;
+
+                                <#if requestIsCarEdit>
+                                    setupPictureGalleryPositionInputs();
+                                </#if>
+
                                 $('#main-container').unblock();
                             });
                 }

@@ -1,0 +1,3 @@
+git init
+git remote add openshift -f ssh://5713d8630c1e66bfc5000085@web-paganihistory.rhcloud.com/~/git/web.git/
+git merge openshift/master -s recursive -X ours

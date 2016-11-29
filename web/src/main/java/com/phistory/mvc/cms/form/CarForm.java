@@ -1,6 +1,8 @@
 package com.phistory.mvc.cms.form;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -94,7 +96,7 @@ public class CarForm
 
     private PictureEditCommand previewPictureEditCommand;
 
-    private List<PictureEditCommand> pictureFileEditCommands;
+    private List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
 
     @NotNull(message = "The field above must not be blank.")
     private DriveWheelType driveWheel;

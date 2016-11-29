@@ -15,6 +15,7 @@ import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.controller.cms.CMSCarController;
 import com.phistory.mvc.controller.cms.CMSCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -23,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.phistory.data.model.picture.PictureType.PICTURE;
 import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
@@ -32,20 +32,30 @@ import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
  * @author gonzalo
  */
 @Component
+@NoArgsConstructor
 public class CMSCarControllerUtil {
 
-    @Inject
-    private SQLCarDAO carDAO;
-    @Inject
-    private SQLCarInternetContentDAO carInternetContentDAO;
-    @Inject
+    private SQLCarDAO sqlCarDAO;
+    private SQLCarInternetContentDAO sqlCarInternetContentDAO;
     private CarFormCreator carFormCreator;
-    @Inject
     private CarInternetContentFormCreator carInternetContentFormCreator;
-    @Inject
     private CMSPictureControllerUtil cmsPictureControllerUtil;
-    @Inject
     private DateProvider dateProvider;
+
+    @Inject
+    public CMSCarControllerUtil(SQLCarDAO sqlCarDAO,
+                                SQLCarInternetContentDAO sqlCarInternetContentDAO,
+                                CarFormCreator carFormCreator,
+                                CarInternetContentFormCreator carInternetContentFormCreator,
+                                CMSPictureControllerUtil cmsPictureControllerUtil,
+                                DateProvider dateProvider) {
+        this.sqlCarDAO = sqlCarDAO;
+        this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
+        this.carFormCreator = carFormCreator;
+        this.carInternetContentFormCreator = carInternetContentFormCreator;
+        this.cmsPictureControllerUtil = cmsPictureControllerUtil;
+        this.dateProvider = dateProvider;
+    }
 
     /**
      * Handle the save or edition of a Car
@@ -60,17 +70,20 @@ public class CMSCarControllerUtil {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
             PictureEditCommand previewPictureEditCommand = carForm.getPreviewPictureEditCommand();
             Car car = this.carFormCreator.createEntityFromForm(carForm);
-            this.carDAO.saveOrEdit(car);
+            this.sqlCarDAO.saveOrEdit(car);
 
             if (pictureFileEditCommands != null) {
-                for (PictureEditCommand editCommand : pictureFileEditCommands) {
-                    Picture picture = new Picture(editCommand.getPicture().getId(),
-                                                  car,
-                                                  null,
-                                                  PICTURE,
-                                                  editCommand.getPicture().getGalleryPosition());
+                for (int i = 0; i < pictureFileEditCommands.size(); i++) {
+                    PictureEditCommand pictureEditCommand = pictureFileEditCommands.get(i);
+                    Picture picture = pictureEditCommand.getPicture();
+                    picture.setCar(car);
+
+                    if (picture.getGalleryPosition() == null) {
+                        picture.setGalleryPosition(i);
+                    }
+
                     try {
-                        this.cmsPictureControllerUtil.saveOrUpdatePicture(new PictureEditCommand(picture, editCommand.getPictureFile()));
+                        this.cmsPictureControllerUtil.saveOrUpdatePicture(pictureEditCommand);
                     } catch (Exception e) {
                         throw e;
                     }
@@ -85,7 +98,7 @@ public class CMSCarControllerUtil {
                                                  car,
                                                  null,
                                                  PREVIEW_PICTURE,
-                                                 previewPicture.getGalleryPosition());
+                                                 null);
                 }
 
                 previewPictureEditCommand.setPicture(previewPicture);
@@ -93,7 +106,7 @@ public class CMSCarControllerUtil {
             }
 
             if (carForm.getId() == null) {
-                //After the car has been saved, we need to recreate the carForm with all the newly assigned ids
+                //After a new car has been saved, we need to recreate the carForm with all the newly assigned ids
                 command.setCarForm(this.carFormCreator.createFormFromEntity(car));
             }
 
@@ -113,8 +126,8 @@ public class CMSCarControllerUtil {
         List<CarInternetContent> persistedCarInternetContents = this.saveOrEditCarInternetContents(carInternetContentEditCommand);
         List<CarInternetContentForm> updatedCarInternetContentForms =
                 persistedCarInternetContents.stream()
-                                            .map(this.carInternetContentFormCreator::createFormFromEntity)
-                                            .collect(Collectors.toList());
+                        .map(this.carInternetContentFormCreator::createFormFromEntity)
+                        .collect(Collectors.toList());
         carInternetContentEditCommand.setCarInternetContentForms(updatedCarInternetContentForms);
     }
 
@@ -134,7 +147,7 @@ public class CMSCarControllerUtil {
                 carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
 
                 if (StringUtils.hasText(carInternetContent.getLink())) {
-                    this.carInternetContentDAO.saveOrEdit(carInternetContent);
+                    this.sqlCarInternetContentDAO.saveOrEdit(carInternetContent);
                     savedCarInternetContents.add(carInternetContent);
                 }
             } catch (Exception e) {
@@ -154,7 +167,7 @@ public class CMSCarControllerUtil {
     public void deleteCar(CarFormEditCommand command) throws Exception {
         if (command.getCarForm() != null) {
             Car car = carFormCreator.createEntityFromForm(command.getCarForm());
-            this.carDAO.delete(car);
+            this.sqlCarDAO.delete(car);
         }
     }
 }

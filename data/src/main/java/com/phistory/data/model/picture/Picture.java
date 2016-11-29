@@ -29,13 +29,19 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @NoArgsConstructor
 @Entity
 @Table(name = "picture",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"picture_id", CAR_ID_FIELD, "picture_type"}))
+       uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD,
+                                                            Picture.PICTURE_TYPE_FIELD,
+                                                            Picture.PICTURE_GALLERY_POSITION_FIELD}))
 
 public class Picture implements GenericEntity {
 
+    public static final String PICTURE_ID_FIELD = "picture_id";
+    public static final String PICTURE_TYPE_FIELD = "picture_type";
+    public static final String PICTURE_GALLERY_POSITION_FIELD = "picture_gallery_position";
+
     @Id
     @GeneratedValue(strategy = AUTO)
-    @Column(name = "picture_id")
+    @Column(name = PICTURE_ID_FIELD)
     private Long id;
 
     @ManyToOne
@@ -51,7 +57,7 @@ public class Picture implements GenericEntity {
     @Enumerated(ORDINAL)
     private PictureType type = PICTURE;
 
-    @Column(name = "picture_gallery_position", nullable = false, unique = true)
+    @Column(name = "picture_gallery_position")
     private Integer galleryPosition;
 
     @Override

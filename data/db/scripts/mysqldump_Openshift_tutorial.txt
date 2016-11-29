@@ -1,1 +1,1 @@
-mysqldump -h 127.12.196.130 -P 3306 -u adminVQqQRuK --password=K689Kq-4c1jB web > ~/app-root/runtime/repo/db/scripts/Pagani-History-DB_22-08-2016.sql
+mysqldump -h 127.12.196.130 -P 3306 -u XXXXXX --password=XXXXXXXX web > ~/app-root/runtime/repo/db/scripts/Pagani-History-DB.sql

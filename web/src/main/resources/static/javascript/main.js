@@ -91,6 +91,7 @@ function deleteCarInternetContent(carInternetContentId, deleteMessage)
     });
 }
 
+//this function is called from the pagination template
 function writeCarPreviews(data)
 {
 	var auxCarRowList = new Array();
@@ -150,4 +151,17 @@ function openTechnologyStackModal()
 		$('#technology-stack-modal-div')[0].innerHTML = data; 
 		$('#technology-stack-modal-div').modal('show');
 	});
+}
+
+function setupPictureGalleryPositionInputs() {
+    var pictureUploadBoxNum = $("input[id$='picture.galleryPosition']").length;
+
+    //one iteration more for the default file chooser input
+	for(var i = 0; i <= pictureUploadBoxNum; i++) {
+        $("input[name='carForm.pictureFileEditCommands[" + i + "].picture.galleryPosition']").TouchSpin({
+            verticalbuttons: true,
+            verticalupclass: 'glyphicon glyphicon-plus',
+            verticaldownclass: 'glyphicon glyphicon-minus'
+        });
+    }
 }

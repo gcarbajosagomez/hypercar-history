@@ -18,8 +18,12 @@ import javax.inject.Inject;
 @Component
 public class CMSPictureControllerUtil {
 
-    @Inject
     private SQLPictureDAO SQLPictureDAO;
+
+    @Inject
+    public CMSPictureControllerUtil(SQLPictureDAO SQLPictureDAO) {
+        this.SQLPictureDAO = SQLPictureDAO;
+    }
 
     /**
      * Handle the saving or edition of a {@link Picture}
@@ -36,8 +40,6 @@ public class CMSPictureControllerUtil {
         } else if (pictureFile == null || (pictureFile != null && pictureFile.getSize() == 0)) {
             this.updatePictureGalleryPosition(picture);
         }
-
-        pictureEditCommand.setPicture(this.SQLPictureDAO.getCarPreview(picture.getCar().getId()));
     }
 
     /**

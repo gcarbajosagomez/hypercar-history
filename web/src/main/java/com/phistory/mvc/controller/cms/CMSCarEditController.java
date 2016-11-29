@@ -136,10 +136,6 @@ public class CMSCarEditController extends CMSBaseController {
         Car car = super.getCarDAO().getById(carId);
         CarForm carForm = this.carFormCreator.createFormFromEntity(car);
         CarFormEditCommand command = new CarFormEditCommand(carForm);
-        List<Picture> pictures = super.getSQLPictureDAO().getByCarId(carId);
-        List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
-        pictures.stream().forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
-        command.getCarForm().setPictureFileEditCommands(pictureFileEditCommands);
 
         return command;
     }
