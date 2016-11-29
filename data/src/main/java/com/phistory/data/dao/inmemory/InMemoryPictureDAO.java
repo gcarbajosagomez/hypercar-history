@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import static com.phistory.data.model.picture.PictureType.*;
 import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
+import static java.util.Comparator.*;
 
 /**
  * {@link Picture} {@link InMemoryDAO}
@@ -69,7 +70,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
     public List<Long> getPictureIdsByCarId(Long carId) {
         return this.pictures.stream()
                             .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId) && picture.getType().equals(PICTURE))
-                            .sorted(Comparator.comparing(Picture::getGalleryPosition))
+                            .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
                             .map(Picture::getId)
                             .collect(Collectors.toList());
     }

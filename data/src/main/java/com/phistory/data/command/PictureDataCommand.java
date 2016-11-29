@@ -7,6 +7,11 @@ import lombok.NoArgsConstructor;
 
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Command class to save and edit {@link Picture}s
+ *
+ * Created by Gonzalo Carbajosa on 29/11/16.
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
