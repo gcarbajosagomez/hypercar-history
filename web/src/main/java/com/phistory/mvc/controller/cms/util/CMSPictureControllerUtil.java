@@ -35,7 +35,7 @@ public class CMSPictureControllerUtil {
         MultipartFile pictureFile = pictureEditCommand.getPictureFile();
         Picture picture = pictureEditCommand.getPicture();
 
-        if (pictureFile != null && pictureFile.getSize() > 0) {
+        if (pictureFile != null && !pictureFile.isEmpty()) {
             this.saveNewPicture(pictureEditCommand);
         } else if (pictureFile == null || (pictureFile != null && pictureFile.getSize() == 0)) {
             this.updatePictureGalleryPosition(picture);

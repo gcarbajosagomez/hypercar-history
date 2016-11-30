@@ -18,6 +18,7 @@ import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -90,7 +91,8 @@ public class CMSCarControllerUtil {
                 }
             }
 
-            if (previewPictureEditCommand.getPictureFile() != null) {
+            MultipartFile previewPictureFile = previewPictureEditCommand.getPictureFile();
+            if (previewPictureFile != null && !previewPictureFile.isEmpty()) {
                 Picture previewPicture = previewPictureEditCommand.getPicture();
 
                 if (previewPicture == null) {
@@ -99,9 +101,9 @@ public class CMSCarControllerUtil {
                                                  null,
                                                  PREVIEW_PICTURE,
                                                  null);
+                    previewPictureEditCommand.setPicture(previewPicture);
                 }
 
-                previewPictureEditCommand.setPicture(previewPicture);
                 this.cmsPictureControllerUtil.saveNewPicture(previewPictureEditCommand);
             }
 
