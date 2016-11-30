@@ -80,7 +80,7 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<div class="row"> 
-										<h2 class="col-lg-12 text-left">${car.model}</h2>
+										<h3 class="col-lg-12 text-left car-details-panel-heading">${car.model}</h3>
 										
 										<div class="col-lg-12 dropdown">
 											<button id="units-of-measure-dropdown" class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="true">
@@ -348,10 +348,18 @@
 						<div class="col-lg-6 col-md-6 col-sm-12">
 							<div class="panel panel-default">
 								<div class="panel-heading" style="min-height: 84px">
-									<h3 class="text-left car-details-panel-heading">${language.getTextSource('engine')}<em class="text-muted"> (${car.engine.code})</em></h3>
+									<h3 class="text-left car-details-panel-heading">${language.getTextSource('engine')}</h3>
 								</div>
 								<div class="panel-body inner-car-details-panel-body">
 									<dl class="dl-horizontal text-left">
+                                        <dt>
+											${language.getTextSource('engine.code')} :
+                                        </dt>
+                                        <dd>
+                                            <p class="text-muted">
+												${car.engine.code}
+                                            </p>
+                                        </dd>
 										<dt>
   											${language.getTextSource('engine.displacement')} :
 			  							</dt>
