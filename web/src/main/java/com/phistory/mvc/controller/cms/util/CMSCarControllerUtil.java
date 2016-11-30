@@ -22,7 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
@@ -66,8 +68,8 @@ public class CMSCarControllerUtil {
      * @throws Exception
      */
     public Car saveOrEditCar(CarFormEditCommand command) throws Exception {
-        if (command.getCarForm() != null) {
-            CarForm carForm = command.getCarForm();
+        CarForm carForm = command.getCarForm();
+        if (carForm != null) {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
             PictureEditCommand previewPictureEditCommand = carForm.getPreviewPictureEditCommand();
             Car car = this.carFormCreator.createEntityFromForm(carForm);
@@ -77,18 +79,28 @@ public class CMSCarControllerUtil {
                 for (int i = 0; i < pictureFileEditCommands.size(); i++) {
                     PictureEditCommand pictureEditCommand = pictureFileEditCommands.get(i);
                     Picture picture = pictureEditCommand.getPicture();
-                    picture.setCar(car);
+                    if (picture != null) {
+                        picture.setCar(car);
 
-                    if (picture.getGalleryPosition() == null) {
-                        picture.setGalleryPosition(i);
-                    }
+                        if (picture.getGalleryPosition() == null) {
+                            picture.setGalleryPosition(i);
+                        }
 
-                    try {
-                        this.cmsPictureControllerUtil.saveOrUpdatePicture(pictureEditCommand);
-                    } catch (Exception e) {
-                        throw e;
+                        try {
+                            this.cmsPictureControllerUtil.saveOrUpdatePicture(pictureEditCommand);
+                        } catch (Exception e) {
+                            throw e;
+                        }
                     }
                 }
+
+                pictureFileEditCommands =
+                        pictureFileEditCommands.stream()
+                                               .filter(pictureEditCommand -> Objects.nonNull(pictureEditCommand.getPicture()))
+                                               .sorted(Comparator.comparing(pictureEditCommand -> pictureEditCommand.getPicture().getGalleryPosition()))
+                                               .collect(Collectors.toList());
+
+                carForm.setPictureFileEditCommands(pictureFileEditCommands);
             }
 
             MultipartFile previewPictureFile = previewPictureEditCommand.getPictureFile();
