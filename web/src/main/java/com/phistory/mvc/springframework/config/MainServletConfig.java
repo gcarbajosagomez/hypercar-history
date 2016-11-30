@@ -127,8 +127,8 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
         cacheMappings.setProperty("/" + CARS_URL, NO_CACHE_VALUE);
         cacheMappings.setProperty("/" + CARS_URL + "/*", NO_CACHE_VALUE);
         cacheMappings.setProperty("/" + MODELS_SEARCH_URL + "/*", NO_CACHE_VALUE);
-        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE, TWO_WEEKS_SECONDS.toString());
-        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PREVIEW, NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE.getName() + "*", TWO_WEEKS_SECONDS.toString());
+        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PREVIEW.getName() + "/*", NO_CACHE_VALUE);
         webContentInterceptor.setCacheMappings(cacheMappings);
 
 		registry.addInterceptor(localeChangeInterceptor);

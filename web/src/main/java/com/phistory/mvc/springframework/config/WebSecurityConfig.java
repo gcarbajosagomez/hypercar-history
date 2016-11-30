@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	public void configure(WebSecurity web) throws Exception {
         //we don't want these URLs to be secured so that they can be cached by the browser
 		web.ignoring().antMatchers(STATIC_RESOURCES_URI + "**");
-		web.ignoring().antMatchers("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE);
+		web.ignoring().antMatchers("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE.getName() + "**");
 	}
 	
 	@Autowired
