@@ -1,5 +1,6 @@
 package com.phistory.mvc.springframework.config;
 import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
+import com.phistory.mvc.command.PictureLoadAction;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.*;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
+import static com.phistory.mvc.command.PictureLoadAction.*;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static java.util.Locale.ENGLISH;
 import static java.util.concurrent.TimeUnit.MINUTES;
@@ -37,6 +39,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @PropertySource(value= "classpath:com/phistory/systemproperty/systemProperties.properties", ignoreResourceNotFound= false)
 public class MainServletConfig extends WebMvcConfigurerAdapter
 {
+    private static final String NO_CACHE_VALUE = "0";
     private static final Integer TWO_WEEKS_SECONDS = 1209600;
 
 	@Bean(name="viewResolver", autowire=Autowire.BY_NAME)
@@ -120,11 +123,12 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
 		localeChangeInterceptor.setParamName(LANGUAGE_DATA);
         WebContentInterceptor webContentInterceptor = new WebContentInterceptor();
-        webContentInterceptor.setCacheControl(CacheControl.maxAge(30, MINUTES));
 		Properties cacheMappings = new Properties();
-        cacheMappings.setProperty("/" + CARS_URL + "/*", "-1");
-        cacheMappings.setProperty("/" + MODELS_SEARCH_URL + "/*", "-1");
-        cacheMappings.setProperty("/" + PICTURES_URL + "/*", TWO_WEEKS_SECONDS.toString());
+        cacheMappings.setProperty("/" + CARS_URL, NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + CARS_URL + "/*", NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + MODELS_SEARCH_URL + "/*", NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE, TWO_WEEKS_SECONDS.toString());
+        cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PREVIEW, NO_CACHE_VALUE);
         webContentInterceptor.setCacheMappings(cacheMappings);
 
 		registry.addInterceptor(localeChangeInterceptor);

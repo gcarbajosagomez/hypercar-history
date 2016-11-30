@@ -37,9 +37,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.id = :id");
         q.setParameter(ID_FIELD, id);
-        Picture picture = (Picture) q.uniqueResult();
-
-        return picture;
+        return (Picture) q.uniqueResult();
     }
 
     public List<Picture> getByCarId(Long carId) {
@@ -60,9 +58,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
                                                + " AND picture.type = " + PREVIEW_PICTURE.ordinal());
 
         q.setParameter("carId", carId);
-        Picture picture = (Picture) q.uniqueResult();
-
-        return picture;
+        return (Picture) q.uniqueResult();
     }
 
     public Picture getManufacturerLogo(Long manufacturerId) {

@@ -1,5 +1,6 @@
 package com.phistory.mvc.springframework.config;
 
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_ERROR;
@@ -10,6 +11,7 @@ import static com.phistory.mvc.controller.cms.CMSBaseController.QUERY_STRING_SEP
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.command.PictureLoadAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -62,7 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
 	public void configure(WebSecurity web) throws Exception {
         //we don't want these URLs to be secured so that they can be cached by the browser
 		web.ignoring().antMatchers(STATIC_RESOURCES_URI + "**");
-		web.ignoring().antMatchers("/" + PICTURES_URL + "/**");
+		web.ignoring().antMatchers("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE);
 	}
 	
 	@Autowired
