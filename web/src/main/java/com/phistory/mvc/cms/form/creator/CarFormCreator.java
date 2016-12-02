@@ -1,21 +1,17 @@
 package com.phistory.mvc.cms.form.creator;
 
-import javax.inject.Inject;
-
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
+import com.phistory.data.model.car.Car;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.CarMaterial;
 import com.phistory.mvc.cms.command.PictureEditCommand;
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.stereotype.Component;
-
 import com.phistory.mvc.cms.form.CarForm;
-import com.phistory.data.dao.sql.impl.SQLPictureDAO;
-import com.phistory.data.model.picture.Picture;
-import com.phistory.data.model.car.Car;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -79,27 +75,12 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
                                           this.transmissionFormCreator.createFormFromEntity(car.getTransmission()),
                                           car.getFuelTankCapacity(),
                                           this.tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
-                                          new PictureEditCommand(),
                                           pictureFileEditCommands,
                                           car.getDriveWheelType(),
                                           car.getRoadLegal(),
                                           car.getDescriptionES(),
                                           car.getDescriptionEN());
 
-            if (car.getId() != null) {
-                try {
-                    PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-                    Picture carPreview = sqlPictureDAO.getCarPreview(car.getId());
-
-                    if (carPreview != null) {
-                        pictureEditCommand.setPicture(carPreview);
-                    }
-
-                    carForm.setPreviewPictureEditCommand(pictureEditCommand);
-                } catch (Exception e) {
-                    log.error(e.toString(), e);
-                }
-            }
             return carForm;
         } catch (Exception e) {
             log.error(e.toString(), e);
@@ -158,7 +139,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
     }
 
     /**
-     * Parse a materials {@link String} (material1-material2-materialn) into a {@link List<CarMaterial>}
+     * Parse a materials {@link String} (material1-material2-materialN) into a {@link List<CarMaterial>}
      *
      * @param materialsString
      * @return
@@ -169,8 +150,8 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
         if (StringUtils.hasText(materialsString)) {
             if (materialsString.contains(CAR_MATERIAL_STRING_SEPARATOR)) {
                 materialsList = Stream.of(materialsString.split(CAR_MATERIAL_STRING_SEPARATOR))
-                        .map(CarMaterial::map)
-                        .collect(Collectors.toList());
+                                      .map(CarMaterial::map)
+                                      .collect(Collectors.toList());
             } else {
                 materialsList.add(CarMaterial.map(materialsString));
             }
@@ -179,7 +160,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
     }
 
     /**
-     * Parse a {@link List<CarMaterial>} into a materials {@link String} (material1-material2-materialn)
+     * Parse a {@link List<CarMaterial>} into a materials {@link String} (material1-material2-materialN)
      *
      * @param materialList
      * @return

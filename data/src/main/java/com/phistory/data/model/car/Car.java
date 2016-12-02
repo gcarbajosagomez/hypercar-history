@@ -1,14 +1,15 @@
 package com.phistory.data.model.car;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.brake.BrakeSet;
 import com.phistory.data.model.engine.Engine;
+import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.transmission.Transmission;
 import com.phistory.data.model.tyre.TyreSet;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
@@ -18,7 +19,7 @@ import java.util.Calendar;
 
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.AUTO;
-import static javax.persistence.TemporalType.*;
+import static javax.persistence.TemporalType.DATE;
 import static org.hibernate.annotations.CascadeType.ALL;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
@@ -30,7 +31,6 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Indexed
 @Table(name = Car.CAR_TABLE_NAME,
        uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
-@JsonIgnoreProperties(value = {"previewImage"})
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

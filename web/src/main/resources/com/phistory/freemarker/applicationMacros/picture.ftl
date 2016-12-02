@@ -107,24 +107,6 @@
     </script>
 </#macro>
 
-<#macro addDisplayPreviewImageWhenFileSelectedFunctionScript>
-
-    <script type="application/javascript">
-        function displayPreviewImageWhenFileSelected(previewFile) {
-            var reader = new FileReader();
-
-            reader.onload = function (e) {
-                var img = $('#car-preview-image')[0];
-                img.src = reader.result;
-
-                $('#car-preview-picture-area').append(img);
-            }
-
-            reader.readAsDataURL(previewFile);
-        }
-    </script>
-</#macro>
-
 <#macro addDisplayCarPictureWhenFileSelectedFunctionScript>
 
     <script type="application/javascript">

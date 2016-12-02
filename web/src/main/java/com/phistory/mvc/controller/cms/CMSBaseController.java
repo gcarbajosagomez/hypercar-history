@@ -1,15 +1,16 @@
 package com.phistory.mvc.controller.cms;
 
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletResponse;
-
+import com.phistory.data.dao.sql.impl.SQLCarDAO;
+import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
+import com.phistory.data.dao.sql.impl.SQLEngineDAO;
+import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
+import com.phistory.data.model.Manufacturer;
+import com.phistory.data.model.car.Car;
+import com.phistory.data.model.engine.Engine;
+import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
+import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
+import com.phistory.mvc.controller.BaseController;
 import lombok.Getter;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,18 +18,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
-import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
-import com.phistory.mvc.cms.propertyEditor.PreviewPicturePropertyEditor;
-import com.phistory.mvc.controller.BaseController;
-import com.phistory.data.dao.sql.impl.SQLCarDAO;
-import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
-import com.phistory.data.dao.sql.impl.SQLEngineDAO;
-import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
-import com.phistory.data.model.Manufacturer;
-import com.phistory.data.model.picture.Picture;
-import com.phistory.data.model.car.Car;
-import com.phistory.data.model.engine.Engine;
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 
 /**
  * Base controller that contains common CMS data and functionality 
@@ -118,7 +113,6 @@ public class CMSBaseController extends BaseController {
 		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDAO));
 		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
         binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDAO));
-        binder.registerCustomEditor(Picture.class, 		new PreviewPicturePropertyEditor(super.getSQLPictureDAO()));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 

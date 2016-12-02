@@ -318,17 +318,6 @@
                        <dd class="resizable-dd">
                             <@spring.formTextarea "CEFC.carForm.descriptionEN", "class=form-control cols='50' rows='6'"/>
                        </dd>
-                       <dt>
-                           ${language.getTextSource('car.previewImage')}
-                      </dt>
-                      <dd>
-						   <@spring.formInput "CEFC.carForm.previewPictureEditCommand.pictureFile", "class=form-control accept=image/* size=20 onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
-                      </dd>
-
-                      <div id="car-preview-picture-area">
-                      	  	<@spring.bind "CEFC.carForm.previewPictureEditCommand.picture"/>
-                            <img id="car-preview-image" name="${spring.status.expression}" class="thumbnail preview-img resizable-img pull-right" <#if CEFC.carForm.id??>src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${CEFC.carForm.id}"/>'</#if>/>
-                      </div>
 				   </dl>
 			   </div>
 		   </div>
@@ -903,5 +892,4 @@
 <@internetContent.addAddInternetContentFunctionScript/>
 
 <@pictureUtil.addPictureUploadBoxFunctionScript/>
-<@pictureUtil.addDisplayPreviewImageWhenFileSelectedFunctionScript/>
 <@pictureUtil.addDisplayCarPictureWhenFileSelectedFunctionScript/>

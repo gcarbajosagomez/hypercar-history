@@ -11,10 +11,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.sql.Blob;
 
-import static com.phistory.data.model.picture.PictureType.*;
-import static com.phistory.data.model.car.Car.*;
-import static com.phistory.data.model.picture.PictureType.*;
-import static javax.persistence.EnumType.ORDINAL;
+import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
 import static javax.persistence.GenerationType.AUTO;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
@@ -30,13 +27,11 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Entity
 @Table(name = "picture",
        uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD,
-                                                            Picture.PICTURE_TYPE_FIELD,
                                                             Picture.PICTURE_GALLERY_POSITION_FIELD}))
 
 public class Picture implements GenericEntity {
 
     public static final String PICTURE_ID_FIELD = "picture_id";
-    public static final String PICTURE_TYPE_FIELD = "picture_type";
     public static final String PICTURE_GALLERY_POSITION_FIELD = "picture_gallery_position";
 
     @Id
@@ -53,10 +48,6 @@ public class Picture implements GenericEntity {
     @Lob
     private Blob image;
 
-    @Column(name = "picture_type", nullable = false)
-    @Enumerated(ORDINAL)
-    private PictureType type = PICTURE;
-
     @Column(name = "picture_gallery_position")
     private Integer galleryPosition;
 
@@ -71,7 +62,8 @@ public class Picture implements GenericEntity {
     @Override
     public String getFriendlyName() {
         StringBuilder builder = new StringBuilder("Picture - ")
-                .append(this.type)
+                .append("eligible for picture")
+                .append(this.eligibleForPreview)
                 .append(" ");
 
         Long carId = this.getCar().getId();

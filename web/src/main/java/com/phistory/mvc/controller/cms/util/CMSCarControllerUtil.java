@@ -2,9 +2,9 @@ package com.phistory.mvc.controller.cms.util;
 
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
-import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
+import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
@@ -18,7 +18,6 @@ import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -26,8 +25,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * Set of utilities for {@link CMSCarController} and {@link CMSCarEditController}
@@ -71,7 +68,6 @@ public class CMSCarControllerUtil {
         CarForm carForm = command.getCarForm();
         if (carForm != null) {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
-            PictureEditCommand previewPictureEditCommand = carForm.getPreviewPictureEditCommand();
             Car car = this.carFormCreator.createEntityFromForm(carForm);
             this.sqlCarDAO.saveOrEdit(car);
 
@@ -101,23 +97,6 @@ public class CMSCarControllerUtil {
                                                .collect(Collectors.toList());
 
                 carForm.setPictureFileEditCommands(pictureFileEditCommands);
-            }
-
-            MultipartFile previewPictureFile = previewPictureEditCommand.getPictureFile();
-            if (previewPictureFile != null && !previewPictureFile.isEmpty()) {
-                Picture previewPicture = previewPictureEditCommand.getPicture();
-
-                if (previewPicture == null) {
-                    previewPicture = new Picture(null,
-                                                 car,
-                                                 null,
-                                                 PREVIEW_PICTURE,
-                                                 null,
-                                                 true);
-                    previewPictureEditCommand.setPicture(previewPicture);
-                }
-
-                this.cmsPictureControllerUtil.saveNewPicture(previewPictureEditCommand);
             }
 
             if (carForm.getId() == null) {

@@ -3,7 +3,7 @@ package com.phistory.data.dao.sql.impl;
 import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.SQLDAO;
 import com.phistory.data.model.picture.Picture;
-import com.phistory.data.model.picture.PictureType;
+import com.phistory.data.model.util.PictureUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
 import org.hibernate.engine.jdbc.LobCreator;
@@ -15,8 +15,6 @@ import java.sql.Blob;
 import java.util.List;
 
 import static com.phistory.data.model.GenericEntity.ID_FIELD;
-import static com.phistory.data.model.picture.PictureType.PICTURE;
-import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 
 /**
  * @author Gonzalo
@@ -42,11 +40,9 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
 
     public List<Picture> getByCarId(Long carId) {
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
-                                               + " WHERE picture.type = :pictureType"
-                                               + " AND picture.car.id = :carId"
+                                               + " WHERE picture.car.id = :carId"
                                                + " ORDER BY picture.galleryPosition ASC");
 
-        q.setParameter("pictureType", PICTURE);
         q.setParameter("carId", carId);
 
         return q.list();
@@ -55,10 +51,11 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     public Picture getCarPreview(Long carId) {
         Query q = getCurrentSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.car.id = :carId"
-                                               + " AND picture.type = " + PREVIEW_PICTURE.ordinal());
+                                               + " AND picture.eligibleForPreview = true");
 
         q.setParameter("carId", carId);
-        return (Picture) q.uniqueResult();
+        List<Picture> previewCandidates = q.list();
+        return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 
     public Picture getManufacturerLogo(Long manufacturerId) {
@@ -102,23 +99,6 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
                            .createQuery("SELECT COUNT (picture.car.id)"
                                      + " FROM Picture AS picture")
                            .uniqueResult();
-    }
-
-    /**
-     * Count the number of {@link PictureType#PICTURE}s belonging to the supplied carId
-     *
-     * @param carId
-     * @return
-     */
-    public Long countPicturesByCarId(Long carId) {
-        Query query = super.getCurrentSession()
-                           .createQuery("SELECT COUNT (picture.car.id)"
-                                     + " FROM Picture AS picture"
-                                     + " WHERE picture.car.id = :carId"
-                                     + " AND picture.type =" + PICTURE.ordinal());
-
-        query.setParameter("carId", carId);
-        return (Long) query.uniqueResult();
     }
 
     public List<Picture> getPaginated(int firstResult, int limit) {

@@ -1,8 +1,11 @@
 package com.phistory.data.model.util;
 
 import java.sql.Blob;
+import java.util.List;
+import java.util.Random;
 
 import com.phistory.data.dao.SQLDAO;
+import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
 
 import org.hibernate.Hibernate;
@@ -30,5 +33,12 @@ public class PictureUtil
         }
         
         return picture;
+    }
+
+    public static Picture getPreviewPictureFromCandidates(List<Picture> previewCandidates) {
+        if (!previewCandidates.isEmpty()) {
+            return previewCandidates.get(new Random().nextInt(previewCandidates.size()));
+        }
+        return null;
     }
 }

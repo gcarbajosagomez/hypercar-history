@@ -94,8 +94,6 @@ public class CarForm
     @NotNull(message = "The field must not be blank.")
     private TyreSetForm tyreSetForm;
 
-    private PictureEditCommand previewPictureEditCommand;
-
     private List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
 
     @NotNull(message = "The field above must not be blank.")

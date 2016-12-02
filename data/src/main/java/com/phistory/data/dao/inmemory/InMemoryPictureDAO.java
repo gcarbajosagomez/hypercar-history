@@ -3,6 +3,7 @@ package com.phistory.data.dao.inmemory;
 import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
+import com.phistory.data.model.util.PictureUtil;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,13 +13,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 import java.util.stream.Collectors;
-
-import static com.phistory.data.model.picture.PictureType.*;
-import static com.phistory.data.model.picture.PictureType.PREVIEW_PICTURE;
 import static java.util.Comparator.*;
 
 /**
@@ -70,7 +68,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
      */
     public List<Long> getPictureIdsByCarId(Long carId) {
         return this.pictures.stream()
-                            .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId) && picture.getType().equals(PICTURE))
+                            .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
                             .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
                             .map(Picture::getId)
                             .collect(Collectors.toList());
@@ -111,14 +109,10 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
                 this.getPictures().stream()
                                   .filter(picture -> {
                                         Car car = picture.getCar();
-                                        return (car != null && car.getId().equals(carId) &&
-                                               (picture.getEligibleForPreview() || (picture.getType().equals(PREVIEW_PICTURE))));
+                                        return ((Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview());
                                   })
                                   .collect(Collectors.toList());
 
-        if (!previewCandidates.isEmpty()) {
-            return previewCandidates.get(new Random().nextInt(previewCandidates.size()));
-        }
-        return null;
+       return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 }

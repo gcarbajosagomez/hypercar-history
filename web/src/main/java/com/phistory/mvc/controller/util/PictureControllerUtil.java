@@ -24,6 +24,28 @@ public class PictureControllerUtil extends BaseControllerData {
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
 
     /**
+     * Print the binary information of a Picture to a HTTP response
+     *
+     * @param picture
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) throws Exception {
+        if (picture != null && picture.getImage() != null) {
+            response.setContentType(IMAGE_CONTENT_TYPE);
+
+            int imgBytesLength = (int) picture.getImage().length();
+            byte[] imgBytes = picture.getImage().getBytes(1, imgBytesLength);
+
+            response.getOutputStream().write(imgBytes);
+            response.getOutputStream().flush();
+        }
+
+        return response;
+    }
+
+    /**
      * Load a {@link Picture} from the DB depending on the action being performed
      *
      * @param command
@@ -58,29 +80,7 @@ public class PictureControllerUtil extends BaseControllerData {
     }
 
     /**
-     * Print the binary information of a Picture to a HTTP response
-     *
-     * @param picture
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) throws Exception {
-        if (picture != null && picture.getImage() != null) {
-            response.setContentType(IMAGE_CONTENT_TYPE);
-
-            int imgBytesLength = (int) picture.getImage().length();
-            byte[] imgBytes = picture.getImage().getBytes(1, imgBytesLength);
-
-            response.getOutputStream().write(imgBytes);
-            response.getOutputStream().flush();
-        }
-
-        return response;
-    }
-
-    /**
-     * Load a {@link Picture} from the DB depending on the action being performed
+     * Load a {@link Picture} from the in-memory storage depending on the action being performed
      *
      * @param command
      * @return
