@@ -112,7 +112,8 @@ public class CMSCarControllerUtil {
                                                  car,
                                                  null,
                                                  PREVIEW_PICTURE,
-                                                 null);
+                                                 null,
+                                                 true);
                     previewPictureEditCommand.setPicture(previewPicture);
                 }
 

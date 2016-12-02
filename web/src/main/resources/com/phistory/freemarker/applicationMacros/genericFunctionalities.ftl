@@ -44,7 +44,7 @@
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
 					<link rel="stylesheet" href="/static/stylesheet/bootstrap-theme.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.css">
 				    <#if !requestIsDesktop>
                         <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
 				    </#if>

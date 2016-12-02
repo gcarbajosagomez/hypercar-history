@@ -60,6 +60,9 @@ public class Picture implements GenericEntity {
     @Column(name = "picture_gallery_position")
     private Integer galleryPosition;
 
+    @Column(name = "picture_eligible_for_preview", columnDefinition = "tinyint(1) default 0")
+    private Boolean eligibleForPreview = false;
+
     @Override
     public Long getId() {
         return id;

@@ -302,8 +302,8 @@
                            <@spring.bind "CEFC.carForm.roadLegal"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                           		<option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>true</option>
-                           		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>false</option>
+                           		<option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>${language.getTextSource('yes')}</option>
+                           		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>${language.getTextSource('no')}</option>
                            </select>
                       </dd>
                        <dt>
@@ -676,7 +676,7 @@
 			   </div>
 			   <div class="panel-body row">
                     <#if CEFC.carForm.pictureFileEditCommands?has_content>
-                        <table>
+                        <table style="width:100%">
                             <#list CEFC.carForm.pictureFileEditCommands as pictureCommand>
                                 <#assign commandIndex = pictureCommand?index/>
                                 <#if pictureCommand.picture??>
@@ -693,12 +693,35 @@
                                                 <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.id"/>
                                                 <input type="hidden" name="${spring.status.expression}" value="${picture.id}">
 
-                                                <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.galleryPosition"/>
-                                                <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" <#if picture.galleryPosition??>value="${picture.galleryPosition}"</#if><br/>
-                                                <a id="picture-delete-link" class="btn btn-danger pull-right" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
+                                                <dl class="dl-vertical text-left">
+                                                    <dt>
+                                                        ${language.getTextSource('picture.galleryPosition')}
+                                                    </dt>
+                                                    <dd>
+                                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.galleryPosition"/>
+                                                        <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" <#if picture.galleryPosition??>value="${picture.galleryPosition}"</#if> size="10"/>
+                                                    </dd>
+                                                </dl>
+                                                <dl class="dl-vertical text-left">
+                                                    <dt>
+                                                        ${language.getTextSource('picture.eligibleForPreview')}
+                                                    </dt>
+                                                    <dd>
+                                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.eligibleForPreview"/>
+                                                        <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                                            <option value="false" <#if CEFC.carForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == false>selected</#if>>${language.getTextSource('no')}</option>
+                                                            <option value="true" <#if CEFC.carForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == true>selected</#if>>${language.getTextSource('yes')}</option>
+                                                        </select>
+                                                    </dd>
+                                                </dl>
+
+                                                <a id="picture-delete-link" class="btn btn-danger pull-right delete-picture-btn" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
                                                     <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
                                                 </a>
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"><div class="divider"></div></td>
                                         </tr>
                                     </#if>
                                 </#if>
@@ -714,17 +737,37 @@
                         <#assign pictureIndex>${CEFC.carForm.pictureFileEditCommands?size}</#assign>
                         <@spring.bind "CEFC.carForm.pictureFileEditCommands"/>
                         <tr>
-                            <td style="width:80%">
+                            <td style="width:65%">
                                 <input type="file" id="${spring.status.expression}[${pictureIndex}].pictureFile" name="${spring.status.expression}[${pictureIndex}].pictureFile" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
                             </td>
-                            <td style="width:20%; padding-left:40px">
-                                <input id="${spring.status.expression}[${pictureIndex}].picture.galleryPosition" type="text" class="pull-right" name="${spring.status.expression}[${pictureIndex}].picture.galleryPosition">
+                            <td rowspan="2" style="width:35%; padding-left:40px">
+                                <dl class="dl-vertical text-left">
+                                    <dt>
+                                        ${language.getTextSource('picture.galleryPosition')}
+                                    </dt>
+                                    <dd>
+                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${pictureIndex}].picture.galleryPosition"/>
+                                        <input id="${spring.status.expression}" name="${spring.status.expression}" type="text" class="pull-right">
+                                    </dd>
+                                </dl>
+                                <dl class="dl-vertical text-left">
+                                    <dt>
+                                        ${language.getTextSource('picture.eligibleForPreview')}
+                                    </dt>
+                                    <dd>
+                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${pictureIndex}].picture.eligibleForPreview"/>
+                                        <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                            <option value="false">${language.getTextSource('no')}</option>
+                                            <option value="true">${language.getTextSource('yes')}</option>
+                                        </select>
+                                    </dd>
+                                </dl>
                             </td>
                         </tr>
                         <tr>
                             <td>
                             	<div id="car-picture-area-0">
-                            		<img id="car-picture-0" class="thumbnail resizable-img">
+                            		<img id="car-picture-0" class="thumbnail resizable-img edit-car-picture">
                       			</div>
                       		</td>
                         </tr>

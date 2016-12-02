@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static com.phistory.data.model.picture.PictureType.*;
@@ -106,12 +107,18 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
      * @return
      */
     public Picture getCarPreview(Long carId) {
-        return this.getPictures().stream()
-                                 .filter(picture -> {
-                                     Car car = picture.getCar();
-                                     return picture.getType().equals(PREVIEW_PICTURE) && (car != null && car.getId().equals(carId));
-                                 })
-                                 .findFirst()
-                                 .orElse(null);
+        List<Picture> previewCandidates =
+                this.getPictures().stream()
+                                  .filter(picture -> {
+                                        Car car = picture.getCar();
+                                        return (car != null && car.getId().equals(carId) &&
+                                               (picture.getEligibleForPreview() || (picture.getType().equals(PREVIEW_PICTURE))));
+                                  })
+                                  .collect(Collectors.toList());
+
+        if (!previewCandidates.isEmpty()) {
+            return previewCandidates.get(new Random().nextInt(previewCandidates.size()));
+        }
+        return null;
     }
 }

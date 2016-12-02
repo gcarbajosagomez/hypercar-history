@@ -684,6 +684,10 @@ a:hover {
     top: 25%;
 }
 
+.edit-car-picture {
+    margin-top: 15px;
+}
+
 #index-jumbotron {
     padding: 0;
 }
@@ -820,4 +824,8 @@ a:hover {
 #cars-per-page-dropdown {
     padding: 10px;
     margin-top: 15px
+}
+
+.delete-picture-btn {
+    margin-top: 15px;
 }

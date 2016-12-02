@@ -20,10 +20,7 @@
                         }
                     }).done(function (data) {
                         document.children[0].innerHTML = data;
-
-                        <#if requestIsCarEdit>
-                            setupPictureGalleryPositionInputs();
-                        </#if>
+                        setupPictureGalleryPositionInputs();
 
                         var savedEntityId = $("input[id*='.id']")[0].value;
                         var urlReplacement = '';
@@ -63,10 +60,7 @@
                             })
                             .done(function (data) {
                                 document.children[0].innerHTML = data;
-
-                                <#if requestIsCarEdit>
-                                    setupPictureGalleryPositionInputs();
-                                </#if>
+                                setupPictureGalleryPositionInputs();
 
                                 $('#main-container').unblock();
                             });

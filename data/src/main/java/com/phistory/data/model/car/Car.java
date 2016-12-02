@@ -63,15 +63,15 @@ public class Car implements GenericEntity
 
     @ManyToOne
     @Cascade(value = SAVE_UPDATE)
-    @JoinColumn(name = ENGINE_ID_FIELD, nullable = true)
+    @JoinColumn(name = ENGINE_ID_FIELD)
     //Do not change nullable to false as otherwise Hibernate won't be able to persist the entity
     //since right before persisting it the engine is null
     private Engine engine;
 
-    @Column(name = "car_chassis_materials", nullable = true)
+    @Column(name = "car_chassis_materials")
     private String chassisMaterials;
 
-    @Column(name = "car_body_materials", nullable = true)
+    @Column(name = "car_body_materials")
     private String bodyMaterials;
 
     @Enumerated(ORDINAL)
@@ -82,13 +82,13 @@ public class Car implements GenericEntity
     @Column(name = "car_seats_config", nullable = false)
     private CarSeatsConfig carSeatsConfig;
 
-    @Column(name = "car_top_speed", nullable = true)
+    @Column(name = "car_top_speed")
     private Integer topSpeed;
 
-    @Column(name = "car_acceleration", nullable = true)
+    @Column(name = "car_acceleration")
     private Float acceleration;
 
-    @Column(name = "car_fuel_consumption", nullable = true)
+    @Column(name = "car_fuel_consumption")
     private Float fuelConsumption;
 
     @Enumerated(ORDINAL)
@@ -100,51 +100,51 @@ public class Car implements GenericEntity
     @Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
     private Calendar productionStartDate;
 
-    @Column(name = "car_production_end_date", nullable = true)
+    @Column(name = "car_production_end_date")
     @Temporal(DATE)
     private Calendar productionEndDate;
 
-    @Column(name = "car_weight", nullable = true)
+    @Column(name = "car_weight")
     private Long weight;
 
-    @Column(name = "car_length", nullable = true)
+    @Column(name = "car_length")
     private Long length;
 
-    @Column(name = "car_width", nullable = true)
+    @Column(name = "car_width")
     private Long width;
 
-    @Column(name = "car_height", nullable = true)
+    @Column(name = "car_height")
     private Long height;
 
     @OneToOne(orphanRemoval = true)
     @Cascade(value = ALL)
-    @JoinColumn(name = "car_brake_set_id", nullable = true, unique = true)
+    @JoinColumn(name = "car_brake_set_id", unique = true)
     private BrakeSet brakeSet;
 
     @OneToOne()
     @Cascade(value = ALL)
-    @JoinColumn(name = "car_transmission_id", nullable = true, unique = true)
+    @JoinColumn(name = "car_transmission_id", unique = true)
     private Transmission transmission;
 
-    @Column(name = "car_fuel_tank_capacity", nullable = true)
+    @Column(name = "car_fuel_tank_capacity")
     private Long fuelTankCapacity;
 
     @OneToOne
     @Cascade(value = ALL)
-    @JoinColumn(name = "car_tyre_set_id", nullable = true, unique = true)
+    @JoinColumn(name = "car_tyre_set_id", unique = true)
     private TyreSet tyreSet;
 
     @Enumerated(ORDINAL)
     @Column(name = "car_drive_wheel_type", nullable = false)
     private DriveWheelType driveWheelType;
 
-    @Column(name = "car_road_legal", nullable = false, columnDefinition = "tinyint(1) default 1")
+    @Column(name = "car_road_legal", nullable = false, columnDefinition = "tinyint(1) default 0")
     private Boolean roadLegal;
 
-    @Column(name = "car_description_es", nullable = true, columnDefinition="LONGTEXT")
+    @Column(name = "car_description_es", columnDefinition="LONGTEXT")
     private String descriptionES;
 
-    @Column(name = "car_description_en", nullable = true, columnDefinition="LONGTEXT")
+    @Column(name = "car_description_en", columnDefinition="LONGTEXT")
     private String descriptionEN;
 
     @Override
