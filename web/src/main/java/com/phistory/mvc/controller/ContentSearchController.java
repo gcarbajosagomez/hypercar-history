@@ -36,11 +36,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 				method = HEAD)
 public class ContentSearchController extends BaseController implements InitializingBean
 {
-	@Inject
 	private ModelFiller carModelFiller;
-	@Inject
 	private ModelFiller pictureModelFiller;
-	
+
+	@Inject
+	public ContentSearchController(ModelFiller carModelFiller, ModelFiller pictureModelFiller) {
+		this.carModelFiller = carModelFiller;
+		this.pictureModelFiller = pictureModelFiller;
+	}
+
 	@RequestMapping(method = GET)
 	@ResponseBody
 	public ModelAndView handleModelsSearch(Model model, 
@@ -51,7 +55,7 @@ public class ContentSearchController extends BaseController implements Initializ
             ContentSearchDTO clonedContentSearchDto = contentSearchDto.clone();
             clonedContentSearchDto.setItemsPerPage(0);
 			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
-			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getContentSearchDAO().hibernateSearchSearchContent(searchCommand);
+			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getSqlContentSearchDAO().hibernateSearchSearchContent(searchCommand);
             List<Object> searchResults = dataContentSearchDto.getResults();
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
@@ -115,6 +119,6 @@ public class ContentSearchController extends BaseController implements Initializ
 	@Override
 	public void afterPropertiesSet() throws Exception
 	{
-		super.getContentSearchDAO().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
+		super.getSqlContentSearchDAO().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
 	}
 }

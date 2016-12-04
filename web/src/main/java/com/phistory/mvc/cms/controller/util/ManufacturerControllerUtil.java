@@ -1,17 +1,17 @@
-package com.phistory.mvc.controller.cms.util;
+package com.phistory.mvc.cms.controller.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.cms.controller.CMSBaseController;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
-import com.phistory.mvc.controller.cms.CMSBaseController;
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;

@@ -1,10 +1,8 @@
 package com.phistory.test.integration.web.cms.login;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
-import static org.hamcrest.MatcherAssert.assertThat;
-
+import com.phistory.Main;
+import com.phistory.test.integration.web.BaseIntegrationTest;
+import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 import com.phistory.test.integration.web.navbar.NavBarPage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
@@ -17,9 +15,10 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.phistory.Main;
-import com.phistory.test.integration.web.BaseIntegrationTest;
-import com.phistory.test.integration.web.cms.car.CmsCarListPage;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 @SpringApplicationConfiguration(classes = Main.class)
 @WebAppConfiguration
@@ -75,7 +74,7 @@ public class LoginTest extends BaseIntegrationTest
 		Thread.sleep(1000);
 		assertThat("Wrong credentials alert should be displayed", this.loginPage.isWrongCredentialsAlertDisplayed());
 		
-		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
+		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS_URL);
 		this.cmsCarListPage = new CmsCarListPage(this.webDriver);
 		this.cmsCarListPage.initializePageElements();
 		this.test_username_input_is_displayed();
@@ -86,7 +85,7 @@ public class LoginTest extends BaseIntegrationTest
 	{
         this.loginTestUtils.performCMSLogin(this.loginPage);
         Thread.sleep(1000);
-        webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS);
+        webDriver.get(TEST_SERVER_HOST + this.port + "/" + CMS_CONTEXT + CARS_URL);
         CmsCarListPage cmsCarListPage = new CmsCarListPage(webDriver);
         cmsCarListPage.initializePageElements();
 		assertThat("Main car list div should be present after login", this.cmsCarListPage.isMainCarListDivPresent());

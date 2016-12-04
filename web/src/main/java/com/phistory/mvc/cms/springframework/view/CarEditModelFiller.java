@@ -33,13 +33,19 @@ import static com.phistory.mvc.controller.BaseControllerData.PICTURES;
 @Component
 public class CarEditModelFiller implements ModelFiller
 {
-	@Inject
 	private SQLManufacturerDAO sqlManufacturerDAO;
-	@Inject
 	private SQLEngineDAO sqlEngineDAO;
-	@Inject
 	private SQLPictureDAO sqlPictureDAO;
-	
+
+	@Inject
+	public CarEditModelFiller(SQLManufacturerDAO sqlManufacturerDAO,
+							  SQLEngineDAO sqlEngineDAO,
+							  SQLPictureDAO sqlPictureDAO) {
+		this.sqlManufacturerDAO = sqlManufacturerDAO;
+		this.sqlEngineDAO = sqlEngineDAO;
+		this.sqlPictureDAO = sqlPictureDAO;
+	}
+
 	@Override
 	public void fillModel(Model model) 
 	{

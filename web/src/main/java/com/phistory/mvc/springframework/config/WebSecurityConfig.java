@@ -2,16 +2,15 @@ package com.phistory.mvc.springframework.config;
 
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.*;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_ERROR;
-import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_SUCCESS;
-import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_URL;
-import static com.phistory.mvc.controller.cms.CMSBaseController.LOGOUT;
-import static com.phistory.mvc.controller.cms.CMSBaseController.QUERY_STRING_SEPARATOR;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_ERROR;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_SUCCESS;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGOUT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.QUERY_STRING_SEPARATOR;
 
 import javax.inject.Inject;
 
-import com.phistory.mvc.command.PictureLoadAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;

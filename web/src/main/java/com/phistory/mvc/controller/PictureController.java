@@ -14,7 +14,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
-import static com.phistory.mvc.controller.BaseControllerData.PICTURE_LOAD_ACTION_ACTION;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURE_LOAD_ACTION;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -25,7 +25,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
  */
 @Slf4j
 @Controller
-@RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION_ACTION + "}",
+@RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION + "}",
                 method = HEAD)
 public class PictureController extends BaseController {
     @Inject
@@ -44,7 +44,7 @@ public class PictureController extends BaseController {
     }
 
     @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
-    public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION_ACTION) PictureLoadAction loadAction,
+    public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION) PictureLoadAction loadAction,
                                             @RequestParam(value = ID, required = false) Long pictureId) {
 
         PictureLoadCommand command = new PictureLoadCommand();

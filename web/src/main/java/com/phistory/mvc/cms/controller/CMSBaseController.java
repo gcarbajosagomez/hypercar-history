@@ -1,4 +1,4 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
@@ -10,6 +10,7 @@ import com.phistory.data.model.engine.Engine;
 import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
 import com.phistory.mvc.controller.BaseController;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 
 /**
  * Base controller that contains common CMS data and functionality 
@@ -45,6 +46,7 @@ public class CMSBaseController extends BaseController {
 	public static final String CARS_URL		           		= "cars";
 	public static final String MANUFACTURERS_URL			= "manufacturers";
 	public static final String CAR_INTERNET_CONTENTS_URL    = "carInternetContents";
+	public static final String ENTITY_MANAGEMENT_URL    	= "entityManagement";
 
     /*************************
      ******Request params*****
@@ -56,12 +58,14 @@ public class CMSBaseController extends BaseController {
     
     public static final String MANUFACTURERS_PER_PAGE  		= "manufacturersPerPage";
     public static final String MANUFACTURERS_PER_PAGE_DATA  = "manufacturersPerPageData";
+    public static final String CAR_INTERNET_CONTENT_ID		= "carInternetContentId";
 
 	/*************************
      **********Actions********
      *************************/
-    public static final String DELETE_CAR_PICTURE_ACTION    = "deleteCarPicture";
-    
+    public static final String DELETE_CAR_PICTURE_ACTION    	= "deleteCarPicture";
+    public static final String ENTITY_MANAGEMENT_QUERY_ACTION	= "entityManagementQueryAction";
+
     /*************************
      **********Misc***********
      *************************/
@@ -72,6 +76,7 @@ public class CMSBaseController extends BaseController {
 	public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND 	    = "CICEFC";
 	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			    = "MEFC";
 	public static final String PICTURE_EDIT_FORM_COMMAND 			        = "PEFC";
+	public static final String ENTITY_MANAGEMENT_LOAD_COMMAND 			    = "EMLC";
 	public static final String LOGGED_IN 								    = "loggedIn";
 	public static final String DATE_FORMAT 								    = "yyyy-MM";
 	public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE     = "entitySavedSuccessfully";
@@ -85,19 +90,22 @@ public class CMSBaseController extends BaseController {
 
     @Getter
     @Inject
-    private SQLManufacturerDAO manufacturerDAO;
+    private SQLManufacturerDAO sqlManufacturerDAO;
     @Getter
     @Inject
-    private SQLEngineDAO engineDAO;
+    private SQLEngineDAO sqlEngineDAO;
     @Inject
-    private SQLCarDAO carDAO;
+    private SQLCarDAO sqlCarDAO;
     @Getter
     @Inject
-    private SQLCarInternetContentDAO carInternetContentDAO;
+    private SQLCarInternetContentDAO sqlCarInternetContentDAO;
+    @Inject
+	private ModelFiller cmsBaseModelFiller;
 
     @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response)
     {
+    	this.cmsBaseModelFiller.fillModel(model);
         this.setNotCacheHeadersToResponse(response);
 		model.addAttribute("saveURL", 			        SAVE_URL);
 		model.addAttribute("deleteURL", 		        DELETE_URL);
@@ -110,9 +118,9 @@ public class CMSBaseController extends BaseController {
 	@InitBinder
     public void initBinder(WebDataBinder binder)
     {
-		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.manufacturerDAO));
-		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.carDAO));
-        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.engineDAO));
+		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.sqlManufacturerDAO));
+		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.sqlCarDAO));
+        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.sqlEngineDAO));
         binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 

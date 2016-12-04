@@ -1,9 +1,10 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
+import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -12,9 +13,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.inject.Inject;
+
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
@@ -29,8 +33,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
-    @Autowired
     private SQLCarInternetContentDAO carInternetContentDAO;
+    private EntityManagementService entityManagementService;
+
+    @Inject
+    public CMSCarInternetContentEditController(SQLCarInternetContentDAO carInternetContentDAO, EntityManagementService entityManagementService) {
+        this.carInternetContentDAO = carInternetContentDAO;
+        this.entityManagementService = entityManagementService;
+    }
 
     @RequestMapping(value = DELETE_URL,
                     method = DELETE)
@@ -39,6 +49,11 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
     {
         try {
             this.carInternetContentDAO.delete(carInternetContent);
+
+            EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+            entityManagementLoadCommand.setCarInternetContentId(carInternetContent.getCar().getId());
+            entityManagementLoadCommand.setQueryType(REMOVE_CAR);
+            this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
             String successMessage = super.getMessageSource()
                                          .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
@@ -56,6 +71,6 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
     public CarInternetContent createCarInternetContentCommand(@PathVariable(ID) Long caInternetContentId) throws Exception
     {
-        return super.getCarInternetContentDAO().getById(caInternetContentId);
+        return super.getSqlCarInternetContentDAO().getById(caInternetContentId);
     }
 }

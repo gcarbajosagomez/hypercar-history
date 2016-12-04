@@ -13,7 +13,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
@@ -35,7 +35,7 @@ public class CarDetailsTest extends BaseIntegrationTest
 	public void setupTest() throws Exception
 	{
 		super.setupBaseTest();
-		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS + "/" + IRRELEVANT_CAR_ID);
+		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL + "/" + IRRELEVANT_CAR_ID);
 		this.carDetailsPage = new CarDetailsPage(this.webDriver);
 	}
 	

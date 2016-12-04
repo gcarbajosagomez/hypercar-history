@@ -34,25 +34,25 @@ public class BaseController extends BaseControllerData
 {	
 	@Inject
 	@Getter
-	private SQLCarDAO carDAO;
+	private SQLCarDAO sqlCarDAO;
     @Inject
 	@Getter
-	private InMemoryCarDAO inMemoryInMemoryCarDAO;
+	private InMemoryCarDAO inMemoryCarDAO;
 	@Inject
 	@Getter
-	private SQLPictureDAO SQLPictureDAO;
+	private SQLPictureDAO sqlPictureDAO;
 	@Inject
 	@Getter
-	private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
+	private InMemoryPictureDAO inMemoryPictureDAO;
 	@Inject
 	@Getter
-	private SQLContentSearchDAO contentSearchDAO;
+	private SQLContentSearchDAO sqlContentSearchDAO;
 	@Inject
 	@Getter
-	private SQLCarInternetContentDAO carInternetContentDAO;
+	private SQLCarInternetContentDAO sqlCarInternetContentDAO;
 	@Inject
 	@Getter
-	private InMemoryCarInternetContentDAO inMemoryInMemoryCarInternetContentDAO;
+	private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
 	@Inject
 	private ModelFiller baseModelFiller;
 	@Getter

@@ -44,7 +44,7 @@
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
 					<link rel="stylesheet" href="/static/stylesheet/bootstrap-theme.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 				    <#if !requestIsDesktop>
                         <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
 				    </#if>
@@ -60,7 +60,7 @@
                     <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.js"></script>
-					<script src="/static/javascript/main.js"></script>
+					<script src="/static/javascript/main.min.js"></script>
 
                     <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
@@ -277,7 +277,7 @@
 
 <#function getCarProductionLifeTime car>
     <#assign productionStartYear>${car.productionStartDate.time?string("yyyy")}</#assign>
-    <#assign productionEndYear>${car.productionEndDate.time?string("yyyy")}</#assign>
+    <#assign productionEndYear><#if car.productionEndDate??>${car.productionEndDate.time?string("yyyy")}</#if></#assign>
     <#assign productionLifeTime = ""/>
 
     <#if productionEndYear != "">

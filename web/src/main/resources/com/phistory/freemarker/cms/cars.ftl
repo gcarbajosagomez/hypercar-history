@@ -47,12 +47,12 @@
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-dropdown">
-									<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=5">5</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=10">10</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>
-    								<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=20">20</a></li>
+									<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=5">5</a></li>
+    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=10">10</a></li>
+    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>
+    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=20">20</a></li>
    									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${language.getTextSource('pagination.allCars')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${language.getTextSource('pagination.allCars')}</a></li>
   								</ul>
   							</div>
   						</div>
@@ -88,7 +88,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	

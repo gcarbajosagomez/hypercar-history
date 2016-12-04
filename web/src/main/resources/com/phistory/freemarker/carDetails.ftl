@@ -578,4 +578,6 @@
 </script>
 
 <@carUtils.addSetUnitsOfMeasureFunctionScript/>
-<@carUtils.addCarStructuredMetadata/>
+<#if car??>
+	<@carUtils.addCarStructuredMetadata/>
+</#if>

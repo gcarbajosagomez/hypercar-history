@@ -1,17 +1,17 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
-import com.phistory.mvc.cms.command.PictureEditCommand;
+import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
-import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
+import com.phistory.mvc.service.EntityManagementService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,9 +30,10 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
@@ -41,21 +42,34 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
  */
 @Secured(USER_ROLE)
 @Controller
+@RequestMapping(value = CMS_CONTEXT + CARS_URL + "/{" + ID + "}")
 @Slf4j
-@RequestMapping(value = CMS_CONTEXT + CARS + "/{" + ID + "}")
 public class CMSCarEditController extends CMSBaseController {
-    @Inject
+
     private CMSCarControllerUtil carControllerUtil;
-    @Inject
     private CarFormCreator carFormCreator;
-    @Inject
     private CarInternetContentFormCreator carInternetContentFormCreator;
-    @Inject
     private ModelFiller carModelFiller;
-    @Inject
     private CarEditModelFiller carEditModelFiller;
-    @Inject
     private ModelFiller pictureModelFiller;
+    private EntityManagementService entityManagementService;
+
+    @Inject
+    public CMSCarEditController(CMSCarControllerUtil carControllerUtil,
+                                CarFormCreator carFormCreator,
+                                CarInternetContentFormCreator carInternetContentFormCreator,
+                                ModelFiller carModelFiller,
+                                CarEditModelFiller carEditModelFiller,
+                                ModelFiller pictureModelFiller,
+                                EntityManagementService entityManagementService) {
+        this.carControllerUtil = carControllerUtil;
+        this.carFormCreator = carFormCreator;
+        this.carInternetContentFormCreator = carInternetContentFormCreator;
+        this.carModelFiller = carModelFiller;
+        this.carEditModelFiller = carEditModelFiller;
+        this.pictureModelFiller = pictureModelFiller;
+        this.entityManagementService = entityManagementService;
+    }
 
     @RequestMapping(value = EDIT_URL,
                     method = GET)
@@ -84,6 +98,8 @@ public class CMSCarEditController extends CMSBaseController {
                 if (!carInternetContentEditCommandResult.hasErrors()) {
                     this.carControllerUtil.saveCarInternetEditCommand(carInternetContentEditCommand);
                 }
+
+                this.carControllerUtil.reloadCarAndPictureDBEntities(car.getId());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } else {
                 String errorMessage = super.getMessageSource()
@@ -112,6 +128,12 @@ public class CMSCarEditController extends CMSBaseController {
         if (!result.hasErrors()) {
             try {
                 this.carControllerUtil.deleteCar(carFormEditCommand);
+
+                EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+                entityManagementLoadCommand.setCarId(carFormEditCommand.getCarForm().getId());
+                entityManagementLoadCommand.setQueryType(REMOVE_CAR);
+                this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
                                                          new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() + " " +
@@ -133,7 +155,7 @@ public class CMSCarEditController extends CMSBaseController {
 
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
-        Car car = super.getCarDAO().getById(carId);
+        Car car = super.getSqlCarDAO().getById(carId);
         CarForm carForm = this.carFormCreator.createFormFromEntity(car);
         CarFormEditCommand command = new CarFormEditCommand(carForm);
 
@@ -142,7 +164,7 @@ public class CMSCarEditController extends CMSBaseController {
 
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
     public CarInternetContentEditCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) throws Exception {
-        List<CarInternetContent> carInternetContents = super.getCarInternetContentDAO().getByCarId(carId);
+        List<CarInternetContent> carInternetContents = super.getSqlCarInternetContentDAO().getByCarId(carId);
         List<CarInternetContentForm> carInternetContentForms = new ArrayList<>();
         carInternetContents.forEach(internetContent -> carInternetContentForms.add(this.carInternetContentFormCreator.createFormFromEntity(internetContent)));
 

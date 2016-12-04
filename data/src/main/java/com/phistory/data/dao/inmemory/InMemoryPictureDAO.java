@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.stream.Collectors;
 import static java.util.Comparator.*;
 
@@ -28,36 +27,53 @@ import static java.util.Comparator.*;
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
-public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
+public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
     public static final String BEAN_NAME = "InMemoryPictureDAO";
 
-    private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 20;
-
     @Autowired
-    private com.phistory.data.dao.sql.impl.SQLPictureDAO sqlSQLPictureDAO;
+    private com.phistory.data.dao.sql.impl.SQLPictureDAO sqlPictureDAO;
     @Getter
     private List<Picture> pictures = new ArrayList<>();
 
     @Scheduled(fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
-        log.info("Loading Picture entities in-memory");
-        Long pictureCount = this.sqlSQLPictureDAO.count();
+        log.info("Loading Picture entities in memory");
+        this.pictures.addAll(this.sqlPictureDAO.getAll());
+    }
 
-        Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
-        chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int chunkSize = new Double(chunkSizeDouble).intValue();
+    @Override
+    public void loadEntityFromDB(Long id) {
+        log.info("Loading Picture: " + id + " entity in memory");
+        Picture pictureToReload = this.getById(id);
+        Picture dbPicture = this.sqlPictureDAO.getById(id);
 
-        this.pictures = this.sqlSQLPictureDAO.getPaginated(0, chunkSize);
+        if (Objects.nonNull(dbPicture)) {
+            if (Objects.nonNull(pictureToReload)) {
+                this.pictures.stream()
+                             .filter(picture -> picture.getId().equals(dbPicture.getId()))
+                             .findFirst()
+                             .ifPresent(picture -> picture = dbPicture);
 
-        for (int i = 2; i < NUMBER_OF_CHUNKS_TO_LOAD_PICTURES; i++) {
-            this.getPictures().addAll(this.sqlSQLPictureDAO.getPaginated(chunkSize,
-                                                                      chunkSizeDouble.intValue()));
-            chunkSize = chunkSize + chunkSizeDouble.intValue();
+            } else {
+                //we're loading a picture that's not yet in memory because it has been just stored
+                //a BLOB object that has been just stored needs to be refreshed before its content can be read for some reason
+                this.sqlPictureDAO.getCurrentSession().refresh(dbPicture);
+                this.pictures.add(dbPicture);
+            }
+        } else {
+            //removing a picture from the memory that either never existed in the DB or has just been removed from it
+            this.pictures.remove(pictureToReload);
         }
+    }
 
-        this.getPictures().addAll(this.sqlSQLPictureDAO.getPaginated(chunkSize,
-                                                                     pictureCount.intValue()));
+    @Override
+    public void removeEntity(Long id) {
+        log.info("Removing Picture: " + id + " entity from the memory cache");
+        this.pictures.stream()
+                     .filter(picture -> picture.getId().equals(id))
+                     .findFirst()
+                     .ifPresent(this.pictures::remove);
     }
 
     /**
@@ -68,7 +84,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
      */
     public List<Long> getPictureIdsByCarId(Long carId) {
         return this.pictures.stream()
-                            .filter(picture -> picture.getCar() != null && picture.getCar().getId().equals(carId))
+                            .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
                             .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
                             .map(Picture::getId)
                             .collect(Collectors.toList());
@@ -85,12 +101,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture> {
                             .collect(Collectors.toList());
     }
 
-    /**
-     * Get the {@link Picture} whose {@link Picture#id} matches the supplied {@code pictureId}
-     *
-     * @param pictureId
-     * @return The {@link Picture} if found, null otherwise
-     */
+    @Override
     public Picture getById(Long pictureId) {
         return this.pictures.stream()
                             .filter(picture -> picture.getId().equals(pictureId))

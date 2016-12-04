@@ -20,6 +20,7 @@ public class BaseControllerData
      *************************/
 	public static final String ID          						= "id";
     public static final String CAR_ID          					= "carId";
+    public static final String PICTURE_ID      					= "pictureId";
     public static final String MANUFACTURER_ID          		= "manufacturerId";
     public static final String PAG_NUM      	  				= "pn";
     public static final String PAG_NUM_DATA	  					= "pagNumData";
@@ -33,7 +34,7 @@ public class BaseControllerData
     /*************************
      **********Actions********
      *************************/
-	public static final String PICTURE_LOAD_ACTION_ACTION 		= "action";
+	public static final String PICTURE_LOAD_ACTION 				= "action";
 	public static final String PICTURE_LOAD_COMMAND_ACTION 		= "pictureLoadCommand";
 	
 	/*************************

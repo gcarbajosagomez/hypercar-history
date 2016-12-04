@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 import static com.phistory.data.model.car.CarInternetContentType.REVIEW_ARTICLE;
 import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CARS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -82,11 +82,11 @@ public class CarController extends BaseController
 			this.pictureModelFiller.fillModel(model);
 			this.carModelFiller.fillModel(model);
 
-			model.addAttribute(CAR,                 super.getInMemoryInMemoryCarDAO().loadCarById(carId));
+			model.addAttribute(CAR,                 super.getInMemoryCarDAO().getById(carId));
 			model.addAttribute(PICTURE_IDS,         this.inMemoryInMemoryPictureDAO.getPictureIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = super.getInMemoryInMemoryCarInternetContentDAO().getByCarId(carId);
+            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getByCarId(carId);
 			List<CarInternetContent> videos = carInternetContents.stream()
 					   											 .filter(content -> content.getType().equals(VIDEO))
 					   											 .collect(Collectors.toList());

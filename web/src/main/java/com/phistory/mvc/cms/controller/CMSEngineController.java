@@ -1,9 +1,10 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
 import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.http.MediaType.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 import static org.springframework.web.bind.annotation.RequestMethod.PUT;
@@ -14,7 +15,6 @@ import javax.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.EngineForm;
 import com.phistory.mvc.cms.form.creator.EngineFormCreator;
-import com.phistory.mvc.controller.cms.util.EngineControllerUtil;
+import com.phistory.mvc.cms.controller.util.EngineControllerUtil;
 import com.phistory.data.model.engine.Engine;
 
 /**
@@ -48,7 +48,7 @@ public class CMSEngineController extends CMSBaseController {
     private EngineControllerUtil engineControllerUtil;
 
     @RequestMapping(method = GET,
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+                    produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public EngineForm handleListEngineById(@ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
         return command.getEngineForm();
@@ -56,16 +56,16 @@ public class CMSEngineController extends CMSBaseController {
 
     @RequestMapping(value = {SAVE_URL, EDIT_URL},
                     method = {POST, PUT},
-                    produces = MediaType.APPLICATION_JSON_VALUE)
+                    produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public Model handleSaveOrEditEngine(Model model,
-                                        @Valid @RequestBody(required = true) EngineFormEditCommand command,
+                                        @Valid @RequestBody EngineFormEditCommand command,
                                         BindingResult result) {
         Engine engine = this.engineFormCreator.createEntityFromForm(command.getEngineForm());
 
         try {
             if (!result.hasErrors()) {
-                super.getEngineDAO().saveOrEdit(engine);
+                super.getSqlEngineDAO().saveOrEdit(engine);
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
@@ -103,7 +103,7 @@ public class CMSEngineController extends CMSBaseController {
         EngineFormEditCommand command = new EngineFormEditCommand();
 
         if (engineId != null) {
-            Engine engine = super.getEngineDAO().getById(engineId);
+            Engine engine = super.getSqlEngineDAO().getById(engineId);
             EngineForm engineForm = this.engineFormCreator.createFormFromEntity(engine);
             command.setEngineForm(engineForm);
         }

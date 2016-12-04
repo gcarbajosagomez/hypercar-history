@@ -22,11 +22,11 @@ import static javax.persistence.FetchType.LAZY;
  * @author gonzalo
  *main.java.
  */
-@Entity
-@Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME)
 public class CarInternetContent implements GenericEntity
 {
 	public static final String CAR_INTERNET_CONTENT_TABLE_NAME = "car_internet_content";
@@ -36,7 +36,7 @@ public class CarInternetContent implements GenericEntity
     @Column(name = "content_id")
     private Long id;
 	
-	@Column(name = "content_link", nullable = false)
+	@Column(name = "content_link", nullable = false, unique = true)
 	private String link;
 	
 	@Enumerated(ORDINAL)
@@ -70,6 +70,7 @@ public class CarInternetContent implements GenericEntity
 		return stringBuilder.toString();
 	}
 
+	//method needed for SQL projected query
 	public void setCarId(Long carId) {
 		if (this.car == null) {
             this.car = new Car();

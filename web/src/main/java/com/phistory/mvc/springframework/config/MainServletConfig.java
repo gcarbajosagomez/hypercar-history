@@ -1,11 +1,10 @@
 package com.phistory.mvc.springframework.config;
+
 import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
-import com.phistory.mvc.command.PictureLoadAction;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.http.CacheControl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.servlet.LocaleResolver;
@@ -20,10 +19,10 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.Random;
 
-import static com.phistory.mvc.command.PictureLoadAction.*;
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static java.util.Locale.ENGLISH;
-import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
@@ -36,7 +35,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.phistory.mvc"})
 @Import(SqlDatabaseConfig.class)
-@PropertySource(value= "classpath:com/phistory/systemproperty/systemProperties.properties", ignoreResourceNotFound= false)
+@PropertySource(value = "classpath:com/phistory/systemproperty/systemProperties.properties")
 public class MainServletConfig extends WebMvcConfigurerAdapter
 {
     private static final String NO_CACHE_VALUE = "0";

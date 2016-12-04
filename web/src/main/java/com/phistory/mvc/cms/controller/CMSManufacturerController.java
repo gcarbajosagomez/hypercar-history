@@ -1,8 +1,8 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.Manufacturer;
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
-import com.phistory.mvc.controller.cms.util.ManufacturerControllerUtil;
+import com.phistory.mvc.cms.controller.util.ManufacturerControllerUtil;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
@@ -19,8 +19,8 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.Map;
 
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CMSBaseController.MANUFACTURERS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;

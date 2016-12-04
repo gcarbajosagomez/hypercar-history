@@ -1,11 +1,11 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
 import com.phistory.mvc.controller.CarController;
-import com.phistory.mvc.controller.cms.util.CMSCarControllerUtil;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
@@ -24,32 +24,42 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.cms.CMSBaseController.*;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Secured(value = USER_ROLE)
 @Controller
-@RequestMapping(value = CMS_CONTEXT + CARS)
+@RequestMapping(value = CMS_CONTEXT + CARS_URL)
 @Slf4j
 public class CMSCarController extends CMSBaseController
 {
-	@Inject
-    private CarController carController;
-	@Inject
+	private CarController carController;
 	private ModelFiller carModelFiller;
-	@Inject
 	private ModelFiller pictureModelFiller;
-	@Inject
 	private CarEditModelFiller carEditModelFiller;
-	@Inject
     private CarListModelFiller sqlCarsListModelFiller;
-	@Inject
     private CMSCarControllerUtil cmsCarControllerUtil;
-	@Inject
     private CarControllerUtil carControllerUtil;
+
+	@Inject
+	public CMSCarController(CarController carController,
+							ModelFiller carModelFiller,
+							ModelFiller pictureModelFiller,
+							CarEditModelFiller carEditModelFiller,
+							CarListModelFiller sqlCarsListModelFiller,
+							CMSCarControllerUtil cmsCarControllerUtil,
+							CarControllerUtil carControllerUtil) {
+		this.carController = carController;
+		this.carModelFiller = carModelFiller;
+		this.pictureModelFiller = pictureModelFiller;
+		this.carEditModelFiller = carEditModelFiller;
+		this.sqlCarsListModelFiller = sqlCarsListModelFiller;
+		this.cmsCarControllerUtil = cmsCarControllerUtil;
+		this.carControllerUtil = carControllerUtil;
+	}
 	
 	@RequestMapping(method = GET)
 	public ModelAndView handleCarsList(Model model,
@@ -115,6 +125,7 @@ public class CMSCarController extends CMSBaseController
     				carInternetContentEditCommand.getCarInternetContentForms().forEach(carInternetContentForm -> carInternetContentForm.setCar(car));
     				this.cmsCarControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
     			}
+    			this.cmsCarControllerUtil.reloadCarAndPictureDBEntities(car.getId());
     			model.addAttribute(SUCCESS_MESSAGE, successMessage);
     		}
     		else

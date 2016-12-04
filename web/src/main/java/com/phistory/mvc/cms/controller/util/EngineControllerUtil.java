@@ -1,4 +1,4 @@
-package com.phistory.mvc.controller.cms.util;
+package com.phistory.mvc.cms.controller.util;
 
 import javax.inject.Inject;
 

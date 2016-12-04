@@ -1,7 +1,7 @@
-package com.phistory.mvc.controller.cms;
+package com.phistory.mvc.cms.controller;
 
-import static com.phistory.mvc.controller.cms.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.controller.cms.CMSBaseController.LOGIN_URL;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_URL;
 
 import javax.servlet.http.HttpServletResponse;
 

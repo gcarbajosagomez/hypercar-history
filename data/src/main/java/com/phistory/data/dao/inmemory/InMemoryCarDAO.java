@@ -1,6 +1,7 @@
 package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.dao.InMemoryDAO;
+import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.car.Car;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -23,22 +25,58 @@ import java.util.stream.Collectors;
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
-public class InMemoryCarDAO implements InMemoryDAO<Car> {
+public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
     private static final int LOAD_ENTITIES_INITIAL_DELAY = 15000;
 
-    @Autowired
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
-    @Autowired
     private com.phistory.data.dao.sql.impl.SQLCarDAO sqlCarDAO;
     private List<Car> cars;
+
+    @Autowired
+    public InMemoryCarDAO(InMemoryPictureDAO inMemoryInMemoryPictureDAO, SQLCarDAO sqlCarDAO) {
+        this.inMemoryInMemoryPictureDAO = inMemoryInMemoryPictureDAO;
+        this.sqlCarDAO = sqlCarDAO;
+    }
 
     @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
-        log.info("Loading Car entities in-memory");
+        log.info("Loading Car entities in memory");
         this.cars = this.sqlCarDAO.getAll();
+    }
+
+    @Override
+    public void loadEntityFromDB(Long id) {
+        log.info("Loading Car: " + id + " entity in memory");
+        Car carToReload = this.getById(id);
+        Car dbCar = this.sqlCarDAO.getById(id);
+
+        if (Objects.nonNull(dbCar)) {
+            if (Objects.nonNull(carToReload)) {
+                this.cars.stream()
+                         .filter(car -> car.getId().equals(dbCar.getId()))
+                         .findFirst()
+                         .ifPresent(car -> car = dbCar);
+
+            } else {
+                //we're loading a car that's not yet in memory because it has been just stored
+                this.cars.add(dbCar);
+            }
+        } else {
+            //removing a car from the memory that either never existed in the DB or has just been removed from it
+            this.cars.remove(carToReload);
+        }
+    }
+
+    @Override
+    public void removeEntity(Long id) {
+        log.info("Removing Car: " + id + " entity from the memory cache");
+        this.cars.stream()
+                 .filter(car -> car.getId().equals(id))
+                 .findFirst()
+                 .ifPresent(this.cars::remove);
     }
 
     public Car getCarByPictureId(Long pictureId) {
@@ -50,13 +88,8 @@ public class InMemoryCarDAO implements InMemoryDAO<Car> {
                                               .orElse(null);
     }
 
-    /**
-     * Get the {@link Car} whose {@link Car#id} matches the {@code id} supplied
-     *
-     * @param id
-     * @return The {@link Car} found if any, null otherwise
-     */
-    public Car loadCarById(Long id) {
+    @Override
+    public Car getById(Long id) {
         return this.cars.stream()
                         .filter(car -> car.getId().equals(id))
                         .findFirst()

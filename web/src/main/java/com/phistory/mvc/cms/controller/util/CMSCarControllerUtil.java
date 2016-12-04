@@ -1,4 +1,4 @@
-package com.phistory.mvc.controller.cms.util;
+package com.phistory.mvc.cms.controller.util;
 
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
@@ -7,14 +7,16 @@ import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
-import com.phistory.mvc.controller.cms.CMSCarController;
-import com.phistory.mvc.controller.cms.CMSCarEditController;
+import com.phistory.mvc.cms.controller.CMSCarController;
+import com.phistory.mvc.cms.controller.CMSCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
+import com.phistory.mvc.service.EntityManagementService;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -25,6 +27,10 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_CARS;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_CAR_INTERNET_CONTENTS;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_PICTURES;
 
 /**
  * Set of utilities for {@link CMSCarController} and {@link CMSCarEditController}
@@ -41,6 +47,7 @@ public class CMSCarControllerUtil {
     private CarInternetContentFormCreator carInternetContentFormCreator;
     private CMSPictureControllerUtil cmsPictureControllerUtil;
     private DateProvider dateProvider;
+    private EntityManagementService entityManagementService;
 
     @Inject
     public CMSCarControllerUtil(SQLCarDAO sqlCarDAO,
@@ -48,13 +55,15 @@ public class CMSCarControllerUtil {
                                 CarFormCreator carFormCreator,
                                 CarInternetContentFormCreator carInternetContentFormCreator,
                                 CMSPictureControllerUtil cmsPictureControllerUtil,
-                                DateProvider dateProvider) {
+                                DateProvider dateProvider,
+                                EntityManagementService entityManagementService) {
         this.sqlCarDAO = sqlCarDAO;
         this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
         this.carFormCreator = carFormCreator;
         this.carInternetContentFormCreator = carInternetContentFormCreator;
         this.cmsPictureControllerUtil = cmsPictureControllerUtil;
         this.dateProvider = dateProvider;
+        this.entityManagementService = entityManagementService;
     }
 
     /**
@@ -163,5 +172,18 @@ public class CMSCarControllerUtil {
             Car car = carFormCreator.createEntityFromForm(command.getCarForm());
             this.sqlCarDAO.delete(car);
         }
+    }
+
+    public void reloadCarAndPictureDBEntities(Long carId) {
+        EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+        entityManagementLoadCommand.setCarId(carId);
+        entityManagementLoadCommand.setQueryType(RELOAD_CARS);
+        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+
+        entityManagementLoadCommand.setQueryType(RELOAD_PICTURES);
+        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+
+        entityManagementLoadCommand.setQueryType(RELOAD_CAR_INTERNET_CONTENTS);
+        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
     }
 }

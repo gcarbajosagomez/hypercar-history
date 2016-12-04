@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Blob;
+import java.util.Objects;
 
 /**
  * Set of utilities for the PictureController class
@@ -32,11 +34,12 @@ public class PictureControllerUtil extends BaseControllerData {
      * @throws Exception
      */
     public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) throws Exception {
-        if (picture != null && picture.getImage() != null) {
+        Blob image = picture.getImage();
+        if (Objects.nonNull(picture) && Objects.nonNull(image)) {
             response.setContentType(IMAGE_CONTENT_TYPE);
 
-            int imgBytesLength = (int) picture.getImage().length();
-            byte[] imgBytes = picture.getImage().getBytes(1, imgBytesLength);
+            int imgBytesLength = (int) image.length();
+            byte[] imgBytes = image.getBytes(1, imgBytesLength);
 
             response.getOutputStream().write(imgBytes);
             response.getOutputStream().flush();

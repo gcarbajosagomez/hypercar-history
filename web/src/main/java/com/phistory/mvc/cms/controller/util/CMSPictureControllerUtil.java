@@ -1,10 +1,10 @@
-package com.phistory.mvc.controller.cms.util;
+package com.phistory.mvc.cms.controller.util;
 
 import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.PictureEditCommand;
-import com.phistory.mvc.controller.cms.CMSPictureController;
+import com.phistory.mvc.cms.controller.CMSPictureController;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
