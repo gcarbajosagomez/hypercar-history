@@ -106,4 +106,8 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
                         .sorted(Comparator.comparing(Car::getProductionStartDate))
                         .collect(Collectors.toList());
     }
+
+    public int countDistinctCars() {
+        return this.cars.size();
+    }
 }

@@ -53,13 +53,13 @@
                     </#if>
 
             		<script src="/static/javascript/lib/jquery.min.js"></script>
-            		<script src="/static/javascript/lib/jquery.cookie.js"></script>
-            		<script src="/static/javascript/lib/jquery.cookiesdirective.js"></script>
-            		<script src="/static/javascript/lib/jquery.blockUI.js"></script>
+            		<script src="/static/javascript/lib/jquery.cookie.min.js"></script>
+            		<script src="/static/javascript/lib/jquery.cookiesdirective.min.js"></script>
+            		<script src="/static/javascript/lib/jquery.blockUI.min.js"></script>
         			<script src="/static/javascript/lib/bootstrap.min.js"></script>
                     <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
-                    <script src="/static/javascript/lib/modernizr.custom.js"></script>
+                    <script src="/static/javascript/lib/modernizr.custom.min.js"></script>
 					<script src="/static/javascript/main.min.js"></script>
 
                     <#if requestIsCarDetails || requestIsCarEdit>
@@ -142,7 +142,7 @@
           					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
 	          						 <ul class="nav navbar-nav">
-    	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('cars')?upper_case}</a></li>
+    	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <div class="divider navbar-divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>

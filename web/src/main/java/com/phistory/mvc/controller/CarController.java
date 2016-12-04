@@ -40,19 +40,27 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 				method = {GET, HEAD})
 public class CarController extends BaseController
 {
+	private CarControllerUtil carControllerUtil;
+	private ModelFiller carModelFiller;
+	private CarListModelFiller inMemoryCarsListModelFiller;
+	private ModelFiller pictureModelFiller;
+	private CarInternetContentUtils carInternetContentUtils;
+	private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
 
 	@Inject
-	private CarControllerUtil carControllerUtil;
-	@Inject
-	private ModelFiller carModelFiller;
-	@Inject
-	private CarListModelFiller inMemoryCarsListModelFiller;
-	@Inject
-	private ModelFiller pictureModelFiller;
-	@Inject
-	private CarInternetContentUtils carInternetContentUtils;
-	@Inject
-	private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
+	public CarController(CarControllerUtil carControllerUtil,
+						 ModelFiller carModelFiller,
+						 CarListModelFiller inMemoryCarsListModelFiller,
+						 ModelFiller pictureModelFiller,
+						 CarInternetContentUtils carInternetContentUtils,
+						 InMemoryPictureDAO inMemoryInMemoryPictureDAO) {
+		this.carControllerUtil = carControllerUtil;
+		this.carModelFiller = carModelFiller;
+		this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
+		this.pictureModelFiller = pictureModelFiller;
+		this.carInternetContentUtils = carInternetContentUtils;
+		this.inMemoryInMemoryPictureDAO = inMemoryInMemoryPictureDAO;
+	}
 
 	@RequestMapping
 	public ModelAndView handleCarsList(Model model,

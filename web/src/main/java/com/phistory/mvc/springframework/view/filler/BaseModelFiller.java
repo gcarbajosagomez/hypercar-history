@@ -1,7 +1,12 @@
 package com.phistory.mvc.springframework.view.filler;
 
+import com.phistory.data.dao.inmemory.InMemoryCarDAO;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+
+import javax.inject.Inject;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
@@ -16,6 +21,18 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
 @Component
 public class BaseModelFiller implements ModelFiller
 {
+	private static final String CARS_HEADER_LINK_MESSAGE_ID = "header.cars";
+
+	private InMemoryCarDAO inMemoryCarDAO;
+	private ResourceBundleMessageSource messageSource;
+
+	@Inject
+	public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
+						   ResourceBundleMessageSource messageSource) {
+		this.inMemoryCarDAO = inMemoryCarDAO;
+		this.messageSource = messageSource;
+	}
+
 	@Override
 	public void fillModel(Model model)
 	{
@@ -34,5 +51,12 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("cmsContext", 			CMS_CONTEXT);
 		model.addAttribute("languageQueryString",	LANGUAGE_DATA);
 		model.addAttribute("doNotTrackParam",		DO_NOT_TRACK_REQUEST_PARAM);
+		model.addAttribute("carsHeaderLinkValue", 	this.buildCarsHeaderLinkValue());
+	}
+
+	private String buildCarsHeaderLinkValue() {
+		return this.messageSource.getMessage(CARS_HEADER_LINK_MESSAGE_ID,
+						new Object[]{this.inMemoryCarDAO.countDistinctCars()},
+						LocaleContextHolder.getLocale());
 	}
 }

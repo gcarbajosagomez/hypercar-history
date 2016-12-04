@@ -11,12 +11,12 @@
 			<div class="list-group">
 				<#list models as car>
     				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-    					<h5 class="text-center list-group-element">${car.model}</h5>
+    					<h5 class="text-center list-group-element">${car.model?upper_case}</h5>
     				</a>
   				</#list> 
 				<#if models??>
 					<a class="list-group-item" <#if requestIsCars>href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'</#if>>
-    					<h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')}</h5>
+    					<h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')?upper_case}</h5>
     				</a>
     			</#if>
 			</div>
