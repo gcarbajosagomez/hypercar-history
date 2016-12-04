@@ -222,6 +222,29 @@
  	         					 </div>
 							</div>
     	        		</nav>
+						<#if !requestIsDesktop && !doNotTrack>
+						   	<div id="mopub-ad-unit-container" class="col-lg-12 center-block mobile-banner-div"></div>
+
+							<#-- Mopub SDK integration (only for mobile) -->
+                            <script type="text/javascript">
+                                window.mopub = [{
+                                    ad_unit: "99b4e677f06246fa927e9f7848911b4c",
+                                    ad_container_id: "mopub-ad-unit-container",
+                                    ad_width: 320,
+                                    ad_height: 50,
+                                    keywords: "", // Optionally pass keywords as a comma separated list
+                                }]; // To load additional ad units, add another object into the array.
+
+                                (function() {
+                                    var mopubjs = document.createElement("script");
+                                    mopubjs.async = true;
+                                    mopubjs.type = "text/javascript";
+                                    mopubjs.src = "//d1zg4cyg8u4pko.cloudfront.net/mweb/mobileweb.min.js";
+                                    var node = document.getElementsByTagName("script")[0];
+                                    node.parentNode.insertBefore(mopubjs, node);
+                                })();
+                            </script>
+						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
 
