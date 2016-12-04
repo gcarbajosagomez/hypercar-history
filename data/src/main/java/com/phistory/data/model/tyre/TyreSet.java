@@ -10,8 +10,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static javax.persistence.CascadeType.*;
-import static javax.persistence.FetchType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.FetchType.LAZY;
 
 /**
  *main.java.
@@ -19,7 +20,9 @@ import static javax.persistence.FetchType.*;
  */
 @Entity
 @Table(name = "tyre_set",
-	   uniqueConstraints = @UniqueConstraint(columnNames = {"front_tyre_id", "front_tyre_id", "tyre_set_car_id"}))
+	   uniqueConstraints = @UniqueConstraint(columnNames = {TyreSet.FRONT_TYRE_ID_FIELD,
+                                                            TyreSet.BACK_TYRE_ID_FIELD,
+                                                            TyreSet.TYRE_SET_CAR_ID_FIELD}))
 @JsonIgnoreProperties(value = {"car"})
 @Getter
 @Setter
@@ -27,18 +30,35 @@ import static javax.persistence.FetchType.*;
 @NoArgsConstructor
 public class TyreSet implements GenericEntity
 {
+    public static final String FRONT_TYRE_ID_FIELD = "front_tyre_id";
+    public static final String BACK_TYRE_ID_FIELD = "back_tyre_id";
+    public static final String TYRE_SET_CAR_ID_FIELD = "tyre_set_car_id";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "tyre_set_id")
     private Long id;
+
+    @Enumerated(ORDINAL)
+    @Column(name = "tyre_set_manufacturer_name", nullable = false)
+    private TyreManufacturer manufacturer;
+
+    @Column(name = "tyre_set_type", nullable = false)
+    private TyreType type;
+
+    @Column(name = "tyre_set_model_name", nullable = false)
+    private String model;
+
     @ManyToOne(cascade = ALL)
-    @JoinColumn(name = "front_tyre_id", nullable = false, unique = true)
+    @JoinColumn(name = FRONT_TYRE_ID_FIELD, nullable = false, unique = true)
     private Tyre frontTyre;
+
     @ManyToOne(cascade = ALL)
-    @JoinColumn(name = "back_tyre_id", nullable = false, unique = true)
+    @JoinColumn(name = BACK_TYRE_ID_FIELD, nullable = false, unique = true)
     private Tyre backTyre;
+
     @OneToOne(cascade = ALL, fetch = LAZY)
-    @JoinColumn(name = "tyre_set_car_id", nullable = true)
+    @JoinColumn(name = TYRE_SET_CAR_ID_FIELD)
     private Car car;
 
     @Override

@@ -1,5 +1,6 @@
 package com.phistory.mvc.cms.springframework.view;
 
+import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.impl.SQLEngineDAO;
 import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
@@ -11,6 +12,8 @@ import com.phistory.data.model.car.*;
 import com.phistory.data.model.engine.EngineCylinderDisposition;
 import com.phistory.data.model.engine.EngineType;
 import com.phistory.data.model.transmission.TransmissionType;
+import com.phistory.data.model.tyre.TyreManufacturer;
+import com.phistory.data.model.tyre.TyreType;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarMaterial;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
@@ -35,15 +38,15 @@ public class CarEditModelFiller implements ModelFiller
 {
 	private SQLManufacturerDAO sqlManufacturerDAO;
 	private SQLEngineDAO sqlEngineDAO;
-	private SQLPictureDAO sqlPictureDAO;
+	private InMemoryPictureDAO inMemoryPictureDAO;
 
 	@Inject
 	public CarEditModelFiller(SQLManufacturerDAO sqlManufacturerDAO,
 							  SQLEngineDAO sqlEngineDAO,
-							  SQLPictureDAO sqlPictureDAO) {
+							  InMemoryPictureDAO inMemoryPictureDAO) {
 		this.sqlManufacturerDAO = sqlManufacturerDAO;
 		this.sqlEngineDAO = sqlEngineDAO;
-		this.sqlPictureDAO = sqlPictureDAO;
+		this.inMemoryPictureDAO = inMemoryPictureDAO;
 	}
 
 	@Override
@@ -64,6 +67,8 @@ public class CarEditModelFiller implements ModelFiller
     	model.addAttribute("carInternetContentTypes", 		CarInternetContentType.values());
     	model.addAttribute("carInternetContentLanguages", 	Language.values());
     	model.addAttribute("productionTypes", 				ProductionType.values());
+    	model.addAttribute("tyreManufacturers", 			TyreManufacturer.values());
+    	model.addAttribute("tyreTypes", 					TyreType.values());
 	}
 	
 	/**
@@ -77,7 +82,7 @@ public class CarEditModelFiller implements ModelFiller
         List<Picture> pictures = new ArrayList<>();
         Long carId = command.getCarForm().getId();
         if (carId != null) {
-            pictures = this.sqlPictureDAO.getByCarId(carId);
+            pictures = this.inMemoryPictureDAO.getByCarId(carId);
         }
         model.addAttribute(PICTURES, pictures);
         this.fillModel(model);

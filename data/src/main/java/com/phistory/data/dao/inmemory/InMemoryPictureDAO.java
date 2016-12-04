@@ -50,10 +50,8 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
 
         if (Objects.nonNull(dbPicture)) {
             if (Objects.nonNull(pictureToReload)) {
-                this.pictures.stream()
-                             .filter(picture -> picture.getId().equals(dbPicture.getId()))
-                             .findFirst()
-                             .ifPresent(picture -> picture = dbPicture);
+                int indexToReload = this.pictures.indexOf(pictureToReload);
+                this.pictures.set(indexToReload, dbPicture);
 
             } else {
                 //we're loading a picture that's not yet in memory because it has been just stored
@@ -82,7 +80,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
      * @param carId
      * @return The resulting {@link List<Long>}
      */
-    public List<Long> getPictureIdsByCarId(Long carId) {
+    public List<Long> getIdsByCarId(Long carId) {
         return this.pictures.stream()
                             .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
                             .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
@@ -91,11 +89,24 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
     }
 
     /**
+     * Get a {@link List} of {@link Picture}s whose {@link Picture#car#id} matches the supplied {@code carId}
+     *
+     * @param carId
+     * @return The resulting {@link List<Picture>}
+     */
+    public List<Picture> getByCarId(Long carId) {
+        return this.pictures.stream()
+                            .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
+                            .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
+                            .collect(Collectors.toList());
+    }
+
+    /**
      * Get all the {@link Picture#id}s
      *
      * @return the {@link List} of {@link Picture} ids
      */
-    public List<Long> getAllPictureIds() {
+    public List<Long> getAllIds() {
         return this.pictures.stream()
                             .map(Picture::getId)
                             .collect(Collectors.toList());

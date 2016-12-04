@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import com.phistory.data.model.tyre.CarTyreTrain;
+import com.phistory.data.model.tyre.TyreTrain;
 
 /**
  * Tyre form
@@ -20,5 +20,5 @@ public class TyreForm
     private Long width;
     private Long profile;
     private Long rimDiameter;
-    private CarTyreTrain train;
+    private TyreTrain train;
 }

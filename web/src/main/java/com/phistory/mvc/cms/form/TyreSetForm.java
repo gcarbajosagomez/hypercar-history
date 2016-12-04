@@ -1,5 +1,7 @@
 package com.phistory.mvc.cms.form;
 
+import com.phistory.data.model.tyre.TyreManufacturer;
+import com.phistory.data.model.tyre.TyreType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -16,6 +18,9 @@ import com.phistory.data.model.tyre.Tyre;
 public class TyreSetForm
 {
     private Long id;
+    private TyreManufacturer manufacturer;
+    private TyreType type;
+    private String model;
     private Tyre frontTyre;
     private Tyre backTyre;
     private Car car;

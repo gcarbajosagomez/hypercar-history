@@ -552,7 +552,40 @@
 			   </div>
 			   <div class="panel-body">
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
-                       <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id", "class=form-control"/>
+                       <dt>
+                            ${language.getTextSource('tyreSet.manufacturer')}
+                       </dt>
+                       <dd>
+                           <@spring.bind "CEFC.carForm.tyreSetForm.manufacturer"/>
+
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                <#list tyreManufacturers as manufacturer>
+                                    <option value="${manufacturer}" <#if spring.status.value?? && manufacturer == spring.status.value?default("")> selected</#if>>${manufacturer.getName()}</option>
+                                </#list>
+                           </select>
+                       </dd>
+                       <dt>
+                            ${language.getTextSource('tyreSet.type')}
+                       </dt>
+                       <dd>
+                           <@spring.bind "CEFC.carForm.tyreSetForm.type"/>
+
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                <#list tyreTypes as tyreType>
+                                    <option value="${tyreType}" <#if spring.status.value?? && tyreType == spring.status.value?default("")> selected</#if>>${language.getTextSource('tyreSet.type.${tyreType.getName()}')}</option>
+                                </#list>
+                           </select>
+                       </dd>
+                       <dt>
+                            ${language.getTextSource('tyreSet.model')}
+                       </dt>
+                       <dd>
+                            <@spring.formInput "CEFC.carForm.tyreSetForm.model", "class=form-control", "text"/>
+                            <@spring.showErrors '<br>'/>
+                       </dd>
+                   </dl>
+                   <dl class="dl-horizontal dl-horizontal-edit text-left">
+                       <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id"/>
                        
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/> 
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.backTyre "CEFC.carForm.tyreSetForm.backTyre" "BACK"/>

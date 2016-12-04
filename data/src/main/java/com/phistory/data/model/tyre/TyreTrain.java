@@ -4,7 +4,7 @@ package com.phistory.data.model.tyre;
  *
  * @author Gonzalo
  */
-public enum CarTyreTrain
+public enum TyreTrain
 {
     FRONT,
     BACK

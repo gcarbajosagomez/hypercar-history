@@ -137,10 +137,10 @@
                                 <a class="toggle-button navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
                                     <i id="navbar-toggle-arrow" class="fa fa-arrow-down" aria-hidden="true"></i>
                                 </a>
-        	  				 </div>
+        	  				</div>
 
-          					 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
-          					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well">
+          					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
+          					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
     	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <div class="divider navbar-divider"></div>

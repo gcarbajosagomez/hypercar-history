@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +33,7 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
 
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
     private com.phistory.data.dao.sql.impl.SQLCarDAO sqlCarDAO;
-    private List<Car> cars;
+    private List<Car> cars = new ArrayList<>();
 
     @Autowired
     public InMemoryCarDAO(InMemoryPictureDAO inMemoryInMemoryPictureDAO, SQLCarDAO sqlCarDAO) {
@@ -55,11 +56,8 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
 
         if (Objects.nonNull(dbCar)) {
             if (Objects.nonNull(carToReload)) {
-                this.cars.stream()
-                         .filter(car -> car.getId().equals(dbCar.getId()))
-                         .findFirst()
-                         .ifPresent(car -> car = dbCar);
-
+                int indexToReload = this.cars.indexOf(carToReload);
+                this.cars.set(indexToReload, dbCar);
             } else {
                 //we're loading a car that's not yet in memory because it has been just stored
                 this.cars.add(dbCar);

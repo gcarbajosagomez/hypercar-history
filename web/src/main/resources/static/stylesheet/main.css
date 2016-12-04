@@ -19,6 +19,11 @@ a:hover {
     border-radius: 3px;
 }
 
+.bordered-div {
+    border: 1px solid #337ab7 !important;
+    background: #ffffff none !important;
+}
+
 .pagani-history-navbar .navbar-nav {
     width: 100%;
 }
@@ -236,11 +241,6 @@ a:hover {
     padding-bottom: 0;
 }
 
-.navbar-collapse {
-    border: 1px solid #337ab7 !important;
-    background: #ffffff none !important;
-}
-
 .navbar-divider {
     height: 1px;
     margin: 0px 0px !important;
@@ -454,12 +454,8 @@ a:hover {
     color: #337ab7;
 }
 
-.main-panel {
-    background-color: #f5f5f5;
-}
-
-.panel-default > .panel-heading {
-    border-color: rgba(0, 0, 0, 0.611765);
+.car-details-panel-body {
+    padding: 0px !important;
 }
 
 .car-details-model-name {

@@ -91,7 +91,7 @@ public class CarController extends BaseController
 			this.carModelFiller.fillModel(model);
 
 			model.addAttribute(CAR,                 super.getInMemoryCarDAO().getById(carId));
-			model.addAttribute(PICTURE_IDS,         this.inMemoryInMemoryPictureDAO.getPictureIdsByCarId(carId));
+			model.addAttribute(PICTURE_IDS,         this.inMemoryInMemoryPictureDAO.getIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
             List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getByCarId(carId);

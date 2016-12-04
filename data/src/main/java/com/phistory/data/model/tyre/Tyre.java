@@ -23,15 +23,19 @@ public class Tyre implements GenericEntity
     @GeneratedValue(strategy = AUTO)
     @Column(name = "tyre_id")
     private Long id;
-    @Column(name = "tyre_width", nullable = true)
+
+    @Column(name = "tyre_width")
     private Long width;
-    @Column(name = "tyre_profile", nullable = true)
+
+    @Column(name = "tyre_profile")
     private Long profile;
-    @Column(name = "rim_diameter", nullable = true)
+
+    @Column(name = "rim_diameter")
     private Long rimDiameter;
+
     @Enumerated(ORDINAL)
     @Column(name = "tyre_train", nullable = false)
-    private CarTyreTrain train;
+    private TyreTrain train;
 
     @Override
     public Long getId() {
