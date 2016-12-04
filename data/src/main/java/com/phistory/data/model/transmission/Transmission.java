@@ -41,7 +41,7 @@ public class Transmission implements GenericEntity
     }
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		return null;
 	}
 }

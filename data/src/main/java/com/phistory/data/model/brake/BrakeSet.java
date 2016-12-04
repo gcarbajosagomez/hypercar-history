@@ -48,7 +48,7 @@ public class BrakeSet implements GenericEntity
     }
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		// TODO Auto-generated method stub
 		return null;
 	}

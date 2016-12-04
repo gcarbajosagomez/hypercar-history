@@ -114,12 +114,12 @@ public abstract class SQLDAO<TYPE extends GenericEntity, IDENTIFIER>
     	   
     	   if (entity.getId() == null)
     	   {
-    		   log.info("Saving new entity: " + entity.getFriendlyName());
+    		   log.info("Saving new entity: " + entity.toString());
     		   session.save(entity);
     	   } 
     	   else
     	   {
-    		   log.info("Editing entity: " + entity.getFriendlyName());
+    		   log.info("Editing entity: " + entity.toString());
     		   session.update(entity);
     	   }
        }        

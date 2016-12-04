@@ -61,7 +61,7 @@ public class CarInternetContent implements GenericEntity
 	}
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		StringBuilder stringBuilder = new StringBuilder(this.link).append(" ")
 																  .append(this.type)
 																  .append(" (")

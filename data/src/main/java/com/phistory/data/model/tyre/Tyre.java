@@ -43,7 +43,7 @@ public class Tyre implements GenericEntity
     }
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		return null;
 	}
 }

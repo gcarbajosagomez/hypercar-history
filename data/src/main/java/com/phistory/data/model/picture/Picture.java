@@ -60,9 +60,9 @@ public class Picture implements GenericEntity {
     }
 
     @Override
-    public String getFriendlyName() {
+    public String toString() {
         StringBuilder builder = new StringBuilder("Picture - ")
-                .append("eligible for picture")
+                .append("eligible for picture ")
                 .append(this.eligibleForPreview)
                 .append(" ");
 

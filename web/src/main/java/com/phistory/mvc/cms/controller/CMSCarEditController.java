@@ -92,7 +92,7 @@ public class CMSCarEditController extends CMSBaseController {
                 Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{car.getFriendlyName()},
+                                                         new Object[]{car.toString()},
                                                          LocaleContextHolder.getLocale());
 
                 if (!carInternetContentEditCommandResult.hasErrors()) {
@@ -136,7 +136,7 @@ public class CMSCarEditController extends CMSBaseController {
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{carFormEditCommand.getCarForm().getManufacturer().getFriendlyName() + " " +
+                                                         new Object[]{carFormEditCommand.getCarForm().getManufacturer().toString() + " " +
                                                                       carFormEditCommand.getCarForm().getModel()},
                                                          LocaleContextHolder.getLocale());
 

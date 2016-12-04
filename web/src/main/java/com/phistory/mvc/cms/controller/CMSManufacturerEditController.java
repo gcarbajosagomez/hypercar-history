@@ -66,7 +66,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{manufacturer.getFriendlyName()},
+                                                         new Object[]{manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {

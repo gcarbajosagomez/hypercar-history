@@ -153,7 +153,7 @@ public class Car implements GenericEntity
     }
 
 	@Override
-	public String getFriendlyName()
+	public String toString()
 	{
 		if (this.getManufacturer() != null)
 		{

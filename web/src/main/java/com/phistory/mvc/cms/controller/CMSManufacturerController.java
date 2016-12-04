@@ -93,7 +93,7 @@ public class CMSManufacturerController extends CMSBaseController {
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
-                                                         new Object[]{manufacturer.getFriendlyName()},
+                                                         new Object[]{manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {

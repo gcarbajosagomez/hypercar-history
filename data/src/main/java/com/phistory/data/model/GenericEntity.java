@@ -10,5 +10,5 @@ public interface GenericEntity
 
     Long getId();
     
-    String getFriendlyName();
+    String toString();
 }

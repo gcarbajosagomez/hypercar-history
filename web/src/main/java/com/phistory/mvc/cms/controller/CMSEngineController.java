@@ -69,7 +69,7 @@ public class CMSEngineController extends CMSBaseController {
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{engine.getFriendlyName()},
+                                                         new Object[]{engine.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
                 model.addAttribute(ENGINE, engine);

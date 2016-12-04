@@ -71,7 +71,7 @@ public class IndexController extends BaseController {
         randomPictureIds.forEach(pictureId ->
         {
             Car car = super.getInMemoryCarDAO().getCarByPictureId(pictureId);
-            StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().getFriendlyName())
+            StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().toString())
                     .append(" ")
                     .append(car.getModel());
 

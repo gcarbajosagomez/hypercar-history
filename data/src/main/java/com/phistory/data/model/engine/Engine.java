@@ -67,7 +67,7 @@ public class Engine implements GenericEntity
     }
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		return getCode();
 	}  
 }

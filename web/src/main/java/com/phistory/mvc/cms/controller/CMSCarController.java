@@ -117,7 +117,7 @@ public class CMSCarController extends CMSBaseController
     		{        	
     			Car car = this.cmsCarControllerUtil.saveOrEditCar(carFormEditCommand);
     			String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
-				  											  		  new Object[]{car.getFriendlyName()},
+				  											  		  new Object[]{car.toString()},
 				  											  		  LocaleContextHolder.getLocale());
     			
     			if (!carInternetContentEditCommandResult.hasErrors())

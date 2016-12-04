@@ -34,7 +34,7 @@ public class Manufacturer implements GenericEntity
     private String story;
 
 	@Override
-	public String getFriendlyName() {
+	public String toString() {
 		return this.name;
 	}
 }

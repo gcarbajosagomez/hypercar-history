@@ -30,6 +30,8 @@ import static java.util.Comparator.*;
 public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
     public static final String BEAN_NAME = "InMemoryPictureDAO";
 
+    private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
+
     @Autowired
     private com.phistory.data.dao.sql.impl.SQLPictureDAO sqlPictureDAO;
     @Getter
@@ -38,8 +40,23 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
     @Scheduled(fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
-        log.info("Loading Picture entities in memory");
-        this.pictures.addAll(this.sqlPictureDAO.getAll());
+        log.info("Loading Picture entities in-memory");
+        Long pictureCount = this.sqlPictureDAO.count();
+
+        Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
+        chunkSizeDouble = Math.floor(chunkSizeDouble);
+        int chunkSize = new Double(chunkSizeDouble).intValue();
+
+        this.pictures = this.sqlPictureDAO.getPaginated(0, chunkSize);
+
+        for (int i = 2; i < NUMBER_OF_CHUNKS_TO_LOAD_PICTURES; i++) {
+            this.getPictures().addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+                    chunkSizeDouble.intValue()));
+            chunkSize = chunkSize + chunkSizeDouble.intValue();
+        }
+
+        this.getPictures().addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+                pictureCount.intValue()));
     }
 
     @Override
