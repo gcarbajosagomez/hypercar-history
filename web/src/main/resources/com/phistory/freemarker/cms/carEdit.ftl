@@ -565,6 +565,13 @@
                            </select>
                        </dd>
                        <dt>
+                            ${language.getTextSource('tyreSet.model')}
+                       </dt>
+                       <dd>
+                            <@spring.formInput "CEFC.carForm.tyreSetForm.model", "class=form-control", "text"/>
+                            <@spring.showErrors '<br>'/>
+                       </dd>
+                       <dt>
                             ${language.getTextSource('tyreSet.type')}
                        </dt>
                        <dd>
@@ -575,13 +582,6 @@
                                     <option value="${tyreType}" <#if spring.status.value?? && tyreType == spring.status.value?default("")> selected</#if>>${language.getTextSource('tyreSet.type.${tyreType.getName()}')}</option>
                                 </#list>
                            </select>
-                       </dd>
-                       <dt>
-                            ${language.getTextSource('tyreSet.model')}
-                       </dt>
-                       <dd>
-                            <@spring.formInput "CEFC.carForm.tyreSetForm.model", "class=form-control", "text"/>
-                            <@spring.showErrors '<br>'/>
                        </dd>
                    </dl>
                    <dl class="dl-horizontal dl-horizontal-edit text-left">

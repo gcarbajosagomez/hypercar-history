@@ -525,14 +525,6 @@
                                     </p>
                                 </dd>
                                 <dt>
-									${language.getTextSource('tyreSet.type')} :
-                                </dt>
-                                <dd>
-                                    <p class="text-muted">
-										${language.getTextSource('tyreSet.type.${car.tyreSet.type.getName()}')}
-                                    </p>
-                                </dd>
-                                <dt>
 									${language.getTextSource('tyreSet.model')} :
                                 </dt>
                                 <dd>
@@ -540,9 +532,17 @@
 										<#if (car.tyreSet.model?length > 0)>
 											${car.tyreSet.model}
 										<#else>
-											${language.getTextSource('unknown')}
+										${language.getTextSource('unknown')}
 										</#if>
 
+                                    </p>
+                                </dd>
+                                <dt>
+									${language.getTextSource('tyreSet.type')} :
+                                </dt>
+                                <dd>
+                                    <p class="text-muted">
+										${language.getTextSource('tyreSet.type.${car.tyreSet.type.getName()}')}
                                     </p>
                                 </dd>
 								<dt>

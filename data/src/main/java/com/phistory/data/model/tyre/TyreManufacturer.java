@@ -6,7 +6,7 @@ package com.phistory.data.model.tyre;
  * Created by gonzalo on 4/12/16.
  */
 public enum TyreManufacturer {
-    
+
     PIRELLI("Pirelli"),
     MICHELIN("Michelin"),
     BRIDGESTONE("Bridgestone"),
@@ -14,7 +14,8 @@ public enum TyreManufacturer {
     KUMHO("Kumho"),
     TOYO("Toyo"),
     YOKOHAMA("Yokohama"),
-    MAXXIS("Maxxis");
+    MAXXIS("Maxxis"),
+    UNKNOWN("Unknown");
 
     private String name;
 
