@@ -222,10 +222,10 @@
  	         					 </div>
 							</div>
     	        		</nav>
-						<#if !requestIsDesktop && !doNotTrack>
+						<#if !doNotTrack>
 
 							<#-- Smaato SDK integration (only for mobile) -->
-                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
+                            <div id="smt-130205382" class=""></div>
                             <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
                             <script>
                                 function callBackForSmaato(status){
@@ -238,34 +238,12 @@
                                 SomaJS.loadAd({apiver: 502,
 											   divid : "smt-130205382",
 											   pub: 1100029117,
-                                               adspace: 130205734,
+                                               adspace: 130205382,
 											   format: "all",
 											   width: 320,
-											   height: 50,
-											   kws:"cars"}
+											   height: 50}
                                     ,callBackForSmaato);
                             </script>
-
-							<#-- Mopub SDK integration (only for mobile) -->
-							<#--<div id="mopub-ad-unit-container" class="col-lg-12 center-block mobile-banner-div"></div>
-							<script type="text/javascript">
-								window.mopub = [{
-									ad_unit: "99b4e677f06246fa927e9f7848911b4c",
-									ad_container_id: "mopub-ad-unit-container",
-									ad_width: 320,
-									ad_height: 50,
-									keywords: "", // Optionally pass keywords as a comma separated list
-								}]; // To load additional ad units, add another object into the array.
-
-								(function() {
-									var mopubjs = document.createElement("script");
-									mopubjs.async = true;
-									mopubjs.type = "text/javascript";
-									mopubjs.src = "//d1zg4cyg8u4pko.cloudfront.net/mweb/mobileweb.min.js";
-									var node = document.getElementsByTagName("script")[0];
-									node.parentNode.insertBefore(mopubjs, node);
-								})();
-							</script>-->
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
