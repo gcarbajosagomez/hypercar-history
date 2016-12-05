@@ -222,7 +222,7 @@
  	         					 </div>
 							</div>
     	        		</nav>
-						<#if !doNotTrack>
+						<#if !requestIsDesktop && !doNotTrack>
 
 							<#-- Smaato SDK integration (only for mobile) -->
                             <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
@@ -241,11 +241,11 @@
 											   adDivId : "smt-130205382",
 											   divid : "smt-130205382",
 											   format: "all",
-											   dimension: "xxlarge",
+									           coppa: 0,
 											   width: 320,
 											   height: 50,
-											   sync: false,
-											   kws: "cars"}
+											   kws: "cars",
+                                               iabcategory: "IAB2"}
                                 	,callBackForSmaato);
                             </script>
 						</#if>
