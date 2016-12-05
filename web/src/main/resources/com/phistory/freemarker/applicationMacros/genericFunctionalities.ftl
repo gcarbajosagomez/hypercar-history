@@ -225,7 +225,7 @@
 						<#if !requestIsDesktop && !doNotTrack>
 
 							<#-- Smaato SDK integration (only for mobile) -->
-                            <div id="smt-130205382" style="padding: 0px" class="col-lg-12 center-block mobile-banner-div"></div>
+                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
                             <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
                             <script>
                                 function callBackForSmaato(status){
@@ -235,12 +235,15 @@
                                         console.log("callBack is being called with status : " + status);
                                     }
                                 };
-                                SomaJS.loadAd({
-                                    adDivId : "smt-130205382",
-                                    publisherId: 1100029117,
-                                    adSpaceId: 130205382,
-                                    format: "all",formatstrict: true,dimension: "xxlarge",width: 320,height: 50,
-                                    sync: false,},callBackForSmaato);
+                                SomaJS.loadAd({apiver: 502,
+											   divid : "smt-130205382",
+											   pub: 1100029117,
+                                               adspace: 130205734,
+											   format: "all",
+											   width: 320,
+											   height: 50,
+											   kws:"cars"}
+                                    ,callBackForSmaato);
                             </script>
 
 							<#-- Mopub SDK integration (only for mobile) -->
