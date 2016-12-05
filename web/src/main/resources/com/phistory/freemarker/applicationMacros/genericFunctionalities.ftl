@@ -223,27 +223,46 @@
 							</div>
     	        		</nav>
 						<#if !requestIsDesktop && !doNotTrack>
-						   	<div id="mopub-ad-unit-container" class="col-lg-12 center-block mobile-banner-div"></div>
+
+							<#-- Smaato SDK integration (only for mobile) -->
+                            <div id="smt-130205382" style="padding: 0px" class="col-lg-12 center-block mobile-banner-div"></div>
+                            <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
+                            <script>
+                                function callBackForSmaato(status){
+                                    if(status == "SUCCESS"){
+                                        console.log("callBack is being called with status : " + status);
+                                    } else if (status == "ERROR"){
+                                        console.log("callBack is being called with status : " + status);
+                                    }
+                                };
+                                SomaJS.loadAd({
+                                    adDivId : "smt-130205382",
+                                    publisherId: 1100029117,
+                                    adSpaceId: 130205382,
+                                    format: "all",formatstrict: true,dimension: "xxlarge",width: 320,height: 50,
+                                    sync: false,},callBackForSmaato);
+                            </script>
 
 							<#-- Mopub SDK integration (only for mobile) -->
-                            <script type="text/javascript">
-                                window.mopub = [{
-                                    ad_unit: "99b4e677f06246fa927e9f7848911b4c",
-                                    ad_container_id: "mopub-ad-unit-container",
-                                    ad_width: 320,
-                                    ad_height: 50,
-                                    keywords: "", // Optionally pass keywords as a comma separated list
-                                }]; // To load additional ad units, add another object into the array.
+							<#--<div id="mopub-ad-unit-container" class="col-lg-12 center-block mobile-banner-div"></div>
+							<script type="text/javascript">
+								window.mopub = [{
+									ad_unit: "99b4e677f06246fa927e9f7848911b4c",
+									ad_container_id: "mopub-ad-unit-container",
+									ad_width: 320,
+									ad_height: 50,
+									keywords: "", // Optionally pass keywords as a comma separated list
+								}]; // To load additional ad units, add another object into the array.
 
-                                (function() {
-                                    var mopubjs = document.createElement("script");
-                                    mopubjs.async = true;
-                                    mopubjs.type = "text/javascript";
-                                    mopubjs.src = "//d1zg4cyg8u4pko.cloudfront.net/mweb/mobileweb.min.js";
-                                    var node = document.getElementsByTagName("script")[0];
-                                    node.parentNode.insertBefore(mopubjs, node);
-                                })();
-                            </script>
+								(function() {
+									var mopubjs = document.createElement("script");
+									mopubjs.async = true;
+									mopubjs.type = "text/javascript";
+									mopubjs.src = "//d1zg4cyg8u4pko.cloudfront.net/mweb/mobileweb.min.js";
+									var node = document.getElementsByTagName("script")[0];
+									node.parentNode.insertBefore(mopubjs, node);
+								})();
+							</script>-->
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
