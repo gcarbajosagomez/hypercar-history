@@ -225,7 +225,7 @@
 						<#if !doNotTrack>
 
 							<#-- Smaato SDK integration (only for mobile) -->
-                            <div id="smt-130205382" class=""></div>
+                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
                             <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
                             <script>
                                 function callBackForSmaato(status){
@@ -236,13 +236,17 @@
                                     }
                                 };
                                 SomaJS.loadAd({apiver: 502,
-											   divid : "smt-130205382",
+											   adspace: 130205382,
 											   pub: 1100029117,
-                                               adspace: 130205382,
+											   adDivId : "smt-130205382",
+											   divid : "smt-130205382",
 											   format: "all",
+											   dimension: "xxlarge",
 											   width: 320,
-											   height: 50}
-                                    ,callBackForSmaato);
+											   height: 50,
+											   sync: false,
+											   kws: "cars"}
+                                	,callBackForSmaato);
                             </script>
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
