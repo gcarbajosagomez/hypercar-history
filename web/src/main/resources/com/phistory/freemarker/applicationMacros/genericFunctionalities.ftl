@@ -237,7 +237,9 @@
                                 };
                                 SomaJS.loadAd({apiver: 502,
 											   adspace: 130205382,
+											   adSpaceId: 130205382,
 											   pub: 1100029117,
+											   publisherId: 1100029117,
 											   adDivId : "smt-130205382",
 											   divid : "smt-130205382",
 											   format: "all",
