@@ -6,6 +6,10 @@ html, body {
     background-color: #777;
 }
 
+a {
+    cursor: pointer;
+}
+
 a:hover {
     text-decoration: none !important;
 }
