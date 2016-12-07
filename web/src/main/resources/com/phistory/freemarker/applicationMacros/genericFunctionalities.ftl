@@ -224,7 +224,7 @@
     	        		</nav>
 						<#if !requestIsDesktop && !doNotTrack>
 							<#-- Smaato SDK integration (only for mobile) -->
-                            <#--<div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
+                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
                             <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
                             <script>
                                 function callBackForSmaato(status){
@@ -248,7 +248,7 @@
 											   kws: "cars",
                                                iabcategory: "IAB2"}
                                 	,callBackForSmaato);
-                            </script>-->
+                            </script>
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
