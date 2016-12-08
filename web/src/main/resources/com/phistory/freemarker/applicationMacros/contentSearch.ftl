@@ -1,8 +1,10 @@
 <#import "pagination.ftl" as pagination/>
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
+<#import "googleAnalytics.ftl" as googleAnalytics/>
+<#import "advertising.ftl" as advertising/>
 
-<#macro addHandleContentSearch>
+<#macro addHandleContentSearchFunctionScript>
 	<script type='application/javascript'>
 		function handleContentSearch(contentToSearch)
 		{
@@ -51,7 +53,14 @@
 					setupContentSearchEventListeners();	
 				}
 				
-				ajaxCallBeingProcessed = false;        	
+				ajaxCallBeingProcessed = false;
+				<#if !requestIsCMS && !doNotTrack>
+					<@googleAnalytics.addAnalyticsScript/>
+
+					<#if !requestIsDesktop>
+						<@advertising.performSmaatoJSAdRequest/>
+					</#if>
+				</#if>
 			});   
 		}
 	</script>

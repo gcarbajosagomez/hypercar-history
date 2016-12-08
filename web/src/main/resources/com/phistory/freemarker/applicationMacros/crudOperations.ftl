@@ -116,3 +116,17 @@
     }
 </script>
 </#macro>
+
+<#macro addOperationResultMessage exceptionMessage, successMessage>
+    <#if exceptionMessage?has_content>
+    <div class="col-xs-12 alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">${language.getTextSource('error')}:</span>${exceptionMessage}
+    </div>
+    <#elseif successMessage?has_content>
+    <div class="col-xs-12 alert alert-success" role="info">
+        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+        <span class="sr-only">${language.getTextSource('info')}:</span>${successMessage}
+    </div>
+    </#if>
+</#macro>

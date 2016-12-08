@@ -1,6 +1,8 @@
 <#import "/spring.ftl" as spring/>
 <#import "pagination.ftl" as pagination/>
 <#import "genericFunctionalities.ftl" as generic/>
+<#import "googleAnalytics.ftl" as googleAnalytics/>
+<#import "advertising.ftl" as advertising/>
 
 <#macro addSetPageLanguage chunkedModelsList=[]>
 
@@ -60,7 +62,15 @@
 					</#if>
 		               
 		            ajaxCallBeingProcessed = false;
-		            setupContentSearchEventListeners();	
+		            setupContentSearchEventListeners();
+
+				   	<#if !requestIsCMS && !doNotTrack>
+					   <@googleAnalytics.addAnalyticsScript/>
+
+					   <#if !requestIsDesktop>
+						   <@advertising.performSmaatoJSAdRequest/>
+					   </#if>
+				   	</#if>
 					$('#main-wrap-div').unblock();           	
 			   });
 		   }

@@ -1,5 +1,6 @@
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
+<#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 
 <@generic.startPage language.getTextSource('title.login')/>
 
@@ -8,7 +9,7 @@
 		<div id="main-login-div" class="col-md-offset-2 col-md-offset-0 col-lg-8 col-sm-10 col-xs-12">
 			<div class="panel panel-default">
 				<div class="panel-body form-horizontal">
-					<@generic.addOperationResultMessage error!"", logout!""/>
+					<@crudOperations.addOperationResultMessage error!"", logout!""/>
 					<#if loggedIn?? && loggedIn == false> 
   						<div class="form-group">
     						<label for="username-input" class="col-sm-2 control-label">${language.getTextSource('cms.login.user')}</label>

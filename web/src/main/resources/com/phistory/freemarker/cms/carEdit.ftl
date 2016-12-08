@@ -16,7 +16,7 @@
 
 <div id="main-container" class="container car-edit-container">
 	<div class="row">
-	   <@generic.addOperationResultMessage exceptionMessage!"", successMessage!""/>
+	   <@crudOperations.addOperationResultMessage exceptionMessage!"", successMessage!""/>
 	   <div class="col-lg-6 col-sm-6 col-xs-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">

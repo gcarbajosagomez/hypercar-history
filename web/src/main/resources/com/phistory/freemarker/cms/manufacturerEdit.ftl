@@ -13,7 +13,7 @@
 
 <div id="main-container" class="container">
 	<div class="row">		
-		<@generic.addOperationResultMessage exceptionMessage!"", successMessage!""/>   
+		<@crudOperations.addOperationResultMessage exceptionMessage!"", successMessage!""/>
 	  	<div class="col-lg-9 col-sm-12 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">

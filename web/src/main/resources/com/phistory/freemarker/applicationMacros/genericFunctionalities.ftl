@@ -3,6 +3,8 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
 <#import "picture.ftl" as picture/>
+<#import "googleAnalytics.ftl" as googleAnalytics/>
+<#import "advertising.ftl" as advertising/>
 
 <#macro startPage title=''>
     <@identifyRequestURL/>
@@ -121,7 +123,7 @@
     					});
 
                         <#if !requestIsCMS && !doNotTrack>
-                            <@addGoogleAnalyticsScript/>
+                            <@googleAnalytics.addAnalyticsScript/>
                         </#if>
 					</script>
             </head>
@@ -222,22 +224,10 @@
  	         					 </div>
 							</div>
     	        		</nav>
-						<#if !requestIsDesktop && !doNotTrack>
-							<#-- Smaato SDK integration (only for mobile) -->
+						<#if !requestIsDesktop && !doNotTrack && !requestIsCMS>
+							<#-- Smaato header ad space (only for mobile) -->
                             <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
-                            <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
-                            <script>
-                                SomaJS.loadAd({publisherId: 1100029117,
-											   adSpaceId: 130205382,
-                                    		   adDivId : "smt-130205382",
-									           dimension: "xxlarge",
-                                               dimensionstrict: false,
-                                    		   keywords: "cars",
-                                    		   autoReload: 60,
-									           coppa: 0,
-                                               iabcategory: "IAB2",
-                                    		   adspacename: "PaganiHistory_${deviceMake?lower_case}_320x50"});
-                            </script>
+							<@advertising.addHTMLPerformSmaatoAdRequestScript/>
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
@@ -287,7 +277,7 @@
     			</div>
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
-				<@contentSearch.addHandleContentSearch/>
+				<@contentSearch.addHandleContentSearchFunctionScript/>
 			</body>
         </html>
 </#macro>
@@ -310,33 +300,6 @@
     </#if>
     <#return productionLifeTime/>
 </#function>
-
-<#macro addOperationResultMessage exceptionMessage, successMessage>
-	<#if exceptionMessage?has_content>
-		<div class="col-xs-12 alert alert-danger" role="alert">
-			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-			<span class="sr-only">${language.getTextSource('error')}:</span>${exceptionMessage}
-		</div>
-	<#elseif successMessage?has_content>
-		<div class="col-xs-12 alert alert-success" role="info">
-			<span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-			<span class="sr-only">${language.getTextSource('info')}:</span>${successMessage}
-		</div>
-	</#if>    
-</#macro>
-
-<#macro addGoogleAnalyticsScript>
-    (function(i,s,o,g,r,a,m)
-    {
-        i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })
-
-    (window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-59713760-1', 'auto');
-    ga('send', 'pageview');
-</#macro>
 
 <#macro addLoadingSpinnerToComponentScript componentId>
     $('#${componentId}').block({
