@@ -227,27 +227,16 @@
                             <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
                             <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
                             <script>
-                                function callBackForSmaato(status){
-                                    if(status == "SUCCESS"){
-                                        console.log("callBack is being called with status : " + status);
-                                    } else if (status == "ERROR"){
-                                        console.log("callBack is being called with status : " + status);
-                                    }
-                                };
-                                SomaJS.loadAd({apiver: 502,
-											   adspace: 130205382,
+                                SomaJS.loadAd({publisherId: 1100029117,
 											   adSpaceId: 130205382,
-											   pub: 1100029117,
-											   publisherId: 1100029117,
-											   adDivId : "smt-130205382",
-											   divid : "smt-130205382",
-											   format: "all",
+                                    		   adDivId : "smt-130205382",
+									           dimension: "xxlarge",
+                                               dimensionstrict: false,
+                                    		   keywords: "cars",
+                                    		   autoReload: 60,
 									           coppa: 0,
-											   width: 320,
-											   height: 50,
-											   kws: "cars",
-                                               iabcategory: "IAB2"}
-                                	,callBackForSmaato);
+                                               iabcategory: "IAB2",
+                                    		   adspacename: "PaganiHistory_${deviceMake?lower_case}_320x50"});
                             </script>
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">

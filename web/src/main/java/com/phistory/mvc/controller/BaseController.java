@@ -69,8 +69,8 @@ public class BaseController extends BaseControllerData
 		log.info("Handling " + request.getMethod() + " request to URI " + requestURI);
 		
 		model.addAttribute("requestURI",  		requestURI);
-		model.addAttribute("requestIsCarsList", requestURI.contains(CARS_URL));
 		model.addAttribute("requestIsDesktop",  device.isNormal());
+		model.addAttribute("deviceMake",  		device.getDevicePlatform().name());
 		model.addAttribute("doNotTrack",        dnt);
 
 		this.baseModelFiller.fillModel(model);
