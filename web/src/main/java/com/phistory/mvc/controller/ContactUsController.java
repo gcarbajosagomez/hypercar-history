@@ -45,6 +45,7 @@ import com.phistory.mvc.cms.form.ContactUsMessageForm;
 public class ContactUsController extends BaseController
 {
 	private static final String SENDER_EMAIL_ADDRESS    = "paganihistory.contact.us.send@gmail.com";
+	private static final String RECIPIENT_EMAIL_ADDRESS	= "paganihistory.contact.us@gmail.com";
 	private static final String SENDER_EMAIL_PASSWORD	= "paganiHistorySender";
 	private static final String DEFAULT_SMTP_HOST 		= "smtp.gmail.com";
 	private static final String DEFAULT_SMTP_PORT 		= "587";
@@ -79,7 +80,7 @@ public class ContactUsController extends BaseController
 				String senderName = contactUsMessageForm.getSenderName();
 				if (!StringUtils.isEmpty(senderName))
 				{
-					replyTo.append(senderName.replaceAll("[ ]+", ".")).append("");
+					replyTo.append(senderName.replaceAll("[ ]+", ".")).append("-");
 				}
 				
 				String senderEmail = contactUsMessageForm.getSenderEmail();
@@ -90,7 +91,7 @@ public class ContactUsController extends BaseController
 				
 				message.setReplyTo(new Address[]{new InternetAddress(replyTo.toString())});
 				message.setText(contactUsMessageForm.getMessage());				
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(SENDER_EMAIL_ADDRESS));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(RECIPIENT_EMAIL_ADDRESS));
 				message.setSubject(contactUsMessageForm.getSubject());
 				Transport.send(message);
 	

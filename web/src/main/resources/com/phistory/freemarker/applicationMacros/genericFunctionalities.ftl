@@ -367,9 +367,3 @@
         });
     </script>
 </#macro>
-
-<#function normalizeCarDescriptionString string>
-    <#assign normalizedString>${string?replace("\\r\\n", "<br/>")}</#assign>
-    <#assign normalizedString>${normalizedString?replace("(.)(.{0,})", "<d class=\"big-text\">$1</d><d>$2</d>", "r")}</#assign>
-    <#return normalizedString/>
-</#function>
