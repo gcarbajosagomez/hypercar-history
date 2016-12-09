@@ -29,8 +29,6 @@ import java.util.stream.Collectors;
 public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
-    private static final int LOAD_ENTITIES_INITIAL_DELAY = 15000;
-
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
     private com.phistory.data.dao.sql.impl.SQLCarDAO sqlCarDAO;
     private List<Car> cars = new ArrayList<>();
@@ -41,7 +39,7 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
         this.sqlCarDAO = sqlCarDAO;
     }
 
-    @Scheduled(initialDelay = LOAD_ENTITIES_INITIAL_DELAY, fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.cars.inmemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");

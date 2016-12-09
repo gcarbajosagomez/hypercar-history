@@ -42,7 +42,7 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
         this.sqlPictureDAO = sqlPictureDAO;
     }
 
-    @Scheduled(initialDelay = 0, fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.pictures.inmemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");

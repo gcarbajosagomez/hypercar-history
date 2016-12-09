@@ -29,12 +29,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 public class IndexController extends BaseController {
     private static final int MAX_NUMBER_PICTURES_TO_DISPLAY = 9;
 
-    @Inject
     private ModelFiller pictureModelFiller;
-    @Inject
     private ModelFiller carModelFiller;
-    @Inject
     private Random previewPictureRandomGenerator;
+
+    @Inject
+    public IndexController(ModelFiller pictureModelFiller,
+                           ModelFiller carModelFiller,
+                           Random previewPictureRandomGenerator) {
+        this.pictureModelFiller = pictureModelFiller;
+        this.carModelFiller = carModelFiller;
+        this.previewPictureRandomGenerator = previewPictureRandomGenerator;
+    }
 
     @RequestMapping(method = GET)
     public ModelAndView handleDefault(Model model) {

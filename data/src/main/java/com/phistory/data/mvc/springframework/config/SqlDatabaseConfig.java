@@ -43,16 +43,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @ComponentScan(basePackages = {"com.phistory.data.dao"})
-@EnableTransactionManagement()
+@EnableTransactionManagement
 @EnableCaching
 @Slf4j
 public class SqlDatabaseConfig
 {
-    private static ObjectPool<PoolableConnection> objectPool = null;
-    private static PoolingDataSource<?> poolingDataSource = null;
-    private static LocalSessionFactoryBean sessionFactoryBean = null;
-    private static DriverManagerDataSource dataSource = null;  
-    private static PoolableConnectionFactory poolableConnectionFactory = null;
+    private static ObjectPool<PoolableConnection> objectPool;
+    private static LocalSessionFactoryBean sessionFactoryBean;
+    private static DriverManagerDataSource dataSource;
+    private static PoolableConnectionFactory poolableConnectionFactory;
     @Resource
 	private Environment environment; 
     
@@ -84,18 +83,17 @@ public class SqlDatabaseConfig
         
         return poolableConnectionFactory;
     }
-    
+
     // Now we'll need a ObjectPool that serves as the actual pool of connections.
-    //@Bean
     public ObjectPool<PoolableConnection> objectPool()
     {
     	log.info("Creating bean objectPool");
-    	
+
 		if (objectPool == null)
 		{
-			objectPool = new GenericObjectPool<>(poolableConnectionFactory());			
-		}       
-      
+			objectPool = new GenericObjectPool<>(poolableConnectionFactory());
+		}
+
        return objectPool;
     }
     
@@ -116,22 +114,7 @@ public class SqlDatabaseConfig
         return dataSource;
     }
     
-    // Finally, we create the PoolingDriver itself, passing in the object pool we created.
-    //@Bean()
-    @DependsOn("poolableConnectionFactory")
-    public PoolingDataSource<?> poolingDataSource()
-    {
-    	log.info("Creating bean poolingDataSource");
-    	
-		if (poolingDataSource == null)
-		{ 
-			poolingDataSource = new PoolingDataSource<>(objectPool());
-		}
-        
-        return poolingDataSource;
-    }   
-    
-    @Bean()
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory()
     {
     	log.info("Creating bean entityManagerFactory");
