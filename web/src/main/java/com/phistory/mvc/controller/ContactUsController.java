@@ -44,13 +44,14 @@ import com.phistory.mvc.cms.form.ContactUsMessageForm;
 				method = {POST, HEAD})
 public class ContactUsController extends BaseController
 {
-	private static final String ADMIN_EMAIL_ADDRESS 		= "paganihistory.contact.us@gmail.com";
-	private static final String DEFAULT_SMTP_HOST 			= "smtp.gmail.com";
-	private static final String DEFAULT_SMTP_PORT 			= "587";
+	private static final String SENDER_EMAIL_ADDRESS    = "paganihistory.contact.us.send@gmail.com";
+	private static final String SENDER_EMAIL_PASSWORD	= "paganiHistorySender";
+	private static final String DEFAULT_SMTP_HOST 		= "smtp.gmail.com";
+	private static final String DEFAULT_SMTP_PORT 		= "587";
 	
 	@RequestMapping(produces = APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
-	public Map<String, String> handleSendContactUsMessage(@RequestBody(required = true) @Valid ContactUsMessageForm contactUsMessageForm,
+	public Map<String, String> handleSendContactUsMessage(@RequestBody @Valid ContactUsMessageForm contactUsMessageForm,
 														  BindingResult result)
 	{
 		Map<String, String> resultMessage = new HashMap<>();
@@ -68,9 +69,9 @@ public class ContactUsController extends BaseController
 				{
 					protected PasswordAuthentication getPasswordAuthentication()
 					{
-						return new PasswordAuthentication(ADMIN_EMAIL_ADDRESS, "paganiHistoryContactUs2016");
+						return new PasswordAuthentication(SENDER_EMAIL_ADDRESS, SENDER_EMAIL_PASSWORD);
 					}
-				});			
+				});
 	
 				Message message = new MimeMessage(session);				
 
@@ -89,7 +90,7 @@ public class ContactUsController extends BaseController
 				
 				message.setReplyTo(new Address[]{new InternetAddress(replyTo.toString())});
 				message.setText(contactUsMessageForm.getMessage());				
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(ADMIN_EMAIL_ADDRESS));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(SENDER_EMAIL_ADDRESS));
 				message.setSubject(contactUsMessageForm.getSubject());
 				Transport.send(message);
 	

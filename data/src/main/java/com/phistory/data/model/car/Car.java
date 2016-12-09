@@ -10,9 +10,20 @@ import com.phistory.data.model.tyre.TyreSet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
+import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
+import org.apache.lucene.analysis.core.StopFilterFactory;
+import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
+import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
+import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
+import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -24,25 +35,34 @@ import static org.hibernate.annotations.CascadeType.ALL;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
- *
  * @author Gonzalo
  */
 @Entity
 @Indexed
+@AnalyzerDef(name = "carModelAnalyzer",
+        // Split input into tokens according to tokenizer
+        tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class),
+        filters = {
+                // Normalize token text to lowercase, as the user is unlikely to care about casing when searching for matches
+                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                // Accent insensitive
+                @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+                // Index partial words starting at the front, so we can provide Autocomplete functionality
+                @TokenFilterDef(factory = NGramFilterFactory.class, params = {@Parameter(name = "maxGramSize", value = "1024")})
+        })
 @Table(name = Car.CAR_TABLE_NAME,
-       uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Car implements GenericEntity
-{
-    public static final String CAR_TABLE_NAME                       = "car";
-    public static final String CAR_ID_FIELD                         = "car_id";
-    public static final String MODEL_FIELD                          = "car_model";
-    public static final String MANUFACTURER_ID_FIELD                = "car_manufacturer_id";
-    public static final String ENGINE_ID_FIELD                      = "car_engine_id";
-    public static final String MODEL_PROPERTY_NAME                  = "model";
-    public static final String PRODUCTION_START_DATE_PROPERTY_NAME  = "productionStartDate";
+public class Car implements GenericEntity {
+    public static final String CAR_TABLE_NAME = "car";
+    public static final String CAR_ID_FIELD = "car_id";
+    public static final String MODEL_FIELD = "car_model";
+    public static final String MANUFACTURER_ID_FIELD = "car_manufacturer_id";
+    public static final String ENGINE_ID_FIELD = "car_engine_id";
+    public static final String MODEL_PROPERTY_NAME = "model";
+    public static final String PRODUCTION_START_DATE_PROPERTY_NAME = "productionStartDate";
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -55,7 +75,7 @@ public class Car implements GenericEntity
     private Manufacturer manufacturer;
 
     @Column(name = MODEL_FIELD, nullable = false)
-    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.YES)
+    @Field(store = Store.YES, analyzer = @Analyzer(definition = "carModelAnalyzer"))
     private String model;
 
     @Column(name = "car_engine_layout", nullable = false)
@@ -97,7 +117,7 @@ public class Car implements GenericEntity
 
     @Column(name = "car_production_start_date", nullable = false)
     @Temporal(DATE)
-    @Field(index=Index.YES, analyze=Analyze.NO, store=Store.NO)
+    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
     private Calendar productionStartDate;
 
     @Column(name = "car_production_end_date")
@@ -121,7 +141,7 @@ public class Car implements GenericEntity
     @JoinColumn(name = "car_brake_set_id", unique = true)
     private BrakeSet brakeSet;
 
-    @OneToOne()
+    @OneToOne
     @Cascade(value = ALL)
     @JoinColumn(name = "car_transmission_id", unique = true)
     private Transmission transmission;
@@ -141,10 +161,10 @@ public class Car implements GenericEntity
     @Column(name = "car_road_legal", nullable = false, columnDefinition = "tinyint(1) default 0")
     private Boolean roadLegal;
 
-    @Column(name = "car_description_es", columnDefinition="LONGTEXT")
+    @Column(name = "car_description_es", columnDefinition = "LONGTEXT")
     private String descriptionES;
 
-    @Column(name = "car_description_en", columnDefinition="LONGTEXT")
+    @Column(name = "car_description_en", columnDefinition = "LONGTEXT")
     private String descriptionEN;
 
     @Override
@@ -152,14 +172,12 @@ public class Car implements GenericEntity
         return id;
     }
 
-	@Override
-	public String toString()
-	{
-		if (this.getManufacturer() != null)
-		{
-			return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")").toString();
-		}
+    @Override
+    public String toString() {
+        if (this.getManufacturer() != null) {
+            return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")").toString();
+        }
 
-		return null;
-	}
+        return null;
+    }
 }

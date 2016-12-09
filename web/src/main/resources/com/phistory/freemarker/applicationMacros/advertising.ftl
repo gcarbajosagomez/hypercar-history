@@ -15,12 +15,14 @@
     var options = {publisherId: 1100029117,
                    adSpaceId: 130205382,
                    adDivId: "smt-130205382",
+                   format: "all",
+                   formatstrict: false,
                    dimension: "xxlarge",
                    dimensionstrict: false,
-                   keywords: "cars",
+                   keywords: "cars, supercars",
                    autoReload: 60,
                    coppa: 0,
-                   iabcategory: "IAB2",
+                   iabcategory: "IAB2-4",
                    adspacename: "PaganiHistory_${deviceMake?lower_case}_320x50"
                   };
 

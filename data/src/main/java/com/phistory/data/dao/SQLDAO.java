@@ -1,32 +1,23 @@
 package com.phistory.data.dao;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Expression;
-import javax.persistence.criteria.Order;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.extern.slf4j.Slf4j;
-
 import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.jpa.HibernateEntityManagerFactory;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -148,9 +139,7 @@ public abstract class SQLDAO<TYPE extends GenericEntity, IDENTIFIER>
      */
     protected EntityManager createEntityManager()
     {
-        EntityManager entityManager = entityManagerFactory.createEntityManager(sessionFactory.getAllClassMetadata());
-       
-        return entityManager;        
+        return this.entityManagerFactory.createEntityManager(sessionFactory.getAllClassMetadata());
     }
     
     private CriteriaQuery<?> processOrderByMap(Map<String, Boolean> orderByMap,
@@ -255,22 +244,5 @@ public abstract class SQLDAO<TYPE extends GenericEntity, IDENTIFIER>
         session.setFlushMode(FlushMode.COMMIT);     
         
         return session;
-    }
-    
-    /**
-     * Triggers the index process of the previously stored objects in the database
-     */
-    protected void hibernateSearchIndexPreviouslyStoredDatabaseRecords()
-    {
-    	try
-    	{
-    		FullTextSession fullTextSession = Search.getFullTextSession(getCurrentSession());
-      
-    		fullTextSession.createIndexer().startAndWait();
-		}
-    	catch (InterruptedException ie)
-    	{
-    		log.error(ie.toString(), ie);
-		}
     }
 }

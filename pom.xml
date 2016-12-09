@@ -34,6 +34,7 @@
         <maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
 
         <org.projectlombok.version>1.16.6</org.projectlombok.version>
+        <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
 	</properties>
 
     <build>

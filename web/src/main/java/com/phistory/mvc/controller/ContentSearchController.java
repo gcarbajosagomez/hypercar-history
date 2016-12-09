@@ -1,6 +1,7 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.data.command.SearchCommand;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType;
@@ -53,16 +54,16 @@ public class ContentSearchController extends BaseController implements Initializ
 		try
 		{
             ContentSearchDTO clonedContentSearchDto = contentSearchDto.clone();
+            //so that we can return all the searched car model names to the view, we need to retrieve all cars, and separate them into models (names) and cars
             clonedContentSearchDto.setItemsPerPage(0);
 			SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
-			com.phistory.data.dto.ContentSearchDto dataContentSearchDto = this.getSqlContentSearchDAO().hibernateSearchSearchContent(searchCommand);
-            List<Object> searchResults = dataContentSearchDto.getResults();
+			List<GenericEntity> searchResults = this.getSqlContentSearchDAO().hibernateSearchSearchContent(searchCommand);
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
             model.addAttribute(MODELS, searchResults);
 			model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getItemsPerPage());
 			model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());	
-			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, dataContentSearchDto.getTotalResults());
+			model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, searchResults.size());
 			model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDto.getContentToSearch());
 			this.carModelFiller.fillModel(model);
 			this.pictureModelFiller.fillModel(model);
@@ -87,7 +88,7 @@ public class ContentSearchController extends BaseController implements Initializ
 	{	
 		Map<String, Boolean> orderByMap = new HashMap<>();
 		orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
-		orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
+		//orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
 
 		SimpleDataConditionCommand simpleDataConditionCommand = new SimpleDataConditionCommand(EntityConditionType.LIKE,
 																							   new Object[]{contentSearchDto.getContentToSearch()});
@@ -106,7 +107,7 @@ public class ContentSearchController extends BaseController implements Initializ
 								 contentSearchDto.getItemsPerPage());
 	}
 
-    private List<Object> extractModelsListFromSearchResults(List<Object> searchResults, ContentSearchDTO contentSearchDto) {
+    private List<GenericEntity> extractModelsListFromSearchResults(List<GenericEntity> searchResults, ContentSearchDTO contentSearchDto) {
         int fromIndex = contentSearchDto.getFirstResult();
         int toIndex = fromIndex + contentSearchDto.getItemsPerPage();
 

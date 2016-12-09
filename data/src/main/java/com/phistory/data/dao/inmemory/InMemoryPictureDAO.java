@@ -1,6 +1,7 @@
 package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.dao.InMemoryDAO;
+import com.phistory.data.dao.sql.impl.SQLPictureDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
@@ -32,12 +33,16 @@ public class InMemoryPictureDAO implements InMemoryDAO<Picture, Long> {
 
     private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
 
-    @Autowired
     private com.phistory.data.dao.sql.impl.SQLPictureDAO sqlPictureDAO;
     @Getter
     private List<Picture> pictures = new ArrayList<>();
 
-    @Scheduled(fixedDelay = LOAD_ENTITIES_DELAY)
+    @Autowired
+    public InMemoryPictureDAO(SQLPictureDAO sqlPictureDAO) {
+        this.sqlPictureDAO = sqlPictureDAO;
+    }
+
+    @Scheduled(initialDelay = 0, fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
