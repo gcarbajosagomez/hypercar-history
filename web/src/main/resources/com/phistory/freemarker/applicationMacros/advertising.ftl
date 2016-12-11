@@ -17,13 +17,13 @@
                    adDivId: "smt-130205382",
                    format: "all",
                    formatstrict: false,
-                   dimension: "xxlarge",
+                   dimension: "medrect",
                    dimensionstrict: false,
                    keywords: "cars, supercars",
                    autoReload: 60,
                    coppa: 0,
                    iabcategory: "IAB2-4",
-                   adspacename: "PaganiHistory_${deviceMake?lower_case}_320x50"
+                   adspacename: "PaganiHistory_${deviceMake?lower_case}_300x250"
                   };
 
     <#if contentToSearchData??>
