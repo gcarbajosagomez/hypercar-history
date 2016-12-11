@@ -67,7 +67,7 @@
                         performGoogleAnalyticsRequest();
 
 					   <#if !requestIsDesktop>
-						   <@advertising.performSmaatoJSAdRequest/>
+						   <@advertising.performSmaatoJSAdRequests/>
 					   </#if>
 				   	</#if>
 					$('#main-wrap-div').unblock();           	

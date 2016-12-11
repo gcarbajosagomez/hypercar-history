@@ -47,7 +47,7 @@
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
@@ -219,14 +219,18 @@
 												<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>
 											</div>
               							</li>
+                                        <div class="divider navbar-divider"></div>
+                                        <li class="search-container-li">
+											<#if !requestIsDesktop && !doNotTrack && !requestIsCMS>
+                                                <div id="smt-130207357" class="col-lg-12 center-block mobile-banner in-header-mobile-banner-div"></div>
+											</#if>
+                                        </li>
               						 </ul>
  	         					 </div>
 							</div>
     	        		</nav>
 						<#if !requestIsDesktop && !doNotTrack && !requestIsCMS>
-							<#-- Smaato header ad space (only for mobile) -->
-                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner-div"></div>
-							<@advertising.addHTMLPerformSmaatoAdRequestScript/>
+                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner below-the-fold-mobile-banner-div"></div>
 						</#if>
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
@@ -277,6 +281,7 @@
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
 				<@contentSearch.addHandleContentSearchFunctionScript/>
+				<@advertising.addHTMLPerformSmaatoAdRequestsScript/>
 			</body>
         </html>
 </#macro>
