@@ -1,19 +1,19 @@
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
-        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36"  "large"/>
-        <@performSmaatoAdRequest "130205382" "PaganiHistory_${deviceMake?lower_case}_300x250" "medrect"/>
+        <@performSmaatoAdRequest "130207357" "xxlarge" "PaganiHistory_${deviceMake?lower_case}_320x50"/>
+        <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     </script>
 </#macro>
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36"  "large"/>
-        <@performSmaatoAdRequest "130205382" "PaganiHistory_${deviceMake?lower_case}_300x250" "medrect"/>
+        <@performSmaatoAdRequest "130207357" "xxlarge" "PaganiHistory_${deviceMake?lower_case}_320x50"/>
+        <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     });
 </#macro>
 
-<#macro performSmaatoAdRequest adSpaceId, adSpaceName, dimension>
+<#macro performSmaatoAdRequest adSpaceId, dimension, adSpaceName>
     var options = {publisherId: 1100029117,
                    adSpaceId: ${adSpaceId},
                    adDivId: "smt-${adSpaceId}",
@@ -22,7 +22,7 @@
                    dimension: "${dimension}",
                    dimensionstrict: false,
                    keywords: "cars, supercars",
-                   autoReload: 20,
+                   autoReload: 60,
                    coppa: 0,
                    iabcategory: "IAB2-4",
                    adspacename: "${adSpaceName}"
