@@ -8,9 +8,7 @@
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36" "large"/>
-    });
-    $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
+        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36"  "large"/>
         <@performSmaatoAdRequest "130205382" "PaganiHistory_${deviceMake?lower_case}_300x250" "medrect"/>
     });
 </#macro>
