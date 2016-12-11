@@ -1,7 +1,6 @@
 <#import "/spring.ftl" as spring/>
 <#import "pagination.ftl" as pagination/>
 <#import "genericFunctionalities.ftl" as generic/>
-<#import "googleAnalytics.ftl" as googleAnalytics/>
 <#import "advertising.ftl" as advertising/>
 
 <#macro addSetPageLanguage chunkedModelsList=[]>
@@ -65,7 +64,7 @@
 		            setupContentSearchEventListeners();
 
 				   	<#if !requestIsCMS && !doNotTrack>
-					   <@googleAnalytics.addAnalyticsScript/>
+                        performGoogleAnalyticsRequest();
 
 					   <#if !requestIsDesktop>
 						   <@advertising.performSmaatoJSAdRequest/>

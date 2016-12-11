@@ -1,7 +1,6 @@
 <#import "pagination.ftl" as pagination/>
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
-<#import "googleAnalytics.ftl" as googleAnalytics/>
 <#import "advertising.ftl" as advertising/>
 
 <#macro addHandleContentSearchFunctionScript>
@@ -55,7 +54,7 @@
 				
 				ajaxCallBeingProcessed = false;
 				<#if !requestIsCMS && !doNotTrack>
-					<@googleAnalytics.addAnalyticsScript/>
+                    performGoogleAnalyticsRequest();
 
 					<#if !requestIsDesktop>
 						<@advertising.performSmaatoJSAdRequest/>

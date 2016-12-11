@@ -3,7 +3,6 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
 <#import "picture.ftl" as picture/>
-<#import "googleAnalytics.ftl" as googleAnalytics/>
 <#import "advertising.ftl" as advertising/>
 
 <#macro startPage title=''>
@@ -123,7 +122,7 @@
     					});
 
                         <#if !requestIsCMS && !doNotTrack>
-                            <@googleAnalytics.addAnalyticsScript/>
+                        	performGoogleAnalyticsRequest();
                         </#if>
 					</script>
             </head>
