@@ -1,14 +1,14 @@
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
-        <@performSmaatoAdRequest "130207357" "xxlarge" "PaganiHistory_${deviceMake?lower_case}_320x50"/>
+        <@performSmaatoAdRequest "130207357" "xlarge" "PaganiHistory_${deviceMake?lower_case}_300x50"/>
         <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     </script>
 </#macro>
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest "130207357" "xxlarge" "PaganiHistory_${deviceMake?lower_case}_320x50"/>
+        <@performSmaatoAdRequest "130207357" "xlarge" "PaganiHistory_${deviceMake?lower_case}_300x50"/>
         <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     });
 </#macro>
