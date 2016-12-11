@@ -1,29 +1,33 @@
-<#macro addHTMLPerformSmaatoAdRequestScript>
+<#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
-        <@performSmaatoAdRequest/>
+        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36"  "large"/>
+        <@performSmaatoAdRequest "130205382" "PaganiHistory_${deviceMake?lower_case}_300x250" "medrect"/>
     </script>
 </#macro>
 
-<#macro performSmaatoJSAdRequest>
+<#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest/>
+        <@performSmaatoAdRequest "130207357" "PaganiHistory_${deviceMake?lower_case}_216x36" "large"/>
+    });
+    $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
+        <@performSmaatoAdRequest "130205382" "PaganiHistory_${deviceMake?lower_case}_300x250" "medrect"/>
     });
 </#macro>
 
-<#macro performSmaatoAdRequest>
+<#macro performSmaatoAdRequest adSpaceId, adSpaceName, dimension>
     var options = {publisherId: 1100029117,
-                   adSpaceId: 130205382,
-                   adDivId: "smt-130205382",
+                   adSpaceId: ${adSpaceId},
+                   adDivId: "smt-${adSpaceId}",
                    format: "all",
                    formatstrict: false,
-                   dimension: "medrect",
+                   dimension: "${dimension}",
                    dimensionstrict: false,
                    keywords: "cars, supercars",
-                   autoReload: 60,
+                   autoReload: 20,
                    coppa: 0,
                    iabcategory: "IAB2-4",
-                   adspacename: "PaganiHistory_${deviceMake?lower_case}_300x250"
+                   adspacename: "${adSpaceName}"
                   };
 
     <#if contentToSearchData??>

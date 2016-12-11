@@ -54,6 +54,27 @@
         padding-bottom: 0.9em;
     }
 
+    .content-search-input {
+        margin-bottom: 0.9em;
+    }
+
+    .mobile-banner {
+        padding: 0px;
+    }
+
+    .in-header-mobile-banner-div {
+        width: 216px;
+        height: 36px;
+        margin-top: 0.9em;
+        margin-bottom: 0.7em;
+    }
+
+    .below-the-fold-mobile-banner-div {
+        width: 300px;
+        height: 250px;
+        margin-bottom: 20px;
+    }
+
     @media only screen and (min-width: 768px) {
         .pagani-history-navbar .navbar-nav > li > a {
             padding-top: 25px;
@@ -401,12 +422,5 @@
     .toggle-button i {
         font-size: 40px;
         padding: 2px 0px 0px 10%;
-    }
-
-    .mobile-banner-div {
-        width: 300px;
-        height: 250px;
-        padding: 0px;
-        margin-bottom: 20px;
     }
 }
