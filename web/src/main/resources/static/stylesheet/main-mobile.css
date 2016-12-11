@@ -62,14 +62,7 @@
         padding: 0px;
     }
 
-    .in-header-mobile-banner-div {
-        width: 300px;
-        height: 50px;
-        margin-top: 0.9em;
-        margin-bottom: 0.7em;
-    }
-
-    .below-the-fold-mobile-banner-div {
+    .below-the-header-mobile-banner-div {
         width: 300px;
         height: 250px;
         margin-bottom: 20px;
@@ -125,7 +118,7 @@
 
     .content-search-input {
         transition: none;
-        width: 50%;
+        width: 55%;
         color: white;
     }
 

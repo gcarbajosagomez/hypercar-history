@@ -48,7 +48,7 @@
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
@@ -220,18 +220,12 @@
 												<input id="search-total-results" type="hidden" value="<#if searchTotalResultsData??>${searchTotalResultsData}<#else>0</#if>"/>
 											</div>
               							</li>
-										<#--<#if triggerMobileAdvertisement>
-                                        	<li class="search-container-li">
-                                                <div class="divider navbar-divider"></div>
-                                                <div id="smt-130207357" class="col-lg-12 center-block mobile-banner in-header-mobile-banner-div"></div>
-                                       		</li>
-										</#if>-->
               						 </ul>
  	         					 </div>
 							</div>
     	        		</nav>
 						<#if triggerMobileAdvertisement>
-                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner below-the-fold-mobile-banner-div"></div>
+                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner below-the-header-mobile-banner-div"></div>
 						</#if>
 
         	    		<form id="main-form" action="${requestURI}" method="POST">
