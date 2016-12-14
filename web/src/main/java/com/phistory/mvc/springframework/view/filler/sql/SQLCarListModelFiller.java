@@ -28,14 +28,11 @@ public class SQLCarListModelFiller extends CarListModelFiller {
     private SQLCarDAO carDAO;
 
     @Override
-    public void fillModel(Model model) {
-        model.addAttribute(MODELS, this.carDAO.getAllOrderedByProductionStartDate());
-    }
+    public void fillModel(Model model) {}
 
     @Override
     public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
         super.fillPaginatedModel(model, paginationDTO);
-        this.fillModel(model);
         model.addAttribute(CARS, this.carDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
     }
 

@@ -5,7 +5,7 @@
 <#import "picture.ftl" as picture/>
 <#import "advertising.ftl" as advertising/>
 
-<#macro startPage title=''>
+<#macro startPage title='' metaDescription=''>
     <@identifyRequestURL/>
 	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
 
@@ -16,7 +16,7 @@
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('paganiHistory')}</title>
             		<meta charset="UTF-8">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
-					<meta name="description" content="${title}">
+					<meta name="description" content="<#if (metaDescription?length > 0)>${metaDescription}<#else>${title}</#if>">
 					<#-- CRSF token to protect against cross site attacks -->
 					<meta name="_csrf" content="${_csrf.token}"/>
 					<#-- default header name is X-CSRF-TOKEN -->
@@ -27,7 +27,7 @@
                         "@type":"WebSite",
                         "name":"${language.getTextSource('paganiHistory')}",
                         "url":"${siteURL}",
-                        "about":"${language.getTextSource('footer.aboutUs.text')}",
+                        "about":"${language.getTextSource('footer.aboutUs.text', [models?size])}",
                         "keywords":"${language.getTextSource('pagani')}, ${language.getTextSource('structuredData.carsURL')}",
                         "potentialAction": {
                             "@type":"SearchAction",
@@ -240,7 +240,7 @@
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>
 								<p class="text-muted text-left">
-									${language.getTextSource('footer.aboutUs.text')}
+									${language.getTextSource('footer.aboutUs.text', [models?size])}
 								</p>
         					</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

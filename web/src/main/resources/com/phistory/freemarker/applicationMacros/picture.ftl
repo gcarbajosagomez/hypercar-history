@@ -191,7 +191,11 @@
                             fullScreen: true,
                             useBootstrapModal: false,
                             youTubeClickToPlay: <#if requestIsDesktop>false<#else>true</#if>,
-                            youTubePlayerVars: {rel: 0}
+                            youTubePlayerVars: {
+                                rel: 0,
+                                color: white,
+                                playsinline: 0
+                            }
                         }
                         blueimp.Gallery(galleryVideos, options);
                     });

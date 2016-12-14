@@ -37,3 +37,24 @@
 
     SomaJS.loadAd(options);
 </#macro>
+
+<#macro performMopubJSAdRequests>
+    <script type="text/javascript">
+        window.mopub = [{
+            ad_unit: "f5331363892d4a64846b6820b3208644",
+            ad_container_id: "mopub-f5331363892d4a64846b6820b3208644",
+            ad_width: 300,
+            ad_height: 250,
+            keywords: "cars, car culture",
+        } ]; // To load additional ad units, add another object into the array.
+
+        (function() {
+            var mopubjs = document.createElement("script");
+            mopubjs.async = true;
+            mopubjs.type = "text/javascript";
+            mopubjs.src = "//d1zg4cyg8u4pko.cloudfront.net/mweb/mobileweb.min.js";
+            var node = document.getElementsByTagName("script")[0];
+            node.parentNode.insertBefore(mopubjs, node);
+        })();
+    </script>
+</#macro>

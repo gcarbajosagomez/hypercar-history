@@ -94,15 +94,9 @@ public class CarController extends BaseController
 			model.addAttribute(PICTURE_IDS,         this.inMemoryInMemoryPictureDAO.getIdsByCarId(carId));
 			model.addAttribute(UNITS_OF_MEASURE,    unitsOfMeasure);
 
-            List<CarInternetContent> carInternetContents = super.getInMemoryCarInternetContentDAO().getByCarId(carId);
-			List<CarInternetContent> videos = carInternetContents.stream()
-					   											 .filter(content -> content.getType().equals(VIDEO))
-					   											 .collect(Collectors.toList());
-					   											 
+			List<CarInternetContent> videos = super.getInMemoryCarInternetContentDAO().getVideosByCarId(carId);
 			model.addAttribute(YOUTUBE_VIDEO_IDS,                       this.carInternetContentUtils.extractYoutubeVideoIds(videos));
-			model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES,    carInternetContents.stream()
-																						   .filter(content -> content.getType().equals(REVIEW_ARTICLE))
-																						   .collect(Collectors.toList()));
+			model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES,    super.getInMemoryCarInternetContentDAO().getReviewArticlesByCarId(carId));
 			return new ModelAndView(CAR_DETAILS);
 		}
 		catch(Exception e)

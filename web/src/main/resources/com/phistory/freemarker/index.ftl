@@ -1,7 +1,7 @@
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 
-<@generic.startPage language.getTextSource('title.index')/>
+<@generic.startPage language.getTextSource('title.index', [models?size]) language.getTextSource('title.index.metaDescription', [models?size, numberOfPictures, numberOfVideos])/>
 
 <div id="main-container" class="container">
 	<div class="row">

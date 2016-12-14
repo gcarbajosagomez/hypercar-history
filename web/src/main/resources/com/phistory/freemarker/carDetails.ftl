@@ -4,7 +4,17 @@
 <#import "applicationMacros/carUtils.ftl" as carUtils/>
 
 <#if car??>
-	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title')?lower_case}</#assign>
+	<#if pictureIds??>
+		<#assign numberOfPictures = pictureIds?size/>
+	<#else>
+		<#assign numberOfPictures = 0/>
+	</#if>
+
+	<#if youtubeVideoIds??>
+		<#assign numberOfVideos = youtubeVideoIds?size/><#else><#assign numberOfVideos = 0/>
+	</#if>
+
+	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
 <#else>
 	<#assign title>${language.getTextSource('title.noCarFound')}</#assign>
 </#if>
@@ -17,13 +27,8 @@
 			<div class="panel-heading">
 				 <h1 class="text-left car-details-model-name">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
 			</div>
-			<#if youtubeVideoIds?? && (youtubeVideoIds?size > 0)>
-				<#assign youtubeVideosPresent = true>
-			<#else>
-				<#assign youtubeVideosPresent = false>
-			</#if>
-			<div class="<#if pictureIds?? && (pictureIds?size > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
-				<#if pictureIds?? && (pictureIds?size > 0)>
+			<div class="<#if (numberOfPictures > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
+				<#if (numberOfPictures > 0)>
 					<div id="car-pictures-carousel" class="carousel slide center-block vertically-aligned-div container" data-ride="carousel">
 	  					<ol class="carousel-indicators">
   							<#list pictureIds as pictureId>
@@ -49,7 +54,7 @@
 
                     <@picture.addPicturesGallery "images-gallery" "carousel-inner"/>
 
-					<#if youtubeVideosPresent == true>
+					<#if (numberOfVideos > 0)>
 						<@picture.addOpenVideoGalleryFunctionScript "videos-gallery"/>
 					</#if>
   				<#else>
@@ -57,7 +62,7 @@
   				</#if>
 			</div>
 
-			<#if youtubeVideosPresent = true>
+			<#if (numberOfVideos > 0)>
 				<ul class="nav nav-tabs">
 					<li id="show-pictures-tab" class="active cursor-pointer" role="presentation"><a>${language.getTextSource('car.pictures')}</a></li>
 					<li id="show-videos-tab" class="cursor-pointer" role="presentation"><a onClick="openVideoGallery()">${language.getTextSource('car.videos')}</a></li>

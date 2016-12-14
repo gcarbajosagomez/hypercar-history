@@ -4,6 +4,7 @@ import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
+import com.phistory.data.model.car.CarInternetContentType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+
+import static com.phistory.data.model.car.CarInternetContentType.*;
 
 /**
  * {@link CarInternetContent} {@link InMemoryDAO}
@@ -84,15 +87,21 @@ public class InMemoryCarInternetContentDAO implements InMemoryDAO<CarInternetCon
                                        .orElse(null);
     }
 
-    /**
-     * Get a {@link List <CarInternetContent>} whose {@link CarInternetContent#car#id} matches the supplied {@code carId}
-     *
-     * @param carId
-     * @return The resulting {@link List<CarInternetContent>}
-     */
-    public List<CarInternetContent> getByCarId(Long carId) {
+    public List<CarInternetContent> getAllVideos() {
         return this.carInternetContents.stream()
-                                       .filter(internetContent -> internetContent.getCar() != null && internetContent.getCar().getId().equals(carId))
+                                       .filter(content -> content.getType().equals(VIDEO))
+                                       .collect(Collectors.toList());
+    }
+
+    public List<CarInternetContent> getVideosByCarId(Long carId) {
+        return this.carInternetContents.stream()
+                                       .filter(content -> content.getCar().getId().equals(carId) && content.getType().equals(VIDEO))
+                                       .collect(Collectors.toList());
+    }
+
+    public List<CarInternetContent> getReviewArticlesByCarId(Long carId) {
+        return this.carInternetContents.stream()
+                                       .filter(content -> content.getCar().getId().equals(carId) && content.getType().equals(REVIEW_ARTICLE))
                                        .collect(Collectors.toList());
     }
 }

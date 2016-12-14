@@ -51,6 +51,7 @@ public class BaseControllerData
 	public static final String CAR                					= "car";
 	public static final String PICTURE_IDS                   		= "pictureIds";
 	public static final String PICTURES	                   			= "pictures";
+	public static final String NUMBER_OF_PICTURES          			= "numberOfPictures";
     public static final String MODELS                   			= "models";
 	public static final String CONTENT_TO_SEARCH_DATA      			= "contentToSearchData";
 	public static final String CAR_DETAILS       					= "carDetails";
@@ -61,5 +62,6 @@ public class BaseControllerData
 	public static final String CONTACT_US_EXCEPTION_MESSAGE     	= "contactUsExceptionMessage";   
 	public static final String YOUTUBE_VIDEO_IDS     				= "youtubeVideoIds";    
 	public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES	= "carInternetContentReviewArticles";  
+	public static final String NUMBER_OF_VIDEOS						= "numberOfVideos";
 	public static final String STATIC_RESOURCES_URI					= "/static/";
 }

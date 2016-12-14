@@ -25,14 +25,11 @@ public class InMemoryCarsListModelFiller extends CarListModelFiller {
     private InMemoryCarDAO inMemoryCarDAO;
 
     @Override
-    public void fillModel(Model model) {
-        model.addAttribute(MODELS, this.inMemoryCarDAO.getAllOrderedByProductionStartDate());
-    }
+    public void fillModel(Model model) {}
 
     @Override
     public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
         super.fillPaginatedModel(model, paginationDTO);
-        this.fillModel(model);
         model.addAttribute(CARS, this.loadCarsBySearchCommand(paginationDTO));
     }
 

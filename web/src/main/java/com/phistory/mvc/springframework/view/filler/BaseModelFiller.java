@@ -1,6 +1,8 @@
 package com.phistory.mvc.springframework.view.filler;
 
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
+import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
+import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
@@ -24,12 +26,18 @@ public class BaseModelFiller implements ModelFiller
 	private static final String CARS_HEADER_LINK_MESSAGE_ID = "header.cars";
 
 	private InMemoryCarDAO inMemoryCarDAO;
+	private InMemoryPictureDAO inMemoryPictureDAO;
+	private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
 	private ResourceBundleMessageSource messageSource;
 
 	@Inject
 	public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
+						   InMemoryPictureDAO inMemoryPictureDAO,
+						   InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
 						   ResourceBundleMessageSource messageSource) {
 		this.inMemoryCarDAO = inMemoryCarDAO;
+		this.inMemoryPictureDAO = inMemoryPictureDAO;
+		this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
 		this.messageSource = messageSource;
 	}
 
@@ -52,6 +60,9 @@ public class BaseModelFiller implements ModelFiller
 		model.addAttribute("languageQueryString",	LANGUAGE_DATA);
 		model.addAttribute("doNotTrackParam",		DO_NOT_TRACK_REQUEST_PARAM);
 		model.addAttribute("carsHeaderLinkValue", 	this.buildCarsHeaderLinkValue());
+		model.addAttribute(MODELS, 					this.inMemoryCarDAO.getAllOrderedByProductionStartDate());
+		model.addAttribute(NUMBER_OF_PICTURES, 		this.inMemoryPictureDAO.getAllIds().size());
+		model.addAttribute(NUMBER_OF_VIDEOS, 		this.inMemoryCarInternetContentDAO.getAllVideos().size());
 	}
 
 	private String buildCarsHeaderLinkValue() {

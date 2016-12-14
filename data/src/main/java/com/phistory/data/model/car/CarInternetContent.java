@@ -2,6 +2,7 @@ package com.phistory.data.model.car;
 
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Language;
+import com.phistory.data.model.picture.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import org.joda.time.DateTime;
 
 import javax.persistence.*;
 
+import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.FetchType.LAZY;
 
@@ -20,23 +22,24 @@ import static javax.persistence.FetchType.LAZY;
  * </p> 
  * 
  * @author gonzalo
- *main.java.
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME)
+@Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME,
+	   uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD, CarInternetContent.CAR_INTERNET_CONTENT_LINK_FIELD}))
 public class CarInternetContent implements GenericEntity
 {
 	public static final String CAR_INTERNET_CONTENT_TABLE_NAME = "car_internet_content";
-	
+	public static final String CAR_INTERNET_CONTENT_LINK_FIELD = "content_link";
+
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "content_id")
     private Long id;
 	
-	@Column(name = "content_link", nullable = false, unique = true)
+	@Column(name = "content_link", nullable = false)
 	private String link;
 	
 	@Enumerated(ORDINAL)
@@ -52,7 +55,7 @@ public class CarInternetContent implements GenericEntity
     private Language contentLanguage;
 
 	@ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "content_car_id", nullable = false)
+    @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 
 	@Override
