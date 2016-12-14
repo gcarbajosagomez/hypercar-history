@@ -15,3 +15,4 @@
 
 User-agent: *
 Disallow: /cms
+Sitemap: http://www.paganihistory.com/sitemap.xml
