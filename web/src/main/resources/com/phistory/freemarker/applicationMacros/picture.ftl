@@ -193,7 +193,7 @@
                             youTubeClickToPlay: <#if requestIsDesktop>false<#else>true</#if>,
                             youTubePlayerVars: {
                                 rel: 0,
-                                color: white,
+                                color: 'white',
                                 playsinline: 0
                             }
                         }
