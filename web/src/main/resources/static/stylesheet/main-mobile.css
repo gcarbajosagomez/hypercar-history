@@ -124,7 +124,6 @@
 
     .content-search-input:focus {
         transition: none;
-        width: 50%;
     }
 
     .content-search-input:not(:focus) {

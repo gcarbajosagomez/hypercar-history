@@ -48,7 +48,7 @@
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
