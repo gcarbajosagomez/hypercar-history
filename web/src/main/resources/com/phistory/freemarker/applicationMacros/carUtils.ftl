@@ -121,7 +121,7 @@
                     "position":2,
                     "item": {
                         "@id":"${siteURL}/${carsURL}/",
-                        "name":"${language.getTextSource('structuredData.carsURL')}"
+                        "name":"${language.getTextSource('cars.all', [models?size])}"
                     }
                 },
                 {

@@ -23,7 +23,7 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
 @Component
 public class BaseModelFiller implements ModelFiller
 {
-	private static final String CARS_HEADER_LINK_MESSAGE_ID = "header.cars";
+	private static final String CARS_HEADER_LINK_MESSAGE_ID = "cars.all";
 
 	private InMemoryCarDAO inMemoryCarDAO;
 	private InMemoryPictureDAO inMemoryPictureDAO;
