@@ -3,11 +3,11 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
 <#import "picture.ftl" as picture/>
-<#import "advertising.ftl" as advertising/>
+<#--<#import "advertising.ftl" as advertising/>-->
 
 <#macro startPage title='' metaDescription=''>
     <@identifyRequestURL/>
-	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
+	<#--<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>-->
 
 	<!DOCTYPE html>
     	<#global lang = language.getTextSource('paganiHistory.language')/>
@@ -224,9 +224,9 @@
  	         					 </div>
 							</div>
     	        		</nav>
-						<#if triggerMobileAdvertisement>
+						<#--<#if triggerMobileAdvertisement>
                             <div id="smt-130205382" class="col-lg-12 center-block mobile-banner below-the-header-mobile-banner-div"></div>
-						</#if>
+						</#if>-->
 
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
@@ -277,9 +277,9 @@
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
 				<@contentSearch.addHandleContentSearchFunctionScript/>
-				<#if triggerMobileAdvertisement>
-					<@advertising.addHTMLPerformSmaatoAdRequestsScript/>
-				</#if>
+				<#--<#if triggerMobileAdvertisement>-->
+					<#--<@advertising.addHTMLPerformSmaatoAdRequestsScript/>-->
+				<#--</#if>-->
 			</body>
         </html>
 </#macro>
