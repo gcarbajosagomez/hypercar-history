@@ -45,7 +45,7 @@
             ad_container_id: "mopub-f5331363892d4a64846b6820b3208644",
             ad_width: 300,
             ad_height: 250,
-            keywords: "cars, car culture",
+            keywords: "",
         } ]; // To load additional ad units, add another object into the array.
 
         (function() {

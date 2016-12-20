@@ -3,11 +3,11 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "contentSearch.ftl" as contentSearch/>
 <#import "picture.ftl" as picture/>
-<#--<#import "advertising.ftl" as advertising/>-->
+<#import "advertising.ftl" as advertising/>
 
 <#macro startPage title='' metaDescription=''>
     <@identifyRequestURL/>
-	<#--<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>-->
+	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
 
 	<!DOCTYPE html>
     	<#global lang = language.getTextSource('paganiHistory.language')/>
@@ -126,6 +126,9 @@
                         	performGoogleAnalyticsRequest();
                         </#if>
 					</script>
+					<#if triggerMobileAdvertisement>
+						<@advertising.performMopubJSAdRequests/>
+					</#if>
             </head>
             <body>
               	<div id="main-wrap-div">
@@ -224,9 +227,9 @@
  	         					 </div>
 							</div>
     	        		</nav>
-						<#--<#if triggerMobileAdvertisement>
-                            <div id="smt-130205382" class="col-lg-12 center-block mobile-banner below-the-header-mobile-banner-div"></div>
-						</#if>-->
+						<#if triggerMobileAdvertisement>
+                            <div id="mopub-f5331363892d4a64846b6820b3208644" class="col-lg-12 center-block mobile-banner below-the-header-mobile-banner-div"></div>
+						</#if>
 
         	    		<form id="main-form" action="${requestURI}" method="POST">
 </#macro>
@@ -277,9 +280,6 @@
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
 				<@contentSearch.addHandleContentSearchFunctionScript/>
-				<#--<#if triggerMobileAdvertisement>-->
-					<#--<@advertising.addHTMLPerformSmaatoAdRequestsScript/>-->
-				<#--</#if>-->
 			</body>
         </html>
 </#macro>
