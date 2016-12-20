@@ -41,12 +41,12 @@
 <#macro performMopubJSAdRequests>
     <script type="text/javascript">
         window.mopub = [{
-            ad_unit: "def1c8f8278d4d9ea1730b44afd76d30",
-            ad_container_id: "mopub-f5331363892d4a64846b6820b3208644",
-            ad_width: 300,
-            ad_height: 250,
+            ad_unit: "7ed9b1aa12de4da9afcd8a8a3f7c158a",
+            ad_container_id: "mopub-below-the-header-small-banner",
+            ad_width: 320,
+            ad_height: 50,
             keywords: "",
-        } ]; // To load additional ad units, add another object into the array.
+        }];
 
         (function() {
             var mopubjs = document.createElement("script");

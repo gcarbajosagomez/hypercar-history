@@ -228,7 +228,7 @@
 							</div>
     	        		</nav>
 						<#if triggerMobileAdvertisement>
-                            <div id="mopub-f5331363892d4a64846b6820b3208644" class="col-lg-12 center-block mobile-banner below-the-header-mobile-banner-div"></div>
+                            <div id="mopub-below-the-header-small-banner" class="col-lg-12 center-block below-the-header-mobile-small-banner-div"></div>
 						</#if>
 
         	    		<form id="main-form" action="${requestURI}" method="POST">

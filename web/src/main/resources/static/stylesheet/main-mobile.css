@@ -58,13 +58,8 @@
         margin-bottom: 0.9em;
     }
 
-    .mobile-banner {
-        padding: 0px;
-    }
-
-    .below-the-header-mobile-banner-div {
-        width: 300px;
-        height: 250px;
+    .below-the-header-mobile-small-banner-div {
+        width: 320px;
         margin-bottom: 20px;
     }
 
