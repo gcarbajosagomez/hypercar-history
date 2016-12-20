@@ -41,7 +41,7 @@
 <#macro performMopubJSAdRequests>
     <script type="text/javascript">
         window.mopub = [{
-            ad_unit: "f5331363892d4a64846b6820b3208644",
+            ad_unit: "def1c8f8278d4d9ea1730b44afd76d30",
             ad_container_id: "mopub-f5331363892d4a64846b6820b3208644",
             ad_width: 300,
             ad_height: 250,
