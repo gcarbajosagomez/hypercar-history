@@ -2,7 +2,7 @@
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 
-<@generic.startPage language.getTextSource('title.login')/>
+<@generic.startPage language.getTextSource('meta.title.login')/>
 
 <div id="main-container" class="col-sm-offset-2">
 	<div class="row">

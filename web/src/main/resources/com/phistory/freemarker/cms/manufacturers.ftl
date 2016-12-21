@@ -2,7 +2,7 @@
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 
-<@generic.startPage language.getTextSource('title.allManufacturers')/>   
+<@generic.startPage language.getTextSource('meta.title.allManufacturers')/>
 
 <div id="main-container" class="container panel panel-default main-container main-panel"> 
      <div class="row">

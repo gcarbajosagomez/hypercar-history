@@ -16,10 +16,12 @@
 
 	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
 <#else>
-	<#assign title>${language.getTextSource('title.noCarFound')}</#assign>
+	<#assign title>${language.getTextSource('meta.title.noCarFound')}</#assign>
 </#if>
 
-<@generic.startPage title/>
+<@generic.startPage title
+					language.getTextSource('meta.keywords.carDetails', [car.model])
+					null/>
 
 <div id="main-container" class="container">
 	<div class="panel panel-default main-panel row" style="border:0px;">

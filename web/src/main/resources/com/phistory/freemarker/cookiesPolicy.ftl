@@ -1,10 +1,10 @@
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 
-<@generic.startPage language.getTextSource('title.cookiesPolicy')/>
+<@generic.startPage language.getTextSource('meta.title.cookiesPolicy')/>
 	<div id="main-container" class="container cookies-policy-main-container">
 		<div class="panel panel-body col-lg-12">
-			<h1>${language.getTextSource('title.cookiesPolicy')}<h1>
+			<h1>${language.getTextSource('meta.title.cookiesPolicy')}<h1>
 			<br/>
 						
 			<h2>${language.getTextSource('cookiesPolicy.whatAreCookies')}</h2>

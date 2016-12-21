@@ -5,7 +5,7 @@
 <#import "picture.ftl" as picture/>
 <#import "advertising.ftl" as advertising/>
 
-<#macro startPage title='' metaDescription=''>
+<#macro startPage title='' metaKeywords=language.getTextSource('meta.keywords.index') metaDescription=''>
     <@identifyRequestURL/>
 	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
 
@@ -16,6 +16,7 @@
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('paganiHistory')}</title>
             		<meta charset="UTF-8">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
+                	<meta name="keywords" content="${metaKeywords}">
 					<meta name="description" content="<#if (metaDescription?length > 0)>${metaDescription}<#else>${title}</#if>">
 					<#-- CRSF token to protect against cross site attacks -->
 					<meta name="_csrf" content="${_csrf.token}"/>
@@ -263,7 +264,7 @@
 								<div id="technology-stack-modal-div" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="technology-stack-label" aria-hidden="true"></div>
 							</div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                <h4>${language.getTextSource('title.cookiesPolicy')?upper_case}</h4>
+                                <h4>${language.getTextSource('meta.title.cookiesPolicy')?upper_case}</h4>
                                 <p class="text-muted text-left">
                                     ${language.getTextSource('footer.cookiesPolicy.text')}
                                 </p>
