@@ -1,26 +1,26 @@
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
-        <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     </script>
 </#macro>
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest "130205382" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
     });
 </#macro>
 
-<#macro performSmaatoAdRequest adSpaceId, dimension, adSpaceName>
+<#macro performSmaatoAdRequest adSpaceId, adDivId, dimension, adSpaceName>
     var options = {publisherId: 1100029117,
                    adSpaceId: ${adSpaceId},
-                   adDivId: "smt-${adSpaceId}",
+                   adDivId: "${adDivId}",
                    format: "all",
                    formatstrict: false,
                    dimension: "${dimension}",
                    dimensionstrict: false,
-                   keywords: "cars, supercars",
-                   autoReload: 60,
+                   keywords: "cars,technology",
+                   autoReload: 20,
                    coppa: 0,
                    iabcategory: "IAB2-4",
                    adspacename: "${adSpaceName}"
@@ -42,10 +42,16 @@
     <script type="text/javascript">
         window.mopub = [{
             ad_unit: "7ed9b1aa12de4da9afcd8a8a3f7c158a",
-            ad_container_id: "mopub-below-the-header-small-banner",
+            ad_container_id: "below-the-header-small-banner",
             ad_width: 320,
             ad_height: 50,
-            keywords: "",
+            keywords: "cars, technology",
+        },{
+            ad_unit: "09763a959d3643c08f246c2d156cc346",
+            ad_container_id: "below-the-header-medium-banner",
+            ad_width: 300,
+            ad_height: 250,
+            keywords: "cars, technology",
         }];
 
         (function() {

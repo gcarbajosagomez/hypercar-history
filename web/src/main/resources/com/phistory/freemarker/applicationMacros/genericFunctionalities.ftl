@@ -113,7 +113,7 @@
 								fontSize: '13px',
 								backgroundColor: 'rgba(63, 63, 63, 1)',
 								backgroundOpacity: '90',
-								linkColor: '#CA7300'
+								linkColor: '#337ab7'
         					});
 
         					setupContentSearchEventListeners();
@@ -127,9 +127,6 @@
                         	performGoogleAnalyticsRequest();
                         </#if>
 					</script>
-					<#if triggerMobileAdvertisement>
-						<@advertising.performMopubJSAdRequests/>
-					</#if>
             </head>
             <body>
               	<div id="main-wrap-div">
@@ -229,7 +226,7 @@
 							</div>
     	        		</nav>
 						<#if triggerMobileAdvertisement>
-                            <div id="mopub-below-the-header-small-banner" class="col-lg-12 center-block below-the-header-mobile-small-banner-div"></div>
+                            <div id="below-the-header-medium-banner" class="col-lg-12 center-block below-the-header-mobile-banner-div mobile-medium-banner-div"></div>
 						</#if>
 
         	    		<form id="main-form" action="${requestURI}" method="POST">
@@ -281,6 +278,7 @@
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
 				<@contentSearch.addHandleContentSearchFunctionScript/>
+				<@advertising.addHTMLPerformSmaatoAdRequestsScript/>
 			</body>
         </html>
 </#macro>
