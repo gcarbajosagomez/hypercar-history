@@ -20,6 +20,7 @@
                    dimension: "${dimension}",
                    dimensionstrict: false,
                    keywords: "cars,technology",
+                   autoReload: 45,
                    coppa: 0,
                    iabcategory: "IAB2-4",
                    adspacename: "${adSpaceName}"
