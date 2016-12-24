@@ -29,7 +29,7 @@
                         "name":"${language.getTextSource('paganiHistory')}",
                         "url":"${siteURL}",
                         "about":"${language.getTextSource('footer.aboutUs.text', [models?size])}",
-                        "keywords":"${language.getTextSource('pagani')}, ${language.getTextSource('cars.all', [models?size])}, ${language.getTextSource('supercars')}",
+                        "keywords":"${metaKeywords}",
                         "potentialAction": {
                             "@type":"SearchAction",
                             "target":"${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
