@@ -29,7 +29,6 @@
 		<mysql.connector.version>5.1.36</mysql.connector.version>
 		<org.selenium.version>2.53.0</org.selenium.version>
 		<org.mockito-all.version>1.10.19</org.mockito-all.version>
-		<org.testng-all.version>6.9.10</org.testng-all.version>
 		<xml-apis.version>1.4.01</xml-apis.version>
 	</properties>
 	
@@ -235,13 +234,6 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
 			<version>${org.mockito-all.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>${org.testng-all.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>

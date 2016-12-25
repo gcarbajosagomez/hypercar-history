@@ -29,7 +29,7 @@ public class ManufacturerModelFiller implements ModelFiller
 	public void fillModel(Model model)
 	{
 		model.addAttribute(MANUFACTURERS, 	  			   	this.manufacturerDAO.getAll());
-		model.addAttribute(MANUFACTURER_ID,   			   	MANUFACTURER_ID);
+		model.addAttribute("manufacturerIdData", 		   	MANUFACTURER_ID);
 		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
 	}
 	

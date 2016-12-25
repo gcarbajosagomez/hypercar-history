@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller.util;
 
-import com.phistory.mvc.controller.CarController;
+import com.phistory.mvc.controller.CarDetailsController;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import javax.inject.Inject;
 
 /**
- * Set of utilities for {@link CarController}
+ * Set of utilities for {@link CarDetailsController}
  * 
  * @author gonzalo
  *

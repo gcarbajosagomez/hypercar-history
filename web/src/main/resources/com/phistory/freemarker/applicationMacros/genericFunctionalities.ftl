@@ -4,6 +4,7 @@
 <#import "contentSearch.ftl" as contentSearch/>
 <#import "picture.ftl" as picture/>
 <#import "advertising.ftl" as advertising/>
+<#import "cookiesDirective.ftl" as cookiesDirective/>
 
 <#macro startPage title='' metaKeywords=language.getTextSource('meta.keywords.index') metaDescription=''>
     <@identifyRequestURL/>
@@ -98,24 +99,7 @@
                             <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
                             $.getScript('/static/javascript/lib/toucheffects.js', null);
 
-        					$.cookiesDirective({
-            					privacyPolicyUri: '/${cookiesPolicyURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>',
-            					position: 'bottom',
-								message: '${language.getTextSource('cookiesDirectiveMessage')}',
-								deleteAndBlockCookiesMessage: '${language.getTextSource('cookiesDirectiveMessage.deleteAndBlockCookiesMessage')}',
-								privacyPolicyMessage: '${language.getTextSource('cookiesDirectiveMessage.privacyPolicyMessage')}',
-								acceptCookiesMessage: '${language.getTextSource('cookiesDirectiveMessage.acceptCookies')}',
-								continueButton: '${language.getTextSource('cookiesDirectiveMessage.continueButton')}',
-								duration: 200,
-								limit: 0,
-								fontFamily: 'Helvetica Neue, Helvetica, Arial, sans-serif',
-								fontColor: '#FFFFFF',
-								fontSize: '13px',
-								backgroundColor: 'rgba(63, 63, 63, 1)',
-								backgroundOpacity: '90',
-								linkColor: '#337ab7'
-        					});
-
+                            <@cookiesDirective.loadCookiesDirectiveScript/>
         					setupContentSearchEventListeners();
 
         					$('#contact-us-modal-div').on('show.bs.modal', function () {
@@ -332,7 +316,7 @@
         </#if>
     </#if>
 	<#if requestURI?contains(carsURL)>
-        <#if requestURI?matches("/" + carsURL + "/([0-9]{1,}).{0,}")>
+        <#if requestURI?matches("/" + carsURL + "/.{1,}")>
             <#global requestIsCarDetails = true/>
         <#else>
             <#global requestIsCars = true/>

@@ -1,5 +1,6 @@
 package com.phistory.data.dao.inmemory;
 
+import com.phistory.data.command.CarQueryCommand;
 import com.phistory.data.dao.InMemoryDAO;
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.model.picture.Picture;
@@ -88,6 +89,15 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
     public Car getById(Long id) {
         return this.cars.stream()
                         .filter(car -> car.getId().equals(id))
+                        .findFirst()
+                        .orElse(null);
+    }
+
+    public Car getByQueryCommand(CarQueryCommand queryCommand) {
+        return this.cars.stream()
+                        .filter(car -> Objects.isNull(queryCommand.getCarId()) || car.getId().equals(queryCommand.getCarId()))
+                        .filter(car -> Objects.isNull(queryCommand.getEngineId()) || car.getEngine().getId().equals(queryCommand.getEngineId()))
+                        .filter(car -> Objects.isNull(queryCommand.getModelName()) || car.getNormalizedModelName().equals(Car.normalizeModelName(queryCommand.getModelName())))
                         .findFirst()
                         .orElse(null);
     }

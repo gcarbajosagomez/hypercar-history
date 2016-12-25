@@ -12,7 +12,7 @@
 		<div class="col-lg-2">
 			<div class="list-group">
 				<#list models as car>
-    				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+    				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
     					<h5 class="text-center list-group-element">${car.model?upper_case}</h5>
     				</a>
   				</#list> 
@@ -70,7 +70,7 @@
 <script type='application/javascript'>
 	
 	<#if cars?? && (models?size > carsPerPageData)>
-		$( document ).ready(function()
+		$(document).ready(function()
 		{
             <#if requestIsCars && (chunkedModelsList?size > 0)>
                 <@pagination.createCarsPagination chunkedModelsList/>
@@ -91,7 +91,7 @@
         var carRowString = "<div class='row car-list-row'>";
         carRowString = carRowString.concat("<ul class='grid preview'>");
 
-        for (var i=0 ; i< cars.length; i++)
+        for (var i = 0; i< cars.length; i++)
         {
             var carModel = cars[i].model;
             carRowString = carRowString.concat("<div id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div' class='col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>'>");
@@ -99,12 +99,12 @@
             carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
             carRowString = carRowString.concat(	  	 	"<figure>");
             carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
             carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				    "</a>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-            carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].id + "'>");
+            carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
 
             if (carModel.length < 33)
             {
@@ -144,13 +144,13 @@
             <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                        <a href='<@spring.url "/${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
                         	<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
                                  alt="${car.manufacturer.name} ${modelName}">
                     	</a>
 					</div>
                     <figcaption>
-                        <a href='<@spring.url "/${carsURL}/${car.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
                             <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
                                             <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>

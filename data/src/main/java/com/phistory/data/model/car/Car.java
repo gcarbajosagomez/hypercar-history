@@ -1,5 +1,6 @@
 package com.phistory.data.model.car;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.brake.BrakeSet;
@@ -8,6 +9,7 @@ import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.transmission.Transmission;
 import com.phistory.data.model.tyre.TyreSet;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
@@ -53,6 +55,7 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @Table(name = Car.CAR_TABLE_NAME,
         uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car implements GenericEntity {
@@ -179,5 +182,16 @@ public class Car implements GenericEntity {
         }
 
         return null;
+    }
+
+    @JsonProperty
+    public String getNormalizedModelName() {
+        return Car.normalizeModelName(this.getModel());
+    }
+
+    public static String normalizeModelName(String modelName) {
+        return modelName.toLowerCase()
+                        .trim()
+                        .replaceAll("\\s", "-");
     }
 }

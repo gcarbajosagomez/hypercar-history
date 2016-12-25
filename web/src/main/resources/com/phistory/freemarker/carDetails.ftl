@@ -15,12 +15,13 @@
 	</#if>
 
 	<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
+	<#assign metaKeywords = language.getTextSource('meta.keywords.carDetails', [car.model])/>
 <#else>
 	<#assign title>${language.getTextSource('meta.title.noCarFound')}</#assign>
 </#if>
 
 <@generic.startPage title
-					language.getTextSource('meta.keywords.carDetails', [car.model])
+					metaKeywords
 					null/>
 
 <div id="main-container" class="container">
@@ -588,6 +589,8 @@
 
 	$(function()
 	{
+        window.history.pushState(null,'',"${car.getNormalizedModelName()}");
+
 		$('.carousel').carousel({
 	  		interval: 8000
 		});

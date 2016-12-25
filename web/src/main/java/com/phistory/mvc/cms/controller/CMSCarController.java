@@ -5,7 +5,7 @@ import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
-import com.phistory.mvc.controller.CarController;
+import com.phistory.mvc.controller.CarListController;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
@@ -36,7 +36,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @Slf4j
 public class CMSCarController extends CMSBaseController
 {
-	private CarController carController;
+	private CarListController carListController;
 	private ModelFiller carModelFiller;
 	private ModelFiller pictureModelFiller;
 	private CarEditModelFiller carEditModelFiller;
@@ -45,14 +45,14 @@ public class CMSCarController extends CMSBaseController
     private CarControllerUtil carControllerUtil;
 
 	@Inject
-	public CMSCarController(CarController carController,
-							ModelFiller carModelFiller,
-							ModelFiller pictureModelFiller,
-							CarEditModelFiller carEditModelFiller,
-							CarListModelFiller sqlCarsListModelFiller,
-							CMSCarControllerUtil cmsCarControllerUtil,
-							CarControllerUtil carControllerUtil) {
-		this.carController = carController;
+	public CMSCarController(CarListController carListController,
+                            ModelFiller carModelFiller,
+                            ModelFiller pictureModelFiller,
+                            CarEditModelFiller carEditModelFiller,
+                            CarListModelFiller sqlCarsListModelFiller,
+                            CMSCarControllerUtil cmsCarControllerUtil,
+                            CarControllerUtil carControllerUtil) {
+		this.carListController = carListController;
 		this.carModelFiller = carModelFiller;
 		this.pictureModelFiller = pictureModelFiller;
 		this.carEditModelFiller = carEditModelFiller;
@@ -82,7 +82,7 @@ public class CMSCarController extends CMSBaseController
 	@ResponseBody
 	public void handlePagination(Model model, PaginationDTO paginationDTO)
 	{			
-		this.carController.handlePagination(model, paginationDTO);
+		this.carListController.handlePagination(model, paginationDTO);
 	}	
 	
     @RequestMapping(value = EDIT_URL,

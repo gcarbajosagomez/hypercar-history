@@ -76,7 +76,7 @@
     	<li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
         	<figure>
 				<div class="caption vertically-aligned-div vertically-aligned-preview-div">
-               		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${manufacturerId}=${manufacturer.id}"/>' alt="${manufacturer.name}">
+               		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${manufacturerIdData}=${manufacturer.id}"/>' alt="${manufacturer.name}">
 				</div>
 				<figcaption>
 			 		<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">

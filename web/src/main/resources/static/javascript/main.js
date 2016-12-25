@@ -97,7 +97,7 @@ function writeCarPreviews(data)
 	var auxCarRowList = new Array();
 	var carListString = "";
 							 
-	for (var i=0 ; i< data.length; i++)
+	for (var i = 0; i < data.length; i++)
 	{
     	if (i%2 == 0)
 		{

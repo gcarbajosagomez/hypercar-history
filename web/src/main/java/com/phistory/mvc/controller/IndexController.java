@@ -49,7 +49,7 @@ public class IndexController extends BaseController {
             this.pictureModelFiller.fillModel(model);
             model.addAttribute("carNamesToPictureIds", this.generateRandomCarNamesToPictureIds());
 
-            return new ModelAndView(INDEX_URL);
+            return new ModelAndView(INDEX_VIEW_NAME);
         } catch (Exception e) {
             log.error(e.toString(), e);
 

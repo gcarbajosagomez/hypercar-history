@@ -19,9 +19,11 @@ public class BaseControllerData
      ******Request params*****
      *************************/
 	public static final String ID          						= "id";
-    public static final String CAR_ID          					= "carId";
-    public static final String PICTURE_ID      					= "pictureId";
-    public static final String MANUFACTURER_ID          		= "manufacturerId";
+    public static final String CAR_ID          					= "cId";
+    public static final String CAR_MODEL_NAME 					= "mN";
+    public static final String ENGINE_ID	 					= "eId";
+    public static final String PICTURE_ID      					= "pId";
+    public static final String MANUFACTURER_ID          		= "mId";
     public static final String PAG_NUM      	  				= "pn";
     public static final String PAG_NUM_DATA	  					= "pagNumData";
     public static final String CARS_PER_PAGE  					= "cpp";
@@ -36,7 +38,8 @@ public class BaseControllerData
      *************************/
 	public static final String PICTURE_LOAD_ACTION 				= "action";
 	public static final String PICTURE_LOAD_COMMAND_ACTION 		= "pictureLoadCommand";
-	
+	public static final String CAR_QUERY_COMMAND		 		= "carQueryCommand";
+
 	/*************************
      **********Misc***********
      *************************/
@@ -47,6 +50,7 @@ public class BaseControllerData
 	public static final String UNITS_OF_MEASURE_IMPERIAL     		= "imperial";
 	public static final String LANGUAGE_COOKIE_NAME   				= "def_lang"; 
 	public static final String ERROR_VIEW_NAME                  	= "/error";  
+	public static final String INDEX_VIEW_NAME                  	= "index";
 	public static final String CARS                   				= "cars";
 	public static final String CAR                					= "car";
 	public static final String PICTURE_IDS                   		= "pictureIds";

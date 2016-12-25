@@ -25,7 +25,7 @@ import static org.hamcrest.Matchers.is;
 									  DirtiesContextTestExecutionListener.class })
 public class CarDetailsTest extends BaseIntegrationTest
 {
-	private static final String IRRELEVANT_CAR_ID = "2";
+	private static final String IRRELEVANT_CAR_MODEL = "zonda-c12";
 	@Value("${local.server.port}")
 	private int port;
 	private CarDetailsPage carDetailsPage;
@@ -35,7 +35,7 @@ public class CarDetailsTest extends BaseIntegrationTest
 	public void setupTest() throws Exception
 	{
 		super.setupBaseTest();
-		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL + "/" + IRRELEVANT_CAR_ID);
+		this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL + "/" + IRRELEVANT_CAR_MODEL);
 		this.carDetailsPage = new CarDetailsPage(this.webDriver);
 	}
 	

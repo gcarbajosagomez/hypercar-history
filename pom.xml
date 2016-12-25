@@ -35,6 +35,7 @@
 
         <org.projectlombok.version>1.16.6</org.projectlombok.version>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
+        <org.testng-all.version>6.9.10</org.testng-all.version>
 	</properties>
 
     <build>
@@ -100,6 +101,13 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${org.testng-all.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
