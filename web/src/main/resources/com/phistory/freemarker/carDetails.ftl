@@ -589,9 +589,7 @@
 
 	$(function()
 	{
-        window.history.pushState(null,'',"${car.getNormalizedModelName()}");
-
-		$('.carousel').carousel({
+        $('.carousel').carousel({
 	  		interval: 8000
 		});
 
