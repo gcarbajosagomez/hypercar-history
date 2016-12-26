@@ -15,8 +15,6 @@
     function callBack(status) {
         if(status == "SUCCESS"){
            $("#below-the-header-medium-banner").addClass("below-the-header-mobile-banner-div");
-        } else if(status == "ERROR"){
-            $("#below-the-header-medium-banner").removeClass("below-the-header-mobile-banner-div");
         }
     };
 
