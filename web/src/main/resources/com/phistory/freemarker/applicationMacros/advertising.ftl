@@ -12,6 +12,14 @@
 </#macro>
 
 <#macro performSmaatoAdRequest adSpaceId, adDivId, dimension, adSpaceName>
+    function callBack(status) {
+        if(status == "SUCCESS"){
+           $("#below-the-header-medium-banner").addClass("below-the-header-mobile-banner-div");
+        } else if(status == "ERROR"){
+            $("#below-the-header-medium-banner").removeClass("below-the-header-mobile-banner-div");
+        }
+    };
+
     var options = {publisherId: 1100029117,
                    adSpaceId: ${adSpaceId},
                    adDivId: "${adDivId}",
@@ -35,7 +43,7 @@
         }
     </#if>
 
-    SomaJS.loadAd(options);
+    SomaJS.loadAd(options, callBack);
 </#macro>
 
 <#macro performMopubJSAdRequests>
