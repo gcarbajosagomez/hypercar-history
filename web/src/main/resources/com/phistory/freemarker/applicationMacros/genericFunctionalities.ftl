@@ -65,7 +65,6 @@
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.min.js"></script>
 					<script src="/static/javascript/main.min.js"></script>
-
                     <#if requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">

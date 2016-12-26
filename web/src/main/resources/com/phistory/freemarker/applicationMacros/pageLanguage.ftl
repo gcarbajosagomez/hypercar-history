@@ -81,9 +81,19 @@
 	<#assign pageLanguages = ['en', 'es']>
 	<#list pageLanguages as language>		
 		<#if requestURI?contains(languageQueryString + "=")>
-			<link rel="alternate" hreflang="${language}" href="${requestURI?replace(languageQueryString + "=" + "\\w{2}\\b", languageQueryString + "=" + language, 'r')}"/>
-			<#if requestURI?contains(language)>
-				<link rel="alternate" hreflang="${language}" href="${requestURI?replace("[?&]" + languageQueryString + "=" + "\\w{2}\\b", '', 'r')}"/>
+			<#assign hrefLangString>${requestURI?replace("${languageQueryString}=\\w{2}\\b", "${languageQueryString}=${language}", 'r')}</#assign>
+			<#assign hrefLangString>${hrefLangString?replace("&${languageQueryString}=${language}", "", 'r')}</#assign>
+			<#if !hrefLangString?contains("${languageQueryString}=${language}")>
+				<#assign hrefLangString>${hrefLangString}&${languageQueryString}=${language}</#assign>
+			</#if>
+			<link rel="alternate" hreflang="${language}" href="${hrefLangString}"/>
+
+			<#if requestURI?contains("${languageQueryString}=${language}")>
+				<#assign hrefLangString>${requestURI?replace("[?&]${languageQueryString}=\\w{2}\\b", '', 'r')}</#assign>
+				<#if hrefLangString?contains("&") && !hrefLangString?contains("?")>
+					<#assign hrefLangString>${hrefLangString?replace("&", "?")}</#assign>
+				</#if>
+				<link rel="alternate" hreflang="${language}" href="${hrefLangString}"/>
 			</#if>
 		<#else>
 			<link rel="alternate" hreflang="${language}" href="${requestURI}<#if requestURI?contains("?")>&<#else>?</#if>${languageQueryString}=${language}"/>
