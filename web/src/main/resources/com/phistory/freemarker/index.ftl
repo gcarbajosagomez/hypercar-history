@@ -1,5 +1,6 @@
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
+<#import "applicationMacros/metaData.ftl" as metaData/>
 
 <@generic.startPage language.getTextSource('meta.title.index', [models?size])
 					language.getTextSource('meta.keywords.index')
@@ -48,11 +49,11 @@
 <@generic.endPage/>
 
 <script type="application/javascript">
-
-$(function() {
-	$('.carousel').carousel({
-  		interval: 8000
-	});
-})
-	
+	$(function() {
+		$('.carousel').carousel({
+			interval: 8000
+		});
+	})
 </script>
+
+<@metaData.addIndexStructuredMetadata/>

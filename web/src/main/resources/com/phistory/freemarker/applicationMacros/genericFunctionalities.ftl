@@ -23,25 +23,6 @@
 					<meta name="_csrf" content="${_csrf.token}"/>
 					<#-- default header name is X-CSRF-TOKEN -->
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
-                    <script type="application/ld+json">
-                    {
-                        "@context":"http://schema.org/",
-                        "@type":"WebSite",
-                        "name":"${language.getTextSource('paganiHistory')}",
-                        "url":"${siteURL}",
-                        "about":"${language.getTextSource('footer.aboutUs.text', [models?size])}",
-                        "keywords":"${metaKeywords}",
-                        "potentialAction": {
-                            "@type":"SearchAction",
-                            "target":"${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
-                            "query-input": {
-                                "@type":"PropertyValueSpecification",
-                                "valueName":"contentToSearch",
-                                "valueRequired":"http://schema.org/True"
-                            }
-                        }
-                    }
-                    </script>
 
 					<@language.addHrefLangInfo/>
 					<link rel="shortcut icon" href="/static/img/favicon.ico">
@@ -261,7 +242,9 @@
                 <@addBackToTopButton/>
 				<@language.addSetPageLanguage chunkedModelsList/>
 				<@contentSearch.addHandleContentSearchFunctionScript/>
-				<@advertising.addHTMLPerformSmaatoAdRequestsScript/>
+				<#if triggerMobileAdvertisement>
+					<@advertising.addHTMLPerformSmaatoAdRequestsScript/>
+				</#if>
 			</body>
         </html>
 </#macro>

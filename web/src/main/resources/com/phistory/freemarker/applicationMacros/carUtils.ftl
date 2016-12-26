@@ -103,63 +103,34 @@
     </script>
 </#macro>
 
-<#macro addCarStructuredMetadata>
-    <script type="application/ld+json">
-        {
-            "@context":"http://schema.org/",
-            "@type":"BreadcrumbList",
-            "itemListElement": [{
-                    "@type":"ListItem",
-                    "position":1,
-                    "item": {
-                        "@id":"${siteURL}/",
-                        "name":"Home"
-                    }
-                },
-                {
-                    "@type":"ListItem",
-                    "position":2,
-                    "item": {
-                        "@id":"${siteURL}/${carsURL}/",
-                        "name":"${language.getTextSource('cars.all', [models?size])}"
-                    }
-                },
-                {
-                    "@type":"ListItem",
-                    "position":3,
-                    "item": {
-                        "@id":"${siteURL}${requestURI}/",
-                        "name":"${language.getTextSource('pagani')} ${car.model}"
-                    }
-                }]
-        }
-    </script>
-
-    <script type="application/ld+json">
-        {
-            "@context":"http://schema.org/",
-            "@type":"Car",
-            "url":"${siteURL}${requestURI}/",
-            "manufacturer":"${language.getTextSource('pagani')}",
-            "name":"${car.model}",
-            "model":"${car.model}",
-            "category":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
-            "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
-            "description":"${language.getTextSource('pagani')} ${car.model}",
-            "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}",
-            "numberOfForwardGears":"${writeCarNumericData (car.transmission.numOfGears?default(-1))}",
-            "driveWheelConfiguration":"${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
-            "accelerationTime":"${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
-            "speed":"${carUtils.writeCarNumericData (car.topSpeed?default(-1))}<#if car.topSpeed??>${language.getTextSource('Km/h')}</#if>",
-            "productionDate":"${car.productionStartDate.time?string("yyyy")}",
-            "weight":"${carUtils.writeCarNumericData (car.weight?default(-1))}<#if car.weight??>${language.getTextSource('Kg')}</#if>",
-            "vehicleEngine": {
-                "@type": "EngineSpecification",
-                "name":"${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}",
-                "description":"${car.engine.size}${language.getTextSource('CM3')} ${language.getTextSource('engine.type.${car.engine.type}')} ${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}"
-            }
-        }
-    </script>
+<#macro printCarPreview car car_index row_index>
+    <#assign modelName>${car.model}</#assign>
+    <div id="${car.manufacturer.name}-${modelName}-div" class="col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>">
+        <#assign zIndex = (car_index + 1) * (row_index + 1)>
+        <#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->
+        <#assign zIndex = zIndex + (cars?size - ((car_index + 1) * (row_index + 1)) - zIndex)>
+        <#if requestIsDesktop && car_index == 0>
+            <#assign zIndex = (zIndex) - (1 * row_index)>
+        </#if>
+        <div class="thumbnail preview-div">
+            <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
+                <figure>
+                    <div class="caption vertically-aligned-div vertically-aligned-preview-div">
+                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                            <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
+                                 alt="${car.manufacturer.name} ${modelName}">
+                        </a>
+                    </div>
+                    <figcaption>
+                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                            <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
+                                                <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
+                        </a>
+                    </figcaption>
+                </figure>
+            </li>
+        </div>
+    </div>
 </#macro>
 
 <#function normalizeCarDescriptionString string>

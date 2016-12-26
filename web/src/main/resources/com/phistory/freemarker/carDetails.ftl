@@ -2,6 +2,7 @@
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 <#import "applicationMacros/picture.ftl" as picture/>
 <#import "applicationMacros/carUtils.ftl" as carUtils/>
+<#import "applicationMacros/metaData.ftl" as metaData/>
 
 <#if car??>
 	<#if pictureIds??>
@@ -609,5 +610,5 @@
 
 <@carUtils.addSetUnitsOfMeasureFunctionScript/>
 <#if car??>
-	<@carUtils.addCarStructuredMetadata/>
+	<@metaData.addCarStructuredMetadata metaKeywords/>
 </#if>
