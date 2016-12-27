@@ -482,10 +482,9 @@
 							<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakes')}</h3>
 						</div>
 						<div class="row panel-body">
-							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
-								<@carUtils.writeCarBrakeInfo car.brakeSet.rearBrake/>
-							</div>
+							<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
+							<div class="divider"></div>
+							<@carUtils.writeCarBrakeInfo car.brakeSet.rearBrake/>
 						</div>
                     </div>
   				</div>

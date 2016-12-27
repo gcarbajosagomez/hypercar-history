@@ -177,6 +177,10 @@
         margin-bottom: 0px;
     }
 
+    .brake-set-train-name {
+        margin-left: 0px
+    }
+
     .nav-tabs {
         width: 60%;
     }
@@ -199,8 +203,30 @@
         }
     }
 
-    .dl-horizontal dt {
-        width: 100%;
+    @media only screen and (orientation: portrait) and (max-width: 767px) {
+        .dl-horizontal dt {
+            width: 100% !important;
+        }
+    }
+
+    @media only screen and (orientation: portrait) and (min-width: 768px) {
+        .dl-horizontal dt {
+            width: 35%;
+        }
+
+        .dl-horizontal dd {
+            margin-left: 36% !important;
+        }
+    }
+
+    @media only screen and (orientation: landscape) and (min-width: 768px) {
+        .dl-horizontal dt {
+            width: 40%;
+        }
+
+        .dl-horizontal dd {
+            margin-left: 41% !important;
+        }
     }
 
     .dl-horizontal dd {

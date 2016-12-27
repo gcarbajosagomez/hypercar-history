@@ -516,11 +516,7 @@ a:hover {
     height: 38px;
 }
 
-@media (max-width: 768px) {
-    .dl-horizontal dt {
-        width: 100% !important;
-    }
-
+@media (max-width: 767px) {
     .dl-horizontal dd {
         margin-left: 0 !important;
     }
@@ -573,6 +569,19 @@ a:hover {
 .car-material-dd {
     margin-left: 21% !important;
     margin-bottom: 10px !important;
+}
+
+.brake-set-train-name {
+    margin-top: 0px;
+    margin-left: 10px
+}
+
+.brake-set-list-group {
+    margin-top: 0px;
+}
+
+.brake-set-list-group-item {
+    border: 0px;
 }
 
 .resizable-dd {
