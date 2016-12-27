@@ -142,7 +142,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
     public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
         //so that the content of the resources directory is served as static content
-		registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/").setCachePeriod(TWO_WEEKS_SECONDS);
+		registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/");
 		registry.addResourceHandler("/" + ROBOTS_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + ROBOTS_FILE_NAME);
 		registry.addResourceHandler("/" + SITEMAP_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + SITEMAP_FILE_NAME);
 		registry.addResourceHandler("/" + FAVICON_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "img/" + FAVICON_FILE_NAME);
