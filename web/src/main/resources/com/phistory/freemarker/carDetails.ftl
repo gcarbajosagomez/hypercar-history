@@ -74,11 +74,18 @@
 			</#if>
 
 			<div id="main-car-details-div" class="col-lg-12 panel-body">
-                <#if car.descriptionES?? || car.descriptionEN??>
+				<#assign showESDescription = false/>
+				<#assign showENDescription = false/>
+				<#if (car.descriptionES?? && car.descriptionES?length > 0) && lang == "es">
+					<#assign showESDescription = true/>
+				<#elseif (car.descriptionEN?? && car.descriptionEN?length > 0) && lang == "en">
+					<#assign showENDescription = true/>
+				</#if>
+                <#if showESDescription || showENDescription>
                     <div class="well car-description-well">
-                        <#if car.descriptionES?? && lang == "es">
+                        <#if showESDescription>
                             ${carUtils.normalizeCarDescriptionString(car.descriptionES?j_string)}
-                        <#elseif car.descriptionEN?? && lang == "en">
+                        <#elseif showENDescription>
                             ${carUtils.normalizeCarDescriptionString(car.descriptionEN?j_string)}
                         </#if>
                     </div>
@@ -343,7 +350,7 @@
 													</#if>
 												<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 													<#if car.fuelConsumption?? && car.fuelTankCapacity??>
-                                                        ${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity*0.219969)/(car.fuelConsumption/282.481)*100)?default(-1))}<em class="measure-unit-text">${language.getTextSource('Miles')}</em>
+                                                        ${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)*0.621371?default(-1))}<em class="measure-unit-text">${language.getTextSource('Miles')}</em>
 													<#else>
 														${language.getTextSource('unknown')}
 													</#if>
@@ -476,12 +483,8 @@
 						</div>
 						<div class="row panel-body">
 							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<#if (car.brakeSet??) && (car.brakeSet.frontBrake??)>
-									<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
-								</#if>
-								<#if (car.brakeSet??) && (car.brakeSet.backBrake??)>
-									<@carUtils.writeCarBrakeInfo car.brakeSet.backBrake/>
-								</#if>
+								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
+								<@carUtils.writeCarBrakeInfo car.brakeSet.rearBrake/>
 							</div>
 						</div>
                     </div>
@@ -559,15 +562,17 @@
 								</dt>
 								<dd>
 									<p class="text-muted">
-										${carUtils.writeCarNumericData (car.tyreSet.frontTyre.width?default(-1))} / ${carUtils.writeCarNumericData (car.tyreSet.frontTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (car.tyreSet.frontTyre.rimDiameter?default(-1))}
+										<#assign frontTyre = car.tyreSet.frontTyre/>
+										${carUtils.writeCarNumericData (frontTyre.width?default(-1))} / ${carUtils.writeCarNumericData (frontTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (frontTyre.rimDiameter?default(-1))}
 									</p>
 								</dd>
 								<dt>
-									${language.getTextSource('tyreSet.backTyre')} :
+									${language.getTextSource('tyreSet.rearTyre')} :
 								</dt>
 								<dd>
 									<p class="text-muted">
-										${carUtils.writeCarNumericData (car.tyreSet.backTyre.width?default(-1))} / ${carUtils.writeCarNumericData (car.tyreSet.backTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (car.tyreSet.backTyre.rimDiameter?default(-1))}
+										<#assign rearTyre = car.tyreSet.rearTyre/>
+										${carUtils.writeCarNumericData (rearTyre.width?default(-1))} / ${carUtils.writeCarNumericData (rearTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (rearTyre.rimDiameter?default(-1))}
 									</p>
 								</dd>
 							</dl>

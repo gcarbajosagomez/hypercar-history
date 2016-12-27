@@ -14,7 +14,7 @@
 <#macro performSmaatoAdRequest adSpaceId, adDivId, dimension, adSpaceName>
     function callBack(status) {
         if(status == "SUCCESS"){
-           $("#below-the-header-medium-banner").addClass("below-the-header-mobile-banner-div");
+           $("#below-the-header-medium-banner").css("margin-bottom", "20px");
         }
     };
 

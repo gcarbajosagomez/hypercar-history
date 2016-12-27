@@ -15,8 +15,7 @@ import com.phistory.data.model.transmission.TransmissionType;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransmissionForm
-{
+public class TransmissionForm {
     private Long id;
     private TransmissionType type;
     private Integer numOfGears;

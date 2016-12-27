@@ -190,7 +190,7 @@
 							</div>
     	        		</nav>
 						<#if triggerMobileAdvertisement>
-                            <div id="below-the-header-medium-banner" class="col-lg-12 center-block mobile-medium-banner-div"></div>
+                            <div id="below-the-header-medium-banner" class="col-lg-12 center-block below-the-header-mobile-banner-div mobile-medium-banner-div"></div>
 						</#if>
 
         	    		<form id="main-form" action="${requestURI}" method="POST">

@@ -17,8 +17,7 @@ import com.phistory.data.model.engine.EngineType;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EngineForm
-{   
+public class EngineForm {
     private Long id;
     private String code;
     @NotNull(message = "The field must not be blank.")

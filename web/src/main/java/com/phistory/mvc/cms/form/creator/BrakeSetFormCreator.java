@@ -26,7 +26,7 @@ public class BrakeSetFormCreator implements EntityFormCreator<BrakeSet, BrakeSet
         {
             BrakeSetForm BrakeSetForm = new BrakeSetForm(brakeSet.getId(),
             									 		 brakeSet.getFrontBrake(),
-            									 		 brakeSet.getBackBrake(),
+            									 		 brakeSet.getRearBrake(),
             									 		 brakeSet.getCar());
 
             return BrakeSetForm;
@@ -49,7 +49,7 @@ public class BrakeSetFormCreator implements EntityFormCreator<BrakeSet, BrakeSet
         {
             BrakeSet brakeSet = new BrakeSet(brakeSetForm.getId(),
             								 brakeSetForm.getFrontBrake(),
-            								 brakeSetForm.getBackBrake(),
+            								 brakeSetForm.getRearBrake(),
             								 brakeSetForm.getCar());
 
             return brakeSet;

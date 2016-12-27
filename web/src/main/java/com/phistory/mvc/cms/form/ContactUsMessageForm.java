@@ -9,21 +9,19 @@ import javax.validation.constraints.Size;
 
 /**
  * Form class to send a 'Contact Us' message
- * 
- * @author Gonzalo
  *
+ * @author Gonzalo
  */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactUsMessageForm
-{
-	@NotNull
-	@Size(min = 1)
-	private String subject;
-	private String senderName;
-	private String senderEmail;
-	@NotNull
-	@Size(min = 1)
-	private String message;
+public class ContactUsMessageForm {
+    @NotNull
+    @Size(min = 1)
+    private String subject;
+    private String senderName;
+    private String senderEmail;
+    @NotNull
+    @Size(min = 1)
+    private String message;
 }

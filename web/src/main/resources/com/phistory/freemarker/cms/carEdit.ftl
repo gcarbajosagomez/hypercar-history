@@ -503,7 +503,7 @@
                        <@spring.formHiddenInput "CEFC.carForm.brakeSetForm.id", ""/>
                        
                        <@writeBrakeEditFields CEFC.carForm.brakeSetForm.frontBrake "CEFC.carForm.brakeSetForm.frontBrake" "FRONT"/> 
-                       <@writeBrakeEditFields CEFC.carForm.brakeSetForm.backBrake "CEFC.carForm.brakeSetForm.backBrake" "BACK"/>
+                       <@writeBrakeEditFields CEFC.carForm.brakeSetForm.rearBrake "CEFC.carForm.brakeSetForm.rearBrake" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -588,7 +588,7 @@
                        <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id"/>
                        
                        <@writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/> 
-                       <@writeTyreEditFields CEFC.carForm.tyreSetForm.backTyre "CEFC.carForm.tyreSetForm.backTyre" "BACK"/>
+                       <@writeTyreEditFields CEFC.carForm.tyreSetForm.rearTyre "CEFC.carForm.tyreSetForm.rearTyre" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -805,7 +805,7 @@
 <#macro writeBrakeEditFields brake objectBindingPath brakeTrain>
       <div class="panel panel-default">
 	      <div class="panel-heading">
-		      <h4 class="text-left">${brakeTrain}</h4>
+		      <h4 class="text-left">${language.getTextSource('brakeSet.${brakeTrain?lower_case}')}</h4>
 		  </div>
 		  <div class="panel-body">
               <dl class="dl-horizontal dl-horizontal-edit text-left">

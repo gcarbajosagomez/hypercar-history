@@ -30,8 +30,7 @@ import com.phistory.data.model.car.ProductionType;
  */
 @Data
 @AllArgsConstructor
-public class CarForm
-{
+public class CarForm {
     private Long id;
 
     @Valid
@@ -71,7 +70,7 @@ public class CarForm
 
     private Calendar productionEndDate;
 
-    @Digits(integer=8, fraction=4, message="The numeric field has a wrong format")
+    @Digits(integer = 8, fraction = 4, message = "The numeric field has a wrong format")
     private Long weight;
 
     private Long length;
@@ -82,7 +81,7 @@ public class CarForm
 
     @Valid
     @NotNull(message = "The field must not be blank.")
-    private BrakeSetForm brakeSetForm;    
+    private BrakeSetForm brakeSetForm;
 
     @Valid
     @NotNull(message = "The field must not be blank.")
@@ -106,12 +105,11 @@ public class CarForm
 
     private String descriptionEN;
 
-    public CarForm()
-    {
-        this.engineForm         = new EngineForm();
-        this.brakeSetForm       = new BrakeSetForm();
-        this.transmissionForm   = new TransmissionForm();
-        this.tyreSetForm        = new TyreSetForm();
-        this.manufacturer       = new Manufacturer();
+    public CarForm() {
+        this.engineForm = new EngineForm();
+        this.brakeSetForm = new BrakeSetForm();
+        this.transmissionForm = new TransmissionForm();
+        this.tyreSetForm = new TyreSetForm();
+        this.manufacturer = new Manufacturer();
     }
 }

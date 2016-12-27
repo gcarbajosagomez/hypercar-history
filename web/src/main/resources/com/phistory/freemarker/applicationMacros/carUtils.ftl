@@ -22,45 +22,40 @@
 </#function>
 
 <#macro writeCarBrakeInfo brake>
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <#if brake.train = "FRONT">
-                <h3 class="text-left car-details-panel-heading">${language.getTextSource('brakeSet.front')}</h3>
-            <#else>
-                <h3 class="text-left car-details-panel-heading">${language.getTextSource('brakeSet.back')}</h3>
+    <#assign trainName = brake.train.getName()/>
+
+<ul class="list-group">
+    <li class="list-group-item"><h3 style="margin-top: 5px">${language.getTextSource('brakeSet.${trainName}')}</h3>
+    <dl class="dl-horizontal text-left">
+        <dt>
+            ${language.getTextSource('brake.disc.diameter')} :
+        </dt>
+        <dd>
+            <p class="text-muted">
+                ${writeCarNumericData (brake.discDiameter?default(-1))}<#if brake.discDiameter??><em class="measure-unit-text">${language.getTextSource('MM')}</em></#if>
+            </p>
+        </dd>
+        <dt>
+            ${language.getTextSource('brake.disc.material')} :
+        </dt>
+        <dd>
+            <#if brake.discMaterial??>
+                <p class="text-muted">
+                    ${language.getTextSource('brake.disc.material.${brake.discMaterial}')}
+                </p>
             </#if>
-        </div>
-        <div class="panel-body inner-car-details-panel-body">
-            <dl class="dl-horizontal text-left">
-                <dt>
-                    ${language.getTextSource('brake.disc.diameter')} :
-                </dt>
-                <dd>
-                    <p class="text-muted">
-                        ${writeCarNumericData (brake.discDiameter?default(-1))}<#if brake.discDiameter??><em class="measure-unit-text">${language.getTextSource('MM')}</em></#if>
-                    </p>
-                </dd>
-                <dt>
-                    ${language.getTextSource('brake.disc.material')} :
-                </dt>
-                <dd>
-                    <#if brake.discMaterial??>
-                        <p class="text-muted">
-                            ${language.getTextSource('brake.disc.material.${brake.discMaterial}')}
-                        </p>
-                    </#if>
-                </dd>
-                <dt>
-                    ${language.getTextSource('brake.caliper.numOfPistons')} :
-                </dt>
-                <dd>
-                    <p class="text-muted">
-                        ${writeCarNumericData (brake.caliperNumOfPistons?default(-1))}
-                    </p>
-                </dd>
-            </dl>
-        </div>
-    </div>
+        </dd>
+        <dt>
+            ${language.getTextSource('brake.caliper.numOfPistons')} :
+        </dt>
+        <dd>
+            <p class="text-muted">
+                ${writeCarNumericData (brake.caliperNumOfPistons?default(-1))}
+            </p>
+        </dd>
+    </dl>
+    </li>
+</ul>
 </#macro>
 
 <#macro addSetUnitsOfMeasureFunctionScript>

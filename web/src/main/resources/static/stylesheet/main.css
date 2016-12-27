@@ -458,6 +458,14 @@ a:hover {
     color: #337ab7;
 }
 
+#main-car-details-div > .panel > .panel-body {
+    padding-bottom: 0;
+}
+
+.inner-car-details-panel-body {
+    padding-bottom: 0;
+}
+
 .car-details-panel-body {
     padding: 0px !important;
 }
@@ -489,14 +497,6 @@ a:hover {
 #units-of-measure-dropdown-menu {
     margin-top: 0;
     top: 45px;
-}
-
-#main-car-details-div > .panel > .panel-body {
-    padding-bottom: 0;
-}
-
-.inner-car-details-panel-body {
-    padding-bottom: 0;
 }
 
 .dl-horizontal dd {

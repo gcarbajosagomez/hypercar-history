@@ -6,7 +6,6 @@ import lombok.*;
 import javax.persistence.*;
 
 /**
- *
  * @author Gonzalo
  */
 @Entity
@@ -15,8 +14,8 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Brake implements GenericEntity
-{	
+public class Brake implements GenericEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "brake_id")
@@ -31,15 +30,14 @@ public class Brake implements GenericEntity
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "brake_train", nullable = false)
     private BrakeTrain train;
-    
+
     @Override
     public Long getId() {
         return id;
     }
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public String toString() {
+        return null;
+    }
 }

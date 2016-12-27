@@ -17,12 +17,12 @@ public class BrakeSetForm
 {
     private Long id;
     private Brake frontBrake;
-    private Brake backBrake;
+    private Brake rearBrake;
     private Car car;
     
     public BrakeSetForm()
     {
         frontBrake = new Brake();
-        backBrake = new Brake();
+        rearBrake = new Brake();
     }
 }

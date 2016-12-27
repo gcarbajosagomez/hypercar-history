@@ -59,7 +59,6 @@
     }
 
     .below-the-header-mobile-banner-div {
-        margin-bottom: 20px;
         padding: 0px
     }
 
@@ -118,7 +117,7 @@
 
     .content-search-input {
         transition: none;
-        width: 55%;
+        width: 55% !important;
         color: white;
     }
 
@@ -132,12 +131,7 @@
 
     @media (orientation: landscape) {
         .content-search-input {
-            width: 60%;
-        }
-
-        .content-search-input:focus {
-            transition: none;
-            width: 60%;
+            width: 60% !important;
         }
     }
 

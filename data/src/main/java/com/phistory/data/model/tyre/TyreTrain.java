@@ -7,5 +7,5 @@ package com.phistory.data.model.tyre;
 public enum TyreTrain
 {
     FRONT,
-    BACK
+    REAR
 }

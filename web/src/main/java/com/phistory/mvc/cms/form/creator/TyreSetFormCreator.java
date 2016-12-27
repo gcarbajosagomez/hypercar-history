@@ -29,7 +29,7 @@ public class TyreSetFormCreator implements EntityFormCreator<TyreSet, TyreSetFor
                                                       tyreSet.getType(),
                                                       tyreSet.getModel(),
             								   		  tyreSet.getFrontTyre(),
-            								   		  tyreSet.getBackTyre(),
+            								   		  tyreSet.getRearTyre(),
             								   		  tyreSet.getCar());
 
             return tyreSetForm;
@@ -55,7 +55,7 @@ public class TyreSetFormCreator implements EntityFormCreator<TyreSet, TyreSetFor
                                           tyreSetForm.getType(),
                                           tyreSetForm.getModel(),
             							  tyreSetForm.getFrontTyre(),
-            							  tyreSetForm.getBackTyre(), 
+            							  tyreSetForm.getRearTyre(),
             							  tyreSetForm.getCar());
 
             return tyreSet;

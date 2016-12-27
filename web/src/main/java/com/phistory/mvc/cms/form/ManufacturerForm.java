@@ -15,13 +15,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManufacturerForm
-{
+public class ManufacturerForm {
     private Long id;
+
     @NotEmpty(message = "NotEmpty.manufacturerForm.name")
     private String name;
+
     @NotEmpty(message = "The field above must not be blank.")
     private String nationality;
+
     private PictureEditCommand previewPictureEditCommand;
-    private String story;   
+
+    private String story;
 }
