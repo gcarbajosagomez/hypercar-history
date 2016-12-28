@@ -98,7 +98,7 @@
     	        		<nav class="navbar navbar-default pagani-history-navbar" role="navigation">
           					<div class="navbar-header">
                                 <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-									<img class="main-logo" src="/static/img/pagani-history-logo.png">
+									<img class="main-logo" src="/static/img/pagani-history-logo.png" alt="Home page" title="Home page">
 								</a>
 
                                 <a class="toggle-button navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
@@ -122,7 +122,7 @@
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
-                                                                     title="${language.getTextSource('language.spanish')?upper_case}"/>
+                                                                     alt="${language.getTextSource('language.spanish')?upper_case}"/>
           													</div>
           													<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
@@ -139,7 +139,7 @@
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
           														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
-                                                                     title="${language.getTextSource('language.english')?upper_case}"/>
+                                                                     alt="${language.getTextSource('language.english')?upper_case}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>

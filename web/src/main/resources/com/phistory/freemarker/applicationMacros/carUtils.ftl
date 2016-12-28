@@ -112,8 +112,10 @@
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
                         <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-                            <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
-                                 alt="${car.manufacturer.name} ${modelName}">
+                            <img class="img-thumbnail preview-img"
+                                 src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
+                                 alt="${car.manufacturer.name} ${modelName} preview"
+                                 title="${car.manufacturer.name} ${modelName}">
                         </a>
                     </div>
                     <figcaption>

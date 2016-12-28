@@ -84,7 +84,7 @@
             carRowString = carRowString.concat(	  	 	"<figure>");
             carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
             carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
-            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
             carRowString = carRowString.concat(				    "</a>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
