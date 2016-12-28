@@ -76,7 +76,7 @@
 
 					  <div id="manufacturer-preview-picture-area">                 	    
                       	  	<@spring.bind "MEFC.manufacturerForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${manufacturerId}=${MEFC.manufacturerForm.id}"/>'</#if>                                                 
+                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${MEFC.manufacturerForm.id}"/>'</#if>
                       </div>  
              	 </dl>
      	   </div>

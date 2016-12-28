@@ -23,7 +23,6 @@ public class BaseControllerData
     public static final String CAR_MODEL_NAME 					= "mN";
     public static final String ENGINE_ID	 					= "eId";
     public static final String PICTURE_ID      					= "pId";
-    public static final String MANUFACTURER_ID          		= "mId";
     public static final String PAG_NUM      	  				= "pn";
     public static final String PAG_NUM_DATA	  					= "pagNumData";
     public static final String CARS_PER_PAGE  					= "cpp";

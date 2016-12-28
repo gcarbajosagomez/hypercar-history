@@ -25,12 +25,12 @@ public class Manufacturer implements GenericEntity
     private Long id;
     @Column(name = "manufacturer_name", nullable = false)
     private String name;
-    @Column(name = "manufacturer_nationality", nullable = true)
+    @Column(name = "manufacturer_nationality")
     private String nationality;
-    @Column(name = "manufacturer_logo", nullable = true)
+    @Column(name = "manufacturer_logo")
     @Lob
     private Blob logo;
-    @Column(name = "manufacturer_story", nullable = true)
+    @Column(name = "manufacturer_story")
     private String story;
 
 	@Override

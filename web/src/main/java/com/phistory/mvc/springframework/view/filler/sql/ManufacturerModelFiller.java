@@ -8,10 +8,9 @@ import org.springframework.ui.Model;
 
 import javax.inject.Inject;
 
-import static com.phistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
-import static com.phistory.mvc.controller.BaseControllerData.MANUFACTURER_ID;
-import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
 import static com.phistory.mvc.cms.controller.CMSBaseController.*;
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
+import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
 
 /**
  * Fills a Spring Framework Model with manufacturer related information
@@ -29,7 +28,6 @@ public class ManufacturerModelFiller implements ModelFiller
 	public void fillModel(Model model)
 	{
 		model.addAttribute(MANUFACTURERS, 	  			   	this.manufacturerDAO.getAll());
-		model.addAttribute("manufacturerIdData", 		   	MANUFACTURER_ID);
 		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
 	}
 	
