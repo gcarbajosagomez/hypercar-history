@@ -48,4 +48,14 @@ public class PaginationDTO {
         }
         return 0;
     }
+
+    /**
+     * Calculate the index (0 based) of the last result based on the number of the current page and items per page
+     */
+    public int getLastResult() {
+        if (this.itemsPerPage != null) {
+            return this.getFirstResult() + itemsPerPage;
+        }
+        return 0;
+    }
 }

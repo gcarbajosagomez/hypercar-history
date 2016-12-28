@@ -6,9 +6,11 @@
 <#import "applicationMacros/carUtils.ftl" as carUtils/>
 
 <#assign metaKeywords = language.getTextSource('meta.keywords.cars', [models?size])/>
-<@generic.startPage language.getTextSource('meta.title.allModels', [models?size])
+<#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
+<#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
+<@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])
                     metaKeywords
-                    language.getTextSource('meta.title.allModels.metaDescription', [models?size, numberOfPictures, numberOfVideos])/>
+                    language.getTextSource('meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
 
 <div id="main-container" class="container panel panel-default main-container main-panel">
 	<div class="main-car-list-container row">
@@ -40,29 +42,7 @@
 						</#list>
 					</ul>
 				</div>
-                <div id="car-pagination-main-div" class="col-lg-12">
-                    <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12 center-block well well-sm">
-                        <div id="pagination-row-div" class="row">
-                            <div class="text-left col-lg-8 col-md-8 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
-                                <ul id="pagination-ul"></ul>
-                            </div>
-                            <div class="text-right col-lg-4 col-md-4 <#if requestIsDesktop>col-sm-4 col-xs-4<#else>col-sm-12 col-xs-12</#if>">
-                                <button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle <#if requestIsDesktop>pull-right<#else>pull-left</#if>" data-toggle="dropdown">
-                                    ${language.getTextSource('pagination.carsPerPage')}
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-<#if requestIsDesktop>right<#else>left</#if>" role="menu" aria-labelledby="cars-per-page-dropdown">
-                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=5"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>5</a></li>
-                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=10"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>10</a></li>
-                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=15"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>15</a></li>
-                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=20"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>20</a></li>
-                                    <li role="presentation" class="divider"></li>
-                                    <li role="presentation"><a role="menuitem" href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'>${language.getTextSource('pagination.allCars')}</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <@carUtils.writePaginationMarkup/>
 			</#if>
         <#if requestIsDesktop></div></#if>
 	</div>

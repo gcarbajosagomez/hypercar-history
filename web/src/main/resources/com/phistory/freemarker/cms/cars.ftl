@@ -2,8 +2,11 @@
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/pagination.ftl" as pagination/>
+<#import "../applicationMacros/carUtils.ftl" as carUtils/>
 
-<@generic.startPage language.getTextSource('meta.title.allModels')/>
+<#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
+<#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
+<@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])/>
 
 <div id="main-container" class="container panel panel-default cars-main-container main-panel">
 	<div class="row">
@@ -30,38 +33,12 @@
 						</#list>
 					</ul>
 				</div>
-				
-				<#assign chunkedModelsList = models?chunk(carsPerPageData)>
-				
-				<div class="col-lg-12" style="margin-top: 55px;">
-					<div class="col-lg-6 col-md-6 col-sm-7 col-xs-8 center-block well well-sm">
-						<div id="pagination-row-div" class="row">
-							<#if (chunkedModelsList?size > 1)>					
-								<div class="text-left col-lg-8 col-md-7 col-sm-7 col-xs-8">
-									<ul id="pagination-ul"></ul>
-								</div>
-							</#if>
-							<div class="text-right col-lg-4 col-md-5 col-sm-5 col-xs-4" style="height:56px; margin-bottom: 20px;">
-								<button id="cars-per-page-dropdown" class="btn btn-default dropdown-toggle" style="padding: 10px; margin-top: 15px" type="button" data-toggle="dropdown">
-    								${language.getTextSource('pagination.carsPerPage')}
-    								<span class="caret"></span>
-  								</button>
-  								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="cars-per-page-dropdown">
-									<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=5">5</a></li>
-    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=10">10</a></li>
-    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=15">15</a></li>
-    								<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=20">20</a></li>
-   									<li role="presentation" class="divider"></li>
-	    							<li role="presentation"><a role="menuitem" href="${cmsContext}${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}">${language.getTextSource('pagination.allCars')}</a></li>
-  								</ul>
-  							</div>
-  						</div>
-  					</div>	
-				</div>			
+				<@carUtils.writePaginationMarkup/>
 			</#if>
 		</div>		
 	</div>
 </div>
+<#assign chunkedModelsList = models?chunk(carsPerPageData)>
 <@generic.endPage chunkedModelsList/>
 
 <script type='application/javascript'>
