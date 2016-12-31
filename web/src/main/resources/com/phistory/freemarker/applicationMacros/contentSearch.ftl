@@ -1,3 +1,4 @@
+<#compress>
 <#import "pagination.ftl" as pagination/>
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
@@ -64,3 +65,4 @@
 		}
 	</script>
 </#macro>
+</#compress>

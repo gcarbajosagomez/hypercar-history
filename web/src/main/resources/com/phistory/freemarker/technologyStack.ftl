@@ -1,3 +1,4 @@
+<#compress>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 
 <div class="modal-dialog modal-lg">
@@ -57,3 +58,4 @@
 		</div>      											
 	</div>
 </div>
+</#compress>

@@ -1,3 +1,4 @@
+<#compress>
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
@@ -15,8 +16,6 @@
     function callBack(status) {
         if(status == "SUCCESS"){
            $("#below-the-header-medium-banner").css("margin-bottom", "20px");
-        } else if(status == "ERROR") {
-            $("#below-the-header-medium-banner").css("margin-bottom", "0px");
         }
     };
 
@@ -72,3 +71,4 @@
         })();
     </script>
 </#macro>
+</#compress>

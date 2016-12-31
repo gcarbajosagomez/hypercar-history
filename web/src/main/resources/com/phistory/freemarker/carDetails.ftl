@@ -1,3 +1,4 @@
+<#compress>
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 <#import "applicationMacros/picture.ftl" as picture/>
@@ -616,3 +617,4 @@
 <#if car??>
 	<@metaData.addCarStructuredMetadata metaKeywords/>
 </#if>
+</#compress>

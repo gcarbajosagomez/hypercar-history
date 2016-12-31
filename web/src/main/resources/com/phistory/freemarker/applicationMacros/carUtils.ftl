@@ -1,3 +1,4 @@
+<#compress>
 <#import "pageLanguage.ftl" as language/>
 <#import "picture.ftl" as picture/>
 <#import "genericFunctionalities.ftl" as generic/>
@@ -162,3 +163,4 @@
     <#assign normalizedString>${normalizedString?replace("(.)(.{0,})", "<d class=\"big-text\">$1</d><d>$2</d>", "r")}</#assign>
     <#return normalizedString/>
 </#function>
+</#compress>

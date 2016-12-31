@@ -1,3 +1,4 @@
+<#compress>
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 
@@ -60,4 +61,5 @@
 			<br/>		
 		</div>
 	</div>
-<@generic.endPage/> 
+<@generic.endPage/>
+</#compress>

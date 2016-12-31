@@ -1,3 +1,4 @@
+<#compress>
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
 
@@ -146,3 +147,4 @@
     	$('#pagination-ul').bootstrapPaginator(paginationOptions);
     	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
+</#compress>

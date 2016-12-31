@@ -1,3 +1,4 @@
+<#compress>
 <#import "/spring.ftl" as spring/>
 <#import "contactUs.ftl" as contactUs/>
 <#import "pageLanguage.ftl" as language/>
@@ -334,3 +335,4 @@
         });
     </script>
 </#macro>
+</#compress>

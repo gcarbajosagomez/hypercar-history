@@ -1,64 +1,64 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		 				http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.pagani-history</groupId>
-		<artifactId>pagani-history</artifactId>
-		<version>1.2.3</version>
-	</parent>
+    <parent>
+        <groupId>com.pagani-history</groupId>
+        <artifactId>pagani-history</artifactId>
+        <version>1.2.3</version>
+    </parent>
 
-	<artifactId>pagani-history-web</artifactId>
-	<packaging>jar</packaging>
-	<name>Pagani History Web</name>
+    <artifactId>pagani-history-web</artifactId>
+    <packaging>jar</packaging>
+    <name>Pagani History Web</name>
 
-	<properties>
-		<project.resources.path>src/main/resources</project.resources.path>
+    <properties>
+        <project.resources.path>src/main/resources</project.resources.path>
 
-		<javax.ee.version>7.0</javax.ee.version>
-		<javax.mail.version>1.4.7</javax.mail.version>
-		<com.google.guava.version>19.0</com.google.guava.version>
-		<org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
-		<org.spring-boot.version>1.3.5.RELEASE</org.spring-boot.version>
-		<org.spring-mobile-device.version>1.1.5.RELEASE</org.spring-mobile-device.version>
-		<org.freemarker.version>2.3.23</org.freemarker.version>
-		<commons.collection.version>3.2.1</commons.collection.version>
-		<mysql.connector.version>5.1.36</mysql.connector.version>
-		<org.selenium.version>2.53.0</org.selenium.version>
-		<org.mockito-all.version>1.10.19</org.mockito-all.version>
-		<xml-apis.version>1.4.01</xml-apis.version>
-	</properties>
-	
-	<profiles>
-  		<profile>
-    		<id>dev</id>
-    		<activation>
-      			<activeByDefault>true</activeByDefault>
-    		</activation>
-    		<build>
-            	<resources>
-                	<resource>
-                    	<directory>${project.resources.path}/com/phistory/systemproperty/dev</directory>
-                    	<targetPath>com/phistory/systemproperty</targetPath>
-                	</resource>
-            	</resources>
-        	</build>
- 		</profile>
- 		<profile>
-    		<id>prod</id>
-    		<build>
-            	<resources>
-                	<resource>
-                    	<directory>${project.resources.path}/com/phistory/systemproperty/prod</directory>
-                    	<targetPath>com/phistory/systemproperty</targetPath>
-                	</resource>
-            	</resources>
-        	</build>
-  		</profile>
-	</profiles>
+        <javax.ee.version>7.0</javax.ee.version>
+        <javax.mail.version>1.4.7</javax.mail.version>
+        <com.google.guava.version>19.0</com.google.guava.version>
+        <org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
+        <org.spring-boot.version>1.3.5.RELEASE</org.spring-boot.version>
+        <org.spring-mobile-device.version>1.1.5.RELEASE</org.spring-mobile-device.version>
+        <org.freemarker.version>2.3.23</org.freemarker.version>
+        <commons.collection.version>3.2.1</commons.collection.version>
+        <mysql.connector.version>5.1.36</mysql.connector.version>
+        <org.selenium.version>2.53.0</org.selenium.version>
+        <org.mockito-all.version>1.10.19</org.mockito-all.version>
+        <xml-apis.version>1.4.01</xml-apis.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.resources.path}/com/phistory/systemproperty/dev</directory>
+                        <targetPath>com/phistory/systemproperty</targetPath>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>${project.resources.path}/com/phistory/systemproperty/prod</directory>
+                        <targetPath>com/phistory/systemproperty</targetPath>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 
     <build>
         <finalName>${project.name}-${project.version}</finalName>
@@ -69,119 +69,119 @@
         </resources>
 
         <plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>deployments</directory>
-							<includes>
-								<include>*.jar</include>
-								<followSymlinks>false</followSymlinks>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>deployments</directory>
+                            <includes>
+                                <include>*.jar</include>
+                                <followSymlinks>false</followSymlinks>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
             </plugin>
 
-			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<mainClass>com.phistory.Main</mainClass>
-					<finalName>Pagani-History</finalName>
-					<outputDirectory>../deployments</outputDirectory>
-					<excludeGroupIds>org.seleniumhq.selenium,org.projectlombok</excludeGroupIds>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>com.phistory.Main</mainClass>
+                    <finalName>Pagani-History</finalName>
+                    <outputDirectory>../deployments</outputDirectory>
+                    <excludeGroupIds>org.seleniumhq.selenium,org.projectlombok</excludeGroupIds>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
-	<dependencies>
-		<dependency>
-			<groupId>javax</groupId>
-			<artifactId>javaee-web-api</artifactId>
-			<version>${javax.ee.version}</version>
-			<scope>compile</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>${javax.mail.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>com.pagani-history</groupId>
-			<artifactId>pagani-history-data</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-web-api</artifactId>
+            <version>${javax.ee.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>mail</artifactId>
+            <version>${javax.mail.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.pagani-history</groupId>
+            <artifactId>pagani-history-data</artifactId>
             <exclusions>
                 <exclusion>
                     <groupId>org.springframework</groupId>
                     <artifactId>spring-web</artifactId>
                 </exclusion>
             </exclusions>
-		</dependency>	
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-			<version>${org.spring-boot.version}</version>
-			<exclusions>
-        		<exclusion>
-            		<groupId>org.springframework.boot</groupId>
-            		<artifactId>spring-boot-starter-logging</artifactId>
-        		</exclusion>
-    		</exclusions>
-		</dependency>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.mobile</groupId>
-			<artifactId>spring-mobile-device</artifactId>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>${org.spring-boot.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.mobile</groupId>
+            <artifactId>spring-mobile-device</artifactId>
             <version>${org.spring-mobile-device.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-log4j</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-test</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-freemarker</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
-		
-		<dependency>
-    		<groupId>org.springframework.boot</groupId>
-    		<artifactId>spring-boot-starter-security</artifactId>
-    		<version>${org.spring-boot.version}</version>
-		</dependency>
+        </dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-			<version>${org.spring-boot.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -191,50 +191,50 @@
         </dependency>
 
         <dependency>
-			<groupId>org.freemarker</groupId>
-			<artifactId>freemarker</artifactId>
-			<version>${org.freemarker.version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>${commons.collection.version}</version>
-			<scope>runtime</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>${mysql.connector.version}</version>
-			<scope>runtime</scope>
-		</dependency>
+            <groupId>org.freemarker</groupId>
+            <artifactId>freemarker</artifactId>
+            <version>${org.freemarker.version}</version>
+        </dependency>
 
-		<dependency>
-			<groupId>com.google.guava</groupId>
-			<artifactId>guava</artifactId>
-			<version>${com.google.guava.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>commons-collections</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>${commons.collection.version}</version>
+            <scope>runtime</scope>
+        </dependency>
 
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>${org.selenium.version}</version>
-			<scope>test</scope>
-		</dependency>
-		
-		<dependency>
-			<groupId>xml-apis</groupId>
-			<artifactId>xml-apis</artifactId>
-			<version>${xml-apis.version}</version>
-			<scope>test</scope>
-		</dependency>
-			
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${org.mockito-all.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${com.google.guava.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${org.selenium.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>${xml-apis.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${org.mockito-all.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

@@ -1,3 +1,4 @@
+<#compress>
 <#import "/spring.ftl" as spring/>
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
@@ -113,3 +114,4 @@
         return carRowString;
     }
 </script>
+</#compress>

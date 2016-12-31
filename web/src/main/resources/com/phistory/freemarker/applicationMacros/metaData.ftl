@@ -1,3 +1,4 @@
+<#compress>
 <#--
  Created by Gonzalo Carbajosa on 26/12/16.
 -->
@@ -126,3 +127,4 @@
         }
     </script>
 </#macro>
+</#compress>

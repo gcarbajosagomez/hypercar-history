@@ -39,11 +39,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @PropertySource(value = "classpath:com/phistory/systemproperty/systemProperties.properties")
 public class MainServletConfig extends WebMvcConfigurerAdapter
 {
-    private static final String NO_CACHE_VALUE = "0";
-    private static final Integer TWO_WEEKS_SECONDS = 1209600;
-    private static final String ROBOTS_FILE_NAME = "robots.txt";
-    private static final String SITEMAP_FILE_NAME = "sitemap.xml";
-    private static final String FAVICON_FILE_NAME = "favicon.ico";
+	private static final String NO_CACHE_VALUE = "0";
+	private static final Integer TWO_WEEKS_SECONDS = 1209600;
+	private static final Integer THIRTY_MINUTES_SECONDS = 1800;
+	private static final String ROBOTS_FILE_NAME = "robots.txt";
+	private static final String SITEMAP_FILE_NAME = "sitemap.xml";
+	private static final String FAVICON_FILE_NAME = "favicon.ico";
 
 	@Bean(name="viewResolver", autowire=Autowire.BY_NAME)
 	public FreeMarkerViewResolver internalResourceViewResolver()
@@ -142,7 +143,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
     public void addResourceHandlers(ResourceHandlerRegistry registry)
 	{
         //so that the content of the resources directory is served as static content
-		registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/");
+		registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/").setCachePeriod(THIRTY_MINUTES_SECONDS);
 		registry.addResourceHandler("/" + ROBOTS_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + ROBOTS_FILE_NAME);
 		registry.addResourceHandler("/" + SITEMAP_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + SITEMAP_FILE_NAME);
 		registry.addResourceHandler("/" + FAVICON_FILE_NAME).addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "img/" + FAVICON_FILE_NAME);

@@ -1,29 +1,29 @@
-<?xml version="1.0" encoding="UTF-8"?> 
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
 		 				http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-	<modelVersion>4.0.0</modelVersion> 
-	<groupId>com.pagani-history</groupId>
-	<artifactId>pagani-history</artifactId>
-	<version>1.2.3</version>
-	<packaging>pom</packaging>
-	<name>Pagani History</name>
-	<developers>
-		<developer>
-			<name>Gonzalo Carbajosa Gómez</name>
-			<url>https://es.linkedin.com/in/gonzalocarbajosagomez</url>
-		</developer>
-	</developers>
-	<inceptionYear>2014</inceptionYear>	
-	<url>www.paganihistory.com</url>
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.pagani-history</groupId>
+    <artifactId>pagani-history</artifactId>
+    <version>1.2.3</version>
+    <packaging>pom</packaging>
+    <name>Pagani History</name>
+    <developers>
+        <developer>
+            <name>Gonzalo Carbajosa Gómez</name>
+            <url>https://es.linkedin.com/in/gonzalocarbajosagomez</url>
+        </developer>
+    </developers>
+    <inceptionYear>2014</inceptionYear>
+    <url>www.paganihistory.com</url>
 
     <modules>
         <module>data</module>
         <module>web</module>
     </modules>
 
-	<properties>
+    <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
@@ -36,7 +36,7 @@
         <org.projectlombok.version>1.16.6</org.projectlombok.version>
         <org.springframework.version>4.2.6.RELEASE</org.springframework.version>
         <org.testng-all.version>6.9.10</org.testng-all.version>
-	</properties>
+    </properties>
 
     <build>
         <pluginManagement>

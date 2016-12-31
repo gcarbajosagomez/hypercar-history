@@ -1,3 +1,4 @@
+<#compress>
 <#--
  Created by Gonzalo Carbajosa on 25/12/16.
 -->
@@ -22,3 +23,4 @@
         linkColor: '#337ab7'
     });
 </#macro>
+</#compress>

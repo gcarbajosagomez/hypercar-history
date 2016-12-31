@@ -1,3 +1,4 @@
+<#compress>
 <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "applicationMacros/pageLanguage.ftl" as language/>
 <#import "applicationMacros/metaData.ftl" as metaData/>
@@ -57,3 +58,4 @@
 </script>
 
 <@metaData.addIndexStructuredMetadata/>
+</#compress>

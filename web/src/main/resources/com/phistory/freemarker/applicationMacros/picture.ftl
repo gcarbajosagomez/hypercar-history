@@ -1,3 +1,4 @@
+<#compress>
 <#import "pageLanguage.ftl" as language/>
 
 <#macro addPictureUploadBoxFunctionScript>
@@ -202,3 +203,4 @@
         }
     </script>
 </#macro>
+</#compress>
