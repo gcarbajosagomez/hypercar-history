@@ -1,4 +1,3 @@
-<#compress>
 <#import "genericFunctionalities.ftl" as generic/>
 <#import "pageLanguage.ftl" as language/>
 
@@ -127,4 +126,3 @@
     </div>
     </#if>
 </#macro>
-</#compress>

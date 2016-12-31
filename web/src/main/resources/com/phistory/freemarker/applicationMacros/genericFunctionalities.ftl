@@ -1,4 +1,3 @@
-<#compress>
 <#import "/spring.ftl" as spring/>
 <#import "contactUs.ftl" as contactUs/>
 <#import "pageLanguage.ftl" as language/>
@@ -78,7 +77,7 @@
 						$(document).ready(function()
 						{
                             <#-- this script needs all of the elements to have been created before it loads, therefore it must be included once the page has been loaded-->
-                            $.getScript('/static/javascript/lib/toucheffects.js', null);
+                            $.getScript('/static/javascript/lib/toucheffects.min.js', null);
 
                             <@cookiesDirective.loadCookiesDirectiveScript/>
         					setupContentSearchEventListeners();
@@ -335,4 +334,3 @@
         });
     </script>
 </#macro>
-</#compress>

@@ -1,4 +1,3 @@
-<#compress>
 <#import "/spring.ftl" as spring/>
 <#import "pagination.ftl" as pagination/>
 <#import "genericFunctionalities.ftl" as generic/>
@@ -106,4 +105,3 @@
 	<#assign message><@spring.messageArgs text arguments/></#assign>
 	<#return message/>
 </#function>
-</#compress>

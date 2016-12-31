@@ -1,4 +1,3 @@
-<#compress>
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
 
@@ -111,4 +110,3 @@
 		}
 	</script>
 </#macro>
-</#compress>

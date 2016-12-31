@@ -1,4 +1,3 @@
-<#compress>
 <#import "pageLanguage.ftl" as language/>
 
 <#macro addAddInternetContentFunctionScript>
@@ -68,4 +67,3 @@
         }
     </script>
 </#macro>
-</#compress>

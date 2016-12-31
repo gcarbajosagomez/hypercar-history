@@ -1,4 +1,3 @@
-<#compress>
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
@@ -71,4 +70,3 @@
         })();
     </script>
 </#macro>
-</#compress>

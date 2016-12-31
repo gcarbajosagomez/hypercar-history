@@ -14,7 +14,8 @@ public class BaseControllerData
 	public static final String PAGINATION_URL		= "pagination";
 	public static final String CONTACT_US_URL		= "contactUs";
 	public static final String TECHNOLOGY_STACK_URL	= "technologyStack";
-	
+	public static final String ERROR_URL			= "err";
+
 	/*************************
      ******Request params*****
      *************************/
