@@ -15,7 +15,7 @@ import com.phistory.data.model.engine.Engine;
  * @author gonzalo
  */
 @Component
-public class EngineControllerUtil {
+public class CMSEngineControllerUtil {
 
     @Inject
     private SQLEngineDAO engineDAO;

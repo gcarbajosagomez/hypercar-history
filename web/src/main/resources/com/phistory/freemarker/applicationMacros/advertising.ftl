@@ -1,25 +1,29 @@
 <#macro addHTMLPerformSmaatoAdRequestsScript>
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
-        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner"       "medrect"   "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205734" "below-the-header-desktop-leaderboard" "leader"    "PaganiHistory_desktop_728x90"/>
     </script>
 </#macro>
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
-        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner" "medrect" "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner"       "medrect"   "PaganiHistory_${deviceMake?lower_case}_300x250"/>
+        <@performSmaatoAdRequest "130205734" "below-the-header-desktop-leaderboard" "leader"    "PaganiHistory_desktop_728x90"/>
     });
 </#macro>
 
 <#macro performSmaatoAdRequest adSpaceId, adDivId, dimension, adSpaceName>
     function callBack(status) {
-        if(status == "SUCCESS"){
-           $("#below-the-header-medium-banner").css("margin-bottom", "20px");
-        }
+        <#if adDivId == "below-the-header-medium-banner">
+            if (status == "SUCCESS") {
+               $("#${adDivId}").css("margin-bottom", "20px");
+            }
+        </#if>
     };
 
-    var options = {publisherId: 1100029117,
-                   adSpaceId: ${adSpaceId},
+    var options = {publisherId: 0,
+                   adSpaceId: 0,
                    adDivId: "${adDivId}",
                    format: "all",
                    formatstrict: false,

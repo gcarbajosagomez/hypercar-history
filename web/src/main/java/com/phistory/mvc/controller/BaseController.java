@@ -2,6 +2,7 @@ package com.phistory.mvc.controller;
 
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
+import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
@@ -34,30 +35,33 @@ public class BaseController extends BaseControllerData
 {	
 	@Inject
 	@Getter
-	private SQLCarDAO sqlCarDAO;
+	private SQLCarDAO                     sqlCarDAO;
     @Inject
 	@Getter
-	private InMemoryCarDAO inMemoryCarDAO;
+	private InMemoryCarDAO                inMemoryCarDAO;
 	@Inject
 	@Getter
-	private SQLPictureDAO sqlPictureDAO;
+	private SQLPictureDAO                 sqlPictureDAO;
 	@Inject
 	@Getter
-	private InMemoryPictureDAO inMemoryPictureDAO;
+	private InMemoryPictureDAO            inMemoryPictureDAO;
 	@Inject
 	@Getter
-	private SQLContentSearchDAO sqlContentSearchDAO;
+	private SQLContentSearchDAO           sqlContentSearchDAO;
 	@Inject
 	@Getter
-	private SQLCarInternetContentDAO sqlCarInternetContentDAO;
+	private SQLCarInternetContentDAO      sqlCarInternetContentDAO;
 	@Inject
 	@Getter
 	private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
 	@Inject
-	private ModelFiller baseModelFiller;
+	@Getter
+	private InMemoryManufacturerDAO       inMemoryManufacturerDAO;
+	@Inject
+	private ModelFiller                   baseModelFiller;
 	@Getter
 	@Inject
-	private ResourceBundleMessageSource messageSource;
+	private ResourceBundleMessageSource   messageSource;
 	
 	@ModelAttribute
     public void fillBaseModel(Model model,

@@ -109,13 +109,14 @@
           					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
+                                     	<#--<li><a href='<@spring.url "/${manufacturerHistoryURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>-->
     	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <div class="divider navbar-divider"></div>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
         	  									<li role="presentation">
-          											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('es', $('#main-form')[0]);">
+          											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('${languageSpanishCode}', $('#main-form')[0]);">
           												<div class="row language-selection-div">
           													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
           													    <h4>${language.getTextSource('language.spanish')?upper_case}</h4>
@@ -132,7 +133,7 @@
         	  									</li>
           										<li role="separator" class="divider"></li>
           										<li role="presentation">
-          											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('en', $('#main-form')[0]);">
+          											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('${languageEnglishCode}', $('#main-form')[0]);">
 														<div class="row language-selection-div">
     	      												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
 																<h4>${language.getTextSource('language.english')?upper_case}</h4>
@@ -334,3 +335,10 @@
         });
     </script>
 </#macro>
+
+<#function normalizeDatabaseString string>
+	<#assign normalizedString>${string?replace("\\r\\n", "<br/>")}</#assign>
+	<#assign normalizedString>${normalizedString?replace("\\", "")}</#assign>
+	<#assign normalizedString>${normalizedString?replace("(.)(.{0,})", "<d class=\"big-text\">$1</d><d>$2</d>", "r")}</#assign>
+	<#return normalizedString/>
+</#function>

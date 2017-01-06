@@ -9,80 +9,81 @@ import org.springframework.util.StringUtils;
 /**
  * Created by gonzalo on 7/17/16.
  */
-public class ManufacturerEditPage extends CMSPage
-{
+public class ManufacturerEditPage extends CMSPage {
+
     @FindBy(id = "save-manufacturer-button")
     private WebElement saveManufacturerButtonLocator;
+
     @FindBy(id = "delete-manufacturer-button")
     private WebElement deleteManufacturerButtonLocator;
+
     @FindBy(className = "btn-default")
     private WebElement newManufacturerLinkLocator;
+
     @FindBy(id = "manufacturerForm.name")
     private WebElement nameInputLocator;
+
     @FindBy(id = "manufacturerForm.nationality")
     private WebElement nationalityInputLocator;
-    @FindBy(id = "manufacturerForm.story")
-    private WebElement storyInputLocator;
+
+    @FindBy(id = "manufacturerForm.historyES")
+    private WebElement historyESInputLocator;
+
+    @FindBy(id = "manufacturerForm.historyEN")
+    private WebElement historyENInputLocator;
+
     @FindBy(id = "manufacturerForm.previewPictureEditCommand.pictureFile")
     private WebElement logoFileInputLocator;
 
-    public ManufacturerEditPage(WebDriver webDriver)
-    {
+    public ManufacturerEditPage(WebDriver webDriver) {
         super(webDriver);
     }
 
-    public boolean isSaveManufacturerButtonDisplayed()
-    {
+    public boolean isSaveManufacturerButtonDisplayed() {
         return this.saveManufacturerButtonLocator.isDisplayed();
     }
 
-    public void clickSaveManufacturerButton()
-    {
+    public void clickSaveManufacturerButton() {
         this.saveManufacturerButtonLocator.click();
     }
 
-    public boolean isDeleteManufacturerButtonDisplayed()
-    {
+    public boolean isDeleteManufacturerButtonDisplayed() {
         return this.deleteManufacturerButtonLocator.isDisplayed();
     }
 
-    public void clickDeleteManufacturerButton()
-    {
+    public void clickDeleteManufacturerButton() {
         this.deleteManufacturerButtonLocator.click();
     }
 
-    public boolean isNewManufacturerLinkDisplayed()
-    {
+    public boolean isNewManufacturerLinkDisplayed() {
         return this.newManufacturerLinkLocator.isDisplayed();
     }
 
-    public void clickNewManufacturerLink()
-    {
+    public void clickNewManufacturerLink() {
         this.newManufacturerLinkLocator.click();
     }
 
-    public void typeName(String name)
-    {
+    public void typeName(String name) {
         this.nameInputLocator.sendKeys(name);
     }
 
-    public boolean nameInputHasContent()
-    {
+    public boolean nameInputHasContent() {
         return !StringUtils.isEmpty(this.nameInputLocator.getText());
     }
 
-    public void typeNationality(String nationality)
-    {
+    public void typeNationality(String nationality) {
         this.nationalityInputLocator.sendKeys(nationality);
     }
 
-    public void typeStory(String story)
-    {
-        this.storyInputLocator.sendKeys(story);
+    public void typeHistoryES(String history) {
+        this.historyESInputLocator.sendKeys(history);
     }
 
-    public void selectLogoFile(String filePath)
-    {
+    public void typeHistoryEN(String history) {
+        this.historyENInputLocator.sendKeys(history);
+    }
+
+    public void selectLogoFile(String filePath) {
         this.logoFileInputLocator.sendKeys(filePath);
     }
 }

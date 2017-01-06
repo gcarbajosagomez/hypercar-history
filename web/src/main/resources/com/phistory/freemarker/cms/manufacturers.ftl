@@ -7,7 +7,7 @@
 <div id="main-container" class="container panel panel-default main-container main-panel"> 
      <div class="row">
         <div class="col-lg-2">
-			<div class="thumbnail list-group">
+			<div class="list-group">
 				<#list manufacturers as manufacturer>
     				<a class="list-group-item" href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>'>
     					<h5 class="text-center list-group-element">${manufacturer.name}</h5>

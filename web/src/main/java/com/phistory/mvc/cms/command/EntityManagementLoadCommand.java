@@ -15,4 +15,5 @@ public class EntityManagementLoadCommand {
     private Long carId;
     private Long pictureId;
     private Long carInternetContentId;
+    private Long manufacturerId;
 }

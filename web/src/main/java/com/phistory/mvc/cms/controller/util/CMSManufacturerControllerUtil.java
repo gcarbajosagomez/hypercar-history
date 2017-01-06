@@ -5,7 +5,9 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.controller.CMSBaseController;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -17,6 +19,8 @@ import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
+
 /**
  * Set of utilities for the ManufacturerController class
  * 
@@ -24,13 +28,21 @@ import com.phistory.data.model.car.Car;
  *
  */
 @Component 
-public class ManufacturerControllerUtil extends CMSBaseController
+public class CMSManufacturerControllerUtil extends CMSBaseController
 {
-	@Inject()
-	private SQLManufacturerDAO manufacturerDAO;
-	@Inject()
+	private SQLManufacturerDAO      manufacturerDAO;
 	private ManufacturerFormCreator manufacturerFormCreator;
-	
+	private EntityManagementService entityManagementService;
+
+	@Inject
+	public CMSManufacturerControllerUtil(SQLManufacturerDAO manufacturerDAO,
+										 ManufacturerFormCreator manufacturerFormCreator,
+										 EntityManagementService entityManagementService) {
+		this.manufacturerDAO = manufacturerDAO;
+		this.manufacturerFormCreator = manufacturerFormCreator;
+		this.entityManagementService = entityManagementService;
+	}
+
 	/**
 	 * Handle the save or edition of a {@link Manufacturer}
 	 * 
@@ -109,5 +121,12 @@ public class ManufacturerControllerUtil extends CMSBaseController
 				  				 null,
 								 paginationFirstResult,
 								 manufacturersPaginationDTO.getItemsPerPage());
+	}
+
+	public void reloadManufacturerDBEntities(Long manufacturerId) {
+		EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+		entityManagementLoadCommand.setManufacturerId(manufacturerId);
+		entityManagementLoadCommand.setQueryType(RELOAD_MANUFACTURERS);
+		this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 	}
 }

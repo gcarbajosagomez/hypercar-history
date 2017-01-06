@@ -44,26 +44,29 @@ public class BaseModelFiller implements ModelFiller
 	@Override
 	public void fillModel(Model model)
 	{
-		model.addAttribute("indexURL", 			   	INDEX_URL);
-		model.addAttribute("cookiesPolicyURL", 	   	COOKIES_POLICY_URL);
-		model.addAttribute("carsURL", 			   	CARS_URL);	
-		model.addAttribute("enginesURL", 		   	ENGINES_URL);	
-		model.addAttribute("modelsSearchURL", 	   	MODELS_SEARCH_URL);
-		model.addAttribute("technologyStackURL", 	TECHNOLOGY_STACK_URL);
-		model.addAttribute("siteURL", 				"http://www.paganihistory.com");
-		model.addAttribute(ID, 				   		ID);
-		model.addAttribute("engineIdData", 	    	ENGINE_ID);
-		model.addAttribute("carsPerPage", 		   	CARS_PER_PAGE);
-		model.addAttribute("pagNum", 			   	PAG_NUM);
-		model.addAttribute("contentToSearch", 	   	CONTENT_TO_SEARCH);
-		model.addAttribute("languageCookieName",	LANGUAGE_COOKIE_NAME);
-		model.addAttribute("cmsContext", 			CMS_CONTEXT);
-		model.addAttribute("languageQueryString",	LANGUAGE_DATA);
-		model.addAttribute("doNotTrackParam",		DO_NOT_TRACK_REQUEST_PARAM);
-		model.addAttribute("carsHeaderLinkValue", 	this.buildCarsHeaderLinkValue());
-		model.addAttribute(MODELS, 					this.inMemoryCarDAO.getAllOrderedByProductionStartDate());
-		model.addAttribute(NUMBER_OF_PICTURES, 		this.inMemoryPictureDAO.getAllIds().size());
-		model.addAttribute(NUMBER_OF_VIDEOS, 		this.inMemoryCarInternetContentDAO.getAllVideos().size());
+		model.addAttribute("indexURL", 			   		INDEX_URL);
+		model.addAttribute("manufacturerHistoryURL",	MANUFACTURER_HISTORY_URL);
+		model.addAttribute("cookiesPolicyURL", 	   		COOKIES_POLICY_URL);
+		model.addAttribute("carsURL", 			   		CARS_URL);
+		model.addAttribute("enginesURL", 		   		ENGINES_URL);
+		model.addAttribute("modelsSearchURL", 	   		MODELS_SEARCH_URL);
+		model.addAttribute("technologyStackURL", 		TECHNOLOGY_STACK_URL);
+		model.addAttribute("siteURL", 					"http://www.paganihistory.com");
+		model.addAttribute(ID, 				   			ID);
+		model.addAttribute("engineIdData", 	    		ENGINE_ID);
+		model.addAttribute("carsPerPage", 		   		CARS_PER_PAGE);
+		model.addAttribute("pagNum", 			   		PAG_NUM);
+		model.addAttribute("contentToSearch", 	   		CONTENT_TO_SEARCH);
+		model.addAttribute("languageCookieName",		LANGUAGE_COOKIE_NAME);
+		model.addAttribute("cmsContext", 				CMS_CONTEXT);
+		model.addAttribute("languageQueryString",		LANGUAGE_DATA);
+		model.addAttribute("doNotTrackParam",			DO_NOT_TRACK_REQUEST_PARAM);
+		model.addAttribute("carsHeaderLinkValue", 		this.buildCarsHeaderLinkValue());
+		model.addAttribute(MODELS, 						this.inMemoryCarDAO.getAllOrderedByProductionStartDate());
+		model.addAttribute(NUMBER_OF_PICTURES, 			this.inMemoryPictureDAO.getAllIds().size());
+		model.addAttribute(NUMBER_OF_VIDEOS, 			this.inMemoryCarInternetContentDAO.getAllVideos().size());
+		model.addAttribute("languageSpanishCode", 		LANGUAGE_SPANISH_CODE);
+		model.addAttribute("languageEnglishCode", 		LANGUAGE_ENGLISH_CODE);
 	}
 
 	private String buildCarsHeaderLinkValue() {

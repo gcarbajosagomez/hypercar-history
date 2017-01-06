@@ -2,7 +2,7 @@ package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.Manufacturer;
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
-import com.phistory.mvc.cms.controller.util.ManufacturerControllerUtil;
+import com.phistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
@@ -33,11 +33,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class CMSManufacturerController extends CMSBaseController {
 
     @Inject
-    private ManufacturerModelFiller manufacturerModelFiller;
+    private ManufacturerModelFiller       manufacturerModelFiller;
     @Inject
-    private ModelFiller pictureModelFiller;
+    private ModelFiller                   pictureModelFiller;
     @Inject
-    private ManufacturerControllerUtil manufacturerControllerUtil;
+    private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
 
     @RequestMapping(method = GET)
     public ModelAndView handleListManufacturers(Model model,
@@ -59,7 +59,7 @@ public class CMSManufacturerController extends CMSBaseController {
                     produces = APPLICATION_JSON)
     @ResponseBody
     public Map<String, Object> handlePagination(@RequestBody(required = true) PaginationDTO paginationDTO) {
-        return this.manufacturerControllerUtil.createPaginationData(paginationDTO);
+        return this.cmsManufacturerControllerUtil.createPaginationData(paginationDTO);
     }
 
     @RequestMapping(value = EDIT_URL,
@@ -89,8 +89,9 @@ public class CMSManufacturerController extends CMSBaseController {
                                                   BindingResult result) {
         if (!result.hasErrors()) {
             try {
-                Manufacturer manufacturer = this.manufacturerControllerUtil.saveOrEditManufacturer(command, model);
+                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command, model);
 
+                this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
                                                          new Object[]{manufacturer.toString()},

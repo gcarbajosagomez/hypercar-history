@@ -42,7 +42,7 @@ public class InMemoryCarInternetContentDAO implements InMemoryDAO<CarInternetCon
         this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
     }
 
-    @Scheduled(initialDelayString = "${data.carInternetContents.inmemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.carInternetContents.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in memory");

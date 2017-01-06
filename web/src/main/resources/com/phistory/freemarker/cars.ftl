@@ -1,117 +1,117 @@
 <#compress>
-<#import "/spring.ftl" as spring/>
-<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
-<#import "applicationMacros/pageLanguage.ftl" as language/>
-<#import "applicationMacros/pagination.ftl" as pagination/>
-<#import "applicationMacros/metaData.ftl" as metaData/>
-<#import "applicationMacros/carUtils.ftl" as carUtils/>
+    <#import "/spring.ftl" as spring/>
+    <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
+    <#import "applicationMacros/pageLanguage.ftl" as language/>
+    <#import "applicationMacros/pagination.ftl" as pagination/>
+    <#import "applicationMacros/metaData.ftl" as metaData/>
+    <#import "applicationMacros/carUtils.ftl" as carUtils/>
 
-<#assign metaKeywords = language.getTextSource('meta.keywords.cars', [models?size])/>
-<#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
-<#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
-<@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])
-                    metaKeywords
-                    language.getTextSource('meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
+    <#assign metaKeywords = language.getTextSource('meta.keywords.cars', [models?size])/>
+    <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
+    <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
+    <@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])
+                        metaKeywords
+                        language.getTextSource('meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
 
-<div id="main-container" class="container panel panel-default main-container main-panel">
-	<div class="main-car-list-container row">
-		<div class="col-lg-2">
-			<div class="list-group">
-				<#list models as car>
-    				<a class="list-group-item" href='<@spring.url "${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-    					<h5 class="text-center list-group-element">${car.model?upper_case}</h5>
-    				</a>
-  				</#list> 
-				<#if models??>
-					<a class="list-group-item" <#if requestIsCars>href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'</#if>>
-    					<h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')?upper_case}</h5>
-    				</a>
-    			</#if>
-			</div>
-		</div>
-		
-		<#if requestIsDesktop><div id="main-car-list-div" class="col-lg-10 thumbnail"></#if>
-			<#if (carsPerPageData >= 1)>
-				<div id="car-list-div" class="col-lg-<#if requestIsDesktop>12<#else>10</#if>">
-					<ul class="grid preview">
-                        <#list cars?chunk(2) as row>
-							<div class="row car-list-row">
-								<#list row as car>
-                                    <@carUtils.printCarPreview car car_index row_index/>
-								</#list>
-							</div>
-						</#list>
-					</ul>
-				</div>
-                <@carUtils.writePaginationMarkup/>
-			</#if>
-        <#if requestIsDesktop></div></#if>
-	</div>
-</div>
-<#assign chunkedModelsList = models?chunk(carsPerPageData)>
-<@generic.endPage chunkedModelsList/>
-<@metaData.addCarListStructuredMetadata metaKeywords/>
+    <div id="main-container" class="container panel panel-default main-container main-panel">
+        <div class="main-car-list-container row">
+            <div class="col-lg-2">
+                <div class="list-group">
+                    <#list models as car>
+                        <a class="list-group-item" href='<@spring.url "${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                            <h5 class="text-center list-group-element">${car.model?upper_case}</h5>
+                        </a>
+                    </#list>
+                    <#if models??>
+                        <a class="list-group-item" <#if requestIsCars>href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'</#if>>
+                            <h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')?upper_case}</h5>
+                        </a>
+                    </#if>
+                </div>
+            </div>
 
-<script type='application/javascript'>
-	
-	<#if cars?? && (models?size > carsPerPageData)>
-		$(document).ready(function()
-		{
-            <#if requestIsCars && (chunkedModelsList?size > 0)>
-                <@pagination.createCarsPagination chunkedModelsList/>
-            <#elseif requestIsModelsSearch>
-                var contentSearchDto = {
-                                        ${pagNum} 			: 1,
-                                        ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
-                                        ${contentToSearch} : $("#content-search-input")[0].value,
-                                        searchTotalResults : $("#search-total-results")[0].value
-                };
-                <@pagination.createContentSearchPaginationFunction/>
-            </#if>
-		    });
-	</#if>
+            <#if requestIsDesktop><div id="main-car-list-div" class="col-lg-10 thumbnail"></#if>
+                <#if (carsPerPageData >= 1)>
+                    <div id="car-list-div" class="col-lg-<#if requestIsDesktop>12<#else>10</#if>">
+                        <ul class="grid preview">
+                            <#list cars?chunk(2) as row>
+                                <div class="row car-list-row">
+                                    <#list row as car>
+                                        <@carUtils.printCarPreview car car_index row_index/>
+                                    </#list>
+                                </div>
+                            </#list>
+                        </ul>
+                    </div>
+                    <@carUtils.writePaginationMarkup/>
+                </#if>
+            <#if requestIsDesktop></div></#if>
+        </div>
+    </div>
+    <#assign chunkedModelsList = models?chunk(carsPerPageData)>
+    <@generic.endPage chunkedModelsList/>
+    <@metaData.addCarListStructuredMetadata metaKeywords/>
 
-	function writeCarListRow(cars, zIndex)
-    {
-        var carRowString = "<div class='row car-list-row'>";
-        carRowString = carRowString.concat("<ul class='grid preview'>");
+    <script type='application/javascript'>
 
-        for (var i = 0; i< cars.length; i++)
+        <#if cars?? && (models?size > carsPerPageData)>
+            $(document).ready(function()
+            {
+                <#if requestIsCars && (chunkedModelsList?size > 0)>
+                    <@pagination.createCarsPagination chunkedModelsList/>
+                <#elseif requestIsModelsSearch>
+                    var contentSearchDto = {
+                                            ${pagNum} 			: 1,
+                                            ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+                                            ${contentToSearch} : $("#content-search-input")[0].value,
+                                            searchTotalResults : $("#search-total-results")[0].value
+                    };
+                    <@pagination.createContentSearchPaginationFunction/>
+                </#if>
+                });
+        </#if>
+
+        function writeCarListRow(cars, zIndex)
         {
-            var carModel = cars[i].model;
-            carRowString = carRowString.concat("<div id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div' class='col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>'>");
-            carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
-            carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
-            carRowString = carRowString.concat(	  	 	"<figure>");
-            carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
-            carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
-            carRowString = carRowString.concat(				    "</a>");
-            carRowString = carRowString.concat(				"</div>");
-            carRowString = carRowString.concat(				"<figcaption>");
-            carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
+            var carRowString = "<div class='row car-list-row'>";
+            carRowString = carRowString.concat("<ul class='grid preview'>");
 
-            if (carModel.length < 33)
+            for (var i = 0; i< cars.length; i++)
             {
-                carRowString = carRowString.concat(						"<h3 class='text-center'>" + carModel + "</h3>");
-            }
-            else
-            {
-                carRowString = carRowString.concat(						"<h3 class='text-center double-line-car-model-name'>" + carModel + "</h3>");
+                var carModel = cars[i].model;
+                carRowString = carRowString.concat("<div id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div' class='col-lg-6 col-md-6 col-sm-12 preview-outer<#if !requestIsDesktop> center-block</#if>'>");
+                carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
+                carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
+                carRowString = carRowString.concat(	  	 	"<figure>");
+                carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
+                carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
+                carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
+                carRowString = carRowString.concat(				    "</a>");
+                carRowString = carRowString.concat(				"</div>");
+                carRowString = carRowString.concat(				"<figcaption>");
+                carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
+
+                if (carModel.length < 33)
+                {
+                    carRowString = carRowString.concat(						"<h3 class='text-center'>" + carModel + "</h3>");
+                }
+                else
+                {
+                    carRowString = carRowString.concat(						"<h3 class='text-center double-line-car-model-name'>" + carModel + "</h3>");
+                }
+
+                carRowString = carRowString.concat(					"</a>");
+                carRowString = carRowString.concat(				"</figcaption>");
+                carRowString = carRowString.concat(	  		"</figure>");
+                carRowString = carRowString.concat(	  	 "</li>");
+                carRowString = carRowString.concat(	  "</div>");
+                carRowString = carRowString.concat("</div>");
             }
 
-            carRowString = carRowString.concat(					"</a>");
-            carRowString = carRowString.concat(				"</figcaption>");
-            carRowString = carRowString.concat(	  		"</figure>");
-            carRowString = carRowString.concat(	  	 "</li>");
-            carRowString = carRowString.concat(	  "</div>");
+            carRowString = carRowString.concat("</ul>");
             carRowString = carRowString.concat("</div>");
+
+            return carRowString;
         }
-
-        carRowString = carRowString.concat("</ul>");
-        carRowString = carRowString.concat("</div>");
-
-        return carRowString;
-    }
-</script>
+    </script>
 </#compress>

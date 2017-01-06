@@ -11,7 +11,7 @@ import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.cms.springframework.view.CarEditModelFiller;
-import com.phistory.mvc.service.EntityManagementService;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;

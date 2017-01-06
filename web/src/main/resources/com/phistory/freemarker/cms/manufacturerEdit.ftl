@@ -58,14 +58,19 @@
                		  <dd>
                    		   <@spring.formInput "MEFC.manufacturerForm.nationality", "class=form-control", "text"/>
                    		   <@spring.showErrors '<br>'/> 
-               		  </dd>           
-          			  <dt>
-              			   ${language.getTextSource('manufacturer.story')}
-                 	  </dt>
-					  <dd class="resizable-dd">
-                   	  		<@spring.formTextarea "MEFC.manufacturerForm.story", "class=form-control cols='50' rows='6'"/>
-                   		   	<@spring.showErrors '<br>'/>
                		  </dd>
+                      <dt>
+						  ${language.getTextSource('manufacturer.historyES')}
+                      </dt>
+                      <dd class="resizable-dd">
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='50' rows='6'"/>
+                      </dd>
+                      <dt>
+						  ${language.getTextSource('manufacturer.historyEN')}
+                      </dt>
+                      <dd class="resizable-dd">
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='50' rows='6'"/>
+                      </dd>
           			  <dt>
                			   ${language.getTextSource('manufacturer.logo')}
                 	  </dt>
@@ -76,7 +81,7 @@
 
 					  <div id="manufacturer-preview-picture-area">                 	    
                       	  	<@spring.bind "MEFC.manufacturerForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${MEFC.manufacturerForm.id}"/>'</#if>
+                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img pull-right" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${MEFC.manufacturerForm.id}"/>'</#if>
                       </div>  
              	 </dl>
      	   </div>

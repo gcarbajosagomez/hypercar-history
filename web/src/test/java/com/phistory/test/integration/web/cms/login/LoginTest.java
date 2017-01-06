@@ -5,12 +5,10 @@ import com.phistory.test.integration.web.BaseIntegrationTest;
 import com.phistory.test.integration.web.cms.car.CmsCarListPage;
 import com.phistory.test.integration.web.navbar.NavBarPage;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -19,13 +17,14 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.CMS_LOGIN_USER;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
-@SpringApplicationConfiguration(classes = Main.class)
-@WebAppConfiguration
-@IntegrationTest("server.port:0")
-@TestExecutionListeners(inheritListeners = false,
-						listeners = { DependencyInjectionTestExecutionListener.class,
-									  DirtiesContextTestExecutionListener.class })
+@SpringBootTest(
+		classes = Main.class,
+		webEnvironment = RANDOM_PORT)
+@TestExecutionListeners(
+		inheritListeners = false,
+		listeners = {DependencyInjectionTestExecutionListener.class, DirtiesContextTestExecutionListener.class})
 public class LoginTest extends BaseIntegrationTest
 {
 	@Value("${local.server.port}")

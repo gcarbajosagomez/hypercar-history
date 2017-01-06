@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.EngineForm;
 import com.phistory.mvc.cms.form.creator.EngineFormCreator;
-import com.phistory.mvc.cms.controller.util.EngineControllerUtil;
+import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
 import com.phistory.data.model.engine.Engine;
 
 /**
@@ -43,9 +43,9 @@ public class CMSEngineController extends CMSBaseController {
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
 
     @Inject
-    private EngineFormCreator engineFormCreator;
+    private EngineFormCreator       engineFormCreator;
     @Inject
-    private EngineControllerUtil engineControllerUtil;
+    private CMSEngineControllerUtil CMSEngineControllerUtil;
 
     @RequestMapping(method = GET,
                     produces = APPLICATION_JSON_VALUE)
@@ -90,7 +90,7 @@ public class CMSEngineController extends CMSBaseController {
                                    @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
         if (!result.hasErrors()) {
             try {
-                this.engineControllerUtil.deleteEngine(command);
+                this.CMSEngineControllerUtil.deleteEngine(command);
             } catch (Exception e) {
                 log.error(e.toString(), e);
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());

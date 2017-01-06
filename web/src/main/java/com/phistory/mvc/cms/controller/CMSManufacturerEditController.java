@@ -1,5 +1,7 @@
 package com.phistory.mvc.cms.controller;
 
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_MANUFACTURERS;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS_URL;
@@ -9,7 +11,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
-import com.phistory.mvc.cms.controller.util.ManufacturerControllerUtil;
+import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -38,35 +42,47 @@ import com.phistory.data.model.Manufacturer;
 @Slf4j
 @RequestMapping(value = CMS_CONTEXT + MANUFACTURERS_URL + "/{" + ID + "}")
 public class CMSManufacturerEditController extends CMSBaseController {
+
+    private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
+    private ManufacturerFormCreator       manufacturerFormCreator;
+    private ManufacturerModelFiller       manufacturerModelFiller;
+    private ModelFiller                   pictureModelFiller;
+    private EntityManagementService       entityManagementService;
+
     @Inject
-    private ManufacturerControllerUtil manufacturerControllerUtil;
-    @Inject
-    private ManufacturerFormCreator manufacturerFormCreator;
-    @Inject
-    private ManufacturerModelFiller manufacturerModelFiller;
-    @Inject
-    private ModelFiller pictureModelFiller;
+    public CMSManufacturerEditController(CMSManufacturerControllerUtil cmsManufacturerControllerUtil,
+                                         ManufacturerFormCreator manufacturerFormCreator,
+                                         ManufacturerModelFiller manufacturerModelFiller,
+                                         ModelFiller pictureModelFiller,
+                                         EntityManagementService entityManagementService) {
+        this.cmsManufacturerControllerUtil = cmsManufacturerControllerUtil;
+        this.manufacturerFormCreator = manufacturerFormCreator;
+        this.manufacturerModelFiller = manufacturerModelFiller;
+        this.pictureModelFiller = pictureModelFiller;
+        this.entityManagementService = entityManagementService;
+    }
 
     @RequestMapping(value = EDIT_URL,
-                    method = GET)
+            method = GET)
     public ModelAndView handleEditManufacturer(Model model) {
         this.fillModel(model);
         return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
     }
 
     @RequestMapping(value = EDIT_URL,
-                    method = {POST, PUT})
+            method = {POST, PUT})
     @ResponseBody
     public ModelAndView handleEditManufacturer(Model model,
                                                @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
                                                BindingResult result) {
         if (!result.hasErrors()) {
             try {
-                Manufacturer manufacturer = this.manufacturerControllerUtil.saveOrEditManufacturer(command, model);
+                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command, model);
+                this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{manufacturer.toString()},
+                                                         new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {
@@ -84,12 +100,21 @@ public class CMSManufacturerEditController extends CMSBaseController {
     @ResponseBody
     public ModelAndView handleDeleteManufacturer(Model model,
                                                  @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command) {
-        if (command.getManufacturerForm() != null && command.getManufacturerForm().getId() != null) {
+
+        ManufacturerForm manufacturerForm = command.getManufacturerForm();
+
+        if (command.getManufacturerForm() != null && manufacturerForm.getId() != null) {
             try {
-                manufacturerControllerUtil.deleteManufacturer(command);
+                cmsManufacturerControllerUtil.deleteManufacturer(command);
+
+                EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+                entityManagementLoadCommand.setManufacturerId(manufacturerForm.getId());
+                entityManagementLoadCommand.setQueryType(REMOVE_MANUFACTURERS);
+                this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{command.getManufacturerForm().getName()},
+                                                         new Object[] {manufacturerForm.getName()},
                                                          LocaleContextHolder.getLocale());
 
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);

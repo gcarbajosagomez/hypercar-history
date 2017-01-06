@@ -27,105 +27,104 @@ import java.util.Calendar;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 
 /**
- * Base controller that contains common CMS data and functionality 
- * 
- * @author Gonzalo
+ * Base controller that contains common CMS data and functionality
  *
+ * @author Gonzalo
  */
 @Controller
 @RequestMapping(value = CMS_CONTEXT)
 public class CMSBaseController extends BaseController {
-	/********************
+    /********************
      *******URLs*********
      ********************/
-	public static final String CMS_CONTEXT 					= "cms/"; 
-	public static final String LOGIN_URL	 	   			= "login";	
-	public static final String SAVE_URL 		 			= "save";
-	public static final String EDIT_URL 		 			= "edit";
-    public static final String DELETE_URL  					= "delete";
-	public static final String CARS_URL		           		= "cars";
-	public static final String MANUFACTURERS_URL			= "manufacturers";
-	public static final String CAR_INTERNET_CONTENTS_URL    = "carInternetContents";
-	public static final String ENTITY_MANAGEMENT_URL    	= "entityManagement";
+    public static final String CMS_CONTEXT               = "cms/";
+    public static final String LOGIN_URL                 = "login";
+    public static final String SAVE_URL                  = "save";
+    public static final String EDIT_URL                  = "edit";
+    public static final String DELETE_URL                = "delete";
+    public static final String CARS_URL                  = "cars";
+    public static final String MANUFACTURERS_URL         = "manufacturers";
+    public static final String CAR_INTERNET_CONTENTS_URL = "carInternetContents";
+    public static final String ENTITY_MANAGEMENT_URL     = "entityManagement";
 
     /*************************
      ******Request params*****
      *************************/
-	public static final String QUERY_STRING_SEPARATOR		= "?";
-	public static final String LOGIN_SUCCESS 				= "success";
-	public static final String LOGIN_ERROR 					= "error";
-	public static final String LOGOUT 						= "logout";
-    
-    public static final String MANUFACTURERS_PER_PAGE  		= "manufacturersPerPage";
-    public static final String MANUFACTURERS_PER_PAGE_DATA  = "manufacturersPerPageData";
-    public static final String CAR_INTERNET_CONTENT_ID		= "carInternetContentId";
+    public static final String QUERY_STRING_SEPARATOR = "?";
+    public static final String LOGIN_SUCCESS          = "success";
+    public static final String LOGIN_ERROR            = "error";
+    public static final String LOGOUT                 = "logout";
 
-	/*************************
+    public static final String MANUFACTURER_ID             = "manufacturerId";
+    public static final String MANUFACTURERS_PER_PAGE      = "manufacturersPerPage";
+    public static final String MANUFACTURERS_PER_PAGE_DATA = "manufacturersPerPageData";
+    public static final String CAR_INTERNET_CONTENT_ID     = "carInternetContentId";
+
+    /*************************
      **********Actions********
      *************************/
-    public static final String DELETE_CAR_PICTURE_ACTION    	= "deleteCarPicture";
-    public static final String ENTITY_MANAGEMENT_QUERY_ACTION	= "entityManagementQueryAction";
+    public static final String DELETE_CAR_PICTURE_ACTION      = "deleteCarPicture";
+    public static final String ENTITY_MANAGEMENT_QUERY_ACTION = "entityManagementQueryAction";
 
     /*************************
      **********Misc***********
      *************************/
-	public static final String MANUFACTURERS 							    = "manufacturers";
-	public static final String CAR_EDIT_VIEW_NAME 						    = "/cms/carEdit";
-	public static final String MANUFACTURER_EDIT_VIEW_NAME 				    = "/cms/manufacturerEdit";
-	public static final String CAR_EDIT_FORM_COMMAND 					    = "CEFC";
-	public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND 	    = "CICEFC";
-	public static final String MANUFACTURER_EDIT_FORM_COMMAND 			    = "MEFC";
-	public static final String PICTURE_EDIT_FORM_COMMAND 			        = "PEFC";
-	public static final String ENTITY_MANAGEMENT_LOAD_COMMAND 			    = "EMLC";
-	public static final String LOGGED_IN 								    = "loggedIn";
-	public static final String DATE_FORMAT 								    = "yyyy-MM";
-	public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE     = "entitySavedSuccessfully";
-	public static final String ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE    = "entityEditedSuccessfully";
-	public static final String ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE   = "entityDeletedSuccessfully";
-	public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE       = "entityContainedErrors";
+    public static final String MANUFACTURERS                              = "manufacturers";
+    public static final String CAR_EDIT_VIEW_NAME                         = "/cms/carEdit";
+    public static final String MANUFACTURER_EDIT_VIEW_NAME                = "/cms/manufacturerEdit";
+    public static final String CAR_EDIT_FORM_COMMAND                      = "CEFC";
+    public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND     = "CICEFC";
+    public static final String MANUFACTURER_EDIT_FORM_COMMAND             = "MEFC";
+    public static final String PICTURE_EDIT_FORM_COMMAND                  = "PEFC";
+    public static final String ENTITY_MANAGEMENT_LOAD_COMMAND             = "EMLC";
+    public static final String LOGGED_IN                                  = "loggedIn";
+    public static final String DATE_FORMAT                                = "yyyy-MM";
+    public static final String ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE   = "entitySavedSuccessfully";
+    public static final String ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE  = "entityEditedSuccessfully";
+    public static final String ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE = "entityDeletedSuccessfully";
+    public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE     = "entityContainedErrors";
 
-    private static final String CACHE_CONTROL_HTTP_HEADER   = "Cache-Control";
-    private static final String PRAGMA_HTTP_HEADER          = "Pragma";
-    private static final String EXPIRES_HTTP_HEADER         = "Expires";
+    private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
+    private static final String PRAGMA_HTTP_HEADER        = "Pragma";
+    private static final String EXPIRES_HTTP_HEADER       = "Expires";
 
     @Getter
     @Inject
-    private SQLManufacturerDAO sqlManufacturerDAO;
+    private SQLManufacturerDAO       sqlManufacturerDAO;
     @Getter
     @Inject
-    private SQLEngineDAO sqlEngineDAO;
+    private SQLEngineDAO             sqlEngineDAO;
     @Inject
-    private SQLCarDAO sqlCarDAO;
+    private SQLCarDAO                sqlCarDAO;
     @Getter
     @Inject
     private SQLCarInternetContentDAO sqlCarInternetContentDAO;
     @Inject
-	private ModelFiller cmsBaseModelFiller;
+    private ModelFiller              cmsBaseModelFiller;
 
     @ModelAttribute
-    public void fillBaseCmsModel(Model model, HttpServletResponse response)
-    {
-    	this.cmsBaseModelFiller.fillModel(model);
+    public void fillBaseCmsModel(Model model, HttpServletResponse response) {
+        this.cmsBaseModelFiller.fillModel(model);
         this.setNotCacheHeadersToResponse(response);
-		model.addAttribute("saveURL", 			        SAVE_URL);
-		model.addAttribute("deleteURL", 		        DELETE_URL);
-		model.addAttribute("manufacturersURL",	        MANUFACTURERS_URL);
-		model.addAttribute("loginURL", 	 		        LOGIN_URL);
-		model.addAttribute(LOGGED_IN, 	 		        true);
-		model.addAttribute("deleteCarPictureAction",    DELETE_CAR_PICTURE_ACTION);
-	}
-	
-	@InitBinder
-    public void initBinder(WebDataBinder binder)
-    {
-		binder.registerCustomEditor(Manufacturer.class,	new GenericObjectPropertyEditor<>(this.sqlManufacturerDAO));
-		binder.registerCustomEditor(Car.class,			new GenericObjectPropertyEditor<>(this.sqlCarDAO));
-        binder.registerCustomEditor(Engine.class, 		new GenericObjectPropertyEditor<>(this.sqlEngineDAO));
-        binder.registerCustomEditor(Calendar.class, 	new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
+        model.addAttribute("saveURL", SAVE_URL);
+        model.addAttribute("deleteURL", DELETE_URL);
+        model.addAttribute("manufacturersURL", MANUFACTURERS_URL);
+        model.addAttribute("loginURL", LOGIN_URL);
+        model.addAttribute(LOGGED_IN, true);
+        model.addAttribute("deleteCarPictureAction", DELETE_CAR_PICTURE_ACTION);
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<>(this.sqlManufacturerDAO));
+        binder.registerCustomEditor(Car.class, new GenericObjectPropertyEditor<>(this.sqlCarDAO));
+        binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<>(this.sqlEngineDAO));
+        binder.registerCustomEditor(Calendar.class, new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 
     /**
      * Set the necessary HTTP headers to the supplied {@link HttpServletResponse} so that it's not cached by browsers
+     *
      * @param response
      */
     private void setNotCacheHeadersToResponse(HttpServletResponse response) {

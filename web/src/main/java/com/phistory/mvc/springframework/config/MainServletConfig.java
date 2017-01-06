@@ -3,12 +3,8 @@ package com.phistory.mvc.springframework.config;
 import com.phistory.data.mvc.springframework.config.SqlDatabaseConfig;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowire;
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.ErrorPage;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.AntPathMatcher;
@@ -28,7 +24,6 @@ import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static java.util.Locale.ENGLISH;
-import static org.springframework.http.HttpStatus.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
@@ -102,7 +97,6 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 		localeResolver.setCookieName("def_lang");
 		localeResolver.setCookieSecure(false);
 		localeResolver.setCookiePath("/");
-		//2 weeks
 		localeResolver.setCookieMaxAge(TWO_WEEKS_SECONDS);
 		
 		return localeResolver;
@@ -112,11 +106,6 @@ public class MainServletConfig extends WebMvcConfigurerAdapter
 	public PasswordEncoder passwordEncoder()
 	{		
 		return new BCryptPasswordEncoder(11);
-	}
-
-	@Bean
-	public EmbeddedServletContainerCustomizer containerCustomizer() {
-		return container -> container.addErrorPages(new ErrorPage(NOT_FOUND, "/" + ERROR_URL));
 	}
 
 	@Override

@@ -26,5 +26,7 @@ public class ManufacturerForm {
 
     private PictureEditCommand previewPictureEditCommand;
 
-    private String story;
+    private String historyES;
+
+    private String historyEN;
 }

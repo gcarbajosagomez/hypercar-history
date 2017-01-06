@@ -40,7 +40,7 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
         this.sqlCarDAO = sqlCarDAO;
     }
 
-    @Scheduled(initialDelayString = "${data.cars.inmemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.cars.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");

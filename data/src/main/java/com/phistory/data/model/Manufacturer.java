@@ -6,7 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Blob;
 
-/**main.java.
+/**
+ * main.java.
  *
  * @author Gonzalo
  */
@@ -17,24 +18,25 @@ import java.sql.Blob;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Manufacturer implements GenericEntity
-{
+public class Manufacturer implements GenericEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "manufacturer_id")
-    private Long id;
+    private Long   id;
     @Column(name = "manufacturer_name", nullable = false)
     private String name;
     @Column(name = "manufacturer_nationality")
     private String nationality;
     @Column(name = "manufacturer_logo")
     @Lob
-    private Blob logo;
-    @Column(name = "manufacturer_story")
-    private String story;
+    private Blob   logo;
+    @Column(name = "manufacturer_history_es", columnDefinition = "LONGTEXT")
+    private String historyES;
+    @Column(name = "manufacturer_history_en", columnDefinition = "LONGTEXT")
+    private String historyEN;
 
-	@Override
-	public String toString() {
-		return this.name;
-	}
+    @Override
+    public String toString() {
+        return this.name;
+    }
 }

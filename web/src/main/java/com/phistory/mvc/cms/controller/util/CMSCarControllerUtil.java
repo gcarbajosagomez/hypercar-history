@@ -16,7 +16,7 @@ import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
 import com.phistory.mvc.cms.controller.CMSCarController;
 import com.phistory.mvc.cms.controller.CMSCarEditController;
 import com.phistory.mvc.controller.util.DateProvider;
-import com.phistory.mvc.service.EntityManagementService;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

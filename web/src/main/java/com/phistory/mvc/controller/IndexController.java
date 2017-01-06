@@ -25,7 +25,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @Slf4j
 @Controller
 @RequestMapping(value = {"/", INDEX_URL},
-                method = HEAD)
+                method = {GET, HEAD})
 public class IndexController extends BaseController {
     private static final int MAX_NUMBER_PICTURES_TO_DISPLAY = 9;
 
@@ -42,7 +42,7 @@ public class IndexController extends BaseController {
         this.previewPictureRandomGenerator = previewPictureRandomGenerator;
     }
 
-    @RequestMapping(method = GET)
+    @RequestMapping
     public ModelAndView handleDefault(Model model) {
         try {
             this.carModelFiller.fillModel(model);

@@ -3,7 +3,7 @@ package com.phistory.mvc.cms.controller;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
-import com.phistory.mvc.service.EntityManagementService;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
