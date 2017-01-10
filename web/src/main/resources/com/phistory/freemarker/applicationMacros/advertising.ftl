@@ -2,14 +2,12 @@
     <script type="text/javascript" src="https://soma-assets.smaato.net/js/smaatoAdTag.js"></script>
     <script>
         <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner"       "medrect"   "PaganiHistory_${deviceMake?lower_case}_300x250"/>
-        <@performSmaatoAdRequest "130205734" "below-the-header-desktop-leaderboard" "leader"    "PaganiHistory_desktop_728x90"/>
     </script>
 </#macro>
 
 <#macro performSmaatoJSAdRequests>
     $.getScript("https://soma-assets.smaato.net/js/smaatoAdTag.js", function() {
         <@performSmaatoAdRequest "130205382" "below-the-header-medium-banner"       "medrect"   "PaganiHistory_${deviceMake?lower_case}_300x250"/>
-        <@performSmaatoAdRequest "130205734" "below-the-header-desktop-leaderboard" "leader"    "PaganiHistory_desktop_728x90"/>
     });
 </#macro>
 
@@ -22,8 +20,10 @@
         </#if>
     };
 
-    var options = {publisherId: 0,
-                   adSpaceId: 0,
+    <#assign publisherId = 1100029117/>
+
+    var options = {publisherId: ${publisherId},
+                   adSpaceId: ${adSpaceId},
                    adDivId: "${adDivId}",
                    format: "all",
                    formatstrict: false,

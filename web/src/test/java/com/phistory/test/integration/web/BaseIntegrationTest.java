@@ -8,7 +8,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 public abstract class BaseIntegrationTest extends AbstractTestNGSpringContextTests {
-    
+
     protected static final String TEST_SERVER_HOST                   = "http://localhost:";
     protected static final long   STANDARD_TEST_WAIT_MILLIS          = 2000;
     protected static final String PROJECT_PATH                       = "/home/gonzalo/workspace/pagani-history-web";
