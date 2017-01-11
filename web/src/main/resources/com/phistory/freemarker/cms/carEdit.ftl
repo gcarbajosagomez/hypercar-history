@@ -20,7 +20,7 @@
 	   <div class="col-lg-6 col-sm-6 col-xs-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${language.getTextSource('car')}</h3>
+					<h3 class="text-left"><#if CEFC.carForm.id??>${CEFC.carForm.model}<#else>${language.getTextSource('car')}</#if></h3>
 
                     <table>
                         <tr>

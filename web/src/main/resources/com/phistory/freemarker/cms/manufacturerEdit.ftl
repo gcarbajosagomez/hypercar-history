@@ -17,7 +17,7 @@
 	  	<div class="col-lg-9 col-sm-12 col-xs-12">		
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left">${language.getTextSource('manufacturer')}</h3>
+					<h3 class="text-left"><#if MEFC.manufacturerForm.id??>${MEFC.manufacturerForm.name}<#else>${language.getTextSource('manufacturer')}</#if></h3>
 						
 					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>
 					                                                                                        ${language.getTextSource('cms.editManufacturer')}
