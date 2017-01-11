@@ -688,6 +688,10 @@ a:hover {
     height: 95%;
 }
 
+.car-description-img {
+    max-width: 80%;
+}
+
 .video-carousel-control {
     height: 50%;
     top: 25%;

@@ -324,6 +324,10 @@
         height: 90%;
     }
 
+    .car-description-img {
+        max-width: 90% !important;
+    }
+
     .car-details-panel-heading {
         font-size: 26px;
     }
