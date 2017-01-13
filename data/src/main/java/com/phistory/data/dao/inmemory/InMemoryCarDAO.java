@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 /**
  * {@link Car} {@link InMemoryDAO}
- *
+ * <p>
  * Created by gonzalo on 11/4/16.
  */
 @Repository(value = InMemoryCarDAO.BEAN_NAME)
@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
-    private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
+    private InMemoryPictureDAO                       inMemoryInMemoryPictureDAO;
     private com.phistory.data.dao.sql.impl.SQLCarDAO sqlCarDAO;
     private List<Car> cars = new ArrayList<>();
 
@@ -96,24 +96,29 @@ public class InMemoryCarDAO implements InMemoryDAO<Car, Long> {
     public Car getByQueryCommand(CarQueryCommand queryCommand) {
         return this.cars.stream()
                         .filter(car -> Objects.isNull(queryCommand.getCarId()) || car.getId().equals(queryCommand.getCarId()))
-                        .filter(car -> Objects.isNull(queryCommand.getEngineId()) || car.getEngine().getId().equals(queryCommand.getEngineId()))
-                        .filter(car -> Objects.isNull(queryCommand.getModelName()) || car.getNormalizedModelName().equals(Car.normalizeModelName(queryCommand.getModelName())))
+                        .filter(car -> Objects.isNull(queryCommand.getEngineId()) ||
+                                       car.getEngine().getId().equals(queryCommand.getEngineId()))
+                        .filter(car -> Objects.isNull(queryCommand.getModelName()) ||
+                                       car.getNormalizedModelName().equals(Car.normalizeModelName(queryCommand.getModelName())))
                         .findFirst()
                         .orElse(null);
     }
 
     /**
-     * Get all {@link Car}s ordered by their {@link Car#productionStartDate} descending
+     * Get all {@link Car}s whose {@link Car#visible} is true ordered by their {@link Car#productionStartDate} descending
      *
      * @return
      */
-    public List<Car> getAllOrderedByProductionStartDate() {
+    public List<Car> getAllVisibleOrderedByProductionStartDate() {
         return this.cars.stream()
+                        .filter(Car::getVisible)
                         .sorted(Comparator.comparing(Car::getProductionStartDate))
                         .collect(Collectors.toList());
     }
 
-    public int countDistinctCars() {
-        return this.cars.size();
+    public long countVisibleCars() {
+        return this.cars.stream()
+                        .filter(Car::getVisible)
+                        .count();
     }
 }

@@ -11,17 +11,19 @@ import javax.inject.Inject;
 
 /**
  * Set of utilities for {@link CarDetailsController}
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
 @Component
-public class CarControllerUtil
-{
-    @Inject
+public class CarControllerUtil {
     private ModelFiller carModelFiller;
-    @Inject
     private ModelFiller pictureModelFiller;
+
+    @Inject
+    public CarControllerUtil(ModelFiller carModelFiller, ModelFiller pictureModelFiller) {
+        this.carModelFiller = carModelFiller;
+        this.pictureModelFiller = pictureModelFiller;
+    }
 
     /**
      * Fills the supplied {@link Model} with the necessary data to handle car list requests
@@ -30,7 +32,7 @@ public class CarControllerUtil
      * @param model
      * @param paginationDTO
      */
-	public void fillCarListModel(CarListModelFiller carListModelFiller, Model model, PaginationDTO paginationDTO) {
+    public void fillCarListModel(CarListModelFiller carListModelFiller, Model model, PaginationDTO paginationDTO) {
         carListModelFiller.fillPaginatedModel(model, paginationDTO);
         this.carModelFiller.fillModel(model);
         this.pictureModelFiller.fillModel(model);

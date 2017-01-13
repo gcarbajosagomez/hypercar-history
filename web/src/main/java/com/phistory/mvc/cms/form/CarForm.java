@@ -33,6 +33,9 @@ import com.phistory.data.model.car.ProductionType;
 public class CarForm {
     private Long id;
 
+    @NotNull(message = "The field must not be blank.")
+    private Boolean visible = true;
+
     @Valid
     @NotNull(message = "The field must not be blank.")
     private Manufacturer manufacturer;

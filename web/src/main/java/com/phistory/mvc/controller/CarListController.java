@@ -20,55 +20,48 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
  * Controller to handle Cars URLs
- * 
- * @author Gonzalo
  *
+ * @author Gonzalo
  */
 @Slf4j
 @Controller
 @RequestMapping(value = CARS_URL,
-				method = {GET, HEAD})
-public class CarListController extends BaseController
-{
-	private CarControllerUtil carControllerUtil;
-	private CarListModelFiller inMemoryCarsListModelFiller;
+        method = {GET, HEAD})
+public class CarListController extends BaseController {
+    private CarControllerUtil  carControllerUtil;
+    private CarListModelFiller inMemoryCarsListModelFiller;
 
-	@Inject
-	public CarListController(CarControllerUtil carControllerUtil,
+    @Inject
+    public CarListController(CarControllerUtil carControllerUtil,
                              CarListModelFiller inMemoryCarsListModelFiller) {
-		this.carControllerUtil = carControllerUtil;
-		this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
-	}
+        this.carControllerUtil = carControllerUtil;
+        this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
+    }
 
-	@RequestMapping
-	public ModelAndView handleCarsList(Model model,
-									   PaginationDTO paginationDTO)
-	{		
-		try
-		{
+    @RequestMapping
+    public ModelAndView handleCarsList(Model model,
+                                       PaginationDTO paginationDTO) {
+        try {
             this.carControllerUtil.fillCarListModel(this.inMemoryCarsListModelFiller, model, paginationDTO);
-			return new ModelAndView(CARS);
-		}
-		catch(Exception e)
-		{
-			log.error(e.toString(), e);
-			return new ModelAndView(ERROR_VIEW_NAME);
-		}		
-	}
-	
-	@RequestMapping(value = "/" + PAGINATION_URL)
-	@ResponseBody
-	public Map<String, Object> handlePagination(Model model, PaginationDTO paginationDTO)
-	{
+            return new ModelAndView(CARS);
+        } catch (Exception e) {
+            log.error(e.toString(), e);
+            return new ModelAndView(ERROR_VIEW_NAME);
+        }
+    }
+
+    @RequestMapping(value = "/" + PAGINATION_URL)
+    @ResponseBody
+    public Map<String, Object> handlePagination(Model model, PaginationDTO paginationDTO) {
         this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);
 
-		Map<String, Object> modelMap = model.asMap();
-		Map<String, Object> data = new HashMap<>();
-    	data.put(CARS,                  modelMap.get(CARS));
-    	data.put(CARS_PER_PAGE_DATA,    modelMap.get(CARS_PER_PAGE_DATA));
-    	data.put(PAG_NUM_DATA,          modelMap.get(PAG_NUM_DATA));
+        Map<String, Object> modelMap = model.asMap();
+        Map<String, Object> data = new HashMap<>();
+        data.put(CARS, modelMap.get(CARS));
+        data.put(CARS_PER_PAGE_DATA, modelMap.get(CARS_PER_PAGE_DATA));
+        data.put(PAG_NUM_DATA, modelMap.get(PAG_NUM_DATA));
 
         //the model cannot be returned, because Spring tries to render the cars/pagination view otherwise
-		return data;
-	}
+        return data;
+    }
 }

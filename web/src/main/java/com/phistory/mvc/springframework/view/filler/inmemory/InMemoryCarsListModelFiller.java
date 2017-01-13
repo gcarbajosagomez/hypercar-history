@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.BaseControllerData.MODELS;
 
 /**
  * In-memory implementation of a {@link CarListModelFiller}
@@ -25,7 +24,8 @@ public class InMemoryCarsListModelFiller extends CarListModelFiller {
     private InMemoryCarDAO inMemoryCarDAO;
 
     @Override
-    public void fillModel(Model model) {}
+    public void fillModel(Model model) {
+    }
 
     @Override
     public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
@@ -40,10 +40,10 @@ public class InMemoryCarsListModelFiller extends CarListModelFiller {
      * @return The resulting {@link List<Car>}
      */
     public List<Car> loadCarsBySearchCommand(PaginationDTO paginationDTO) {
-        return this.inMemoryCarDAO.getAllOrderedByProductionStartDate()
-                          .stream()
-                          .skip(paginationDTO.getFirstResult())
-                          .limit(paginationDTO.getItemsPerPage())
-                          .collect(Collectors.toList());
+        return this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate()
+                                  .stream()
+                                  .skip(paginationDTO.getFirstResult())
+                                  .limit(paginationDTO.getItemsPerPage())
+                                  .collect(Collectors.toList());
     }
 }

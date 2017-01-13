@@ -54,7 +54,7 @@
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
 			      	  <#if CEFC.carForm.id??>
-                      	<dt>
+                        <dt>
                           	${language.getTextSource('id')}
                       	</dt>
                       	<dd>
@@ -65,12 +65,23 @@
                         </dd>
                       </#if>
                       <dt>
+                            ${language.getTextSource('car.visible')}
+                      </dt>
+                      <dd>
+                            <@spring.bind "CEFC.carForm.visible"/>
+
+                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                <option value="true" <#if CEFC.carForm.visible == true>selected</#if>>${language.getTextSource('yes')}</option>
+                                <option value="false" <#if CEFC.carForm.visible == false>selected</#if>>${language.getTextSource('no')}</option>
+                            </select>
+                      </dd>
+                      <dt>
                            ${language.getTextSource('car.manufacturer')}</h5>
                       </dt>
                       <dd>
                            <@spring.bind "CEFC.carForm.manufacturer"/>
 
-                           <select name="${spring.status.expression}" class="form-control">
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                               <#list manufacturers as manufacturer>
                                  <option value="${manufacturer.id}" <#if spring.status.value?? && manufacturer.id == spring.status.value?default(-1)?number> selected</#if>>${manufacturer.name}</option>
                               </#list>
@@ -302,7 +313,7 @@
                            <@spring.bind "CEFC.carForm.roadLegal"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                           		<option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>${language.getTextSource('yes')}</option>
+                                <option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>${language.getTextSource('yes')}</option>
                            		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>${language.getTextSource('no')}</option>
                            </select>
                       </dd>
