@@ -109,7 +109,7 @@
           					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
-                                     	<#--<li><a href='<@spring.url "/${manufacturerHistoryURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>-->
+                                     	<li><a href='<@spring.url "/${manufacturerHistoryURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>
     	          						<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <div class="divider navbar-divider"></div>
         	      						<li>
