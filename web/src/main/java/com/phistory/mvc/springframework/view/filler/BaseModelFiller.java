@@ -7,12 +7,15 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+import org.springframework.web.servlet.LocaleResolver;
 
 import javax.inject.Inject;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
 import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.language.Language.ENGLISH;
+import static com.phistory.mvc.language.Language.SPANISH;
 
 /**
  * Fills a Spring Framework Model with the basic information for the web context
@@ -54,16 +57,15 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("carsPerPage", CARS_PER_PAGE);
         model.addAttribute("pagNum", PAG_NUM);
         model.addAttribute("contentToSearch", CONTENT_TO_SEARCH);
-        model.addAttribute("languageCookieName", LANGUAGE_COOKIE_NAME);
         model.addAttribute("cmsContext", CMS_CONTEXT);
-        model.addAttribute("languageQueryString", LANGUAGE_DATA);
         model.addAttribute("doNotTrackParam", DO_NOT_TRACK_REQUEST_PARAM);
         model.addAttribute("carsHeaderLinkValue", this.buildCarsHeaderLinkValue());
         model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate());
         model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
         model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
-        model.addAttribute("languageSpanishCode", LANGUAGE_SPANISH_CODE);
-        model.addAttribute("languageEnglishCode", LANGUAGE_ENGLISH_CODE);
+        model.addAttribute("languageCookieName", LANGUAGE_COOKIE_NAME);
+        model.addAttribute("languageSpanishCode", SPANISH.getIsoCode());
+        model.addAttribute("languageEnglishCode", ENGLISH.getIsoCode());
     }
 
     private String buildCarsHeaderLinkValue() {

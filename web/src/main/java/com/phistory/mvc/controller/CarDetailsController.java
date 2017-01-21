@@ -4,10 +4,7 @@ import com.phistory.data.command.CarQueryCommand;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
-import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.controller.util.CarInternetContentUtils;
-import com.phistory.mvc.model.dto.PaginationDTO;
-import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;

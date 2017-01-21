@@ -1,6 +1,7 @@
 package com.phistory.mvc.controller;
 
 public class BaseControllerData {
+
     /********************
      *******URLs*********
      ********************/
@@ -70,6 +71,4 @@ public class BaseControllerData {
     public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES = "carInternetContentReviewArticles";
     public static final String NUMBER_OF_VIDEOS                     = "numberOfVideos";
     public static final String STATIC_RESOURCES_URI                 = "/static/";
-    public static final String LANGUAGE_SPANISH_CODE                = "es";
-    public static final String LANGUAGE_ENGLISH_CODE                = "en";
 }

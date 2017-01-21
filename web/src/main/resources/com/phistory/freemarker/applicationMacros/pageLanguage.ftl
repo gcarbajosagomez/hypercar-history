@@ -7,29 +7,25 @@
 
 	<script type='application/javascript'>
 		function setPageLanguage(locale, mainForm)
-		{  
-		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed) 
-		   { 
+		{
+		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed)
+		   {
 		   		ajaxCallBeingProcessed = true;
-		   		
-				if (mainForm.action.search(/[&?]${languageQueryString}=/) != -1)
-				{
-					<#--The lang param must be removed from the URL before sending it -->
-					mainForm.action = mainForm.action.replace(/[&?]${languageQueryString}=e[ns]/,'');
-				}
-		   		
-		   		$.ajax({            
+		   		var matches = mainForm.action.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
+               	var domain = matches && matches[0];
+               	var url = mainForm.action.replace(domain, domain + locale + '/');
+
+		   		$.ajax({
 		        	type:'GET',
-			        url: mainForm.action,
+			        url: url,
 		    	    contentType :'application/json; charset=UTF-8',
-		        	data: { ${languageQueryString}: locale },
 			        beforeSend: function(xhr)
 		    	    {
-		        	    if(locale == 'en')
+		        	    if(locale == '${languageEnglishCode}')
 		            	{
 			                $('#english-loading-gif').removeClass('sr-only');
 		    	        }
-		        	    else if(locale == 'es')
+		        	    else if(locale == '${languageSpanishCode}')
 		            	{
 		                	$('#spanish-loading-gif').removeClass('sr-only');
 			            }
@@ -40,7 +36,7 @@
 		   			}
 			   })
 			   .done(function(data)
-			   {           
+			   {
 			        document.children[0].innerHTML = data;
 					<#if (requestURI?matches("/" + carsURL + "([0-9]{0})") && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
@@ -59,7 +55,7 @@
 							</#if>
 			            }
 					</#if>
-		               
+
 		            ajaxCallBeingProcessed = false;
 		            setupContentSearchEventListeners();
 
@@ -70,7 +66,7 @@
 						   <@advertising.performSmaatoJSAdRequests/>
 					   </#if>
 				   	</#if>
-					$('#main-wrap-div').unblock();           	
+					$('#main-wrap-div').unblock();
 			   });
 		   }
 		}
@@ -78,26 +74,9 @@
 </#macro>
 
 <#macro addHrefLangInfo>
-	<#assign pageLanguages = ['en', 'es']>
-	<#list pageLanguages as language>		
-		<#if requestURI?contains(languageQueryString + "=")>
-			<#assign hrefLangString>${requestURI?replace("${languageQueryString}=\\w{2}\\b", "${languageQueryString}=${language}", 'r')}</#assign>
-			<#assign hrefLangString>${hrefLangString?replace("&${languageQueryString}=${language}", "", 'r')}</#assign>
-			<#if !hrefLangString?contains("${languageQueryString}=${language}")>
-				<#assign hrefLangString>${hrefLangString}&${languageQueryString}=${language}</#assign>
-			</#if>
-			<link rel="alternate" hreflang="${language}" href="${hrefLangString}"/>
-
-			<#if requestURI?contains("${languageQueryString}=${language}")>
-				<#assign hrefLangString>${requestURI?replace("[?&]${languageQueryString}=\\w{2}\\b", '', 'r')}</#assign>
-				<#if hrefLangString?contains("&") && !hrefLangString?contains("?")>
-					<#assign hrefLangString>${hrefLangString?replace("&", "?")}</#assign>
-				</#if>
-				<link rel="alternate" hreflang="${language}" href="${hrefLangString}"/>
-			</#if>
-		<#else>
-			<link rel="alternate" hreflang="${language}" href="${requestURI}<#if requestURI?contains("?")>&<#else>?</#if>${languageQueryString}=${language}"/>
-		</#if>
+	<#assign pageLanguages = [languageSpanishCode, languageEnglishCode]>
+	<#list pageLanguages as language>
+		<link rel="alternate" hreflang="${language}" href="/${language}${requestURI}"/>
 	</#list>
 </#macro>
 
