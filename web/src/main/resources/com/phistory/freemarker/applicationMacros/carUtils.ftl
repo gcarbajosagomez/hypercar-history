@@ -32,7 +32,7 @@
                 </dt>
                 <dd>
                     <p class="text-muted">
-                        ${writeCarNumericData (brake.discDiameter?default(-1))}<#if brake.discDiameter??><em class="measure-unit-text">${language.getTextSource('MM')}</em></#if>
+                        ${writeCarNumericData (brake.discDiameter?default(-1))}<#if brake.discDiameter??><em class="measure-unit-text"> ${language.getTextSource('MM')}</em></#if>
                     </p>
                 </dd>
                 <dt>
