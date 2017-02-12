@@ -58,7 +58,7 @@
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=10">10</a></li>
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=15">15</a></li>
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=20">20</a></li>
-   									<li role="presentation" class="divider"></li>
+   									<hr>
 	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${language.getTextSource('pagination.allManufacturers')}</a></li>
   								</ul>
   							</div>

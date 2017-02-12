@@ -4,7 +4,7 @@
 
     <script type="application/javascript">
         function addPictureUploadBox() {
-            var dividerDiv = $('<div>', {'class': 'divider'});
+            var dividerDiv = $('<hr>');
             var pictureUploadBoxNum = $("input[id$='picture.galleryPosition']").length;
             var numberOfCarPictureAreas = $("[id^='car-picture-area']").length;
 

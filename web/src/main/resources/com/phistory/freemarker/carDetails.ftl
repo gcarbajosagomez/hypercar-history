@@ -116,7 +116,7 @@
 															</div>
 														</a>
 													</li>
-													<li class="divider"></li>
+													<hr>
 													<li role="presentation">
 														<a class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setUnitsOfMeasure('${unitsOfMeasureImperial}', $('#main-form')[0]);" style="padding-right: 0px; padding-left: 0px;">
 															<div class="row" style="margin: 0px;">
@@ -484,7 +484,7 @@
 							</div>
 							<div class="row panel-body">
 								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
-								<div class="divider"></div>
+								<hr>
 								<@carUtils.writeCarBrakeInfo car.brakeSet.rearBrake/>
 							</div>
 						</div>

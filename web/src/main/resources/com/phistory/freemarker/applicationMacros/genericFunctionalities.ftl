@@ -110,9 +110,9 @@
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
                                      	<li><a href='<@spring.url "/${manufacturerHistoryURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>
-                                        <div class="divider navbar-divider"></div>
+                                        <hr class="navbar-divider">
 										<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
-                                        <div class="divider navbar-divider"></div>
+                                        <hr class="navbar-divider">
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
@@ -132,7 +132,7 @@
 	    	      										</div>
     	    	  									</a>
         	  									</li>
-          										<li role="separator" class="divider"></li>
+          										<hr role="separator" class="divider">
           										<li role="presentation">
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('${languageEnglishCode}', $('#main-form')[0]);">
 														<div class="row language-selection-div">
@@ -152,7 +152,7 @@
           									</ul>
               							</li>
               							<#if requestIsCMS && (loggedIn?? && loggedIn)>
-                                            <div class="divider navbar-divider"></div>
+                                            <hr class="navbar-divider">
               								<li>
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')?upper_case} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
@@ -162,21 +162,21 @@
 													<li role="presentation">
           												<a id="new-manufacturer-link" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')?upper_case}</a>
 													</li>
-													<li role="separator" class="divider"></li>
+                                                    <hr role="separator" class="divider">
         	  										<li role="presentation">
           												<a href='<@spring.url "/${cmsContext}${carsURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listCars')?upper_case}</a>
 													</li>
 													<li role="presentation">
           												<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newCar')?upper_case}</a>
 													</li>
-													<li role="separator" class="divider"></li>
+                                                    <hr role="separator" class="divider">
 													<li role="presentation">
           												<a onClick="submitLoginForm(false);" class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.logout')?upper_case}</a>
 													</li>
           										</ul>
               								</li>
               							</#if>
-                                        <div class="divider navbar-divider"></div>
+                                        <hr class="navbar-divider">
               							<li class="search-container-li">
               								<div id="search-container">
 												<a>${language.getTextSource('contentSearch.search')?upper_case}</a>
@@ -233,7 +233,7 @@
                                 </p>
                             </div>
       					</div>
-                        <div class="divider"></div>
+                        <hr>
       					<div class="row" style="margin-bottom: 15px">
         					<p class="col-lg-12 text-muted text-center" style="padding-top: 15px">
 								${language.getTextSource('paganiHistory')} 2015 - ${.now?string("yyyy")}. ${language.getTextSource('footer.allRightsReserved')}
