@@ -25,14 +25,12 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "picture",
-       uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD,
-                                                            Picture.PICTURE_GALLERY_POSITION_FIELD}))
+@Table(name = Picture.PICTURE_TABLE_NAME)
 
 public class Picture implements GenericEntity {
 
-    public static final String PICTURE_ID_FIELD = "picture_id";
-    public static final String PICTURE_GALLERY_POSITION_FIELD = "picture_gallery_position";
+    public static final String PICTURE_TABLE_NAME             = "picture";
+    public static final String PICTURE_ID_FIELD               = "picture_id";
 
     @Id
     @GeneratedValue(strategy = AUTO)

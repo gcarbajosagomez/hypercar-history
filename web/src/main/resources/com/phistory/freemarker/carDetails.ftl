@@ -464,9 +464,9 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('hpPerLitre')}</em>
+														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('hpPerLitre')}</#if></em>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData (((car.engine.maxPower*0.9863)/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('bhpPerLitre')}</em>
+														${carUtils.writeNonDecimalCarNumericData (((car.engine.maxPower*0.9863)/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('bhpPerLitre')}</#if></em>
 													</#if>
 												</p>
 											</dd>
