@@ -248,11 +248,7 @@
 											</dt>
 											<dd>
 												<p class="text-muted">
-													<#if car.engineLayout??>
-														${language.getTextSource('car.engineLayout.${car.engineLayout}')}
-													<#else>
-														${language.getTextSource('unknown')}
-													</#if>
+													${language.getTextSource('car.engineLayout.${car.engineLayout.getName()}')} ${language.getTextSource('car.engineDisposition.${car.engineDisposition.getName()}')?lower_case}
 												</p>
 											</dd>
 											<dt>

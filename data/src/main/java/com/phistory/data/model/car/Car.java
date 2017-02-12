@@ -12,16 +12,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.core.StopFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
-import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
-import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
-import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
-import org.apache.lucene.analysis.snowball.SnowballPorterFilterFactory;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
@@ -86,7 +80,10 @@ public class Car implements GenericEntity {
     private String model;
 
     @Column(name = "car_engine_layout", nullable = false)
-    private EngineLayout engineLayout;
+    private CarEngineLayout engineLayout;
+
+    @Column(name = "car_engine_disposition", nullable = false)
+    private CarEngineDisposition engineDisposition;
 
     @ManyToOne
     @Cascade(value = SAVE_UPDATE)
@@ -120,7 +117,7 @@ public class Car implements GenericEntity {
 
     @Enumerated(ORDINAL)
     @Column(name = "car_production_type", nullable = false)
-    private ProductionType productionType;
+    private CarProductionType productionType;
 
     @Column(name = "car_production_start_date", nullable = false)
     @Temporal(DATE)

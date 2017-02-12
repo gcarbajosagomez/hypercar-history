@@ -102,7 +102,18 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineLayouts as engineLayout>
-                                   <option value="${engineLayout}" <#if spring.status.value?? && engineLayout == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineLayout.${engineLayout}')}</option>
+                                   <option value="${engineLayout}" <#if spring.status.value?? && engineLayout == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineLayout.${engineLayout.getName()}')}</option>
+                               </#list>
+                           </select>
+
+                           <@spring.showErrors '<br>'/>
+                      </dd>
+                      <dd>
+                           <@spring.bind "CEFC.carForm.engineDisposition"/>
+
+                           <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                               <#list engineDispositions as engineDisposition>
+                                   <option value="${engineDisposition}" <#if spring.status.value?? && engineDisposition == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineDisposition.${engineDisposition.getName()}')}</option>
                                </#list>
                            </select>
 

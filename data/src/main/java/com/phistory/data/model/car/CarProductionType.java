@@ -6,7 +6,7 @@ package com.phistory.data.model.car;
  * @author gonzalo
  *
  */
-public enum ProductionType
+public enum CarProductionType
 {
 	SERIES_RUN("seriesRun"),
 	LIMITED_EDITION("limitedEdition"),
@@ -15,7 +15,7 @@ public enum ProductionType
 	
 	private String name;
 	
-	ProductionType(String name)
+	CarProductionType(String name)
 	{
 		this.name = name;
 	}
