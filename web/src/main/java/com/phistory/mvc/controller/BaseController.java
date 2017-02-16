@@ -14,12 +14,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.mobile.device.Device;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.LocaleResolver;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * Base controller that contains common data and functionality
@@ -86,11 +88,18 @@ public class BaseController extends BaseControllerData {
      */
     private String extractRequestUriFromRequest(HttpServletRequest request) {
         StringBuilder requestedUri = new StringBuilder();
-        String requestQueryString =
-                (request.getQueryString() != null && !request.getQueryString().isEmpty()) ? "?" + request.getQueryString() : "";
 
-        requestedUri.append(request.getRequestURI().toString());
-        requestedUri.append(requestQueryString);
+        String language = (String) request.getAttribute(LANGUAGE_DATA);
+        if (!StringUtils.isEmpty(language)) {
+            requestedUri.append("/" + language);
+        }
+
+        requestedUri.append(request.getRequestURI());
+
+        String queryString = request.getQueryString();
+        if (!StringUtils.isEmpty(queryString)) {
+            requestedUri.append("?" + queryString);
+        }
 
         return requestedUri.toString();
     }

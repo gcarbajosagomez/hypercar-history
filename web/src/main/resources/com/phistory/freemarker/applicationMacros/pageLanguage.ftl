@@ -76,7 +76,17 @@
 <#macro addHrefLangInfo>
 	<#assign pageLanguages = [languageSpanishCode, languageEnglishCode]>
 	<#list pageLanguages as language>
-		<link rel="alternate" hreflang="${language}" href="/${language}${requestURI}"/>
+		<#if requestURI?contains("/" + language + "/")>
+            <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + language + "/", '/')}"/>
+		<#else>
+            <#if requestURI?contains("/" + languageSpanishCode + "/")>
+                <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageSpanishCode + "/", "/" + languageEnglishCode + "/")}"/>
+            <#elseif requestURI?contains("/" + languageEnglishCode + "/")>
+                <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageEnglishCode + "/", "/" + languageSpanishCode + "/")}"/>
+            <#else>
+                <link rel="alternate" hreflang="${language}" href="/${language}${requestURI}"/>
+            </#if>
+		</#if>
 	</#list>
 </#macro>
 
