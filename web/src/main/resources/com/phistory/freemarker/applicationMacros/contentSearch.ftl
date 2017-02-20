@@ -8,8 +8,8 @@
 		function handleContentSearch(contentToSearch)
 		{
 			var contentSearchDto = {		
-									 ${pagNum} : 1,
-			         				 ${carsPerPage} : <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+									 ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
+			         				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 									 ${contentToSearch} : contentToSearch
 			         			   }; 
 			         			   

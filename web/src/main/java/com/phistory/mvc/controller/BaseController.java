@@ -87,20 +87,20 @@ public class BaseController extends BaseControllerData {
      * @return A string containing the requested URI if everything went well, an empty String otherwise
      */
     private String extractRequestUriFromRequest(HttpServletRequest request) {
-        StringBuilder requestedUri = new StringBuilder();
+        StringBuilder requestedURI = new StringBuilder();
 
         String language = (String) request.getAttribute(LANGUAGE_DATA);
         if (!StringUtils.isEmpty(language)) {
-            requestedUri.append("/" + language);
+            requestedURI.append("/" + language);
         }
 
-        requestedUri.append(request.getRequestURI());
+        requestedURI.append(request.getRequestURI());
 
         String queryString = request.getQueryString();
         if (!StringUtils.isEmpty(queryString)) {
-            requestedUri.append("?" + queryString);
+            requestedURI.append("?" + queryString);
         }
 
-        return requestedUri.toString();
+        return requestedURI.toString();
     }
 }

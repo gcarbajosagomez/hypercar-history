@@ -61,7 +61,7 @@ public class CarListController extends BaseController {
         data.put(CARS_PER_PAGE_DATA, modelMap.get(CARS_PER_PAGE_DATA));
         data.put(PAG_NUM_DATA, modelMap.get(PAG_NUM_DATA));
 
-        //the model cannot be returned, because Spring tries to render the cars/pagination view otherwise
+        //the model cannot be returned, or Spring would try to render the cars/pagination view
         return data;
     }
 }

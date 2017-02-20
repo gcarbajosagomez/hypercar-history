@@ -11,9 +11,10 @@
 		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed)
 		   {
 		   		ajaxCallBeingProcessed = true;
+                var url = mainForm.action.replace(/\/(${languageEnglishCode}|${languageSpanishCode})\//, '/');
 		   		var matches = mainForm.action.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
                	var domain = matches && matches[0];
-               	var url = mainForm.action.replace(domain, domain + locale + '/');
+               	var url = url.replace(domain, domain + locale + '/');
 
 		   		$.ajax({
 		        	type:'GET',
@@ -21,16 +22,16 @@
 		    	    contentType :'application/json; charset=UTF-8',
 			        beforeSend: function(xhr)
 		    	    {
-		        	    if(locale == '${languageEnglishCode}')
-		            	{
-			                $('#english-loading-gif').removeClass('sr-only');
-		    	        }
-		        	    else if(locale == '${languageSpanishCode}')
-		            	{
-		                	$('#spanish-loading-gif').removeClass('sr-only');
-			            }
+                        if (locale == '${languageEnglishCode}') {
+                            $('#english-loading-gif').removeClass('sr-only');
+                        }
+                        else if (locale == '${languageSpanishCode}') {
+                            $('#spanish-loading-gif').removeClass('sr-only');
+                        }
 
-                        window.history.pushState(null, '', mainForm.action);
+                        var regex = new RegExp('/' + locale + '/(.*)','g');
+                        var replacedURL = url.replace(regex, "/$1");
+                        window.history.pushState(null, '', replacedURL);
                         <@generic.addLoadingSpinnerToComponentScript "main-wrap-div"/>
                         addCRSFTokenToAjaxRequest(xhr);
 		   			}
@@ -38,7 +39,7 @@
 			   .done(function(data)
 			   {
 			        document.children[0].innerHTML = data;
-					<#if (requestURI?matches("/" + carsURL + "([0-9]{0})") && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>
+					<#if (requestURI?matches(".*/" + carsURL + "([0-9]{0})") && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {
@@ -46,7 +47,7 @@
 			              		<@pagination.createCarsPagination chunkedModelsList/>
 			              	<#elseif requestIsModelsSearch>
 								var contentSearchDto = {
-										 				 ${pagNum} 			: 1,
+										 				 ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
 				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
 										 				 ${contentToSearch} : $("#content-search-input")[0].value,
 										 				 searchTotalResults : $("#search-total-results")[0].value

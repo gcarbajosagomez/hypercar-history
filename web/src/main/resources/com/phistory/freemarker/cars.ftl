@@ -61,10 +61,10 @@
                     <@pagination.createCarsPagination chunkedModelsList/>
                 <#elseif requestIsModelsSearch>
                     var contentSearchDto = {
-                                            ${pagNum} 			: 1,
-                                            ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
-                                            ${contentToSearch} : $("#content-search-input")[0].value,
-                                            searchTotalResults : $("#search-total-results")[0].value
+                                            ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
+                                            ${carsPerPage} 	    : <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+                                            ${contentToSearch}  : $("#content-search-input")[0].value,
+                                            searchTotalResults  : $("#search-total-results")[0].value
                     };
                     <@pagination.createContentSearchPaginationFunction/>
                 </#if>
