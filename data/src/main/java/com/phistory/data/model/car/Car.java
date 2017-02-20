@@ -22,6 +22,7 @@ import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
+import java.text.Normalizer;
 import java.util.Calendar;
 
 import static javax.persistence.EnumType.ORDINAL;
@@ -179,7 +180,8 @@ public class Car implements GenericEntity {
     @Override
     public String toString() {
         if (this.getManufacturer() != null) {
-            return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")").toString();
+            return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")")
+                    .toString();
         }
 
         return null;
@@ -191,8 +193,11 @@ public class Car implements GenericEntity {
     }
 
     public static String normalizeModelName(String modelName) {
-        return modelName.toLowerCase()
-                        .trim()
-                        .replaceAll("\\s", "-");
+        modelName = Normalizer.normalize(modelName, Normalizer.Form.NFD);
+        modelName = modelName.toLowerCase()
+                             .trim()
+                             .replaceAll("\\s", "-")
+                             .replaceAll("\\p{M}", "");
+        return modelName;
     }
 }
