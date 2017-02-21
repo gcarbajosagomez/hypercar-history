@@ -39,13 +39,17 @@
 			   .done(function(data)
 			   {
 			        document.children[0].innerHTML = data;
-					<#if (requestURI?matches(".*/" + carsURL + "([0-9]{0})") && !requestURI?contains(cmsContext)) || requestURI?contains(modelsSearchURL)>
+					<#if requestIsCars || requestIsModelsSearch>
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
 			            if ($('#car-list-div').length > 0)
 			            {
 			              	<#if requestIsCars && (chunkedModelsList?size > 0)>
-			              		<@pagination.createCarsPagination chunkedModelsList/>
-			              	<#elseif requestIsModelsSearch>
+								<#if requestIsCMS>
+									<@pagination.addCMSCarsPagination chunkedModelsList/>
+								<#else>
+									<@pagination.addCarsPagination chunkedModelsList/>
+								</#if>
+							<#elseif requestIsModelsSearch>
 								var contentSearchDto = {
 										 				 ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
 				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,

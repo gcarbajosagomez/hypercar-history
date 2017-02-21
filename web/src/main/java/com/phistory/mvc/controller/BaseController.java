@@ -8,6 +8,7 @@ import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
 import com.phistory.data.dao.sql.impl.SQLContentSearchDAO;
 import com.phistory.data.dao.sql.impl.SQLPictureDAO;
+import com.phistory.mvc.service.URILoggingService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -62,45 +63,20 @@ public class BaseController extends BaseControllerData {
     private ResourceBundleMessageSource   messageSource;
     @Inject
     private LocaleResolver                localeResolver;
+    @Inject
+    private URILoggingService             uriLoggingService;
 
     @ModelAttribute
     public void fillBaseModel(@RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt,
                               Model model,
                               Device device,
                               HttpServletRequest request) {
-
-        String requestURI = this.extractRequestUriFromRequest(request);
-        log.info("Handling " + request.getMethod() + " request to URI " + requestURI);
-
+        String requestURI = this.uriLoggingService.logURI(request);
         model.addAttribute("requestURI", requestURI);
         model.addAttribute("requestIsDesktop", device.isNormal());
         model.addAttribute("deviceMake", device.getDevicePlatform().name());
         model.addAttribute("doNotTrack", dnt);
 
         this.baseModelFiller.fillModel(model);
-    }
-
-    /**
-     * Extract the requested URI from the {@link HttpServletRequest}
-     *
-     * @param request
-     * @return A string containing the requested URI if everything went well, an empty String otherwise
-     */
-    private String extractRequestUriFromRequest(HttpServletRequest request) {
-        StringBuilder requestedURI = new StringBuilder();
-
-        String language = (String) request.getAttribute(LANGUAGE_DATA);
-        if (!StringUtils.isEmpty(language)) {
-            requestedURI.append("/" + language);
-        }
-
-        requestedURI.append(request.getRequestURI());
-
-        String queryString = request.getQueryString();
-        if (!StringUtils.isEmpty(queryString)) {
-            requestedURI.append("?" + queryString);
-        }
-
-        return requestedURI.toString();
     }
 }

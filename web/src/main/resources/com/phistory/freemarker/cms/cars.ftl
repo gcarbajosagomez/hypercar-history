@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-lg-2">
 			<div class="list-group">
-				<#list models as car>
+				<#list cmsModels as car>
     				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
@@ -46,7 +46,7 @@
 	<#if cars?? && (models?size > carsPerPageData)>
 		$( document ).ready(function()
 		{
-  			<@pagination.createCarsPagination chunkedModelsList/>
+			<@pagination.addCMSCarsPagination chunkedModelsList/>
 		});
 	</#if>
     

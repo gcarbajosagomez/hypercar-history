@@ -58,7 +58,7 @@
             $(document).ready(function()
             {
                 <#if requestIsCars && (chunkedModelsList?size > 0)>
-                    <@pagination.createCarsPagination chunkedModelsList/>
+                    <@pagination.addCarsPagination chunkedModelsList/>
                 <#elseif requestIsModelsSearch>
                     var contentSearchDto = {
                                             ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,

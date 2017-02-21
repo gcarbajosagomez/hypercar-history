@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.springframework.view;
+package com.phistory.mvc.cms.springframework.view.filler;
 
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.impl.SQLEngineDAO;

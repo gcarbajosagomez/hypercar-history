@@ -300,10 +300,10 @@
         </#if>
     </#if>
 	<#if requestURI?contains(carsURL)>
-        <#if requestURI?matches("/" + carsURL + "/.{1,}")>
-            <#global requestIsCarDetails = true/>
+        <#if requestURI?matches(".*/" + carsURL + "[^/]*")>
+			<#global requestIsCars = true/>
         <#else>
-            <#global requestIsCars = true/>
+			<#global requestIsCarDetails = true/>
         </#if>
     </#if>
     <#if requestURI?contains(modelsSearchURL)>

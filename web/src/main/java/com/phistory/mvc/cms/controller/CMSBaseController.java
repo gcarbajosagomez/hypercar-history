@@ -83,6 +83,7 @@ public class CMSBaseController extends BaseController {
     public static final String ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE  = "entityEditedSuccessfully";
     public static final String ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE = "entityDeletedSuccessfully";
     public static final String ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE     = "entityContainedErrors";
+    public static final String CMS_MODELS                                 = "cmsModels";
 
     private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
     private static final String PRAGMA_HTTP_HEADER        = "Pragma";

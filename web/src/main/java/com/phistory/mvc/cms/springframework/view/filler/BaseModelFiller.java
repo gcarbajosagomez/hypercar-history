@@ -1,23 +1,34 @@
-package com.phistory.mvc.cms.springframework.view;
+package com.phistory.mvc.cms.springframework.view.filler;
 
+import com.phistory.data.dao.sql.impl.SQLCarDAO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
+import javax.inject.Inject;
+
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_CARS;
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_MODELS;
 import static com.phistory.mvc.cms.controller.CMSBaseController.EDIT_URL;
 
 /**
  * Fills a Spring Framework {@link Model} with the basic information for the CMS web context
- *
+ * <p>
  * Created by Gonzalo Carbajosa on 3/12/16.
  */
 @Component(value = "cmsBaseModelFiller")
 public class BaseModelFiller implements ModelFiller {
+    private SQLCarDAO sqlCarDAO;
+
+    @Inject
+    public BaseModelFiller(SQLCarDAO sqlCarDAO) {
+        this.sqlCarDAO = sqlCarDAO;
+    }
 
     @Override
     public void fillModel(Model model) {
         model.addAttribute("editURL",                           EDIT_URL);
         model.addAttribute("reloadCarsEntityManagementAction",  RELOAD_CARS);
+        model.addAttribute(CMS_MODELS,                          this.sqlCarDAO.getAllOrderedByProductionStartDate());
     }
 }

@@ -1,7 +1,15 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
 
-<#macro createCarsPagination chunkedModelsList=[]>
+<#macro addCarsPagination chunkedModelsList=[]>
+	<@carsPagination "/${carsURL}/${paginationURL}" chunkedModelsList/>
+</#macro>
+
+<#macro addCMSCarsPagination chunkedModelsList=[]>
+	<@carsPagination "/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
+</#macro>
+
+<#macro carsPagination url chunkedModelsList=[]>
 	var paginationOptions =
    	{
 	    bootstrapMajorVersion : 3,
@@ -37,7 +45,7 @@
 	       							  	 };
 		   	    	$.ajax({
 	    	       			type: 'GET',
-	            			url: "/${carsURL}/${paginationURL}",
+	            			url: "${url}",
 	           				data: paginationData, 
 	           				beforeSend: function(xhr)
 	           				{

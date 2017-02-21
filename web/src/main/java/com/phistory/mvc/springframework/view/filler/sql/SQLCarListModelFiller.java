@@ -9,12 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
-import static com.phistory.mvc.controller.BaseControllerData.MODELS;
 
 /**
  * SQL implementation of a {@link CarListModelFiller}
