@@ -15,561 +15,570 @@
         <loc>http://www.paganihistory.com/es/</loc>
     </url>
     <url>
+        <loc>http://www.paganihistory.com/error</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/en/error/</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/es/error/</loc>
+    </url>
+    <url>
         <loc>http://www.paganihistory.com/history</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/history/en/</loc>
+        <loc>http://www.paganihistory.com/en/history/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/history/es/</loc>
+        <loc>http://www.paganihistory.com/es/history/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/carsy/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cookiesPolicy</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cookiesPolicy/en/</loc>
+        <loc>http://www.paganihistory.com/en/cookiesPolicy/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cookiesPolicy/es/</loc>
+        <loc>http://www.paganihistory.com/es/cookiesPolicy/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-c12</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-c12/en/</loc>
+        <loc>http://www.paganihistory.com/cars/en/zonda-c12/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-c12/es/</loc>
+        <loc>http://www.paganihistory.com/cars/es/zonda-c12/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-s</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-s/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-s/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-s/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-s/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-s-7.3</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-s-7.3/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-s-7.3/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-s-7.3/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-s-7.3/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-roadster</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-roadster/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-roadster/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-gr</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-gr/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-gr/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-gr/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-gr/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-monza</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-monza/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-monza/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-monza/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-monza/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-f</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-f/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-f/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-f/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-f/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-roadster-f</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-f/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-roadster-f/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-f/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-roadster-f/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-f-clubsport</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-f-clubsport/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-f-clubsport/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-f-clubsport/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-f-clubsport/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-r</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-r/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-r/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-r/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-r/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-roadster-f-final-edition</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-f-final-edition/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-roadster-f-final-edition/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-f-final-edition/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-roadster-f-final-edition/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-ps</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-ps/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-ps/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-ps/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-ps/</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-cinque</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-cinque/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-cinque/</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-cinque/es/</loc>
+        <loc>http://www.paganihistory.com/cars/zonda-cinque</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-roadster-cinque</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-cinque/en/</loc>
+        <loc>http://www.paganihistory.com/cars/zonda-roadster-cinque</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-roadster-cinque/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-roadster-cinque</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-tricolore</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-tricolore/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-tricolore</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-tricolore/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-tricolore</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-750</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-750/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-750</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-750/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-750</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-absolute</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-absolute/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-absolute</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-absolute/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-absolute</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-gj</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-gj/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-gj</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-gj/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-gj</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-hh</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-hh/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-hh</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-hh/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-hh</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-uno</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-uno/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-uno</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-uno/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-uno</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-nero</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-nero/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-nero</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-nero/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-nero</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-rak</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-rak/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-rak</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-rak/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-rak</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-r-evolution</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-r-evolution/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-r-evolution</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-r-evolution/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-r-evolution</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-760rs</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760rs/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-760rs</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760rs/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-760rs</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-760-lh</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-lh/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-760-lh</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-lh/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-760-lh</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-764-passione</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-764-passione/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-764-passione</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-764-passione/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-764-passione</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-revolución</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-revolución/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-revolución</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-revolución/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-revolución</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-ps-mkii</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-ps-mkii/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-ps-mkii</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-ps-mkii/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-ps-mkii</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-fantasma</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-fantasma/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-fantasma</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-fantasma/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-fantasma</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-x</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-x/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-x</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-x/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-x</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-dinastia</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-dinastia/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-dinastia</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-dinastia/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-dinastia</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-lm</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-lm/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-lm</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-lm/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-lm</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-la-monza-lisa</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-la-monza-lisa/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-la-monza-lisa</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-la-monza-lisa/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-la-monza-lisa</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-jc</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-jc/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-jc</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-jc/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-jc</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-760</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-760</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-760</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-730s-edition</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-730s-edition/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-730s-edition</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-730s-edition/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-730s-edition</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-zozo</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-zozo/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-zozo</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-zozo/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-zozo</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-760-ag-roadster</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-ag-roadster/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-760-ag-roadster</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-ag-roadster/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-760-ag-roadster</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-lm-roadster</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-lm-roadster/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-lm-roadster</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-lm-roadster/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-lm-roadster</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-kiryu</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-kiryu/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-kiryu</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-kiryu/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-kiryu</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-760-vr</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-vr/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-760-vr</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-760-vr/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-760-vr</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-the-king-1-of-1-of-1</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-the-king-1-of-1-of-1/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-the-king-1-of-1-of-1</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-the-king-1-of-1-of-1/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-the-king-1-of-1-of-1</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-gemini-uno</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-gemini-uno/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-gemini-uno</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-gemini-uno/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-gemini-uno</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-scozia</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-scozia/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-scozia</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-scozia/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-scozia</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-bc</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-bc/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-bc</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-bc/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-bc</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-pearl</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-pearl/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-pearl</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-pearl/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-pearl</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-md</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-md/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-md</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-md/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-md</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-by-mileson</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-by-mileson/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-by-mileson</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-by-mileson/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-by-mileson</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-zeus</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-zeus/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-zeus</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-zeus/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-zeus</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-futura</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-futura/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-futura</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-futura/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-futura</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-pacchetto-tempesta</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-pacchetto-tempesta/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-pacchetto-tempesta</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-pacchetto-tempesta/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-pacchetto-tempesta</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/zonda-oliver-evolution</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-oliver-evolution/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-oliver-evolution</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/zonda-oliver-evolution/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-oliver-evolution</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars/huayra-hermes-edition</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-hermes-edition/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars/huayra-hermes-edition</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars/huayra-hermes-edition/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars/huayra-hermes-edition</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=54</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=54/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=54</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=54/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=54</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=5</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=5/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=5</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=5/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=5</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=10</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=10/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=10</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=10/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=10</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=15</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=15/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=15</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=15/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=15</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=20</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=20/en/</loc>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=20</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=20/es/</loc>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=20</loc>
     </url>
 </urlset>
