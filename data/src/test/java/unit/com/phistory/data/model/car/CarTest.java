@@ -11,28 +11,25 @@ import static org.hamcrest.core.Is.is;
  * Created by Gonzalo Carbajosa on 25/12/16.
  */
 public class CarTest {
-    private static final String IRRELEVANT_MODEL_NAME_WITH_WHITE_SPACES = "irrelevant Model Name";
+    private static final String IRRELEVANT_MODEL_NAME_WITH_WHITE_SPACES    = "irrelevant Model Name";
     private static final String IRRELEVANT_MODEL_NAME_WITHOUT_WHITE_SPACES = " irrelevantModelName ";
-    private static final String IRRELEVANT_ALREADY_NORMALIZED_MODEL_NAME = "irrelevant-model-name";
+    private static final String IRRELEVANT_ALREADY_NORMALIZED_MODEL_NAME   = "irrelevant-model-name";
 
     @DataProvider(name = "cars")
     public Object[][] getCars() {
-        Car irrelevantCar = new Car()
-                .builder()
-                .model(IRRELEVANT_MODEL_NAME_WITH_WHITE_SPACES)
-                .build();
+        Car irrelevantCar = new Car().builder()
+                                     .model(IRRELEVANT_MODEL_NAME_WITH_WHITE_SPACES)
+                                     .build();
 
-        Car irrelevantCar2 = new Car()
-                .builder()
-                .model(IRRELEVANT_MODEL_NAME_WITHOUT_WHITE_SPACES)
-                .build();
+        Car irrelevantCar2 = new Car().builder()
+                                      .model(IRRELEVANT_MODEL_NAME_WITHOUT_WHITE_SPACES)
+                                      .build();
 
-        Car irrelevantCar3 = new Car()
-                .builder()
-                .model(IRRELEVANT_ALREADY_NORMALIZED_MODEL_NAME)
-                .build();
+        Car irrelevantCar3 = new Car().builder()
+                                      .model(IRRELEVANT_ALREADY_NORMALIZED_MODEL_NAME)
+                                      .build();
 
-        return new Object[][]{
+        return new Object[][] {
                 {irrelevantCar, "irrelevant-model-name"},
                 {irrelevantCar2, "irrelevantmodelname"},
                 {irrelevantCar3, IRRELEVANT_ALREADY_NORMALIZED_MODEL_NAME}

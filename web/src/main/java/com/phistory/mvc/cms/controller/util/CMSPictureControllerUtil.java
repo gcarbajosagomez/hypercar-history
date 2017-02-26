@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.controller.util;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.sql.impl.SQLPictureDAO;
+import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.controller.CMSPictureController;
@@ -18,11 +18,11 @@ import javax.inject.Inject;
 @Component
 public class CMSPictureControllerUtil {
 
-    private SQLPictureDAO SQLPictureDAO;
+    private SqlPictureDAO SqlPictureDAO;
 
     @Inject
-    public CMSPictureControllerUtil(SQLPictureDAO SQLPictureDAO) {
-        this.SQLPictureDAO = SQLPictureDAO;
+    public CMSPictureControllerUtil(SqlPictureDAO SqlPictureDAO) {
+        this.SqlPictureDAO = SqlPictureDAO;
     }
 
     /**
@@ -52,7 +52,7 @@ public class CMSPictureControllerUtil {
         MultipartFile pictureFile = pictureEditCommand.getPictureFile();
         Picture picture = pictureEditCommand.getPicture();
         PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, picture);
-        this.SQLPictureDAO.saveOrEdit(pictureDataCommand);
+        this.SqlPictureDAO.saveOrEdit(pictureDataCommand);
     }
 
     /**
@@ -63,6 +63,6 @@ public class CMSPictureControllerUtil {
      */
     public void updatePictureGalleryPosition(Picture picture) throws Exception {
         PictureDataCommand pictureDataCommand = new PictureDataCommand(null, picture);
-        this.SQLPictureDAO.updateGalleryPosition(pictureDataCommand.getPicture());
+        this.SqlPictureDAO.updateGalleryPosition(pictureDataCommand.getPicture());
     }
 }

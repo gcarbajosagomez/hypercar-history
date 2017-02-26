@@ -12,7 +12,6 @@ import javax.persistence.*;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  *main.java.
@@ -57,7 +56,7 @@ public class TyreSet implements GenericEntity
     @JoinColumn(name = REAR_TYRE_ID_FIELD, nullable = false, unique = true)
     private Tyre rearTyre;
 
-    @OneToOne(cascade = ALL, fetch = LAZY)
+    @OneToOne(cascade = ALL)
     @JoinColumn(name = TYRE_SET_CAR_ID_FIELD)
     private Car car;
 

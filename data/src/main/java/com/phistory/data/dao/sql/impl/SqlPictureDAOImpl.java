@@ -1,15 +1,18 @@
 package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.command.PictureDataCommand;
-import com.phistory.data.dao.SQLDAO;
+import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.LobCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -21,25 +24,30 @@ import static com.phistory.data.model.GenericEntity.ID_FIELD;
  */
 @Transactional
 @Repository
-public class SQLPictureDAO extends SQLDAO<Picture, Long> {
+public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlPictureDAO {
+
+    @Autowired
+    public SqlPictureDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
+        super(sessionFactory, entityManager);
+    }
 
     @Override
     public List<Picture> getAll() {
-        return super.getCurrentSession()
+        return super.openSession()
                     .createQuery("FROM Picture")
                     .list();
     }
 
     @Override
     public Picture getById(Long id) {
-        Query q = getCurrentSession().createQuery("FROM Picture AS picture"
+        Query q = super.openSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.id = :id");
         q.setParameter(ID_FIELD, id);
         return (Picture) q.uniqueResult();
     }
 
     public List<Picture> getByCarId(Long carId) {
-        Query q = getCurrentSession().createQuery("FROM Picture AS picture"
+        Query q = super.openSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.car.id = :carId"
                                                + " ORDER BY picture.galleryPosition ASC");
 
@@ -49,7 +57,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     }
 
     public Picture getCarPreview(Long carId) {
-        Query q = getCurrentSession().createQuery("FROM Picture AS picture"
+        Query q = super.openSession().createQuery("FROM Picture AS picture"
                                                + " WHERE picture.car.id = :carId"
                                                + " AND picture.eligibleForPreview = true");
 
@@ -61,7 +69,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     public Picture getManufacturerLogo(Long manufacturerId) {
         Picture picture = new Picture();
 
-        Query q = getCurrentSession().createQuery("SELECT manufacturer.logo"
+        Query q = super.openSession().createQuery("SELECT manufacturer.logo"
                                                + " FROM Manufacturer AS manufacturer"
                                                + " WHERE manufacturer.id = :manufacturerId");
 
@@ -72,7 +80,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     }
 
     public void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException {
-        LobCreator lobCreator = Hibernate.getLobCreator(getCurrentSession());
+        LobCreator lobCreator = Hibernate.getLobCreator(super.openSession());
         Blob pictureBlob = lobCreator.createBlob(pictureEditCommand.getMultipartFile().getInputStream(), -1);
 
         Picture picture = pictureEditCommand.getPicture();
@@ -82,7 +90,7 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     }
 
     public void updateGalleryPosition(Picture picture) {
-        Query q = super.getCurrentSession()
+        Query q = super.openSession()
                        .createQuery("UPDATE Picture"
                                  + " SET galleryPosition = :galleryPosition"
                                  + " WHERE id = :id"
@@ -95,14 +103,14 @@ public class SQLPictureDAO extends SQLDAO<Picture, Long> {
     }
 
     public Long count() {
-        return (Long) super.getCurrentSession()
+        return (Long) super.openSession()
                            .createQuery("SELECT COUNT (picture.car.id)"
                                      + " FROM Picture AS picture")
                            .uniqueResult();
     }
 
     public List<Picture> getPaginated(int firstResult, int limit) {
-        Query query = super.getCurrentSession()
+        Query query = super.openSession()
                            .createQuery("FROM Picture AS picture"
                                      + " ORDER BY picture.id");
 

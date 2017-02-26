@@ -1,8 +1,8 @@
 package com.phistory.mvc.cms.springframework.view.filler;
 
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.impl.SQLEngineDAO;
-import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
+import com.phistory.data.dao.sql.SqlEngineDAO;
+import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.model.Language;
 import com.phistory.data.model.brake.BrakeDiscMaterial;
 import com.phistory.data.model.car.*;
@@ -30,62 +30,59 @@ import static com.phistory.mvc.controller.BaseControllerData.PICTURES;
  * Fills a Spring Framework Model with car edit related information
  *
  * @author gonzalo
- *
  */
 @Component
-public class CarEditModelFiller implements ModelFiller
-{
-    private SQLManufacturerDAO sqlManufacturerDAO;
-    private SQLEngineDAO       sqlEngineDAO;
+public class CarEditModelFiller implements ModelFiller {
+    private SqlManufacturerDAO sqlManufacturerDAO;
+    private SqlEngineDAO       sqlEngineDAO;
     private InMemoryPictureDAO inMemoryPictureDAO;
 
-	@Inject
-	public CarEditModelFiller(SQLManufacturerDAO sqlManufacturerDAO,
-							  SQLEngineDAO sqlEngineDAO,
-							  InMemoryPictureDAO inMemoryPictureDAO) {
-		this.sqlManufacturerDAO = sqlManufacturerDAO;
-		this.sqlEngineDAO = sqlEngineDAO;
-		this.inMemoryPictureDAO = inMemoryPictureDAO;
-	}
+    @Inject
+    public CarEditModelFiller(SqlManufacturerDAO sqlManufacturerDAO,
+                              SqlEngineDAO sqlEngineDAO,
+                              InMemoryPictureDAO inMemoryPictureDAO) {
+        this.sqlManufacturerDAO = sqlManufacturerDAO;
+        this.sqlEngineDAO = sqlEngineDAO;
+        this.inMemoryPictureDAO = inMemoryPictureDAO;
+    }
 
-	@Override
-	public void fillModel(Model model)
-	{
-		model.addAttribute("manufacturers", 				this.sqlManufacturerDAO.getAll());
-    	model.addAttribute("engineLayouts", 				CarEngineLayout.values());
-    	model.addAttribute("engineDispositions", 			CarEngineDisposition.values());
-    	model.addAttribute("engines", 						this.sqlEngineDAO.getAll());
-    	model.addAttribute(ENGINE, 							ENGINE);
-    	model.addAttribute("carMaterials", 					CarMaterial.values());
-    	model.addAttribute("bodyShapes", 					CarBodyShape.values());
-    	model.addAttribute("seatsConfigs", 					CarSeatsConfig.values());
-    	model.addAttribute("brakeDiscMaterials", 			BrakeDiscMaterial.values());
-    	model.addAttribute("transmissionTypes", 			TransmissionType.values());
-    	model.addAttribute("engineTypes", 					EngineType.values());
-    	model.addAttribute("engineCylinderDispositions",	EngineCylinderDisposition.values());
-    	model.addAttribute("driveWheelTypes", 				DriveWheelType.values());
-    	model.addAttribute("carInternetContentTypes", 		CarInternetContentType.values());
-    	model.addAttribute("carInternetContentLanguages", 	Language.values());
-    	model.addAttribute("productionTypes", 				CarProductionType.values());
-    	model.addAttribute("tyreManufacturers", 			TyreManufacturer.values());
-    	model.addAttribute("tyreTypes", 					TyreType.values());
-	}
+    @Override
+    public void fillModel(Model model) {
+        model.addAttribute("manufacturers", this.sqlManufacturerDAO.getAll());
+        model.addAttribute("engineLayouts", CarEngineLayout.values());
+        model.addAttribute("engineDispositions", CarEngineDisposition.values());
+        model.addAttribute("engines", this.sqlEngineDAO.getAll());
+        model.addAttribute(ENGINE, ENGINE);
+        model.addAttribute("carMaterials", CarMaterial.values());
+        model.addAttribute("bodyShapes", CarBodyShape.values());
+        model.addAttribute("seatsConfigs", CarSeatsConfig.values());
+        model.addAttribute("brakeDiscMaterials", BrakeDiscMaterial.values());
+        model.addAttribute("transmissionTypes", TransmissionType.values());
+        model.addAttribute("engineTypes", EngineType.values());
+        model.addAttribute("engineCylinderDispositions", EngineCylinderDisposition.values());
+        model.addAttribute("driveWheelTypes", DriveWheelType.values());
+        model.addAttribute("carInternetContentTypes", CarInternetContentType.values());
+        model.addAttribute("carInternetContentLanguages", Language.values());
+        model.addAttribute("productionTypes", CarProductionType.values());
+        model.addAttribute("tyreManufacturers", TyreManufacturer.values());
+        model.addAttribute("tyreTypes", TyreType.values());
+    }
 
-	/**
-	 * Fill the model with information
-	 *
-	 * @param model
-	 * @param command
-	 */
-	public void fillCarEditModel(Model model, CarFormEditCommand command) {
-		List<Picture> pictures = new ArrayList<>();
-		Long carId = command.getCarForm().getId();
+    /**
+     * Fill the model with information
+     *
+     * @param model
+     * @param command
+     */
+    public void fillCarEditModel(Model model, CarFormEditCommand command) {
+        List<Picture> pictures = new ArrayList<>();
+        Long carId = command.getCarForm().getId();
 
-		if (carId != null) {
-			pictures = this.inMemoryPictureDAO.getByCarId(carId);
-		}
+        if (carId != null) {
+            pictures = this.inMemoryPictureDAO.getByCarId(carId);
+        }
 
-		model.addAttribute(PICTURES, pictures);
-		this.fillModel(model);
-	}
+        model.addAttribute(PICTURES, pictures);
+        this.fillModel(model);
+    }
 }

@@ -4,10 +4,8 @@ import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
-import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
-import com.phistory.data.dao.sql.impl.SQLPictureDAO;
-import com.phistory.data.model.Manufacturer;
+import com.phistory.data.dao.sql.SqlPictureDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
@@ -24,17 +22,17 @@ import java.util.Objects;
 public class EntityManagementService {
     private InMemoryCarDAO                inMemoryCarDAO;
     private InMemoryPictureDAO            inMemoryPictureDAO;
-    private SQLPictureDAO                 sqlPictureDAO;
+    private SqlPictureDAO                 sqlPictureDAO;
     private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
-    private SQLCarInternetContentDAO      sqlCarInternetContentDAO;
+    private SqlCarInternetContentDAO      sqlCarInternetContentDAO;
     private InMemoryManufacturerDAO       inMemoryManufacturerDAO;
 
     @Inject
     public EntityManagementService(InMemoryCarDAO inMemoryCarDAO,
                                    InMemoryPictureDAO inMemoryPictureDAO,
-                                   SQLPictureDAO sqlPictureDAO,
+                                   SqlPictureDAO sqlPictureDAO,
                                    InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
-                                   SQLCarInternetContentDAO sqlCarInternetContentDAO,
+                                   SqlCarInternetContentDAO sqlCarInternetContentDAO,
                                    InMemoryManufacturerDAO inMemoryManufacturerDAO) {
         this.inMemoryCarDAO = inMemoryCarDAO;
         this.inMemoryPictureDAO = inMemoryPictureDAO;

@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.phistory.mvc.cms.form.ManufacturerForm;
-import com.phistory.data.dao.sql.impl.SQLPictureDAO;
+import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
@@ -26,11 +26,11 @@ import com.phistory.data.model.util.PictureUtil;
 @Slf4j
 @Component
 public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, ManufacturerForm> {
-    private SQLPictureDAO SQLPictureDAO;
+    private SqlPictureDAO sqlPictureDAO;
 
     @Inject
-    public ManufacturerFormCreator(com.phistory.data.dao.sql.impl.SQLPictureDAO SQLPictureDAO) {
-        this.SQLPictureDAO = SQLPictureDAO;
+    public ManufacturerFormCreator(SqlPictureDAO sqlPictureDAO) {
+        this.sqlPictureDAO = sqlPictureDAO;
     }
 
     /**
@@ -48,7 +48,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
             if (manufacturer.getId() != null) {
                 try {
                     PictureEditCommand pictureEditCommand = new PictureEditCommand(new Picture(), null);
-                    Optional<Picture> carPreview = Optional.of(SQLPictureDAO.getManufacturerLogo(manufacturer.getId()));
+                    Optional<Picture> carPreview = Optional.of(sqlPictureDAO.getManufacturerLogo(manufacturer.getId()));
 
                     if (carPreview.isPresent()) {
                         pictureEditCommand.setPicture(carPreview.get());
@@ -86,7 +86,7 @@ public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, 
 
             if ((logoFile.isPresent() && logoFile.get().getSize() > 0) &&
                 (!logo.isPresent() || (logo.isPresent() && logo.get().length() == 0))) {
-                logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), SQLPictureDAO));
+                logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), sqlPictureDAO));
             }
 
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),

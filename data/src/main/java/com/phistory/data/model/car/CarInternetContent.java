@@ -2,7 +2,6 @@ package com.phistory.data.model.car;
 
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Language;
-import com.phistory.data.model.picture.Picture;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,6 @@ import javax.persistence.*;
 
 import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
 import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.FetchType.LAZY;
 
 /**
  * Represents a link to an internet content
@@ -23,12 +21,12 @@ import static javax.persistence.FetchType.LAZY;
  * 
  * @author gonzalo
  */
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME,
 	   uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD, CarInternetContent.CAR_INTERNET_CONTENT_LINK_FIELD}))
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CarInternetContent implements GenericEntity
 {
 	public static final String CAR_INTERNET_CONTENT_TABLE_NAME = "car_internet_content";
@@ -54,7 +52,7 @@ public class CarInternetContent implements GenericEntity
     @Column(name = "content_language", nullable = false)
     private Language contentLanguage;
 
-	@ManyToOne(fetch = LAZY)
+	@ManyToOne
     @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 

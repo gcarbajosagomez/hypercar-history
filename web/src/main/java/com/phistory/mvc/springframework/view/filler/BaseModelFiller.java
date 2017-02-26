@@ -7,7 +7,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.LocaleResolver;
 
 import javax.inject.Inject;
 
@@ -60,12 +59,12 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("cmsContext", CMS_CONTEXT);
         model.addAttribute("doNotTrackParam", DO_NOT_TRACK_REQUEST_PARAM);
         model.addAttribute("carsHeaderLinkValue", this.buildCarsHeaderLinkValue());
-        model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate());
-        model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
-        model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
         model.addAttribute("languageCookieName", LANGUAGE_COOKIE_NAME);
         model.addAttribute("languageSpanishCode", SPANISH.getIsoCode());
         model.addAttribute("languageEnglishCode", ENGLISH.getIsoCode());
+        model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate());
+        model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
+        model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
     }
 
     private String buildCarsHeaderLinkValue() {

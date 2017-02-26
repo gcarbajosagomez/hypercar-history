@@ -1,6 +1,8 @@
-package com.phistory.data.dao;
+package com.phistory.data.dao.inmemory;
 
 import com.phistory.data.model.GenericEntity;
+
+import java.util.List;
 
 /**
  * Created by gonzalo on 11/4/16.
@@ -30,4 +32,6 @@ public interface InMemoryDAO<TYPE extends GenericEntity, IDENTIFIER> {
      * @return The {@link TYPE} found if any, null otherwise
      */
     TYPE getById(IDENTIFIER id);
+
+    List<TYPE> getEntities();
 }

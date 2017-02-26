@@ -44,7 +44,7 @@ public class BrakeSet implements GenericEntity {
     @JoinColumn(name = REAR_BRAKE_ID_FIELD, unique = true)
     private Brake rearBrake;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @JoinColumn(name = BRAKE_SET_CAR_ID_FIELD)
     private Car car;
 

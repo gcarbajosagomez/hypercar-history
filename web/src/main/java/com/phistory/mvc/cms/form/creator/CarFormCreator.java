@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.form.creator;
 
-import com.phistory.data.dao.sql.impl.SQLPictureDAO;
+import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.CarMaterial;
@@ -27,14 +27,14 @@ import java.util.stream.Stream;
 public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
     public static final String CAR_MATERIAL_STRING_SEPARATOR = "-";
 
-    private SQLPictureDAO           sqlPictureDAO;
+    private SqlPictureDAO           sqlPictureDAO;
     private BrakeSetFormCreator     brakeSetFormCreator;
     private EngineFormCreator       engineFormCreator;
     private TransmissionFormCreator transmissionFormCreator;
     private TyreSetFormCreator      tyreSetFormCreator;
 
     @Inject
-    public CarFormCreator(SQLPictureDAO sqlPictureDAO,
+    public CarFormCreator(SqlPictureDAO sqlPictureDAO,
                           BrakeSetFormCreator brakeSetFormCreator,
                           EngineFormCreator engineFormCreator,
                           TransmissionFormCreator transmissionFormCreator,

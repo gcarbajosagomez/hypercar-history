@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.controller.util;
 
-import com.phistory.data.dao.sql.impl.SQLCarDAO;
-import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
@@ -9,14 +9,14 @@ import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.command.PictureEditCommand;
+import com.phistory.mvc.cms.controller.CMSCarController;
+import com.phistory.mvc.cms.controller.CMSCarEditController;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.creator.CarFormCreator;
 import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
-import com.phistory.mvc.cms.controller.CMSCarController;
-import com.phistory.mvc.cms.controller.CMSCarEditController;
-import com.phistory.mvc.controller.util.DateProvider;
 import com.phistory.mvc.cms.service.EntityManagementService;
+import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -28,9 +28,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_CARS;
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_CAR_INTERNET_CONTENTS;
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_PICTURES;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
 
 /**
  * Set of utilities for {@link CMSCarController} and {@link CMSCarEditController}
@@ -41,17 +39,17 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_PICT
 @NoArgsConstructor
 public class CMSCarControllerUtil {
 
-    private SQLCarDAO sqlCarDAO;
-    private SQLCarInternetContentDAO sqlCarInternetContentDAO;
-    private CarFormCreator carFormCreator;
+    private SqlCarDAO                     sqlCarDAO;
+    private SqlCarInternetContentDAO      sqlCarInternetContentDAO;
+    private CarFormCreator                carFormCreator;
     private CarInternetContentFormCreator carInternetContentFormCreator;
-    private CMSPictureControllerUtil cmsPictureControllerUtil;
-    private DateProvider dateProvider;
-    private EntityManagementService entityManagementService;
+    private CMSPictureControllerUtil      cmsPictureControllerUtil;
+    private DateProvider                  dateProvider;
+    private EntityManagementService       entityManagementService;
 
     @Inject
-    public CMSCarControllerUtil(SQLCarDAO sqlCarDAO,
-                                SQLCarInternetContentDAO sqlCarInternetContentDAO,
+    public CMSCarControllerUtil(SqlCarDAO sqlCarDAO,
+                                SqlCarInternetContentDAO sqlCarInternetContentDAO,
                                 CarFormCreator carFormCreator,
                                 CarInternetContentFormCreator carInternetContentFormCreator,
                                 CMSPictureControllerUtil cmsPictureControllerUtil,

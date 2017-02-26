@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
+import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 
@@ -30,14 +30,14 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
 @Component 
 public class CMSManufacturerControllerUtil extends CMSBaseController
 {
-	private SQLManufacturerDAO      manufacturerDAO;
+	private SqlManufacturerDAO  manufacturerDAO;
 	private ManufacturerFormCreator manufacturerFormCreator;
 	private EntityManagementService entityManagementService;
 
 	@Inject
-	public CMSManufacturerControllerUtil(SQLManufacturerDAO manufacturerDAO,
-										 ManufacturerFormCreator manufacturerFormCreator,
-										 EntityManagementService entityManagementService) {
+	public CMSManufacturerControllerUtil(SqlManufacturerDAO manufacturerDAO,
+                                         ManufacturerFormCreator manufacturerFormCreator,
+                                         EntityManagementService entityManagementService) {
 		this.manufacturerDAO = manufacturerDAO;
 		this.manufacturerFormCreator = manufacturerFormCreator;
 		this.entityManagementService = entityManagementService;

@@ -35,8 +35,10 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
  * @author Gonzalo
  */
 @Entity
+@Table(name = Car.CAR_TABLE_NAME,
+        uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
 @Indexed
-@AnalyzerDef(name = "carModelAnalyzer",
+@AnalyzerDef(name = Car.CAR_MODEL_ANALYZER_NAME,
         // Split input into tokens according to tokenizer
         tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class),
         filters = {
@@ -47,13 +49,12 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
                 // Index partial words starting at the front, so we can provide Autocomplete functionality
                 @TokenFilterDef(factory = NGramFilterFactory.class, params = {@Parameter(name = "maxGramSize", value = "1024")})
         })
-@Table(name = Car.CAR_TABLE_NAME,
-        uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Car implements GenericEntity {
+
     public static final String CAR_TABLE_NAME                      = "car";
     public static final String CAR_ID_FIELD                        = "car_id";
     public static final String MODEL_FIELD                         = "car_model";
@@ -62,6 +63,7 @@ public class Car implements GenericEntity {
     public static final String CAR_VISIBLE_PROPERTY_NAME           = "visible";
     public static final String MODEL_PROPERTY_NAME                 = "model";
     public static final String PRODUCTION_START_DATE_PROPERTY_NAME = "productionStartDate";
+    public static final String CAR_MODEL_ANALYZER_NAME             = "carModelAnalyzer";
 
     @Id
     @GeneratedValue(strategy = AUTO)
@@ -77,7 +79,8 @@ public class Car implements GenericEntity {
     private Manufacturer manufacturer;
 
     @Column(name = MODEL_FIELD, nullable = false)
-    @Field(store = Store.YES, analyzer = @Analyzer(definition = "carModelAnalyzer"))
+    @Field
+    @Analyzer(definition = CAR_MODEL_ANALYZER_NAME)
     private String model;
 
     @Column(name = "car_engine_layout", nullable = false)
@@ -122,7 +125,8 @@ public class Car implements GenericEntity {
 
     @Column(name = "car_production_start_date", nullable = false)
     @Temporal(DATE)
-    @Field(index = Index.YES, analyze = Analyze.NO, store = Store.NO)
+    @Field(name = "productionStartDate", index = Index.YES, analyze = Analyze.NO, store = Store.YES)
+    @SortableField(forField = "productionStartDate")
     private Calendar productionStartDate;
 
     @Column(name = "car_production_end_date")

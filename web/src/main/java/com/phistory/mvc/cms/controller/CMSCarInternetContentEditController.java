@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.service.EntityManagementService;
@@ -33,11 +33,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
-    private SQLCarInternetContentDAO carInternetContentDAO;
-    private EntityManagementService entityManagementService;
+    private SqlCarInternetContentDAO carInternetContentDAO;
+    private EntityManagementService      entityManagementService;
 
     @Inject
-    public CMSCarInternetContentEditController(SQLCarInternetContentDAO carInternetContentDAO, EntityManagementService entityManagementService) {
+    public CMSCarInternetContentEditController(SqlCarInternetContentDAO carInternetContentDAO,
+                                               EntityManagementService entityManagementService) {
         this.carInternetContentDAO = carInternetContentDAO;
         this.entityManagementService = entityManagementService;
     }

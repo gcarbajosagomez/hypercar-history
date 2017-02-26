@@ -3,11 +3,12 @@ package com.phistory.data.model.transmission;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
-import static javax.persistence.FetchType.*;
 
 /**
  *
@@ -31,7 +32,7 @@ public class Transmission implements GenericEntity
     private TransmissionType type;
     @Column(name = "transmission_num_of_gears", nullable = false)
     private Integer numOfGears;
-    @OneToOne(fetch = LAZY)
+    @OneToOne
     @JoinColumn(name = "transmission_car_id", nullable = true)
     private Car car;
 

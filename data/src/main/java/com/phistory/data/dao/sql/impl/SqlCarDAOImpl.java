@@ -1,20 +1,22 @@
 package com.phistory.data.dao.sql.impl;
 
+import com.phistory.data.command.SearchCommand;
+import com.phistory.data.dao.sql.SqlCarDAO;
+import com.phistory.data.model.car.Car;
+import com.phistory.data.query.command.SimpleDataConditionCommand;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
+import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.EntityManager;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.phistory.data.query.command.SimpleDataConditionCommand;
-import org.hibernate.Query;
-import org.hibernate.transform.AliasToBeanResultTransformer;
-import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.SQLDAO;
-import com.phistory.data.model.car.Car;
-
-import static com.phistory.data.model.GenericEntity.*;
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
  *
@@ -22,8 +24,13 @@ import static com.phistory.data.model.GenericEntity.*;
  */
 @Transactional
 @Repository
-public class SQLCarDAO extends SQLDAO<Car, Long>
-{		
+public class SqlCarDAOImpl extends SqlDAOImpl<Car, Long> implements SqlCarDAO
+{
+	@Autowired
+	public SqlCarDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
+		super(sessionFactory, entityManager);
+	}
+
     @Override
     public List<Car> getAll()
     {
@@ -41,10 +48,10 @@ public class SQLCarDAO extends SQLDAO<Car, Long>
     }
 
 	public List<Car> getAllOrderedByProductionStartDate() {
-		Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.id AS id"
-				+ " FROM Car AS car"
-				+ " ORDER BY car.productionStartDate ASC,"
-				+ "          car.model ASC");
+		Query q = super.openSession().createQuery("SELECT car.model AS model, car.id AS id"
+												  + " FROM Car AS car"
+												  + " ORDER BY car.productionStartDate ASC,"
+												  + "          car.model ASC");
 
 		q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
 		return q.list();
@@ -77,18 +84,4 @@ public class SQLCarDAO extends SQLDAO<Car, Long>
         
         return car;
     }
-	
-	public Car getByPictureId(Long pictureId)
-	{
-		Query q = getCurrentSession().createQuery("SELECT car.model AS model, car.manufacturer AS manufacturer"
-			       							   + " FROM Car AS car, Picture AS picture, Manufacturer AS manufacturer"
-			       							   + " WHERE picture.id = :pictureId"
-			       							   + " AND picture.car.id = car.id"
-			       							   + " AND car.manufacturer.id = manufacturer.id");
-
-		q.setLong("pictureId", pictureId);
-		q.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
-		
-		return (Car) q.uniqueResult();
-	}
 }

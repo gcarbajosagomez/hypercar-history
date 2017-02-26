@@ -33,8 +33,10 @@
         <maven.clean.plugin.version>2.5</maven.clean.plugin.version>
         <maven.spring-boot-maven-plugin.version>1.3.3.RELEASE</maven.spring-boot-maven-plugin.version>
 
+        <org.spring-boot.version>1.4.4.RELEASE</org.spring-boot.version>
         <org.projectlombok.version>1.16.6</org.projectlombok.version>
         <org.springframework.version>4.3.5.RELEASE</org.springframework.version>
+        <org.apache.commons-lang3.version>3.4</org.apache.commons-lang3.version>
         <org.testng-all.version>6.9.10</org.testng-all.version>
     </properties>
 
@@ -98,9 +100,21 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+            <version>${org.spring-boot.version}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>${org.projectlombok.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${org.apache.commons-lang3.version}</version>
         </dependency>
 
         <dependency>

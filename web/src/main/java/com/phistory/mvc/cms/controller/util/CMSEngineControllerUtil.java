@@ -1,13 +1,12 @@
 package com.phistory.mvc.cms.controller.util;
 
-import javax.inject.Inject;
-
-import org.springframework.stereotype.Component;
-
+import com.phistory.data.dao.sql.SqlEngineDAO;
+import com.phistory.data.model.engine.Engine;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.creator.EngineFormCreator;
-import com.phistory.data.dao.sql.impl.SQLEngineDAO;
-import com.phistory.data.model.engine.Engine;
+import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
 
 /**
  * Set of utilities for the EngineController class
@@ -18,7 +17,7 @@ import com.phistory.data.model.engine.Engine;
 public class CMSEngineControllerUtil {
 
     @Inject
-    private SQLEngineDAO engineDAO;
+    private SqlEngineDAO      engineDAO;
     @Inject
     private EngineFormCreator engineFormCreator;
 

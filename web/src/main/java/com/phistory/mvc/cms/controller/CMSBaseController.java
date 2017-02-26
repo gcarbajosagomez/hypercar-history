@@ -1,9 +1,9 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.impl.SQLCarDAO;
-import com.phistory.data.dao.sql.impl.SQLCarInternetContentDAO;
-import com.phistory.data.dao.sql.impl.SQLEngineDAO;
-import com.phistory.data.dao.sql.impl.SQLManufacturerDAO;
+import com.phistory.data.dao.sql.SqlCarDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlEngineDAO;
+import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
@@ -34,6 +34,7 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 @Controller
 @RequestMapping(value = CMS_CONTEXT)
 public class CMSBaseController extends BaseController {
+
     /********************
      *******URLs*********
      ********************/
@@ -91,15 +92,15 @@ public class CMSBaseController extends BaseController {
 
     @Getter
     @Inject
-    private SQLManufacturerDAO       sqlManufacturerDAO;
+    private SqlManufacturerDAO       sqlManufacturerDAO;
     @Getter
     @Inject
-    private SQLEngineDAO             sqlEngineDAO;
+    private SqlEngineDAO             sqlEngineDAO;
     @Inject
-    private SQLCarDAO                sqlCarDAO;
+    private SqlCarDAO                sqlCarDAO;
     @Getter
     @Inject
-    private SQLCarInternetContentDAO sqlCarInternetContentDAO;
+    private SqlCarInternetContentDAO sqlCarInternetContentDAO;
     @Inject
     private ModelFiller              cmsBaseModelFiller;
 

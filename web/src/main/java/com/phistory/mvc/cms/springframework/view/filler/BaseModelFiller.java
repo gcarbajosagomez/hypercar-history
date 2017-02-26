@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.springframework.view.filler;
 
-import com.phistory.data.dao.sql.impl.SQLCarDAO;
+import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -18,10 +18,10 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.EDIT_URL;
  */
 @Component(value = "cmsBaseModelFiller")
 public class BaseModelFiller implements ModelFiller {
-    private SQLCarDAO sqlCarDAO;
+    private SqlCarDAO sqlCarDAO;
 
     @Inject
-    public BaseModelFiller(SQLCarDAO sqlCarDAO) {
+    public BaseModelFiller(SqlCarDAO sqlCarDAO) {
         this.sqlCarDAO = sqlCarDAO;
     }
 
