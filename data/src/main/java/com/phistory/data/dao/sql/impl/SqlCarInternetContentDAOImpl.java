@@ -29,12 +29,12 @@ public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent,
 
     @Override
     public List<CarInternetContent> getAll() {
-        return super.openSession().createQuery("FROM CarInternetContent").list();
+        return super.getCurrentSession().createQuery("FROM CarInternetContent").list();
     }
 
     @Override
     public CarInternetContent getById(Long id) {
-        Query q = super.openSession().createQuery("FROM CarInternetContent AS internetContent"
+        Query q = super.getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
                                                   + " WHERE internetContent.id = :id");
         q.setParameter(ID_FIELD, id);
         CarInternetContent carInternetContent = (CarInternetContent) q.uniqueResult();
@@ -50,7 +50,7 @@ public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent,
      * @return The {@link List<CarInternetContent>} if everything went well, null otherwise
      */
     public List<CarInternetContent> getByCarId(Long carId) {
-        Query q = super.openSession().createQuery("FROM CarInternetContent AS internetContent"
+        Query q = super.getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
                                                   + " WHERE internetContent.car.id = :carId");
         q.setParameter("carId", carId);
         List<CarInternetContent> carInternetContents = q.list();

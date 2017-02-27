@@ -79,7 +79,7 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
      */
     public void saveOrEdit(TYPE entity) {
         if (entity != null) {
-            Session session = this.openSession();
+            Session session = this.getCurrentSession();
             session.clear();
 
             if (entity.getId() == null) {
@@ -100,7 +100,7 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
     public void delete(TYPE entity) {
         if (entity != null) {
             log.info("Deleting entity: " + entity.toString());
-            Session session = this.openSession();
+            Session session = this.getCurrentSession();
             session.clear();
             session.delete(entity);
         }
@@ -175,12 +175,24 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
     }
 
     /**
-     * Opens a new Hibernate session
+     * Opens a new Hibernate {@link Session}
      *
      * @return
      */
     public Session openSession() {
         Session session = this.sessionFactory.openSession();
+        session.setFlushMode(FlushMode.COMMIT);
+
+        return session;
+    }
+
+    /**
+     * Get the current a new Hibernate {@link Session}
+     *
+     * @return
+     */
+    public Session getCurrentSession() {
+        Session session = this.sessionFactory.getCurrentSession();
         session.setFlushMode(FlushMode.COMMIT);
 
         return session;

@@ -30,6 +30,8 @@ public interface SqlDAO<TYPE extends GenericEntity, IDENTIFIER> {
 
     Session openSession();
 
+    Session getCurrentSession();
+
     void saveOrEdit(TYPE entity);
 
     void delete(TYPE entity);

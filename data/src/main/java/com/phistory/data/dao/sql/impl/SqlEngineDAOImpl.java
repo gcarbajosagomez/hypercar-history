@@ -30,13 +30,13 @@ public class SqlEngineDAOImpl extends SqlDAOImpl<Engine, Long> implements SqlEng
 	@Override
     public List<Engine> getAll()
     {
-        return super.openSession().createQuery("FROM Engine").list();
+        return super.getCurrentSession().createQuery("FROM Engine").list();
     }
     
     @Override
     public Engine getById(Long id)
     {
-        Query q = super.openSession().createQuery("FROM Engine AS engine"
+        Query q = super.getCurrentSession().createQuery("FROM Engine AS engine"
                                                + " WHERE engine.id = :id");
         q.setParameter(ID_FIELD, id);
         return (Engine) q.uniqueResult();

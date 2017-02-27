@@ -14,37 +14,35 @@ import java.util.List;
 import static com.phistory.data.model.GenericEntity.ID_FIELD;
 
 /**
- *
  * @author Gonzalo
  */
 @Transactional
 @Repository
-public class SqlManufacturerDAOImpl extends SqlDAOImpl<Manufacturer, Long> implements SqlManufacturerDAO
-{
+public class SqlManufacturerDAOImpl extends SqlDAOImpl<Manufacturer, Long> implements SqlManufacturerDAO {
+
     @Autowired
     public SqlManufacturerDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
         super(sessionFactory, entityManager);
     }
 
-	/**
-	 * {@inheritDoc}
-	 */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
-	@Override
+    @Override
     public List<Manufacturer> getAll() {
-        return super.openSession().createQuery("FROM Manufacturer AS manufacturer"
-                                            + " ORDER BY manufacturer.name ASC")
-                                  .list();
+        return super.getCurrentSession().createQuery("FROM Manufacturer AS manufacturer"
+                                                     + " ORDER BY manufacturer.name ASC")
+                    .list();
     }
 
     /**
-	 * {@inheritDoc}
-	 */
+     * {@inheritDoc}
+     */
     @Override
-    public Manufacturer getById(Long id)
-    {
-        Query q = super.openSession().createQuery("FROM Manufacturer AS manufacturer"
-                                               + " WHERE manufacturer.id = :id");
+    public Manufacturer getById(Long id) {
+        Query q = super.getCurrentSession().createQuery("FROM Manufacturer AS manufacturer"
+                                                        + " WHERE manufacturer.id = :id");
         q.setParameter(ID_FIELD, id);
         return (Manufacturer) q.uniqueResult();
     }

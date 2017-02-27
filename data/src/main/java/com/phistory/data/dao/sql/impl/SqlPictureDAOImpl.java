@@ -33,23 +33,23 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
 
     @Override
     public List<Picture> getAll() {
-        return super.openSession()
+        return super.getCurrentSession()
                     .createQuery("FROM Picture")
                     .list();
     }
 
     @Override
     public Picture getById(Long id) {
-        Query q = super.openSession().createQuery("FROM Picture AS picture"
-                                               + " WHERE picture.id = :id");
+        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
+                                                        + " WHERE picture.id = :id");
         q.setParameter(ID_FIELD, id);
         return (Picture) q.uniqueResult();
     }
 
     public List<Picture> getByCarId(Long carId) {
-        Query q = super.openSession().createQuery("FROM Picture AS picture"
-                                               + " WHERE picture.car.id = :carId"
-                                               + " ORDER BY picture.galleryPosition ASC");
+        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
+                                                        + " WHERE picture.car.id = :carId"
+                                                        + " ORDER BY picture.galleryPosition ASC");
 
         q.setParameter("carId", carId);
 
@@ -57,9 +57,9 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
     }
 
     public Picture getCarPreview(Long carId) {
-        Query q = super.openSession().createQuery("FROM Picture AS picture"
-                                               + " WHERE picture.car.id = :carId"
-                                               + " AND picture.eligibleForPreview = true");
+        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
+                                                        + " WHERE picture.car.id = :carId"
+                                                        + " AND picture.eligibleForPreview = true");
 
         q.setParameter("carId", carId);
         List<Picture> previewCandidates = q.list();
@@ -69,9 +69,9 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
     public Picture getManufacturerLogo(Long manufacturerId) {
         Picture picture = new Picture();
 
-        Query q = super.openSession().createQuery("SELECT manufacturer.logo"
-                                               + " FROM Manufacturer AS manufacturer"
-                                               + " WHERE manufacturer.id = :manufacturerId");
+        Query q = super.getCurrentSession().createQuery("SELECT manufacturer.logo"
+                                                        + " FROM Manufacturer AS manufacturer"
+                                                        + " WHERE manufacturer.id = :manufacturerId");
 
         q.setParameter("manufacturerId", manufacturerId);
         picture.setImage((Blob) q.uniqueResult());
@@ -80,7 +80,7 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
     }
 
     public void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException {
-        LobCreator lobCreator = Hibernate.getLobCreator(super.openSession());
+        LobCreator lobCreator = Hibernate.getLobCreator(super.getCurrentSession());
         Blob pictureBlob = lobCreator.createBlob(pictureEditCommand.getMultipartFile().getInputStream(), -1);
 
         Picture picture = pictureEditCommand.getPicture();
@@ -90,11 +90,11 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
     }
 
     public void updateGalleryPosition(Picture picture) {
-        Query q = super.openSession()
+        Query q = super.getCurrentSession()
                        .createQuery("UPDATE Picture"
-                                 + " SET galleryPosition = :galleryPosition"
-                                 + " WHERE id = :id"
-                                 + " AND car = :car");
+                                    + " SET galleryPosition = :galleryPosition"
+                                    + " WHERE id = :id"
+                                    + " AND car = :car");
 
         q.setParameter("galleryPosition", picture.getGalleryPosition());
         q.setParameter("id", picture.getId());
@@ -103,16 +103,16 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlP
     }
 
     public Long count() {
-        return (Long) super.openSession()
+        return (Long) super.getCurrentSession()
                            .createQuery("SELECT COUNT (picture.car.id)"
-                                     + " FROM Picture AS picture")
+                                        + " FROM Picture AS picture")
                            .uniqueResult();
     }
 
     public List<Picture> getPaginated(int firstResult, int limit) {
-        Query query = super.openSession()
+        Query query = super.getCurrentSession()
                            .createQuery("FROM Picture AS picture"
-                                     + " ORDER BY picture.id");
+                                        + " ORDER BY picture.id");
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);

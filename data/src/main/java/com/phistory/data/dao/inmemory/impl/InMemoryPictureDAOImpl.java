@@ -78,7 +78,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
             } else {
                 //we're loading a picture that's not yet in memory because it has been just stored
                 //a BLOB object that has been just stored needs to be refreshed before its content can be read for some reason
-                this.sqlPictureDAO.openSession().refresh(dbPicture);
+                this.sqlPictureDAO.getCurrentSession().refresh(dbPicture);
                 this.pictures.add(dbPicture);
             }
         } else {
