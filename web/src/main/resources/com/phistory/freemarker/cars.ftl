@@ -14,7 +14,7 @@
                         language.getTextSource('meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
 
     <div id="main-container" class="container panel panel-default main-container main-panel">
-        <div class="main-car-list-container row">
+        <div class="main-row-container row">
             <div class="col-lg-2">
                 <div class="list-group">
                     <#list models as car>

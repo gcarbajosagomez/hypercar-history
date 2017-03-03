@@ -286,12 +286,12 @@ hr {
     padding-top: 30px
 }
 
-.main-car-list-container {
+.main-row-container {
     padding-right: 15px;
 }
 
 @media (max-width: 1200px) {
-    .main-car-list-container {
+    .main-row-container {
         padding-left: 15px;
     }
 }

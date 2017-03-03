@@ -9,13 +9,15 @@
                         language.getTextSource('meta.keywords.manufacturerHistory')
                         language.getTextSource('meta.title.manufacturerHistory.metaDescription')/>
 
-        <div id="main-container" class="container">
-            <div class="panel panel-body col-lg-12">
-                <#if (manufacturer.historyES?? && manufacturer.historyES?length > 0) && lang == languageSpanishCode>
-                    ${generic.normalizeDatabaseString(manufacturer.historyES?j_string)}
-				<#elseif (manufacturer.historyEN?? && manufacturer.historyEN?length > 0) && lang == languageEnglishCode>
-                ${generic.normalizeDatabaseString(manufacturer.historyEN?j_string)}
-                </#if>
+        <div id="main-container" class="panel panel-default main-container main-panel">
+            <div class="main-row-container">
+                <div class="panel col-lg-12">
+                    <#if (manufacturer.historyES?? && manufacturer.historyES?length > 0) && lang == languageSpanishCode>
+                        ${generic.normalizeDatabaseString(manufacturer.historyES?j_string)}
+                    <#elseif (manufacturer.historyEN?? && manufacturer.historyEN?length > 0) && lang == languageEnglishCode>
+                        ${generic.normalizeDatabaseString(manufacturer.historyEN?j_string)}
+                    </#if>
+                </div>
             </div>
         </div>
     <@generic.endPage/>
