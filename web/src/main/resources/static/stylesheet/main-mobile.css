@@ -439,4 +439,9 @@
         font-size: 40px;
         padding: 2px 0px 0px 10%;
     }
+
+    .manufacturer-history-div {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }

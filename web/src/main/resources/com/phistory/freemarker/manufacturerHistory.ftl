@@ -9,9 +9,9 @@
                         language.getTextSource('meta.keywords.manufacturerHistory')
                         language.getTextSource('meta.title.manufacturerHistory.metaDescription')/>
 
-        <div id="main-container" class="panel panel-default main-container main-panel">
-            <div class="main-row-container">
-                <div class="panel col-lg-12">
+        <div id="main-container" class="container panel panel-default main-container main-panel">
+            <div class="main-row-container row">
+                <div class="col-lg-12 manufacturer-history-div">
                     <#if (manufacturer.historyES?? && manufacturer.historyES?length > 0) && lang == languageSpanishCode>
                         ${generic.normalizeDatabaseString(manufacturer.historyES?j_string)}
                     <#elseif (manufacturer.historyEN?? && manufacturer.historyEN?length > 0) && lang == languageEnglishCode>
