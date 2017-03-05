@@ -21,6 +21,6 @@
                 </div>
             </div>
         </div>
-    <@picture.addPicturesGallery "images-gallery" "carousel-inner"/>
+    <@picture.addPicturesGallery "images-gallery" "picture-gallery"/>
     <@generic.endPage/>
 </#compress>
