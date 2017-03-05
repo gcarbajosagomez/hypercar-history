@@ -4,6 +4,7 @@
 <#compress>
     <#import "applicationMacros/genericFunctionalities.ftl" as generic/>
     <#import "applicationMacros/pageLanguage.ftl" as language/>
+    <#import "applicationMacros/picture.ftl" as picture/>
 
     <@generic.startPage language.getTextSource('meta.title.manufacturerHistory')
                         language.getTextSource('meta.keywords.manufacturerHistory')
@@ -20,5 +21,6 @@
                 </div>
             </div>
         </div>
+    <@picture.addPicturesGallery "images-gallery" "carousel-inner"/>
     <@generic.endPage/>
 </#compress>

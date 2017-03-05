@@ -46,7 +46,7 @@
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.min.js"></script>
 					<script src="/static/javascript/main.min.js"></script>
-                    <#if requestIsCarDetails || requestIsCarEdit>
+                    <#if requestIsManufacturerHistory || requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">
                         <script src="/static/javascript/lib/jquery.blueimp-gallery.min.js"></script>
@@ -287,12 +287,17 @@
 </#macro>
 
 <#macro identifyRequestURL>
+    <#global requestIsManufacturerHistory = false/>
     <#global requestIsCMS = false/>
     <#global requestIsCarEdit = false/>
     <#global requestIsCars = false/>
     <#global requestIsCarDetails = false/>
     <#global requestIsModelsSearch = false/>
 
+
+	<#if requestURI?contains(manufacturerHistoryURL)>
+		<#global requestIsManufacturerHistory = true/>
+	</#if>
     <#if requestURI?contains(cmsContext)>
         <#global requestIsCMS = true/>
         <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL + ".{0,}")>
