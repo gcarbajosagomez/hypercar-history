@@ -923,9 +923,9 @@
        	$(function() {
             $('.input-group.date').datepicker({
                 format: "yyyy-mm",
-                endDate: "0y",
-                startView: 2,
-                minViewMode: 2,
+                startView: 1,
+                minViewMode: 1,
+                maxViewMode: 2,
                 autoclose: true
             });
 
