@@ -10,6 +10,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.Objects;
 
 import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -65,10 +66,10 @@ public class Picture implements GenericEntity {
                 .append(this.eligibleForPreview)
                 .append(" ");
 
-        Long carId = this.getCar().getId();
-        if (carId != null) {
+        Car car = this.getCar();
+        if (Objects.nonNull(car)) {
             builder.append(" (carId: ")
-                   .append(carId)
+                   .append(car.getId())
                    .append(")");
         }
 

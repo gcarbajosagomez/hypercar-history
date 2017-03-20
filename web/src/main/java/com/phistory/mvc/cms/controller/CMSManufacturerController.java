@@ -55,15 +55,15 @@ public class CMSManufacturerController extends CMSBaseController {
     }
 
     @RequestMapping(method = POST,
-                    consumes = APPLICATION_JSON,
-                    produces = APPLICATION_JSON)
+            consumes = APPLICATION_JSON,
+            produces = APPLICATION_JSON)
     @ResponseBody
-    public Map<String, Object> handlePagination(@RequestBody(required = true) PaginationDTO paginationDTO) {
+    public Map<String, Object> handlePagination(@RequestBody PaginationDTO paginationDTO) {
         return this.cmsManufacturerControllerUtil.createPaginationData(paginationDTO);
     }
 
     @RequestMapping(value = EDIT_URL,
-                    method = GET)
+            method = GET)
     public ModelAndView handleNewManufacturer(Model model) {
         try {
             ManufacturerFormEditCommand manufacturerFormEditCommand = new ManufacturerFormEditCommand();
@@ -82,7 +82,7 @@ public class CMSManufacturerController extends CMSBaseController {
     }
 
     @RequestMapping(value = SAVE_URL,
-                    method = POST)
+            method = POST)
     @ResponseBody
     public ModelAndView handleSaveNewManufacturer(Model model,
                                                   @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
@@ -94,7 +94,7 @@ public class CMSManufacturerController extends CMSBaseController {
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
-                                                         new Object[]{manufacturer.toString()},
+                                                         new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {
