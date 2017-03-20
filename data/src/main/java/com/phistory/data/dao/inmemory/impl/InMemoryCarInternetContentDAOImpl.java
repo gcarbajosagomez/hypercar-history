@@ -1,15 +1,14 @@
 package com.phistory.data.dao.inmemory.impl;
 
-import com.phistory.data.dao.inmemory.InMemoryDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.inmemory.InMemoryDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.car.CarInternetContent;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,36 +20,37 @@ import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
 
 /**
  * {@link CarInternetContent} {@link InMemoryDAO}
- *
+ * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = InMemoryCarInternetContentDAOImpl.BEAN_NAME)
+@Component(value = InMemoryCarInternetContentDAOImpl.BEAN_NAME)
 @EnableScheduling
-@NoArgsConstructor
 @Slf4j
 public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetContentDAO {
     public static final String BEAN_NAME = "inMemoryCarInternetContentDAO";
 
-    private com.phistory.data.dao.sql.SqlCarInternetContentDAO sqlCarInternetContentDAO;
+    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
     private List<CarInternetContent> carInternetContents = new ArrayList<>();
 
     @Autowired
-    public InMemoryCarInternetContentDAOImpl(SqlCarInternetContentDAO sqlCarInternetContentDAO) {
-        this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
+    public InMemoryCarInternetContentDAOImpl(SqlCarInternetContentRepository sqlCarInternetContentRepository) {
+        this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
     }
 
     @Scheduled(initialDelayString = "${data.carInternetContents.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in memory");
-        this.carInternetContents = this.sqlCarInternetContentDAO.getAll();
+        Iterable<CarInternetContent> carInternetContentsIterable = this.sqlCarInternetContentRepository.findAll();
+        carInternetContentsIterable.iterator()
+                                   .forEachRemaining(this.carInternetContents::add);
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading CarInternetContent: " + id + " entity in memory");
         CarInternetContent contentToReload = this.getById(id);
-        CarInternetContent dbContent = this.sqlCarInternetContentDAO.getById(id);
+        CarInternetContent dbContent = this.sqlCarInternetContentRepository.findOne(id);
 
         if (Objects.nonNull(dbContent)) {
             if (Objects.nonNull(contentToReload)) {
@@ -97,13 +97,15 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
 
     public List<CarInternetContent> getVideosByCarId(Long carId) {
         return this.carInternetContents.stream()
-                                       .filter(content -> content.getCar().getId().equals(carId) && content.getType().equals(VIDEO))
+                                       .filter(content -> content.getCar().getId().equals(carId) &&
+                                                          content.getType().equals(VIDEO))
                                        .collect(Collectors.toList());
     }
 
     public List<CarInternetContent> getReviewArticlesByCarId(Long carId) {
         return this.carInternetContents.stream()
-                                       .filter(content -> content.getCar().getId().equals(carId) && content.getType().equals(REVIEW_ARTICLE))
+                                       .filter(content -> content.getCar().getId().equals(carId) &&
+                                                          content.getType().equals(REVIEW_ARTICLE))
                                        .collect(Collectors.toList());
     }
 }

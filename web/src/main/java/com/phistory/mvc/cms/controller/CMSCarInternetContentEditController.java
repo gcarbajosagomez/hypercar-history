@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.service.EntityManagementService;
@@ -24,7 +24,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
  * Controller to handle requests to "{@value CAR_INTERNET_CONTENTS_URL}" URLs
- *
+ * <p>
  * Created by gonzalo on 9/9/16.
  */
 @Secured(USER_ROLE)
@@ -33,23 +33,23 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
-    private SqlCarInternetContentDAO carInternetContentDAO;
-    private EntityManagementService      entityManagementService;
+    private SqlCarInternetContentRepository carInternetContentRepository;
+    private EntityManagementService         entityManagementService;
 
     @Inject
-    public CMSCarInternetContentEditController(SqlCarInternetContentDAO carInternetContentDAO,
+    public CMSCarInternetContentEditController(SqlCarInternetContentRepository carInternetContentRepository,
                                                EntityManagementService entityManagementService) {
-        this.carInternetContentDAO = carInternetContentDAO;
+        this.carInternetContentRepository = carInternetContentRepository;
         this.entityManagementService = entityManagementService;
     }
 
     @RequestMapping(value = DELETE_URL,
-                    method = DELETE)
+            method = DELETE)
     @ResponseBody
-    public String handleDeleteInternetContent(@ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContent carInternetContent)
-    {
+    public String handleDeleteInternetContent(
+            @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContent carInternetContent) {
         try {
-            this.carInternetContentDAO.delete(carInternetContent);
+            this.carInternetContentRepository.delete(carInternetContent);
 
             EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
             entityManagementLoadCommand.setCarInternetContentId(carInternetContent.getCar().getId());
@@ -58,20 +58,18 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
 
             String successMessage = super.getMessageSource()
                                          .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                     new Object[]{"Car internet content"},
+                                                     new Object[] {"Car internet content"},
                                                      LocaleContextHolder.getLocale());
 
             return SUCCESS_MESSAGE + " : " + successMessage;
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             log.error("There was an error while deleting picture; %s ", carInternetContent.getId(), e);
             return EXCEPTION_MESSAGE + " : " + e.toString();
         }
     }
 
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
-    public CarInternetContent createCarInternetContentCommand(@PathVariable(ID) Long caInternetContentId) throws Exception
-    {
-        return super.getSqlCarInternetContentDAO().getById(caInternetContentId);
+    public CarInternetContent createCarInternetContentCommand(@PathVariable(ID) Long caInternetContentId) throws Exception {
+        return super.getSqlCarInternetContentRepository().findOne(caInternetContentId);
     }
 }

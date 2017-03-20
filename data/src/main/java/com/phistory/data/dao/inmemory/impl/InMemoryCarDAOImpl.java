@@ -1,18 +1,17 @@
 package com.phistory.data.dao.inmemory.impl;
 
 import com.phistory.data.command.CarQueryCommand;
-import com.phistory.data.dao.inmemory.InMemoryDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
+import com.phistory.data.dao.inmemory.InMemoryDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.SqlCarDAO;
-import com.phistory.data.model.picture.Picture;
+import com.phistory.data.dao.sql.SqlCarRepository;
 import com.phistory.data.model.car.Car;
-import lombok.NoArgsConstructor;
+import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,35 +24,36 @@ import java.util.stream.Collectors;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = InMemoryCarDAOImpl.BEAN_NAME)
+@Component(value = InMemoryCarDAOImpl.BEAN_NAME)
 @EnableScheduling
-@NoArgsConstructor
 @Slf4j
 public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     public static final String BEAN_NAME = "inMemoryCarDAO";
 
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
-    private SqlCarDAO          sqlCarDAO;
+    private SqlCarRepository   sqlCarRepository;
     private List<Car> cars = new ArrayList<>();
 
     @Autowired
-    public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO, SqlCarDAO sqlCarDAO) {
+    public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO, SqlCarRepository sqlCarRepository) {
         this.inMemoryInMemoryPictureDAO = inMemoryPictureDAO;
-        this.sqlCarDAO = sqlCarDAO;
+        this.sqlCarRepository = sqlCarRepository;
     }
 
     @Scheduled(initialDelayString = "${data.cars.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");
-        this.cars = this.sqlCarDAO.getAll();
+        Iterable<Car> carsIterable = this.sqlCarRepository.findAll();
+        carsIterable.iterator()
+                    .forEachRemaining(this.cars::add);
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading Car: " + id + " entity in memory");
         Car carToReload = this.getById(id);
-        Car dbCar = this.sqlCarDAO.getById(id);
+        Car dbCar = this.sqlCarRepository.findOne(id);
 
         if (Objects.nonNull(dbCar)) {
             if (Objects.nonNull(carToReload)) {

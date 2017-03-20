@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.controller.util;
 
-import com.phistory.data.dao.sql.SqlEngineDAO;
+import com.phistory.data.dao.sql.SqlEngineRepository;
 import com.phistory.data.model.engine.Engine;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.creator.EngineFormCreator;
@@ -16,10 +16,15 @@ import javax.inject.Inject;
 @Component
 public class CMSEngineControllerUtil {
 
+    private SqlEngineRepository sqlEngineRepository;
+    private EngineFormCreator   engineFormCreator;
+
     @Inject
-    private SqlEngineDAO      engineDAO;
-    @Inject
-    private EngineFormCreator engineFormCreator;
+    public CMSEngineControllerUtil(SqlEngineRepository sqlEngineRepository,
+                                   EngineFormCreator engineFormCreator) {
+        this.sqlEngineRepository = sqlEngineRepository;
+        this.engineFormCreator = engineFormCreator;
+    }
 
     /**
      * Handle the deletion of an engine.
@@ -30,7 +35,7 @@ public class CMSEngineControllerUtil {
     public void deleteEngine(EngineFormEditCommand command) throws Exception {
         if (command.getEngineForm() != null) {
             Engine engine = this.engineFormCreator.createEntityFromForm(command.getEngineForm());
-            this.engineDAO.delete(engine);
+            this.sqlEngineRepository.delete(engine);
         }
     }
 }

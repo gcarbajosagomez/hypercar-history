@@ -87,6 +87,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+                log.error("There was an error while editing manufacturer {}", command.getManufacturerForm().getName(), e.getMessage());
             } finally {
                 this.fillModel(model);
             }
@@ -120,7 +121,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
                 model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, new ManufacturerFormEditCommand());
             } catch (Exception e) {
-                log.error(e.toString(), e);
+                log.error("There was an error while deleting manufacturer {}", command.getManufacturerForm().getName(), e.getMessage());
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());
             } finally {
                 this.fillModel(model);
@@ -132,7 +133,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
 
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId) {
-        Manufacturer manufacturer = super.getSqlManufacturerDAO().getById(manufacturerId);
+        Manufacturer manufacturer = super.getSqlManufacturerRepository().findOne(manufacturerId);
         ManufacturerForm manufacturerForm = this.manufacturerFormCreator.createFormFromEntity(manufacturer);
         ManufacturerFormEditCommand command = new ManufacturerFormEditCommand(manufacturerForm);
 

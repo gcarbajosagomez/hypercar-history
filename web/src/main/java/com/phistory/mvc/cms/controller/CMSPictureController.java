@@ -50,7 +50,7 @@ public class CMSPictureController extends CMSBaseController {
         try {
             command.setAction(LOAD_CAR_PICTURE);
             Picture picture = this.pictureControllerUtil.loadPictureFromDB(command);
-            super.getSqlPictureDAO().delete(picture);
+            super.getSqlPictureRepository().delete(picture);
             this.reloadInMemoryPictures(picture.getId());
 
             String successMessage = super.getMessageSource()

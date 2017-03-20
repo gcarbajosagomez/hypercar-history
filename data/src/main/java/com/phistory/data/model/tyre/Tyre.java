@@ -1,15 +1,18 @@
 package com.phistory.data.model.tyre;
 
 import com.phistory.data.model.GenericEntity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-import static javax.persistence.EnumType.*;
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- *main.java.
+ * main.java.
+ *
  * @author Gonzalo
  */
 @Entity
@@ -17,10 +20,10 @@ import static javax.persistence.GenerationType.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Tyre implements GenericEntity
-{
+public class Tyre implements GenericEntity {
+
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tyre_id")
     private Long id;
 
@@ -42,8 +45,8 @@ public class Tyre implements GenericEntity
         return id;
     }
 
-	@Override
-	public String toString() {
-		return null;
-	}
+    @Override
+    public String toString() {
+        return null;
+    }
 }

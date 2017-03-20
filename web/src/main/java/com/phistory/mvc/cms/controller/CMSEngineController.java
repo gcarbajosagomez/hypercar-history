@@ -42,21 +42,26 @@ public class CMSEngineController extends CMSBaseController {
 
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
 
-    @Inject
     private EngineFormCreator       engineFormCreator;
-    @Inject
     private CMSEngineControllerUtil CMSEngineControllerUtil;
 
+    @Inject
+    public CMSEngineController(EngineFormCreator engineFormCreator,
+                               CMSEngineControllerUtil CMSEngineControllerUtil) {
+        this.engineFormCreator = engineFormCreator;
+        this.CMSEngineControllerUtil = CMSEngineControllerUtil;
+    }
+
     @RequestMapping(method = GET,
-                    produces = APPLICATION_JSON_VALUE)
+            produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public EngineForm handleListEngineById(@ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
         return command.getEngineForm();
     }
 
     @RequestMapping(value = {SAVE_URL, EDIT_URL},
-                    method = {POST, PUT},
-                    produces = APPLICATION_JSON_VALUE)
+            method = {POST, PUT},
+            produces = APPLICATION_JSON_VALUE)
     @ResponseBody
     public Model handleSaveOrEditEngine(Model model,
                                         @Valid @RequestBody EngineFormEditCommand command,
@@ -65,11 +70,11 @@ public class CMSEngineController extends CMSBaseController {
 
         try {
             if (!result.hasErrors()) {
-                super.getSqlEngineDAO().saveOrEdit(engine);
+                super.getSqlEngineRepository().save(engine);
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{engine.toString()},
+                                                         new Object[] {engine.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
                 model.addAttribute(ENGINE, engine);
@@ -84,7 +89,7 @@ public class CMSEngineController extends CMSBaseController {
     }
 
     @RequestMapping(value = DELETE_URL,
-                    method = POST)
+            method = POST)
     public void handleDeleteEngine(Model model,
                                    BindingResult result,
                                    @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
@@ -103,7 +108,7 @@ public class CMSEngineController extends CMSBaseController {
         EngineFormEditCommand command = new EngineFormEditCommand();
 
         if (engineId != null) {
-            Engine engine = super.getSqlEngineDAO().getById(engineId);
+            Engine engine = super.getSqlEngineRepository().findOne(engineId);
             EngineForm engineForm = this.engineFormCreator.createFormFromEntity(engine);
             command.setEngineForm(engineForm);
         }

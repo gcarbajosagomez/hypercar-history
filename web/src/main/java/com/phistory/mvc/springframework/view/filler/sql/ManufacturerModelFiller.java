@@ -1,6 +1,6 @@
 package com.phistory.mvc.springframework.view.filler.sql;
 
-import com.phistory.data.dao.sql.SqlManufacturerDAO;
+import com.phistory.data.dao.sql.SqlManufacturerRepository;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
@@ -14,35 +14,31 @@ import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
 
 /**
  * Fills a Spring Framework Model with manufacturer related information
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
 @Component
-public class ManufacturerModelFiller implements ModelFiller
-{
-	@Inject
-	private SqlManufacturerDAO manufacturerDAO;
+public class ManufacturerModelFiller implements ModelFiller {
 
-	@Override
-	public void fillModel(Model model)
-	{
-		model.addAttribute(MANUFACTURERS, 	  			   	this.manufacturerDAO.getAll());
-		model.addAttribute("loadManufacturerLogoAction", 	LOAD_MANUFACTURER_LOGO.getName());
-	}
-	
-	/**
-	 * Fill the model with paginated manufacturer data
-	 * 
-	 * @param model
-	 * @param manufacturersPaginationDTO
-	 */
-	public void fillPaginatedModel(Model model, PaginationDTO manufacturersPaginationDTO)
-	{
-		model.addAttribute(MANUFACTURERS_PER_PAGE_DATA,   manufacturersPaginationDTO.getItemsPerPage());
-		model.addAttribute(PAG_NUM_DATA, 	    		  manufacturersPaginationDTO.getPagNum());
-		model.addAttribute(MANUFACTURERS_PER_PAGE, 		  MANUFACTURERS_PER_PAGE);
-		
-		fillModel(model);
-	}
+    @Inject
+    private SqlManufacturerRepository manufacturerRepository;
+
+    @Override
+    public void fillModel(Model model) {
+        model.addAttribute(MANUFACTURERS, this.manufacturerRepository.findAll());
+        model.addAttribute("loadManufacturerLogoAction", LOAD_MANUFACTURER_LOGO.getName());
+    }
+
+    /**
+     * Fill the model with paginated manufacturer data
+     *
+     * @param model
+     * @param manufacturersPaginationDTO
+     */
+    public void fillPaginatedModel(Model model, PaginationDTO manufacturersPaginationDTO) {
+        model.addAttribute(MANUFACTURERS_PER_PAGE_DATA, manufacturersPaginationDTO.getItemsPerPage());
+        model.addAttribute(PAG_NUM_DATA, manufacturersPaginationDTO.getPagNum());
+        model.addAttribute(MANUFACTURERS_PER_PAGE, MANUFACTURERS_PER_PAGE);
+        this.fillModel(model);
+    }
 }

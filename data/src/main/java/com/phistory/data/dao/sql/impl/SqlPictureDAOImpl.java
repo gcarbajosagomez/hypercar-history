@@ -2,121 +2,112 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.command.PictureDataCommand;
 import com.phistory.data.dao.sql.SqlPictureDAO;
+import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
 import org.hibernate.Hibernate;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.hibernate.engine.jdbc.LobCreator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
 
-import static com.phistory.data.model.GenericEntity.ID_FIELD;
+import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
 
 /**
  * @author Gonzalo
  */
 @Transactional
-@Repository
-public class SqlPictureDAOImpl extends SqlDAOImpl<Picture, Long> implements SqlPictureDAO {
+@Component
+public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPictureDAO {
+
+    private SqlPictureRepository sqlPictureRepository;
 
     @Autowired
-    public SqlPictureDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
-        super(sessionFactory, entityManager);
+    public SqlPictureDAOImpl(EntityManager entityManager,
+                             SqlPictureRepository sqlPictureRepository) {
+        super(entityManager);
+        this.sqlPictureRepository = sqlPictureRepository;
     }
 
     @Override
-    public List<Picture> getAll() {
-        return super.getCurrentSession()
-                    .createQuery("FROM Picture")
-                    .list();
-    }
-
-    @Override
-    public Picture getById(Long id) {
-        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
-                                                        + " WHERE picture.id = :id");
-        q.setParameter(ID_FIELD, id);
-        return (Picture) q.uniqueResult();
-    }
-
     public List<Picture> getByCarId(Long carId) {
-        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
-                                                        + " WHERE picture.car.id = :carId"
-                                                        + " ORDER BY picture.galleryPosition ASC");
+        Query query = super.getEntityManager()
+                           .createQuery("FROM Picture AS picture"
+                                        + " WHERE picture.car.id = :carId"
+                                        + " ORDER BY picture.galleryPosition ASC");
 
-        q.setParameter("carId", carId);
+        query.setParameter(CAR_ID_PROPERTY_NAME, carId);
 
-        return q.list();
+        return query.getResultList();
     }
 
+    @Override
     public Picture getCarPreview(Long carId) {
-        Query q = super.getCurrentSession().createQuery("FROM Picture AS picture"
-                                                        + " WHERE picture.car.id = :carId"
-                                                        + " AND picture.eligibleForPreview = true");
+        Query query = super.getEntityManager()
+                           .createQuery("FROM Picture AS picture"
+                                        + " WHERE picture.car.id = :carId"
+                                        + " AND picture.eligibleForPreview = true");
 
-        q.setParameter("carId", carId);
-        List<Picture> previewCandidates = q.list();
+        query.setParameter(CAR_ID_PROPERTY_NAME, carId);
+        List<Picture> previewCandidates = query.getResultList();
+
         return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 
+    @Override
     public Picture getManufacturerLogo(Long manufacturerId) {
         Picture picture = new Picture();
 
-        Query q = super.getCurrentSession().createQuery("SELECT manufacturer.logo"
-                                                        + " FROM Manufacturer AS manufacturer"
-                                                        + " WHERE manufacturer.id = :manufacturerId");
+        Query query = super.getEntityManager()
+                           .createQuery("SELECT manufacturer.logo"
+                                        + " FROM Manufacturer AS manufacturer"
+                                        + " WHERE manufacturer.id = :manufacturerId");
 
-        q.setParameter("manufacturerId", manufacturerId);
-        picture.setImage((Blob) q.uniqueResult());
+        query.setParameter("manufacturerId", manufacturerId);
+        picture.setImage((Blob) query.getSingleResult());
 
         return picture;
     }
 
+    @Override
     public void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException {
         LobCreator lobCreator = Hibernate.getLobCreator(super.getCurrentSession());
         Blob pictureBlob = lobCreator.createBlob(pictureEditCommand.getMultipartFile().getInputStream(), -1);
 
         Picture picture = pictureEditCommand.getPicture();
         picture.setImage(pictureBlob);
-
-        super.saveOrEdit(picture);
+        this.sqlPictureRepository.save(picture);
     }
 
+    @Override
     public void updateGalleryPosition(Picture picture) {
-        Query q = super.getCurrentSession()
-                       .createQuery("UPDATE Picture"
-                                    + " SET galleryPosition = :galleryPosition"
-                                    + " WHERE id = :id"
-                                    + " AND car = :car");
+        Query query = super.getEntityManager()
+                           .createQuery("UPDATE Picture"
+                                        + " SET galleryPosition = :galleryPosition"
+                                        + " WHERE id = :id"
+                                        + " AND car = :car");
 
-        q.setParameter("galleryPosition", picture.getGalleryPosition());
-        q.setParameter("id", picture.getId());
-        q.setParameter("car", picture.getCar());
-        q.executeUpdate();
+        query.setParameter("galleryPosition", picture.getGalleryPosition());
+        query.setParameter("id", picture.getId());
+        query.setParameter("car", picture.getCar());
+        query.executeUpdate();
     }
 
-    public Long count() {
-        return (Long) super.getCurrentSession()
-                           .createQuery("SELECT COUNT (picture.car.id)"
-                                        + " FROM Picture AS picture")
-                           .uniqueResult();
-    }
-
+    @Override
     public List<Picture> getPaginated(int firstResult, int limit) {
-        Query query = super.getCurrentSession()
+        Query query = super.getEntityManager()
                            .createQuery("FROM Picture AS picture"
                                         + " ORDER BY picture.id");
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);
 
-        return query.list();
+        return query.getResultList();
     }
 }

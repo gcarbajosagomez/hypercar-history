@@ -7,7 +7,6 @@ import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.mvc.model.dto.ContentSearchDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +34,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @Controller
 @RequestMapping(value = MODELS_SEARCH_URL,
         method = HEAD)
-public class ContentSearchController extends BaseController implements InitializingBean {
+public class ContentSearchController extends BaseController {
     private ModelFiller carModelFiller;
     private ModelFiller pictureModelFiller;
 
@@ -54,7 +53,7 @@ public class ContentSearchController extends BaseController implements Initializ
             //so that we can return all the searched car model names to the view, we need to retrieve all cars, and separate them into models (names) and cars
             clonedContentSearchDto.setItemsPerPage(0);
             SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
-            List<GenericEntity> searchResults = this.getSqlContentSearchDAO().hibernateSearchSearchContent(searchCommand);
+            List<GenericEntity> searchResults = this.getSqlContentSearchDAO().searchContent(searchCommand);
             searchResults = this.removeNotVisibleCars(searchResults);
 
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
@@ -83,6 +82,7 @@ public class ContentSearchController extends BaseController implements Initializ
     private SearchCommand createSearchCommand(ContentSearchDTO contentSearchDto) {
         Map<String, Boolean> orderByMap = new HashMap<>();
         orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
+        //TODO
         //orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
 
         SimpleDataConditionCommand contentToSearchCondition =
@@ -93,7 +93,6 @@ public class ContentSearchController extends BaseController implements Initializ
         dataConditionMap.put(Car.MODEL_PROPERTY_NAME, contentToSearchCondition);
 
         return new SearchCommand(Car.class,
-                                 null,
                                  dataConditionMap,
                                  null,
                                  orderByMap,
@@ -117,10 +116,5 @@ public class ContentSearchController extends BaseController implements Initializ
             toIndex = searchResults.size();
         }
         return searchResults.subList(fromIndex, toIndex);
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        super.getSqlContentSearchDAO().hibernateSearchIndexPreviouslyStoredDatabaseRecords();
     }
 }

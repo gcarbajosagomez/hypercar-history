@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface SqlContentSearchDAO {
 
-    void hibernateSearchIndexPreviouslyStoredDatabaseRecords();
+    void indexPreviouslyStoredDatabaseRecords();
 
-    List<GenericEntity> hibernateSearchSearchContent(SearchCommand searchCommand);
+    List<GenericEntity> searchContent(SearchCommand searchCommand);
 }

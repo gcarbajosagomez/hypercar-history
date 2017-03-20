@@ -2,16 +2,15 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
-import static com.phistory.data.model.GenericEntity.ID_FIELD;
+import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
 
 /**
  * Data Access Object class for {@link CarInternetContent}s
@@ -19,27 +18,12 @@ import static com.phistory.data.model.GenericEntity.ID_FIELD;
  * @author gonzalo
  */
 @Transactional
-@Repository
-public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent, Long> implements SqlCarInternetContentDAO {
+@Component
+public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent> implements SqlCarInternetContentDAO {
 
     @Autowired
-    public SqlCarInternetContentDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
-        super(sessionFactory, entityManager);
-    }
-
-    @Override
-    public List<CarInternetContent> getAll() {
-        return super.getCurrentSession().createQuery("FROM CarInternetContent").list();
-    }
-
-    @Override
-    public CarInternetContent getById(Long id) {
-        Query q = super.getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
-                                                  + " WHERE internetContent.id = :id");
-        q.setParameter(ID_FIELD, id);
-        CarInternetContent carInternetContent = (CarInternetContent) q.uniqueResult();
-
-        return carInternetContent;
+    public SqlCarInternetContentDAOImpl(EntityManager entityManager) {
+        super(entityManager);
     }
 
     /**
@@ -49,13 +33,15 @@ public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent,
      * @param carId
      * @return The {@link List<CarInternetContent>} if everything went well, null otherwise
      */
+    @Override
     public List<CarInternetContent> getByCarId(Long carId) {
-        Query q = super.getCurrentSession().createQuery("FROM CarInternetContent AS internetContent"
-                                                  + " WHERE internetContent.car.id = :carId");
-        q.setParameter("carId", carId);
-        List<CarInternetContent> carInternetContents = q.list();
+        Query query = super.getEntityManager()
+                           .createQuery("FROM CarInternetContent AS internetContent"
+                                        + " WHERE internetContent.car.id = :carId");
 
-        return carInternetContents;
+        query.setParameter(CAR_ID_PROPERTY_NAME, carId);
+
+        return query.getResultList();
     }
 
 }

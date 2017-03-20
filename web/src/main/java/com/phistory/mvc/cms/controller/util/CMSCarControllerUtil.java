@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.controller.util;
 
-import com.phistory.data.dao.sql.SqlCarDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
+import com.phistory.data.dao.sql.SqlCarRepository;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
@@ -19,6 +19,7 @@ import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
@@ -37,26 +38,27 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
  */
 @Component
 @NoArgsConstructor
+@Transactional
 public class CMSCarControllerUtil {
 
-    private SqlCarDAO                     sqlCarDAO;
-    private SqlCarInternetContentDAO      sqlCarInternetContentDAO;
-    private CarFormCreator                carFormCreator;
-    private CarInternetContentFormCreator carInternetContentFormCreator;
-    private CMSPictureControllerUtil      cmsPictureControllerUtil;
-    private DateProvider                  dateProvider;
-    private EntityManagementService       entityManagementService;
+    private SqlCarRepository                sqlCarRepository;
+    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+    private CarFormCreator                  carFormCreator;
+    private CarInternetContentFormCreator   carInternetContentFormCreator;
+    private CMSPictureControllerUtil        cmsPictureControllerUtil;
+    private DateProvider                    dateProvider;
+    private EntityManagementService         entityManagementService;
 
     @Inject
-    public CMSCarControllerUtil(SqlCarDAO sqlCarDAO,
-                                SqlCarInternetContentDAO sqlCarInternetContentDAO,
+    public CMSCarControllerUtil(SqlCarRepository sqlCarRepository,
+                                SqlCarInternetContentRepository sqlCarInternetContentRepository,
                                 CarFormCreator carFormCreator,
                                 CarInternetContentFormCreator carInternetContentFormCreator,
                                 CMSPictureControllerUtil cmsPictureControllerUtil,
                                 DateProvider dateProvider,
                                 EntityManagementService entityManagementService) {
-        this.sqlCarDAO = sqlCarDAO;
-        this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
+        this.sqlCarRepository = sqlCarRepository;
+        this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
         this.carFormCreator = carFormCreator;
         this.carInternetContentFormCreator = carInternetContentFormCreator;
         this.cmsPictureControllerUtil = cmsPictureControllerUtil;
@@ -71,12 +73,13 @@ public class CMSCarControllerUtil {
      * @return the newly saved edited car if everything went well, null otherwise
      * @throws Exception
      */
+    @Transactional
     public Car saveOrEditCar(CarFormEditCommand command) throws Exception {
         CarForm carForm = command.getCarForm();
         if (carForm != null) {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
             Car car = this.carFormCreator.createEntityFromForm(carForm);
-            this.sqlCarDAO.saveOrEdit(car);
+            this.sqlCarRepository.save(car);
 
             if (pictureFileEditCommands != null) {
                 for (int i = 0; i < pictureFileEditCommands.size(); i++) {
@@ -148,7 +151,7 @@ public class CMSCarControllerUtil {
                 carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
 
                 if (StringUtils.hasText(carInternetContent.getLink())) {
-                    this.sqlCarInternetContentDAO.saveOrEdit(carInternetContent);
+                    this.sqlCarInternetContentRepository.save(carInternetContent);
                     savedCarInternetContents.add(carInternetContent);
                 }
             } catch (Exception e) {
@@ -168,7 +171,7 @@ public class CMSCarControllerUtil {
     public void deleteCar(CarFormEditCommand command) throws Exception {
         if (command.getCarForm() != null) {
             Car car = carFormCreator.createEntityFromForm(command.getCarForm());
-            this.sqlCarDAO.delete(car);
+            this.sqlCarRepository.delete(car);
         }
     }
 

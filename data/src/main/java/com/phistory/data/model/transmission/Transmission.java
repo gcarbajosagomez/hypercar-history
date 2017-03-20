@@ -10,8 +10,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.EnumType.*;
+import static javax.persistence.GenerationType.*;
+
 /**
- *
  * @author Gonzalo
  */
 @Entity
@@ -21,19 +23,22 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Transmission implements GenericEntity
-{
+public class Transmission implements GenericEntity {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "transmission_id")
     private Long id;
-    @Enumerated(value = EnumType.ORDINAL)
+
+    @Enumerated(value = ORDINAL)
     @Column(name = "transmission_type", nullable = false)
     private TransmissionType type;
+
     @Column(name = "transmission_num_of_gears", nullable = false)
     private Integer numOfGears;
+
     @OneToOne
-    @JoinColumn(name = "transmission_car_id", nullable = true)
+    @JoinColumn(name = "transmission_car_id")
     private Car car;
 
     @Override
@@ -41,8 +46,8 @@ public class Transmission implements GenericEntity
         return id;
     }
 
-	@Override
-	public String toString() {
-		return null;
-	}
+    @Override
+    public String toString() {
+        return null;
+    }
 }

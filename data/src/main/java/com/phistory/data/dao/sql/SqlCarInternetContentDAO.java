@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by Gonzalo Carbajosa on 25/02/17.
  */
-public interface SqlCarInternetContentDAO extends SqlDAO<CarInternetContent, Long> {
+public interface SqlCarInternetContentDAO extends SqlDAO<CarInternetContent> {
 
     List<CarInternetContent> getByCarId(Long carId);
 }

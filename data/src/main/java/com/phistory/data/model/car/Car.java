@@ -26,7 +26,7 @@ import java.text.Normalizer;
 import java.util.Calendar;
 
 import static javax.persistence.EnumType.ORDINAL;
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.TemporalType.DATE;
 import static org.hibernate.annotations.CascadeType.ALL;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
@@ -66,7 +66,7 @@ public class Car implements GenericEntity {
     public static final String CAR_MODEL_ANALYZER_NAME             = "carModelAnalyzer";
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = CAR_ID_FIELD)
     private Long id;
 

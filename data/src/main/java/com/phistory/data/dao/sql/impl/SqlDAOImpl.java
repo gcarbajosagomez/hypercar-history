@@ -5,17 +5,12 @@ import com.phistory.data.dao.sql.SqlDAO;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.FlushMode;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.SynchronizationType;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
@@ -26,21 +21,18 @@ import java.util.Map;
  * @author Gonzalo
  */
 @Transactional
-@Repository
 @Slf4j
-@NoArgsConstructor
-public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> implements SqlDAO<TYPE, IDENTIFIER> {
+public abstract class SqlDAOImpl<TYPE extends GenericEntity> implements SqlDAO<TYPE> {
 
     @Getter
     @PersistenceContext
-    private EntityManager  entityManager;
-    private SessionFactory sessionFactory;
+    private EntityManager entityManager;
 
-    public SqlDAOImpl(SessionFactory sessionFactory, EntityManager entityManager) {
-        this.sessionFactory = sessionFactory;
+    public SqlDAOImpl(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 
+    @Override
     public List<TYPE> getByCriteria(SearchCommand searchCommand) {
         CriteriaBuilder criteriaBuilder = this.entityManager.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(searchCommand.getEntityClass());
@@ -59,7 +51,7 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
             }
         }
 
-        TypedQuery query = this.entityManager.createQuery(criteriaQuery);
+        TypedQuery<TYPE> query = this.entityManager.createQuery(criteriaQuery);
 
         if (searchCommand.getMaxResults() > 0) {
             query.setMaxResults(searchCommand.getMaxResults());
@@ -68,42 +60,7 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
         if (searchCommand.getFirstResult() > 0) {
             query.setFirstResult(searchCommand.getFirstResult());
         }
-
         return query.getResultList();
-    }
-
-    /**
-     * Saves or edits an entity
-     *
-     * @param entity
-     */
-    public void saveOrEdit(TYPE entity) {
-        if (entity != null) {
-            Session session = this.getCurrentSession();
-            session.clear();
-
-            if (entity.getId() == null) {
-                log.info("Saving new entity: " + entity.toString());
-                session.save(entity);
-            } else {
-                log.info("Editing entity: " + entity.toString());
-                session.update(entity);
-            }
-        }
-    }
-
-    /**
-     * Deletes an entity
-     *
-     * @param entity
-     */
-    public void delete(TYPE entity) {
-        if (entity != null) {
-            log.info("Deleting entity: " + entity.toString());
-            Session session = this.getCurrentSession();
-            session.clear();
-            session.delete(entity);
-        }
     }
 
     private CriteriaQuery<?> processOrderByMap(Map<String, Boolean> orderByMap,
@@ -155,15 +112,19 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
                                                                   conditionCommand.getConditionSingleValue()));
                     break;
                 case BIGGER_THAN:
-                    conditionPredicates
-                            .add(criteriaBuilder.greaterThan(entityRoot.get(entityProperty).as(Double.class), doubleComparingEx));
+                    conditionPredicates.add(criteriaBuilder.greaterThan(entityRoot.get(entityProperty)
+                                                                                  .as(Double.class),
+                                                                        doubleComparingEx));
                     break;
                 case LOWER_THAN:
                     conditionPredicates
-                            .add(criteriaBuilder.lessThan(entityRoot.get(entityProperty).as(Double.class), doubleComparingEx));
+                            .add(criteriaBuilder.lessThan(entityRoot.get(entityProperty)
+                                                                    .as(Double.class),
+                                                          doubleComparingEx));
                     break;
                 case LIKE:
-                    conditionPredicates.add(criteriaBuilder.like(entityRoot.get(entityProperty).as(String.class),
+                    conditionPredicates.add(criteriaBuilder.like(entityRoot.get(entityProperty)
+                                                                           .as(String.class),
                                                                  "%" + stringConditionValue + "%"));
                     break;
                 default:
@@ -175,26 +136,11 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity, IDENTIFIER> impleme
     }
 
     /**
-     * Opens a new Hibernate {@link Session}
-     *
-     * @return
-     */
-    public Session openSession() {
-        Session session = this.sessionFactory.openSession();
-        session.setFlushMode(FlushMode.COMMIT);
-
-        return session;
-    }
-
-    /**
-     * Get the current a new Hibernate {@link Session}
+     * Get the current Hibernate {@link Session}
      *
      * @return
      */
     public Session getCurrentSession() {
-        Session session = this.sessionFactory.getCurrentSession();
-        session.setFlushMode(FlushMode.COMMIT);
-
-        return session;
+        return this.entityManager.unwrap(Session.class);
     }
 }

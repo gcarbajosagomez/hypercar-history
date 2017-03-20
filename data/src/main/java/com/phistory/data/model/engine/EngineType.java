@@ -1,11 +1,10 @@
 package com.phistory.data.model.engine;
 
 /**
- *
  * @author Gonzalo
  */
-public enum EngineType
-{
+public enum EngineType {
+
     NATURALLY_ASPIRATED,
     TURBO_CHARGED,
     BITURBO_CHARGED,

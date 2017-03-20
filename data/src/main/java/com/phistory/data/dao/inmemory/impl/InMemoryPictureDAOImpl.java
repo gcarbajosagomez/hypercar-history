@@ -3,6 +3,7 @@ package com.phistory.data.dao.inmemory.impl;
 import com.phistory.data.dao.inmemory.InMemoryDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureDAO;
+import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
@@ -11,7 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,10 +24,10 @@ import static java.util.Comparator.*;
 
 /**
  * {@link Picture} {@link InMemoryDAO}
- *
+ * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Repository(value = InMemoryPictureDAOImpl.BEAN_NAME)
+@Component(value = InMemoryPictureDAOImpl.BEAN_NAME)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
@@ -34,19 +36,23 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
 
-    private SqlPictureDAO sqlPictureDAO;
+    private SqlPictureRepository sqlPictureRepository;
+    private SqlPictureDAO        sqlPictureDAO;
     private List<Picture> pictures = new ArrayList<>();
 
     @Autowired
-    public InMemoryPictureDAOImpl(SqlPictureDAO sqlPictureDAO) {
+    public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
+                                  SqlPictureDAO sqlPictureDAO) {
+        this.sqlPictureRepository = sqlPictureRepository;
         this.sqlPictureDAO = sqlPictureDAO;
     }
 
+    @Transactional
     @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
-        Long pictureCount = this.sqlPictureDAO.count();
+        Long pictureCount = this.sqlPictureRepository.count();
 
         Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
         chunkSizeDouble = Math.floor(chunkSizeDouble);
@@ -56,19 +62,19 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
         for (int i = 2; i < NUMBER_OF_CHUNKS_TO_LOAD_PICTURES; i++) {
             this.pictures.addAll(this.sqlPictureDAO.getPaginated(chunkSize,
-                    chunkSizeDouble.intValue()));
+                                                                 chunkSizeDouble.intValue()));
             chunkSize = chunkSize + chunkSizeDouble.intValue();
         }
 
         this.pictures.addAll(this.sqlPictureDAO.getPaginated(chunkSize,
-                pictureCount.intValue()));
+                                                             pictureCount.intValue()));
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading Picture: " + id + " entity in memory");
         Picture pictureToReload = this.getById(id);
-        Picture dbPicture = this.sqlPictureDAO.getById(id);
+        Picture dbPicture = this.sqlPictureRepository.findOne(id);
 
         if (Objects.nonNull(dbPicture)) {
             if (Objects.nonNull(pictureToReload)) {
@@ -156,12 +162,12 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     public Picture getCarPreview(Long carId) {
         List<Picture> previewCandidates =
                 this.pictures.stream()
-                                  .filter(picture -> {
-                                        Car car = picture.getCar();
-                                        return ((Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview());
-                                  })
-                                  .collect(Collectors.toList());
+                             .filter(picture -> {
+                                 Car car = picture.getCar();
+                                 return ((Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview());
+                             })
+                             .collect(Collectors.toList());
 
-       return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
+        return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 }

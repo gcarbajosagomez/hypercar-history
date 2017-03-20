@@ -2,13 +2,14 @@ package com.phistory.data.dao.inmemory.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.phistory.data.dao.sql.SqlManufacturerDAO;
+import com.phistory.data.dao.sql.SqlManufacturerRepository;
 import com.phistory.data.model.Manufacturer;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,33 +18,35 @@ import java.util.Objects;
 /**
  * Created by Gonzalo Carbajosa on 6/01/17.
  */
-@Repository(value = InMemoryManufacturerDAOImpl.BEAN_NAME)
+@Component(value = InMemoryManufacturerDAOImpl.BEAN_NAME)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
 public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
     public static final String BEAN_NAME = "inMemoryManufacturerInternetContentDAO";
 
-    private SqlManufacturerDAO sqlManufacturerDAO;
+    private SqlManufacturerRepository sqlManufacturerRepository;
     private List<Manufacturer> manufacturers = new ArrayList<>();
 
     @Autowired
-    public InMemoryManufacturerDAOImpl(SqlManufacturerDAO sqlManufacturerDAO) {
-        this.sqlManufacturerDAO = sqlManufacturerDAO;
+    public InMemoryManufacturerDAOImpl(SqlManufacturerRepository sqlManufacturerRepository) {
+        this.sqlManufacturerRepository = sqlManufacturerRepository;
     }
 
     @Scheduled(initialDelayString = "${data.manufacturers.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Manufacturers entities in memory");
-        this.manufacturers = this.sqlManufacturerDAO.getAll();
+        Iterable<Manufacturer> manufacturerIterable = this.sqlManufacturerRepository.findAll();
+        manufacturerIterable.iterator()
+                            .forEachRemaining(this.manufacturers::add);
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading Manufacturer: " + id + " entity in memory");
         Manufacturer manufacturer = this.getById(id);
-        Manufacturer dbContent = this.sqlManufacturerDAO.getById(id);
+        Manufacturer dbContent = this.sqlManufacturerRepository.findOne(id);
 
         if (Objects.nonNull(dbContent)) {
             if (Objects.nonNull(manufacturer)) {

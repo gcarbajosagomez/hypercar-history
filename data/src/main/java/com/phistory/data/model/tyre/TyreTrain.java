@@ -1,11 +1,10 @@
 package com.phistory.data.model.tyre;
 
 /**
- *
  * @author Gonzalo
  */
-public enum TyreTrain
-{
+public enum TyreTrain {
+
     FRONT,
     REAR
 }

@@ -4,10 +4,7 @@ import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.SqlCarDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
-import com.phistory.data.dao.sql.SqlContentSearchDAO;
-import com.phistory.data.dao.sql.SqlPictureDAO;
+import com.phistory.data.dao.sql.*;
 import com.phistory.mvc.service.URILoggingService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
@@ -35,10 +32,16 @@ public class BaseController extends BaseControllerData {
     private SqlCarDAO                     sqlCarDAO;
     @Inject
     @Getter
+    private SqlCarRepository              sqlCarRepository;
+    @Inject
+    @Getter
     private InMemoryCarDAO                inMemoryCarDAO;
     @Inject
     @Getter
     private SqlPictureDAO                 sqlPictureDAO;
+    @Inject
+    @Getter
+    private SqlPictureRepository          sqlPictureRepository;
     @Inject
     @Getter
     private InMemoryPictureDAO            inMemoryPictureDAO;
@@ -64,9 +67,9 @@ public class BaseController extends BaseControllerData {
 
     @ModelAttribute
     public ModelAndView fillBaseModel(@RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt,
-                              Model model,
-                              Device device,
-                              HttpServletRequest request) {
+                                      Model model,
+                                      Device device,
+                                      HttpServletRequest request) {
         try {
             String requestURI = this.uriLoggingService.logURI(request);
             model.addAttribute("requestURI", requestURI);

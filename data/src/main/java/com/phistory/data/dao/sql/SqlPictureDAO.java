@@ -9,15 +9,11 @@ import java.util.List;
 /**
  * Created by Gonzalo Carbajosa on 25/02/17.
  */
-public interface SqlPictureDAO extends SqlDAO<Picture, Long> {
+public interface SqlPictureDAO extends SqlDAO<Picture> {
 
     void updateGalleryPosition(Picture picture);
 
-    Long count();
-
     List<Picture> getPaginated(int firstResult, int limit);
-
-    Picture getById(Long id);
 
     void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException;
 

@@ -12,7 +12,7 @@ import javax.persistence.*;
 import java.sql.Blob;
 
 import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
-import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.GenerationType.IDENTITY;
 import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
@@ -29,11 +29,12 @@ import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 public class Picture implements GenericEntity {
 
-    public static final String PICTURE_TABLE_NAME             = "picture";
-    public static final String PICTURE_ID_FIELD               = "picture_id";
+    public static final String PICTURE_TABLE_NAME   = "picture";
+    public static final String PICTURE_ID_FIELD     = "picture_id";
+    public static final String CAR_ID_PROPERTY_NAME = "carId";
 
     @Id
-    @GeneratedValue(strategy = AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = PICTURE_ID_FIELD)
     private Long id;
 

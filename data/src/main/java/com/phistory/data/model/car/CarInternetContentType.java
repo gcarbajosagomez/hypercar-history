@@ -1,6 +1,6 @@
 package com.phistory.data.model.car;
 
-public enum CarInternetContentType
-{
-	VIDEO, REVIEW_ARTICLE
+public enum CarInternetContentType {
+
+    VIDEO, REVIEW_ARTICLE
 }

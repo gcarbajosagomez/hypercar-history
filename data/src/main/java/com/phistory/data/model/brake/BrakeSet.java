@@ -8,9 +8,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
+import static org.hibernate.annotations.CascadeType.ALL;
 
 /**
  * @author Gonzalo
@@ -30,17 +32,17 @@ public class BrakeSet implements GenericEntity {
     public static final String BRAKE_SET_CAR_ID_FIELD = "brake_set_car_id";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "brake_set_id")
     private Long id;
 
     @OneToOne(orphanRemoval = true)
-    @Cascade(value = CascadeType.ALL)
+    @Cascade(value = ALL)
     @JoinColumn(name = FRONT_BRAKE_ID_FIELD, unique = true)
     private Brake frontBrake;
 
     @OneToOne(orphanRemoval = true)
-    @Cascade(value = CascadeType.ALL)
+    @Cascade(value = ALL)
     @JoinColumn(name = REAR_BRAKE_ID_FIELD, unique = true)
     private Brake rearBrake;
 

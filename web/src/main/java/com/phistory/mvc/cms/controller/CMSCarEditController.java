@@ -155,7 +155,7 @@ public class CMSCarEditController extends CMSBaseController {
 
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
-        Car car = super.getSqlCarDAO().getById(carId);
+        Car car = super.getSqlCarRepository().findOne(carId);
         CarForm carForm = this.carFormCreator.createFormFromEntity(car);
         CarFormEditCommand command = new CarFormEditCommand(carForm);
 

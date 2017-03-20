@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                        http://maven.apache.org/xsd/maven-4.0.0.xsd">
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -16,11 +17,7 @@
     <name>Pagani History Data</name>
 
     <properties>
-        <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
-        <javax.el-api.version>3.0.0</javax.el-api.version>
         <mysql.connector.version>6.0.5</mysql.connector.version>
-        <org.hibernate.version>5.2.1.Final</org.hibernate.version>
-        <org.hibernate-validator.version>5.3.0.Final</org.hibernate-validator.version>
         <org.hibernate-search.version>5.6.0.Final</org.hibernate-search.version>
         <org.slf4j.version>1.7.10</org.slf4j.version>
         <org.jadira.usertype.core.version>5.0.0.GA</org.jadira.usertype.core.version>
@@ -39,19 +36,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${javax.servlet-api.version}</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>${javax.el-api.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search-orm</artifactId>
@@ -74,24 +58,28 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
             <version>${org.springframework.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${org.springframework.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${org.slf4j.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>${com.fasterxml.jackson.core.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>

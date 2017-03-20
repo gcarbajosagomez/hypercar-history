@@ -12,29 +12,30 @@ import javax.persistence.*;
 
 import static javax.persistence.CascadeType.ALL;
 import static javax.persistence.EnumType.ORDINAL;
+import static javax.persistence.GenerationType.*;
 
 /**
- *main.java.
+ * main.java.
+ *
  * @author Gonzalo
  */
 @Entity
 @Table(name = "tyre_set",
-	   uniqueConstraints = @UniqueConstraint(columnNames = {TyreSet.FRONT_TYRE_ID_FIELD,
-                                                            TyreSet.REAR_TYRE_ID_FIELD,
-                                                            TyreSet.TYRE_SET_CAR_ID_FIELD}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {TyreSet.FRONT_TYRE_ID_FIELD,
+                TyreSet.REAR_TYRE_ID_FIELD,
+                TyreSet.TYRE_SET_CAR_ID_FIELD}))
 @JsonIgnoreProperties(value = {"car"})
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TyreSet implements GenericEntity
-{
+public class TyreSet implements GenericEntity {
     public static final String FRONT_TYRE_ID_FIELD   = "front_tyre_id";
     public static final String REAR_TYRE_ID_FIELD    = "rear_tyre_id";
     public static final String TYRE_SET_CAR_ID_FIELD = "tyre_set_car_id";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = IDENTITY)
     @Column(name = "tyre_set_id")
     private Long id;
 
@@ -65,8 +66,8 @@ public class TyreSet implements GenericEntity
         return id;
     }
 
-	@Override
-	public String toString() {
-		return null;
-	}
+    @Override
+    public String toString() {
+        return null;
+    }
 }

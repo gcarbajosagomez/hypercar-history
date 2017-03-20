@@ -1,9 +1,6 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.SqlCarDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
-import com.phistory.data.dao.sql.SqlEngineDAO;
-import com.phistory.data.dao.sql.SqlManufacturerDAO;
+import com.phistory.data.dao.sql.*;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
@@ -92,17 +89,22 @@ public class CMSBaseController extends BaseController {
 
     @Getter
     @Inject
-    private SqlManufacturerDAO       sqlManufacturerDAO;
+    private SqlManufacturerRepository       sqlManufacturerRepository;
     @Getter
     @Inject
-    private SqlEngineDAO             sqlEngineDAO;
+    private SqlEngineRepository             sqlEngineRepository;
     @Inject
-    private SqlCarDAO                sqlCarDAO;
+    private SqlCarDAO                       sqlCarDAO;
+    @Inject
+    private SqlCarRepository                sqlCarRepository;
     @Getter
     @Inject
-    private SqlCarInternetContentDAO sqlCarInternetContentDAO;
+    private SqlCarInternetContentDAO        sqlCarInternetContentDAO;
+    @Getter
     @Inject
-    private ModelFiller              cmsBaseModelFiller;
+    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+    @Inject
+    private ModelFiller                     cmsBaseModelFiller;
 
     @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response) {
@@ -118,9 +120,9 @@ public class CMSBaseController extends BaseController {
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {
-        binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<>(this.sqlManufacturerDAO));
-        binder.registerCustomEditor(Car.class, new GenericObjectPropertyEditor<>(this.sqlCarDAO));
-        binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<>(this.sqlEngineDAO));
+        binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<>(this.sqlManufacturerRepository));
+        binder.registerCustomEditor(Car.class, new GenericObjectPropertyEditor<>(this.sqlCarRepository));
+        binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<>(this.sqlEngineRepository));
         binder.registerCustomEditor(Calendar.class, new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
 

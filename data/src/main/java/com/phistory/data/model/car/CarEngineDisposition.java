@@ -8,6 +8,7 @@ import com.phistory.data.model.engine.Engine;
  * Created by gonzalo on 12/02/17.
  */
 public enum CarEngineDisposition {
+
     LONGITUDINAL("longitudinal"),
     TRANSVERSAL("transversal");
 

@@ -1,8 +1,8 @@
 package com.phistory.mvc.cms.springframework.view.filler;
 
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.SqlEngineDAO;
-import com.phistory.data.dao.sql.SqlManufacturerDAO;
+import com.phistory.data.dao.sql.SqlEngineRepository;
+import com.phistory.data.dao.sql.SqlManufacturerRepository;
 import com.phistory.data.model.Language;
 import com.phistory.data.model.brake.BrakeDiscMaterial;
 import com.phistory.data.model.car.*;
@@ -33,25 +33,26 @@ import static com.phistory.mvc.controller.BaseControllerData.PICTURES;
  */
 @Component
 public class CarEditModelFiller implements ModelFiller {
-    private SqlManufacturerDAO sqlManufacturerDAO;
-    private SqlEngineDAO       sqlEngineDAO;
-    private InMemoryPictureDAO inMemoryPictureDAO;
+
+    private SqlManufacturerRepository sqlManufacturerRepository;
+    private SqlEngineRepository       sqlEngineRepository;
+    private InMemoryPictureDAO        inMemoryPictureDAO;
 
     @Inject
-    public CarEditModelFiller(SqlManufacturerDAO sqlManufacturerDAO,
-                              SqlEngineDAO sqlEngineDAO,
+    public CarEditModelFiller(SqlManufacturerRepository sqlManufacturerRepository,
+                              SqlEngineRepository sqlEngineRepository,
                               InMemoryPictureDAO inMemoryPictureDAO) {
-        this.sqlManufacturerDAO = sqlManufacturerDAO;
-        this.sqlEngineDAO = sqlEngineDAO;
+        this.sqlManufacturerRepository = sqlManufacturerRepository;
+        this.sqlEngineRepository = sqlEngineRepository;
         this.inMemoryPictureDAO = inMemoryPictureDAO;
     }
 
     @Override
     public void fillModel(Model model) {
-        model.addAttribute("manufacturers", this.sqlManufacturerDAO.getAll());
+        model.addAttribute("manufacturers", this.sqlManufacturerRepository.findAll());
         model.addAttribute("engineLayouts", CarEngineLayout.values());
         model.addAttribute("engineDispositions", CarEngineDisposition.values());
-        model.addAttribute("engines", this.sqlEngineDAO.getAll());
+        model.addAttribute("engines", this.sqlEngineRepository.findAll());
         model.addAttribute(ENGINE, ENGINE);
         model.addAttribute("carMaterials", CarMaterial.values());
         model.addAttribute("bodyShapes", CarBodyShape.values());

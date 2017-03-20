@@ -50,7 +50,6 @@ public class SQLCarListModelFiller extends CarListModelFiller {
         return new SearchCommand(Car.class,
                                  null,
                                  null,
-                                 null,
                                  orderByMap,
                                  null,
                                  paginationFirstResult,

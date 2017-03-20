@@ -18,11 +18,11 @@ import javax.inject.Inject;
 @Component
 public class CMSPictureControllerUtil {
 
-    private SqlPictureDAO SqlPictureDAO;
+    private SqlPictureDAO sqlPictureDAO;
 
     @Inject
     public CMSPictureControllerUtil(SqlPictureDAO SqlPictureDAO) {
-        this.SqlPictureDAO = SqlPictureDAO;
+        this.sqlPictureDAO = SqlPictureDAO;
     }
 
     /**
@@ -52,7 +52,7 @@ public class CMSPictureControllerUtil {
         MultipartFile pictureFile = pictureEditCommand.getPictureFile();
         Picture picture = pictureEditCommand.getPicture();
         PictureDataCommand pictureDataCommand = new PictureDataCommand(pictureFile, picture);
-        this.SqlPictureDAO.saveOrEdit(pictureDataCommand);
+        this.sqlPictureDAO.saveOrEdit(pictureDataCommand);
     }
 
     /**
@@ -63,6 +63,6 @@ public class CMSPictureControllerUtil {
      */
     public void updatePictureGalleryPosition(Picture picture) throws Exception {
         PictureDataCommand pictureDataCommand = new PictureDataCommand(null, picture);
-        this.SqlPictureDAO.updateGalleryPosition(pictureDataCommand.getPicture());
+        this.sqlPictureDAO.updateGalleryPosition(pictureDataCommand.getPicture());
     }
 }

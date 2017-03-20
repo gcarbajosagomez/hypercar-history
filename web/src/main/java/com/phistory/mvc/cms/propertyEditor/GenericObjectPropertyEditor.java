@@ -1,37 +1,31 @@
 package com.phistory.mvc.cms.propertyEditor;
 
-import com.phistory.data.dao.sql.SqlDAO;
 import com.phistory.data.model.GenericEntity;
+import org.springframework.data.repository.CrudRepository;
 
 import java.beans.PropertyEditorSupport;
+import java.io.Serializable;
 
 /**
- *
  * @author Gonzalo
  */
-public class GenericObjectPropertyEditor<TYPE extends GenericEntity, IDENTIFIER> extends PropertyEditorSupport
-{
-    protected SqlDAO<TYPE, IDENTIFIER> sqlDAO;
+public class GenericObjectPropertyEditor<TYPE extends GenericEntity,
+        IDENTIFIER extends Serializable> extends PropertyEditorSupport {
 
-    public GenericObjectPropertyEditor(SqlDAO<TYPE, IDENTIFIER> sqlDAO)
-    {
-        this.sqlDAO = sqlDAO;
+    private CrudRepository<TYPE, IDENTIFIER> repository;
+
+    public GenericObjectPropertyEditor(CrudRepository<TYPE, IDENTIFIER> repository) {
+        this.repository = repository;
     }
 
-    @SuppressWarnings("unchecked")
-	@Override
-    public String getAsText()
-    {
-        if (getValue() != null)
-        {
+    @Override
+    public String getAsText() {
+        if (getValue() != null) {
             Long id = ((TYPE) getValue()).getId();
-            
-            if (id != null)
-            {
+
+            if (id != null) {
                 return id.toString();
-            }
-            else
-            {
+            } else {
                 return "-1";
             }
         }
@@ -39,18 +33,13 @@ public class GenericObjectPropertyEditor<TYPE extends GenericEntity, IDENTIFIER>
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-	@Override
-    public void setAsText(String idText) throws IllegalArgumentException
-    {    	
-        if (idText != null && !idText.isEmpty())
-        {
+    @Override
+    public void setAsText(String idText) throws IllegalArgumentException {
+        if (idText != null && !idText.isEmpty()) {
             IDENTIFIER id = (IDENTIFIER) new Long(idText);
-            super.setValue(this.sqlDAO.getById(id));
-        }
-        else
-        {
-        	super.setValue(null);
+            super.setValue(this.repository.findOne(id));
+        } else {
+            super.setValue(null);
         }
     }
 }
