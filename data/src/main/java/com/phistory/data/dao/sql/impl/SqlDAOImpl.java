@@ -7,7 +7,6 @@ import com.phistory.data.query.command.SimpleDataConditionCommand;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -20,7 +19,6 @@ import java.util.Map;
 /**
  * @author Gonzalo
  */
-@Transactional
 @Slf4j
 public abstract class SqlDAOImpl<TYPE extends GenericEntity> implements SqlDAO<TYPE> {
 
@@ -140,6 +138,7 @@ public abstract class SqlDAOImpl<TYPE extends GenericEntity> implements SqlDAO<T
      *
      * @return
      */
+    @Override
     public Session getCurrentSession() {
         return this.entityManager.unwrap(Session.class);
     }
