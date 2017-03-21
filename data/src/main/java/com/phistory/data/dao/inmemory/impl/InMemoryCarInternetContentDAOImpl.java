@@ -41,9 +41,10 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in memory");
-        Iterable<CarInternetContent> carInternetContentsIterable = this.sqlCarInternetContentRepository.findAll();
-        carInternetContentsIterable.iterator()
-                                   .forEachRemaining(this.carInternetContents::add);
+        this.carInternetContents = new ArrayList<>();
+        this.sqlCarInternetContentRepository.findAll()
+                                            .iterator()
+                                            .forEachRemaining(this.carInternetContents::add);
     }
 
     @Override

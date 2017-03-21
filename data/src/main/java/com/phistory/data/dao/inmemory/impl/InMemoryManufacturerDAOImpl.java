@@ -37,9 +37,10 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Manufacturers entities in memory");
-        Iterable<Manufacturer> manufacturerIterable = this.sqlManufacturerRepository.findAll();
-        manufacturerIterable.iterator()
-                            .forEachRemaining(this.manufacturers::add);
+        this.manufacturers = new ArrayList<>();
+        this.sqlManufacturerRepository.findAll()
+                                      .iterator()
+                                      .forEachRemaining(this.manufacturers::add);
     }
 
     @Override

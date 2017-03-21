@@ -44,9 +44,10 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");
-        Iterable<Car> carsIterable = this.sqlCarRepository.findAll();
-        carsIterable.iterator()
-                    .forEachRemaining(this.cars::add);
+        this.cars = new ArrayList<>();
+        this.sqlCarRepository.findAll()
+                             .iterator()
+                             .forEachRemaining(this.cars::add);
     }
 
     @Override
