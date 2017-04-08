@@ -3,7 +3,7 @@ package com.phistory.mvc.cms.controller.util;
 import com.phistory.data.dao.sql.SqlEngineRepository;
 import com.phistory.data.model.engine.Engine;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
-import com.phistory.mvc.cms.form.creator.EngineFormCreator;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -17,13 +17,13 @@ import javax.inject.Inject;
 public class CMSEngineControllerUtil {
 
     private SqlEngineRepository sqlEngineRepository;
-    private EngineFormCreator   engineFormCreator;
+    private EntityFormFactory   engineFormFactory;
 
     @Inject
     public CMSEngineControllerUtil(SqlEngineRepository sqlEngineRepository,
-                                   EngineFormCreator engineFormCreator) {
+                                   EntityFormFactory engineFormFactory) {
         this.sqlEngineRepository = sqlEngineRepository;
-        this.engineFormCreator = engineFormCreator;
+        this.engineFormFactory = engineFormFactory;
     }
 
     /**
@@ -34,7 +34,7 @@ public class CMSEngineControllerUtil {
      */
     public void deleteEngine(EngineFormEditCommand command) throws Exception {
         if (command.getEngineForm() != null) {
-            Engine engine = this.engineFormCreator.createEntityFromForm(command.getEngineForm());
+            Engine engine = (Engine) this.engineFormFactory.createEntityFromForm(command.getEngineForm());
             this.sqlEngineRepository.delete(engine);
         }
     }

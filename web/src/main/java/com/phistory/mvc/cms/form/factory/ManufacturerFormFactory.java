@@ -1,5 +1,5 @@
 
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import java.sql.Blob;
 import java.util.Optional;
@@ -25,11 +25,11 @@ import com.phistory.data.model.util.PictureUtil;
  */
 @Slf4j
 @Component
-public class ManufacturerFormCreator implements EntityFormCreator<Manufacturer, ManufacturerForm> {
+public class ManufacturerFormFactory implements EntityFormFactory<Manufacturer, ManufacturerForm> {
     private SqlPictureDAO sqlPictureDAO;
 
     @Inject
-    public ManufacturerFormCreator(SqlPictureDAO sqlPictureDAO) {
+    public ManufacturerFormFactory(SqlPictureDAO sqlPictureDAO) {
         this.sqlPictureDAO = sqlPictureDAO;
     }
 

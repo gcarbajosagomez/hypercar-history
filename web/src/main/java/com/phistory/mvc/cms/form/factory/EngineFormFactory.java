@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import com.phistory.data.model.engine.Engine;
  */
 @Slf4j
 @Component
-public class EngineFormCreator implements EntityFormCreator<Engine, EngineForm>
+public class EngineFormFactory implements EntityFormFactory<Engine, EngineForm>
 {
     /**
      * Create a new EngineForm out of the data contained in an Engine

@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import com.phistory.data.model.transmission.Transmission;
  */
 @Slf4j
 @Component
-public class TransmissionFormCreator implements EntityFormCreator<Transmission, TransmissionForm>
+public class TransmissionFormFactory implements EntityFormFactory<Transmission, TransmissionForm>
 {
     /**
      * Create a new TransmissionForm out of the data contained in a Transmission

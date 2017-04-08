@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 /**
  * Creates new entities out of the data contained in entity forms and vice versa
@@ -8,7 +8,7 @@ package com.phistory.mvc.cms.form.creator;
  * @param <ENTITY> The entity type
  * @param <ENTITY_FORM> The entity form type
  */
-public interface EntityFormCreator<ENTITY, ENTITY_FORM>
+public interface EntityFormFactory<ENTITY, ENTITY_FORM>
 {
 	/**
 	 * Create a new entity form out of the data contained in an entity

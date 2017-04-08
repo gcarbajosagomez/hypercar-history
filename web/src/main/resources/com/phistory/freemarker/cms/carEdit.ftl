@@ -332,13 +332,13 @@
                             ${language.getTextSource('cms.car.descriptionES')}
                        </dt>
                        <dd class="resizable-dd">
-                            <@spring.formTextarea "CEFC.carForm.descriptionES", "class=form-control cols='50' rows='6'"/>
+                            <@spring.formTextarea "CEFC.carForm.descriptionES", "class=form-control cols='50' rows='15'"/>
                        </dd>
                        <dt>
                             ${language.getTextSource('cms.car.descriptionEN')}
                        </dt>
                        <dd class="resizable-dd">
-                            <@spring.formTextarea "CEFC.carForm.descriptionEN", "class=form-control cols='50' rows='6'"/>
+                            <@spring.formTextarea "CEFC.carForm.descriptionEN", "class=form-control cols='50' rows='15'"/>
                        </dd>
 				   </dl>
 			   </div>

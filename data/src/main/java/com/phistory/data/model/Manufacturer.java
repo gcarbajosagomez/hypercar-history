@@ -22,6 +22,8 @@ import static javax.persistence.GenerationType.*;
 @NoArgsConstructor
 public class Manufacturer implements GenericEntity {
 
+    public static final String NAME_PROPERTY = "name";
+
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "manufacturer_id")

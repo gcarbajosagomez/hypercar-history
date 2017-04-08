@@ -8,8 +8,9 @@ import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.creator.CarFormCreator;
-import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
+import com.phistory.mvc.cms.form.factory.CarFormFactory;
+import com.phistory.mvc.cms.form.factory.CarInternetContentFormFactory;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
@@ -46,25 +47,25 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Slf4j
 public class CMSCarEditController extends CMSBaseController {
 
-    private CMSCarControllerUtil carControllerUtil;
-    private CarFormCreator carFormCreator;
-    private CarInternetContentFormCreator carInternetContentFormCreator;
-    private ModelFiller carModelFiller;
-    private CarEditModelFiller carEditModelFiller;
-    private ModelFiller pictureModelFiller;
+    private CMSCarControllerUtil    carControllerUtil;
+    private EntityFormFactory       carFormFactory;
+    private EntityFormFactory       carInternetContentFormFactory;
+    private ModelFiller             carModelFiller;
+    private CarEditModelFiller      carEditModelFiller;
+    private ModelFiller             pictureModelFiller;
     private EntityManagementService entityManagementService;
 
     @Inject
     public CMSCarEditController(CMSCarControllerUtil carControllerUtil,
-                                CarFormCreator carFormCreator,
-                                CarInternetContentFormCreator carInternetContentFormCreator,
+                                EntityFormFactory carFormFactory,
+                                EntityFormFactory carInternetContentFormFactory,
                                 ModelFiller carModelFiller,
                                 CarEditModelFiller carEditModelFiller,
                                 ModelFiller pictureModelFiller,
                                 EntityManagementService entityManagementService) {
         this.carControllerUtil = carControllerUtil;
-        this.carFormCreator = carFormCreator;
-        this.carInternetContentFormCreator = carInternetContentFormCreator;
+        this.carFormFactory = carFormFactory;
+        this.carInternetContentFormFactory = carInternetContentFormFactory;
         this.carModelFiller = carModelFiller;
         this.carEditModelFiller = carEditModelFiller;
         this.pictureModelFiller = pictureModelFiller;
@@ -72,7 +73,7 @@ public class CMSCarEditController extends CMSBaseController {
     }
 
     @RequestMapping(value = EDIT_URL,
-                    method = GET)
+            method = GET)
     public ModelAndView handleEditCarDefault(Model model,
                                              @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand) {
         this.fillModel(model, carFormEditCommand);
@@ -80,7 +81,7 @@ public class CMSCarEditController extends CMSBaseController {
     }
 
     @RequestMapping(value = EDIT_URL,
-                    method = {POST, PUT})
+            method = {POST, PUT})
     @ResponseBody
     public ModelAndView handleEditCar(Model model,
                                       @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
@@ -92,7 +93,7 @@ public class CMSCarEditController extends CMSBaseController {
                 Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{car.toString()},
+                                                         new Object[] {car.toString()},
                                                          LocaleContextHolder.getLocale());
 
                 if (!carInternetContentEditCommandResult.hasErrors()) {
@@ -110,7 +111,8 @@ public class CMSCarEditController extends CMSBaseController {
                 model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
             }
         } catch (Exception e) {
-            log.error("There was an error while trying to edit car with model: {}", carFormEditCommand.getCarForm().getModel(), e);
+            log.error("There was an error while trying to edit car with model: {}", carFormEditCommand.getCarForm().getModel(),
+                      e);
             model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         } finally {
             this.fillModel(model, carFormEditCommand);
@@ -120,7 +122,7 @@ public class CMSCarEditController extends CMSBaseController {
     }
 
     @RequestMapping(value = DELETE_URL,
-                    method = DELETE)
+            method = DELETE)
     @ResponseBody
     public ModelAndView handleDeleteCar(Model model,
                                         @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
@@ -136,14 +138,17 @@ public class CMSCarEditController extends CMSBaseController {
 
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[]{carFormEditCommand.getCarForm().getManufacturer().toString() + " " +
-                                                                      carFormEditCommand.getCarForm().getModel()},
+                                                         new Object[] {
+                                                                 carFormEditCommand.getCarForm().getManufacturer().toString() +
+                                                                 " " +
+                                                                 carFormEditCommand.getCarForm().getModel()},
                                                          LocaleContextHolder.getLocale());
 
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
                 model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarFormEditCommand());
             } catch (Exception e) {
-                log.error("There was an error while trying to delete car with model: {}", carFormEditCommand.getCarForm().getModel(), e);
+                log.error("There was an error while trying to delete car with model: {}",
+                          carFormEditCommand.getCarForm().getModel(), e);
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());
             } finally {
                 this.fillModel(model, carFormEditCommand);
@@ -156,7 +161,7 @@ public class CMSCarEditController extends CMSBaseController {
     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
     public CarFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
         Car car = super.getSqlCarRepository().findOne(carId);
-        CarForm carForm = this.carFormCreator.createFormFromEntity(car);
+        CarForm carForm = (CarForm) this.carFormFactory.createFormFromEntity(car);
         CarFormEditCommand command = new CarFormEditCommand(carForm);
 
         return command;
@@ -166,7 +171,11 @@ public class CMSCarEditController extends CMSBaseController {
     public CarInternetContentEditCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) throws Exception {
         List<CarInternetContent> carInternetContents = super.getSqlCarInternetContentDAO().getByCarId(carId);
         List<CarInternetContentForm> carInternetContentForms = new ArrayList<>();
-        carInternetContents.forEach(internetContent -> carInternetContentForms.add(this.carInternetContentFormCreator.createFormFromEntity(internetContent)));
+        carInternetContents.forEach(internetContent -> {
+            CarInternetContentForm carInternetContentForm =
+                    (CarInternetContentForm) this.carInternetContentFormFactory.createFormFromEntity(internetContent);
+            carInternetContentForms.add(carInternetContentForm);
+        });
 
         return new CarInternetContentEditCommand(carInternetContentForms);
     }

@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -8,14 +8,14 @@ import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.data.model.car.CarInternetContent;
 
 /**
- * {@link CarInternetContent} implementation of an {@link EntityFormCreator}
+ * {@link CarInternetContent} implementation of an {@link EntityFormFactory}
  * 
  * @author gonzalo
  *
  */
 @Slf4j
 @Component
-public class CarInternetContentFormCreator implements EntityFormCreator<CarInternetContent, CarInternetContentForm>
+public class CarInternetContentFormFactory implements EntityFormFactory<CarInternetContent, CarInternetContentForm>
 {	
 	/** 
      * Create a new {@link CarInternetContentForm} out of the data contained in the supplied {@link CarInternetContent}

@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,7 +14,7 @@ import com.phistory.data.model.tyre.TyreSet;
  */
 @Slf4j
 @Component
-public class TyreSetFormCreator implements EntityFormCreator<TyreSet, TyreSetForm>
+public class TyreSetFormFactory implements EntityFormFactory<TyreSet, TyreSetForm>
 {
 	/**
      * Create a new TyreSetForm out of the data contained in a TyreSet

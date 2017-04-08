@@ -12,6 +12,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.form.EngineForm;
-import com.phistory.mvc.cms.form.creator.EngineFormCreator;
+import com.phistory.mvc.cms.form.factory.EngineFormFactory;
 import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
 import com.phistory.data.model.engine.Engine;
 
@@ -42,13 +43,13 @@ public class CMSEngineController extends CMSBaseController {
 
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
 
-    private EngineFormCreator       engineFormCreator;
+    private EntityFormFactory       engineFormFactory;
     private CMSEngineControllerUtil CMSEngineControllerUtil;
 
     @Inject
-    public CMSEngineController(EngineFormCreator engineFormCreator,
+    public CMSEngineController(EngineFormFactory engineFormFactory,
                                CMSEngineControllerUtil CMSEngineControllerUtil) {
-        this.engineFormCreator = engineFormCreator;
+        this.engineFormFactory = engineFormFactory;
         this.CMSEngineControllerUtil = CMSEngineControllerUtil;
     }
 
@@ -66,7 +67,7 @@ public class CMSEngineController extends CMSBaseController {
     public Model handleSaveOrEditEngine(Model model,
                                         @Valid @RequestBody EngineFormEditCommand command,
                                         BindingResult result) {
-        Engine engine = this.engineFormCreator.createEntityFromForm(command.getEngineForm());
+        Engine engine = (Engine) this.engineFormFactory.createEntityFromForm(command.getEngineForm());
 
         try {
             if (!result.hasErrors()) {
@@ -109,7 +110,7 @@ public class CMSEngineController extends CMSBaseController {
 
         if (engineId != null) {
             Engine engine = super.getSqlEngineRepository().findOne(engineId);
-            EngineForm engineForm = this.engineFormCreator.createFormFromEntity(engine);
+            EngineForm engineForm = (EngineForm) this.engineFormFactory.createFormFromEntity(engine);
             command.setEngineForm(engineForm);
         }
 

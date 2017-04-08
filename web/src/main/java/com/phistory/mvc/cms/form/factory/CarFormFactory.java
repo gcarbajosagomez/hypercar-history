@@ -1,11 +1,15 @@
-package com.phistory.mvc.cms.form.creator;
+package com.phistory.mvc.cms.form.factory;
 
 import com.phistory.data.dao.sql.SqlPictureDAO;
+import com.phistory.data.model.brake.BrakeSet;
 import com.phistory.data.model.car.Car;
+import com.phistory.data.model.engine.Engine;
 import com.phistory.data.model.picture.Picture;
+import com.phistory.data.model.transmission.Transmission;
+import com.phistory.data.model.tyre.TyreSet;
 import com.phistory.mvc.cms.command.CarMaterial;
 import com.phistory.mvc.cms.command.PictureEditCommand;
-import com.phistory.mvc.cms.form.CarForm;
+import com.phistory.mvc.cms.form.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -24,26 +28,26 @@ import java.util.stream.Stream;
  */
 @Slf4j
 @Component
-public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
+public class CarFormFactory implements EntityFormFactory<Car, CarForm> {
     public static final String CAR_MATERIAL_STRING_SEPARATOR = "-";
 
-    private SqlPictureDAO           sqlPictureDAO;
-    private BrakeSetFormCreator     brakeSetFormCreator;
-    private EngineFormCreator       engineFormCreator;
-    private TransmissionFormCreator transmissionFormCreator;
-    private TyreSetFormCreator      tyreSetFormCreator;
+    private SqlPictureDAO     sqlPictureDAO;
+    private EntityFormFactory brakeSetFormFactory;
+    private EntityFormFactory engineFormFactory;
+    private EntityFormFactory transmissionFormFactory;
+    private EntityFormFactory tyreSetFormFactory;
 
     @Inject
-    public CarFormCreator(SqlPictureDAO sqlPictureDAO,
-                          BrakeSetFormCreator brakeSetFormCreator,
-                          EngineFormCreator engineFormCreator,
-                          TransmissionFormCreator transmissionFormCreator,
-                          TyreSetFormCreator tyreSetFormCreator) {
+    public CarFormFactory(SqlPictureDAO sqlPictureDAO,
+                          EntityFormFactory brakeSetFormFactory,
+                          EntityFormFactory engineFormFactory,
+                          EntityFormFactory transmissionFormFactory,
+                          EntityFormFactory tyreSetFormFactory) {
         this.sqlPictureDAO = sqlPictureDAO;
-        this.brakeSetFormCreator = brakeSetFormCreator;
-        this.engineFormCreator = engineFormCreator;
-        this.transmissionFormCreator = transmissionFormCreator;
-        this.tyreSetFormCreator = tyreSetFormCreator;
+        this.brakeSetFormFactory = brakeSetFormFactory;
+        this.engineFormFactory = engineFormFactory;
+        this.transmissionFormFactory = transmissionFormFactory;
+        this.tyreSetFormFactory = tyreSetFormFactory;
     }
 
     /**
@@ -60,38 +64,36 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
             pictures.stream()
                     .forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
 
-            CarForm carForm = new CarForm(car.getId(),
-                                          car.getVisible(),
-                                          car.getManufacturer(),
-                                          car.getModel(),
-                                          car.getEngineLayout(),
-                                          car.getEngineDisposition(),
-                                          this.engineFormCreator.createFormFromEntity(car.getEngine()),
-                                          chassisMaterials,
-                                          bodyMaterials,
-                                          car.getBodyShape(),
-                                          car.getCarSeatsConfig(),
-                                          car.getTopSpeed(),
-                                          car.getAcceleration(),
-                                          car.getFuelConsumption(),
-                                          car.getProductionType(),
-                                          car.getProductionStartDate(),
-                                          car.getProductionEndDate(),
-                                          car.getWeight(),
-                                          car.getLength(),
-                                          car.getWidth(),
-                                          car.getHeight(),
-                                          this.brakeSetFormCreator.createFormFromEntity(car.getBrakeSet()),
-                                          this.transmissionFormCreator.createFormFromEntity(car.getTransmission()),
-                                          car.getFuelTankCapacity(),
-                                          this.tyreSetFormCreator.createFormFromEntity(car.getTyreSet()),
-                                          pictureFileEditCommands,
-                                          car.getDriveWheelType(),
-                                          car.getRoadLegal(),
-                                          car.getDescriptionES(),
-                                          car.getDescriptionEN());
-
-            return carForm;
+            return new CarForm(car.getId(),
+                               car.getVisible(),
+                               car.getManufacturer(),
+                               car.getModel(),
+                               car.getEngineLayout(),
+                               car.getEngineDisposition(),
+                               (EngineForm) this.engineFormFactory.createFormFromEntity(car.getEngine()),
+                               chassisMaterials,
+                               bodyMaterials,
+                               car.getBodyShape(),
+                               car.getCarSeatsConfig(),
+                               car.getTopSpeed(),
+                               car.getAcceleration(),
+                               car.getFuelConsumption(),
+                               car.getProductionType(),
+                               car.getProductionStartDate(),
+                               car.getProductionEndDate(),
+                               car.getWeight(),
+                               car.getLength(),
+                               car.getWidth(),
+                               car.getHeight(),
+                               (BrakeSetForm) this.brakeSetFormFactory.createFormFromEntity(car.getBrakeSet()),
+                               (TransmissionForm) this.transmissionFormFactory.createFormFromEntity(car.getTransmission()),
+                               car.getFuelTankCapacity(),
+                               (TyreSetForm) this.tyreSetFormFactory.createFormFromEntity(car.getTyreSet()),
+                               pictureFileEditCommands,
+                               car.getDriveWheelType(),
+                               car.getRoadLegal(),
+                               car.getDescriptionES(),
+                               car.getDescriptionEN());
         } catch (Exception e) {
             log.error(e.toString(), e);
         }
@@ -114,7 +116,7 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
                               carForm.getModel(),
                               carForm.getEngineLayout(),
                               carForm.getEngineDisposition(),
-                              this.engineFormCreator.createEntityFromForm(carForm.getEngineForm()),
+                              (Engine) this.engineFormFactory.createEntityFromForm(carForm.getEngineForm()),
                               carChassisMaterials,
                               carBodyMaterials,
                               carForm.getBodyShape(),
@@ -129,10 +131,10 @@ public class CarFormCreator implements EntityFormCreator<Car, CarForm> {
                               carForm.getLength(),
                               carForm.getWidth(),
                               carForm.getHeight(),
-                              this.brakeSetFormCreator.createEntityFromForm(carForm.getBrakeSetForm()),
-                              this.transmissionFormCreator.createEntityFromForm(carForm.getTransmissionForm()),
+                              (BrakeSet) this.brakeSetFormFactory.createEntityFromForm(carForm.getBrakeSetForm()),
+                              (Transmission) this.transmissionFormFactory.createEntityFromForm(carForm.getTransmissionForm()),
                               carForm.getFuelTankCapacity(),
-                              this.tyreSetFormCreator.createEntityFromForm(carForm.getTyreSetForm()),
+                              (TyreSet) this.tyreSetFormFactory.createEntityFromForm(carForm.getTyreSetForm()),
                               carForm.getDriveWheel(),
                               carForm.getRoadLegal(),
                               carForm.getDescriptionES(),

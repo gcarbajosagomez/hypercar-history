@@ -13,8 +13,7 @@ import com.phistory.mvc.cms.controller.CMSCarController;
 import com.phistory.mvc.cms.controller.CMSCarEditController;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.creator.CarFormCreator;
-import com.phistory.mvc.cms.form.creator.CarInternetContentFormCreator;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
@@ -43,8 +42,8 @@ public class CMSCarControllerUtil {
 
     private SqlCarRepository                sqlCarRepository;
     private SqlCarInternetContentRepository sqlCarInternetContentRepository;
-    private CarFormCreator                  carFormCreator;
-    private CarInternetContentFormCreator   carInternetContentFormCreator;
+    private EntityFormFactory               carFormFactory;
+    private EntityFormFactory               carInternetContentFormFactory;
     private CMSPictureControllerUtil        cmsPictureControllerUtil;
     private DateProvider                    dateProvider;
     private EntityManagementService         entityManagementService;
@@ -52,15 +51,15 @@ public class CMSCarControllerUtil {
     @Inject
     public CMSCarControllerUtil(SqlCarRepository sqlCarRepository,
                                 SqlCarInternetContentRepository sqlCarInternetContentRepository,
-                                CarFormCreator carFormCreator,
-                                CarInternetContentFormCreator carInternetContentFormCreator,
+                                EntityFormFactory carFormFactory,
+                                EntityFormFactory carInternetContentFormFactory,
                                 CMSPictureControllerUtil cmsPictureControllerUtil,
                                 DateProvider dateProvider,
                                 EntityManagementService entityManagementService) {
         this.sqlCarRepository = sqlCarRepository;
         this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
-        this.carFormCreator = carFormCreator;
-        this.carInternetContentFormCreator = carInternetContentFormCreator;
+        this.carFormFactory = carFormFactory;
+        this.carInternetContentFormFactory = carInternetContentFormFactory;
         this.cmsPictureControllerUtil = cmsPictureControllerUtil;
         this.dateProvider = dateProvider;
         this.entityManagementService = entityManagementService;
@@ -78,7 +77,7 @@ public class CMSCarControllerUtil {
         CarForm carForm = command.getCarForm();
         if (carForm != null) {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
-            Car car = this.carFormCreator.createEntityFromForm(carForm);
+            Car car = (Car) this.carFormFactory.createEntityFromForm(carForm);
             this.sqlCarRepository.save(car);
 
             if (pictureFileEditCommands != null) {
@@ -103,7 +102,8 @@ public class CMSCarControllerUtil {
                 pictureFileEditCommands =
                         pictureFileEditCommands.stream()
                                                .filter(pictureEditCommand -> Objects.nonNull(pictureEditCommand.getPicture()))
-                                               .sorted(Comparator.comparing(pictureEditCommand -> pictureEditCommand.getPicture().getGalleryPosition()))
+                                               .sorted(Comparator.comparing(pictureEditCommand -> pictureEditCommand.getPicture()
+                                                                                                                    .getGalleryPosition()))
                                                .collect(Collectors.toList());
 
                 carForm.setPictureFileEditCommands(pictureFileEditCommands);
@@ -111,7 +111,7 @@ public class CMSCarControllerUtil {
 
             if (carForm.getId() == null) {
                 //After a new car has been saved, we need to recreate the carForm with all the newly assigned ids
-                command.setCarForm(this.carFormCreator.createFormFromEntity(car));
+                command.setCarForm((CarForm) this.carFormFactory.createFormFromEntity(car));
             }
 
             return car;
@@ -130,8 +130,9 @@ public class CMSCarControllerUtil {
         List<CarInternetContent> persistedCarInternetContents = this.saveOrEditCarInternetContents(carInternetContentEditCommand);
         List<CarInternetContentForm> updatedCarInternetContentForms =
                 persistedCarInternetContents.stream()
-                        .map(this.carInternetContentFormCreator::createFormFromEntity)
-                        .collect(Collectors.toList());
+                                            .map(carInternetContent -> (CarInternetContentForm)
+                                                    this.carInternetContentFormFactory.createFormFromEntity(carInternetContent))
+                                            .collect(Collectors.toList());
         carInternetContentEditCommand.setCarInternetContentForms(updatedCarInternetContentForms);
     }
 
@@ -142,12 +143,14 @@ public class CMSCarControllerUtil {
      * @return the newly saved edited {@link List<CarInternetContent>} if everything went well, an empty {@link List} otherwise
      * @throws Exception
      */
-    public List<CarInternetContent> saveOrEditCarInternetContents(CarInternetContentEditCommand carInternetContentEditCommand) throws Exception {
+    public List<CarInternetContent> saveOrEditCarInternetContents(CarInternetContentEditCommand carInternetContentEditCommand)
+            throws Exception {
         List<CarInternetContent> savedCarInternetContents = new ArrayList<>();
 
         for (CarInternetContentForm carInternetContentForm : carInternetContentEditCommand.getCarInternetContentForms()) {
             try {
-                CarInternetContent carInternetContent = this.carInternetContentFormCreator.createEntityFromForm(carInternetContentForm);
+                CarInternetContent carInternetContent = (CarInternetContent)
+                        this.carInternetContentFormFactory.createEntityFromForm(carInternetContentForm);
                 carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
 
                 if (StringUtils.hasText(carInternetContent.getLink())) {
@@ -170,7 +173,7 @@ public class CMSCarControllerUtil {
      */
     public void deleteCar(CarFormEditCommand command) throws Exception {
         if (command.getCarForm() != null) {
-            Car car = carFormCreator.createEntityFromForm(command.getCarForm());
+            Car car = (Car) carFormFactory.createEntityFromForm(command.getCarForm());
             this.sqlCarRepository.delete(car);
         }
     }

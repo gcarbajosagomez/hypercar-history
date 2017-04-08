@@ -16,8 +16,8 @@ import com.phistory.mvc.cms.form.CarForm;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarFormEditCommand
-{
+public class CarFormEditCommand {
+
     @Valid
     private CarForm carForm = new CarForm();
 }

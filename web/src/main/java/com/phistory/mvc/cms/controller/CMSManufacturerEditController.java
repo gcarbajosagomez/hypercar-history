@@ -1,6 +1,5 @@
 package com.phistory.mvc.cms.controller;
 
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_MANUFACTURERS;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -13,6 +12,7 @@ import javax.validation.Valid;
 
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
-import com.phistory.mvc.cms.form.creator.ManufacturerFormCreator;
+import com.phistory.mvc.cms.form.factory.ManufacturerFormFactory;
 import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.data.model.Manufacturer;
@@ -44,19 +44,19 @@ import com.phistory.data.model.Manufacturer;
 public class CMSManufacturerEditController extends CMSBaseController {
 
     private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
-    private ManufacturerFormCreator       manufacturerFormCreator;
+    private EntityFormFactory             manufacturerFormFactory;
     private ManufacturerModelFiller       manufacturerModelFiller;
     private ModelFiller                   pictureModelFiller;
     private EntityManagementService       entityManagementService;
 
     @Inject
     public CMSManufacturerEditController(CMSManufacturerControllerUtil cmsManufacturerControllerUtil,
-                                         ManufacturerFormCreator manufacturerFormCreator,
+                                         ManufacturerFormFactory manufacturerFormFactory,
                                          ManufacturerModelFiller manufacturerModelFiller,
                                          ModelFiller pictureModelFiller,
                                          EntityManagementService entityManagementService) {
         this.cmsManufacturerControllerUtil = cmsManufacturerControllerUtil;
-        this.manufacturerFormCreator = manufacturerFormCreator;
+        this.manufacturerFormFactory = manufacturerFormFactory;
         this.manufacturerModelFiller = manufacturerModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.entityManagementService = entityManagementService;
@@ -77,7 +77,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
                                                BindingResult result) {
         if (!result.hasErrors()) {
             try {
-                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command, model);
+                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command);
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
 
                 String successMessage = super.getMessageSource()
@@ -87,10 +87,19 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } catch (Exception e) {
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-                log.error("There was an error while editing manufacturer {}", command.getManufacturerForm().getName(), e.getMessage());
+                log.error("There was an error while editing manufacturer {}",
+                          command.getManufacturerForm().getName(),
+                          e.getMessage());
             } finally {
                 this.fillModel(model);
             }
+        } else {
+            String errorMessage = super.getMessageSource()
+                                       .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
+                                                   null,
+                                                   LocaleContextHolder.getLocale());
+
+            model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
         }
 
         return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
@@ -104,7 +113,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
 
         ManufacturerForm manufacturerForm = command.getManufacturerForm();
 
-        if (command.getManufacturerForm() != null && manufacturerForm.getId() != null) {
+        if (manufacturerForm != null && manufacturerForm.getId() != null) {
             try {
                 cmsManufacturerControllerUtil.deleteManufacturer(command);
 
@@ -121,7 +130,9 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
                 model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, new ManufacturerFormEditCommand());
             } catch (Exception e) {
-                log.error("There was an error while deleting manufacturer {}", command.getManufacturerForm().getName(), e.getMessage());
+                log.error("There was an error while deleting manufacturer {}",
+                          manufacturerForm.getName(),
+                          e.getMessage());
                 model.addAttribute(EXCEPTION_MESSAGE, e.toString());
             } finally {
                 this.fillModel(model);
@@ -134,7 +145,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId) {
         Manufacturer manufacturer = super.getSqlManufacturerRepository().findOne(manufacturerId);
-        ManufacturerForm manufacturerForm = this.manufacturerFormCreator.createFormFromEntity(manufacturer);
+        ManufacturerForm manufacturerForm = (ManufacturerForm) this.manufacturerFormFactory.createFormFromEntity(manufacturer);
         ManufacturerFormEditCommand command = new ManufacturerFormEditCommand(manufacturerForm);
 
         return command;

@@ -32,12 +32,18 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = CMS_CONTEXT + MANUFACTURERS_URL)
 public class CMSManufacturerController extends CMSBaseController {
 
-    @Inject
     private ManufacturerModelFiller       manufacturerModelFiller;
-    @Inject
     private ModelFiller                   pictureModelFiller;
-    @Inject
     private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
+
+    @Inject
+    public CMSManufacturerController(ManufacturerModelFiller manufacturerModelFiller,
+                                     ModelFiller pictureModelFiller,
+                                     CMSManufacturerControllerUtil cmsManufacturerControllerUtil) {
+        this.manufacturerModelFiller = manufacturerModelFiller;
+        this.pictureModelFiller = pictureModelFiller;
+        this.cmsManufacturerControllerUtil = cmsManufacturerControllerUtil;
+    }
 
     @RequestMapping(method = GET)
     public ModelAndView handleListManufacturers(Model model,
@@ -89,11 +95,11 @@ public class CMSManufacturerController extends CMSBaseController {
                                                   BindingResult result) {
         if (!result.hasErrors()) {
             try {
-                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command, model);
+                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command);
 
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
                                                          new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
