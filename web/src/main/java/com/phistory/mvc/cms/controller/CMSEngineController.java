@@ -109,7 +109,7 @@ public class CMSEngineController extends CMSBaseController {
         EngineFormEditCommand command = new EngineFormEditCommand();
 
         if (engineId != null) {
-            Engine engine = super.getSqlEngineRepository().findOne(engineId);
+            Engine engine = (Engine) super.getSqlEngineRepository().findOne(engineId);
             EngineForm engineForm = (EngineForm) this.engineFormFactory.createFormFromEntity(engine);
             command.setEngineForm(engineForm);
         }

@@ -2,10 +2,10 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
@@ -21,7 +21,7 @@ import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
 @Component
 public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent> implements SqlCarInternetContentDAO {
 
-    @Autowired
+    @Inject
     public SqlCarInternetContentDAOImpl(EntityManager entityManager) {
         super(entityManager);
     }

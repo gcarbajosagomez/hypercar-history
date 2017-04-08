@@ -1,6 +1,7 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.*;
+import com.phistory.data.dao.sql.SqlCarDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
@@ -9,6 +10,7 @@ import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
 import com.phistory.mvc.controller.BaseController;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,10 +19,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
+import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
+import static com.phistory.data.dao.sql.SqlEngineRepository.ENGINE_REPOSITORY;
+import static com.phistory.data.dao.sql.SqlManufacturerRepository.MANUFACTURER_REPOSITORY;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 
 /**
@@ -89,22 +96,26 @@ public class CMSBaseController extends BaseController {
 
     @Getter
     @Inject
-    private SqlManufacturerRepository       sqlManufacturerRepository;
+    @Named(MANUFACTURER_REPOSITORY)
+    private CrudRepository           sqlManufacturerRepository;
     @Getter
     @Inject
-    private SqlEngineRepository             sqlEngineRepository;
+    @Named(ENGINE_REPOSITORY)
+    private CrudRepository           sqlEngineRepository;
     @Inject
-    private SqlCarDAO                       sqlCarDAO;
+    private SqlCarDAO                sqlCarDAO;
     @Inject
-    private SqlCarRepository                sqlCarRepository;
+    @Named(CAR_REPOSITORY)
+    private CrudRepository           sqlCarRepository;
     @Getter
     @Inject
-    private SqlCarInternetContentDAO        sqlCarInternetContentDAO;
+    private SqlCarInternetContentDAO sqlCarInternetContentDAO;
     @Getter
     @Inject
-    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+    @Named(CAR_INTERNET_CONTENT_REPOSITORY)
+    private CrudRepository           sqlCarInternetContentRepository;
     @Inject
-    private ModelFiller                     cmsBaseModelFiller;
+    private ModelFiller              cmsBaseModelFiller;
 
     @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response) {

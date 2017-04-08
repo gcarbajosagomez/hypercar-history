@@ -7,10 +7,10 @@ import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.engine.jdbc.LobCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.IOException;
@@ -28,7 +28,7 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPicture
 
     private SqlPictureRepository sqlPictureRepository;
 
-    @Autowired
+    @Inject
     public SqlPictureDAOImpl(EntityManager entityManager,
                              SqlPictureRepository sqlPictureRepository) {
         super(entityManager);

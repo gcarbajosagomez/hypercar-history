@@ -144,7 +144,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
 
     @ModelAttribute(value = MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerFormEditCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId) {
-        Manufacturer manufacturer = super.getSqlManufacturerRepository().findOne(manufacturerId);
+        Manufacturer manufacturer = (Manufacturer) super.getSqlManufacturerRepository().findOne(manufacturerId);
         ManufacturerForm manufacturerForm = (ManufacturerForm) this.manufacturerFormFactory.createFormFromEntity(manufacturer);
         ManufacturerFormEditCommand command = new ManufacturerFormEditCommand(manufacturerForm);
 

@@ -19,7 +19,6 @@
     <properties>
         <project.resources.path>src/main/resources</project.resources.path>
 
-        <javax.ee.version>7.0</javax.ee.version>
         <javax.mail.version>1.4.7</javax.mail.version>
         <com.google.guava.version>19.0</com.google.guava.version>
         <org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
@@ -110,13 +109,6 @@
     </build>
 
     <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>${javax.ee.version}</version>
-            <scope>compile</scope>
-        </dependency>
-
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>

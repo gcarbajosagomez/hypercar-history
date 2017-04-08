@@ -13,10 +13,10 @@ import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.Collections;
 import java.util.List;
@@ -31,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SqlContentSearchDAOImpl extends SqlDAOImpl<GenericEntity> implements SqlContentSearchDAO {
 
-    @Autowired
+    @Inject
     public SqlContentSearchDAOImpl(EntityManager entityManager) {
         super(entityManager);
     }

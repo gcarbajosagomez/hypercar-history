@@ -1,16 +1,15 @@
 package com.phistory.data.dao.inmemory.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
-import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.dao.sql.SqlManufacturerRepository;
 import com.phistory.data.model.Manufacturer;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +27,7 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
     private SqlManufacturerRepository sqlManufacturerRepository;
     private List<Manufacturer> manufacturers = new ArrayList<>();
 
-    @Autowired
+    @Inject
     public InMemoryManufacturerDAOImpl(SqlManufacturerRepository sqlManufacturerRepository) {
         this.sqlManufacturerRepository = sqlManufacturerRepository;
     }

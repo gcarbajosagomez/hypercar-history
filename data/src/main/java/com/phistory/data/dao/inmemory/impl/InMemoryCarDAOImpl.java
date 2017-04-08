@@ -8,11 +8,11 @@ import com.phistory.data.dao.sql.SqlCarRepository;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -34,7 +34,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     private SqlCarRepository   sqlCarRepository;
     private List<Car> cars = new ArrayList<>();
 
-    @Autowired
+    @Inject
     public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO, SqlCarRepository sqlCarRepository) {
         this.inMemoryInMemoryPictureDAO = inMemoryPictureDAO;
         this.sqlCarRepository = sqlCarRepository;

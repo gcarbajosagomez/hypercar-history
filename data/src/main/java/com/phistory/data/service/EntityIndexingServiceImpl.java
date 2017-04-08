@@ -3,8 +3,9 @@ package com.phistory.data.service;
 import com.phistory.data.dao.sql.SqlContentSearchDAO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.inject.Inject;
 
 /**
  * Default implementation of {@link EntityIndexingService}
@@ -17,7 +18,7 @@ public class EntityIndexingServiceImpl implements EntityIndexingService, Initial
 
     private SqlContentSearchDAO sqlContentSearchDAO;
 
-    @Autowired
+    @Inject
     public EntityIndexingServiceImpl(SqlContentSearchDAO sqlContentSearchDAO) {
         this.sqlContentSearchDAO = sqlContentSearchDAO;
     }

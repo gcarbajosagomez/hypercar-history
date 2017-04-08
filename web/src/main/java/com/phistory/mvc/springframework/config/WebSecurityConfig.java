@@ -1,17 +1,5 @@
 package com.phistory.mvc.springframework.config;
 
-import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
-import static com.phistory.mvc.controller.BaseControllerData.*;
-import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_ERROR;
-import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_SUCCESS;
-import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_URL;
-import static com.phistory.mvc.cms.controller.CMSBaseController.LOGOUT;
-import static com.phistory.mvc.cms.controller.CMSBaseController.QUERY_STRING_SEPARATOR;
-
-import javax.inject.Inject;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,6 +7,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import javax.inject.Inject;
+
+import static com.phistory.mvc.cms.controller.CMSBaseController.*;
+import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
+import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
+import static com.phistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_URI;
 
 /**
  * Configuration class for setting up the application's security config.
@@ -65,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE.getName() + "**");
     }
 
-    @Autowired
+    @Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
             .passwordEncoder(this.passwordEncoder)

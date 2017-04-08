@@ -2,10 +2,10 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.model.Manufacturer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
 /**
@@ -15,7 +15,7 @@ import javax.persistence.EntityManager;
 @Component
 public class SqlManufacturerDAOImpl extends SqlDAOImpl<Manufacturer> implements SqlManufacturerDAO {
 
-    @Autowired
+    @Inject
     public SqlManufacturerDAOImpl(EntityManager entityManager) {
         super(entityManager);
     }

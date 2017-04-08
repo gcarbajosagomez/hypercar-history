@@ -9,12 +9,12 @@ import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -40,7 +40,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     private SqlPictureDAO        sqlPictureDAO;
     private List<Picture> pictures = new ArrayList<>();
 
-    @Autowired
+    @Inject
     public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
                                   SqlPictureDAO sqlPictureDAO) {
         this.sqlPictureRepository = sqlPictureRepository;

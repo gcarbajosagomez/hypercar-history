@@ -1,11 +1,11 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
+import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -33,11 +35,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
-    private SqlCarInternetContentRepository carInternetContentRepository;
-    private EntityManagementService         entityManagementService;
+    private CrudRepository          carInternetContentRepository;
+    private EntityManagementService entityManagementService;
 
     @Inject
-    public CMSCarInternetContentEditController(SqlCarInternetContentRepository carInternetContentRepository,
+    public CMSCarInternetContentEditController(@Named(CAR_INTERNET_CONTENT_REPOSITORY)
+                                                       CrudRepository carInternetContentRepository,
                                                EntityManagementService entityManagementService) {
         this.carInternetContentRepository = carInternetContentRepository;
         this.entityManagementService = entityManagementService;
@@ -70,6 +73,6 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
 
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
     public CarInternetContent createCarInternetContentCommand(@PathVariable(ID) Long caInternetContentId) throws Exception {
-        return super.getSqlCarInternetContentRepository().findOne(caInternetContentId);
+        return (CarInternetContent) super.getSqlCarInternetContentRepository().findOne(caInternetContentId);
     }
 }

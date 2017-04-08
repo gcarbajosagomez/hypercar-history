@@ -2,19 +2,21 @@ package com.phistory.data.dao.inmemory.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.phistory.data.dao.inmemory.InMemoryDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.data.model.car.CarInternetContentType.REVIEW_ARTICLE;
 import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
 
@@ -29,11 +31,12 @@ import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
 public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetContentDAO {
     public static final String BEAN_NAME = "inMemoryCarInternetContentDAO";
 
-    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+    private CrudRepository sqlCarInternetContentRepository;
     private List<CarInternetContent> carInternetContents = new ArrayList<>();
 
-    @Autowired
-    public InMemoryCarInternetContentDAOImpl(SqlCarInternetContentRepository sqlCarInternetContentRepository) {
+    @Inject
+    public InMemoryCarInternetContentDAOImpl(@Named(CAR_INTERNET_CONTENT_REPOSITORY)
+                                                         CrudRepository sqlCarInternetContentRepository) {
         this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
     }
 
@@ -44,14 +47,16 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
         this.carInternetContents = new ArrayList<>();
         this.sqlCarInternetContentRepository.findAll()
                                             .iterator()
-                                            .forEachRemaining(this.carInternetContents::add);
+                                            .forEachRemaining(carInternetContent -> {
+                                                this.carInternetContents.add((CarInternetContent) carInternetContent);
+                                            });
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading CarInternetContent: " + id + " entity in memory");
         CarInternetContent contentToReload = this.getById(id);
-        CarInternetContent dbContent = this.sqlCarInternetContentRepository.findOne(id);
+        CarInternetContent dbContent = (CarInternetContent) this.sqlCarInternetContentRepository.findOne(id);
 
         if (Objects.nonNull(dbContent)) {
             if (Objects.nonNull(contentToReload)) {

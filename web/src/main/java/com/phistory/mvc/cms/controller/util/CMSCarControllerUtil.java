@@ -1,6 +1,5 @@
 package com.phistory.mvc.cms.controller.util;
 
-import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.dao.sql.SqlCarRepository;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
@@ -17,17 +16,20 @@ import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
 
 /**
@@ -40,17 +42,17 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
 @Transactional
 public class CMSCarControllerUtil {
 
-    private SqlCarRepository                sqlCarRepository;
-    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
-    private EntityFormFactory               carFormFactory;
-    private EntityFormFactory               carInternetContentFormFactory;
-    private CMSPictureControllerUtil        cmsPictureControllerUtil;
-    private DateProvider                    dateProvider;
-    private EntityManagementService         entityManagementService;
+    private SqlCarRepository         sqlCarRepository;
+    private CrudRepository           sqlCarInternetContentRepository;
+    private EntityFormFactory        carFormFactory;
+    private EntityFormFactory        carInternetContentFormFactory;
+    private CMSPictureControllerUtil cmsPictureControllerUtil;
+    private DateProvider             dateProvider;
+    private EntityManagementService  entityManagementService;
 
     @Inject
     public CMSCarControllerUtil(SqlCarRepository sqlCarRepository,
-                                SqlCarInternetContentRepository sqlCarInternetContentRepository,
+                                @Named(CAR_INTERNET_CONTENT_REPOSITORY) CrudRepository sqlCarInternetContentRepository,
                                 EntityFormFactory carFormFactory,
                                 EntityFormFactory carInternetContentFormFactory,
                                 CMSPictureControllerUtil cmsPictureControllerUtil,

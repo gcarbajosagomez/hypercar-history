@@ -4,10 +4,10 @@ import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.data.model.car.Car;
 import org.hibernate.Query;
 import org.hibernate.transform.AliasToBeanResultTransformer;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class SqlCarDAOImpl extends SqlDAOImpl<Car> implements SqlCarDAO {
 
-    @Autowired
+    @Inject
     public SqlCarDAOImpl(EntityManager entityManager) {
         super(entityManager);
     }
