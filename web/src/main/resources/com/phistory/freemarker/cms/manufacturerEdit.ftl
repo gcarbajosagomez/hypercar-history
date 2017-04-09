@@ -63,19 +63,19 @@
 						  ${language.getTextSource('manufacturer.historyES')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='50' rows='35'"/>
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='50' rows='45'"/>
                       </dd>
                       <dt>
 						  ${language.getTextSource('manufacturer.historyEN')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='50' rows='35'"/>
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='50' rows='45'"/>
                       </dd>
           			  <dt>
                			   ${language.getTextSource('manufacturer.logo')}
                 	  </dt>
               		  <dd>
-                   	 	   <@spring.formInput "MEFC.manufacturerForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' size=20 onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
+                   	 	   <@spring.formInput "MEFC.manufacturerForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
                		  	   <@spring.showErrors '<br>'/>    
                		  </dd>
 
