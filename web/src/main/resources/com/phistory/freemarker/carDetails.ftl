@@ -30,7 +30,7 @@
 		<div class="panel panel-default main-panel row" style="border:0px;">
 			<#if car??>
 				<div class="panel-heading">
-					 <h1 class="text-left car-details-model-name">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${generic.getCarProductionLifeTime (car)})</h1>
+					 <h1 class="text-left car-details-model-name">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${carUtils.getCarProductionLifeTime (car)})</h1>
 				</div>
 				<div class="<#if (numberOfPictures > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">
 					<#if (numberOfPictures > 0)>

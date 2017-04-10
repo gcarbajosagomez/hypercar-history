@@ -2,6 +2,7 @@
 <#import "pagination.ftl" as pagination/>
 <#import "genericFunctionalities.ftl" as generic/>
 <#import "advertising.ftl" as advertising/>
+<#import "picture.ftl" as picture/>
 
 <#macro addSetPageLanguage chunkedModelsList=[]>
 
@@ -61,6 +62,14 @@
 			            }
 					</#if>
 
+                   <#if shouldReloadPictureGallery()>
+					   <#if requestIsManufacturerHistory>
+						   <@picture.addPicturesGalleryFunctionScript "images-gallery" "picture-gallery"/>
+					   <#else>
+						   <@picture.addPicturesGalleryFunctionScript "images-gallery" "carousel-inner"/>
+					   </#if>
+                   </#if>
+
 		            ajaxCallBeingProcessed = false;
 		            setupContentSearchEventListeners();
 
@@ -77,6 +86,10 @@
 		}
 	</script>
 </#macro>
+
+<#function shouldReloadPictureGallery>
+    <#return requestIsManufacturerHistory || requestIsCarDetails || requestIsCarEdit>
+</#function>
 
 <#macro addHrefLangInfo>
 	<#assign pageLanguages = [languageSpanishCode, languageEnglishCode]>

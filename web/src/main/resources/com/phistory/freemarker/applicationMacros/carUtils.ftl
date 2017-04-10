@@ -130,6 +130,25 @@
     </div>
 </#macro>
 
+<#function getCarProductionLifeTime car>
+    <#assign productionStartYear>${car.productionStartDate.time?string("yyyy")}</#assign>
+    <#assign productionEndYear><#if car.productionEndDate??>${car.productionEndDate.time?string("yyyy")}</#if></#assign>
+    <#assign productionLifeTime = ""/>
+
+    <#if productionEndYear != "">
+        <#if productionStartYear != productionEndYear>
+            <#assign productionLifeTime>${productionStartYear} - ${productionEndYear}</#assign>
+        <#else>
+            <#assign productionLifeTime>${productionStartYear}</#assign>
+        </#if>
+    <#else>
+        <#assign productionLifeTime>
+        ${productionStartYear} - ${language.getTextSource('car.productionEndDate.inProduction')}
+        </#assign>
+    </#if>
+    <#return productionLifeTime/>
+</#function>
+
 <#macro writePaginationMarkup>
     <div id="car-pagination-main-div" class="col-lg-12">
         <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12 center-block well well-sm">

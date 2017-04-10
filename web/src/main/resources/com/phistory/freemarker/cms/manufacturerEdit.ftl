@@ -63,13 +63,13 @@
 						  ${language.getTextSource('manufacturer.historyES')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='50' rows='45'"/>
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='60' rows='45'"/>
                       </dd>
                       <dt>
 						  ${language.getTextSource('manufacturer.historyEN')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='50' rows='45'"/>
+						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='60' rows='45'"/>
                       </dd>
           			  <dt>
                			   ${language.getTextSource('manufacturer.logo')}

@@ -251,25 +251,6 @@
         </html>
 </#macro>
 
-<#function getCarProductionLifeTime car>
-    <#assign productionStartYear>${car.productionStartDate.time?string("yyyy")}</#assign>
-    <#assign productionEndYear><#if car.productionEndDate??>${car.productionEndDate.time?string("yyyy")}</#if></#assign>
-    <#assign productionLifeTime = ""/>
-
-    <#if productionEndYear != "">
-        <#if productionStartYear != productionEndYear>
-            <#assign productionLifeTime>${productionStartYear} - ${productionEndYear}</#assign>
-        <#else>
-            <#assign productionLifeTime>${productionStartYear}</#assign>
-        </#if>
-    <#else>
-        <#assign productionLifeTime>
-            ${productionStartYear} - ${language.getTextSource('car.productionEndDate.inProduction')}
-        </#assign>
-    </#if>
-    <#return productionLifeTime/>
-</#function>
-
 <#macro addLoadingSpinnerToComponentScript componentId>
     $('#${componentId}').block({
         css: {
@@ -293,7 +274,6 @@
     <#global requestIsCars = false/>
     <#global requestIsCarDetails = false/>
     <#global requestIsModelsSearch = false/>
-
 
 	<#if requestURI?contains(manufacturerHistoryURL)>
 		<#global requestIsManufacturerHistory = true/>
