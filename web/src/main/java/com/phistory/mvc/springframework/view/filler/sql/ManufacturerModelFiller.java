@@ -1,7 +1,7 @@
 package com.phistory.mvc.springframework.view.filler.sql;
 
 import com.phistory.data.dao.sql.SqlManufacturerRepository;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;

@@ -12,7 +12,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static com.phistory.mvc.controller.BaseControllerData.CARS_URL;
-import static com.phistory.mvc.model.dto.PaginationDTO.ITEMS_PER_PAGE_DEFAULT_VALUE;
+import static com.phistory.mvc.dto.PaginationDTO.ITEMS_PER_PAGE_DEFAULT_VALUE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;

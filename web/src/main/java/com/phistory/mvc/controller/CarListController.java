@@ -1,7 +1,7 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.mvc.controller.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

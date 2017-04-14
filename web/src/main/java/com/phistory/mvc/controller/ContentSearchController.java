@@ -4,7 +4,7 @@ import com.phistory.data.command.SearchCommand;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
-import com.phistory.mvc.model.dto.ContentSearchDTO;
+import com.phistory.mvc.dto.ContentSearchDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;

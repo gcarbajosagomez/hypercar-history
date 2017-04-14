@@ -11,7 +11,7 @@ import com.phistory.mvc.cms.controller.CMSBaseController;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

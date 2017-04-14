@@ -1,6 +1,6 @@
 package com.phistory.test.unit.mvc.model.dto;
 
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

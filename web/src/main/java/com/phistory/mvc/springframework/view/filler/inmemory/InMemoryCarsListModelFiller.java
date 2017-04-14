@@ -2,7 +2,7 @@ package com.phistory.mvc.springframework.view.filler.inmemory;
 
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.model.car.Car;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;

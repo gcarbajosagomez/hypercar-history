@@ -3,7 +3,7 @@ package com.phistory.mvc.cms.controller;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
 import lombok.extern.slf4j.Slf4j;

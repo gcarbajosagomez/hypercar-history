@@ -7,7 +7,7 @@ import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.controller.CarListController;
 import com.phistory.mvc.controller.util.CarControllerUtil;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;

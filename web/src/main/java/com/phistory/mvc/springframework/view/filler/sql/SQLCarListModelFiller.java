@@ -3,7 +3,7 @@ package com.phistory.mvc.springframework.view.filler.sql;
 import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.data.model.car.Car;
-import com.phistory.mvc.model.dto.PaginationDTO;
+import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;

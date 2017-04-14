@@ -1,4 +1,4 @@
-package com.phistory.mvc.model.dto;
+package com.phistory.mvc.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
