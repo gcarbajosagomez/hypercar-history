@@ -99,7 +99,7 @@ public class CMSManufacturerController extends CMSBaseController {
 
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);

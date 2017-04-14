@@ -15,13 +15,15 @@
 <script type="application/javascript">
 
     function eraseEngineFormFields() {
+        removeAllSuccessMessages();
+        removeAllErrorMessages();
     <#--By loading a null Id we can easily erase all the inputs -->
         fillEngineInputValues({});
 
         $('#engine-code-selection-table').addClass('sr-only');
         $('#engine-id-dt').addClass('sr-only');
         $('#engine-id-dd').addClass('sr-only');
-        $('#engine-save-or-edit-link').attr("onClick", "saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}')");
+        $('#engine-save-or-edit-link').attr("onClick", "saveEntity('<@spring.url "/${cmsContext}${engineURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}')");
         $('#engine-save-or-edit-span').text(" ${language.getTextSource('cms.saveEngine')}");
     }
 </script>
@@ -38,7 +40,7 @@
 
             $.ajax({
                         type: 'GET',
-                        url: '<@spring.url "/${cmsContext}${enginesURL}/"/>' + engineId,
+                        url: '<@spring.url "/${cmsContext}${engineURL}/"/>' + engineId,
                         contentType: 'application/json; charset=UTF-8',
                         beforeSend: function (xhr) {
                             <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
@@ -50,7 +52,7 @@
                         $('#engine-main-div').unblock();
 
                         fillEngineInputValues(engine);
-                        $('#engine-save-or-edit-link').attr("onClick", "editEngine()");
+                        $('#engine-save-or-edit-link').attr("onClick", "editEngine(" + engine.id + ")");
                         $('#engine-save-or-edit-span').text(" ${language.getTextSource('cms.editEngine')}");
                         ajaxCallBeingProcessed = false;
                     });
@@ -63,93 +65,189 @@
 <script type="application/javascript">
 
     function fillEngineInputValues(engine) {
-        if (engine != null) {
-            if (engine.id != null) {
-                document.getElementById('carForm.engineForm.id.label').innerText = engine.id;
-                document.getElementById('carForm.engineForm.id').value = engine.id;
+        removeAllSuccessMessages();
+        removeAllErrorMessages();
+
+        if (engine) {
+            if (engine.id) {
+                $('#carForm\\.engineForm\\.id\\.label')[0].innerText = engine.id;
+                $('#carForm\\.engineForm\\.id')[0].value = engine.id;
             }
             else {
-                document.getElementById('carForm.engineForm.id.label').innerText = "";
-                document.getElementById('carForm.engineForm.id').value = "";
+                $('#carForm\\.engineForm\\.id\\.label')[0].innerText = "";
+                $('#carForm\\.engineForm\\.id')[0].value = "";
             }
 
-            if (engine.code != null) {
-                document.getElementById('carForm.engineForm.code').value = engine.code;
+            if (engine.code) {
+                $('#carForm\\.engineForm\\.code')[0].value = engine.code;
             }
             else {
-                document.getElementById('carForm.engineForm.code').value = "";
+                $('#carForm\\.engineForm\\.code')[0].value = "";
             }
 
-            if (engine.type != null) {
-                document.getElementById('carForm.engineForm.type').value = engine.type;
+            if (engine.type) {
+                $('#carForm\\.engineForm\\.type')[0].value = engine.type;
             }
             else {
-                document.getElementById('carForm.engineForm.type').value = "";
+                $('#carForm\\.engineForm\\.type')[0].value = "";
             }
 
-            if (engine.cylinderDisposition != null) {
-                document.getElementById('carForm.engineForm.cylinderDisposition').value = engine.cylinderDisposition;
+            if (engine.cylinderDisposition) {
+                $('#carForm\\.engineForm\\.cylinderDisposition')[0].value = engine.cylinderDisposition;
             }
             else {
-                document.getElementById('carForm.engineForm.cylinderDisposition').value = "";
+                $('#carForm\\.engineForm\\.cylinderDisposition')[0].value = "";
             }
 
-            if (engine.cylinderBankAngle != null) {
-                document.getElementById('carForm.engineForm.cylinderBankAngle').value = engine.cylinderBankAngle;
+            if (engine.cylinderBankAngle) {
+                $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value = engine.cylinderBankAngle;
             }
             else {
-                document.getElementById('carForm.engineForm.cylinderBankAngle').value = "";
+                $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value = "";
             }
 
-            if (engine.numberOfCylinders != null) {
-                document.getElementById('carForm.engineForm.numberOfCylinders').value = engine.numberOfCylinders;
+            if (engine.numberOfCylinders) {
+                $('#carForm\\.engineForm\\.numberOfCylinders')[0].value = engine.numberOfCylinders;
             }
             else {
-                document.getElementById('carForm.engineForm.numberOfCylinders').value = "";
+                $('#carForm\\.engineForm\\.numberOfCylinders')[0].value = "";
             }
 
-            if (engine.numberOfValves != null) {
-                document.getElementById('carForm.engineForm.numberOfValves').value = engine.numberOfValves;
+            if (engine.numberOfValves) {
+                $('#carForm\\.engineForm\\.numberOfValves')[0].value = engine.numberOfValves;
             }
             else {
-                document.getElementById('carForm.engineForm.numberOfValves').value = "";
+                $('#carForm\\.engineForm\\.numberOfValves')[0].value = "";
             }
 
-            if (engine.size != null) {
-                document.getElementById('carForm.engineForm.size').value = engine.size;
+            if (engine.size) {
+                $('#carForm\\.engineForm\\.size')[0].value = engine.size;
             }
             else {
-                document.getElementById('carForm.engineForm.size').value = "";
+                $('#carForm\\.engineForm\\.size')[0].value = "";
             }
 
-            if (engine.maxPower != null) {
-                document.getElementById('carForm.engineForm.maxPower').value = engine.maxPower;
+            if (engine.maxPower) {
+                $('#carForm\\.engineForm\\.maxPower')[0].value = engine.maxPower;
             }
             else {
-                document.getElementById('carForm.engineForm.maxPower').value = "";
+                $('#carForm\\.engineForm\\.maxPower')[0].value = "";
             }
 
-            if (engine.maxPowerRPM != null) {
-                document.getElementById('carForm.engineForm.maxPowerRPM').value = engine.maxPowerRPM;
+            if (engine.maxRPM) {
+                $('#carForm\\.engineForm\\.maxRPM')[0].value = engine.maxRPM;
             }
             else {
-                document.getElementById('carForm.engineForm.maxRPM').value = "";
+                $('#carForm\\.engineForm\\.maxRPM')[0].value = "";
             }
 
-            if (engine.maxTorque != null) {
-                document.getElementById('carForm.engineForm.maxTorque').value = engine.maxTorque;
+            if (engine.maxPowerRPM) {
+                $('#carForm\\.engineForm\\.maxPowerRPM')[0].value = engine.maxPowerRPM;
             }
             else {
-                document.getElementById('carForm.engineForm.maxTorque').value = "";
+                $('#carForm\\.engineForm\\.maxPowerRPM')[0].value = "";
             }
 
-            if (engine.maxTorqueRPM != null) {
-                document.getElementById('carForm.engineForm.maxTorqueRPM').value = engine.maxTorqueRPM;
+            if (engine.maxTorque) {
+                $('#carForm\\.engineForm\\.maxTorque')[0].value = engine.maxTorque;
             }
             else {
-                document.getElementById('carForm.engineForm.maxTorqueRPM').value = "";
+                $('#carForm\\.engineForm\\.maxTorque')[0].value = "";
+            }
+
+            if (engine.maxTorqueRPM) {
+                $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value = engine.maxTorqueRPM;
+            }
+            else {
+                $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value = "";
             }
         }
+    }
+</script>
+</#macro>
+
+<#macro addSaveEngineFunctionScript>
+
+<script type="application/javascript">
+    function saveEngine() {
+        var engine = createEngineFromDOM();
+
+        bootbox.confirm("${language.getTextSource('engine.confirmSave')}", function (result) {
+            //OK button
+            if (result == true) {
+                $.ajax({
+                    url: '/${cmsContext}${engineURL}/${saveURL}',
+                    type: 'POST',
+                    data: JSON.stringify(engine),
+                    contentType: 'application/json; charset=UTF-8',
+                    beforeSend: function (xhr) {
+                        <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
+                        addCRSFTokenToAjaxRequest(xhr);
+                    }
+                }).done(function (data) {
+                    appendEngineCrudOperationsResultMessages(data);
+                    $('#engine-main-div').unblock();
+                });
+            }
+        });
+    }
+</script>
+</#macro>
+
+<#macro addEditEngineFunctionScript>
+
+<script type="application/javascript">
+    function editEngine(engineId) {
+        var engine = createEngineFromDOM();
+
+        bootbox.confirm("${language.getTextSource('engine.confirmEdit')}", function (result) {
+            //OK button
+            if (result == true) {
+                $.ajax({
+                    url: '/${cmsContext}${engineURL}/' + engineId + '/${editURL}',
+                    type: 'POST',
+                    data: JSON.stringify(engine),
+                    contentType: 'application/json; charset=UTF-8',
+                    beforeSend: function (xhr) {
+                        <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
+                        addCRSFTokenToAjaxRequest(xhr);
+                    }
+                }).done(function (data) {
+                    appendEngineCrudOperationsResultMessages(data);
+                    $('#engine-main-div').unblock();
+                });
+            }
+        });
+    }
+</script>
+</#macro>
+
+<#macro addDeleteEngineFunctionScript>
+
+<script type="application/javascript">
+    function deleteEngine(engineId) {
+
+        bootbox.confirm("${language.getTextSource('engine.confirmDelete')}", function (result) {
+            //OK button
+            if (result == true) {
+                $.ajax({
+                    url: '/${cmsContext}${engineURL}/' + engineId + '/${deleteURL}',
+                    type: 'DELETE',
+                    beforeSend: function (xhr) {
+                        <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
+                        addCRSFTokenToAjaxRequest(xhr);
+                    }
+                }).done(function (data) {
+                    appendEngineCrudOperationsResultMessages(data);
+                    var successMessage = data.successMessage;
+                    if (successMessage) {
+                        <#-- empty engine input values after deletion -->
+                        fillEngineInputValues({});
+                    }
+                    $('#engine-main-div').unblock();
+                });
+            }
+        });
     }
 </script>
 </#macro>

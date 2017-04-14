@@ -1,119 +1,48 @@
 package com.phistory.mvc.cms.controller;
 
-import static com.phistory.mvc.controller.BaseControllerData.ENGINES_URL;
-import static com.phistory.mvc.controller.BaseControllerData.ID;
-import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.http.MediaType.*;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-import static org.springframework.web.bind.annotation.RequestMethod.PUT;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
-import com.phistory.mvc.cms.form.factory.EntityFormFactory;
+import com.phistory.mvc.cms.command.EngineFormEditCommand;
+import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
+import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.phistory.mvc.cms.command.EngineFormEditCommand;
-import com.phistory.mvc.cms.form.EngineForm;
-import com.phistory.mvc.cms.form.factory.EngineFormFactory;
-import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
-import com.phistory.data.model.engine.Engine;
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.controller.BaseControllerData.ENGINE_URL;
+import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
- * @author Gonzalo
+ * Created by Gonzalo Carbajosa on 14/04/17.
  */
 @Secured(USER_ROLE)
 @Slf4j
 @Controller
-@RequestMapping(value = {CMS_CONTEXT + ENGINES_URL, CMS_CONTEXT + ENGINES_URL + "/{" + ID + "}"})
+@RequestMapping(value = CMS_CONTEXT + ENGINE_URL)
 public class CMSEngineController extends CMSBaseController {
 
-    private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
-
-    private EntityFormFactory       engineFormFactory;
-    private CMSEngineControllerUtil CMSEngineControllerUtil;
+    private CMSEngineControllerUtil cmsEngineControllerUtil;
 
     @Inject
-    public CMSEngineController(EngineFormFactory engineFormFactory,
-                               CMSEngineControllerUtil CMSEngineControllerUtil) {
-        this.engineFormFactory = engineFormFactory;
-        this.CMSEngineControllerUtil = CMSEngineControllerUtil;
+    public CMSEngineController(CMSEngineControllerUtil cmsEngineControllerUtil) {
+        this.cmsEngineControllerUtil = cmsEngineControllerUtil;
     }
 
-    @RequestMapping(method = GET,
+    @RequestMapping(value = SAVE_URL,
+            method = POST,
             produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public EngineForm handleListEngineById(@ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
-        return command.getEngineForm();
-    }
+    public CrudOperationDTO handleSaveEngine(@Valid @RequestBody EngineFormEditCommand command,
+                                             BindingResult result) {
 
-    @RequestMapping(value = {SAVE_URL, EDIT_URL},
-            method = {POST, PUT},
-            produces = APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public Model handleSaveOrEditEngine(Model model,
-                                        @Valid @RequestBody EngineFormEditCommand command,
-                                        BindingResult result) {
-        Engine engine = (Engine) this.engineFormFactory.createEntityFromForm(command.getEngineForm());
-
-        try {
-            if (!result.hasErrors()) {
-                super.getSqlEngineRepository().save(engine);
-
-                String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                         new Object[] {engine.toString()},
-                                                         LocaleContextHolder.getLocale());
-                model.addAttribute(SUCCESS_MESSAGE, successMessage);
-                model.addAttribute(ENGINE, engine);
-            }
-        } catch (Exception e) {
-            model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-        }
-
-        model.addAttribute(ENGINE, engine);
-
-        return model;
-    }
-
-    @RequestMapping(value = DELETE_URL,
-            method = POST)
-    public void handleDeleteEngine(Model model,
-                                   BindingResult result,
-                                   @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineFormEditCommand command) {
-        if (!result.hasErrors()) {
-            try {
-                this.CMSEngineControllerUtil.deleteEngine(command);
-            } catch (Exception e) {
-                log.error(e.toString(), e);
-                model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-            }
-        }
-    }
-
-    @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND)
-    public EngineFormEditCommand createEditFormCommand(@PathVariable(ID) Long engineId) {
-        EngineFormEditCommand command = new EngineFormEditCommand();
-
-        if (engineId != null) {
-            Engine engine = (Engine) super.getSqlEngineRepository().findOne(engineId);
-            EngineForm engineForm = (EngineForm) this.engineFormFactory.createFormFromEntity(engine);
-            command.setEngineForm(engineForm);
-        }
-
-        return command;
+        return this.cmsEngineControllerUtil.saveOrEditEngine(command, result, ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY);
     }
 }

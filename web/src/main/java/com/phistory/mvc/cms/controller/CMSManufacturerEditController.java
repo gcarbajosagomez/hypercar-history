@@ -81,7 +81,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
 
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
@@ -95,7 +95,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
             }
         } else {
             String errorMessage = super.getMessageSource()
-                                       .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
+                                       .getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY,
                                                    null,
                                                    LocaleContextHolder.getLocale());
 
@@ -123,7 +123,7 @@ public class CMSManufacturerEditController extends CMSBaseController {
                 this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {manufacturerForm.getName()},
                                                          LocaleContextHolder.getLocale());
 

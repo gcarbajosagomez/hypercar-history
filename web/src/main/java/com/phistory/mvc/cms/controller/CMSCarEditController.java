@@ -8,11 +8,9 @@ import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.form.CarForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.factory.CarFormFactory;
-import com.phistory.mvc.cms.form.factory.CarInternetContentFormFactory;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
-import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.cms.service.EntityManagementService;
+import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -31,7 +29,7 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
@@ -92,7 +90,7 @@ public class CMSCarEditController extends CMSBaseController {
             if (!carFormEditCommandResult.hasErrors()) {
                 Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand);
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {car.toString()},
                                                          LocaleContextHolder.getLocale());
 
@@ -104,7 +102,7 @@ public class CMSCarEditController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } else {
                 String errorMessage = super.getMessageSource()
-                                           .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE,
+                                           .getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY,
                                                        null,
                                                        LocaleContextHolder.getLocale());
 
@@ -137,7 +135,7 @@ public class CMSCarEditController extends CMSBaseController {
                 this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
                 String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
+                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {
                                                                  carFormEditCommand.getCarForm().getManufacturer().toString() +
                                                                  " " +

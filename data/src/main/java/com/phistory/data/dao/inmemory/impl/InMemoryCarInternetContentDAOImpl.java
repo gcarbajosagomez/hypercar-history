@@ -62,7 +62,6 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
             if (Objects.nonNull(contentToReload)) {
                 int indexToReload = this.carInternetContents.indexOf(contentToReload);
                 this.carInternetContents.set(indexToReload, dbContent);
-
             } else {
                 //we're loading a car that's not yet in memory because it has been just stored
                 this.carInternetContents.add(dbContent);

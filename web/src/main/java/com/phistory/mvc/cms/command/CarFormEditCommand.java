@@ -1,6 +1,7 @@
 package com.phistory.mvc.cms.command;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,5 +20,6 @@ import com.phistory.mvc.cms.form.CarForm;
 public class CarFormEditCommand {
 
     @Valid
+    @NotNull
     private CarForm carForm = new CarForm();
 }

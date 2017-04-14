@@ -60,7 +60,7 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
             this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
             String successMessage = super.getMessageSource()
-                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
+                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                      new Object[] {"Car internet content"},
                                                      LocaleContextHolder.getLocale());
 

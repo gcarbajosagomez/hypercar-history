@@ -33,7 +33,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
 public class CMSPictureController extends CMSBaseController {
 
-    private PictureControllerUtil pictureControllerUtil;
+    private PictureControllerUtil   pictureControllerUtil;
     private EntityManagementService entityManagementService;
 
     @Inject
@@ -44,7 +44,7 @@ public class CMSPictureController extends CMSBaseController {
     }
 
     @RequestMapping(value = DELETE_URL,
-                    method = DELETE)
+            method = DELETE)
     @ResponseBody
     public String handleDeletePicture(@ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND) PictureLoadCommand command) {
         try {
@@ -54,8 +54,8 @@ public class CMSPictureController extends CMSBaseController {
             this.reloadInMemoryPictures(picture.getId());
 
             String successMessage = super.getMessageSource()
-                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_RESULT_MESSAGE,
-                                                     new Object[]{"Picture"},
+                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
+                                                     new Object[] {"Picture"},
                                                      LocaleContextHolder.getLocale());
 
             return SUCCESS_MESSAGE + " : " + successMessage;

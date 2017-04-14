@@ -1,29 +1,25 @@
 package com.phistory.mvc.cms.controller.util;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.inject.Inject;
-
+import com.phistory.data.command.SearchCommand;
 import com.phistory.data.dao.sql.SqlManufacturerDAO;
 import com.phistory.data.dao.sql.SqlManufacturerRepository;
+import com.phistory.data.model.Manufacturer;
+import com.phistory.data.model.car.Car;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.controller.CMSBaseController;
 import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.model.dto.PaginationDTO;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
-import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
-import com.phistory.mvc.cms.form.factory.ManufacturerFormFactory;
-import com.phistory.data.command.SearchCommand;
-import com.phistory.data.model.Manufacturer;
-import com.phistory.data.model.car.Car;
+import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.phistory.data.model.Manufacturer.NAME_PROPERTY;
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_MANUFACTURERS;
 
 /**
  * Set of utilities for the ManufacturerController class

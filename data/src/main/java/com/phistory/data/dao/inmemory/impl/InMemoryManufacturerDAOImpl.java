@@ -52,7 +52,6 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
             if (Objects.nonNull(manufacturer)) {
                 int indexToReload = this.manufacturers.indexOf(manufacturer);
                 this.manufacturers.set(indexToReload, dbContent);
-
             } else {
                 //we're loading a car that's not yet in memory because it has been just stored
                 this.manufacturers.add(dbContent);

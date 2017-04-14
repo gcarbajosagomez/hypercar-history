@@ -68,27 +68,6 @@
     </script>
 </#macro>
 
-<#macro addEditEngineFunctionScript>
-    <script type="application/javascript">
-        function editEngine() {
-            bootbox.confirm("${language.getTextSource('engine.confirmEdit')}", function (result) {
-                //OK button
-                if (result == true) {
-                    $.ajax({
-                        url: '/${cmsContext}${enginesURL}/${editURL}',
-                        type: 'POST',
-                        data: JSON.stringify(),
-                        contentType: 'application/json; charset=UTF-8',
-                        beforeSend: function (xhr) {
-                            addCRSFTokenToAjaxRequest(xhr);
-                        }
-                    });
-                }
-            });
-        }
-    </script>
-</#macro>
-
 <#macro addDeleteEntityFunctionScript>
     <script type="application/javascript">
         function deleteEntity(url, confirmDeleteMessage) {
@@ -115,14 +94,14 @@
 
 <#macro addOperationResultMessage exceptionMessage, successMessage>
     <#if exceptionMessage?has_content>
-    <div class="col-xs-12 alert alert-danger" role="alert">
-        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-        <span class="sr-only">${language.getTextSource('error')}:</span>${exceptionMessage}
-    </div>
+        <div class="col-xs-12 alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            ${exceptionMessage}
+        </div>
     <#elseif successMessage?has_content>
-    <div class="col-xs-12 alert alert-success" role="info">
-        <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-        <span class="sr-only">${language.getTextSource('info')}:</span>${successMessage}
-    </div>
+        <div class="col-xs-12 alert alert-success" role="info">
+            <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
+            ${successMessage}
+        </div>
     </#if>
 </#macro>

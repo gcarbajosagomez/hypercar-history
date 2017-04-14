@@ -106,7 +106,7 @@ public class CMSCarController extends CMSBaseController {
         try {
             if (!carFormEditCommandResult.hasErrors()) {
                 Car car = this.cmsCarControllerUtil.saveOrEditCar(carFormEditCommand);
-                String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_RESULT_MESSAGE,
+                String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                                       new Object[] {car.toString()},
                                                                       LocaleContextHolder.getLocale());
 
@@ -119,7 +119,7 @@ public class CMSCarController extends CMSBaseController {
                 model.addAttribute(SUCCESS_MESSAGE, successMessage);
             } else {
                 String errorMessage = getMessageSource()
-                        .getMessage(ENTITY_CONTAINED_ERRORS_RESULT_MESSAGE, null, LocaleContextHolder.getLocale());
+                        .getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY, null, LocaleContextHolder.getLocale());
                 model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
             }
         } catch (Exception e) {

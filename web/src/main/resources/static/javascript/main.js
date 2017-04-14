@@ -175,3 +175,76 @@ function performGoogleAnalyticsRequest() {
     ga('create', 'UA-88763429-1', 'auto');
     ga('send', 'pageview');
 }
+
+function addErrorMessage(message, domElementId) {
+	var errorDiv = $('<div>', {
+		'class' : 'col-xs-12 alert alert-danger',
+		'role' : 'alert'
+	});
+    var exclamationSign = $('<span>', {
+        'class' : 'glyphicon glyphicon-exclamation-sign',
+        'aria-hidden' : 'true'
+    });
+    errorDiv.append(exclamationSign);
+    errorDiv.append(' ' + message);
+    $('#' + domElementId).append(errorDiv);
+}
+
+function addSuccessMessage(message, domElementId) {
+	var successDiv = $('<div>', {
+		'class' : 'col-xs-12 alert alert-success',
+		'role' : 'info'
+	});
+    var okSign = $('<span>', {
+        'class' : 'glyphicon glyphicon-ok-sign',
+        'aria-hidden' : 'true'
+    });
+    successDiv.append(okSign);
+    successDiv.append(' ' + message);
+    $('#' + domElementId).append(successDiv);
+}
+
+function removeAllSuccessMessages() {
+    $('.alert-success').remove();
+}
+
+function removeAllErrorMessages() {
+    $('.alert-danger').remove();
+}
+
+function createEngineFromDOM() {
+    return {
+        'engineForm' : {
+            'id': $('#carForm\\.engineForm\\.id')[0].value,
+            'code': $('#carForm\\.engineForm\\.code')[0].value,
+            'size': $('#carForm\\.engineForm\\.size')[0].value,
+            'type': $('#carForm\\.engineForm\\.type')[0].value,
+            'cylinderDisposition': $('#carForm\\.engineForm\\.cylinderDisposition')[0].value,
+            'cylinderBankAngle': $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value,
+            'numberOfCylinders': $('#carForm\\.engineForm\\.numberOfCylinders')[0].value,
+            'numberOfValves': $('#carForm\\.engineForm\\.numberOfValves')[0].value,
+            'maxPower': $('#carForm\\.engineForm\\.maxPower')[0].value,
+            'maxRPM': $('#carForm\\.engineForm\\.maxRPM')[0].value,
+            'maxPowerRPM': $('#carForm\\.engineForm\\.maxPowerRPM')[0].value,
+            'maxTorque': $('#carForm\\.engineForm\\.maxTorque')[0].value,
+            'maxTorqueRPM': $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value,
+        }
+    };
+}
+
+function appendEngineCrudOperationsResultMessages(data) {
+    removeAllSuccessMessages();
+    removeAllErrorMessages();
+
+    var successMessage = data.successMessage;
+    if (successMessage) {
+        addSuccessMessage(successMessage, 'engine-main-div')
+    } else {
+        var errorMessages = data.errorMessages;
+        if (errorMessages) {
+            errorMessages.forEach(function (message) {
+                addErrorMessage(message, 'engine-main-div');
+            });
+        }
+    }
+}

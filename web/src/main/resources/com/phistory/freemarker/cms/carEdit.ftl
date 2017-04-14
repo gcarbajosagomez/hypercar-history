@@ -39,7 +39,7 @@
                             <#if CEFC.carForm.id??>
                             <td>
                                 <a id="car-delete-link" class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>', '${language.getTextSource('car.confirmDelete')}');"/>
-                                    <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
+                                    <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
                                 </a>
                             </td>
                         </#if>
@@ -362,18 +362,18 @@
                            <tr>
                                 <td>
                                    <a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.carForm.engineForm.id??>
-																					            onClick="editEngine();">
+																					            onClick="editEngine(${CEFC.carForm.engineForm.id});">
 																					            <span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.editEngine')}</span>
 												   								            <#else>
-												   		 							            onClick="saveEntity('<@spring.url "/${cmsContext}${enginesURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}');">
+												   		 							            onClick="saveEngine();">
 																					            <span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.saveEngine')}</span>
 												   								            </#if>
 						            </a>
                                 </td>
                                 <#if CEFC.carForm.engineForm.id??>
                                     <td>
-                                        <a id="engine-delete-link" class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${enginesURL}/${CEFC.carForm.engineForm.id}/${deleteURL}"/>', "${language.getTextSource('engine.confirmDelete')}");"/>
-                                            <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteEngine')}
+                                        <a id="engine-delete-link" class="btn btn-danger" onClick="deleteEngine($('#carForm\\.engineForm\\.id')[0].value);"/>
+                                            <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteEngine')}
                                         </a>
                                     </td>
                                 </#if>
@@ -393,7 +393,6 @@
                    	       <#if engines?? && (engines?size > 0)>
                                <dd>
 								   <select class="form-control" onChange="loadEngineById(this.value);">
-                              			<option value="">
                                         <#list engines as engine>
                                         	<option value="${engine.id}" <#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
                                       	</#list>
@@ -760,7 +759,7 @@
                                                 </dl>
 
                                                 <a id="picture-delete-link" class="btn btn-danger pull-right delete-picture-btn" onClick="deletePicture('${picture.id}', '${language.getTextSource('cms.picture.confirmDelete')}');"/>
-                                                    <span id="engine-delete-span" class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
+                                                    <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deletePicture')}
                                                 </a>
                                             </td>
                                         </tr>
@@ -935,7 +934,6 @@
 </script>
 
 <@crudOperations.addEditEntityFunctionScript/>
-<@crudOperations.addEditEngineFunctionScript/>
 <@crudOperations.addDeleteEntityFunctionScript/>
 <@crudOperations.addCreateEntityFunctionScript/>
 
@@ -943,6 +941,9 @@
 <@engine.addEraseEngineFormFieldsScriptFunction/>
 <@engine.addLoadEngineByIdFunctionScript/>
 <@engine.addFillEngineInputValuesFunctionScript/>
+<@engine.addSaveEngineFunctionScript/>
+<@engine.addEditEngineFunctionScript/>
+<@engine.addDeleteEngineFunctionScript/>
 
 <@internetContent.addAddInternetContentFunctionScript/>
 
