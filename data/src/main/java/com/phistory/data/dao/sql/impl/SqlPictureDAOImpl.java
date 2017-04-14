@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
 
+import static com.phistory.data.model.GenericEntity.ID_FIELD;
 import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
 
 /**
@@ -87,14 +88,17 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPicture
 
     @Override
     public void updateGalleryPosition(Picture picture) {
-        Query query = super.getEntityManager()
-                           .createQuery("UPDATE Picture"
-                                        + " SET galleryPosition = :galleryPosition"
-                                        + " WHERE id = :id"
-                                        + " AND car = :car");
+        EntityManager entityManager = super.getEntityManager();
+        //detach pictures from the persistence context so that when 2 pictures for
+        // the same car with the same galleryPosition don't try to override each other
+        entityManager.clear();
+        Query query = entityManager.createQuery("UPDATE Picture"
+                                                + " SET galleryPosition = :galleryPosition"
+                                                + " WHERE id = :id"
+                                                + " AND car = :car");
 
         query.setParameter("galleryPosition", picture.getGalleryPosition());
-        query.setParameter("id", picture.getId());
+        query.setParameter(ID_FIELD, picture.getId());
         query.setParameter("car", picture.getCar());
         query.executeUpdate();
     }
