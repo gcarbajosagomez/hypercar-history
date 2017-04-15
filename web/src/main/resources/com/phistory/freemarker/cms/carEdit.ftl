@@ -5,6 +5,7 @@
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 <#import "../applicationMacros/internetContent.ftl" as internetContent/>
 <#import "../applicationMacros/picture.ftl" as pictureUtil/>
+<#import "../applicationMacros/carUtils.ftl" as carUtils/>
 
 <#if CEFC.carForm.id??>
 	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
@@ -22,34 +23,26 @@
 			   <div class="panel-heading">
 					<h3 class="text-left"><#if CEFC.carForm.id??>${CEFC.carForm.model}<#else>${language.getTextSource('car')}</#if></h3>
 
-                    <table>
-                        <tr>
-                            <td>
-                                <input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>
-                                                                                        ${language.getTextSource('cms.editCar')}
-                                                                                    <#else>
-                                                                                        ${language.getTextSource('cms.saveCar')}
-                                                                                    </#if>"
-                                                                             onClick="<#if CEFC.carForm.id??>
-                                                                                        editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${editURL}"/>', '${language.getTextSource('car.confirmEdit')}')
-                                                                                      <#else>
-                                                                                        saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${language.getTextSource('car.confirmSave')}')
-                                                                                      </#if>;"/>
-                            </td>
-                            <#if CEFC.carForm.id??>
-                            <td>
-                                <a id="car-delete-link" class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>', '${language.getTextSource('car.confirmDelete')}');"/>
-                                    <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
-                                </a>
-                            </td>
+                        <input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>
+                                                                                ${language.getTextSource('cms.editCar')}
+                                                                            <#else>
+                                                                                ${language.getTextSource('cms.saveCar')}
+                                                                            </#if>"
+                                                                     onClick="<#if CEFC.carForm.id??>
+                                                                                    editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${editURL}"/>', '${language.getTextSource('car.confirmEdit')}')
+                                                                              <#else>
+                                                                                    saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${language.getTextSource('car.confirmSave')}')
+                                                                              </#if>;"/>
+
+                        <#if CEFC.carForm.id??>
+                            <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>',
+                                                                            '${language.getTextSource('car.confirmDelete')}');"/>
+                                <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
+                            </a>
                         </#if>
-                            <td>
-                                <a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
-                                    <span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newCar')}
-                                </a>
-                            </td>
-                        </tr>
-                    </table>
+                        <a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
+                            <span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newCar')}
+                        </a>
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
@@ -523,8 +516,8 @@
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.carForm.brakeSetForm.id", ""/>
                        
-                       <@writeBrakeEditFields CEFC.carForm.brakeSetForm.frontBrake "CEFC.carForm.brakeSetForm.frontBrake" "FRONT"/> 
-                       <@writeBrakeEditFields CEFC.carForm.brakeSetForm.rearBrake "CEFC.carForm.brakeSetForm.rearBrake" "REAR"/>
+                       <@carUtils.writeBrakeEditFields CEFC.carForm.brakeSetForm.frontBrake "CEFC.carForm.brakeSetForm.frontBrake" "FRONT"/>
+                       <@carUtils.writeBrakeEditFields CEFC.carForm.brakeSetForm.rearBrake "CEFC.carForm.brakeSetForm.rearBrake" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -608,8 +601,8 @@
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id"/>
                        
-                       <@writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/> 
-                       <@writeTyreEditFields CEFC.carForm.tyreSetForm.rearTyre "CEFC.carForm.tyreSetForm.rearTyre" "REAR"/>
+                       <@carUtils.writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/>
+                       <@carUtils.writeTyreEditFields CEFC.carForm.tyreSetForm.rearTyre "CEFC.carForm.tyreSetForm.rearTyre" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -658,8 +651,6 @@
 			                            </select>
 									</dd>
                                     <#if carInternetContentForm.id??>
-                                        <dt>
-			                            </dt>
                                         <dd>
                                             <a class="btn btn-danger" onClick="deleteCarInternetContent('${carInternetContentForm.id}', '${language.getTextSource('cms.car.internetContent.confirmDelete')}');"/>
                                                 <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCarInternetContent')}
@@ -822,101 +813,6 @@
 </div>
 
 <@generic.endPage/>
-
-<#macro writeBrakeEditFields brake objectBindingPath brakeTrain>
-      <div class="panel panel-default">
-	      <div class="panel-heading">
-		      <h4 class="text-left">${language.getTextSource('brakeSet.${brakeTrain?lower_case}')}</h4>
-		  </div>
-		  <div class="panel-body">
-              <dl class="dl-horizontal dl-horizontal-edit text-left">
-                  <#if brake.id??>
-                      <dt>
-                          ${language.getTextSource('id')}
-                      </dt>
-                      <dd>
-                          <h5 class="text-muted">${brake.id}</h5>
-                          <@spring.formHiddenInput "${objectBindingPath?string}.id", ""/>
-                      </dd>
-                  </#if>
-                  	 <@spring.bind "${objectBindingPath?string}.train"/>
-                  	 <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
-                  <dt>
-                       ${language.getTextSource('brake.disc.diameter')}
-                  </dt>
-                  <dd>
-                       <@spring.formInput "${objectBindingPath?string}.discDiameter", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                       <@spring.showErrors '<br>'/>
-                  </dd>
-                  <dt>
-                       ${language.getTextSource('brake.disc.material')}
-                  </dt>
-                  <dd>
-                       <@spring.bind "${objectBindingPath}.discMaterial"/>
-
-                       <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                           <#list brakeDiscMaterials as brakeDiscMaterial>
-                               <option value="${brakeDiscMaterial}" <#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")> selected</#if>>${language.getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
-                           </#list>
-                       </select>
-
-                       <@spring.showErrors '<br>'/>
-                  </dd>
-                  <dt>
-                       ${language.getTextSource('brake.caliper.numOfPistons')}
-                  </dt>
-                  <dd>
-                       <@spring.formInput "${objectBindingPath?string}.caliperNumOfPistons", "class=form-control", "text"/>
-                       <@spring.showErrors '<br>'/>
-                  </dd>
-              </dl>
-          </div>
-      </div>
-</#macro>
-
-<#macro writeTyreEditFields tyre objectBindingPath tyreTrain>
-      <div class="panel panel-default">
-	      <div class="panel-heading">
-		      <h4 class="text-left">${tyreTrain}</h4>
-		  </div>
-		  <div class="panel-body">
-              <dl class="dl-horizontal dl-horizontal-edit text-left">
-                  <#if tyre.id??>
-                      <dt>
-                          ${language.getTextSource('id')}
-                      </dt>
-                      <dd>
-                          <h5 class="text-muted">${tyre.id}</h5>
-                          <@spring.formHiddenInput "${objectBindingPath}.id", ""/>
-                      </dd>
-                  </#if>
-                  	 <@spring.bind "${objectBindingPath?string}.train"/>
-                     <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${tyreTrain}">
-                  <dt>
-                        ${language.getTextSource('tyre.width')}
-                  </dt>
-                  <dd>
-                        <@spring.formInput "${objectBindingPath?string}.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                        <@spring.showErrors '<br>'/>
-                  </dd>
-                  <dt>
-                        ${language.getTextSource('tyre.profile')}
-                  </dt>
-                  <dd>
-                        <@spring.formInput "${objectBindingPath?string}.profile", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                        <@spring.showErrors '<br>'/>
-                  </dd>
-                  <dt>
-                        ${language.getTextSource('tyre.rimDiameter')}
-                  </dt>
-                  <dd>
-                        <@spring.formInput "${objectBindingPath}.rimDiameter", "class=form-control placeholder=${language.getTextSource('inch')}", "text"/>
-                        <@spring.showErrors '<br>'/>
-                  </dd>
-              </dl>
-          </div>
-      </div>
-</#macro>
 
 <script type="application/javascript">
        	$(function() {

@@ -30,9 +30,14 @@
                                                                                                             saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
                                                                                                         </#if>"/>
 					<#if MEFC.manufacturerForm.id??>
-						<input id="delete-manufacturer-button" type="button" class="btn btn-danger" value="${language.getTextSource('cms.deleteManufacturer')}" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>', '${language.getTextSource('manufacturer.confirmDelete')}');"/>
+                        <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>',
+																		'${language.getTextSource('manufacturer.confirmDelete')}');">
+                            <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteManufacturer')}
+						</a>
 					</#if>
-	       			<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="btn btn-default">${language.getTextSource('cms.newManufacturer')}</a>
+                   	<a class="btn btn-default" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>'>
+                    	<span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newManufacturer')}
+                   	</a>
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
