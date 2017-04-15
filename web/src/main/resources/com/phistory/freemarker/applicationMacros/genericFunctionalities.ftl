@@ -27,7 +27,6 @@
 					<@language.addHrefLangInfo/>
 					<link rel="shortcut icon" href="/static/img/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
-					<link rel="stylesheet" href="/static/stylesheet/bootstrap-theme.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
 				    <#if !requestIsDesktop>
@@ -48,9 +47,7 @@
 					<script src="/static/javascript/main.min.js"></script>
                     <#if requestIsManufacturerHistory || requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
-                        <link rel="stylesheet" href="/static/stylesheet/bootstrap-image-gallery.min.css">
-                        <script src="/static/javascript/lib/jquery.blueimp-gallery.min.js"></script>
-                        <script src="/static/javascript/lib/bootstrap-image-gallery.min.js"></script>
+                        <script src="/static/javascript/lib/blueimp-gallery.min.js"></script>
                     </#if>
                     <#if requestIsCMS>
                         <script src="/static/javascript/lib/bootstrap-datepicker.min.js"></script>

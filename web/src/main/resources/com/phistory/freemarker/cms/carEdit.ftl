@@ -764,7 +764,7 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td colspan="2"><div class="divider"></div></td>
+                                            <td colspan="2"><hr></td>
                                         </tr>
                                     </#if>
                                 </#if>
