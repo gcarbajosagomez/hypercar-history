@@ -12,8 +12,8 @@ import javax.persistence.EntityManager;
  * Created by Gonzalo Carbajosa on 20/03/17.
  */
 @Transactional
-@Component
-public class SqlManufacturerDAOImpl extends SqlDAOImpl<Manufacturer> implements SqlManufacturerDAO {
+@Component("manufacturerDAO")
+public class SqlManufacturerDAOImpl extends AbstractSqlDAO<Manufacturer> implements SqlManufacturerDAO {
 
     @Inject
     public SqlManufacturerDAOImpl(EntityManager entityManager) {

@@ -16,6 +16,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ManufacturerForm {
+
     private Long id;
 
     @NotEmpty(message = "NotEmpty.manufacturerForm.name")
@@ -25,8 +26,6 @@ public class ManufacturerForm {
     private String nationality;
 
     private PictureEditCommand previewPictureEditCommand;
-
-    private String historyES;
-
-    private String historyEN;
+    private String             historyES;
+    private String             historyEN;
 }

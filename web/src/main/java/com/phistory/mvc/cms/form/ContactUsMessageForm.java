@@ -16,11 +16,14 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactUsMessageForm {
+
     @NotNull
     @Size(min = 1)
     private String subject;
+
     private String senderName;
     private String senderEmail;
+
     @NotNull
     @Size(min = 1)
     private String message;

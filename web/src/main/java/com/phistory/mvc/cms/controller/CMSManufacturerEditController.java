@@ -29,7 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
 import com.phistory.mvc.cms.form.ManufacturerForm;
-import com.phistory.mvc.cms.form.factory.ManufacturerFormFactory;
+import com.phistory.mvc.cms.form.factory.impl.ManufacturerFormFactory;
 import com.phistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import com.phistory.data.model.Manufacturer;

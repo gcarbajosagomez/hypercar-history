@@ -5,6 +5,7 @@ import com.phistory.data.model.engine.Engine;
 import com.phistory.mvc.cms.command.EngineFormEditCommand;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
  * @author gonzalo
  */
 @Component
+@Slf4j
 public class CMSEngineControllerUtil {
 
     private SqlEngineRepository sqlEngineRepository;
@@ -47,12 +49,13 @@ public class CMSEngineControllerUtil {
 
         try {
             if (!result.hasErrors()) {
+                log.info("Saving or editing engine: {}", engine.toString());
                 this.sqlEngineRepository.save(engine);
 
-                String successMessage = this.messageSource
-                        .getMessage(successMessageSourceKey,
-                                    new Object[] {engine.toString()},
-                                    LocaleContextHolder.getLocale());
+                String successMessage =
+                        this.messageSource.getMessage(successMessageSourceKey,
+                                                      new Object[] {engine.toString()},
+                                                      LocaleContextHolder.getLocale());
 
                 crudOperationDTO.setSuccessMessage(successMessage);
             } else {
@@ -79,6 +82,7 @@ public class CMSEngineControllerUtil {
     public void deleteEngine(EngineFormEditCommand command) throws Exception {
         if (command.getEngineForm() != null) {
             Engine engine = (Engine) this.engineFormFactory.createEntityFromForm(command.getEngineForm());
+            log.info("Deleting engine: {}", engine.toString());
             this.sqlEngineRepository.delete(engine);
         }
     }

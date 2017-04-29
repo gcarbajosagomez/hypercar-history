@@ -29,11 +29,13 @@ import java.util.stream.Collectors;
 @Transactional
 @Component
 @Slf4j
-public class SqlContentSearchDAOImpl extends SqlDAOImpl<GenericEntity> implements SqlContentSearchDAO {
+public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
+
+    private EntityManager entityManager;
 
     @Inject
     public SqlContentSearchDAOImpl(EntityManager entityManager) {
-        super(entityManager);
+        this.entityManager = entityManager;
     }
 
     /**
@@ -42,7 +44,7 @@ public class SqlContentSearchDAOImpl extends SqlDAOImpl<GenericEntity> implement
     @Override
     public void indexPreviouslyStoredDatabaseRecords() {
         try {
-            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(super.getEntityManager());
+            FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.entityManager);
             fullTextEntityManager.createIndexer().startAndWait();
         } catch (InterruptedException ie) {
             log.error(ie.toString(), ie);
@@ -57,8 +59,7 @@ public class SqlContentSearchDAOImpl extends SqlDAOImpl<GenericEntity> implement
      */
     @Override
     public List<GenericEntity> searchContent(SearchCommand searchCommand) {
-        EntityManager entityManager = super.getEntityManager();
-        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+        FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.entityManager);
 
         // create native Lucene query using the query DSL alternatively you can write the Lucene query using the Lucene query parser
         // or the Lucene programmatic API. The Hibernate Search DSL is recommended though

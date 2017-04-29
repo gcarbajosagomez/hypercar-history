@@ -12,6 +12,7 @@ import com.phistory.mvc.cms.form.ManufacturerForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.dto.PaginationDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -27,6 +28,7 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_MANU
  * @author gonzalo
  */
 @Component
+@Slf4j
 public class CMSManufacturerControllerUtil extends CMSBaseController {
 
     private SqlManufacturerRepository sqlManufacturerRepository;
@@ -56,10 +58,11 @@ public class CMSManufacturerControllerUtil extends CMSBaseController {
         if (command.getManufacturerForm() != null) {
             Manufacturer manufacturer =
                     (Manufacturer) manufacturerFormFactory.createEntityFromForm(command.getManufacturerForm());
+            log.info("Saving or editing manufacturer: {}", manufacturer.toString());
             this.sqlManufacturerRepository.save(manufacturer);
 
             if (command.getManufacturerForm().getId() == null) {
-                //After the car has been saved, we need to recreate the {@link ManufacturerForm} with all the newly assigned ids
+                //After the car has been saved, we need to recreate the ManufacturerForm with all the newly assigned ids
                 command.setManufacturerForm((ManufacturerForm) manufacturerFormFactory.createFormFromEntity(manufacturer));
             }
 
@@ -79,6 +82,7 @@ public class CMSManufacturerControllerUtil extends CMSBaseController {
         if (command.getManufacturerForm() != null) {
             Manufacturer manufacturer =
                     (Manufacturer) manufacturerFormFactory.createEntityFromForm(command.getManufacturerForm());
+            log.info("Deleting manufacturer: {}", manufacturer.toString());
             sqlManufacturerRepository.delete(manufacturer);
         }
     }

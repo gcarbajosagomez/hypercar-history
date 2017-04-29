@@ -4,11 +4,12 @@ import com.phistory.data.model.car.Car;
 import com.phistory.mvc.cms.command.CarFormEditCommand;
 import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
+import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.controller.CarListController;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.dto.PaginationDTO;
-import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
+import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -23,8 +24,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -37,20 +39,21 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 @RequestMapping(value = CMS_CONTEXT + CARS_URL)
 @Slf4j
 public class CMSCarController extends CMSBaseController {
-    private CarListController    carListController;
-    private ModelFiller          carModelFiller;
-    private ModelFiller          pictureModelFiller;
-    private CarEditModelFiller   carEditModelFiller;
-    private CarListModelFiller   sqlCarsListModelFiller;
-    private CMSCarControllerUtil cmsCarControllerUtil;
-    private CarControllerUtil    carControllerUtil;
+
+    private CarListController          carListController;
+    private ModelFiller                carModelFiller;
+    private ModelFiller                pictureModelFiller;
+    private CarEditModelFiller         carEditModelFiller;
+    private AbstractCarListModelFiller sqlCarsListModelFiller;
+    private CMSCarControllerUtil       cmsCarControllerUtil;
+    private CarControllerUtil          carControllerUtil;
 
     @Inject
     public CMSCarController(CarListController carListController,
                             ModelFiller carModelFiller,
                             ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
-                            CarListModelFiller sqlCarsListModelFiller,
+                            AbstractCarListModelFiller sqlCarsListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
                             CarControllerUtil carControllerUtil) {
         this.carListController = carListController;
@@ -111,8 +114,12 @@ public class CMSCarController extends CMSBaseController {
                                                                       LocaleContextHolder.getLocale());
 
                 if (!carInternetContentEditCommandResult.hasErrors()) {
-                    carInternetContentEditCommand.getCarInternetContentForms()
-                                                 .forEach(carInternetContentForm -> carInternetContentForm.setCar(car));
+                    List<CarInternetContentForm> enrichedCarInternetContentForms =
+                            this.enrichCarInternetContentForms(carInternetContentEditCommand.getCarInternetContentForms(),
+                                                               car);
+
+                    carInternetContentEditCommand.setCarInternetContentForms(enrichedCarInternetContentForms);
+
                     this.cmsCarControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
                 }
                 this.cmsCarControllerUtil.reloadCarAndPictureDBEntities(car.getId());
@@ -131,6 +138,16 @@ public class CMSCarController extends CMSBaseController {
         }
 
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
+    }
+
+    private List<CarInternetContentForm> enrichCarInternetContentForms(List<CarInternetContentForm> carInternetContentForms,
+                                                                       Car car) {
+        return carInternetContentForms.stream()
+                                      .map(carInternetContentForm -> {
+                                          carInternetContentForm.setCar(car);
+                                          return carInternetContentForm;
+                                      })
+                                      .collect(Collectors.toList());
     }
 
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)

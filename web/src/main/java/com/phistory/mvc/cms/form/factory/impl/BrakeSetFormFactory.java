@@ -1,5 +1,6 @@
-package com.phistory.mvc.cms.form.factory;
+package com.phistory.mvc.cms.form.factory.impl;
 
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;

@@ -18,17 +18,23 @@ import com.phistory.data.model.engine.EngineType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EngineForm {
-    private Long id;
+
+    private Long   id;
     private String code;
+
     @NotNull(message = "The field must not be blank.")
     private Integer size;
+
     @NotNull(message = "The field must not be blank.")
     private EngineType type;
+
     @NotNull(message = "The field must not be blank.")
     private EngineCylinderDisposition cylinderDisposition;
-    private Integer cylinderBankAngle;
+    private Integer                   cylinderBankAngle;
+
     @NotNull(message = "The field must not be blank.")
     private Integer numberOfCylinders;
+
     private Integer numberOfValves;
     private Integer maxPower;
     private Integer maxRPM;

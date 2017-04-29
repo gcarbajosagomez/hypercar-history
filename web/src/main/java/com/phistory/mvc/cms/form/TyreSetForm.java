@@ -16,13 +16,14 @@ import com.phistory.data.model.tyre.Tyre;
 @Data
 @AllArgsConstructor
 public class TyreSetForm {
-    private Long id;
+
+    private Long             id;
     private TyreManufacturer manufacturer;
-    private TyreType type;
-    private String model;
-    private Tyre frontTyre;
-    private Tyre rearTyre;
-    private Car car;
+    private TyreType         type;
+    private String           model;
+    private Tyre             frontTyre;
+    private Tyre             rearTyre;
+    private Car              car;
 
     public TyreSetForm() {
         this.frontTyre = new Tyre();

@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.form.factory;
+package com.phistory.mvc.cms.form.factory.impl;
 
 import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.model.brake.BrakeSet;
@@ -10,6 +10,7 @@ import com.phistory.data.model.tyre.TyreSet;
 import com.phistory.mvc.cms.command.CarMaterial;
 import com.phistory.mvc.cms.command.PictureEditCommand;
 import com.phistory.mvc.cms.form.*;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

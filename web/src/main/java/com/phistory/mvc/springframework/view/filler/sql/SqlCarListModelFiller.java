@@ -1,7 +1,7 @@
 package com.phistory.mvc.springframework.view.filler.sql;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.sql.SqlCarDAO;
+import com.phistory.data.dao.sql.SqlDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
@@ -19,11 +19,11 @@ import static com.phistory.mvc.controller.BaseControllerData.CARS;
  *
  * Created by gonzalo on 11/9/16.
  */
-@Component(value = "sqlCarsListModelFiller")
-public class SQLCarListModelFiller extends AbstractCarListModelFiller {
+@Component
+public class SqlCarListModelFiller extends AbstractCarListModelFiller {
 
     @Inject
-    private SqlCarDAO carDAO;
+    private SqlDAO sqlCarDAO;
 
     @Override
     public void fillModel(Model model) {}
@@ -31,7 +31,7 @@ public class SQLCarListModelFiller extends AbstractCarListModelFiller {
     @Override
     public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
         super.fillPaginatedModel(model, paginationDTO);
-        model.addAttribute(CARS, this.carDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
+        model.addAttribute(CARS, this.sqlCarDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
     }
 
     /**

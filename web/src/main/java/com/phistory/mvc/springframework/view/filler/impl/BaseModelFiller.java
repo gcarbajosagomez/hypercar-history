@@ -1,8 +1,9 @@
-package com.phistory.mvc.springframework.view.filler;
+package com.phistory.mvc.springframework.view.filler.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.stereotype.Component;

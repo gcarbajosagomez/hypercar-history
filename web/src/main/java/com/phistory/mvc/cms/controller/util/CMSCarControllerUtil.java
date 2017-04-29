@@ -16,6 +16,7 @@ import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.controller.util.DateProvider;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,6 +41,7 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.*;
 @Component
 @NoArgsConstructor
 @Transactional
+@Slf4j
 public class CMSCarControllerUtil {
 
     private SqlCarRepository         sqlCarRepository;
@@ -80,6 +82,7 @@ public class CMSCarControllerUtil {
         if (carForm != null) {
             List<PictureEditCommand> pictureFileEditCommands = carForm.getPictureFileEditCommands();
             Car car = (Car) this.carFormFactory.createEntityFromForm(carForm);
+            log.info("Saving or editing car: {}", car.toString());
             this.sqlCarRepository.save(car);
 
             if (pictureFileEditCommands != null) {
@@ -101,13 +104,7 @@ public class CMSCarControllerUtil {
                     }
                 }
 
-                pictureFileEditCommands =
-                        pictureFileEditCommands.stream()
-                                               .filter(pictureEditCommand -> Objects.nonNull(pictureEditCommand.getPicture()))
-                                               .sorted(Comparator.comparing(pictureEditCommand -> pictureEditCommand.getPicture()
-                                                                                                                    .getGalleryPosition()))
-                                               .collect(Collectors.toList());
-
+                pictureFileEditCommands = this.orderPictureCommandsByGalleryPosition(pictureFileEditCommands);
                 carForm.setPictureFileEditCommands(pictureFileEditCommands);
             }
 
@@ -120,6 +117,15 @@ public class CMSCarControllerUtil {
         }
 
         return null;
+    }
+
+    private List<PictureEditCommand> orderPictureCommandsByGalleryPosition(List<PictureEditCommand> pictureEditCommands) {
+        return pictureEditCommands.stream()
+                                  .map(PictureEditCommand::getPicture)
+                                  .filter(Objects::nonNull)
+                                  .sorted(Comparator.comparing(picture -> picture.getGalleryPosition()))
+                                  .map(picture -> new PictureEditCommand(picture, null))
+                                  .collect(Collectors.toList());
     }
 
     /**
@@ -151,11 +157,12 @@ public class CMSCarControllerUtil {
 
         for (CarInternetContentForm carInternetContentForm : carInternetContentEditCommand.getCarInternetContentForms()) {
             try {
-                CarInternetContent carInternetContent = (CarInternetContent)
-                        this.carInternetContentFormFactory.createEntityFromForm(carInternetContentForm);
+                CarInternetContent carInternetContent =
+                        (CarInternetContent) this.carInternetContentFormFactory.createEntityFromForm(carInternetContentForm);
                 carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
 
                 if (StringUtils.hasText(carInternetContent.getLink())) {
+                    log.info("Saving or editing carInternetContent: {}", carInternetContent.toString());
                     this.sqlCarInternetContentRepository.save(carInternetContent);
                     savedCarInternetContents.add(carInternetContent);
                 }
@@ -176,6 +183,7 @@ public class CMSCarControllerUtil {
     public void deleteCar(CarFormEditCommand command) throws Exception {
         if (command.getCarForm() != null) {
             Car car = (Car) carFormFactory.createEntityFromForm(command.getCarForm());
+            log.info("Deleting car: {}", car.toString());
             this.sqlCarRepository.delete(car);
         }
     }
@@ -183,6 +191,7 @@ public class CMSCarControllerUtil {
     public void reloadCarAndPictureDBEntities(Long carId) {
         EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
         entityManagementLoadCommand.setCarId(carId);
+
         entityManagementLoadCommand.setQueryType(RELOAD_CARS);
         this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 

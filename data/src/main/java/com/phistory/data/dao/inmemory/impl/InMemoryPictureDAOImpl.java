@@ -27,24 +27,26 @@ import static java.util.Comparator.*;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Component(value = InMemoryPictureDAOImpl.BEAN_NAME)
+@Component
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
 public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
-    public static final String BEAN_NAME = "InMemoryPictureDAOImpl";
 
     private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
 
     private SqlPictureRepository sqlPictureRepository;
     private SqlPictureDAO        sqlPictureDAO;
+    private PictureUtil          pictureUtil;
     private List<Picture> pictures = new ArrayList<>();
 
     @Inject
     public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
-                                  SqlPictureDAO sqlPictureDAO) {
+                                  SqlPictureDAO sqlPictureDAO,
+                                  PictureUtil pictureUtil) {
         this.sqlPictureRepository = sqlPictureRepository;
         this.sqlPictureDAO = sqlPictureDAO;
+        this.pictureUtil = pictureUtil;
     }
 
     @Transactional
@@ -167,6 +169,6 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                              })
                              .collect(Collectors.toList());
 
-        return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
+        return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 }

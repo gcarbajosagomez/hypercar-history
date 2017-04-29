@@ -1,5 +1,5 @@
 
-package com.phistory.mvc.cms.form.factory;
+package com.phistory.mvc.cms.form.factory.impl;
 
 import java.sql.Blob;
 import java.util.Optional;
@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 
 import com.phistory.mvc.cms.command.PictureEditCommand;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.stereotype.Component;
@@ -26,7 +27,9 @@ import com.phistory.data.model.util.PictureUtil;
 @Slf4j
 @Component
 public class ManufacturerFormFactory implements EntityFormFactory<Manufacturer, ManufacturerForm> {
+
     private SqlPictureDAO sqlPictureDAO;
+    private PictureUtil   pictureUtil;
 
     @Inject
     public ManufacturerFormFactory(SqlPictureDAO sqlPictureDAO) {
@@ -86,13 +89,14 @@ public class ManufacturerFormFactory implements EntityFormFactory<Manufacturer, 
 
             if ((logoFile.isPresent() && logoFile.get().getSize() > 0) &&
                 (!logo.isPresent() || (logo.isPresent() && logo.get().length() == 0))) {
-                logo = Optional.of(PictureUtil.createPictureFromMultipartFile(logoFile.get(), sqlPictureDAO));
+                logo = Optional.of(this.pictureUtil.createPictureFromMultipartFile(logoFile.get(),
+                                                                                   this.sqlPictureDAO));
             }
 
             Manufacturer object = new Manufacturer(manufacturerForm.getId(),
                                                    manufacturerForm.getName(),
                                                    manufacturerForm.getNationality(),
-                                                   logo.isPresent() ? logo.get() : null,
+                                                   logo.orElse(null),
                                                    manufacturerForm.getHistoryES(),
                                                    manufacturerForm.getHistoryEN());
 

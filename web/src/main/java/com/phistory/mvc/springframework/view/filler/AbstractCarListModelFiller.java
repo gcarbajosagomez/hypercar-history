@@ -12,7 +12,7 @@ import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
  * <p>
  * Created by gonzalo on 11/9/16.
  */
-public abstract class CarListModelFiller implements ModelFiller {
+public abstract class AbstractCarListModelFiller implements ModelFiller {
 
     /**
      * Fill the supplied {@link Model} with paginated car data

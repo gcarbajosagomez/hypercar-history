@@ -1,9 +1,10 @@
-package com.phistory.mvc.springframework.view.filler;
+package com.phistory.mvc.springframework.view.filler.impl;
 
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import static com.phistory.mvc.cms.form.factory.CarFormFactory.CAR_MATERIAL_STRING_SEPARATOR;
+import static com.phistory.mvc.cms.form.factory.impl.CarFormFactory.CAR_MATERIAL_STRING_SEPARATOR;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;

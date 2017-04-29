@@ -5,6 +5,7 @@ import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.data.model.util.PictureUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.engine.jdbc.LobCreator;
 import org.springframework.stereotype.Component;
@@ -24,16 +25,20 @@ import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
  * @author Gonzalo
  */
 @Transactional
-@Component
-public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPictureDAO {
+@Component("pictureDAO")
+@Slf4j
+public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPictureDAO {
 
     private SqlPictureRepository sqlPictureRepository;
+    private PictureUtil pictureUtil;
 
     @Inject
     public SqlPictureDAOImpl(EntityManager entityManager,
-                             SqlPictureRepository sqlPictureRepository) {
+                             SqlPictureRepository sqlPictureRepository,
+                             PictureUtil pictureUtil) {
         super(entityManager);
         this.sqlPictureRepository = sqlPictureRepository;
+        this.pictureUtil = pictureUtil;
     }
 
     @Override
@@ -58,7 +63,7 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPicture
         query.setParameter(CAR_ID_PROPERTY_NAME, carId);
         List<Picture> previewCandidates = query.getResultList();
 
-        return PictureUtil.getPreviewPictureFromCandidates(previewCandidates);
+        return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 
     @Override
@@ -83,15 +88,16 @@ public class SqlPictureDAOImpl extends SqlDAOImpl<Picture> implements SqlPicture
 
         Picture picture = pictureEditCommand.getPicture();
         picture.setImage(pictureBlob);
+        log.info("Saving or editing Picture: {}", picture.toString());
         this.sqlPictureRepository.save(picture);
     }
 
     @Override
     public void updateGalleryPosition(Picture picture) {
         EntityManager entityManager = super.getEntityManager();
-        //detach pictures from the persistence context so that when 2 pictures for
-        // the same car with the same galleryPosition don't try to override each other
-        entityManager.clear();
+        // we need to detach the picture from the persistence context so that when there are 2 pictures for
+        // the same car with the same galleryPosition they don't try to override each other
+        entityManager.detach(picture);
         Query query = entityManager.createQuery("UPDATE Picture"
                                                 + " SET galleryPosition = :galleryPosition"
                                                 + " WHERE id = :id"

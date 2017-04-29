@@ -8,20 +8,19 @@ import com.phistory.data.model.car.Car;
 
 /**
  * Brake set form
- * 
+ *
  * @author Gonzalo
  */
 @Data
 @AllArgsConstructor
-public class BrakeSetForm
-{
-    private Long id;
+public class BrakeSetForm {
+
+    private Long  id;
     private Brake frontBrake;
     private Brake rearBrake;
-    private Car car;
-    
-    public BrakeSetForm()
-    {
+    private Car   car;
+
+    public BrakeSetForm() {
         frontBrake = new Brake();
         rearBrake = new Brake();
     }

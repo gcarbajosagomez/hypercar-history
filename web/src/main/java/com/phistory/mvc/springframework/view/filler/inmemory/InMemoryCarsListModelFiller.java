@@ -3,7 +3,7 @@ package com.phistory.mvc.springframework.view.filler.inmemory;
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.model.car.Car;
 import com.phistory.mvc.dto.PaginationDTO;
-import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
+import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
 
 /**
- * In-memory implementation of a {@link CarListModelFiller}
+ * In-memory implementation of a {@link AbstractCarListModelFiller}
  *
  * @author gonzalo
  */
 @Component(value = "inMemoryCarsListModelFiller")
-public class InMemoryCarsListModelFiller extends CarListModelFiller {
+public class InMemoryCarsListModelFiller extends AbstractCarListModelFiller {
     @Inject
     private InMemoryCarDAO inMemoryCarDAO;
 

@@ -15,8 +15,8 @@ import java.util.List;
  * @author Gonzalo
  */
 @Transactional
-@Component
-public class SqlCarDAOImpl extends SqlDAOImpl<Car> implements SqlCarDAO {
+@Component("sqlCarDAO")
+public class SqlCarDAOImpl extends AbstractSqlDAO<Car> implements SqlCarDAO {
 
     @Inject
     public SqlCarDAOImpl(EntityManager entityManager) {

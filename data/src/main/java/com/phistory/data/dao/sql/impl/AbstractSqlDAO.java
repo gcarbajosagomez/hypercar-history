@@ -20,13 +20,13 @@ import java.util.Map;
  * @author Gonzalo
  */
 @Slf4j
-public abstract class SqlDAOImpl<TYPE extends GenericEntity> implements SqlDAO<TYPE> {
+public abstract class AbstractSqlDAO<TYPE extends GenericEntity> implements SqlDAO<TYPE> {
 
     @Getter
     @PersistenceContext
     private EntityManager entityManager;
 
-    public SqlDAOImpl(EntityManager entityManager) {
+    public AbstractSqlDAO(EntityManager entityManager) {
         this.entityManager = entityManager;
     }
 

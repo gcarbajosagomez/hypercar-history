@@ -20,10 +20,11 @@ import com.phistory.data.model.car.CarInternetContentType;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CarInternetContentForm {
-    private Long id;
-    private String link;
+
+    private Long                   id;
+    private String                 link;
     private CarInternetContentType type;
-    private DateTime addedDate;
-    private Language contentLanguage;
-    private Car car;
+    private DateTime               addedDate;
+    private Language               contentLanguage;
+    private Car                    car;
 }

@@ -25,11 +25,10 @@ import static com.phistory.data.model.car.CarInternetContentType.VIDEO;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Component(value = InMemoryCarInternetContentDAOImpl.BEAN_NAME)
+@Component
 @EnableScheduling
 @Slf4j
 public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetContentDAO {
-    public static final String BEAN_NAME = "inMemoryCarInternetContentDAO";
 
     private CrudRepository sqlCarInternetContentRepository;
     private List<CarInternetContent> carInternetContents = new ArrayList<>();

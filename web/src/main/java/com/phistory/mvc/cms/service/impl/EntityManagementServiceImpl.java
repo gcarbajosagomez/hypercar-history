@@ -1,4 +1,4 @@
-package com.phistory.mvc.cms.service;
+package com.phistory.mvc.cms.service.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
@@ -9,6 +9,7 @@ import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.service.EntityManagementService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;

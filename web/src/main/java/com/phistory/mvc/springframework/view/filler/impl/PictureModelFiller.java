@@ -1,5 +1,6 @@
-package com.phistory.mvc.springframework.view.filler;
+package com.phistory.mvc.springframework.view.filler.impl;
 
+import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 

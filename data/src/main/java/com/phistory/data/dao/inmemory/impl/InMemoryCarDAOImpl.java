@@ -24,11 +24,10 @@ import java.util.stream.Collectors;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Component(value = InMemoryCarDAOImpl.BEAN_NAME)
+@Component
 @EnableScheduling
 @Slf4j
 public class InMemoryCarDAOImpl implements InMemoryCarDAO {
-    public static final String BEAN_NAME = "inMemoryCarDAO";
 
     private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
     private SqlCarRepository   sqlCarRepository;

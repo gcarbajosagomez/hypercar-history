@@ -17,12 +17,11 @@ import java.util.Objects;
 /**
  * Created by Gonzalo Carbajosa on 6/01/17.
  */
-@Component(value = InMemoryManufacturerDAOImpl.BEAN_NAME)
+@Component
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
 public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
-    public static final String BEAN_NAME = "inMemoryManufacturerInternetContentDAO";
 
     private SqlManufacturerRepository sqlManufacturerRepository;
     private List<Manufacturer> manufacturers = new ArrayList<>();

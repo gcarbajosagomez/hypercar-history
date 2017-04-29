@@ -2,7 +2,7 @@ package com.phistory.mvc.controller;
 
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.dto.PaginationDTO;
-import com.phistory.mvc.springframework.view.filler.CarListModelFiller;
+import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,12 +28,12 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @RequestMapping(value = CARS_URL,
         method = {GET, HEAD})
 public class CarListController extends BaseController {
-    private CarControllerUtil  carControllerUtil;
-    private CarListModelFiller inMemoryCarsListModelFiller;
+    private CarControllerUtil          carControllerUtil;
+    private AbstractCarListModelFiller inMemoryCarsListModelFiller;
 
     @Inject
     public CarListController(CarControllerUtil carControllerUtil,
-                             CarListModelFiller inMemoryCarsListModelFiller) {
+                             AbstractCarListModelFiller inMemoryCarsListModelFiller) {
         this.carControllerUtil = carControllerUtil;
         this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
     }

@@ -18,8 +18,8 @@ import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
  * @author gonzalo
  */
 @Transactional
-@Component
-public class SqlCarInternetContentDAOImpl extends SqlDAOImpl<CarInternetContent> implements SqlCarInternetContentDAO {
+@Component("sqlCarInternetContentDAO")
+public class SqlCarInternetContentDAOImpl extends AbstractSqlDAO<CarInternetContent> implements SqlCarInternetContentDAO {
 
     @Inject
     public SqlCarInternetContentDAOImpl(EntityManager entityManager) {
