@@ -29,11 +29,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION + "}",
         method = HEAD)
 public class PictureController {
-    @Inject
+
     private PictureControllerUtil pictureControllerUtil;
-    @Inject
     private URILoggingService     uriLoggingService;
 
+    @Inject
+    public PictureController(PictureControllerUtil pictureControllerUtil,
+                             URILoggingService uriLoggingService) {
+        this.pictureControllerUtil = pictureControllerUtil;
+        this.uriLoggingService = uriLoggingService;
+    }
 
     @RequestMapping(method = GET)
     public void handleDefault(HttpServletResponse response,
@@ -52,14 +57,7 @@ public class PictureController {
     public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION) PictureLoadAction loadAction,
                                             @RequestParam(value = ID, required = false) Long entityId) {
 
-        PictureLoadCommand command = new PictureLoadCommand();
-        try {
-            command = new PictureLoadCommand(loadAction, entityId);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-
-        return command;
+        return new PictureLoadCommand(loadAction, entityId);
     }
 
     @InitBinder

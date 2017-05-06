@@ -60,7 +60,9 @@ public class CMSPictureController extends CMSBaseController {
 
             return SUCCESS_MESSAGE + " : " + successMessage;
         } catch (Exception e) {
-            log.error("There was an error while deleting picture; {} ", command.getEntityId(), e);
+            log.error("There was an error while deleting picture; {} ",
+                      command.getEntityId(),
+                      e);
             return EXCEPTION_MESSAGE + " : " + e.toString();
         }
     }

@@ -15,7 +15,7 @@ import com.phistory.data.model.tyre.Tyre;
  */
 @Data
 @AllArgsConstructor
-public class TyreSetForm {
+public class TyreSetEditForm implements EditForm {
 
     private Long             id;
     private TyreManufacturer manufacturer;
@@ -25,7 +25,7 @@ public class TyreSetForm {
     private Tyre             rearTyre;
     private Car              car;
 
-    public TyreSetForm() {
+    public TyreSetEditForm() {
         this.frontTyre = new Tyre();
         this.rearTyre = new Tyre();
     }

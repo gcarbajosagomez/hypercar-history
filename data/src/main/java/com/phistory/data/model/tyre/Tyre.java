@@ -44,9 +44,4 @@ public class Tyre implements GenericEntity {
     public Long getId() {
         return id;
     }
-
-    @Override
-    public String toString() {
-        return null;
-    }
 }

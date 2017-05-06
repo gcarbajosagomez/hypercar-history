@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.sql.Blob;
@@ -14,7 +13,6 @@ import java.util.Objects;
 
 import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
 import static javax.persistence.GenerationType.IDENTITY;
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
  * main.java.
@@ -39,8 +37,7 @@ public class Picture implements GenericEntity {
     @Column(name = PICTURE_ID_FIELD)
     private Long id;
 
-    @ManyToOne
-    @Cascade(value = SAVE_UPDATE)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 

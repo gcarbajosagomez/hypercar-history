@@ -8,7 +8,7 @@
             var pictureUploadBoxNum = $("input[id$='picture.galleryPosition']").length;
             var numberOfCarPictureAreas = $("[id^='car-picture-area']").length;
 
-            var newPictureUploadBoxId = 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].pictureFile';
+            var newPictureUploadBoxId = 'editForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].pictureFile';
             var newPictureUploadBox = $('<input>', {
                 'type': 'file',
                 'id': newPictureUploadBoxId,
@@ -24,7 +24,7 @@
                 'class': "thumbnail resizable-img edit-car-picture"
             }));
 
-            var galleryPositionInputId = 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].picture.galleryPosition';
+            var galleryPositionInputId = 'editForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].picture.galleryPosition';
             var newGalleryPositionInput = $('<input>', {
                 'type': 'text',
                 'id': galleryPositionInputId,
@@ -32,7 +32,7 @@
                 'class': 'pull-right form-control'
             });
 
-            var newEligibleForPreviewSelectId = 'carForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].picture.eligibleForPreview';
+            var newEligibleForPreviewSelectId = 'editForm.pictureFileEditCommands[' + pictureUploadBoxNum + '].picture.eligibleForPreview';
             var newEligibleForPreviewSelect = $('<select>', {
                 'id': newEligibleForPreviewSelectId,
                 'name': newEligibleForPreviewSelectId,

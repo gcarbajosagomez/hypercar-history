@@ -1,11 +1,16 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.car.CarInternetContent;
+import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
+import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.form.CarInternetContentForm;
+import com.phistory.mvc.cms.form.EditForm;
+import com.phistory.mvc.cms.form.factory.EntityFormFactory;
+import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,9 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.Arrays;
+import java.util.Objects;
 
-import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -35,44 +40,55 @@ import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 @RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
-    private CrudRepository          carInternetContentRepository;
-    private EntityManagementService entityManagementService;
+    private EntityManagementService       entityManagementService;
+    private CarInternetContentFormFactory carInternetContentFormFactory;
 
     @Inject
-    public CMSCarInternetContentEditController(@Named(CAR_INTERNET_CONTENT_REPOSITORY)
-                                                       CrudRepository carInternetContentRepository,
-                                               EntityManagementService entityManagementService) {
-        this.carInternetContentRepository = carInternetContentRepository;
+    public CMSCarInternetContentEditController(EntityManagementService entityManagementService,
+                                               CarInternetContentFormFactory carInternetContentFormFactory) {
         this.entityManagementService = entityManagementService;
+        this.carInternetContentFormFactory = carInternetContentFormFactory;
     }
 
     @RequestMapping(value = DELETE_URL,
             method = DELETE)
     @ResponseBody
     public String handleDeleteInternetContent(
-            @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContent carInternetContent) {
-        try {
-            this.carInternetContentRepository.delete(carInternetContent);
+            @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditCommand) {
+        CarInternetContent carInternetContent = this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentEditCommand.getEditForm());
 
-            EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
-            entityManagementLoadCommand.setCarInternetContentId(carInternetContent.getCar().getId());
-            entityManagementLoadCommand.setQueryType(REMOVE_CAR);
-            this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+        if (Objects.nonNull(carInternetContent)) {
+            try {
+                log.info("Deleting carInternetContent: {}", carInternetContent.toString());
+                super.getSqlCarInternetContentRepository().delete(carInternetContent);
 
-            String successMessage = super.getMessageSource()
-                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                     new Object[] {"Car internet content"},
-                                                     LocaleContextHolder.getLocale());
+                EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
+                entityManagementLoadCommand.setCarInternetContentId(carInternetContent.getCar().getId());
+                entityManagementLoadCommand.setQueryType(REMOVE_CAR);
+                this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
-            return SUCCESS_MESSAGE + " : " + successMessage;
-        } catch (Exception e) {
-            log.error("There was an error while deleting picture; %s ", carInternetContent.getId(), e);
-            return EXCEPTION_MESSAGE + " : " + e.toString();
+                String successMessage = super.getMessageSource()
+                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
+                                                         new Object[] {"Car internet content"},
+                                                         LocaleContextHolder.getLocale());
+
+                return SUCCESS_MESSAGE + " : " + successMessage;
+            } catch (Exception e) {
+                log.error("There was an error while deleting picture; %s ",
+                          carInternetContent.getId(),
+                          e);
+                return EXCEPTION_MESSAGE + " : " + e.toString();
+            }
         }
+        return  EXCEPTION_MESSAGE + " : No content found";
     }
 
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
-    public CarInternetContent createCarInternetContentCommand(@PathVariable(ID) Long caInternetContentId) throws Exception {
-        return (CarInternetContent) super.getSqlCarInternetContentRepository().findOne(caInternetContentId);
+    public CarInternetContentEditFormCommand createCarInternetContentCommand(@PathVariable(ID) Long contentId) throws Exception {
+        CarInternetContent carInternetContent = super.getSqlCarInternetContentRepository()
+                                                     .findOne(contentId);
+
+        CarInternetContentForm carInternetContentForm = this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent);
+        return new CarInternetContentEditFormCommand(Arrays.asList(carInternetContentForm));
     }
 }

@@ -1,10 +1,11 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.dao.sql.SqlCarDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.engine.Engine;
+import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.propertyEditor.DatePropertyEditor;
 import com.phistory.mvc.cms.propertyEditor.GenericObjectPropertyEditor;
 import com.phistory.mvc.controller.BaseController;
@@ -24,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
 import static com.phistory.data.dao.sql.SqlEngineRepository.ENGINE_REPOSITORY;
 import static com.phistory.data.dao.sql.SqlManufacturerRepository.MANUFACTURER_REPOSITORY;
@@ -37,7 +37,7 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
  */
 @Controller
 @RequestMapping(value = CMS_CONTEXT)
-public class CMSBaseController extends BaseController {
+public abstract class CMSBaseController extends BaseController {
 
     /********************
      *******URLs*********
@@ -97,25 +97,19 @@ public class CMSBaseController extends BaseController {
     @Getter
     @Inject
     @Named(MANUFACTURER_REPOSITORY)
-    private CrudRepository           sqlManufacturerRepository;
+    private CrudRepository sqlManufacturerRepository;
+
     @Getter
     @Inject
     @Named(ENGINE_REPOSITORY)
-    private CrudRepository           sqlEngineRepository;
-    @Inject
-    private SqlCarDAO                sqlCarDAO;
-    @Inject
-    @Named(CAR_REPOSITORY)
-    private CrudRepository           sqlCarRepository;
+    private CrudRepository sqlEngineRepository;
+
     @Getter
     @Inject
-    private SqlCarInternetContentDAO sqlCarInternetContentDAO;
-    @Getter
+    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+
     @Inject
-    @Named(CAR_INTERNET_CONTENT_REPOSITORY)
-    private CrudRepository           sqlCarInternetContentRepository;
-    @Inject
-    private ModelFiller              cmsBaseModelFiller;
+    private ModelFiller cmsBaseModelFiller;
 
     @ModelAttribute
     public void fillBaseCmsModel(Model model, HttpServletResponse response) {
@@ -132,7 +126,7 @@ public class CMSBaseController extends BaseController {
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Manufacturer.class, new GenericObjectPropertyEditor<>(this.sqlManufacturerRepository));
-        binder.registerCustomEditor(Car.class, new GenericObjectPropertyEditor<>(this.sqlCarRepository));
+        binder.registerCustomEditor(Car.class, new GenericObjectPropertyEditor<>(super.getSqlCarRepository()));
         binder.registerCustomEditor(Engine.class, new GenericObjectPropertyEditor<>(this.sqlEngineRepository));
         binder.registerCustomEditor(Calendar.class, new DatePropertyEditor(new SimpleDateFormat(DATE_FORMAT)));
     }
@@ -146,5 +140,14 @@ public class CMSBaseController extends BaseController {
         response.setHeader(CACHE_CONTROL_HTTP_HEADER, "no-cache, no-store, max-age=0, must-revalidate");
         response.setHeader(PRAGMA_HTTP_HEADER, "no-cache");
         response.setHeader(EXPIRES_HTTP_HEADER, "0");
+    }
+
+    protected Model fillModel(Model model, EditFormCommand editCommand) {
+        return model;
+    }
+
+    @Override
+    protected Model fillModel(Model model) {
+        return model;
     }
 }

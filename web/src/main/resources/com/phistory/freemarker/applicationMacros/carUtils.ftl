@@ -67,24 +67,24 @@
         <dl class="dl-horizontal dl-horizontal-edit text-left">
             <#if brake.id??>
                 <dt>
-                ${language.getTextSource('id')}
+                    ${language.getTextSource('id')}
                 </dt>
                 <dd>
-                    <h5 class="text-muted">${brake.id}</h5>
+                    <h5 class="entity-id text-muted">${brake.id}</h5>
                     <@spring.formHiddenInput "${objectBindingPath?string}.id", ""/>
                 </dd>
             </#if>
             <@spring.bind "${objectBindingPath?string}.train"/>
             <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
             <dt>
-            ${language.getTextSource('brake.disc.diameter')}
+                ${language.getTextSource('brake.disc.diameter')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.discDiameter", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                       <@spring.showErrors '<br>'/>
+                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
-            ${language.getTextSource('brake.disc.material')}
+                ${language.getTextSource('brake.disc.material')}
             </dt>
             <dd>
                 <@spring.bind "${objectBindingPath}.discMaterial"/>
@@ -98,11 +98,11 @@
                 <@spring.showErrors '<br>'/>
             </dd>
             <dt>
-            ${language.getTextSource('brake.caliper.numOfPistons')}
+                ${language.getTextSource('brake.caliper.numOfPistons')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.caliperNumOfPistons", "class=form-control", "text"/>
-                       <@spring.showErrors '<br>'/>
+                <@spring.showErrors '<br>'/>
             </dd>
         </dl>
     </div>
@@ -118,35 +118,35 @@
         <dl class="dl-horizontal dl-horizontal-edit text-left">
             <#if tyre.id??>
                 <dt>
-                ${language.getTextSource('id')}
+                    ${language.getTextSource('id')}
                 </dt>
                 <dd>
-                    <h5 class="text-muted">${tyre.id}</h5>
+                    <h5 class="entity-id text-muted">${tyre.id}</h5>
                     <@spring.formHiddenInput "${objectBindingPath}.id", ""/>
                 </dd>
             </#if>
             <@spring.bind "${objectBindingPath?string}.train"/>
             <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${tyreTrain}">
             <dt>
-            ${language.getTextSource('tyre.width')}
+                ${language.getTextSource('tyre.width')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                        <@spring.showErrors '<br>'/>
+                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
-            ${language.getTextSource('tyre.profile')}
+                ${language.getTextSource('tyre.profile')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.profile", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                        <@spring.showErrors '<br>'/>
+                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
-            ${language.getTextSource('tyre.rimDiameter')}
+                ${language.getTextSource('tyre.rimDiameter')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath}.rimDiameter", "class=form-control placeholder=${language.getTextSource('inch')}", "text"/>
-                        <@spring.showErrors '<br>'/>
+                <@spring.showErrors '<br>'/>
             </dd>
         </dl>
     </div>
@@ -216,7 +216,7 @@
                     <figcaption>
                         <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
                             <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
-                                                <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
+                                            <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>
                     </figcaption>
                 </figure>

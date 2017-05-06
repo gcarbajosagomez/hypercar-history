@@ -59,7 +59,7 @@
 	                	  })	                	 
 	                	  .done(function (data)
 						  {    	            	 
-	    	        	    	writeCarPreviews(data.cars);
+	    	        	    	writeCarPreviews(data.items);
                                 <#if requestIsDesktop>
 	    	        	     	    $('#main-car-list-div').unblock();
                                 <#else>
@@ -69,7 +69,7 @@
 	    	        	 	    	
 	    	        	     	if (data != null)
 	    	        	     	{
-	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNumData + "&${carsPerPage}=" + data.carsPerPageData<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
+	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNum + "&${carsPerPage}=" + data.itemsPerPage<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 								}
 						  });  
 				}                      

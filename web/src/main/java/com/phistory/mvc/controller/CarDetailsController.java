@@ -33,17 +33,17 @@ public class CarDetailsController extends BaseController {
     private ModelFiller             carModelFiller;
     private ModelFiller             pictureModelFiller;
     private CarInternetContentUtils carInternetContentUtils;
-    private InMemoryPictureDAO      inMemoryInMemoryPictureDAO;
+    private InMemoryPictureDAO      inMemoryPictureDAO;
 
     @Inject
     public CarDetailsController(ModelFiller carModelFiller,
                                 ModelFiller pictureModelFiller,
                                 CarInternetContentUtils carInternetContentUtils,
-                                InMemoryPictureDAO inMemoryInMemoryPictureDAO) {
+                                InMemoryPictureDAO inMemoryPictureDAO) {
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carInternetContentUtils = carInternetContentUtils;
-        this.inMemoryInMemoryPictureDAO = inMemoryInMemoryPictureDAO;
+        this.inMemoryPictureDAO = inMemoryPictureDAO;
     }
 
     @RequestMapping
@@ -60,7 +60,7 @@ public class CarDetailsController extends BaseController {
             this.carModelFiller.fillModel(model);
 
             model.addAttribute(CAR, car);
-            model.addAttribute(PICTURE_IDS, this.inMemoryInMemoryPictureDAO.getIdsByCarId(carId));
+            model.addAttribute(PICTURE_IDS, this.inMemoryPictureDAO.getIdsByCarId(carId));
             model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 
             List<CarInternetContent> videos = super.getInMemoryCarInternetContentDAO().getVideosByCarId(carId);

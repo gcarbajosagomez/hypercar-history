@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -31,10 +32,11 @@ public class PictureUtil {
         return picture;
     }
 
-    public Picture getPreviewPictureFromCandidates(List<Picture> previewCandidates) {
+    public Optional<Picture> getPreviewPictureFromCandidates(List<Picture> previewCandidates) {
         if (!previewCandidates.isEmpty()) {
-            return previewCandidates.get(new Random().nextInt(previewCandidates.size()));
+            int randomIndex = new Random().nextInt(previewCandidates.size());
+            return Optional.of(previewCandidates.get(randomIndex));
         }
-        return null;
+        return Optional.empty();
     }
 }

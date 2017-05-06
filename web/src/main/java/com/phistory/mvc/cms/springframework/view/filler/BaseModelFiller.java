@@ -26,9 +26,10 @@ public class BaseModelFiller implements ModelFiller {
     }
 
     @Override
-    public void fillModel(Model model) {
-        model.addAttribute("editURL",                           EDIT_URL);
-        model.addAttribute("reloadCarsEntityManagementAction",  RELOAD_CARS);
-        model.addAttribute(CMS_MODELS,                          this.sqlCarDAO.getAllOrderedByProductionStartDate());
+    public Model fillModel(Model model) {
+        model.addAttribute("editURL", EDIT_URL);
+        model.addAttribute("reloadCarsEntityManagementAction", RELOAD_CARS);
+        model.addAttribute(CMS_MODELS, this.sqlCarDAO.getAllOrderedByProductionStartDate());
+        return model;
     }
 }

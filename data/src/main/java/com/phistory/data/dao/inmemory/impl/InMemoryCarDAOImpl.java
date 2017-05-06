@@ -24,18 +24,20 @@ import java.util.stream.Collectors;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Component
+@Component(InMemoryCarDAOImpl.IN_MEMORY_CAR_DAO)
 @EnableScheduling
 @Slf4j
 public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
-    private InMemoryPictureDAO inMemoryInMemoryPictureDAO;
+    public static final String IN_MEMORY_CAR_DAO = "inMemoryCarDAO";
+
+    private InMemoryPictureDAO inMemoryPictureDAO;
     private SqlCarRepository   sqlCarRepository;
     private List<Car> cars = new ArrayList<>();
 
     @Inject
     public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO, SqlCarRepository sqlCarRepository) {
-        this.inMemoryInMemoryPictureDAO = inMemoryPictureDAO;
+        this.inMemoryPictureDAO = inMemoryPictureDAO;
         this.sqlCarRepository = sqlCarRepository;
     }
 
@@ -79,7 +81,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     }
 
     public Car getCarByPictureId(Long pictureId) {
-        return this.inMemoryInMemoryPictureDAO.getEntities()
+        return this.inMemoryPictureDAO.getEntities()
                                               .stream()
                                               .filter(picture -> picture.getId().equals(pictureId))
                                               .map(Picture::getCar)

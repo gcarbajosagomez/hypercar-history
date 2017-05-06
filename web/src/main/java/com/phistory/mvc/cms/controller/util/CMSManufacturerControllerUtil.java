@@ -1,24 +1,26 @@
 package com.phistory.mvc.cms.controller.util;
 
 import com.phistory.data.command.SearchCommand;
-import com.phistory.data.dao.sql.SqlManufacturerDAO;
-import com.phistory.data.dao.sql.SqlManufacturerRepository;
+import com.phistory.data.dao.sql.SqlDAO;
+import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
+import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
-import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
-import com.phistory.mvc.cms.controller.CMSBaseController;
-import com.phistory.mvc.cms.form.ManufacturerForm;
+import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
 import com.phistory.mvc.dto.PaginationDTO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import javax.inject.Named;
+import java.util.*;
 
+import static com.phistory.data.dao.sql.SqlManufacturerDAO.SQL_MANUFACTURER_DAO;
+import static com.phistory.data.dao.sql.SqlManufacturerRepository.MANUFACTURER_REPOSITORY;
 import static com.phistory.data.model.Manufacturer.NAME_PROPERTY;
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_MANUFACTURERS;
 
@@ -29,16 +31,16 @@ import static com.phistory.mvc.cms.command.EntityManagementQueryType.RELOAD_MANU
  */
 @Component
 @Slf4j
-public class CMSManufacturerControllerUtil extends CMSBaseController {
+public class CMSManufacturerControllerUtil {
 
-    private SqlManufacturerRepository sqlManufacturerRepository;
-    private SqlManufacturerDAO        sqlManufacturerDAO;
-    private EntityFormFactory         manufacturerFormFactory;
-    private EntityManagementService   entityManagementService;
+    private CrudRepository          sqlManufacturerRepository;
+    private SqlDAO                  sqlManufacturerDAO;
+    private EntityFormFactory       manufacturerFormFactory;
+    private EntityManagementService entityManagementService;
 
     @Inject
-    public CMSManufacturerControllerUtil(SqlManufacturerRepository sqlManufacturerRepository,
-                                         SqlManufacturerDAO sqlManufacturerDAO,
+    public CMSManufacturerControllerUtil(@Named(MANUFACTURER_REPOSITORY) CrudRepository sqlManufacturerRepository,
+                                         @Named(SQL_MANUFACTURER_DAO) SqlDAO sqlManufacturerDAO,
                                          EntityFormFactory manufacturerFormFactory,
                                          EntityManagementService entityManagementService) {
         this.sqlManufacturerRepository = sqlManufacturerRepository;
@@ -54,36 +56,39 @@ public class CMSManufacturerControllerUtil extends CMSBaseController {
      * @return the newly saved or edited {@link Car} if everything went well, null otherwise
      * @throws Exception
      */
-    public Manufacturer saveOrEditManufacturer(ManufacturerFormEditCommand command) throws Exception {
-        if (command.getManufacturerForm() != null) {
-            Manufacturer manufacturer =
-                    (Manufacturer) manufacturerFormFactory.createEntityFromForm(command.getManufacturerForm());
-            log.info("Saving or editing manufacturer: {}", manufacturer.toString());
-            this.sqlManufacturerRepository.save(manufacturer);
+    public Optional<Manufacturer> saveOrEditManufacturer(EditFormCommand command) throws Exception {
+        EditForm editForm = command.getEditForm();
 
-            if (command.getManufacturerForm().getId() == null) {
-                //After the car has been saved, we need to recreate the ManufacturerForm with all the newly assigned ids
-                command.setManufacturerForm((ManufacturerForm) manufacturerFormFactory.createFormFromEntity(manufacturer));
+        if (Objects.nonNull(editForm)) {
+            Manufacturer manufacturer =
+                    (Manufacturer) this.manufacturerFormFactory.buildEntityFromForm(editForm);
+            log.info("Saving or editing manufacturer: {}", manufacturer.toString());
+            manufacturer = (Manufacturer) this.sqlManufacturerRepository.save(manufacturer);
+
+            if (editForm.getId() == null) {
+                //After the car has been saved, we need to recreate the ManufacturerEditForm with all the newly assigned ids
+                command.setEditForm(this.manufacturerFormFactory.buildFormFromEntity(manufacturer));
             }
 
-            return manufacturer;
+            return Optional.of(manufacturer);
         }
 
-        return null;
+        return Optional.empty();
     }
 
     /**
      * Handle the deletion of a manufacturer
      *
-     * @param command
+     * @param editFormCommand
      * @throws Exception
      */
-    public void deleteManufacturer(ManufacturerFormEditCommand command) throws Exception {
-        if (command.getManufacturerForm() != null) {
+    public void deleteManufacturer(EditFormCommand editFormCommand) throws Exception {
+        EditForm editForm = editFormCommand.getEditForm();
+        if (Objects.nonNull(editForm)) {
             Manufacturer manufacturer =
-                    (Manufacturer) manufacturerFormFactory.createEntityFromForm(command.getManufacturerForm());
+                    (Manufacturer) this.manufacturerFormFactory.buildEntityFromForm(editFormCommand.getEditForm());
             log.info("Deleting manufacturer: {}", manufacturer.toString());
-            sqlManufacturerRepository.delete(manufacturer);
+            this.sqlManufacturerRepository.delete(manufacturer);
         }
     }
 
@@ -93,13 +98,11 @@ public class CMSManufacturerControllerUtil extends CMSBaseController {
      * @param paginationDTO
      * @return
      */
-    public Map<String, Object> createPaginationData(PaginationDTO paginationDTO) {
-        Map<String, Object> data = new HashMap<String, Object>();
-        data.put(MANUFACTURERS, this.sqlManufacturerDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
-        data.put(MANUFACTURERS_PER_PAGE_DATA, paginationDTO.getItemsPerPage());
-        data.put(PAG_NUM_DATA, paginationDTO.getPagNum());
+    public PaginationDTO createPaginationData(PaginationDTO paginationDTO) {
+        List<GenericEntity> manufacturers = this.sqlManufacturerDAO.getByCriteria(this.createSearchCommand(paginationDTO));
+        paginationDTO.setItems(manufacturers);
 
-        return data;
+        return paginationDTO;
     }
 
     /**
@@ -110,7 +113,7 @@ public class CMSManufacturerControllerUtil extends CMSBaseController {
      */
     public static SearchCommand createSearchCommand(PaginationDTO manufacturersPaginationDTO) {
         Map<String, Boolean> orderByMap = new HashMap<>();
-        orderByMap.put(NAME_PROPERTY, Boolean.TRUE);
+        orderByMap.put(NAME_PROPERTY, true);
 
         int paginationFirstResult = manufacturersPaginationDTO.getFirstResult();
 

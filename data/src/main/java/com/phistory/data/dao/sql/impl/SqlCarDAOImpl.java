@@ -2,8 +2,7 @@ package com.phistory.data.dao.sql.impl;
 
 import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.data.model.car.Car;
-import org.hibernate.Query;
-import org.hibernate.transform.AliasToBeanResultTransformer;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,11 +10,13 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import java.util.List;
 
+import static com.phistory.data.dao.sql.impl.SqlCarDAOImpl.SQL_CAR_DAO;
+
 /**
  * @author Gonzalo
  */
 @Transactional
-@Component("sqlCarDAO")
+@Component(SQL_CAR_DAO)
 public class SqlCarDAOImpl extends AbstractSqlDAO<Car> implements SqlCarDAO {
 
     @Inject
@@ -25,13 +26,13 @@ public class SqlCarDAOImpl extends AbstractSqlDAO<Car> implements SqlCarDAO {
 
     @Override
     public List<Car> getAllOrderedByProductionStartDate() {
-        Query query = super.getCurrentSession()
-                           .createQuery("SELECT car.model AS model, car.id AS id"
-                                        + " FROM Car AS car"
-                                        + " ORDER BY car.productionStartDate ASC,"
-                                        + "          car.model ASC");
-
-        query.setResultTransformer(new AliasToBeanResultTransformer(Car.class));
-        return query.list();
+        return super.getCurrentSession()
+                    .createQuery("SELECT car.model AS model, " +
+                                 "       car.id AS id " +
+                                 "FROM Car AS car " +
+                                 "ORDER BY car.productionStartDate ASC, " +
+                                 "         car.model ASC")
+                    .setResultTransformer(Transformers.aliasToBean(Car.class))
+                    .list();
     }
 }

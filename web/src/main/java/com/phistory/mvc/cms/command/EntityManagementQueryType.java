@@ -12,6 +12,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public enum EntityManagementQueryType {
+
     RELOAD_CARS("reloadCars"),
     REMOVE_CAR("removeCar"),
     RELOAD_PICTURES("reloadPictures"),

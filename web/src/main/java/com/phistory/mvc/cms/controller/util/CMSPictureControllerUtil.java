@@ -21,8 +21,8 @@ public class CMSPictureControllerUtil {
     private SqlPictureDAO sqlPictureDAO;
 
     @Inject
-    public CMSPictureControllerUtil(SqlPictureDAO SqlPictureDAO) {
-        this.sqlPictureDAO = SqlPictureDAO;
+    public CMSPictureControllerUtil(SqlPictureDAO sqlPictureDAO) {
+        this.sqlPictureDAO = sqlPictureDAO;
     }
 
     /**

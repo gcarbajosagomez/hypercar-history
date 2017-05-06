@@ -16,8 +16,8 @@ import com.phistory.data.model.picture.Picture;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PictureEditCommand
-{
-	private Picture picture;
-	private MultipartFile pictureFile;
+public class PictureEditCommand {
+
+    private Picture       picture;
+    private MultipartFile pictureFile;
 }

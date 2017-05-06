@@ -13,7 +13,7 @@ import com.phistory.data.model.transmission.DriveWheelType;
 import com.phistory.data.model.transmission.TransmissionType;
 import com.phistory.data.model.tyre.TyreManufacturer;
 import com.phistory.data.model.tyre.TyreType;
-import com.phistory.mvc.cms.command.CarFormEditCommand;
+import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.CarMaterial;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
@@ -48,7 +48,7 @@ public class CarEditModelFiller implements ModelFiller {
     }
 
     @Override
-    public void fillModel(Model model) {
+    public Model fillModel(Model model) {
         model.addAttribute("manufacturers", this.sqlManufacturerRepository.findAll());
         model.addAttribute("engineLayouts", CarEngineLayout.values());
         model.addAttribute("engineDispositions", CarEngineDisposition.values());
@@ -67,6 +67,7 @@ public class CarEditModelFiller implements ModelFiller {
         model.addAttribute("productionTypes", CarProductionType.values());
         model.addAttribute("tyreManufacturers", TyreManufacturer.values());
         model.addAttribute("tyreTypes", TyreType.values());
+        return model;
     }
 
     /**
@@ -75,15 +76,16 @@ public class CarEditModelFiller implements ModelFiller {
      * @param model
      * @param command
      */
-    public void fillCarEditModel(Model model, CarFormEditCommand command) {
+    public Model fillCarEditModel(Model model, EditFormCommand command) {
         List<Picture> pictures = new ArrayList<>();
-        Long carId = command.getCarForm().getId();
+        Long carId = command.getEditForm().getId();
 
         if (carId != null) {
             pictures = this.inMemoryPictureDAO.getByCarId(carId);
         }
 
         model.addAttribute(PICTURES, pictures);
-        this.fillModel(model);
+        model = this.fillModel(model);
+        return model;
     }
 }

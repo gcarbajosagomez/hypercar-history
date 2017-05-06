@@ -1,5 +1,7 @@
 package com.phistory.mvc.controller;
 
+import com.phistory.data.model.GenericEntity;
+import com.phistory.data.model.car.Car;
 import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
@@ -11,8 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -52,16 +53,10 @@ public class CarListController extends BaseController {
 
     @RequestMapping(value = "/" + PAGINATION_URL)
     @ResponseBody
-    public Map<String, Object> handlePagination(Model model, PaginationDTO paginationDTO) {
-        this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);
+    public PaginationDTO handlePagination(Model model, PaginationDTO paginationDTO) {
+        model = this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);
 
-        Map<String, Object> modelMap = model.asMap();
-        Map<String, Object> data = new HashMap<>();
-        data.put(CARS, modelMap.get(CARS));
-        data.put(CARS_PER_PAGE_DATA, modelMap.get(CARS_PER_PAGE_DATA));
-        data.put(PAG_NUM_DATA, modelMap.get(PAG_NUM_DATA));
-
-        //the model cannot be returned, or Spring would try to render the cars/pagination view
-        return data;
+        paginationDTO.setItems((List<GenericEntity>) model.asMap().get(CARS));
+        return paginationDTO;
     }
 }

@@ -11,23 +11,22 @@ import static com.phistory.mvc.controller.BaseControllerData.*;
 
 /**
  * Fills a Spring Framework Model with car related information
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
 @Component
-public class CarModelFiller implements ModelFiller
-{	
-	@Override
-	public void fillModel(Model model)
-	{
-		model.addAttribute(CAR_ID, 			   	        		CAR_ID);
-		model.addAttribute("loadCarPreviewAction", 				LOAD_CAR_PREVIEW.getName());
-		model.addAttribute("loadCarPictureAction",      		LOAD_CAR_PICTURE.getName());
-		model.addAttribute("unitsOfMeasureCookieName",  		UNITS_OF_MEASURE_COOKIE_NAME);
-		model.addAttribute("unitsOfMeasureMetric", 	    		UNITS_OF_MEASURE_METRIC);
-		model.addAttribute("unitsOfMeasureImperial",    		UNITS_OF_MEASURE_IMPERIAL);
-		model.addAttribute("paginationURL",    					PAGINATION_URL);
-		model.addAttribute("carMaterialsStringSeparator", 	    CAR_MATERIAL_STRING_SEPARATOR);
-	}
+public class CarModelFiller implements ModelFiller {
+
+    @Override
+    public Model fillModel(Model model) {
+        model.addAttribute(CAR_ID, CAR_ID);
+        model.addAttribute("loadCarPreviewAction", LOAD_CAR_PREVIEW.getName());
+        model.addAttribute("loadCarPictureAction", LOAD_CAR_PICTURE.getName());
+        model.addAttribute("unitsOfMeasureCookieName", UNITS_OF_MEASURE_COOKIE_NAME);
+        model.addAttribute("unitsOfMeasureMetric", UNITS_OF_MEASURE_METRIC);
+        model.addAttribute("unitsOfMeasureImperial", UNITS_OF_MEASURE_IMPERIAL);
+        model.addAttribute("paginationURL", PAGINATION_URL);
+        model.addAttribute("carMaterialsStringSeparator", CAR_MATERIAL_STRING_SEPARATOR);
+        return model;
+    }
 }

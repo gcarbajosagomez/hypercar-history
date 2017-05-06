@@ -7,8 +7,15 @@
 <#import "../applicationMacros/picture.ftl" as pictureUtil/>
 <#import "../applicationMacros/carUtils.ftl" as carUtils/>
 
-<#if CEFC.carForm.id??>
-	<#assign title>${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
+<#if CEFC.editForm.id??>
+    <#assign numberOfPictures = CEFC.editForm.pictureFileEditCommands?size/>
+
+    <#assign numberOfVideos = 0/>
+    <#if (CICEFC.editForms?size > 0)>
+        <#assign numberOfVideos = CICEFC.editForms?size/>
+    </#if>
+
+	<#assign title>${CEFC.editForm.manufacturer.name} ${CEFC.editForm.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
 <#else>
 	<#assign title>${language.getTextSource('car.newCar')}</#assign>
 </#if>
@@ -21,21 +28,21 @@
 	   <div class="col-lg-6 col-sm-6 col-xs-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left"><#if CEFC.carForm.id??>${CEFC.carForm.model}<#else>${language.getTextSource('car')}</#if></h3>
+					<h3 class="text-left"><#if CEFC.editForm.id??>${CEFC.editForm.model}<#else>${language.getTextSource('car')}</#if></h3>
 
-                        <input type="button" class="btn btn-success" value="<#if CEFC.carForm.id??>
+                        <input type="button" class="btn btn-success" value="<#if CEFC.editForm.id??>
                                                                                 ${language.getTextSource('cms.editCar')}
                                                                             <#else>
                                                                                 ${language.getTextSource('cms.saveCar')}
                                                                             </#if>"
-                                                                     onClick="<#if CEFC.carForm.id??>
-                                                                                    editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${editURL}"/>', '${language.getTextSource('car.confirmEdit')}')
+                                                                     onClick="<#if CEFC.editForm.id??>
+                                                                                    editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.editForm.id}/${editURL}"/>', '${language.getTextSource('car.confirmEdit')}')
                                                                               <#else>
                                                                                     saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${language.getTextSource('car.confirmSave')}')
                                                                               </#if>;"/>
 
-                        <#if CEFC.carForm.id??>
-                            <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.carForm.id}/${deleteURL}"/>',
+                        <#if CEFC.editForm.id??>
+                            <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.editForm.id}/${deleteURL}"/>',
                                                                             '${language.getTextSource('car.confirmDelete')}');"/>
                                 <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
                             </a>
@@ -46,33 +53,33 @@
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
-			      	  <#if CEFC.carForm.id??>
+			      	  <#if CEFC.editForm.id??>
                         <dt>
                           	${language.getTextSource('id')}
                       	</dt>
                       	<dd>
-                        	<h5 class="text-muted">${CEFC.carForm.id}</h5>
-                         	<@spring.formHiddenInput "CEFC.carForm.id", ""/>
-							<@spring.bind "CICEFC.carInternetContentForms[0].car"/>
-							<input type="hidden" name="${spring.status.expression}" value="${CEFC.carForm.id}">
+                        	<h5 class="entity-id text-muted">${CEFC.editForm.id}</h5>
+                            <@spring.formHiddenInput "CEFC.editForm.id", ""/>
+                            <@spring.bind "CICEFC.editForms[0].car"/>
+                            <input type="hidden" name="${spring.status.expression}" value="${CEFC.editForm.id}">
                         </dd>
                       </#if>
                       <dt>
                             ${language.getTextSource('car.visible')}
                       </dt>
                       <dd>
-                            <@spring.bind "CEFC.carForm.visible"/>
+                            <@spring.bind "CEFC.editForm.visible"/>
 
                             <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                                <option value="true" <#if CEFC.carForm.visible == true>selected</#if>>${language.getTextSource('yes')}</option>
-                                <option value="false" <#if CEFC.carForm.visible == false>selected</#if>>${language.getTextSource('no')}</option>
+                                <option value="true" <#if CEFC.editForm.visible == true>selected</#if>>${language.getTextSource('yes')}</option>
+                                <option value="false" <#if CEFC.editForm.visible == false>selected</#if>>${language.getTextSource('no')}</option>
                             </select>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.manufacturer')}</h5>
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.manufacturer"/>
+                           <@spring.bind "CEFC.editForm.manufacturer"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                               <#list manufacturers as manufacturer>
@@ -84,14 +91,14 @@
                            ${language.getTextSource('car.model')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.model", "class=form-control", "text"/>
+                           <@spring.formInput "CEFC.editForm.model", "class=form-control", "text"/>
                            <@spring.showErrors '<br>', 'control-label has-error'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.engineLayout')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.engineLayout"/>
+                           <@spring.bind "CEFC.editForm.engineLayout"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineLayouts as engineLayout>
@@ -102,7 +109,7 @@
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dd>
-                           <@spring.bind "CEFC.carForm.engineDisposition"/>
+                           <@spring.bind "CEFC.editForm.engineDisposition"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineDispositions as engineDisposition>
@@ -122,12 +129,12 @@
                                         1
                                     </dt>
                                     <dd class="car-material-dd">
-                                        <@spring.bind "CEFC.carForm.chassisMaterials"/>
+                                        <@spring.bind "CEFC.editForm.chassisMaterials"/>
                                         <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
                                             <option value="" selected></option>
-                                           
+
                                             <#list carMaterials as material>
-                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.carForm.chassisMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.editForm.chassisMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
@@ -139,7 +146,7 @@
                                             <option value="" selected></option>
 
                                             <#list carMaterials as material>
-                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.carForm.chassisMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.editForm.chassisMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
@@ -156,12 +163,12 @@
                                         1
                                     </dt>
                                     <dd class="car-material-dd">
-                                        <@spring.bind "CEFC.carForm.bodyMaterials"/>
+                                        <@spring.bind "CEFC.editForm.bodyMaterials"/>
                                         <select id="${spring.status.expression}[0]" name="${spring.status.expression}[0]" class="form-control">
                                             <option value="" selected></option>
 
                                             <#list carMaterials as material>
-                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.carForm.bodyMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                                <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 0) && material == CEFC.editForm.bodyMaterials[0]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
@@ -173,7 +180,7 @@
                                             <option value="" selected></option>
 
                                             <#list carMaterials as material>
-                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.carForm.bodyMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
+                                               <option value="${material}" <#if spring.status.value?? && (spring.status.value?length > 1) && material == CEFC.editForm.bodyMaterials[1]?default("")> selected</#if>>${language.getTextSource('car.material.${material.getName()}')}</option>
                                             </#list>
                                         </select>
                                     </dd>
@@ -184,7 +191,7 @@
                            ${language.getTextSource('car.bodyShape')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.bodyShape"/>
+                           <@spring.bind "CEFC.editForm.bodyShape"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list bodyShapes as bodyShape>
@@ -198,7 +205,7 @@
                            ${language.getTextSource('car.seatsconfig')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.seatsConfig"/>
+                           <@spring.bind "CEFC.editForm.seatsConfig"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list seatsConfigs as seatsConfig>
@@ -212,7 +219,7 @@
                            ${language.getTextSource('car.productionType')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.productionType"/>
+                           <@spring.bind "CEFC.editForm.productionType"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list productionTypes as productionType>
@@ -227,7 +234,7 @@
                       </dt>
                       <dd>
                            <div class="input-group date">
-                           	   <@spring.formInput "CEFC.carForm.productionStartDate", "class=form-control"/>
+                           	   <@spring.formInput "CEFC.editForm.productionStartDate", "class=form-control"/>
 							   <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 						   </div>
                       </dd>
@@ -236,7 +243,7 @@
                       </dt>
                       <dd>
                            <div class="input-group date">
-                           	   <@spring.formInput "CEFC.carForm.productionEndDate", "class=form-control"/>
+                           	   <@spring.formInput "CEFC.editForm.productionEndDate", "class=form-control"/>
 							   <span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
 						   </div>
                       </dd>
@@ -244,63 +251,63 @@
                            ${language.getTextSource('car.weight')}</td>
                       </dt>
                       <dd>
-							<@spring.formInput "CEFC.carForm.weight", "class=form-control placeholder=${language.getTextSource('Kg')}", "text"/>
+							<@spring.formInput "CEFC.editForm.weight", "class=form-control placeholder=${language.getTextSource('Kg')}", "text"/>
                           	<@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.length')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.length", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.length", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
                            <@spring.showErrors 'br'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.width')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
                            <@spring.showErrors 'br'/>
                       </dd>
 					  <dt>
                            ${language.getTextSource('car.height')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.height", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.height", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
                            <@spring.showErrors 'br'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.acceleration')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.acceleration", "class=form-control placeholder=${language.getTextSource('S')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.acceleration", "class=form-control placeholder=${language.getTextSource('S')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.topSpeed')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.topSpeed", "class=form-control placeholder=${language.getTextSource('Km/h')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.topSpeed", "class=form-control placeholder=${language.getTextSource('Km/h')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.fuelTankCapacity')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.fuelTankCapacity", "class=form-control placeholder=${language.getTextSource('L')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.fuelTankCapacity", "class=form-control placeholder=${language.getTextSource('L')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.fuelConsumption')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.fuelConsumption", "class=form-control placeholder=${language.getTextSource('L/100Km')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.fuelConsumption", "class=form-control placeholder=${language.getTextSource('L/100Km')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.driveWheel')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.driveWheel"/>
+                           <@spring.bind "CEFC.editForm.driveWheel"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list driveWheelTypes as driveWheelType>
@@ -314,24 +321,24 @@
                            ${language.getTextSource('car.roadLegal')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.roadLegal"/>
+                           <@spring.bind "CEFC.editForm.roadLegal"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                                <option value="true" <#if CEFC.carForm.roadLegal == true>selected</#if>>${language.getTextSource('yes')}</option>
-                           		<option value="false" <#if CEFC.carForm.roadLegal == false>selected</#if>>${language.getTextSource('no')}</option>
+                                <option value="true" <#if CEFC.editForm.roadLegal == true>selected</#if>>${language.getTextSource('yes')}</option>
+                           		<option value="false" <#if CEFC.editForm.roadLegal == false>selected</#if>>${language.getTextSource('no')}</option>
                            </select>
                       </dd>
                        <dt>
                             ${language.getTextSource('cms.car.descriptionES')}
                        </dt>
                        <dd class="resizable-dd">
-                            <@spring.formTextarea "CEFC.carForm.descriptionES", "class=form-control cols='50' rows='15'"/>
+                            <@spring.formTextarea "CEFC.editForm.descriptionES", "class=form-control cols='50' rows='15'"/>
                        </dd>
                        <dt>
                             ${language.getTextSource('cms.car.descriptionEN')}
                        </dt>
                        <dd class="resizable-dd">
-                            <@spring.formTextarea "CEFC.carForm.descriptionEN", "class=form-control cols='50' rows='15'"/>
+                            <@spring.formTextarea "CEFC.editForm.descriptionEN", "class=form-control cols='50' rows='15'"/>
                        </dd>
 				   </dl>
 			   </div>
@@ -354,8 +361,8 @@
                            </tr>
                            <tr>
                                 <td>
-                                   <a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.carForm.engineForm.id??>
-																					            onClick="editEngine(${CEFC.carForm.engineForm.id});">
+                                   <a id="engine-save-or-edit-link" class="btn btn-success" <#if CEFC.editForm.engineEditForm.id??>
+																					            onClick="editEngine(${CEFC.editForm.engineEditForm.id});">
 																					            <span id="engine-save-or-edit-span" class="glyphicon glyphicon-plus-sign"> ${language.getTextSource('cms.editEngine')}</span>
 												   								            <#else>
 												   		 							            onClick="saveEngine();">
@@ -363,9 +370,9 @@
 												   								            </#if>
 						            </a>
                                 </td>
-                                <#if CEFC.carForm.engineForm.id??>
+                                <#if CEFC.editForm.engineEditForm.id??>
                                     <td>
-                                        <a id="engine-delete-link" class="btn btn-danger" onClick="deleteEngine($('#carForm\\.engineForm\\.id')[0].value);"/>
+                                        <a id="engine-delete-link" class="btn btn-danger" onClick="deleteEngine($('#editForm\\.engineEditForm\\.id')[0].value);"/>
                                             <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteEngine')}
                                         </a>
                                     </td>
@@ -382,44 +389,44 @@
 			   <div id="engine-main-div" class="panel-body">
 			   	   <dl id="engine-code-selection-table" class="dl-horizontal dl-horizontal-edit text-left sr-only">
 				      <dt>
-				   	       ${language.getTextSource('engine.codes')}
-                   	       <#if engines?? && (engines?size > 0)>
+                            ${language.getTextSource('engine.codes')}
+                   	        <#if engines?? && (engines?size > 0)>
                                <dd>
-								   <select class="form-control" onChange="loadEngineById(this.value);">
+								   <select id="load-engine-by-id-select" class="form-control" onChange="loadEngineById(this.value);">
                                         <#list engines as engine>
-                                        	<option value="${engine.id}" <#if CEFC.carForm.engineForm.code?? && CEFC.carForm.engineForm.code == engine.code> selected</#if>>${engine.code}</option>
+                                        	<option value="${engine.id}" <#if CEFC.editForm.engineEditForm.code?? && CEFC.editForm.engineEditForm.code == engine.code> selected</#if>>${engine.code}</option>
                                       	</#list>
                                    <select>
                                </dd>
-                           </#if>
+                            </#if>
                       </dt>
                    </dl>
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
-                      <dt id="engine-id-dt" class="<#if !CEFC.carForm.engineForm.id??>sr-only</#if>">
-                          ${language.getTextSource('id')}
+                      <dt id="engine-id-dt" class="<#if !CEFC.editForm.engineEditForm.id??>sr-only</#if>">
+                            ${language.getTextSource('id')}
                       </dt>
-                      <dd id="engine-id-dd" class="<#if !CEFC.carForm.engineForm.id??>sr-only</#if>">
-                          <@spring.bind "CEFC.carForm.engineForm.id"/>
+                      <dd id="engine-id-dd" class="<#if !CEFC.editForm.engineEditForm.id??>sr-only</#if>">
+                          <@spring.bind "CEFC.editForm.engineEditForm.id"/>
 
                           <label id="${spring.status.expression}.label">
-                          	 <#if CEFC.carForm.engineForm.id??>
-                           	     <h5 class="text-muted">${CEFC.carForm.engineForm.id}</h5>
+                          	 <#if CEFC.editForm.engineEditForm.id??>
+                           	     <h5 class="entity-id text-muted">${CEFC.editForm.engineEditForm.id}</h5>
                            	 </#if>
                           </label>
 
-                          <@spring.formHiddenInput "CEFC.carForm.engineForm.id", ""/>
+                          <@spring.formHiddenInput "CEFC.editForm.engineEditForm.id", ""/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.code')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.code", "class=form-control", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.code", "class=form-control", "text"/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.type')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.engineForm.type"/>
+                           <@spring.bind "CEFC.editForm.engineEditForm.type"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineTypes as engineType>
@@ -433,7 +440,7 @@
                            ${language.getTextSource('engine.cylinderDisposition')}
                       </dt>
                       <dd>
-                           <@spring.bind "CEFC.carForm.engineForm.cylinderDisposition"/>
+                           <@spring.bind "CEFC.editForm.engineEditForm.cylinderDisposition"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineCylinderDispositions as engineCylinderDisposition>
@@ -447,62 +454,62 @@
                            ${language.getTextSource('engine.cylinderBankAngle')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.cylinderBankAngle", "class=form-control", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.cylinderBankAngle", "class=form-control", "text"/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.numberOfCylinders')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.numberOfCylinders", "class=form-control", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.numberOfCylinders", "class=form-control", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.numberOfValves')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.numberOfValves", "class=form-control", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.numberOfValves", "class=form-control", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.displacement')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.size", "class=form-control placeholder=${language.getTextSource('CM3')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.size", "class=form-control placeholder=${language.getTextSource('CM3')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxPower')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxPower", "class=form-control placeholder=${language.getTextSource('CV')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.maxPower", "class=form-control placeholder=${language.getTextSource('CV')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxRPM')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.maxRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxPowerRPM')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxPowerRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.maxPowerRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxTorque')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxTorque", "class=form-control placeholder=${language.getTextSource('NM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.maxTorque", "class=form-control placeholder=${language.getTextSource('NM')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxTorqueRPM')}
                       </dt>
                       <dd>
-                           <@spring.formInput "CEFC.carForm.engineForm.maxTorqueRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
+                           <@spring.formInput "CEFC.editForm.engineEditForm.maxTorqueRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
                            <@spring.showErrors '<br>'/>
                       </dd>
 				   </dl>
@@ -514,10 +521,10 @@
 			   </div>
 			   <div class="panel-body">
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
-                       <@spring.formHiddenInput "CEFC.carForm.brakeSetForm.id", ""/>
-                       
-                       <@carUtils.writeBrakeEditFields CEFC.carForm.brakeSetForm.frontBrake "CEFC.carForm.brakeSetForm.frontBrake" "FRONT"/>
-                       <@carUtils.writeBrakeEditFields CEFC.carForm.brakeSetForm.rearBrake "CEFC.carForm.brakeSetForm.rearBrake" "REAR"/>
+                       <@spring.formHiddenInput "CEFC.editForm.brakeSetEditForm.id", ""/>
+
+                       <@carUtils.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.frontBrake "CEFC.editForm.brakeSetEditForm.frontBrake" "FRONT"/>
+                       <@carUtils.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.rearBrake "CEFC.editForm.brakeSetEditForm.rearBrake" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -527,20 +534,20 @@
 			   </div>
 			   <div class="panel-body">
 				   <dl class="dl-horizontal dl-horizontal-edit text-left">
-				       <#if CEFC.carForm.transmissionForm?? && CEFC.carForm.transmissionForm.id??>
+				       <#if CEFC.editForm.transmissionEditForm?? && CEFC.editForm.transmissionEditForm.id??>
                            <dt>
                                ${language.getTextSource('id')}
                            </dt>
                            <dd>
-                         	   <h5 class="text-muted">${CEFC.carForm.transmissionForm.id}</h5>
-                         	   <@spring.formHiddenInput "CEFC.carForm.transmissionForm.id", ""/>
+                         	   <h5 class="entity-id text-muted">${CEFC.editForm.transmissionEditForm.id}</h5>
+                         	   <@spring.formHiddenInput "CEFC.editForm.transmissionEditForm.id", ""/>
                            </dd>
                        </#if>
                        <dt>
                              ${language.getTextSource('transmission.type')}
                        </dt>
                        <dd>
-                         	 <@spring.bind "CEFC.carForm.transmissionForm.type"/>
+                         	 <@spring.bind "CEFC.editForm.transmissionEditForm.type"/>
 
                              <select name="${spring.status.expression}" class="form-control">
                                  <#list transmissionTypes as transmissionType>
@@ -554,7 +561,7 @@
                              ${language.getTextSource('transmission.numOfGears')}
                        </dt>
                        <dd>
-                             <@spring.formInput "CEFC.carForm.transmissionForm.numOfGears", "class=form-control", "text"/>
+                             <@spring.formInput "CEFC.editForm.transmissionEditForm.numOfGears", "class=form-control", "text"/>
                              <@spring.showErrors '<br>'/>
                        </dd>
 				   </dl>
@@ -570,7 +577,7 @@
                             ${language.getTextSource('tyreSet.manufacturer')}
                        </dt>
                        <dd>
-                           <@spring.bind "CEFC.carForm.tyreSetForm.manufacturer"/>
+                           <@spring.bind "CEFC.editForm.tyreSetEditForm.manufacturer"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                 <#list tyreManufacturers as manufacturer>
@@ -582,14 +589,14 @@
                             ${language.getTextSource('tyreSet.model')}
                        </dt>
                        <dd>
-                            <@spring.formInput "CEFC.carForm.tyreSetForm.model", "class=form-control", "text"/>
+                            <@spring.formInput "CEFC.editForm.tyreSetEditForm.model", "class=form-control", "text"/>
                             <@spring.showErrors '<br>'/>
                        </dd>
                        <dt>
                             ${language.getTextSource('tyreSet.type')}
                        </dt>
                        <dd>
-                           <@spring.bind "CEFC.carForm.tyreSetForm.type"/>
+                           <@spring.bind "CEFC.editForm.tyreSetEditForm.type"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                 <#list tyreTypes as tyreType>
@@ -599,10 +606,10 @@
                        </dd>
                    </dl>
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
-                       <@spring.formHiddenInput "CEFC.carForm.tyreSetForm.id"/>
-                       
-                       <@carUtils.writeTyreEditFields CEFC.carForm.tyreSetForm.frontTyre "CEFC.carForm.tyreSetForm.frontTyre" "FRONT"/>
-                       <@carUtils.writeTyreEditFields CEFC.carForm.tyreSetForm.rearTyre "CEFC.carForm.tyreSetForm.rearTyre" "REAR"/>
+                       <@spring.formHiddenInput "CEFC.editForm.tyreSetEditForm.id"/>
+
+                       <@carUtils.writeTyreEditFields CEFC.editForm.tyreSetEditForm.frontTyre "CEFC.editForm.tyreSetEditForm.frontTyre" "FRONT"/>
+                       <@carUtils.writeTyreEditFields CEFC.editForm.tyreSetEditForm.rearTyre "CEFC.editForm.tyreSetEditForm.rearTyre" "REAR"/>
                    </dl>
                </div>
 		   </div>
@@ -615,22 +622,31 @@
    					</a>
 			   </div>
 			   <div id="internet-contents-main-panel-body" class="panel-body">
-				   <#if (CICEFC.carInternetContentForms?size > 0)>
-					   <#list CICEFC.carInternetContentForms as carInternetContentForm>
+				   <#if (CICEFC.editForms?size > 0)>
+					   <#list CICEFC.editForms as carInternetContentForm>
 						   <#assign carInternetContentFormIndex = carInternetContentForm?index>
 				  		   <div id="car-internet-content-div<#if carInternetContentForm.id??>-${carInternetContentForm.id}</#if>" class="well well-lg">
 			                   <dl class="dl-horizontal dl-horizontal-edit text-left">
+                                   <#if CICEFC.editForms[carInternetContentFormIndex].id ??>
+                                       <dt>
+                                            ${language.getTextSource('id')}
+                                       </dt>
+                                       <dd>
+                                            <h5 class="entity-id text-muted">${CICEFC.editForms[carInternetContentFormIndex].id}</h5>
+                                            <@spring.formHiddenInput "CICEFC.editForms[${carInternetContentFormIndex}].id", ""/>
+                                       </dd>
+                                   </#if>
 			                   		<dt>
 			                             ${language.getTextSource('cms.car.internetContent.link')}
 			                        </dt>
 									<dd>
-			                   			<@spring.formInput "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].link", "class=form-control", "text"/>
+			                   			<@spring.formInput "CICEFC.editForms[${carInternetContentFormIndex}].link", "class=form-control", "text"/>
 									</dd>
 									<dt>
 			                             ${language.getTextSource('cms.car.internetContent.type')}
 			                        </dt>
 			                        <dd>
-			                        	<@spring.bind "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].type"/>
+			                        	<@spring.bind "CICEFC.editForms[${carInternetContentFormIndex}].type"/>
 
 										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 			                            	<#list carInternetContentTypes as carInternetContentType>
@@ -642,7 +658,7 @@
 			                             ${language.getTextSource('cms.car.internetContent.contentLanguage')}
 			                        </dt>
 									<dd>
-			                   			<@spring.bind "CICEFC.carInternetContentForms[${carInternetContentFormIndex}].contentLanguage"/>
+			                   			<@spring.bind "CICEFC.editForms[${carInternetContentFormIndex}].contentLanguage"/>
 
 										<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 			                            	<#list carInternetContentLanguages as contentLanguage>
@@ -663,17 +679,19 @@
 				   <#else>
 				   	   <div class="well well-lg">
 		                   <dl class="dl-horizontal dl-horizontal-edit text-left">
+                                <@spring.bind "CICEFC.editForms[0].id"/>
+                                <input type="hidden" name="${spring.status.expression}" value="">
 		                   		<dt>
 		                             ${language.getTextSource('cms.car.internetContent.link')}
 		                        </dt>
 								<dd>
-		                   			<@spring.formInput "CICEFC.carInternetContentForms[0].link", "class=form-control", "text"/>
+		                   			<@spring.formInput "CICEFC.editForms[0].link", "class=form-control", "text"/>
 								</dd>
 								<dt>
 		                             ${language.getTextSource('cms.car.internetContent.type')}
 		                        </dt>
 		                        <dd>
-		                        	<@spring.bind "CICEFC.carInternetContentForms[0].type"/>
+		                        	<@spring.bind "CICEFC.editForms[0].type"/>
 
 									<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
 		                            	<#list carInternetContentTypes as carInternetContentType>
@@ -685,7 +703,7 @@
 		                             ${language.getTextSource('cms.car.internetContent.contentLanguage')}
 		                        </dt>
 								<dd>
-		                   			<@spring.bind "CICEFC.carInternetContentForms[0].contentLanguage"/>
+		                   			<@spring.bind "CICEFC.editForms[0].contentLanguage"/>
 
                            			<select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                			<#list carInternetContentLanguages as contentLanguage>
@@ -709,9 +727,9 @@
    					</a>
 			   </div>
 			   <div class="panel-body row">
-                    <#if CEFC.carForm.pictureFileEditCommands?has_content>
+                    <#if CEFC.editForm.pictureFileEditCommands?has_content>
                         <table style="width:100%">
-                            <#list CEFC.carForm.pictureFileEditCommands as pictureCommand>
+                            <#list CEFC.editForm.pictureFileEditCommands as pictureCommand>
                                 <#assign commandIndex = pictureCommand?index/>
                                 <#if pictureCommand.picture??>
                                     <#assign picture = pictureCommand.picture/>
@@ -719,20 +737,26 @@
                                         <#assign pictureId = picture.id/>
                                         <tr id="${picture.id}-picture-row">
                                             <td style="width:70%">
-                                                <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.carForm.manufacturer.name}${CEFC.carForm.model}" gallery="#images-gallery">
-                                                    <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.carForm.manufacturer.name} ${CEFC.carForm.model}">
+                                                <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.editForm.manufacturer.name}${CEFC.editForm.model}" gallery="#images-gallery">
+                                                    <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.editForm.manufacturer.name} ${CEFC.editForm.model}">
                                                 </a>
                                             </td>
                                             <td style="width:30%">
-                                                <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.id"/>
-                                                <input type="hidden" name="${spring.status.expression}" value="${picture.id}">
-
+                                                <dl class="dl-vertical text-left">
+                                                    <dt>
+                                                        ${language.getTextSource('id')}
+                                                    </dt>
+                                                    <dd>
+                                                        <h5 class="entity-id text-muted">${CEFC.editForm.pictureFileEditCommands[commandIndex].picture.id}</h5>
+                                                        <@spring.formHiddenInput "CEFC.editForm.pictureFileEditCommands[${commandIndex}].picture.id", ""/>
+                                                    </dd>
+                                                </dl>
                                                 <dl class="dl-vertical text-left">
                                                     <dt>
                                                         ${language.getTextSource('picture.galleryPosition')}
                                                     </dt>
                                                     <dd>
-                                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.galleryPosition"/>
+                                                        <@spring.bind "CEFC.editForm.pictureFileEditCommands[${commandIndex}].picture.galleryPosition"/>
                                                         <input id="${spring.status.expression}" name="${spring.status.expression}" class="pull-right" type="text" <#if picture.galleryPosition??>value="${picture.galleryPosition}"</#if> size="10"/>
                                                     </dd>
                                                 </dl>
@@ -741,10 +765,10 @@
                                                         ${language.getTextSource('picture.eligibleForPreview')}
                                                     </dt>
                                                     <dd>
-                                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${commandIndex}].picture.eligibleForPreview"/>
+                                                        <@spring.bind "CEFC.editForm.pictureFileEditCommands[${commandIndex}].picture.eligibleForPreview"/>
                                                         <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                                                            <option value="false" <#if CEFC.carForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == false>selected</#if>>${language.getTextSource('no')}</option>
-                                                            <option value="true" <#if CEFC.carForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == true>selected</#if>>${language.getTextSource('yes')}</option>
+                                                            <option value="false" <#if CEFC.editForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == false>selected</#if>>${language.getTextSource('no')}</option>
+                                                            <option value="true" <#if CEFC.editForm.pictureFileEditCommands[commandIndex].picture.eligibleForPreview == true>selected</#if>>${language.getTextSource('yes')}</option>
                                                         </select>
                                                     </dd>
                                                 </dl>
@@ -763,13 +787,13 @@
                         </table>
                         <@pictureUtil.addPicturesGallery "images-gallery" "car-picture"/>
 
-                    <#elseif CEFC.carForm.id??>
+                    <#elseif CEFC.editForm.id??>
                  	    <h3 class="text-left">${language.getTextSource('noPicturesAvailable')}</h3>
          			</#if>
 
                     <table id="pictureUploadInputs" style="width:100%">
-                        <#assign pictureIndex>${CEFC.carForm.pictureFileEditCommands?size}</#assign>
-                        <@spring.bind "CEFC.carForm.pictureFileEditCommands"/>
+                        <#assign pictureIndex>${CEFC.editForm.pictureFileEditCommands?size}</#assign>
+                        <@spring.bind "CEFC.editForm.pictureFileEditCommands"/>
                         <tr>
                             <td style="width:65%">
                                 <input type="file" id="${spring.status.expression}[${pictureIndex}].pictureFile" name="${spring.status.expression}[${pictureIndex}].pictureFile" onChange="displayCarPictureWhenFileSelected(this.files[0], 0);" class="form-control" accept="image/*" size="10"/>
@@ -780,7 +804,7 @@
                                         ${language.getTextSource('picture.galleryPosition')}
                                     </dt>
                                     <dd>
-                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${pictureIndex}].picture.galleryPosition"/>
+                                        <@spring.bind "CEFC.editForm.pictureFileEditCommands[${pictureIndex}].picture.galleryPosition"/>
                                         <input id="${spring.status.expression}" name="${spring.status.expression}" type="text" class="pull-right">
                                     </dd>
                                 </dl>
@@ -789,7 +813,7 @@
                                         ${language.getTextSource('picture.eligibleForPreview')}
                                     </dt>
                                     <dd>
-                                        <@spring.bind "CEFC.carForm.pictureFileEditCommands[${pictureIndex}].picture.eligibleForPreview"/>
+                                        <@spring.bind "CEFC.editForm.pictureFileEditCommands[${pictureIndex}].picture.eligibleForPreview"/>
                                         <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                             <option value="false">${language.getTextSource('no')}</option>
                                             <option value="true">${language.getTextSource('yes')}</option>

@@ -25,11 +25,10 @@ import javax.persistence.*;
 import java.text.Normalizer;
 import java.util.Calendar;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.TemporalType.DATE;
-import static org.hibernate.annotations.CascadeType.ALL;
-import static org.hibernate.annotations.CascadeType.SAVE_UPDATE;
 
 /**
  * @author Gonzalo
@@ -73,8 +72,7 @@ public class Car implements GenericEntity {
     @Column(name = "car_visible", nullable = false, columnDefinition = "tinyint(1) default 1")
     private Boolean visible;
 
-    @ManyToOne
-    @Cascade(value = SAVE_UPDATE)
+    @ManyToOne(cascade = PERSIST)
     @JoinColumn(name = MANUFACTURER_ID_FIELD, nullable = false)
     private Manufacturer manufacturer;
 
@@ -89,8 +87,7 @@ public class Car implements GenericEntity {
     @Column(name = "car_engine_disposition", nullable = false)
     private CarEngineDisposition engineDisposition;
 
-    @ManyToOne
-    @Cascade(value = SAVE_UPDATE)
+    @ManyToOne(cascade = PERSIST)
     @JoinColumn(name = ENGINE_ID_FIELD)
     //Do not change nullable to false as otherwise Hibernate won't be able to persist the entity
     //since right before persisting it the engine is null
@@ -145,21 +142,18 @@ public class Car implements GenericEntity {
     @Column(name = "car_height")
     private Long height;
 
-    @OneToOne(orphanRemoval = true)
-    @Cascade(value = ALL)
+    @OneToOne(orphanRemoval = true, cascade = ALL)
     @JoinColumn(name = "car_brake_set_id", unique = true)
     private BrakeSet brakeSet;
 
-    @OneToOne
-    @Cascade(value = ALL)
+    @OneToOne(cascade = ALL)
     @JoinColumn(name = "car_transmission_id", unique = true)
     private Transmission transmission;
 
     @Column(name = "car_fuel_tank_capacity")
     private Long fuelTankCapacity;
 
-    @OneToOne
-    @Cascade(value = ALL)
+    @OneToOne(cascade = ALL)
     @JoinColumn(name = "car_tyre_set_id", unique = true)
     private TyreSet tyreSet;
 
@@ -184,8 +178,13 @@ public class Car implements GenericEntity {
     @Override
     public String toString() {
         if (this.getManufacturer() != null) {
-            return new StringBuilder(this.getManufacturer().getName() + " " + this.getModel() + " (id: " + this.id + ")")
-                    .toString();
+            return new StringBuilder().append(this.getManufacturer().getName())
+                                      .append(" ")
+                                      .append(this.getModel())
+                                      .append(" (id: ")
+                                      .append(this.id)
+                                      .append(")")
+                                      .toString();
         }
 
         return null;

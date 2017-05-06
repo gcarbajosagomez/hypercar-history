@@ -1,6 +1,6 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.mvc.cms.command.EngineFormEditCommand;
+import com.phistory.mvc.cms.command.EngineEditFormCommand;
 import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -40,9 +40,11 @@ public class CMSEngineController extends CMSBaseController {
             method = POST,
             produces = APPLICATION_JSON_VALUE)
     @ResponseBody
-    public CrudOperationDTO handleSaveEngine(@Valid @RequestBody EngineFormEditCommand command,
-                                             BindingResult result) {
+    public CrudOperationDTO handleSaveNewEngine(@Valid @RequestBody EngineEditFormCommand command,
+                                                BindingResult result) {
 
-        return this.cmsEngineControllerUtil.saveOrEditEngine(command, result, ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY);
+        return this.cmsEngineControllerUtil.saveOrEditEngine(command,
+                                                             result,
+                                                             ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY);
     }
 }

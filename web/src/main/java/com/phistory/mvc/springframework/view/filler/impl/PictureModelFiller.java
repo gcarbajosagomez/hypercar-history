@@ -8,16 +8,15 @@ import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
 
 /**
  * Fills a Spring Framework Model with picture related information
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
 @Component
-public class PictureModelFiller implements ModelFiller
-{
-	@Override
-	public void fillModel(Model model) 
-	{
-		model.addAttribute("picturesURL",	PICTURES_URL);
-	}
+public class PictureModelFiller implements ModelFiller {
+
+    @Override
+    public Model fillModel(Model model) {
+        model.addAttribute("picturesURL", PICTURES_URL);
+        return model;
+    }
 }

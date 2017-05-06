@@ -2,6 +2,7 @@
 <#import "pageLanguage.ftl" as language/>
 
 <#macro addCreateEntityFunctionScript>
+
     <script type="application/javascript">
         function saveEntity(url, confirmSaveMessage) {
             bootbox.confirm(confirmSaveMessage, function (result) {

@@ -24,9 +24,10 @@ public class ManufacturerModelFiller implements ModelFiller {
     private SqlManufacturerRepository manufacturerRepository;
 
     @Override
-    public void fillModel(Model model) {
+    public Model fillModel(Model model) {
         model.addAttribute(MANUFACTURERS, this.manufacturerRepository.findAll());
         model.addAttribute("loadManufacturerLogoAction", LOAD_MANUFACTURER_LOGO.getName());
+        return model;
     }
 
     /**
@@ -35,10 +36,11 @@ public class ManufacturerModelFiller implements ModelFiller {
      * @param model
      * @param manufacturersPaginationDTO
      */
-    public void fillPaginatedModel(Model model, PaginationDTO manufacturersPaginationDTO) {
+    public Model fillPaginatedModel(Model model, PaginationDTO manufacturersPaginationDTO) {
         model.addAttribute(MANUFACTURERS_PER_PAGE_DATA, manufacturersPaginationDTO.getItemsPerPage());
         model.addAttribute(PAG_NUM_DATA, manufacturersPaginationDTO.getPagNum());
         model.addAttribute(MANUFACTURERS_PER_PAGE, MANUFACTURERS_PER_PAGE);
-        this.fillModel(model);
+        model = this.fillModel(model);
+        return model;
     }
 }

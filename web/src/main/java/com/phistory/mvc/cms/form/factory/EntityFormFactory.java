@@ -1,5 +1,7 @@
 package com.phistory.mvc.cms.form.factory;
 
+import com.phistory.mvc.cms.form.EditForm;
+
 /**
  * Creates new entities out of the data contained in entity forms and vice versa
  * 
@@ -8,21 +10,21 @@ package com.phistory.mvc.cms.form.factory;
  * @param <ENTITY> The entity type
  * @param <ENTITY_FORM> The entity form type
  */
-public interface EntityFormFactory<ENTITY, ENTITY_FORM>
+public interface EntityFormFactory<ENTITY, ENTITY_FORM extends EditForm>
 {
 	/**
-	 * Create a new entity form out of the data contained in an entity
+	 * Build a new entity form out of the data contained in an entity
 	 *  
 	 * @param entity 
 	 * @return The entity form created
 	 */
-	ENTITY_FORM createFormFromEntity(ENTITY entity);
+	ENTITY_FORM buildFormFromEntity(ENTITY entity);
 	
 	/**
-	 * Create a new entity out of the data contained in an entity form
+	 * Build a new entity out of the data contained in an entity form
 	 * 
 	 * @param entityForm
 	 * @return The entity created
 	 */
-	ENTITY createEntityFromForm(ENTITY_FORM entityForm);
+	ENTITY buildEntityFromForm(ENTITY_FORM entityForm);
 }

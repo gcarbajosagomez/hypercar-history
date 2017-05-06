@@ -158,7 +158,7 @@ function setupPictureGalleryPositionInputs() {
 
     //one iteration more for the default file chooser input
 	for(var i = 0; i <= pictureUploadBoxNum; i++) {
-        $("input[name='carForm.pictureFileEditCommands[" + i + "].picture.galleryPosition']").TouchSpin({
+        $("input[name='editForm.pictureFileEditCommands[" + i + "].picture.galleryPosition']").TouchSpin({
             verticalbuttons: true,
             verticalupclass: 'glyphicon glyphicon-plus',
             verticaldownclass: 'glyphicon glyphicon-minus'
@@ -214,20 +214,20 @@ function removeAllErrorMessages() {
 
 function createEngineFromDOM() {
     return {
-        'engineForm' : {
-            'id': $('#carForm\\.engineForm\\.id')[0].value,
-            'code': $('#carForm\\.engineForm\\.code')[0].value,
-            'size': $('#carForm\\.engineForm\\.size')[0].value,
-            'type': $('#carForm\\.engineForm\\.type')[0].value,
-            'cylinderDisposition': $('#carForm\\.engineForm\\.cylinderDisposition')[0].value,
-            'cylinderBankAngle': $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value,
-            'numberOfCylinders': $('#carForm\\.engineForm\\.numberOfCylinders')[0].value,
-            'numberOfValves': $('#carForm\\.engineForm\\.numberOfValves')[0].value,
-            'maxPower': $('#carForm\\.engineForm\\.maxPower')[0].value,
-            'maxRPM': $('#carForm\\.engineForm\\.maxRPM')[0].value,
-            'maxPowerRPM': $('#carForm\\.engineForm\\.maxPowerRPM')[0].value,
-            'maxTorque': $('#carForm\\.engineForm\\.maxTorque')[0].value,
-            'maxTorqueRPM': $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value,
+        'engineEditForm' : {
+            'id': $('#editForm\\.engineEditForm\\.id')[0].value,
+            'code': $('#editForm\\.engineEditForm\\.code')[0].value,
+            'size': $('#editForm\\.engineEditForm\\.size')[0].value,
+            'type': $('#editForm\\.engineEditForm\\.type')[0].value,
+            'cylinderDisposition': $('#editForm\\.engineEditForm\\.cylinderDisposition')[0].value,
+            'cylinderBankAngle': $('#editForm\\.engineEditForm\\.cylinderBankAngle')[0].value,
+            'numberOfCylinders': $('#editForm\\.engineEditForm\\.numberOfCylinders')[0].value,
+            'numberOfValves': $('#editForm\\.engineEditForm\\.numberOfValves')[0].value,
+            'maxPower': $('#editForm\\.engineEditForm\\.maxPower')[0].value,
+            'maxRPM': $('#editForm\\.engineEditForm\\.maxRPM')[0].value,
+            'maxPowerRPM': $('#editForm\\.engineEditForm\\.maxPowerRPM')[0].value,
+            'maxTorque': $('#editForm\\.engineEditForm\\.maxTorque')[0].value,
+            'maxTorqueRPM': $('#editForm\\.engineEditForm\\.maxTorqueRPM')[0].value,
         }
     };
 }

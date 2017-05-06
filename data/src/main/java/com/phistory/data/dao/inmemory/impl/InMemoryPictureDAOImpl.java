@@ -18,6 +18,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.*;
@@ -160,7 +161,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
      * @param carId
      * @return
      */
-    public Picture getCarPreview(Long carId) {
+    public Optional<Picture> getCarPreview(Long carId) {
         List<Picture> previewCandidates =
                 this.pictures.stream()
                              .filter(picture -> {

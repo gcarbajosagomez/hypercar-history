@@ -14,16 +14,22 @@ import static com.phistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
  */
 public abstract class AbstractCarListModelFiller implements ModelFiller {
 
+    @Override
+    public Model fillModel(Model model) {
+        return model;
+    }
+
     /**
      * Fill the supplied {@link Model} with paginated car data
      *
      * @param model
      * @param paginationDTO
      */
-    public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
+    public Model fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
         model.addAttribute(CARS_PER_PAGE_DATA,      paginationDTO.getItemsPerPage());
         model.addAttribute(PAG_NUM_DATA,            paginationDTO.getPagNum());
         model.addAttribute("paginationFirstResult", paginationDTO.getFirstResult());
         model.addAttribute("paginationLastResult",  paginationDTO.getLastResult());
+        return model;
     }
 }

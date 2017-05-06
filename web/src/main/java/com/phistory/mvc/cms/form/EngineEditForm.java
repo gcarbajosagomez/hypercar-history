@@ -17,7 +17,7 @@ import com.phistory.data.model.engine.EngineType;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EngineForm {
+public class EngineEditForm implements EditForm {
 
     private Long   id;
     private String code;
@@ -30,7 +30,8 @@ public class EngineForm {
 
     @NotNull(message = "The field must not be blank.")
     private EngineCylinderDisposition cylinderDisposition;
-    private Integer                   cylinderBankAngle;
+
+    private Integer cylinderBankAngle;
 
     @NotNull(message = "The field must not be blank.")
     private Integer numberOfCylinders;

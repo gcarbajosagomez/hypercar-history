@@ -7,19 +7,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.GenerationType.IDENTITY;
-import static org.hibernate.annotations.CascadeType.ALL;
 
 /**
  * @author Gonzalo
  */
 @Entity
 @Table(name = "brake_set",
-        uniqueConstraints = @UniqueConstraint(columnNames = {BrakeSet.FRONT_BRAKE_ID_FIELD, BrakeSet.REAR_BRAKE_ID_FIELD, BrakeSet.BRAKE_SET_CAR_ID_FIELD}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {
+                BrakeSet.FRONT_BRAKE_ID_FIELD,
+                BrakeSet.REAR_BRAKE_ID_FIELD,
+                BrakeSet.BRAKE_SET_CAR_ID_FIELD}))
 @JsonIgnoreProperties(value = {"car"})
 @Getter
 @Setter
@@ -36,13 +38,11 @@ public class BrakeSet implements GenericEntity {
     @Column(name = "brake_set_id")
     private Long id;
 
-    @OneToOne(orphanRemoval = true)
-    @Cascade(value = ALL)
+    @OneToOne(orphanRemoval = true, cascade = ALL)
     @JoinColumn(name = FRONT_BRAKE_ID_FIELD, unique = true)
     private Brake frontBrake;
 
-    @OneToOne(orphanRemoval = true)
-    @Cascade(value = ALL)
+    @OneToOne(orphanRemoval = true, cascade = ALL)
     @JoinColumn(name = REAR_BRAKE_ID_FIELD, unique = true)
     private Brake rearBrake;
 
@@ -53,10 +53,5 @@ public class BrakeSet implements GenericEntity {
     @Override
     public Long getId() {
         return id;
-    }
-
-    @Override
-    public String toString() {
-        return null;
     }
 }

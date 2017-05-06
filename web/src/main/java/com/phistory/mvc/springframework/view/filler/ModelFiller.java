@@ -4,16 +4,15 @@ import org.springframework.ui.Model;
 
 /**
  * Fills a Spring Framework {@link Model} with information
- * 
- * @author gonzalo
  *
+ * @author gonzalo
  */
-public interface ModelFiller
-{
-	/**
-	 * Fill the model with information
-	 * 
-	 * @param model
-	 */
-	 void fillModel(Model model);
+public interface ModelFiller {
+
+    /**
+     * Fill the model with information
+     *
+     * @param model
+     */
+    Model fillModel(Model model);
 }

@@ -16,35 +16,30 @@ import com.phistory.data.model.brake.BrakeSet;
 @Slf4j
 @Component
 public class BrakeSetFormFactory implements EntityFormFactory<BrakeSet, BrakeSetForm> {
-    /**
-     * Create a new BrakeSetForm out of the data contained in a BrakeSet
-     */
+
     @Override
-    public BrakeSetForm createFormFromEntity(BrakeSet brakeSet) {
+    public BrakeSetForm buildFormFromEntity(BrakeSet brakeSet) {
         try {
             return new BrakeSetForm(brakeSet.getId(),
                                     brakeSet.getFrontBrake(),
                                     brakeSet.getRearBrake(),
                                     brakeSet.getCar());
-        } catch (Exception ex) {
-            log.error(ex.toString(), ex);
+        } catch (Exception e) {
+            log.error(e.toString(), e);
         }
 
         return new BrakeSetForm();
     }
 
-    /**
-     * Create a new BrakeSet out of the data contained in a BrakeSetForm
-     */
     @Override
-    public BrakeSet createEntityFromForm(BrakeSetForm brakeSetForm) {
+    public BrakeSet buildEntityFromForm(BrakeSetForm brakeSetForm) {
         try {
             return new BrakeSet(brakeSetForm.getId(),
                                 brakeSetForm.getFrontBrake(),
                                 brakeSetForm.getRearBrake(),
                                 brakeSetForm.getCar());
-        } catch (Exception ex) {
-            log.error(ex.toString(), ex);
+        } catch (Exception e) {
+            log.error(e.toString(), e);
         }
 
         return new BrakeSet();

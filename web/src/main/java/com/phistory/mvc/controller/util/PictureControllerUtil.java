@@ -73,7 +73,8 @@ public class PictureControllerUtil extends BaseControllerData {
             }
             case LOAD_CAR_PREVIEW: {
                 if (command.getEntityId() != null) {
-                    return this.sqlPictureDAO.getCarPreview(command.getEntityId());
+                    return this.sqlPictureDAO.getCarPreview(command.getEntityId())
+                                             .orElse(null);
                 }
             }
             case LOAD_MANUFACTURER_LOGO: {
@@ -110,17 +111,15 @@ public class PictureControllerUtil extends BaseControllerData {
             }
             case LOAD_CAR_PREVIEW: {
                 if (carId != null) {
-                    Picture picture = this.inMemoryPictureDAO.getCarPreview(carId);
-                    if (picture == null) {
-                        picture = this.sqlPictureDAO.getCarPreview(pictureId);
-                    }
-                    return picture;
+                    return this.inMemoryPictureDAO.getCarPreview(carId)
+                                                  .orElseGet(() -> this.sqlPictureDAO.getCarPreview(pictureId)
+                                                                                     .orElse(null));
                 }
                 break;
             }
             case LOAD_MANUFACTURER_LOGO: {
                 if (command.getEntityId() != null) {
-                    return sqlPictureDAO.getManufacturerLogo(command.getEntityId());
+                    return this.sqlPictureDAO.getManufacturerLogo(command.getEntityId());
                 }
                 break;
             }

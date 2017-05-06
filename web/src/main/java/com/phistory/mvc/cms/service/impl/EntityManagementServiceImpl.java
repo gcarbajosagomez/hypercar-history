@@ -4,8 +4,8 @@ import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.phistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.phistory.data.dao.sql.SqlPictureDAO;
-import com.phistory.data.dao.sql.SqlCarInternetContentDAO;
+import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
+import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
@@ -21,25 +21,25 @@ import java.util.Objects;
  */
 @Component
 public class EntityManagementServiceImpl implements EntityManagementService {
-    private InMemoryCarDAO                inMemoryCarDAO;
-    private InMemoryPictureDAO            inMemoryPictureDAO;
-    private SqlPictureDAO                 sqlPictureDAO;
-    private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
-    private SqlCarInternetContentDAO      sqlCarInternetContentDAO;
-    private InMemoryManufacturerDAO       inMemoryManufacturerDAO;
+    private InMemoryCarDAO                  inMemoryCarDAO;
+    private InMemoryPictureDAO              inMemoryPictureDAO;
+    private SqlPictureRepository            sqlPictureRepository;
+    private InMemoryCarInternetContentDAO   inMemoryCarInternetContentDAO;
+    private SqlCarInternetContentRepository sqlCarInternetContentRepository;
+    private InMemoryManufacturerDAO         inMemoryManufacturerDAO;
 
     @Inject
     public EntityManagementServiceImpl(InMemoryCarDAO inMemoryCarDAO,
                                        InMemoryPictureDAO inMemoryPictureDAO,
-                                       SqlPictureDAO sqlPictureDAO,
+                                       SqlPictureRepository sqlPictureRepository,
                                        InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
-                                       SqlCarInternetContentDAO sqlCarInternetContentDAO,
+                                       SqlCarInternetContentRepository sqlCarInternetContentRepository,
                                        InMemoryManufacturerDAO inMemoryManufacturerDAO) {
         this.inMemoryCarDAO = inMemoryCarDAO;
         this.inMemoryPictureDAO = inMemoryPictureDAO;
-        this.sqlPictureDAO = sqlPictureDAO;
+        this.sqlPictureRepository = sqlPictureRepository;
         this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
-        this.sqlCarInternetContentDAO = sqlCarInternetContentDAO;
+        this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
         this.inMemoryManufacturerDAO = inMemoryManufacturerDAO;
     }
 
@@ -61,7 +61,7 @@ public class EntityManagementServiceImpl implements EntityManagementService {
                 break;
             case RELOAD_PICTURES:
                 if (Objects.nonNull(carId)) {
-                    List<Picture> picturesToReload = this.sqlPictureDAO.getByCarId(carId);
+                    List<Picture> picturesToReload = this.sqlPictureRepository.getByCarId(carId);
                     picturesToReload.forEach(picture -> this.inMemoryPictureDAO.loadEntityFromDB(picture.getId()));
                 } else {
                     this.inMemoryPictureDAO.loadEntitiesFromDB();
@@ -72,7 +72,7 @@ public class EntityManagementServiceImpl implements EntityManagementService {
                 break;
             case RELOAD_CAR_INTERNET_CONTENTS:
                 if (Objects.nonNull(carId)) {
-                    List<CarInternetContent> contentsToReload = this.sqlCarInternetContentDAO.getByCarId(carId);
+                    List<CarInternetContent> contentsToReload = this.sqlCarInternetContentRepository.getByCarId(carId);
                     contentsToReload.forEach(content -> this.inMemoryCarInternetContentDAO.loadEntityFromDB(content.getId()));
                 } else {
                     this.inMemoryCarInternetContentDAO.loadEntitiesFromDB();

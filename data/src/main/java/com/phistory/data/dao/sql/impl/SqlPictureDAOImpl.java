@@ -17,20 +17,21 @@ import javax.persistence.Query;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
+import java.util.Optional;
 
+import static com.phistory.data.dao.sql.impl.SqlPictureDAOImpl.SQL_PICTURE_DAO;
 import static com.phistory.data.model.GenericEntity.ID_FIELD;
-import static com.phistory.data.model.picture.Picture.CAR_ID_PROPERTY_NAME;
 
 /**
  * @author Gonzalo
  */
 @Transactional
-@Component("pictureDAO")
+@Component(SQL_PICTURE_DAO)
 @Slf4j
 public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPictureDAO {
 
     private SqlPictureRepository sqlPictureRepository;
-    private PictureUtil pictureUtil;
+    private PictureUtil          pictureUtil;
 
     @Inject
     public SqlPictureDAOImpl(EntityManager entityManager,
@@ -42,27 +43,8 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
     }
 
     @Override
-    public List<Picture> getByCarId(Long carId) {
-        Query query = super.getEntityManager()
-                           .createQuery("FROM Picture AS picture"
-                                        + " WHERE picture.car.id = :carId"
-                                        + " ORDER BY picture.galleryPosition ASC");
-
-        query.setParameter(CAR_ID_PROPERTY_NAME, carId);
-
-        return query.getResultList();
-    }
-
-    @Override
-    public Picture getCarPreview(Long carId) {
-        Query query = super.getEntityManager()
-                           .createQuery("FROM Picture AS picture"
-                                        + " WHERE picture.car.id = :carId"
-                                        + " AND picture.eligibleForPreview = true");
-
-        query.setParameter(CAR_ID_PROPERTY_NAME, carId);
-        List<Picture> previewCandidates = query.getResultList();
-
+    public Optional<Picture> getCarPreview(Long carId) {
+        List<Picture> previewCandidates = this.sqlPictureRepository.getCarPreviews(carId);
         return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }
 
@@ -71,9 +53,9 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
         Picture picture = new Picture();
 
         Query query = super.getEntityManager()
-                           .createQuery("SELECT manufacturer.logo"
-                                        + " FROM Manufacturer AS manufacturer"
-                                        + " WHERE manufacturer.id = :manufacturerId");
+                           .createQuery("SELECT manufacturer.logo " +
+                                        "FROM Manufacturer AS manufacturer " +
+                                        "WHERE manufacturer.id = :manufacturerId");
 
         query.setParameter("manufacturerId", manufacturerId);
         picture.setImage((Blob) query.getSingleResult());
@@ -98,10 +80,10 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
         // we need to detach the picture from the persistence context so that when there are 2 pictures for
         // the same car with the same galleryPosition they don't try to override each other
         entityManager.detach(picture);
-        Query query = entityManager.createQuery("UPDATE Picture"
-                                                + " SET galleryPosition = :galleryPosition"
-                                                + " WHERE id = :id"
-                                                + " AND car = :car");
+        Query query = entityManager.createQuery("UPDATE Picture " +
+                                                "SET galleryPosition = :galleryPosition " +
+                                                "WHERE id = :id " +
+                                                "AND car = :car");
 
         query.setParameter("galleryPosition", picture.getGalleryPosition());
         query.setParameter(ID_FIELD, picture.getId());
@@ -112,8 +94,8 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
     @Override
     public List<Picture> getPaginated(int firstResult, int limit) {
         Query query = super.getEntityManager()
-                           .createQuery("FROM Picture AS picture"
-                                        + " ORDER BY picture.id");
+                           .createQuery("FROM Picture AS picture " +
+                                        "ORDER BY picture.id");
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);

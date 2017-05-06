@@ -25,13 +25,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @Slf4j
 @Controller
 @RequestMapping(value = {"/", INDEX_URL},
-                method = {GET, HEAD})
+        method = {GET, HEAD})
 public class IndexController extends BaseController {
     private static final int MAX_NUMBER_PICTURES_TO_DISPLAY = 9;
 
     private ModelFiller pictureModelFiller;
     private ModelFiller carModelFiller;
-    private Random previewPictureRandomGenerator;
+    private Random      previewPictureRandomGenerator;
 
     @Inject
     public IndexController(ModelFiller pictureModelFiller,
@@ -74,16 +74,15 @@ public class IndexController extends BaseController {
             randomPictureIds = this.generateRandomPictureIdsList(pictureIds);
         }
 
-        randomPictureIds.forEach(pictureId ->
-        {
+        randomPictureIds.forEach(pictureId -> {
             Car car = super.getInMemoryCarDAO().getCarByPictureId(pictureId);
-            StringBuilder pictureDescription = new StringBuilder(car.getManufacturer().toString())
-                    .append(" ")
-                    .append(car.getModel());
+            String pictureDescription = new StringBuilder().append(car.getManufacturer().toString())
+                                                           .append(" ")
+                                                           .append(car.getModel())
+                                                           .toString();
 
-            carNamesToPictureIds.put(pictureDescription.toString(), pictureId);
+            carNamesToPictureIds.put(pictureDescription, pictureId);
         });
-
 
         return carNamesToPictureIds.asMap();
     }

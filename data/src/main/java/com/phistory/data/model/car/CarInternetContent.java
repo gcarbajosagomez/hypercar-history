@@ -11,6 +11,7 @@ import org.joda.time.DateTime;
 import javax.persistence.*;
 
 import static com.phistory.data.model.car.Car.CAR_ID_FIELD;
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.*;
 
@@ -24,7 +25,10 @@ import static javax.persistence.GenerationType.*;
  */
 @Entity
 @Table(name = CarInternetContent.CAR_INTERNET_CONTENT_TABLE_NAME,
-        uniqueConstraints = @UniqueConstraint(columnNames = {CAR_ID_FIELD, CarInternetContent.CAR_INTERNET_CONTENT_LINK_FIELD}))
+        uniqueConstraints = @UniqueConstraint(columnNames = {
+                CAR_ID_FIELD,
+                CarInternetContent.CAR_INTERNET_CONTENT_LINK_FIELD
+        }))
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,7 +57,7 @@ public class CarInternetContent implements GenericEntity {
     @Column(name = "content_language", nullable = false)
     private Language contentLanguage;
 
-    @ManyToOne
+    @ManyToOne(cascade = PERSIST)
     @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 
@@ -64,12 +68,13 @@ public class CarInternetContent implements GenericEntity {
 
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder(this.link).append(" ")
-                                                                  .append(this.type)
-                                                                  .append(" (")
-                                                                  .append(this.contentLanguage.getName())
-                                                                  .append(")");
-        return stringBuilder.toString();
+        return new StringBuilder().append(this.link)
+                                  .append(" ")
+                                  .append(this.type)
+                                  .append(" (")
+                                  .append(this.contentLanguage.getName())
+                                  .append(")")
+                                  .toString();
     }
 
     //method needed for SQL projected query

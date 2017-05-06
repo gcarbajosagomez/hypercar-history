@@ -1,8 +1,12 @@
 package com.phistory.data.dao.sql;
 
 import com.phistory.data.model.car.CarInternetContent;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 
@@ -13,4 +17,9 @@ import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTE
 public interface SqlCarInternetContentRepository extends CrudRepository<CarInternetContent, Long> {
 
     String CAR_INTERNET_CONTENT_REPOSITORY = "carInternetContentRepository";
+
+    @Query("SELECT carInternetContent " +
+           "FROM CarInternetContent carInternetContent JOIN carInternetContent.car car " +
+           "WHERE car.id = :carId")
+    List<CarInternetContent> getByCarId(@Param("carId") Long carId);
 }

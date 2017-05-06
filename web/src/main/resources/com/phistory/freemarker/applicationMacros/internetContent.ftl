@@ -4,12 +4,12 @@
 
     <script type="application/javascript">
         function addInternetContent() {
-            var internetContentNum = $("input[id^=carInternetContentForms][id$=link").length;
+            var internetContentNum = $("input[id^=editForms][id$=link").length;
             var newInternetContentCarFormIdHiddenInput = $('<input>', {
                 'type': 'hidden',
-                'id': 'carInternetContentForms' + internetContentNum + '.car',
-                'name': 'carInternetContentForms[' + internetContentNum + '].car',
-                'value': '<#if CEFC.carForm.id??>${CEFC.carForm.id}</#if>'
+                'id': 'editForms' + internetContentNum + '.car',
+                'name': 'editForms[' + internetContentNum + '].car',
+                'value': '<#if CEFC.editForm.id??>${CEFC.editForm.id}</#if>'
             });
 
             var newInternetContentWellDiv = $('<div>', {'class': 'well well-lg'});
@@ -21,8 +21,8 @@
             newInternetContentLinkDd.append(newInternetContentCarFormIdHiddenInput);
             newInternetContentLinkDd.append($('<input>', {
                 'type': 'text',
-                'id': 'carInternetContentForms' + internetContentNum + '.link',
-                'name': 'carInternetContentForms[' + internetContentNum + '].link',
+                'id': 'editForms' + internetContentNum + '.link',
+                'name': 'editForms[' + internetContentNum + '].link',
                 'class': 'form-control'
             }));
 
@@ -33,8 +33,8 @@
             newInternetContentDl.append(newInternetContentTypeDt);
             var newInternetContentTypeDd = $('<dd>');
             var newInternetContentTypeSelect = $('<select>', {
-                'id': 'carInternetContentForms' + internetContentNum + '.type',
-                'name': 'carInternetContentForms[' + internetContentNum + '].type',
+                'id': 'editForms' + internetContentNum + '.type',
+                'name': 'editForms[' + internetContentNum + '].type',
                 'class': 'form-control'
             });
 
@@ -50,8 +50,8 @@
             newInternetContentDl.append(newInternetContentLanguageDt);
             var newInternetContentLanguageDd = $('<dd>');
             var newInternetContentLanguageSelect = $('<select>', {
-                'id': 'carInternetContentForms' + internetContentNum + '.contentLanguage',
-                'name': 'carInternetContentForms[' + internetContentNum + '].contentLanguage',
+                'id': 'editForms' + internetContentNum + '.contentLanguage',
+                'name': 'editForms[' + internetContentNum + '].contentLanguage',
                 'class': 'form-control'
             });
 

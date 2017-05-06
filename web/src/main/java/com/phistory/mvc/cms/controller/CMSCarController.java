@@ -1,9 +1,12 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.car.Car;
-import com.phistory.mvc.cms.command.CarFormEditCommand;
-import com.phistory.mvc.cms.command.CarInternetContentEditCommand;
+import com.phistory.mvc.cms.command.EditFormCommand;
+import com.phistory.mvc.cms.command.CarEditFormCommand;
+import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
+import com.phistory.mvc.cms.form.CarEditForm;
+import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.controller.CarListController;
@@ -24,8 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
@@ -44,7 +47,7 @@ public class CMSCarController extends CMSBaseController {
     private ModelFiller                carModelFiller;
     private ModelFiller                pictureModelFiller;
     private CarEditModelFiller         carEditModelFiller;
-    private AbstractCarListModelFiller sqlCarsListModelFiller;
+    private AbstractCarListModelFiller sqlCarListModelFiller;
     private CMSCarControllerUtil       cmsCarControllerUtil;
     private CarControllerUtil          carControllerUtil;
 
@@ -53,14 +56,14 @@ public class CMSCarController extends CMSBaseController {
                             ModelFiller carModelFiller,
                             ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
-                            AbstractCarListModelFiller sqlCarsListModelFiller,
+                            AbstractCarListModelFiller sqlCarListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
                             CarControllerUtil carControllerUtil) {
         this.carListController = carListController;
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carEditModelFiller = carEditModelFiller;
-        this.sqlCarsListModelFiller = sqlCarsListModelFiller;
+        this.sqlCarListModelFiller = sqlCarListModelFiller;
         this.cmsCarControllerUtil = cmsCarControllerUtil;
         this.carControllerUtil = carControllerUtil;
     }
@@ -69,7 +72,7 @@ public class CMSCarController extends CMSBaseController {
     public ModelAndView handleCarsList(Model model,
                                        PaginationDTO paginationDTO) {
         try {
-            this.carControllerUtil.fillCarListModel(this.sqlCarsListModelFiller, model, paginationDTO);
+            this.carControllerUtil.fillCarListModel(this.sqlCarListModelFiller, model, paginationDTO);
             return new ModelAndView();
         } catch (Exception e) {
             log.error(e.toString(), e);
@@ -80,14 +83,14 @@ public class CMSCarController extends CMSBaseController {
     @RequestMapping(value = {"/" + PAGINATION_URL},
             method = GET)
     @ResponseBody
-    public Map<String, Object> handlePagination(Model model, PaginationDTO paginationDTO) {
+    public PaginationDTO handlePagination(Model model, PaginationDTO paginationDTO) {
         return this.carListController.handlePagination(model, paginationDTO);
     }
 
     @RequestMapping(value = EDIT_URL,
             method = GET)
     public ModelAndView handleNewCar(Model model,
-                                     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand) {
+                                     @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand) {
         try {
             this.fillModel(model, carFormEditCommand);
             return new ModelAndView(CAR_EDIT_VIEW_NAME);
@@ -102,36 +105,46 @@ public class CMSCarController extends CMSBaseController {
     @RequestMapping(value = SAVE_URL,
             method = POST)
     public ModelAndView handleSaveNewCar(Model model,
-                                         @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) CarFormEditCommand carFormEditCommand,
+                                         @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
                                          BindingResult carFormEditCommandResult,
-                                         @Valid @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditCommand carInternetContentEditCommand,
-                                         BindingResult carInternetContentEditCommandResult) {
+                                         @Valid @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditFormCommand,
+                                         BindingResult carInternetContentEditFormCommandResult) {
         try {
             if (!carFormEditCommandResult.hasErrors()) {
-                Car car = this.cmsCarControllerUtil.saveOrEditCar(carFormEditCommand);
-                String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                                      new Object[] {car.toString()},
-                                                                      LocaleContextHolder.getLocale());
+                this.cmsCarControllerUtil.saveOrEditCar(carFormEditCommand).ifPresent(car -> {
+                    String successMessage = getMessageSource().getMessage(ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY,
+                                                                          new Object[] {car.toString()},
+                                                                          LocaleContextHolder.getLocale());
 
-                if (!carInternetContentEditCommandResult.hasErrors()) {
-                    List<CarInternetContentForm> enrichedCarInternetContentForms =
-                            this.enrichCarInternetContentForms(carInternetContentEditCommand.getCarInternetContentForms(),
-                                                               car);
+                    if (!carInternetContentEditFormCommandResult.hasErrors()) {
+                        List<CarInternetContentForm> enrichedCarInternetContentForms =
+                                this.enrichCarInternetContentForms(carInternetContentEditFormCommand.getEditForms(),
+                                                                   car);
 
-                    carInternetContentEditCommand.setCarInternetContentForms(enrichedCarInternetContentForms);
+                        carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
 
-                    this.cmsCarControllerUtil.saveOrEditCarInternetContents(carInternetContentEditCommand);
-                }
-                this.cmsCarControllerUtil.reloadCarAndPictureDBEntities(car.getId());
-                model.addAttribute(SUCCESS_MESSAGE, successMessage);
+                        try {
+                            this.cmsCarControllerUtil.saveOrEditCarInternetContents(carInternetContentEditFormCommand);
+                        } catch (Exception e) {
+                            log.error("There was an error while editing car with model: {}",
+                                      ((CarEditForm) carFormEditCommand.getEditForm()).getModel(),
+                                      e);
+                            model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+                        }
+                    }
+                    this.cmsCarControllerUtil.reloadCarAndPictureDBEntities(car.getId());
+                    model.addAttribute(SUCCESS_MESSAGE, successMessage);
+                });
             } else {
-                String errorMessage = getMessageSource()
-                        .getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY, null, LocaleContextHolder.getLocale());
+                String errorMessage = super.getMessageSource().getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY,
+                                                                          new Object[] {},
+                                                                          LocaleContextHolder.getLocale());
                 model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
             }
         } catch (Exception e) {
-            log.error("There was an error while trying to save new car with model: {}",
-                      carFormEditCommand.getCarForm().getModel(), e);
+            log.error("There was an error while saving new car with model: {}",
+                      ((CarEditForm) carFormEditCommand.getEditForm()).getModel(),
+                      e);
             model.addAttribute(EXCEPTION_MESSAGE, e.toString());
         } finally {
             this.fillModel(model, carFormEditCommand);
@@ -150,9 +163,14 @@ public class CMSCarController extends CMSBaseController {
                                       .collect(Collectors.toList());
     }
 
+    @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
+    public EditFormCommand createCarEditFormCommand() {
+        return new CarEditFormCommand();
+    }
+
     @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
-    public CarInternetContentEditCommand createCarInternetContentEditFormCommand() {
-        return new CarInternetContentEditCommand();
+    public CarInternetContentEditFormCommand createCarInternetContentEditFormCommand() {
+        return new CarInternetContentEditFormCommand();
     }
 
     /**
@@ -161,9 +179,11 @@ public class CMSCarController extends CMSBaseController {
      * @param model
      * @param carFormEditCommand
      */
-    private void fillModel(Model model, CarFormEditCommand carFormEditCommand) {
-        this.carModelFiller.fillModel(model);
-        this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
-        this.pictureModelFiller.fillModel(model);
+    @Override
+    protected Model fillModel(Model model, EditFormCommand carFormEditCommand) {
+        model = this.carModelFiller.fillModel(model);
+        model = this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
+        model = this.pictureModelFiller.fillModel(model);
+        return model;
     }
 }

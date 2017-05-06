@@ -1,7 +1,10 @@
 package com.phistory.data.dao.sql;
 
 import com.phistory.data.model.car.Car;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
@@ -13,4 +16,8 @@ import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
 public interface SqlCarRepository extends CrudRepository<Car, Long> {
 
     String CAR_REPOSITORY = "carRepository";
+
+    @Modifying
+    @Query("DELETE FROM Car car WHERE car.id = :carId")
+    void delete(@Param("carId") Long carId);
 }

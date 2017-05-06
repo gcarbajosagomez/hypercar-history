@@ -9,29 +9,37 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.phistory.data.dao.sql.SqlCarDAO.SQL_CAR_DAO;
 import static com.phistory.mvc.controller.BaseControllerData.CARS;
+import static com.phistory.mvc.springframework.view.filler.sql.SqlCarListModelFiller.SQL_CAR_LIST_MODEL_FILLER;
 
 /**
  * SQL implementation of a {@link AbstractCarListModelFiller}
- *
+ * <p>
  * Created by gonzalo on 11/9/16.
  */
-@Component
+@Component(value = SQL_CAR_LIST_MODEL_FILLER)
 public class SqlCarListModelFiller extends AbstractCarListModelFiller {
 
-    @Inject
+    public static final String SQL_CAR_LIST_MODEL_FILLER = "sqlCarListModelFiller";
+
     private SqlDAO sqlCarDAO;
 
-    @Override
-    public void fillModel(Model model) {}
+    @Inject
+    public SqlCarListModelFiller(@Named(SQL_CAR_DAO) SqlDAO sqlCarDAO) {
+        this.sqlCarDAO = sqlCarDAO;
+    }
 
     @Override
-    public void fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
-        super.fillPaginatedModel(model, paginationDTO);
-        model.addAttribute(CARS, this.sqlCarDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
+    public Model fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
+        model = super.fillPaginatedModel(model, paginationDTO);
+        model.addAttribute(CARS,
+                           this.sqlCarDAO.getByCriteria(this.createSearchCommand(paginationDTO)));
+        return model;
     }
 
     /**
@@ -40,8 +48,7 @@ public class SqlCarListModelFiller extends AbstractCarListModelFiller {
      * @param paginationDTO
      * @return
      */
-    private SearchCommand createSearchCommand(PaginationDTO paginationDTO)
-    {
+    private SearchCommand createSearchCommand(PaginationDTO paginationDTO) {
         Map<String, Boolean> orderByMap = new HashMap<>();
         orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
 

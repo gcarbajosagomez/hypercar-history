@@ -1,13 +1,12 @@
 package com.phistory.mvc.controller.util;
 
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
+import com.phistory.data.model.car.CarInternetContent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import com.phistory.data.model.car.CarInternetContent;
+import java.net.URL;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Set of utilities for {@link CarInternetContent}
@@ -26,18 +25,17 @@ public class CarInternetContentUtils {
      * @return A {@link List<String>} with the Youtube video ids
      */
     public List<String> extractYoutubeVideoIds(List<CarInternetContent> carInternetContents) {
-        List<String> processedList = new ArrayList<>();
-        carInternetContents.stream()
-                           .filter(content -> content.getLink().contains(YOUTUBE_BASE_URL))
-                           .forEach(content -> {
-                               try {
-                                   URL youtubeURL = new URL(content.getLink());
-                                   String videoId = youtubeURL.getQuery().replace("v=", "");
-                                   processedList.add(videoId);
-                               } catch (Exception e) {
-                                   log.error(e.toString(), e);
-                               }
-                            });
-        return processedList;
+        return carInternetContents.stream()
+                                  .filter(content -> content.getLink().contains(YOUTUBE_BASE_URL))
+                                  .map(content -> {
+                                      try {
+                                          URL youtubeURL = new URL(content.getLink());
+                                          String videoId = youtubeURL.getQuery().replace("v=", "");
+                                          return videoId;
+                                      } catch (Exception e) {
+                                          log.error(e.toString(), e);
+                                          return null;
+                                      }
+                                  }).collect(Collectors.toList());
     }
 }

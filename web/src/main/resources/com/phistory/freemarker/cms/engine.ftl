@@ -23,7 +23,7 @@
         $('#engine-code-selection-table').addClass('sr-only');
         $('#engine-id-dt').addClass('sr-only');
         $('#engine-id-dd').addClass('sr-only');
-        $('#engine-save-or-edit-link').attr("onClick", "saveEntity('<@spring.url "/${cmsContext}${engineURL}/${saveURL}"/>', '${language.getTextSource('engine.confirmSave')}')");
+        $('#engine-save-or-edit-link').attr("onClick", "saveEngine()");
         $('#engine-save-or-edit-span').text(" ${language.getTextSource('cms.saveEngine')}");
     }
 </script>
@@ -70,96 +70,97 @@
 
         if (engine) {
             if (engine.id) {
-                $('#carForm\\.engineForm\\.id\\.label')[0].innerText = engine.id;
-                $('#carForm\\.engineForm\\.id')[0].value = engine.id;
+                $('#editForm\\.engineEditForm\\.id\\.label')[0].innerText = engine.id;
+                $('#editForm\\.engineEditForm\\.id')[0].value = engine.id;
             }
             else {
-                $('#carForm\\.engineForm\\.id\\.label')[0].innerText = "";
-                $('#carForm\\.engineForm\\.id')[0].value = "";
+                $('#editForm\\.engineEditForm\\.id\\.label')[0].innerText = "";
+                $('#editForm\\.engineEditForm\\.id')[0].value = "";
+                $('#load-engine-by-id-select')[0].value = "";
             }
 
             if (engine.code) {
-                $('#carForm\\.engineForm\\.code')[0].value = engine.code;
+                $('#editForm\\.engineEditForm\\.code')[0].value = engine.code;
             }
             else {
-                $('#carForm\\.engineForm\\.code')[0].value = "";
+                $('#editForm\\.engineEditForm\\.code')[0].value = "";
             }
 
             if (engine.type) {
-                $('#carForm\\.engineForm\\.type')[0].value = engine.type;
+                $('#editForm\\.engineEditForm\\.type')[0].value = engine.type;
             }
             else {
-                $('#carForm\\.engineForm\\.type')[0].value = "";
+                $('#editForm\\.engineEditForm\\.type')[0].value = "";
             }
 
             if (engine.cylinderDisposition) {
-                $('#carForm\\.engineForm\\.cylinderDisposition')[0].value = engine.cylinderDisposition;
+                $('#editForm\\.engineEditForm\\.cylinderDisposition')[0].value = engine.cylinderDisposition;
             }
             else {
-                $('#carForm\\.engineForm\\.cylinderDisposition')[0].value = "";
+                $('#editForm\\.engineEditForm\\.cylinderDisposition')[0].value = "";
             }
 
             if (engine.cylinderBankAngle) {
-                $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value = engine.cylinderBankAngle;
+                $('#editForm\\.engineEditForm\\.cylinderBankAngle')[0].value = engine.cylinderBankAngle;
             }
             else {
-                $('#carForm\\.engineForm\\.cylinderBankAngle')[0].value = "";
+                $('#editForm\\.engineEditForm\\.cylinderBankAngle')[0].value = "";
             }
 
             if (engine.numberOfCylinders) {
-                $('#carForm\\.engineForm\\.numberOfCylinders')[0].value = engine.numberOfCylinders;
+                $('#editForm\\.engineEditForm\\.numberOfCylinders')[0].value = engine.numberOfCylinders;
             }
             else {
-                $('#carForm\\.engineForm\\.numberOfCylinders')[0].value = "";
+                $('#editForm\\.engineEditForm\\.numberOfCylinders')[0].value = "";
             }
 
             if (engine.numberOfValves) {
-                $('#carForm\\.engineForm\\.numberOfValves')[0].value = engine.numberOfValves;
+                $('#editForm\\.engineEditForm\\.numberOfValves')[0].value = engine.numberOfValves;
             }
             else {
-                $('#carForm\\.engineForm\\.numberOfValves')[0].value = "";
+                $('#editForm\\.engineEditForm\\.numberOfValves')[0].value = "";
             }
 
             if (engine.size) {
-                $('#carForm\\.engineForm\\.size')[0].value = engine.size;
+                $('#editForm\\.engineEditForm\\.size')[0].value = engine.size;
             }
             else {
-                $('#carForm\\.engineForm\\.size')[0].value = "";
+                $('#editForm\\.engineEditForm\\.size')[0].value = "";
             }
 
             if (engine.maxPower) {
-                $('#carForm\\.engineForm\\.maxPower')[0].value = engine.maxPower;
+                $('#editForm\\.engineEditForm\\.maxPower')[0].value = engine.maxPower;
             }
             else {
-                $('#carForm\\.engineForm\\.maxPower')[0].value = "";
+                $('#editForm\\.engineEditForm\\.maxPower')[0].value = "";
             }
 
             if (engine.maxRPM) {
-                $('#carForm\\.engineForm\\.maxRPM')[0].value = engine.maxRPM;
+                $('#editForm\\.engineEditForm\\.maxRPM')[0].value = engine.maxRPM;
             }
             else {
-                $('#carForm\\.engineForm\\.maxRPM')[0].value = "";
+                $('#editForm\\.engineEditForm\\.maxRPM')[0].value = "";
             }
 
             if (engine.maxPowerRPM) {
-                $('#carForm\\.engineForm\\.maxPowerRPM')[0].value = engine.maxPowerRPM;
+                $('#editForm\\.engineEditForm\\.maxPowerRPM')[0].value = engine.maxPowerRPM;
             }
             else {
-                $('#carForm\\.engineForm\\.maxPowerRPM')[0].value = "";
+                $('#editForm\\.engineEditForm\\.maxPowerRPM')[0].value = "";
             }
 
             if (engine.maxTorque) {
-                $('#carForm\\.engineForm\\.maxTorque')[0].value = engine.maxTorque;
+                $('#editForm\\.engineEditForm\\.maxTorque')[0].value = engine.maxTorque;
             }
             else {
-                $('#carForm\\.engineForm\\.maxTorque')[0].value = "";
+                $('#editForm\\.engineEditForm\\.maxTorque')[0].value = "";
             }
 
             if (engine.maxTorqueRPM) {
-                $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value = engine.maxTorqueRPM;
+                $('#editForm\\.engineEditForm\\.maxTorqueRPM')[0].value = engine.maxTorqueRPM;
             }
             else {
-                $('#carForm\\.engineForm\\.maxTorqueRPM')[0].value = "";
+                $('#editForm\\.engineEditForm\\.maxTorqueRPM')[0].value = "";
             }
         }
     }
@@ -170,7 +171,7 @@
 
 <script type="application/javascript">
     function saveEngine() {
-        var engine = createEngineFromDOM();
+        var engineEditFormCommand = createEngineFromDOM();
 
         bootbox.confirm("${language.getTextSource('engine.confirmSave')}", function (result) {
             //OK button
@@ -178,7 +179,7 @@
                 $.ajax({
                     url: '/${cmsContext}${engineURL}/${saveURL}',
                     type: 'POST',
-                    data: JSON.stringify(engine),
+                    data: JSON.stringify(engineEditFormCommand),
                     contentType: 'application/json; charset=UTF-8',
                     beforeSend: function (xhr) {
                         <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
@@ -198,15 +199,15 @@
 
 <script type="application/javascript">
     function editEngine(engineId) {
-        var engine = createEngineFromDOM();
+        var engineEditFormCommand = createEngineFromDOM();
 
         bootbox.confirm("${language.getTextSource('engine.confirmEdit')}", function (result) {
             //OK button
             if (result == true) {
                 $.ajax({
                     url: '/${cmsContext}${engineURL}/' + engineId + '/${editURL}',
-                    type: 'POST',
-                    data: JSON.stringify(engine),
+                    type: 'PUT',
+                    data: JSON.stringify(engineEditFormCommand),
                     contentType: 'application/json; charset=UTF-8',
                     beforeSend: function (xhr) {
                         <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>

@@ -1,7 +1,11 @@
 package com.phistory.mvc.dto;
 
+import com.phistory.data.model.GenericEntity;
+import com.phistory.data.model.car.Car;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * DTO class that transports pagination data
@@ -11,12 +15,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class PaginationDTO {
+
     public static final Integer ITEMS_PER_PAGE_DEFAULT_VALUE = 8;
+
     private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
 
-    private Integer pagNum = PAG_NUM_DEFAULT_VALUE;
+    private Integer pagNum       = PAG_NUM_DEFAULT_VALUE;
     private Integer itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
-    private int     firstResult;
+    private Integer             firstResult;
+    private List<GenericEntity> items;
 
     public PaginationDTO(Integer pagNum, Integer itemsPerPage) {
         this.pagNum = pagNum;

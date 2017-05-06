@@ -3,8 +3,8 @@
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 
-<#if MEFC.manufacturerForm.id??>
-	<#assign title>${MEFC.manufacturerForm.name}</#assign>
+<#if MEFC.editForm.id??>
+	<#assign title>${MEFC.editForm.name}</#assign>
 <#else>
 	<#assign title>${language.getTextSource('manufacturer.newManufacturer')}</#assign>
 </#if>
@@ -12,25 +12,25 @@
 <@generic.startPage title/>
 
 <div id="main-container" class="container">
-	<div class="row">		
+	<div class="row">
 		<@crudOperations.addOperationResultMessage exceptionMessage!"", successMessage!""/>
 	  	<div class="col-lg-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
-					<h3 class="text-left"><#if MEFC.manufacturerForm.id??>${MEFC.manufacturerForm.name}<#else>${language.getTextSource('manufacturer')}</#if></h3>
-						
-					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.manufacturerForm.id??>
+					<h3 class="text-left"><#if MEFC.editForm.id??>${MEFC.editForm.name}<#else>${language.getTextSource('manufacturer')}</#if></h3>
+
+					<input id="save-manufacturer-button" type="button" class="btn btn-success" value="<#if MEFC.editForm.id??>
 					                                                                                        ${language.getTextSource('cms.editManufacturer')}
 					                                                                                  <#else>
 					                                                                                        ${language.getTextSource('cms.saveManufacturer')}
 					                                                                                  </#if>"
-                                                                                               onClick="<#if MEFC.manufacturerForm.id??>
-                                                                                                            editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
+                                                                                               onClick="<#if MEFC.editForm.id??>
+                                                                                                            editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
                                                                                                         <#else>
                                                                                                             saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
                                                                                                         </#if>"/>
-					<#if MEFC.manufacturerForm.id??>
-                        <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.manufacturerForm.id}/${deleteURL}"/>',
+					<#if MEFC.editForm.id??>
+                        <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${deleteURL}"/>',
 																		'${language.getTextSource('manufacturer.confirmDelete')}');">
                             <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteManufacturer')}
 						</a>
@@ -41,52 +41,52 @@
 			   </div>
 			   <div class="panel-body">
 			   	   <dl class="dl-horizontal dl-horizontal-edit text-left">
-          		   	  <#if MEFC.manufacturerForm.id??>
-            			  <dt>          
+          		   	  <#if MEFC.editForm.id??>
+            			  <dt>
                 			  ${language.getTextSource('id')}
                 		  </dt>
                 		  <dd>
-							  <h5 class="text-muted">${MEFC.manufacturerForm.id}</h5>
-                			  <@spring.formHiddenInput "MEFC.manufacturerForm.id", ""/>
+							  <h5 class="entity-id text-muted">${MEFC.editForm.id}</h5>
+                			  <@spring.formHiddenInput "MEFC.editForm.id", ""/>
 						  </dd>
           		      </#if>
           			  <dt>
                			   <@spring.message 'manufacturer.name'/>
                 	  </dt>
-               		  <dd> 
-						   <@spring.formInput "MEFC.manufacturerForm.name", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>'/>  
+               		  <dd>
+						   <@spring.formInput "MEFC.editForm.name", "class=form-control", "text"/>
+                           <@spring.showErrors '<br>'/>
                		  </dd>
           			  <dt>
              			   ${language.getTextSource('manufacturer.nationality')}
-               		  </dt>                
+               		  </dt>
                		  <dd>
-                   		   <@spring.formInput "MEFC.manufacturerForm.nationality", "class=form-control", "text"/>
-                   		   <@spring.showErrors '<br>'/> 
+                   		   <@spring.formInput "MEFC.editForm.nationality", "class=form-control", "text"/>
+                   		   <@spring.showErrors '<br>'/>
                		  </dd>
                       <dt>
 						  ${language.getTextSource('manufacturer.historyES')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyES", "class=form-control cols='60' rows='60'"/>
+						  <@spring.formTextarea "MEFC.editForm.historyES", "class=form-control cols='60' rows='60'"/>
                       </dd>
                       <dt>
 						  ${language.getTextSource('manufacturer.historyEN')}
                       </dt>
                       <dd class="resizable-dd">
-						  <@spring.formTextarea "MEFC.manufacturerForm.historyEN", "class=form-control cols='60' rows='60'"/>
+						  <@spring.formTextarea "MEFC.editForm.historyEN", "class=form-control cols='60' rows='60'"/>
                       </dd>
           			  <dt>
                			   ${language.getTextSource('manufacturer.logo')}
                 	  </dt>
               		  <dd>
-                   	 	   <@spring.formInput "MEFC.manufacturerForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
-               		  	   <@spring.showErrors '<br>'/>    
+                   	 	   <@spring.formInput "MEFC.editForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
+               		  	   <@spring.showErrors '<br>'/>
                		  </dd>
 
-					  <div id="manufacturer-preview-picture-area">                 	    
-                      	  	<@spring.bind "MEFC.manufacturerForm.previewPictureEditCommand.picture"/>               		                      
-                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img pull-right" <#if MEFC.manufacturerForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${MEFC.manufacturerForm.id}"/>'</#if>
+					  <div id="manufacturer-preview-picture-area">
+                      	  	<@spring.bind "MEFC.editForm.previewPictureEditCommand.picture"/>
+                            <img id="manufacturer-preview-image" name="${spring.status.expression}" class="thumbnail preview-img pull-right" <#if MEFC.editForm.id??>src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${MEFC.editForm.id}"/>'</#if>
                       </div>  
              	 </dl>
      	   </div>

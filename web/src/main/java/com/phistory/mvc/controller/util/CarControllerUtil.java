@@ -28,13 +28,16 @@ public class CarControllerUtil {
     /**
      * Fills the supplied {@link Model} with the necessary data to handle car list requests
      *
-     * @param abstractCarListModelFiller
+     * @param carListModelFiller
      * @param model
      * @param paginationDTO
      */
-    public void fillCarListModel(AbstractCarListModelFiller abstractCarListModelFiller, Model model, PaginationDTO paginationDTO) {
-        abstractCarListModelFiller.fillPaginatedModel(model, paginationDTO);
+    public Model fillCarListModel(AbstractCarListModelFiller carListModelFiller,
+                                 Model model,
+                                 PaginationDTO paginationDTO) {
+        model = carListModelFiller.fillPaginatedModel(model, paginationDTO);
         this.carModelFiller.fillModel(model);
         this.pictureModelFiller.fillModel(model);
+        return model;
     }
 }

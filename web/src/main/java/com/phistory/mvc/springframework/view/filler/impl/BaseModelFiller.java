@@ -43,7 +43,7 @@ public class BaseModelFiller implements ModelFiller {
     }
 
     @Override
-    public void fillModel(Model model) {
+    public Model fillModel(Model model) {
         model.addAttribute("indexURL", INDEX_URL);
         model.addAttribute("manufacturerHistoryURL", MANUFACTURER_HISTORY_URL);
         model.addAttribute("cookiesPolicyURL", COOKIES_POLICY_URL);
@@ -66,6 +66,7 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate());
         model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
         model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
+        return model;
     }
 
     private String buildCarsHeaderLinkValue() {

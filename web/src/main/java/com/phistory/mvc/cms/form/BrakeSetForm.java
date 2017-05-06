@@ -13,7 +13,7 @@ import com.phistory.data.model.car.Car;
  */
 @Data
 @AllArgsConstructor
-public class BrakeSetForm {
+public class BrakeSetForm implements EditForm {
 
     private Long  id;
     private Brake frontBrake;
@@ -21,7 +21,7 @@ public class BrakeSetForm {
     private Car   car;
 
     public BrakeSetForm() {
-        frontBrake = new Brake();
-        rearBrake = new Brake();
+        this.frontBrake = new Brake();
+        this.rearBrake = new Brake();
     }
 }

@@ -1,7 +1,7 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.Manufacturer;
-import com.phistory.mvc.cms.command.ManufacturerFormEditCommand;
+import com.phistory.mvc.cms.command.ManufacturerEditFormCommand;
 import com.phistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
 import com.phistory.mvc.dto.PaginationDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
@@ -12,12 +12,14 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.util.Map;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS_URL;
@@ -49,7 +51,7 @@ public class CMSManufacturerController extends CMSBaseController {
     public ModelAndView handleListManufacturers(Model model,
                                                 PaginationDTO manufacturersPaginationDTO) {
         try {
-            this.manufacturerModelFiller.fillPaginatedModel(model, manufacturersPaginationDTO);
+            model = this.manufacturerModelFiller.fillPaginatedModel(model, manufacturersPaginationDTO);
             this.pictureModelFiller.fillModel(model);
 
             return new ModelAndView();
@@ -64,7 +66,7 @@ public class CMSManufacturerController extends CMSBaseController {
             consumes = APPLICATION_JSON,
             produces = APPLICATION_JSON)
     @ResponseBody
-    public Map<String, Object> handlePagination(@RequestBody PaginationDTO paginationDTO) {
+    public PaginationDTO handlePagination(@RequestBody PaginationDTO paginationDTO) {
         return this.cmsManufacturerControllerUtil.createPaginationData(paginationDTO);
     }
 
@@ -72,11 +74,11 @@ public class CMSManufacturerController extends CMSBaseController {
             method = GET)
     public ModelAndView handleNewManufacturer(Model model) {
         try {
-            ManufacturerFormEditCommand manufacturerFormEditCommand = new ManufacturerFormEditCommand();
-            model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, manufacturerFormEditCommand);
+            ManufacturerEditFormCommand manufacturerEditFormCommand = new ManufacturerEditFormCommand();
+            model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, manufacturerEditFormCommand);
 
-            this.manufacturerModelFiller.fillModel(model);
-            this.pictureModelFiller.fillModel(model);
+            model = this.manufacturerModelFiller.fillModel(model);
+            model = this.pictureModelFiller.fillModel(model);
         } catch (Exception e) {
             log.error(e.toString(), e);
             model.addAttribute(EXCEPTION_MESSAGE, e.toString());
@@ -91,26 +93,28 @@ public class CMSManufacturerController extends CMSBaseController {
             method = POST)
     @ResponseBody
     public ModelAndView handleSaveNewManufacturer(Model model,
-                                                  @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerFormEditCommand command,
+                                                  @Valid @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND) ManufacturerEditFormCommand command,
                                                   BindingResult result) {
-        if (!result.hasErrors()) {
-            try {
-                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command);
+        try {
+            if (!result.hasErrors()) {
+
+                Manufacturer manufacturer = this.cmsManufacturerControllerUtil.saveOrEditManufacturer(command)
+                                                                              .orElseThrow(Exception::new);
 
                 this.cmsManufacturerControllerUtil.reloadManufacturerDBEntities(manufacturer.getId());
                 String successMessage = super.getMessageSource()
                                              .getMessage(ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY,
                                                          new Object[] {manufacturer.toString()},
                                                          LocaleContextHolder.getLocale());
-                model.addAttribute(SUCCESS_MESSAGE, successMessage);
-            } catch (Exception e) {
-                model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-            } finally {
-                manufacturerModelFiller.fillModel(model);
-                pictureModelFiller.fillModel(model);
-            }
-        }
 
-        return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+                model.addAttribute(SUCCESS_MESSAGE, successMessage);
+            }
+        } catch (Exception e) {
+            model.addAttribute(EXCEPTION_MESSAGE, e.toString());
+        } finally {
+            model = manufacturerModelFiller.fillModel(model);
+            pictureModelFiller.fillModel(model);
+            return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+        }
     }
 }
