@@ -8,6 +8,7 @@ import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.data.dao.sql.SqlContentSearchDAO;
 import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureRepository;
+import com.phistory.mvc.controller.util.CarControllerUtil;
 import com.phistory.mvc.service.URILoggingService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
@@ -80,6 +81,10 @@ public abstract class BaseController extends BaseControllerData {
 
     @Inject
     private URILoggingService uriLoggingService;
+
+    @Inject
+    @Getter
+    private CarControllerUtil carControllerUtil;
 
     @ModelAttribute
     public ModelAndView fillBaseModel(@RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt,

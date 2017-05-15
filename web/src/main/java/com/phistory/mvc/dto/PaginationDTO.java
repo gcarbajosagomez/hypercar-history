@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PaginationDTO {
 
-    public static final Integer ITEMS_PER_PAGE_DEFAULT_VALUE = 8;
+    public static final Integer ITEMS_PER_PAGE_DEFAULT_VALUE = 10;
 
     private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
 
@@ -24,6 +24,7 @@ public class PaginationDTO {
     private Integer itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
     private Integer             firstResult;
     private List<GenericEntity> items;
+    private String pageTitle;
 
     public PaginationDTO(Integer pagNum, Integer itemsPerPage) {
         this.pagNum = pagNum;

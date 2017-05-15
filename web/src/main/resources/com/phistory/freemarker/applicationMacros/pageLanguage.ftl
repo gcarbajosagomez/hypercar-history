@@ -53,7 +53,7 @@
 							<#elseif requestIsModelsSearch>
 								var contentSearchDto = {
 										 				 ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
-				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+				         				 				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>${defaultCarsPerPageData}</#if>,
 										 				 ${contentToSearch} : $("#content-search-input")[0].value,
 										 				 searchTotalResults : $("#search-total-results")[0].value
 				         			   				   };

@@ -5,7 +5,7 @@ import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.mvc.dto.ContentSearchDTO;
-import com.phistory.mvc.springframework.view.filler.ModelFiller;
+import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.*;
+import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.LIKE;
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -35,35 +35,31 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @RequestMapping(value = MODELS_SEARCH_URL,
         method = HEAD)
 public class ContentSearchController extends BaseController {
-    private ModelFiller carModelFiller;
-    private ModelFiller pictureModelFiller;
+    private AbstractCarListModelFiller inMemoryCarsListModelFiller;
 
     @Inject
-    public ContentSearchController(ModelFiller carModelFiller, ModelFiller pictureModelFiller) {
-        this.carModelFiller = carModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
+    public ContentSearchController(AbstractCarListModelFiller inMemoryCarsListModelFiller) {
+        this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
     }
 
     @RequestMapping(method = GET)
     @ResponseBody
     public ModelAndView handleModelsSearch(Model model,
-                                           ContentSearchDTO contentSearchDto) {
+                                           ContentSearchDTO contentSearchDTO) {
         try {
-            ContentSearchDTO clonedContentSearchDto = contentSearchDto.clone();
-            //so that we can return all the searched car model names to the view, we need to retrieve all cars, and separate them into models (names) and cars
+            ContentSearchDTO clonedContentSearchDto = contentSearchDTO.clone();
+            //so that we can return all the searched car model names to the view, we need to retrieve all cars, and separate
+            // them into models (full list of model names) and cars
             clonedContentSearchDto.setItemsPerPage(0);
             SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
             List<GenericEntity> searchResults = this.getSqlContentSearchDAO().searchContent(searchCommand);
             searchResults = this.removeNotVisibleCars(searchResults);
 
-            model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDto));
+            super.getCarControllerUtil().fillCarListModel(this.inMemoryCarsListModelFiller, model, contentSearchDTO);
+            model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDTO));
             model.addAttribute(MODELS, searchResults);
-            model.addAttribute(CARS_PER_PAGE_DATA, contentSearchDto.getItemsPerPage());
-            model.addAttribute(PAG_NUM_DATA, contentSearchDto.getPagNum());
             model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, searchResults.size());
-            model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDto.getContentToSearch());
-            this.carModelFiller.fillModel(model);
-            this.pictureModelFiller.fillModel(model);
+            model.addAttribute(CONTENT_TO_SEARCH_DATA, contentSearchDTO.getContentToSearch());
 
             return new ModelAndView(CARS);
         } catch (Exception e) {

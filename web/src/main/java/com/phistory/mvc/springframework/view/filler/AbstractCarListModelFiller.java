@@ -26,10 +26,10 @@ public abstract class AbstractCarListModelFiller implements ModelFiller {
      * @param paginationDTO
      */
     public Model fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
-        model.addAttribute(CARS_PER_PAGE_DATA,      paginationDTO.getItemsPerPage());
-        model.addAttribute(PAG_NUM_DATA,            paginationDTO.getPagNum());
+        model.addAttribute(CARS_PER_PAGE_DATA, paginationDTO.getItemsPerPage());
+        model.addAttribute(PAG_NUM_DATA, paginationDTO.getPagNum());
         model.addAttribute("paginationFirstResult", paginationDTO.getFirstResult());
-        model.addAttribute("paginationLastResult",  paginationDTO.getLastResult());
+        model.addAttribute("paginationLastResult", paginationDTO.getLastResult());
         return model;
     }
 }

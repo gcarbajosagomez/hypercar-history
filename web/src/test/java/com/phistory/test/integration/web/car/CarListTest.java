@@ -27,7 +27,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 public class CarListTest extends BaseIntegrationTest
 {
     private static final int INITIAL_NUMBER_OF_CARS_PER_PAGE_OPTIONS = 5;
-    private static final int IRRELEVANT_NUMBER_OF_CARS_PER_PAGE = 15;
+    private static final int IRRELEVANT_NUMBER_OF_CARS_PER_PAGE = 18;
 
 	@Value("${local.server.port}")
 	private int port;

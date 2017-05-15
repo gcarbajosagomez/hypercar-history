@@ -9,7 +9,7 @@
 		{
 			var contentSearchDto = {		
 									 ${pagNum} 			: <#if pagNumData??>${pagNumData}<#else>1</#if>,
-			         				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>8</#if>,
+			         				 ${carsPerPage} 	: <#if carsPerPageData??>${carsPerPageData}<#else>${defaultCarsPerPageData}</#if>,
 									 ${contentToSearch} : contentToSearch
 			         			   }; 
 			         			   

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.phistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
 import static com.phistory.mvc.controller.BaseControllerData.*;
+import static com.phistory.mvc.dto.PaginationDTO.ITEMS_PER_PAGE_DEFAULT_VALUE;
 import static com.phistory.mvc.language.Language.ENGLISH;
 import static com.phistory.mvc.language.Language.SPANISH;
 
@@ -66,6 +67,7 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate());
         model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
         model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
+        model.addAttribute("defaultCarsPerPageData", ITEMS_PER_PAGE_DEFAULT_VALUE);
         return model;
     }
 

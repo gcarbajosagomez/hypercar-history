@@ -69,6 +69,10 @@
 	    	        	 	    	
 	    	        	     	if (data != null)
 	    	        	     	{
+									var pageTitle = data.pageTitle;
+									if (pageTitle) {
+										document.title = pageTitle;
+									}
 	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNum + "&${carsPerPage}=" + data.itemsPerPage<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 								}
 						  });  
@@ -154,3 +158,19 @@
     	$('#pagination-ul').bootstrapPaginator(paginationOptions);
     	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
+
+<#function getCarsPerPageURI carsPerPageNumber>
+	<#assign uri>
+		<#if requestURI?matches(".{1,}([&?]${pagNum}=).{1,}")>
+			${requestURI?replace("${pagNum}=[0-9]{1,}&${carsPerPage}=[0-9]{1,}", "${pagNum}=1&${carsPerPage}=${carsPerPageNumber}", "r")}
+		<#else>
+			<#if requestURI?contains("?")>
+				${requestURI}&${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+			<#else>
+            	${requestURI}?${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+			</#if>
+		</#if>
+	</#assign>
+
+	<#return uri>
+</#function>

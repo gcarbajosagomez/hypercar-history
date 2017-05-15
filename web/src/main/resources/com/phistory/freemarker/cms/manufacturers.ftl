@@ -54,10 +54,10 @@
     								<span class="caret"></span>
   								</button>
   								<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="manufacturers-per-page-menu">
-									<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=5">5</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=10">10</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=15">15</a></li>
-    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=20">20</a></li>
+									<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=6">6</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=12">12</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=18">18</a></li>
+    								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=24">24</a></li>
    									<hr>
 	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${language.getTextSource('pagination.allManufacturers')}</a></li>
   								</ul>
