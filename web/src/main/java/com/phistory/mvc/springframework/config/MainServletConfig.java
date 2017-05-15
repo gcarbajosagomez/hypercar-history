@@ -12,7 +12,6 @@ import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
@@ -27,6 +26,7 @@ import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static java.util.Locale.ENGLISH;
+import static org.springframework.beans.factory.annotation.Autowire.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
@@ -41,21 +41,24 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @PropertySource(value = "classpath:com/phistory/systemproperty/systemProperties.properties")
 public class MainServletConfig extends WebMvcConfigurerAdapter {
 
-    private static final String  NO_CACHE_VALUE         = "0";
-    private static final Integer TWO_WEEKS_SECONDS      = 1209600;
-    private static final Integer THIRTY_MINUTES_SECONDS = 1800;
-    private static final String  ROBOTS_FILE_NAME       = "robots.txt";
-    private static final String  SITEMAP_FILE_NAME      = "sitemap.xml";
-    private static final String  FAVICON_FILE_NAME      = "favicon.ico";
+    private static final String  NO_CACHE_VALUE                  = "0";
+    private static final Integer TWO_WEEKS_SECONDS               = 1209600;
+    private static final Integer THIRTY_MINUTES_SECONDS          = 1800;
+    private static final String  ROBOTS_FILE_NAME                = "robots.txt";
+    private static final String  SITEMAP_FILE_NAME               = "sitemap.xml";
+    private static final String  FAVICON_FILE_NAME               = "favicon.ico";
+    private static final String  DEFAULT_TIMEZONE                = "UTC";
+    private static final String  FREEMARKER_ENCODING             = "UTF-8";
+    private static final String  FREEMARKER_TEMLATE_FILES_SUFFIX = ".ftl";
 
-    @Bean(name = "viewResolver", autowire = Autowire.BY_NAME)
+    @Bean(name = "viewResolver", autowire = BY_NAME)
     public FreeMarkerViewResolver internalResourceViewResolver() {
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
         viewResolver.setCache(true);
         viewResolver.setPrefix("");
-        viewResolver.setSuffix(".ftl");
+        viewResolver.setSuffix(FREEMARKER_TEMLATE_FILES_SUFFIX);
         viewResolver.setExposeSpringMacroHelpers(true);
-        viewResolver.setContentType("text/html;charset=UTF-8");
+        viewResolver.setContentType("text/html;charset=" + FREEMARKER_ENCODING);
 
         return viewResolver;
     }
@@ -64,10 +67,12 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     public FreeMarkerConfigurer freemarkerConfigurer() throws IOException, TemplateException {
         FreeMarkerConfigurer freemarkerConfigurer = new FreeMarkerConfigurer();
         freemarkerConfigurer.setTemplateLoaderPaths("classpath:/com/phistory/freemarker/");
-        freemarkerConfigurer.setDefaultEncoding("UTF-8");
+        freemarkerConfigurer.setDefaultEncoding(FREEMARKER_ENCODING);
 
         Properties properties = new Properties();
         properties.setProperty("number_format", "0.##");
+        properties.setProperty("time_zone", DEFAULT_TIMEZONE);
+        properties.setProperty("sql_date_and_time_time_zone", DEFAULT_TIMEZONE);
         freemarkerConfigurer.setFreemarkerSettings(properties);
 
         return freemarkerConfigurer;
