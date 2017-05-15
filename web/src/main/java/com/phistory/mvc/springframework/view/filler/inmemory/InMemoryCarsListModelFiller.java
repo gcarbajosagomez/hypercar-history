@@ -18,7 +18,7 @@ import static com.phistory.mvc.controller.BaseControllerData.CARS;
  *
  * @author gonzalo
  */
-@Component(value = "inMemoryCarsListModelFiller")
+@Component("inMemoryCarsListModelFiller")
 public class InMemoryCarsListModelFiller extends AbstractCarListModelFiller {
     @Inject
     private InMemoryCarDAO inMemoryCarDAO;

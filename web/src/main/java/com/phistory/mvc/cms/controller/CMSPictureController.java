@@ -2,17 +2,14 @@ package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
-import com.phistory.mvc.command.PictureLoadCommand;
-import com.phistory.mvc.controller.util.PictureControllerUtil;
+import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.service.EntityManagementService;
+import com.phistory.mvc.cms.service.crud.impl.PictureCrudService;
+import com.phistory.mvc.command.PictureLoadCommand;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 
@@ -22,62 +19,51 @@ import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
  * @author Gonzalo
  */
 @Slf4j
 @Secured(USER_ROLE)
-@Controller
-@RequestMapping(value = CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
+@RestController
+@RequestMapping(CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
 public class CMSPictureController extends CMSBaseController {
 
-    private PictureControllerUtil   pictureControllerUtil;
+    private PictureCrudService      pictureCrudService;
     private EntityManagementService entityManagementService;
 
     @Inject
-    public CMSPictureController(PictureControllerUtil pictureControllerUtil,
+    public CMSPictureController(PictureCrudService pictureCrudService,
                                 EntityManagementService entityManagementService) {
-        this.pictureControllerUtil = pictureControllerUtil;
+        this.pictureCrudService = pictureCrudService;
         this.entityManagementService = entityManagementService;
     }
 
-    @RequestMapping(value = DELETE_URL,
-            method = DELETE)
-    @ResponseBody
-    public String handleDeletePicture(@ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND) PictureLoadCommand command) {
+    @DeleteMapping(value = DELETE_URL)
+    public CrudOperationDTO handleDeletePicture(@ModelAttribute(PICTURE_LOAD_COMMAND) PictureLoadCommand command) {
+        command.setAction(LOAD_CAR_PICTURE);
+        CrudOperationDTO crudOperationDTO = this.pictureCrudService.deletePicture(command);
+        Picture picture = (Picture) crudOperationDTO.getEntity();
+
         try {
-            command.setAction(LOAD_CAR_PICTURE);
-            Picture picture = this.pictureControllerUtil.loadPictureFromDB(command);
-            super.getSqlPictureRepository().delete(picture);
-            this.reloadInMemoryPictures(picture.getId());
-
-            String successMessage = super.getMessageSource()
-                                         .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                     new Object[] {"Picture"},
-                                                     LocaleContextHolder.getLocale());
-
-            return SUCCESS_MESSAGE + " : " + successMessage;
+            EntityManagementLoadCommand entityManagementLoadCommand = EntityManagementLoadCommand.builder()
+                                                                                                 .queryType(REMOVE_PICTURE)
+                                                                                                 .pictureId(picture.getId())
+                                                                                                 .build();
+            this.entityManagementService.reloadEntities(entityManagementLoadCommand);
         } catch (Exception e) {
-            log.error("There was an error while deleting picture; {} ",
-                      command.getEntityId(),
+            log.error("There was an error while deleting picture {} ",
+                      picture.toString(),
                       e);
-            return EXCEPTION_MESSAGE + " : " + e.toString();
+            crudOperationDTO.addErrorMessage(e.toString());
         }
+        return crudOperationDTO;
     }
 
-    private void reloadInMemoryPictures(Long pictureId) {
-        EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand(REMOVE_PICTURE,
-                                                                                                  null,
-                                                                                                  pictureId,
-                                                                                                  null,
-                                                                                                  null);
-        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
-    }
-
-    @ModelAttribute(value = PICTURE_EDIT_FORM_COMMAND)
+    @ModelAttribute(PICTURE_LOAD_COMMAND)
     public PictureLoadCommand createCommand(@PathVariable(ID) Long entityId) {
-        return new PictureLoadCommand(null, entityId);
+        PictureLoadCommand pictureLoadCommand = new PictureLoadCommand();
+        pictureLoadCommand.setEntityId(entityId);
+        return pictureLoadCommand;
     }
 }

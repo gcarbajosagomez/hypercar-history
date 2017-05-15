@@ -39,8 +39,8 @@ public abstract class BaseController extends BaseControllerData {
     private SqlCarDAO sqlCarDAO;
 
     @Inject
-    @Getter
     @Named(CAR_REPOSITORY)
+    @Getter
     private CrudRepository sqlCarRepository;
 
     @Inject
@@ -73,9 +73,9 @@ public abstract class BaseController extends BaseControllerData {
 
     @Inject
     private ModelFiller                 baseModelFiller;
-    @Getter
 
     @Inject
+    @Getter
     private ResourceBundleMessageSource messageSource;
 
     @Inject

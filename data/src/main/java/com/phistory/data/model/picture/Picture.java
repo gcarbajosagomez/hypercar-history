@@ -1,5 +1,6 @@
 package com.phistory.data.model.picture;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import lombok.AllArgsConstructor;
@@ -24,6 +25,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@JsonIgnoreProperties("image")
 @Table(name = Picture.PICTURE_TABLE_NAME)
 
 public class Picture implements GenericEntity {

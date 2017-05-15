@@ -1,6 +1,5 @@
 package com.phistory.mvc.cms.controller;
 
-import com.phistory.data.dao.sql.SqlCarDAO;
 import com.phistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
 import static com.phistory.data.dao.sql.SqlEngineRepository.ENGINE_REPOSITORY;
 import static com.phistory.data.dao.sql.SqlManufacturerRepository.MANUFACTURER_REPOSITORY;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -36,7 +34,7 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
  * @author Gonzalo
  */
 @Controller
-@RequestMapping(value = CMS_CONTEXT)
+@RequestMapping(CMS_CONTEXT)
 public abstract class CMSBaseController extends BaseController {
 
     /********************
@@ -55,11 +53,10 @@ public abstract class CMSBaseController extends BaseController {
     /*************************
      ******Request params*****
      *************************/
-    public static final String QUERY_STRING_SEPARATOR = "?";
-    public static final String LOGIN_SUCCESS          = "success";
-    public static final String LOGIN_ERROR            = "error";
-    public static final String LOGOUT                 = "logout";
-
+    public static final String QUERY_STRING_SEPARATOR      = "?";
+    public static final String LOGIN_SUCCESS               = "success";
+    public static final String LOGIN_ERROR                 = "error";
+    public static final String LOGOUT                      = "logout";
     public static final String MANUFACTURER_ID             = "manufacturerId";
     public static final String MANUFACTURERS_PER_PAGE      = "manufacturersPerPage";
     public static final String MANUFACTURERS_PER_PAGE_DATA = "manufacturersPerPageData";
@@ -74,21 +71,23 @@ public abstract class CMSBaseController extends BaseController {
     /*************************
      **********Misc***********
      *************************/
-    public static final String MANUFACTURERS                               = "manufacturers";
-    public static final String CAR_EDIT_VIEW_NAME                          = "/cms/carEdit";
-    public static final String MANUFACTURER_EDIT_VIEW_NAME                 = "/cms/manufacturerEdit";
-    public static final String CAR_EDIT_FORM_COMMAND                       = "CEFC";
-    public static final String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND      = "CICEFC";
-    public static final String MANUFACTURER_EDIT_FORM_COMMAND              = "MEFC";
-    public static final String PICTURE_EDIT_FORM_COMMAND                   = "PEFC";
-    public static final String ENTITY_MANAGEMENT_LOAD_COMMAND              = "EMLC";
-    public static final String LOGGED_IN                                   = "loggedIn";
-    public static final String DATE_FORMAT                                 = "yyyy-MM";
-    public static final String ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY   = "entitySavedSuccessfully";
-    public static final String ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY  = "entityEditedSuccessfully";
-    public static final String ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY = "entityDeletedSuccessfully";
-    public static final String ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY     = "entityContainedErrors";
-    public static final String CMS_MODELS                                  = "cmsModels";
+    public static final    String MANUFACTURERS                               = "manufacturers";
+    public static final    String CAR_EDIT_VIEW_NAME                          = "/cms/carEdit";
+    public static final    String MANUFACTURER_EDIT_VIEW_NAME                 = "/cms/manufacturerEdit";
+    public static final    String CAR_EDIT_FORM_COMMAND                       = "CEFC";
+    public static final    String CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND      = "CICEFC";
+    public static final    String MANUFACTURER_EDIT_FORM_COMMAND              = "MEFC";
+    public static final    String PICTURE_LOAD_COMMAND                        = "PLC";
+    public static final    String ENTITY_MANAGEMENT_LOAD_COMMAND              = "EMLC";
+    public static final    String LOGGED_IN                                   = "loggedIn";
+    public static final    String DATE_FORMAT                                 = "yyyy-MM";
+    public static final    String ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY   = "entitySavedSuccessfully";
+    public static final    String ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY  = "entityEditedSuccessfully";
+    public static final    String ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY = "entityDeletedSuccessfully";
+    public static final    String ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY     = "entityContainedErrors";
+    public static final    String CMS_MODELS                                  = "cmsModels";
+    protected static final String CRUD_OPERATION_DTO                          = "crudOperationDTO";
+    protected static final String CAR_INTERNET_CONTENTS_CRUD_OPERATION_DTO    = "carInternetContentsCrudOperationDTO";
 
     private static final String CACHE_CONTROL_HTTP_HEADER = "Cache-Control";
     private static final String PRAGMA_HTTP_HEADER        = "Pragma";

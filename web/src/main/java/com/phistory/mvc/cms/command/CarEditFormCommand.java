@@ -1,5 +1,6 @@
 package com.phistory.mvc.cms.command;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.phistory.mvc.cms.form.CarEditForm;
 import com.phistory.mvc.cms.form.EditForm;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class CarEditFormCommand implements EditFormCommand {
 
     @Valid
     @NotNull
+    @JsonDeserialize(as = CarEditForm.class)
     private EditForm editForm;
 
     public CarEditFormCommand() {

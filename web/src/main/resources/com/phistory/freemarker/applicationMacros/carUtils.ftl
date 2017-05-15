@@ -81,7 +81,6 @@
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.discDiameter", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
                 ${language.getTextSource('brake.disc.material')}
@@ -94,15 +93,12 @@
                         <option value="${brakeDiscMaterial}" <#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")> selected</#if>>${language.getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
                     </#list>
                 </select>
-
-                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
                 ${language.getTextSource('brake.caliper.numOfPistons')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.caliperNumOfPistons", "class=form-control", "text"/>
-                <@spring.showErrors '<br>'/>
             </dd>
         </dl>
     </div>
@@ -132,21 +128,18 @@
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
                 ${language.getTextSource('tyre.profile')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath?string}.profile", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                <@spring.showErrors '<br>'/>
             </dd>
             <dt>
                 ${language.getTextSource('tyre.rimDiameter')}
             </dt>
             <dd>
                 <@spring.formInput "${objectBindingPath}.rimDiameter", "class=form-control placeholder=${language.getTextSource('inch')}", "text"/>
-                <@spring.showErrors '<br>'/>
             </dd>
         </dl>
     </div>

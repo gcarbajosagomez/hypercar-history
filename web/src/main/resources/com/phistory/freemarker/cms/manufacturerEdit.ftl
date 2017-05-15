@@ -13,7 +13,9 @@
 
 <div id="main-container" class="container">
 	<div class="row">
-		<@crudOperations.addOperationResultMessage exceptionMessage!"", successMessage!""/>
+		<#if crudOperationDTO??>
+			<@crudOperations.addOperationResultMessage crudOperationDTO/>
+		</#if>
 	  	<div class="col-lg-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
@@ -55,14 +57,12 @@
                 	  </dt>
                		  <dd>
 						   <@spring.formInput "MEFC.editForm.name", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>'/>
                		  </dd>
           			  <dt>
              			   ${language.getTextSource('manufacturer.nationality')}
                		  </dt>
                		  <dd>
                    		   <@spring.formInput "MEFC.editForm.nationality", "class=form-control", "text"/>
-                   		   <@spring.showErrors '<br>'/>
                		  </dd>
                       <dt>
 						  ${language.getTextSource('manufacturer.historyES')}
@@ -81,7 +81,6 @@
                 	  </dt>
               		  <dd>
                    	 	   <@spring.formInput "MEFC.editForm.previewPictureEditCommand.pictureFile", "class='form-control' accept='image/*' onChange=displayPreviewImageWhenFileSelected(this.files[0]);", "file"/><br/>
-               		  	   <@spring.showErrors '<br>'/>
                		  </dd>
 
 					  <div id="manufacturer-preview-picture-area">

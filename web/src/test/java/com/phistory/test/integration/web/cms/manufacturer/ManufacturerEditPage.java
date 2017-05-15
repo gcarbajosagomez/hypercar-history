@@ -20,19 +20,19 @@ public class ManufacturerEditPage extends CMSPage {
     @FindBy(className = "btn-default")
     private WebElement newManufacturerLinkLocator;
 
-    @FindBy(id = "manufacturerForm.name")
+    @FindBy(id = "editForm.name")
     private WebElement nameInputLocator;
 
-    @FindBy(id = "manufacturerForm.nationality")
+    @FindBy(id = "editForm.nationality")
     private WebElement nationalityInputLocator;
 
-    @FindBy(id = "manufacturerForm.historyES")
+    @FindBy(id = "editForm.historyES")
     private WebElement historyESInputLocator;
 
-    @FindBy(id = "manufacturerForm.historyEN")
+    @FindBy(id = "editForm.historyEN")
     private WebElement historyENInputLocator;
 
-    @FindBy(id = "manufacturerForm.previewPictureEditCommand.pictureFile")
+    @FindBy(id = "editForm.previewPictureEditCommand.pictureFile")
     private WebElement logoFileInputLocator;
 
     public ManufacturerEditPage(WebDriver webDriver) {

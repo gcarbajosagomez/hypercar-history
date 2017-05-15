@@ -1,69 +1,61 @@
-package com.phistory.mvc.controller.util;
+package com.phistory.mvc.service.impl;
 
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.command.PictureLoadCommand;
-import com.phistory.mvc.controller.BaseControllerData;
+import com.phistory.mvc.service.PictureService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Blob;
-import java.util.Objects;
+import java.util.Optional;
+
+import static com.phistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
- * Set of utilities for the PictureController class
- *
  * @author gonzalo
  */
 @Component
-public class PictureControllerUtil extends BaseControllerData {
+@Slf4j
+public class PictureServiceImpl implements PictureService {
 
     private SqlPictureDAO        sqlPictureDAO;
     private SqlPictureRepository sqlPictureRepository;
     private InMemoryPictureDAO   inMemoryPictureDAO;
 
     @Inject
-    public PictureControllerUtil(SqlPictureDAO sqlPictureDAO,
-                                 SqlPictureRepository sqlPictureRepository,
-                                 InMemoryPictureDAO inMemoryPictureDAO) {
+    public PictureServiceImpl(SqlPictureDAO sqlPictureDAO,
+                              SqlPictureRepository sqlPictureRepository,
+                              InMemoryPictureDAO inMemoryPictureDAO) {
         this.sqlPictureDAO = sqlPictureDAO;
         this.sqlPictureRepository = sqlPictureRepository;
         this.inMemoryPictureDAO = inMemoryPictureDAO;
     }
 
-    /**
-     * Print the binary information of a Picture to a HTTP response
-     *
-     * @param picture
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) throws Exception {
-        Blob image = picture.getImage();
-        if (Objects.nonNull(picture) && Objects.nonNull(image)) {
-            response.setContentType(IMAGE_CONTENT_TYPE);
+    @Override
+    public HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response) {
+        return Optional.ofNullable(picture)
+                       .map(Picture::getImage)
+                       .map(image -> {
+                           response.setContentType(IMAGE_CONTENT_TYPE);
+                           try {
+                               int imgBytesLength = (int) image.length();
+                               byte[] imgBytes = image.getBytes(1, imgBytesLength);
 
-            int imgBytesLength = (int) image.length();
-            byte[] imgBytes = image.getBytes(1, imgBytesLength);
-
-            response.getOutputStream().write(imgBytes);
-            response.getOutputStream().flush();
-        }
-
-        return response;
+                               response.getOutputStream().write(imgBytes);
+                               response.getOutputStream().flush();
+                           } catch (Exception e) {
+                               log.error("There was an error while printing picture image to HTTP response", e);
+                           }
+                           return response;
+                       })
+                       .orElse(response);
     }
 
-    /**
-     * Load a {@link Picture} from the DB depending on the action being performed
-     *
-     * @param command
-     * @return
-     * @throws Exception
-     */
+    @Override
     public Picture loadPictureFromDB(PictureLoadCommand command) throws Exception {
         switch (command.getAction()) {
             case LOAD_CAR_PICTURE: {
@@ -92,12 +84,7 @@ public class PictureControllerUtil extends BaseControllerData {
         return this.sqlPictureRepository.findOne(command.getEntityId());
     }
 
-    /**
-     * Load a {@link Picture} from the in-memory storage depending on the action being performed
-     *
-     * @param command
-     * @return
-     */
+    @Override
     public Picture loadPicture(PictureLoadCommand command) {
         Long pictureId = command.getEntityId();
         Long carId = command.getEntityId();
@@ -134,10 +121,7 @@ public class PictureControllerUtil extends BaseControllerData {
     }
 
     private Picture loadById(Long pictureId) {
-        Picture picture = this.inMemoryPictureDAO.getById(pictureId);
-        if (picture == null) {
-            picture = this.sqlPictureRepository.findOne(pictureId);
-        }
-        return picture;
+        return Optional.ofNullable(this.inMemoryPictureDAO.getById(pictureId))
+                       .orElse(this.sqlPictureRepository.findOne(pictureId));
     }
 }

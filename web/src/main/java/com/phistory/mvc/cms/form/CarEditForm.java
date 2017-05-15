@@ -64,6 +64,7 @@ public class CarEditForm implements EditForm {
     @NotNull(message = "The field must not be blank.")
     private CarProductionType productionType;
 
+    @NotNull
     private Calendar productionStartDate;
     private Calendar productionEndDate;
 

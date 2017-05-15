@@ -1,5 +1,6 @@
 package com.phistory.mvc.cms.command;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.EditForm;
 import lombok.AllArgsConstructor;
@@ -8,9 +9,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Command class to save or edit a {@link CarInternetContentForm}
@@ -19,20 +18,30 @@ import java.util.Optional;
  */
 @Data
 @AllArgsConstructor
-public class CarInternetContentEditFormCommand {
+public class CarInternetContentEditFormCommand implements EditFormCommand {
 
     @Valid
     @NotEmpty
-    private List<CarInternetContentForm> editForms;
+    @JsonDeserialize(contentAs = CarInternetContentForm.class)
+    private List<EditForm> editForms;
 
     public CarInternetContentEditFormCommand() {
         this.editForms = new ArrayList<>();
     }
 
-    public CarInternetContentForm getEditForm() {
+    @Override
+    public EditForm getEditForm() {
         if (this.editForms.isEmpty()) {
             return new CarInternetContentForm();
         }
         return this.editForms.get(0);
+    }
+
+    @Override
+    public void setEditForm(EditForm form) {
+        if (this.editForms.isEmpty()) {
+            this.editForms = new ArrayList<>();
+        }
+        this.editForms.add(form);
     }
 }

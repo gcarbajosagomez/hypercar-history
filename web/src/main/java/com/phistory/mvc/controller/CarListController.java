@@ -51,7 +51,7 @@ public class CarListController extends BaseController {
         }
     }
 
-    @RequestMapping(value = "/" + PAGINATION_URL)
+    @RequestMapping("/" + PAGINATION_URL)
     @ResponseBody
     public PaginationDTO handlePagination(Model model, PaginationDTO paginationDTO) {
         model = this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);

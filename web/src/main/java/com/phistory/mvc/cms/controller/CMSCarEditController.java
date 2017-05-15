@@ -7,47 +7,52 @@ import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
 import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
-import com.phistory.mvc.cms.form.CarEditForm;
+import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
+import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
+import com.phistory.mvc.cms.service.crud.CrudService;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.service.crud.impl.CarCrudService.CAR_CRUD_SERVICE;
+import static com.phistory.mvc.cms.service.crud.impl.CarInternetContentCrudService.CAR_INTERNET_CONTENT_CRUD_SERVICE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 /**
  * @author Gonzalo
  */
 @Secured(USER_ROLE)
 @Controller
-@RequestMapping(value = CMS_CONTEXT + CARS_URL + "/{" + ID + "}")
+@RequestMapping(CMS_CONTEXT + CARS_URL + "/{" + ID + "}")
 @Slf4j
 public class CMSCarEditController extends CMSBaseController {
 
-    private CMSCarControllerUtil          carControllerUtil;
+    private CrudService                   carCrudService;
+    private CrudService                   carInternetContentCrudService;
+    private CMSCarControllerUtil          cmsCarControllerUtil;
     private EntityFormFactory             carFormFactory;
     private CarInternetContentFormFactory carInternetContentFormFactory;
     private ModelFiller                   carModelFiller;
@@ -56,14 +61,18 @@ public class CMSCarEditController extends CMSBaseController {
     private EntityManagementService       entityManagementService;
 
     @Inject
-    public CMSCarEditController(CMSCarControllerUtil carControllerUtil,
+    public CMSCarEditController(@Named(CAR_CRUD_SERVICE) CrudService carCrudService,
+                                @Named(CAR_INTERNET_CONTENT_CRUD_SERVICE) CrudService carInternetContentCrudService,
+                                CMSCarControllerUtil cmsCarControllerUtil,
                                 EntityFormFactory carFormFactory,
                                 CarInternetContentFormFactory carInternetContentFormFactory,
                                 ModelFiller carModelFiller,
                                 CarEditModelFiller carEditModelFiller,
                                 ModelFiller pictureModelFiller,
                                 EntityManagementService entityManagementService) {
-        this.carControllerUtil = carControllerUtil;
+        this.carCrudService = carCrudService;
+        this.carInternetContentCrudService = carInternetContentCrudService;
+        this.cmsCarControllerUtil = cmsCarControllerUtil;
         this.carFormFactory = carFormFactory;
         this.carInternetContentFormFactory = carInternetContentFormFactory;
         this.carModelFiller = carModelFiller;
@@ -72,10 +81,9 @@ public class CMSCarEditController extends CMSBaseController {
         this.entityManagementService = entityManagementService;
     }
 
-    @RequestMapping(value = EDIT_URL,
-            method = GET)
+    @GetMapping(EDIT_URL)
     public ModelAndView handleEditCarDefault(Model model,
-                                             @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand) {
+                                             @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand) {
         this.fillModel(model, carFormEditCommand);
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
@@ -84,101 +92,104 @@ public class CMSCarEditController extends CMSBaseController {
             method = {POST, PUT})
     @ResponseBody
     public ModelAndView handleEditCar(Model model,
-                                      @Valid @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
+                                      @Valid @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
                                       BindingResult carFormEditCommandResult,
-                                      @Valid @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand
-                                              carInternetContentEditFormCommand,
+                                      @Valid @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) EditFormCommand carInternetContentEditFormCommand,
                                       BindingResult carInternetContentEditFormCommandResult) {
 
-        try {
-            if (!carFormEditCommandResult.hasErrors()) {
-                Car car = this.carControllerUtil.saveOrEditCar(carFormEditCommand)
-                                                .orElseThrow(Exception::new);
+        CrudOperationDTO carCrudOperationDTO = this.carCrudService.saveOrEditEntity(carFormEditCommand,
+                                                                                    carFormEditCommandResult);
+        model.addAttribute(CRUD_OPERATION_DTO, carCrudOperationDTO);
 
-                String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                         new Object[] {car.toString()},
-                                                         LocaleContextHolder.getLocale());
+        List<EditForm> carInternetContentForms =
+                ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).getEditForms();
+        Car car = (Car) carCrudOperationDTO.getEntity();
+        List<EditForm> enrichedCarInternetContentForms =
+                this.enrichCarInternetContentForms(carInternetContentForms,
+                                                   car);
+        ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).setEditForms(enrichedCarInternetContentForms);
 
-                if (!carInternetContentEditFormCommandResult.hasErrors()) {
-                    this.carControllerUtil.saveCarInternetEditCommand(carInternetContentEditFormCommand);
-                }
+        CrudOperationDTO carInternetContentCrudOperationDTO =
+                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand,
+                                                                    carInternetContentEditFormCommandResult);
 
-                this.carControllerUtil.reloadCarAndPictureDBEntities(car.getId());
-                model.addAttribute(SUCCESS_MESSAGE, successMessage);
-            } else {
-                String errorMessage = super.getMessageSource()
-                                           .getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY,
-                                                       null,
-                                                       LocaleContextHolder.getLocale());
+        model.addAttribute(CAR_INTERNET_CONTENTS_CRUD_OPERATION_DTO, carInternetContentCrudOperationDTO);
 
-                model.addAttribute(EXCEPTION_MESSAGE, errorMessage);
-            }
-        } catch (Exception e) {
-            log.error("There was an error while editing car with model: {}",
-                      ((CarEditForm) carFormEditCommand.getEditForm()).getModel(),
-                      e);
-            model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-        } finally {
-            this.fillModel(model, carFormEditCommand);
-            return new ModelAndView(CAR_EDIT_VIEW_NAME);
-        }
-    }
+        Optional.ofNullable(car)
+                .map(Car::getId)
+                .ifPresent(carId -> {
+                    try {
+                        this.cmsCarControllerUtil.reloadCarAndPictureDBEntities(car.getId());
+                    } catch (Exception e) {
+                        log.error("There was an error while editing car: {}",
+                                  car.toString(),
+                                  e);
+                    }
+                });
 
-    @RequestMapping(value = DELETE_URL,
-            method = DELETE)
-    @ResponseBody
-    public ModelAndView handleDeleteCar(Model model,
-                                        @ModelAttribute(value = CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
-                                        BindingResult result) {
-
-        if (!result.hasErrors()) {
-            CarEditForm carEditForm = (CarEditForm) carFormEditCommand.getEditForm();
-            try {
-                this.carControllerUtil.deleteCar(carFormEditCommand);
-
-                EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
-                entityManagementLoadCommand.setCarId(carEditForm.getId());
-                entityManagementLoadCommand.setQueryType(REMOVE_CAR);
-                this.entityManagementService.reloadEntities(entityManagementLoadCommand);
-
-                String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                         new Object[] {
-                                                                 carEditForm.getManufacturer().toString() +
-                                                                 " " +
-                                                                 carEditForm.getModel()},
-                                                         LocaleContextHolder.getLocale());
-
-                model.addAttribute(SUCCESS_MESSAGE, successMessage);
-                model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarEditFormCommand());
-            } catch (Exception e) {
-                log.error("There was an error while deleting car with model: {}",
-                          carEditForm.getModel(),
-                          e);
-                model.addAttribute(EXCEPTION_MESSAGE, e.toString());
-            } finally {
-                this.fillModel(model, carFormEditCommand);
-            }
-        }
-
+        this.fillModel(model, carFormEditCommand);
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
-    @ModelAttribute(value = CAR_EDIT_FORM_COMMAND)
+    private List<EditForm> enrichCarInternetContentForms(List<EditForm> carInternetContentForms,
+                                                         Car car) {
+        return carInternetContentForms.stream()
+                                      .map(carInternetContentForm -> {
+                                          ((CarInternetContentForm) carInternetContentForm).setCar(car);
+                                          return carInternetContentForm;
+                                      })
+                                      .collect(Collectors.toList());
+    }
+
+    @DeleteMapping(DELETE_URL)
+    @ResponseBody
+    public ModelAndView handleDeleteCar(Model model,
+                                        @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
+                                        BindingResult result) {
+
+        CrudOperationDTO crudOperationDTO = this.carCrudService.deleteEntity(carFormEditCommand, result);
+        model.addAttribute(CRUD_OPERATION_DTO, crudOperationDTO);
+        Car car = (Car) crudOperationDTO.getEntity();
+
+        Optional.ofNullable(car)
+                .map(Car::getId)
+                .ifPresent(carId -> {
+                    try {
+                        EntityManagementLoadCommand entityManagementLoadCommand =
+                                EntityManagementLoadCommand.builder()
+                                                           .queryType(REMOVE_CAR)
+                                                           .carId(carId)
+                                                           .build();
+                        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+
+                        model.addAttribute(CAR_EDIT_FORM_COMMAND, new CarEditFormCommand());
+                    } catch (Exception e) {
+                        log.error("There was an error while deleting car: {}",
+                                  car.toString(),
+                                  e);
+                    }
+                });
+
+        this.fillModel(model, carFormEditCommand);
+        return new ModelAndView(CAR_EDIT_VIEW_NAME);
+    }
+
+    @ModelAttribute(CAR_EDIT_FORM_COMMAND)
     public EditFormCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
         Car car = (Car) super.getSqlCarRepository().findOne(carId);
-        CarEditForm carEditForm = (CarEditForm) this.carFormFactory.buildFormFromEntity(car);
+        EditForm carEditForm = this.carFormFactory.buildFormFromEntity(car);
+
         return new CarEditFormCommand(carEditForm);
     }
 
-    @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
-    public CarInternetContentEditFormCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) {
+    @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
+    public EditFormCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) {
         List<CarInternetContent> carInternetContents = super.getSqlCarInternetContentRepository().getByCarId(carId);
-        List<CarInternetContentForm> carInternetContentForms =
+        List<EditForm> carInternetContentForms =
                 carInternetContents.stream()
                                    .map(this.carInternetContentFormFactory::buildFormFromEntity)
                                    .collect(Collectors.toList());
+
         return new CarInternetContentEditFormCommand(carInternetContentForms);
     }
 

@@ -1,50 +1,55 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.mvc.cms.command.EngineEditFormCommand;
-import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
+import com.phistory.mvc.cms.service.crud.CrudService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.Valid;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.service.crud.impl.EngineCrudService.ENGINE_CRUD_SERVICE;
 import static com.phistory.mvc.controller.BaseControllerData.ENGINE_URL;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 /**
  * Created by Gonzalo Carbajosa on 14/04/17.
  */
 @Secured(USER_ROLE)
+@RestController
+@RequestMapping(CMS_CONTEXT + ENGINE_URL)
 @Slf4j
-@Controller
-@RequestMapping(value = CMS_CONTEXT + ENGINE_URL)
 public class CMSEngineController extends CMSBaseController {
 
-    private CMSEngineControllerUtil cmsEngineControllerUtil;
+    private CrudService engineCrudService;
 
     @Inject
-    public CMSEngineController(CMSEngineControllerUtil cmsEngineControllerUtil) {
-        this.cmsEngineControllerUtil = cmsEngineControllerUtil;
+    public CMSEngineController(@Named(ENGINE_CRUD_SERVICE) CrudService engineCrudService) {
+        this.engineCrudService = engineCrudService;
     }
 
-    @RequestMapping(value = SAVE_URL,
-            method = POST,
+    @PostMapping(value = SAVE_URL,
             produces = APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public CrudOperationDTO handleSaveNewEngine(@Valid @RequestBody EngineEditFormCommand command,
+    public CrudOperationDTO handleSaveNewEngine(@Valid @RequestBody EngineEditFormCommand engineEditFormCommand,
                                                 BindingResult result) {
 
-        return this.cmsEngineControllerUtil.saveOrEditEngine(command,
-                                                             result,
-                                                             ENTITY_SAVED_SUCCESSFULLY_TEXT_SOURCE_KEY);
+        CrudOperationDTO crudOperationDTO = new CrudOperationDTO();
+        try {
+            crudOperationDTO = this.engineCrudService.saveOrEditEntity(engineEditFormCommand,
+                                                                       result);
+        } catch (Exception e) {
+            log.error("There was an error while saving new engine", e);
+        } finally {
+            return crudOperationDTO;
+        }
     }
 }

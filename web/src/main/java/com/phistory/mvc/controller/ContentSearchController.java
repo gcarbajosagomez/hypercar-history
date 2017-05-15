@@ -7,10 +7,10 @@ import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.mvc.dto.ContentSearchDTO;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
@@ -20,9 +20,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.*;
+import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.LIKE;
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
@@ -31,7 +30,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
  * @author Gonzalo
  */
 @Slf4j
-@Controller
+@RestController
 @RequestMapping(value = MODELS_SEARCH_URL,
         method = HEAD)
 public class ContentSearchController extends BaseController {
@@ -44,8 +43,7 @@ public class ContentSearchController extends BaseController {
         this.pictureModelFiller = pictureModelFiller;
     }
 
-    @RequestMapping(method = GET)
-    @ResponseBody
+    @GetMapping
     public ModelAndView handleModelsSearch(Model model,
                                            ContentSearchDTO contentSearchDto) {
         try {

@@ -8,7 +8,8 @@
 	<div id="main-login-div" class="col-md-offset-2 col-md-offset-0 col-lg-8 col-sm-10 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-body form-horizontal">
-				<@crudOperations.addOperationResultMessage error!"", logout!""/>
+				<#assign resultDTO = {"errorMessages" : [error!""],"successMessage" : logout!""}>
+				<@crudOperations.addOperationResultMessage resultDTO/>
 				<#if loggedIn?? && loggedIn == false>
   					<div class="form-group">
     					<label for="username-input" class="col-sm-2 control-label">${language.getTextSource('cms.login.user')}</label>

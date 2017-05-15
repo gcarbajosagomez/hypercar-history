@@ -35,12 +35,12 @@ public class CMSEntityManagementController extends CMSBaseController {
 
     @RequestMapping
     public String handleReloadCars(
-            @ModelAttribute(value = ENTITY_MANAGEMENT_LOAD_COMMAND) EntityManagementLoadCommand entityManagementLoadCommand) {
+            @ModelAttribute(ENTITY_MANAGEMENT_LOAD_COMMAND) EntityManagementLoadCommand entityManagementLoadCommand) {
         this.entityManagementService.reloadEntities(entityManagementLoadCommand);
         return "Database entities successfully loaded in memory";
     }
 
-    @ModelAttribute(value = ENTITY_MANAGEMENT_LOAD_COMMAND)
+    @ModelAttribute(ENTITY_MANAGEMENT_LOAD_COMMAND)
     public EntityManagementLoadCommand createQueryCommand(
             @PathVariable(ENTITY_MANAGEMENT_QUERY_ACTION) EntityManagementQueryType queryType,
             @RequestParam(value = CAR_ID, required = false) Long carId,

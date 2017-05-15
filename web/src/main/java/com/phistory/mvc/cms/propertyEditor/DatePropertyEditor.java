@@ -10,53 +10,41 @@ import org.springframework.util.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- *
  * @author Gonzalo
  */
 @Slf4j
-public class DatePropertyEditor extends PropertyEditorSupport
-{
+public class DatePropertyEditor extends PropertyEditorSupport {
     private SimpleDateFormat dateFormat;
 
-    public DatePropertyEditor(SimpleDateFormat dateFormat)
-    {
+    public DatePropertyEditor(SimpleDateFormat dateFormat) {
         this.dateFormat = dateFormat;
     }
 
     @Override
-    public String getAsText()
-    {
-        try
-        {
+    public String getAsText() {
+        try {
             Calendar calendar = (Calendar) getValue();
-            
-            if (calendar != null)
-            {            
-            	return this.dateFormat.format(calendar.getTime());  
+
+            if (calendar != null) {
+                return this.dateFormat.format(calendar.getTime());
             }
+        } catch (Exception e) {
+            log.error(e.toString(), e);
         }
-        catch (Exception e)
-        {
-            log.error(e.toString(), e);           
-        }
-        
+
         return "";
     }
 
     @Override
-    public void setAsText(String text) throws IllegalArgumentException
-    {
-        try
-        {
-            if(!StringUtils.isEmpty(text)) {
-            	Date date = this.dateFormat.parse(text);
+    public void setAsText(String text) throws IllegalArgumentException {
+        try {
+            if (!StringUtils.isEmpty(text)) {
+                Date date = this.dateFormat.parse(text);
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(date);
                 super.setValue(calendar);
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error(e.toString(), e);
         }
     }
