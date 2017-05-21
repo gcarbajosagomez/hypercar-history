@@ -1,5 +1,6 @@
 package com.phistory.mvc.cms.command;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.ManufacturerEditForm;
 import lombok.AllArgsConstructor;
@@ -17,6 +18,7 @@ import javax.validation.Valid;
 public class ManufacturerEditFormCommand implements EditFormCommand {
 
     @Valid
+    @JsonDeserialize(as = ManufacturerEditForm.class)
     private EditForm editForm;
 
     public ManufacturerEditFormCommand() {

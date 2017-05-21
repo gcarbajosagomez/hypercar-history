@@ -1,6 +1,6 @@
 package com.phistory.mvc.controller;
 
-public class BaseControllerData {
+public abstract class BaseControllerData {
 
     /********************
      *******URLs*********
@@ -63,8 +63,6 @@ public class BaseControllerData {
     public static final String CAR_DETAILS                          = "carDetails";
     public static final String ENGINE                               = "engine";
     public static final String MANUFACTURER                         = "manufacturer";
-    public static final String SUCCESS_MESSAGE                      = "successMessage";
-    public static final String EXCEPTION_MESSAGE                    = "exceptionMessage";
     public static final String CONTACT_US_SUCCESS_MESSAGE           = "contactUsSuccessMessage";
     public static final String CONTACT_US_EXCEPTION_MESSAGE         = "contactUsExceptionMessage";
     public static final String YOUTUBE_VIDEO_IDS                    = "youtubeVideoIds";

@@ -1,32 +1,30 @@
 package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.engine.Engine;
+import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.EngineEditFormCommand;
-import com.phistory.mvc.cms.controller.util.CMSEngineControllerUtil;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
+import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.EngineEditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.EngineFormFactory;
+import com.phistory.mvc.cms.service.crud.CrudService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.validation.Valid;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.service.crud.impl.EngineCrudService.ENGINE_CRUD_SERVICE;
 import static com.phistory.mvc.controller.BaseControllerData.ENGINE_URL;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
-import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 /**
  * @author Gonzalo
@@ -34,79 +32,52 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 @Secured(USER_ROLE)
 @Slf4j
 @RestController
-@RequestMapping(value = CMS_CONTEXT + ENGINE_URL + "/{" + ID + "}")
+@RequestMapping(CMS_CONTEXT + ENGINE_URL + "/{" + ID + "}")
 public class CMSEngineEditController extends CMSBaseController {
 
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
 
-    private EntityFormFactory       engineFormFactory;
-    private CMSEngineControllerUtil cmsEngineControllerUtil;
+    private EntityFormFactory engineFormFactory;
+    private CrudService       engineCrudService;
 
     @Inject
-    public CMSEngineEditController(EngineFormFactory engineFormFactory,
-                                   CMSEngineControllerUtil cmsEngineControllerUtil) {
+    public CMSEngineEditController(@Named(ENGINE_CRUD_SERVICE) CrudService engineCrudService,
+                                   EngineFormFactory engineFormFactory) {
         this.engineFormFactory = engineFormFactory;
-        this.cmsEngineControllerUtil = cmsEngineControllerUtil;
+        this.engineCrudService = engineCrudService;
     }
 
-    @RequestMapping(method = GET,
-            produces = APPLICATION_JSON_VALUE)
-    public EngineEditForm handleListEngineById(@ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineEditFormCommand engineEditFormCommand) {
-        return engineEditFormCommand.getEngineEditForm();
+    @GetMapping(produces = APPLICATION_JSON_VALUE)
+    public EditForm handleListEngineById(
+            @ModelAttribute(ENGINE_EDIT_FORM_COMMAND) EditFormCommand engineEditFormCommand) {
+        return engineEditFormCommand.getEditForm();
     }
 
-    @RequestMapping(value = EDIT_URL,
-            method = PUT,
+    @PutMapping(value = EDIT_URL,
             produces = APPLICATION_JSON_VALUE)
     public CrudOperationDTO handleEditEngine(@Valid @RequestBody EngineEditFormCommand engineEditFormCommand,
                                              BindingResult result) {
 
-        return this.cmsEngineControllerUtil.saveOrEditEngine(engineEditFormCommand,
-                                                             result,
-                                                             ENTITY_EDITED_SUCCESSFULLY_TEXT_SOURCE_KEY);
+        return this.engineCrudService.saveOrEditEntity(engineEditFormCommand,
+                                                       result);
     }
 
-    @RequestMapping(value = DELETE_URL,
-            method = DELETE)
+    @DeleteMapping(value = DELETE_URL)
     public CrudOperationDTO handleDeleteEngine(
-            @Valid @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND) EngineEditFormCommand engineFormEditCommand,
+            @Valid @ModelAttribute(ENGINE_EDIT_FORM_COMMAND) EditFormCommand engineFormEditCommand,
             BindingResult result) {
 
-        CrudOperationDTO crudOperationDTO = new CrudOperationDTO();
-
-        try {
-            if (!result.hasErrors()) {
-                this.cmsEngineControllerUtil.deleteEngine(engineFormEditCommand);
-                String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                         new Object[] {engineFormEditCommand.getEngineEditForm().getCode()},
-                                                         LocaleContextHolder.getLocale());
-
-                crudOperationDTO.setSuccessMessage(successMessage);
-            } else {
-                List<String> errorMessages = result.getAllErrors()
-                                                   .stream()
-                                                   .map(ObjectError::toString)
-                                                   .collect(Collectors.toList());
-
-                crudOperationDTO.setErrorMessages(errorMessages);
-            }
-        } catch (Exception e) {
-            log.error(e.toString(), e);
-            crudOperationDTO.setErrorMessages(Arrays.asList(e.toString()));
-        }
-
-        return crudOperationDTO;
+        return this.engineCrudService.deleteEntity(engineFormEditCommand, result);
     }
 
-    @ModelAttribute(value = ENGINE_EDIT_FORM_COMMAND)
-    public EngineEditFormCommand createEditFormCommand(@PathVariable(ID) Long engineId) {
-        EngineEditFormCommand command = new EngineEditFormCommand();
+    @ModelAttribute(ENGINE_EDIT_FORM_COMMAND)
+    public EditFormCommand createEditFormCommand(@PathVariable(ID) Long engineId) {
+        EditFormCommand command = new EngineEditFormCommand();
 
         if (Objects.nonNull(engineId)) {
             Engine engine = (Engine) super.getSqlEngineRepository().findOne(engineId);
             EngineEditForm engineEditForm = (EngineEditForm) this.engineFormFactory.buildFormFromEntity(engine);
-            command.setEngineEditForm(engineEditForm);
+            command.setEditForm(engineEditForm);
         }
 
         return command;

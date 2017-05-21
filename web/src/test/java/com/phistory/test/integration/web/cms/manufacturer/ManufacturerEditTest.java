@@ -92,7 +92,7 @@ public class ManufacturerEditTest extends BaseIntegrationTest {
         this.confirmModalPage = new ConfirmModalPage(this.webDriver);
         this.confirmModalPage.clickOKButton();
         Thread.sleep(STANDARD_TEST_WAIT_MILLIS);
-        //assertThat("Successful new manufacturer alert should be displayed", this.manufacturerPage.isSuccessAlertDisplayed());
+        assertThat("Successful new manufacturer alert should be displayed", this.manufacturerPage.isSuccessAlertDisplayed());
     }
 
     /*@Test(dependsOnMethods= {"test_save_new_manufacturer"})

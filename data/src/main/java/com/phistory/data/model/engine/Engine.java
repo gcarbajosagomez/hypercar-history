@@ -69,6 +69,6 @@ public class Engine implements GenericEntity
 
 	@Override
 	public String toString() {
-		return getCode();
+		return this.code;
 	}  
 }

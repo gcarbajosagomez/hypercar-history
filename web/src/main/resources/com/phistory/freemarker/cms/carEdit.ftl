@@ -24,8 +24,13 @@
 
 <div id="main-container" class="container car-edit-container">
 	<div class="row">
-	   <@crudOperations.addOperationResultMessage exceptionMessage!"", successMessage!""/>
-	   <div class="col-lg-6 col-sm-6 col-xs-12">
+        <#if crudOperationDTO??>
+	        <@crudOperations.addOperationResultMessage crudOperationDTO/>
+        </#if>
+        <#if carInternetContentsCrudOperationDTO??>
+	        <@crudOperations.addOperationResultMessage carInternetContentsCrudOperationDTO/>
+        </#if>
+	    <div class="col-lg-6 col-sm-6 col-xs-12">
 		   <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left"><#if CEFC.editForm.id??>${CEFC.editForm.model}<#else>${language.getTextSource('car')}</#if></h3>
@@ -92,7 +97,6 @@
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.model", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>', 'control-label has-error'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.engineLayout')}
@@ -105,8 +109,6 @@
                                    <option value="${engineLayout}" <#if spring.status.value?? && engineLayout == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineLayout.${engineLayout.getName()}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dd>
                            <@spring.bind "CEFC.editForm.engineDisposition"/>
@@ -116,8 +118,6 @@
                                    <option value="${engineDisposition}" <#if spring.status.value?? && engineDisposition == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.engineDisposition.${engineDisposition.getName()}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.chassisMaterials')}
@@ -198,8 +198,6 @@
                                    <option value="${bodyShape}" <#if spring.status.value?? && bodyShape == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.bodyShape.${bodyShape}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.seatsconfig')}
@@ -212,8 +210,6 @@
                                    <option value="${seatsConfig}" <#if spring.status.value?? && seatsConfig == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.seatsConfig.${seatsConfig}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.productionType')}
@@ -226,8 +222,6 @@
                                    <option value="${productionType}" <#if spring.status.value?? && productionType == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.productionType.${productionType.getName()}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.productionStartDate')}
@@ -252,56 +246,48 @@
                       </dt>
                       <dd>
 							<@spring.formInput "CEFC.editForm.weight", "class=form-control placeholder=${language.getTextSource('Kg')}", "text"/>
-                          	<@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.length')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.length", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                           <@spring.showErrors 'br'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.width')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                           <@spring.showErrors 'br'/>
                       </dd>
 					  <dt>
                            ${language.getTextSource('car.height')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.height", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-                           <@spring.showErrors 'br'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.acceleration')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.acceleration", "class=form-control placeholder=${language.getTextSource('S')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.topSpeed')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.topSpeed", "class=form-control placeholder=${language.getTextSource('Km/h')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.fuelTankCapacity')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.fuelTankCapacity", "class=form-control placeholder=${language.getTextSource('L')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.fuelConsumption')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.fuelConsumption", "class=form-control placeholder=${language.getTextSource('L/100Km')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.driveWheel')}
@@ -314,8 +300,6 @@
                                    <option value="${driveWheelType}" <#if spring.status.value?? && driveWheelType == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.driveWheelType.${driveWheelType}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('car.roadLegal')}
@@ -433,8 +417,6 @@
                                    <option value="${engineType}" <#if spring.status.value?? && engineType == spring.status.value?default("")> selected</#if>>${language.getTextSource('engine.type.${engineType}')}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.cylinderDisposition')}
@@ -447,8 +429,6 @@
                                    <option value="${engineCylinderDisposition}" <#if spring.status.value?? && engineCylinderDisposition == spring.status.value?default("")> selected</#if>>${engineCylinderDisposition}</option>
                                </#list>
                            </select>
-
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.cylinderBankAngle')}
@@ -461,56 +441,48 @@
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.numberOfCylinders", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.numberOfValves')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.numberOfValves", "class=form-control", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.displacement')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.size", "class=form-control placeholder=${language.getTextSource('CM3')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxPower')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.maxPower", "class=form-control placeholder=${language.getTextSource('CV')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxRPM')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.maxRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxPowerRPM')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.maxPowerRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxTorque')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.maxTorque", "class=form-control placeholder=${language.getTextSource('NM')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
                       <dt>
                            ${language.getTextSource('engine.maxTorqueRPM')}
                       </dt>
                       <dd>
                            <@spring.formInput "CEFC.editForm.engineEditForm.maxTorqueRPM", "class=form-control placeholder=${language.getTextSource('RPM')}", "text"/>
-                           <@spring.showErrors '<br>'/>
                       </dd>
 				   </dl>
 			   </div>
@@ -554,15 +526,12 @@
                                      <option value="${transmissionType}" <#if spring.status.value?? && transmissionType == spring.status.value>selected</#if>><h3 class="capitalizedText">${language.getTextSource('transmission.type.${transmissionType}')}</h3></option>
                                  </#list>
                              </select>
-
-                             <@spring.showErrors '<br>'/>
                        </dd>
                        <dt>
                              ${language.getTextSource('transmission.numOfGears')}
                        </dt>
                        <dd>
                              <@spring.formInput "CEFC.editForm.transmissionEditForm.numOfGears", "class=form-control", "text"/>
-                             <@spring.showErrors '<br>'/>
                        </dd>
 				   </dl>
 			   </div>
@@ -590,7 +559,6 @@
                        </dt>
                        <dd>
                             <@spring.formInput "CEFC.editForm.tyreSetEditForm.model", "class=form-control", "text"/>
-                            <@spring.showErrors '<br>'/>
                        </dd>
                        <dt>
                             ${language.getTextSource('tyreSet.type')}
@@ -716,8 +684,8 @@
 				   </#if>
                </div>
 		   </div>
-	   </div>
-	   <div class="col-lg-6 col-sm-6 col-xs-12">
+	    </div>
+	    <div class="col-lg-6 col-sm-6 col-xs-12">
 	       <div class="panel panel-default">
 			   <div class="panel-heading">
 					<h3 class="text-left">${language.getTextSource('pictureSet')}</h3>
@@ -832,7 +800,7 @@
                     </table>
                </div>
 		   </div>
-	   </div>
+	    </div>
    </div>
 </div>
 

@@ -4,91 +4,92 @@ import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
 import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.EditForm;
-import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
 import com.phistory.mvc.cms.service.EntityManagementService;
+import com.phistory.mvc.cms.service.crud.CrudService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Arrays;
-import java.util.Objects;
+import java.util.Optional;
 
-import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
+import static com.phistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR_INTERNET_CONTENTS;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CAR_INTERNET_CONTENTS_URL;
 import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.service.crud.impl.CarInternetContentCrudService.CAR_INTERNET_CONTENT_CRUD_SERVICE;
 import static com.phistory.mvc.controller.BaseControllerData.ID;
 import static com.phistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
-import static org.springframework.web.bind.annotation.RequestMethod.DELETE;
 
 /**
- * Controller to handle requests to "{@value CAR_INTERNET_CONTENTS_URL}" URLs
+ * Controller to handle requests to "{@link CMSBaseController#CAR_INTERNET_CONTENTS_URL}" URLs
  * <p>
  * Created by gonzalo on 9/9/16.
  */
 @Secured(USER_ROLE)
 @Slf4j
-@Controller
-@RequestMapping(value = CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
+@RestController
+@RequestMapping(CMS_CONTEXT + CAR_INTERNET_CONTENTS_URL + "/{" + ID + "}")
 public class CMSCarInternetContentEditController extends CMSBaseController {
 
     private EntityManagementService       entityManagementService;
     private CarInternetContentFormFactory carInternetContentFormFactory;
+    private CrudService                   carInternetContentCrudService;
 
     @Inject
-    public CMSCarInternetContentEditController(EntityManagementService entityManagementService,
-                                               CarInternetContentFormFactory carInternetContentFormFactory) {
+    public CMSCarInternetContentEditController(
+            @Named(CAR_INTERNET_CONTENT_CRUD_SERVICE) CrudService carInternetContentCrudService,
+            EntityManagementService entityManagementService,
+            CarInternetContentFormFactory carInternetContentFormFactory) {
+
         this.entityManagementService = entityManagementService;
         this.carInternetContentFormFactory = carInternetContentFormFactory;
+        this.carInternetContentCrudService = carInternetContentCrudService;
     }
 
-    @RequestMapping(value = DELETE_URL,
-            method = DELETE)
-    @ResponseBody
-    public String handleDeleteInternetContent(
-            @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditCommand) {
-        CarInternetContent carInternetContent = this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentEditCommand.getEditForm());
+    @DeleteMapping(value = DELETE_URL)
+    public CrudOperationDTO handleDeleteInternetContent(
+            @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditCommand,
+            BindingResult bindingResult) {
 
-        if (Objects.nonNull(carInternetContent)) {
-            try {
-                log.info("Deleting carInternetContent: {}", carInternetContent.toString());
-                super.getSqlCarInternetContentRepository().delete(carInternetContent);
+        CrudOperationDTO crudOperationDTO = this.carInternetContentCrudService.deleteEntity(carInternetContentEditCommand.adapt(),
+                                                                                            bindingResult);
 
-                EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();
-                entityManagementLoadCommand.setCarInternetContentId(carInternetContent.getCar().getId());
-                entityManagementLoadCommand.setQueryType(REMOVE_CAR);
-                this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+        CarInternetContent carInternetContent = (CarInternetContent) crudOperationDTO.getEntity();
+        Optional.ofNullable(carInternetContent)
+                .map(CarInternetContent::getId)
+                .ifPresent(carInternetContentId -> {
+                    try {
+                        EntityManagementLoadCommand entityManagementLoadCommand =
+                                EntityManagementLoadCommand.builder()
+                                                           .queryType(REMOVE_CAR_INTERNET_CONTENTS)
+                                                           .carInternetContentId(carInternetContentId)
+                                                           .build();
 
-                String successMessage = super.getMessageSource()
-                                             .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                                         new Object[] {"Car internet content"},
-                                                         LocaleContextHolder.getLocale());
+                        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+                    } catch (Exception e) {
+                        log.error("There was an error while deleting carInternetContent {} ",
+                                  carInternetContent.toString(),
+                                  e);
+                    }
+                });
 
-                return SUCCESS_MESSAGE + " : " + successMessage;
-            } catch (Exception e) {
-                log.error("There was an error while deleting picture; %s ",
-                          carInternetContent.getId(),
-                          e);
-                return EXCEPTION_MESSAGE + " : " + e.toString();
-            }
-        }
-        return  EXCEPTION_MESSAGE + " : No content found";
+        return crudOperationDTO;
     }
 
-    @ModelAttribute(value = CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
+    @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
     public CarInternetContentEditFormCommand createCarInternetContentCommand(@PathVariable(ID) Long contentId) throws Exception {
         CarInternetContent carInternetContent = super.getSqlCarInternetContentRepository()
                                                      .findOne(contentId);
 
-        CarInternetContentForm carInternetContentForm = this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent);
+        CarInternetContentForm carInternetContentForm =
+                this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent)
+                                                  .adapt();
         return new CarInternetContentEditFormCommand(Arrays.asList(carInternetContentForm));
     }
 }

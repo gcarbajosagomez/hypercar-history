@@ -22,7 +22,7 @@ import static com.phistory.mvc.springframework.view.filler.sql.SqlCarListModelFi
  * <p>
  * Created by gonzalo on 11/9/16.
  */
-@Component(value = SQL_CAR_LIST_MODEL_FILLER)
+@Component(SQL_CAR_LIST_MODEL_FILLER)
 public class SqlCarListModelFiller extends AbstractCarListModelFiller {
 
     public static final String SQL_CAR_LIST_MODEL_FILLER = "sqlCarListModelFiller";

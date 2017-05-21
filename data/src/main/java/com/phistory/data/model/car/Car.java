@@ -16,7 +16,6 @@ import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
 import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
@@ -25,7 +24,8 @@ import javax.persistence.*;
 import java.text.Normalizer;
 import java.util.Calendar;
 
-import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.ALL;
+import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.EnumType.ORDINAL;
 import static javax.persistence.GenerationType.IDENTITY;
 import static javax.persistence.TemporalType.DATE;

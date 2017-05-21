@@ -20,7 +20,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CarInternetContentForm implements EditForm {
+public class CarInternetContentForm {
 
     private Long id;
 
@@ -37,4 +37,8 @@ public class CarInternetContentForm implements EditForm {
 
     @NotNull
     private Car car;
+
+    public EditForm adapt() {
+        return new CarInternetContentFormAdapter(this);
+    }
 }

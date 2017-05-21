@@ -1,5 +1,7 @@
 package com.phistory.mvc.cms.command;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.EngineEditForm;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,13 +16,14 @@ import javax.validation.constraints.NotNull;
  */
 @Data
 @AllArgsConstructor
-public class EngineEditFormCommand {
+public class EngineEditFormCommand implements EditFormCommand {
 
     @Valid
     @NotNull
-    private EngineEditForm engineEditForm;
+    @JsonDeserialize(as = EngineEditForm.class)
+    private EditForm editForm;
 
     public EngineEditFormCommand() {
-        this.engineEditForm = new EngineEditForm();
+        this.editForm = new EngineEditForm();
     }
 }

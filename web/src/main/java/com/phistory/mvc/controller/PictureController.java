@@ -3,7 +3,8 @@ package com.phistory.mvc.controller;
 import com.phistory.data.model.picture.Picture;
 import com.phistory.mvc.command.PictureLoadAction;
 import com.phistory.mvc.command.PictureLoadCommand;
-import com.phistory.mvc.controller.util.PictureControllerUtil;
+import com.phistory.mvc.service.PictureService;
+import com.phistory.mvc.service.impl.PictureServiceImpl;
 import com.phistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import com.phistory.mvc.service.URILoggingService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,30 +31,28 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
         method = HEAD)
 public class PictureController {
 
-    private PictureControllerUtil pictureControllerUtil;
-    private URILoggingService     uriLoggingService;
+    private PictureService    pictureService;
+    private URILoggingService uriLoggingService;
 
     @Inject
-    public PictureController(PictureControllerUtil pictureControllerUtil,
+    public PictureController(PictureService pictureService,
                              URILoggingService uriLoggingService) {
-        this.pictureControllerUtil = pictureControllerUtil;
+        this.pictureService = pictureService;
         this.uriLoggingService = uriLoggingService;
     }
 
-    @RequestMapping(method = GET)
+    @GetMapping
     public void handleDefault(HttpServletResponse response,
                               HttpServletRequest request,
-                              @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command) {
-        try {
-            this.uriLoggingService.logURI(request);
-            Picture picture = this.pictureControllerUtil.loadPicture(command);
-            this.pictureControllerUtil.printPictureToResponse(picture, response);
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
+                              @ModelAttribute(PICTURE_LOAD_COMMAND_ACTION) PictureLoadCommand command) {
+
+        this.uriLoggingService.logURI(request);
+        Picture picture = this.pictureService.loadPicture(command);
+        this.pictureService.printPictureToResponse(picture, response);
+
     }
 
-    @ModelAttribute(value = PICTURE_LOAD_COMMAND_ACTION)
+    @ModelAttribute(PICTURE_LOAD_COMMAND_ACTION)
     public PictureLoadCommand createCommand(@PathVariable(PICTURE_LOAD_ACTION) PictureLoadAction loadAction,
                                             @RequestParam(value = ID, required = false) Long entityId) {
 

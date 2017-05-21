@@ -16,7 +16,7 @@ import static com.phistory.mvc.cms.controller.CMSBaseController.EDIT_URL;
  * <p>
  * Created by Gonzalo Carbajosa on 3/12/16.
  */
-@Component(value = "cmsBaseModelFiller")
+@Component("cmsBaseModelFiller")
 public class BaseModelFiller implements ModelFiller {
     private SqlCarDAO sqlCarDAO;
 
