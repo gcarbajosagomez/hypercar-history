@@ -42,13 +42,13 @@
                         type: 'GET',
                         url: '<@spring.url "/${cmsContext}${engineURL}/"/>' + engineId,
                         contentType: 'application/json; charset=UTF-8',
+                        dataType: 'json',
                         beforeSend: function (xhr) {
                             <@generic.addLoadingSpinnerToComponentScript "engine-main-div"/>
                             addCRSFTokenToAjaxRequest(xhr);
                         }
                     })
-                    .done(function (data) {
-                        var engine = data;
+                    .done(function (engine) {
                         $('#engine-main-div').unblock();
 
                         fillEngineInputValues(engine);

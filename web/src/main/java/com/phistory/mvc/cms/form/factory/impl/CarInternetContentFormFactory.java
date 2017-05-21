@@ -1,5 +1,6 @@
 package com.phistory.mvc.cms.form.factory.impl;
 
+import com.phistory.mvc.cms.form.CarInternetContentFormAdapter;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.extern.slf4j.Slf4j;
 
@@ -15,27 +16,31 @@ import com.phistory.data.model.car.CarInternetContent;
  */
 @Slf4j
 @Component
-public class CarInternetContentFormFactory implements EntityFormFactory<CarInternetContent, CarInternetContentForm> {
+public class CarInternetContentFormFactory implements EntityFormFactory<CarInternetContent, CarInternetContentFormAdapter> {
 
     @Override
-    public CarInternetContentForm buildFormFromEntity(CarInternetContent carInternetContent) {
+    public CarInternetContentFormAdapter buildFormFromEntity(CarInternetContent carInternetContent) {
         try {
-            return new CarInternetContentForm(carInternetContent.getId(),
-                                              carInternetContent.getLink(),
-                                              carInternetContent.getType(),
-                                              carInternetContent.getAddedDate(),
-                                              carInternetContent.getContentLanguage(),
-                                              carInternetContent.getCar());
+            CarInternetContentForm carInternetContentForm
+                    = new CarInternetContentForm(carInternetContent.getId(),
+                                                 carInternetContent.getLink(),
+                                                 carInternetContent.getType(),
+                                                 carInternetContent.getAddedDate(),
+                                                 carInternetContent.getContentLanguage(),
+                                                 carInternetContent.getCar());
+
+            return new CarInternetContentFormAdapter(carInternetContentForm);
         } catch (Exception e) {
             log.error(e.toString(), e);
         }
 
-        return new CarInternetContentForm();
+        return new CarInternetContentFormAdapter(new CarInternetContentForm());
     }
 
     @Override
-    public CarInternetContent buildEntityFromForm(CarInternetContentForm carInternetContentForm) {
+    public CarInternetContent buildEntityFromForm(CarInternetContentFormAdapter carInternetContentFormAdapter) {
         try {
+            CarInternetContentForm carInternetContentForm = carInternetContentFormAdapter.adapt();
             return new CarInternetContent(carInternetContentForm.getId(),
                                           carInternetContentForm.getLink(),
                                           carInternetContentForm.getType(),

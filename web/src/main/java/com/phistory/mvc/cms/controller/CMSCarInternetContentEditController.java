@@ -54,10 +54,10 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
 
     @DeleteMapping(value = DELETE_URL)
     public CrudOperationDTO handleDeleteInternetContent(
-            @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) EditFormCommand carInternetContentEditCommand,
+            @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditCommand,
             BindingResult bindingResult) {
 
-        CrudOperationDTO crudOperationDTO = this.carInternetContentCrudService.deleteEntity(carInternetContentEditCommand,
+        CrudOperationDTO crudOperationDTO = this.carInternetContentCrudService.deleteEntity(carInternetContentEditCommand.adapt(),
                                                                                             bindingResult);
 
         CarInternetContent carInternetContent = (CarInternetContent) crudOperationDTO.getEntity();
@@ -88,7 +88,8 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
                                                      .findOne(contentId);
 
         CarInternetContentForm carInternetContentForm =
-                this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent);
+                this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent)
+                                                  .adapt();
         return new CarInternetContentEditFormCommand(Arrays.asList(carInternetContentForm));
     }
 }

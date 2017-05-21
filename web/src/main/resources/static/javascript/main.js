@@ -41,13 +41,12 @@ function deletePicture(pictureId, deleteMessage) {
             $.ajax({
                 url: '/cms/pictures/' + pictureId + '/delete',
                 type: 'DELETE',
-                dataType: 'text',
+                dataType: 'json',
                 beforeSend: function (xhr) {
                     addCRSFTokenToAjaxRequest(xhr);
                 }
             })
-                .done(function (data) {
-                    var crudOperationDTO = JSON.parse(data);
+                .done(function (crudOperationDTO) {
                     if (crudOperationDTO.successMessage) {
                         $('#' + pictureId + '-picture-row').remove();
                     }
@@ -63,13 +62,13 @@ function deleteCarInternetContent(carInternetContentId, deleteMessage) {
             $.ajax({
                 url: '/cms/carInternetContents/' + carInternetContentId + '/delete',
                 type: 'DELETE',
-                dataType: 'text',
+                dataType: 'json',
                 beforeSend: function (xhr) {
                     addCRSFTokenToAjaxRequest(xhr);
                 }
             })
-                .done(function (data) {
-                    if (data.indexOf('successMessage : ') !== -1) {
+                .done(function (crudOperationDTO) {
+                    if (crudOperationDTO.successMessage) {
                         $('#car-internet-content-div-' + carInternetContentId).remove();
                     }
                 });

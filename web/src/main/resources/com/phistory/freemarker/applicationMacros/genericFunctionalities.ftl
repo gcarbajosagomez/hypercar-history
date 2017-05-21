@@ -44,7 +44,7 @@
                     <script src="/static/javascript/lib/bootstrap-paginator.min.js"></script>
         			<script src="/static/javascript/lib/bootbox.min.js"></script>
                     <script src="/static/javascript/lib/modernizr.custom.min.js"></script>
-					<script src="/static/javascript/main.js"></script>
+					<script src="/static/javascript/main.min.js"></script>
                     <#if requestIsManufacturerHistory || requestIsCarDetails || requestIsCarEdit>
                         <link rel="stylesheet" href="/static/stylesheet/blueimp-gallery.min.css">
                         <script src="/static/javascript/lib/blueimp-gallery.min.js"></script>

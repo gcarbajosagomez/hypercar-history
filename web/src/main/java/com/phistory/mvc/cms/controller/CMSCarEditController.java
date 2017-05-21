@@ -2,13 +2,11 @@ package com.phistory.mvc.cms.controller;
 
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.car.CarInternetContent;
-import com.phistory.mvc.cms.command.CarEditFormCommand;
-import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
-import com.phistory.mvc.cms.command.EditFormCommand;
-import com.phistory.mvc.cms.command.EntityManagementLoadCommand;
+import com.phistory.mvc.cms.command.*;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
+import com.phistory.mvc.cms.form.CarInternetContentFormAdapter;
 import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
@@ -94,23 +92,21 @@ public class CMSCarEditController extends CMSBaseController {
     public ModelAndView handleEditCar(Model model,
                                       @Valid @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
                                       BindingResult carFormEditCommandResult,
-                                      @Valid @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) EditFormCommand carInternetContentEditFormCommand,
+                                      @Valid @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand carInternetContentEditFormCommand,
                                       BindingResult carInternetContentEditFormCommandResult) {
 
         CrudOperationDTO carCrudOperationDTO = this.carCrudService.saveOrEditEntity(carFormEditCommand,
                                                                                     carFormEditCommandResult);
         model.addAttribute(CRUD_OPERATION_DTO, carCrudOperationDTO);
 
-        List<EditForm> carInternetContentForms =
-                ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).getEditForms();
         Car car = (Car) carCrudOperationDTO.getEntity();
-        List<EditForm> enrichedCarInternetContentForms =
-                this.enrichCarInternetContentForms(carInternetContentForms,
+        List<CarInternetContentForm> enrichedCarInternetContentForms =
+                this.enrichCarInternetContentForms(carInternetContentEditFormCommand.getEditForms(),
                                                    car);
-        ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).setEditForms(enrichedCarInternetContentForms);
+        carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
 
         CrudOperationDTO carInternetContentCrudOperationDTO =
-                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand,
+                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
                                                                     carInternetContentEditFormCommandResult);
 
         model.addAttribute(CAR_INTERNET_CONTENTS_CRUD_OPERATION_DTO, carInternetContentCrudOperationDTO);
@@ -131,11 +127,11 @@ public class CMSCarEditController extends CMSBaseController {
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
-    private List<EditForm> enrichCarInternetContentForms(List<EditForm> carInternetContentForms,
+    private List<CarInternetContentForm> enrichCarInternetContentForms(List<CarInternetContentForm> carInternetContentForms,
                                                          Car car) {
         return carInternetContentForms.stream()
                                       .map(carInternetContentForm -> {
-                                          ((CarInternetContentForm) carInternetContentForm).setCar(car);
+                                          carInternetContentForm.setCar(car);
                                           return carInternetContentForm;
                                       })
                                       .collect(Collectors.toList());
@@ -183,11 +179,12 @@ public class CMSCarEditController extends CMSBaseController {
     }
 
     @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
-    public EditFormCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) {
+    public CarInternetContentEditFormCommand createCarInternetContentEditFormCommand(@PathVariable(ID) Long carId) {
         List<CarInternetContent> carInternetContents = super.getSqlCarInternetContentRepository().getByCarId(carId);
-        List<EditForm> carInternetContentForms =
+        List<CarInternetContentForm> carInternetContentForms =
                 carInternetContents.stream()
                                    .map(this.carInternetContentFormFactory::buildFormFromEntity)
+                                   .map(CarInternetContentFormAdapter::adapt)
                                    .collect(Collectors.toList());
 
         return new CarInternetContentEditFormCommand(carInternetContentForms);

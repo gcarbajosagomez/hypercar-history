@@ -2,13 +2,14 @@ package com.phistory.mvc.cms.service.crud.impl;
 
 import com.phistory.data.model.car.CarInternetContent;
 import com.phistory.mvc.cms.command.CarInternetContentEditFormCommand;
+import com.phistory.mvc.cms.command.CarInternetContentEditFormCommandAdapter;
 import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarEditForm;
+import com.phistory.mvc.cms.form.CarInternetContentForm;
 import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
-import com.phistory.mvc.cms.service.crud.CrudService;
 import com.phistory.mvc.controller.util.DateProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.MessageSource;
@@ -16,6 +17,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.context.request.async.CallableProcessingInterceptorAdapter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -24,7 +26,6 @@ import java.util.List;
 import java.util.Objects;
 
 import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
-import static com.phistory.mvc.cms.controller.CMSBaseController.ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY;
 import static com.phistory.mvc.cms.controller.CMSBaseController.ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY;
 import static com.phistory.mvc.cms.service.crud.impl.CarInternetContentCrudService.CAR_INTERNET_CONTENT_CRUD_SERVICE;
 
@@ -62,10 +63,11 @@ public class CarInternetContentCrudService extends BaseCrudService {
             try {
                 List<CarInternetContent> savedCarInternetContents = new ArrayList<>();
 
-                for (EditForm carInternetContentForm : ((CarInternetContentEditFormCommand) editFormCommand).getEditForms()) {
+                for (CarInternetContentForm carInternetContentForm :
+                        ((CarInternetContentEditFormCommandAdapter) editFormCommand).getEditForms()) {
                     try {
                         CarInternetContent carInternetContent = (CarInternetContent)
-                                this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentForm);
+                                this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentForm.adapt());
                         if (Objects.isNull(carInternetContent.getAddedDate())) {
                             carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
                         }
@@ -78,8 +80,7 @@ public class CarInternetContentCrudService extends BaseCrudService {
                     }
                 }
             } catch (Exception e) {
-                log.error("There was an error while editing carInternetContents for car: {}",
-                          ((CarEditForm) editFormCommand.getEditForm()).getModel(),
+                log.error("There was an error while editing carInternetContents",
                           e);
                 crudOperationDTO.addErrorMessage(e.toString());
             }

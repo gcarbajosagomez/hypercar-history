@@ -7,7 +7,6 @@ import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
-import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.service.crud.CrudService;
 import com.phistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
 import com.phistory.mvc.controller.CarListController;
@@ -26,8 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -112,7 +109,7 @@ public class CMSCarController extends CMSBaseController {
     public ModelAndView handleSaveNewCar(Model model,
                                          @Valid @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand,
                                          BindingResult carFormEditCommandResult,
-                                         @Valid @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) EditFormCommand
+                                         @Valid @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND) CarInternetContentEditFormCommand
                                                  carInternetContentEditFormCommand,
                                          BindingResult carInternetContentEditFormCommandResult) {
 
@@ -121,16 +118,14 @@ public class CMSCarController extends CMSBaseController {
         model.addAttribute(CRUD_OPERATION_DTO, crudOperationDTO);
 
         Car car = (Car) crudOperationDTO.getEntity();
-        List<EditForm> enrichedCarInternetContentForms =
-                this.enrichCarInternetContentForms(
-                        ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).getEditForms(),
-                        car);
+        List<CarInternetContentForm> enrichedCarInternetContentForms =
+                this.enrichCarInternetContentForms(carInternetContentEditFormCommand.getEditForms(),
+                                                   car);
 
-        ((CarInternetContentEditFormCommand) carInternetContentEditFormCommand).setEditForms
-                (enrichedCarInternetContentForms);
+        carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
 
         CrudOperationDTO carInternetContentCrudOperationDTO =
-                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand,
+                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
                                                                     carInternetContentEditFormCommandResult);
         model.addAttribute(CAR_INTERNET_CONTENTS_CRUD_OPERATION_DTO, carInternetContentCrudOperationDTO);
 
@@ -150,11 +145,11 @@ public class CMSCarController extends CMSBaseController {
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
-    private List<EditForm> enrichCarInternetContentForms(List<EditForm> carInternetContentForms,
-                                                         Car car) {
+    private List<CarInternetContentForm> enrichCarInternetContentForms(List<CarInternetContentForm> carInternetContentForms,
+                                                                       Car car) {
         return carInternetContentForms.stream()
                                       .map(carInternetContentForm -> {
-                                          ((CarInternetContentForm) carInternetContentForm).setCar(car);
+                                          carInternetContentForm.setCar(car);
                                           return carInternetContentForm;
                                       })
                                       .collect(Collectors.toList());
