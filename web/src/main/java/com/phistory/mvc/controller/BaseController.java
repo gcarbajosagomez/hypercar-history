@@ -9,6 +9,8 @@ import com.phistory.data.dao.sql.SqlContentSearchDAO;
 import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.mvc.controller.util.CarControllerUtil;
+import com.phistory.mvc.manufacturer.Manufacturer;
+import com.phistory.mvc.service.ManufacturerService;
 import com.phistory.mvc.service.URILoggingService;
 import com.phistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.Getter;
@@ -25,7 +27,10 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Optional;
+
 import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
+import static com.phistory.mvc.manufacturer.Manufacturer.*;
 
 /**
  * Base controller that contains common data and functionality
@@ -73,7 +78,7 @@ public abstract class BaseController extends BaseControllerData {
     private InMemoryManufacturerDAO inMemoryManufacturerDAO;
 
     @Inject
-    private ModelFiller                 baseModelFiller;
+    private ModelFiller baseModelFiller;
 
     @Inject
     @Getter
@@ -86,6 +91,10 @@ public abstract class BaseController extends BaseControllerData {
     @Getter
     private CarControllerUtil carControllerUtil;
 
+    @Inject
+    @Getter
+    private ManufacturerService manufacturerService;
+
     @ModelAttribute
     public ModelAndView fillBaseModel(@RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt,
                                       Model model,
@@ -97,6 +106,11 @@ public abstract class BaseController extends BaseControllerData {
             model.addAttribute("requestIsDesktop", device.isNormal());
             model.addAttribute("deviceMake", device.getDevicePlatform().name());
             model.addAttribute("doNotTrack", dnt);
+            model.addAttribute(MANUFACTURER, Optional.ofNullable((Manufacturer) request.getAttribute(MANUFACTURER_DATA))
+                                                     .orElse(PAGANI));
+
+            this.manufacturerService.mapToInMemoryEntity(model)
+                                    .ifPresent(manufacturer -> model.addAttribute(MANUFACTURER_ENTITY, manufacturer));
 
             this.baseModelFiller.fillModel(model);
 
@@ -106,7 +120,6 @@ public abstract class BaseController extends BaseControllerData {
 
             return new ModelAndView(ERROR_VIEW_NAME);
         }
-
     }
 
     protected Model fillModel(Model model) {

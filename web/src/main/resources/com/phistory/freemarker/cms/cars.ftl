@@ -13,7 +13,7 @@
 		<div class="col-lg-2">
 			<div class="list-group">
 				<#list cmsModels as car>
-    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>'>
+    				<a class="list-group-item" href='<@spring.url "/${manufacturerShortName}/${cmsContext}${carsURL}/${car.id}/${editURL}"/>'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
@@ -65,7 +65,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='/${manufacturerShortName}/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	
@@ -98,7 +98,7 @@
                         <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
                     </div>
                     <figcaption>
-                        <a href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+                        <a href='<@spring.url "/${manufacturerShortName}/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
                             <h3 class="text-center model-name">${car.model}</h3>
                         </a>
                     </figcaption>

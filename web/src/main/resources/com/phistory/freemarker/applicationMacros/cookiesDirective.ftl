@@ -5,7 +5,7 @@
 
 <#macro loadCookiesDirectiveScript>
     $.cookiesDirective({
-        privacyPolicyUri: '/${cookiesPolicyURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>',
+        privacyPolicyUri: '/${manufacturerShortName}/${cookiesPolicyURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>',
         position: 'bottom',
         message: '${language.getTextSource('cookiesDirectiveMessage')}',
         deleteAndBlockCookiesMessage: '${language.getTextSource('cookiesDirectiveMessage.deleteAndBlockCookiesMessage')}',

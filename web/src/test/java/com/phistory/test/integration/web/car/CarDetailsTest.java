@@ -34,8 +34,17 @@ public class CarDetailsTest extends BaseIntegrationTest {
     @Override
     public void setupTest() throws Exception {
         super.setupBaseTest();
-        this.webDriver.get(TEST_SERVER_HOST + this.port + "/" + CARS_URL + "/" + IRRELEVANT_CAR_MODEL);
+        this.webDriver.get(this.getTestUrl());
         this.carDetailsPage = new CarDetailsPage(this.webDriver);
+    }
+
+    @Override
+    protected String getTestUrl() {
+        return TEST_SERVER_HOST +
+               this.port + "/" +
+               IRRELEVANT_MANUFACTURER.getShortName() + "/" +
+               CARS_URL + "/" +
+               IRRELEVANT_CAR_MODEL;
     }
 
     @Test

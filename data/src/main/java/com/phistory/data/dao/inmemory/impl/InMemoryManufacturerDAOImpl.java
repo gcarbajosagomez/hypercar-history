@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by Gonzalo Carbajosa on 6/01/17.
@@ -83,12 +84,12 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
         return this.manufacturers;
     }
 
-    public Manufacturer getByName(String manufacturerName) {
+    @Override
+    public Optional<Manufacturer> getByName(String manufacturerName) {
         return this.manufacturers.stream()
                                  .filter(inMemoryManufacturer -> inMemoryManufacturer.getName()
                                                                                      .toLowerCase()
                                                                                      .equals(manufacturerName.toLowerCase()))
-                                 .findFirst()
-                                 .orElse(null);
+                                 .findFirst();
     }
 }

@@ -21,10 +21,10 @@ public abstract class BaseControllerData {
      ******Request params*****
      *************************/
     public static final String ID                         = "id";
-    public static final String CAR_ID                     = "cId";
-    public static final String CAR_MODEL_NAME             = "mN";
-    public static final String ENGINE_ID                  = "eId";
-    public static final String PICTURE_ID                 = "pId";
+    public static final String CAR_ID                     = "cid";
+    public static final String CAR_MODEL_NAME             = "cmn";
+    public static final String ENGINE_ID                  = "eid";
+    public static final String PICTURE_ID                 = "pid";
     public static final String PAG_NUM                    = "pn";
     public static final String PAG_NUM_DATA               = "pagNumData";
     public static final String CARS_PER_PAGE              = "cpp";
@@ -32,6 +32,7 @@ public abstract class BaseControllerData {
     public static final String CONTENT_TO_SEARCH          = "cts";
     public static final String SEARCH_TOTAL_RESULTS_DATA  = "searchTotalResultsData";
     public static final String LANGUAGE_DATA              = "l";
+    public static final String MANUFACTURER_DATA          = "m";
     public static final String DO_NOT_TRACK_REQUEST_PARAM = "dnt";
 
     /*************************
@@ -63,6 +64,7 @@ public abstract class BaseControllerData {
     public static final String CAR_DETAILS                          = "carDetails";
     public static final String ENGINE                               = "engine";
     public static final String MANUFACTURER                         = "manufacturer";
+    public static final String MANUFACTURER_ENTITY                  = "manufacturerEntity";
     public static final String CONTACT_US_SUCCESS_MESSAGE           = "contactUsSuccessMessage";
     public static final String CONTACT_US_EXCEPTION_MESSAGE         = "contactUsExceptionMessage";
     public static final String YOUTUBE_VIDEO_IDS                    = "youtubeVideoIds";

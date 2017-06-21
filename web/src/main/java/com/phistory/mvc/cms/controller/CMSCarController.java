@@ -48,6 +48,7 @@ public class CMSCarController extends CMSBaseController {
     private ModelFiller                pictureModelFiller;
     private CarEditModelFiller         carEditModelFiller;
     private AbstractCarListModelFiller sqlCarListModelFiller;
+    private AbstractCarListModelFiller inMemoryCarListModelFiller;
     private CMSCarControllerUtil       cmsCarControllerUtil;
     private CarControllerUtil          carControllerUtil;
 
@@ -59,6 +60,7 @@ public class CMSCarController extends CMSBaseController {
                             ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
                             AbstractCarListModelFiller sqlCarListModelFiller,
+                            AbstractCarListModelFiller inMemoryCarListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
                             CarControllerUtil carControllerUtil) {
         this.carCrudService = carCrudService;
@@ -68,6 +70,7 @@ public class CMSCarController extends CMSBaseController {
         this.pictureModelFiller = pictureModelFiller;
         this.carEditModelFiller = carEditModelFiller;
         this.sqlCarListModelFiller = sqlCarListModelFiller;
+        this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
         this.cmsCarControllerUtil = cmsCarControllerUtil;
         this.carControllerUtil = carControllerUtil;
     }
@@ -76,7 +79,7 @@ public class CMSCarController extends CMSBaseController {
     public ModelAndView handleCarsList(Model model,
                                        PaginationDTO paginationDTO) {
         try {
-            this.carControllerUtil.fillCarListModel(this.sqlCarListModelFiller, model, paginationDTO);
+            this.carControllerUtil.fillCarListModel(this.inMemoryCarListModelFiller, model, paginationDTO);
             return new ModelAndView();
         } catch (Exception e) {
             log.error(e.toString(), e);

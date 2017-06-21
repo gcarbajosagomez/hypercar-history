@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.*;
 
@@ -48,5 +49,14 @@ public class Manufacturer implements GenericEntity {
     @Override
     public String toString() {
         return this.name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof Manufacturer) {
+            Manufacturer another = (Manufacturer) o;
+            return Objects.nonNull(this.id) && another.getId().equals(this.id);
+        }
+        return false;
     }
 }

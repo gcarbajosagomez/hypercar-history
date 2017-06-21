@@ -1,11 +1,14 @@
 package com.phistory.mvc.service.impl;
 
+import com.phistory.mvc.language.Language;
 import com.phistory.mvc.service.URILoggingService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.Optional;
 
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
 
@@ -32,10 +35,8 @@ public class URILoggingServiceImpl implements URILoggingService {
     private String extractRequestUriFromRequest(HttpServletRequest request) {
         StringBuilder requestedURI = new StringBuilder();
 
-        String language = (String) request.getAttribute(LANGUAGE_DATA);
-        if (!StringUtils.isEmpty(language)) {
-            requestedURI.append("/" + language);
-        }
+        Optional.ofNullable((Language) request.getAttribute(LANGUAGE_DATA))
+                .ifPresent(language -> requestedURI.append("/" + language.getIsoCode()));
 
         requestedURI.append(request.getRequestURI());
 

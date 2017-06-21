@@ -49,12 +49,12 @@
             "@context":"http://schema.org/",
             "@type":"Car",
             "url":"${siteURL}${requestURI}/",
-            "manufacturer":"${language.getTextSource('pagani')}",
+            "manufacturer":"${language.getTextSource('${manufacturerName}')}",
             "name":"${car.model}",
             "model":"${car.model}",
             "category":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
             "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}",
-            "description":"${language.getTextSource('pagani')} ${car.model}",
+            "description":"${language.getTextSource('${manufacturerName}')} ${car.model}",
             "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}",
             "numberOfForwardGears":"${carUtils.writeCarNumericData (car.transmission.numOfGears?default(-1))}",
             "driveWheelConfiguration":"${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
@@ -100,7 +100,7 @@
         "position":3,
         "item": {
             "@id":"${siteURL}${requestURI}/",
-            "name":"${language.getTextSource('pagani')} ${car.model}"
+            "name":"${language.getTextSource('${manufacturerName}')} ${car.model}"
         }
     }
 </#macro>
@@ -110,13 +110,13 @@
         {
             "@context":"http://schema.org/",
             "@type":"WebSite",
-            "name":"${language.getTextSource('paganiHistory')}",
+            "name":"${language.getTextSource('${manufacturerName}History')}",
             "url":"${siteURL}",
             "about":"${language.getTextSource('footer.aboutUs.text', [models?size])}",
             "keywords":"${metaKeywords}",
             "potentialAction": {
                 "@type":"SearchAction",
-                "target":"${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
+                "target":"${manufacturerShortName}/${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
                 "query-input": {
                     "@type":"PropertyValueSpecification",
                     "valueName":"contentToSearch",

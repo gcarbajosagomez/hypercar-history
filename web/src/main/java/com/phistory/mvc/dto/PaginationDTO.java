@@ -24,7 +24,7 @@ public class PaginationDTO {
     private Integer itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
     private Integer             firstResult;
     private List<GenericEntity> items;
-    private String pageTitle;
+    private String              pageTitle;
 
     public PaginationDTO(Integer pagNum, Integer itemsPerPage) {
         this.pagNum = pagNum;

@@ -1,5 +1,6 @@
 package com.phistory.mvc.springframework.interceptor;
 
+import com.phistory.mvc.language.Language;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -7,6 +8,8 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import java.util.Optional;
 
 import static com.phistory.mvc.controller.BaseControllerData.LANGUAGE_DATA;
 import static com.phistory.mvc.controller.BaseControllerData.PICTURES_URL;
@@ -25,11 +28,12 @@ public class LocaleChangeInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         if (this.uriCanChangeLocale(request.getRequestURI())) {
-            String newLocale = (String) request.getAttribute(LANGUAGE_DATA);
-            if (newLocale != null) {
-                this.localeResolver.setLocale(request, response, StringUtils.parseLocaleString(newLocale));
-                this.localeResolver.addCookie(response, newLocale);
-            }
+            Optional.ofNullable((Language) request.getAttribute(LANGUAGE_DATA))
+                    .map(Language::getIsoCode)
+                    .ifPresent(newLanguage -> {
+                        this.localeResolver.setLocale(request, response, StringUtils.parseLocaleString(newLanguage));
+                        this.localeResolver.addCookie(response, newLanguage);
+                    });
         }
 
         // Proceed in any case.

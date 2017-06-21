@@ -38,9 +38,6 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
         this.entityManager = entityManager;
     }
 
-    /**
-     * Triggers the index process of the previously stored objects in the database
-     */
     @Override
     public void indexPreviouslyStoredDatabaseRecords() {
         try {
@@ -51,21 +48,16 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
         }
     }
 
-    /**
-     * Search content with Hibernate Search
-     *
-     * @param searchCommand
-     * @return ContentSearchDto filled with the content entities to search
-     */
     @Override
     public List<GenericEntity> searchContent(SearchCommand searchCommand) {
         FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(this.entityManager);
+        Class<?> entityClass = searchCommand.getEntityClass();
 
         // create native Lucene query using the query DSL alternatively you can write the Lucene query using the Lucene query parser
         // or the Lucene programmatic API. The Hibernate Search DSL is recommended though
         QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
                                                          .buildQueryBuilder()
-                                                         .forEntity(searchCommand.getEntityClass())
+                                                         .forEntity(entityClass)
                                                          .get();
 
         Map<String, SimpleDataConditionCommand> conditionMap = searchCommand.getConditionMap();
@@ -83,9 +75,8 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
                                                                .createQuery();
 
                                //create a Hibernate Search query out of a Lucene one
-                               FullTextQuery fullTextQuery =
-                                       fullTextEntityManager.createFullTextQuery(luceneQuery,
-                                                                                 searchCommand.getEntityClass());
+                               FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery,
+                                                                                                       entityClass);
 
                                fullTextQuery = this.applySortingToSearchQuery(searchCommand, fullTextQuery);
                                fullTextQuery.setFirstResult(searchCommand.getFirstResult());

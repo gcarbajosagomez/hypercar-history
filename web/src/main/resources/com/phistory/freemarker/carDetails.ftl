@@ -111,7 +111,7 @@
 																	${language.getTextSource('unitsOfMeasure.metric')}
 																</div>
 																<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 center-block" style="padding-right: 0px; padding-top: 5px;">
-																	<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
+																	<i id="metric-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>
 																</div>
 															</div>
 														</a>
@@ -124,7 +124,7 @@
 																	${language.getTextSource('unitsOfMeasure.imperial')}
 																</div>
 																<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 center-block" style="padding-right: 0px; padding-top: 5px;">
-																	<i id="imperial-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
+																	<i id="imperial-units-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>
 																</div>
 															</div>
 														</a>

@@ -33,23 +33,23 @@
         right: 5px !important;
     }
 
-    .pagani-history-navbar {
+    .manufacturer-history-navbar {
         min-height: 10em;
         margin: 10px 10px 20px;
     }
 
     @media (orientation: landscape) {
-        .pagani-history-navbar {
+        .manufacturer-history-navbar {
             min-height: 8.5em;
         }
     }
 
-    .pagani-history-navbar .navbar-nav > li {
+    .manufacturer-history-navbar .navbar-nav > li {
         margin-top: 0.1em;
         margin-bottom: 0.1em;
     }
 
-    .pagani-history-navbar .navbar-nav > li > a {
+    .manufacturer-history-navbar .navbar-nav > li > a {
         padding-top: 0.9em;
         padding-bottom: 0.9em;
     }
@@ -68,17 +68,17 @@
     }
 
     @media only screen and (min-width: 768px) {
-        .pagani-history-navbar .navbar-nav > li > a {
+        .manufacturer-history-navbar .navbar-nav > li > a {
             padding-top: 25px;
         }
     }
 
-    .pagani-history-navbar .navbar-nav > li > a,
-    .pagani-history-navbar .navbar-nav > li > #search-container > a {
+    .manufacturer-history-navbar .navbar-nav > li > a,
+    .manufacturer-history-navbar .navbar-nav > li > #search-container > a {
         font-size: 15px;
     }
 
-    .pagani-history-navbar-brand {
+    .manufacturer-history-navbar-brand {
         font-size: 26px;
         width: 80% !important;
         padding-bottom: 0px;
@@ -86,7 +86,7 @@
     }
 
     @media (orientation: landscape) {
-        .pagani-history-navbar-brand {
+        .manufacturer-history-navbar-brand {
             height: 92% !important;
         }
     }
@@ -118,7 +118,6 @@
     .content-search-input {
         transition: none;
         width: 55% !important;
-        color: white;
     }
 
     .content-search-input:focus {
@@ -136,7 +135,7 @@
     }
 
     @media (orientation: landscape) {
-        .pagani-history-navbar {
+        .manufacturer-history-navbar {
             min-height: 8.5em;
         }
     }
@@ -151,7 +150,7 @@
         }
     }
 
-    .pagani-history-footer {
+    .manufacturer-history-footer {
         height: auto;
         padding: 25px;
         margin-left: 10px;

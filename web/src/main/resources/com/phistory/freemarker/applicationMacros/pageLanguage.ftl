@@ -15,7 +15,8 @@
                 var url = mainForm.action.replace(/\/(${languageEnglishCode}|${languageSpanishCode})\//, '/');
 		   		var matches = mainForm.action.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
                	var domain = matches && matches[0];
-               	var url = url.replace(domain, domain + locale + '/');
+
+               	url = url.replace(domain, domain + '${manufacturerShortName}/' + locale + '/');
 
 		   		$.ajax({
 		        	type:'GET',
@@ -95,14 +96,14 @@
 	<#assign pageLanguages = [languageSpanishCode, languageEnglishCode]>
 	<#list pageLanguages as language>
 		<#if requestURI?contains("/" + language + "/")>
-            <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + language + "/", '/')}"/>
+            <link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + language + "/", '/')}"/>
 		<#else>
             <#if requestURI?contains("/" + languageSpanishCode + "/")>
-                <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageSpanishCode + "/", "/" + languageEnglishCode + "/")}"/>
+                <link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageSpanishCode + "/", "/" + languageEnglishCode + "/")}"/>
             <#elseif requestURI?contains("/" + languageEnglishCode + "/")>
-                <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageEnglishCode + "/", "/" + languageSpanishCode + "/")}"/>
+                <link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageEnglishCode + "/", "/" + languageSpanishCode + "/")}"/>
             <#else>
-                <link rel="alternate" hreflang="${language}" href="/${language}${requestURI}"/>
+                <link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}/${language}${requestURI}"/>
             </#if>
 		</#if>
 	</#list>

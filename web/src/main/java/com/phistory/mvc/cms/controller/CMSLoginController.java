@@ -1,21 +1,21 @@
 package com.phistory.mvc.cms.controller;
 
-import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
-import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_URL;
-
-import javax.servlet.http.HttpServletResponse;
-
 import lombok.extern.slf4j.Slf4j;
-
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
+
+import static com.phistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
+import static com.phistory.mvc.cms.controller.CMSBaseController.LOGIN_URL;
+
 @Slf4j
 @Controller
-@RequestMapping({CMS_CONTEXT + LOGIN_URL})
+@RequestMapping({CMS_CONTEXT, CMS_CONTEXT + LOGIN_URL})
 public class CMSLoginController extends CMSBaseController {
 
     @RequestMapping
@@ -26,15 +26,22 @@ public class CMSLoginController extends CMSBaseController {
                                     @RequestParam(value = LOGOUT, required = false) String logout) {
         try {
             if (success != null) {
-                request.sendRedirect(CARS_URL);
+                String manufacturerShortName = super.getManufacturerService().getFromModel(model).getShortName();
+                request.sendRedirect("/" + manufacturerShortName + "/" + CMS_CONTEXT + CARS_URL);
             } else if (error != null) {
                 model.addAttribute(LOGGED_IN, false);
-                model.addAttribute(LOGIN_ERROR, "Invalid username and password!");
+                model.addAttribute(LOGIN_ERROR, super.getMessageSource()
+                                                     .getMessage("cms.login.invalidCredentials",
+                                                                 new Object[] {},
+                                                                 LocaleContextHolder.getLocale()));
             } else if (logout != null) {
                 model.addAttribute(LOGGED_IN, false);
-                model.addAttribute(LOGOUT, "You've been logged out successfully.");
+                model.addAttribute(LOGOUT, super.getMessageSource()
+                                                .getMessage("cms.logout.successful",
+                                                            new Object[] {},
+                                                            LocaleContextHolder.getLocale()));
             }
-            //we haven't logged in yet
+            //not logged in yet
             else {
                 model.addAttribute(LOGGED_IN, false);
             }

@@ -6,7 +6,7 @@
 </#macro>
 
 <#macro addCMSCarsPagination chunkedModelsList=[]>
-	<@carsPagination "/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
+	<@carsPagination "/${manufacturerShortName}/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
 </#macro>
 
 <#macro carsPagination url chunkedModelsList=[]>
@@ -162,12 +162,12 @@
 <#function getCarsPerPageURI carsPerPageNumber>
 	<#assign uri>
 		<#if requestURI?matches(".{1,}([&?]${pagNum}=).{1,}")>
-			${requestURI?replace("${pagNum}=[0-9]{1,}&${carsPerPage}=[0-9]{1,}", "${pagNum}=1&${carsPerPage}=${carsPerPageNumber}", "r")}
+        	/${manufacturerShortName}${requestURI?replace("${pagNum}=[0-9]{1,}&${carsPerPage}=[0-9]{1,}", "${pagNum}=1&${carsPerPage}=${carsPerPageNumber}", "r")}
 		<#else>
 			<#if requestURI?contains("?")>
-				${requestURI}&${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+            	/${manufacturerShortName}${requestURI}&${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
 			<#else>
-            	${requestURI}?${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+            	/${manufacturerShortName}${requestURI}?${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
 			</#if>
 		</#if>
 	</#assign>

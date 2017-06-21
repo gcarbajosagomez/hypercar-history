@@ -1,6 +1,7 @@
 package com.phistory.mvc.controller;
 
 import com.phistory.mvc.cms.form.ContactUsMessageForm;
+import com.phistory.mvc.dto.ContactUsMessageDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.StringUtils;
@@ -13,8 +14,6 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 import static com.phistory.mvc.controller.BaseControllerData.CONTACT_US_URL;
@@ -40,10 +39,8 @@ public class ContactUsController extends BaseController {
     private static final String DEFAULT_SMTP_PORT       = "587";
 
     @RequestMapping(produces = APPLICATION_JSON_UTF8_VALUE)
-    public Map<String, String> handleSendContactUsMessage(@RequestBody @Valid ContactUsMessageForm contactUsMessageForm,
+    public ContactUsMessageDTO handleSendContactUsMessage(@RequestBody @Valid ContactUsMessageForm contactUsMessageForm,
                                                           BindingResult result) {
-
-        Map<String, String> resultMessage = new HashMap<>();
 
         try {
             if (!result.hasErrors()) {
@@ -76,29 +73,33 @@ public class ContactUsController extends BaseController {
                 message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(RECIPIENT_EMAIL_ADDRESS));
                 message.setSubject(contactUsMessageForm.getSubject());
                 Transport.send(message);
+                log.info("'Contact Us' message from: " + replyTo + " sent successfully");
 
                 String successMessage = super.getMessageSource().getMessage("footer.contactUs.messageSentSuccessfully",
-                                                                            null,
+                                                                            new Object[] {},
                                                                             LocaleContextHolder.getLocale());
 
-                resultMessage.put(CONTACT_US_SUCCESS_MESSAGE, successMessage);
-                log.info("'Contact Us' message from: " + replyTo + " sent successfully");
+                return ContactUsMessageDTO.builder()
+                                          .successMessage(successMessage)
+                                          .build();
             } else {
-                String validationErrorsMessage = super.getMessageSource().getMessage("footer.contactUs.mandatoryFieldsError",
-                                                                                     null,
-                                                                                     LocaleContextHolder.getLocale());
+                String validationErrorMessage = super.getMessageSource().getMessage("footer.contactUs.mandatoryFieldsError",
+                                                                                    new Object[] {},
+                                                                                    LocaleContextHolder.getLocale());
 
-                resultMessage.put(CONTACT_US_EXCEPTION_MESSAGE, validationErrorsMessage);
+                return ContactUsMessageDTO.builder()
+                                          .errorMessage(validationErrorMessage)
+                                          .build();
             }
         } catch (MessagingException me) {
             log.error(me.toString(), me);
             String errorMessage = super.getMessageSource().getMessage("footer.contactUs.error",
-                                                                      null,
+                                                                      new Object[] {},
                                                                       LocaleContextHolder.getLocale());
 
-            resultMessage.put(CONTACT_US_EXCEPTION_MESSAGE, errorMessage);
+            return ContactUsMessageDTO.builder()
+                                      .errorMessage(errorMessage)
+                                      .build();
         }
-
-        return resultMessage;
     }
 }
