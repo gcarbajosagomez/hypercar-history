@@ -29,6 +29,7 @@ public class PathVariableLocaleFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
+        log.info("Request coming from domain {}", request.getHeader("Host"));
         String url = defaultString(request.getRequestURI().substring(request.getContextPath().length()));
         String language = this.getLanguageFromURL(url);
         if (!Objects.isNull(language)) {
