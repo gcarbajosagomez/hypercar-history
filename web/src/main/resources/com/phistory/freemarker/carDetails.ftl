@@ -16,8 +16,14 @@
 			<#assign numberOfVideos = youtubeVideoIds?size/><#else><#assign numberOfVideos = 0/>
 		</#if>
 
-		<#assign title>${language.getTextSource('pagani')} ${car.model} ${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}</#assign>
-		<#assign metaKeywords = language.getTextSource('meta.keywords.carDetails', [car.model])/>
+		<#assign title>${language.getTextSource('pagani')} ${car.model} <#if (numberOfVideos > 0)>${language.getTextSource('car.details.title', [numberOfPictures, numberOfVideos])?lower_case}<#else>${language.getTextSource('car.details.title.noVideos', [numberOfPictures])?lower_case}</#if></#assign>
+		<#assign metaKeywords>
+			<#if (numberOfVideos > 0)>
+				${language.getTextSource('meta.keywords.carDetails', [car.model])}
+			<#else>
+				${language.getTextSource('meta.keywords.carDetails.noVideos', [car.model])}
+			</#if>
+		</#assign>
 	<#else>
 		<#assign title>${language.getTextSource('meta.title.noCarFound')}</#assign>
 	</#if>
