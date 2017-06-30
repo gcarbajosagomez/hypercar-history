@@ -2,6 +2,7 @@
 <#import "picture.ftl" as picture/>
 <#import "pagination.ftl" as pagination/>
 <#import "genericFunctionalities.ftl" as generic/>
+<#import "uriUtils.ftl" as uriUtils/>
 <#import "/spring.ftl" as spring/>
 
 <#function writeCarNumericData data>
@@ -200,7 +201,7 @@
             <li style="z-index: <#if zIndex??>${zIndex}<#else>1</#if>">
                 <figure>
                     <div class="caption vertically-aligned-div vertically-aligned-preview-div">
-                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        <a href='${uriUtils.buildDomainURI("/${carsURL}/${car.getNormalizedModelName()}")}'>
                             <img class="img-thumbnail preview-img"
                                  src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'
                                  alt="${car.manufacturer.name} ${modelName} preview"
@@ -208,7 +209,7 @@
                         </a>
                     </div>
                     <figcaption>
-                        <a href='<@spring.url "/${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        <a href='${uriUtils.buildDomainURI("/${carsURL}/${car.getNormalizedModelName()}")}'>
                             <h3 class="text-<#if requestIsDesktop>center<#else>left center-block</#if>
                                             <#if (requestIsDesktop && modelName?length > 33) || (!requestIsDesktop && modelName?length > 21)> double-line-car-model-name</#if>">${modelName}</h3>
                         </a>

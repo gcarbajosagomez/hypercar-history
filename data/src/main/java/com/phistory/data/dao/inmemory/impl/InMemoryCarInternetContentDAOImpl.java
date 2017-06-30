@@ -93,12 +93,14 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
         return this.carInternetContents;
     }
 
+    @Override
     public List<CarInternetContent> getAllVideos() {
         return this.carInternetContents.stream()
                                        .filter(content -> content.getType().equals(VIDEO))
                                        .collect(Collectors.toList());
     }
 
+    @Override
     public List<CarInternetContent> getVideosByCarId(Long carId) {
         return this.carInternetContents.stream()
                                        .filter(content -> content.getCar().getId().equals(carId) &&
@@ -106,6 +108,7 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
                                        .collect(Collectors.toList());
     }
 
+    @Override
     public List<CarInternetContent> getReviewArticlesByCarId(Long carId) {
         return this.carInternetContents.stream()
                                        .filter(content -> content.getCar().getId().equals(carId) &&

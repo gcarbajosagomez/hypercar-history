@@ -5,6 +5,7 @@ import com.phistory.data.dao.inmemory.InMemoryCarDAO;
 import com.phistory.data.dao.inmemory.InMemoryDAO;
 import com.phistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.phistory.data.dao.sql.SqlCarRepository;
+import com.phistory.data.model.Manufacturer;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.model.picture.Picture;
 import lombok.extern.slf4j.Slf4j;
@@ -80,6 +81,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
                  .ifPresent(this.cars::remove);
     }
 
+    @Override
     public Car getCarByPictureId(Long pictureId) {
         return this.inMemoryPictureDAO.getEntities()
                                               .stream()
@@ -102,6 +104,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
         return this.cars;
     }
 
+    @Override
     public Car getByQueryCommand(CarQueryCommand queryCommand) {
         return this.cars.stream()
                         .filter(car -> Objects.isNull(queryCommand.getCarId()) || car.getId().equals(queryCommand.getCarId()))
@@ -113,20 +116,19 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
                         .orElse(null);
     }
 
-    /**
-     * Get all {@link Car}s whose {@link Car#visible} is true ordered by their {@link Car#productionStartDate} descending
-     *
-     * @return
-     */
-    public List<Car> getAllVisibleOrderedByProductionStartDate() {
+    @Override
+    public List<Car> getAllVisibleOrderedByProductionStartDate(Manufacturer manufacturer) {
         return this.cars.stream()
+                        .filter(car -> car.getManufacturer().equals(manufacturer))
                         .filter(Car::getVisible)
                         .sorted(Comparator.comparing(Car::getProductionStartDate))
                         .collect(Collectors.toList());
     }
 
-    public long countVisibleCars() {
+    @Override
+    public long countVisibleCars(Manufacturer manufacturer) {
         return this.cars.stream()
+                        .filter(car -> car.getManufacturer().equals(manufacturer))
                         .filter(Car::getVisible)
                         .count();
     }

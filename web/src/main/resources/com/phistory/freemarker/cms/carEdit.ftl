@@ -6,6 +6,7 @@
 <#import "../applicationMacros/internetContent.ftl" as internetContent/>
 <#import "../applicationMacros/picture.ftl" as pictureUtil/>
 <#import "../applicationMacros/carUtils.ftl" as carUtils/>
+<#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#if CEFC.editForm.id??>
     <#assign numberOfPictures = CEFC.editForm.pictureFileEditCommands?size/>
@@ -41,18 +42,17 @@
                                                                                 ${language.getTextSource('cms.saveCar')}
                                                                             </#if>"
                                                                      onClick="<#if CEFC.editForm.id??>
-                                                                                    editEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.editForm.id}/${editURL}"/>', '${language.getTextSource('car.confirmEdit')}')
+                                                                                    editEntity('${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${CEFC.editForm.id}/${editURL}")}', '${language.getTextSource('car.confirmEdit')}')
                                                                               <#else>
-                                                                                    saveEntity('<@spring.url "/${cmsContext}${carsURL}/${saveURL}"/>', '${language.getTextSource('car.confirmSave')}')
+                                                                                    saveEntity('${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${saveURL}")}', '${language.getTextSource('car.confirmSave')}')
                                                                               </#if>;"/>
 
                         <#if CEFC.editForm.id??>
-                            <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${carsURL}/${CEFC.editForm.id}/${deleteURL}"/>',
-                                                                            '${language.getTextSource('car.confirmDelete')}');"/>
+                            <a class="btn btn-danger" onClick="deleteEntity('${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${CEFC.editForm.id}/${deleteURL}")}', '${language.getTextSource('car.confirmDelete')}');"/>
                                 <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteCar')}
                             </a>
                         </#if>
-                        <a class="btn btn-default" href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>'>
+                        <a class="btn btn-default" href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${editURL}")}'>
                             <span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newCar')}
                         </a>
 			   </div>
@@ -705,7 +705,7 @@
                                         <#assign pictureId = picture.id/>
                                         <tr id="${picture.id}-picture-row">
                                             <td style="width:70%">
-                                                <a href='<@spring.url "/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}"/>' title="${CEFC.editForm.manufacturer.name}${CEFC.editForm.model}" gallery="#images-gallery">
+                                                <a href='${uriUtils.buildDomainURI("/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}")}' title="${CEFC.editForm.manufacturer.name}${CEFC.editForm.model}" gallery="#images-gallery">
                                                     <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.editForm.manufacturer.name} ${CEFC.editForm.model}">
                                                 </a>
                                             </td>

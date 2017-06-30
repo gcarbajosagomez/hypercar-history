@@ -104,12 +104,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                      .ifPresent(this.pictures::remove);
     }
 
-    /**
-     * Get a {@link List} of {@link Picture#id} whose {@link Picture#car#id} matches the supplied {@code carId}
-     *
-     * @param carId
-     * @return The resulting {@link List<Long>}
-     */
+    @Override
     public List<Long> getIdsByCarId(Long carId) {
         return this.pictures.stream()
                             .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
@@ -118,12 +113,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                             .collect(Collectors.toList());
     }
 
-    /**
-     * Get a {@link List} of {@link Picture}s whose {@link Picture#car#id} matches the supplied {@code carId}
-     *
-     * @param carId
-     * @return The resulting {@link List<Picture>}
-     */
+    @Override
     public List<Picture> getByCarId(Long carId) {
         return this.pictures.stream()
                             .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
@@ -131,11 +121,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                             .collect(Collectors.toList());
     }
 
-    /**
-     * Get all the {@link Picture#id}s
-     *
-     * @return the {@link List} of {@link Picture} ids
-     */
+    @Override
     public List<Long> getAllIds() {
         return this.pictures.stream()
                             .map(Picture::getId)
@@ -155,12 +141,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
         return this.pictures;
     }
 
-    /**
-     * Get the preview {@link Picture} for the supplied {@code carId}
-     *
-     * @param carId
-     * @return
-     */
+    @Override
     public Optional<Picture> getCarPreview(Long carId) {
         List<Picture> previewCandidates =
                 this.pictures.stream()

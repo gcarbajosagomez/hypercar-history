@@ -3,6 +3,7 @@
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/pagination.ftl" as pagination/>
 <#import "../applicationMacros/carUtils.ftl" as carUtils/>
+<#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
 <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
@@ -13,7 +14,7 @@
 		<div class="col-lg-2">
 			<div class="list-group">
 				<#list cmsModels as car>
-    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>'>
+    				<a class="list-group-item" href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${car.id}/${editURL}")}'>
     					<h5 class="text-center list-group-element">${car.model}</h5>
     				</a>
   				</#list> 
@@ -65,7 +66,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}")}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	
@@ -98,7 +99,7 @@
                         <img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}"/>' alt="${car.manufacturer.name} ${car.model}">
                     </div>
                     <figcaption>
-                        <a href='<@spring.url "/${cmsContext}${carsURL}/${car.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+                        <a href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${car.id}/${editURL}")}' style="padding-bottom: 0px; padding-top: 0px;">
                             <h3 class="text-center model-name">${car.model}</h3>
                         </a>
                     </figcaption>

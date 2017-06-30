@@ -10,10 +10,10 @@ function addCRSFTokenToAjaxRequest(xhr) {
 
 function submitLoginForm(login) {
     if (login) {
-        $("#main-form")[0].action = "/cms/login";
+        $("#main-form")[0].action = "login";
     }
     else {
-        $("#main-form")[0].action = "/cms/login/logout";
+        $("#main-form")[0].action = "login/logout";
     }
 
     var csrfData = $("<input>").attr("type", "hidden").attr("name", "_csrf").val($("meta[name='_csrf']").attr("content"));

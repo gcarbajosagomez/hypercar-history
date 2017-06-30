@@ -5,16 +5,19 @@
 <#import "picture.ftl" as picture/>
 <#import "advertising.ftl" as advertising/>
 <#import "cookiesDirective.ftl" as cookiesDirective/>
+<#import "uriUtils.ftl" as uriUtils/>
 
 <#macro startPage title='' metaKeywords=language.getTextSource('meta.keywords.index') metaDescription=''>
-    <@identifyRequestURL/>
+    <@uriUtils.identifyRequestURL/>
 	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
+	<#global manufacturerShortName = manufacturer.getShortName()/>
+	<#global manufacturerName = manufacturer.getName()/>
 
 	<!DOCTYPE html>
-    	<#global lang = language.getTextSource('paganiHistory.language')/>
+    	<#global lang = language.getTextSource('${manufacturerName}History.language')/>
         <html lang="${lang}" class="no-js">
             <head>
-            		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('paganiHistory')}</title>
+            		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('${manufacturerName}History')}</title>
             		<meta charset="UTF-8">
 					<meta name="viewport" content="width=device-width, initial-scale=1.0">
                 	<meta name="keywords" content="${metaKeywords}">
@@ -29,8 +32,10 @@
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
 				    <#if !requestIsDesktop>
                         <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
@@ -92,10 +97,10 @@
             <body>
               	<div id="main-wrap-div">
 	            	<div class="wrap">
-    	        		<nav class="navbar navbar-default pagani-history-navbar" role="navigation">
+    	        		<nav class="navbar navbar-default manufacturer-history-navbar" role="navigation">
           					<div class="navbar-header">
-                                <a class="navbar-brand pagani-history-navbar-brand" href='<@spring.url "/"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
-									<img class="main-logo" src="/static/img/pagani-history-logo.png" alt="Home page" title="Home page">
+								<a class="navbar-brand manufacturer-history-navbar-brand" href='${uriUtils.buildDomainURI("/")}'>
+									<img class="main-logo" src="/static/img/${manufacturerName}/main-logo.png" alt="Home page" title="Home page">
 								</a>
 
                                 <a class="toggle-button navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">
@@ -106,9 +111,9 @@
           					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
-                                     	<li><a href='<@spring.url "/${manufacturerHistoryURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>
+                                     	<li><a href='${uriUtils.buildDomainURI("/${manufacturerHistoryURL}")}'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>
                                         <hr class="navbar-divider">
-										<li><a href='<@spring.url "/${carsURL}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>${carsHeaderLinkValue?upper_case}</a></li>
+										<li><a href='${uriUtils.buildDomainURI("/${carsURL}")}'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <hr class="navbar-divider">
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
@@ -124,7 +129,7 @@
                                                                      alt="${language.getTextSource('language.spanish')?upper_case}"/>
           													</div>
           													<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
-	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
+	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>
     	      												</div>
 	    	      										</div>
     	    	  									</a>
@@ -141,7 +146,7 @@
                                                                      alt="${language.getTextSource('language.english')?upper_case}"/>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
-		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin blue sr-only"></i>
+		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>
     		      											</div>
         		  										</div>
           											</a>
@@ -154,17 +159,17 @@
               									<a id="cms-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('cms')?upper_case} <b class="caret"></b></a>
           										<ul class="dropdown-menu">
           											<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${manufacturersURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listManufacturers')?upper_case}</a>
+          												<a href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}")}' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listManufacturers')?upper_case}</a>
 													</li>
 													<li role="presentation">
-          												<a id="new-manufacturer-link" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')?upper_case}</a>
+          												<a id="new-manufacturer-link" href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${editURL}")}' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newManufacturer')?upper_case}</a>
 													</li>
                                                     <hr role="separator" class="divider">
         	  										<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${carsURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listCars')?upper_case}</a>
+          												<a href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}")}' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.listCars')?upper_case}</a>
 													</li>
 													<li role="presentation">
-          												<a href='<@spring.url "/${cmsContext}${carsURL}/${editURL}"/>' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newCar')?upper_case}</a>
+          												<a href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${editURL}")}' class="cursor-pointer" role="menuitem" tabindex="-1">${language.getTextSource('cms.newCar')?upper_case}</a>
 													</li>
                                                     <hr role="separator" class="divider">
 													<li role="presentation">
@@ -199,12 +204,13 @@
 						</form>
 					</div>
 
-					<div class="pagani-history-footer navbar">
+					<div class="manufacturer-history-footer navbar">
 						<div class="row">
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>
 								<p class="text-muted text-left">
-									${language.getTextSource('footer.aboutUs.text', [models?size])}
+									${language.getTextSource('footer.aboutUs.text',
+															 [uriUtils.buildDomainURI("/${carsURL}?pn=1&cpp=${models?size}"), models?size])}
 								</p>
         					</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
@@ -259,38 +265,9 @@
         },
         message: '<div class="row" style="<#if requestIsDesktop>width: 60%; margin-left: 40%<#else>width: 320px; margin-left: -50px</#if> !important;">' +
                      '<h1 class="<#if requestIsDesktop>col-lg-4 col-md-6 col-sm-12 col-xs-12<#else>col-lg-4 col-md-6 col-sm-12 col-xs-6</#if>" style="color: #fff">${language.getTextSource('loading')}</h1>' +
-                     '<i id="loading-gif" class="<#if requestIsDesktop>col-lg-2 col-md-4 col-sm-12 col-xs-12<#else>col-lg-4 col-md-4 col-sm-12 col-xs-4</#if> fa fa-snowflake-o fa-4x fa-spin blue"></i>' +
+                     '<i id="loading-gif" class="<#if requestIsDesktop>col-lg-2 col-md-4 col-sm-12 col-xs-12<#else>col-lg-4 col-md-4 col-sm-12 col-xs-4</#if> fa fa-snowflake-o fa-4x fa-spin manufacturer-colour"></i>' +
                  '</div>'
     });
-</#macro>
-
-<#macro identifyRequestURL>
-    <#global requestIsManufacturerHistory = false/>
-    <#global requestIsCMS = false/>
-    <#global requestIsCarEdit = false/>
-    <#global requestIsCars = false/>
-    <#global requestIsCarDetails = false/>
-    <#global requestIsModelsSearch = false/>
-
-	<#if requestURI?contains(manufacturerHistoryURL)>
-		<#global requestIsManufacturerHistory = true/>
-	</#if>
-    <#if requestURI?contains(cmsContext)>
-        <#global requestIsCMS = true/>
-        <#if requestURI?matches("/" + cmsContext + carsURL + "/([0-9]{1,})/" + editURL + ".{0,}")>
-            <#global requestIsCarEdit = true/>
-        </#if>
-    </#if>
-	<#if requestURI?contains(carsURL)>
-        <#if requestURI?matches(".*/" + carsURL + "[^/]*")>
-			<#global requestIsCars = true/>
-        <#else>
-			<#global requestIsCarDetails = true/>
-        </#if>
-    </#if>
-    <#if requestURI?contains(modelsSearchURL)>
-        <#global requestIsModelsSearch = true/>
-    </#if>
 </#macro>
 
 <#macro addBackToTopButton>

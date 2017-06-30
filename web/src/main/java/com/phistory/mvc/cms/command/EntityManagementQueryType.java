@@ -33,15 +33,14 @@ public enum EntityManagementQueryType {
     }
 
     public static EntityManagementQueryType map(String name) {
-        Optional<EntityManagementQueryType> action = Stream.of(EntityManagementQueryType.values())
-                                                           .filter(value -> value.getName()
-                                                                                 .toLowerCase()
-                                                                                 .equals(name.toLowerCase()))
-                                                           .findFirst();
-        if (!action.isPresent()) {
-            log.error("No PictureLoadAction found for name: {}", name);
-            return null;
-        }
-        return action.get();
+        return Stream.of(EntityManagementQueryType.values())
+                     .filter(value -> value.getName()
+                                           .toLowerCase()
+                                           .equals(name.toLowerCase()))
+                     .findFirst()
+                     .orElseGet(() -> {
+                         log.error("No PictureLoadAction found for name: {}", name);
+                         return null;
+                     });
     }
 }

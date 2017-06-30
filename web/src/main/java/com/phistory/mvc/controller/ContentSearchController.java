@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 
 import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.LIKE;
 import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+import static com.phistory.mvc.springframework.view.filler.inmemory.InMemoryCarListModelFiller.IN_MEMORY_CAR_LIST_MODEL_FILLER;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
 /**
@@ -34,11 +36,13 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @RequestMapping(value = MODELS_SEARCH_URL,
         method = HEAD)
 public class ContentSearchController extends BaseController {
-    private AbstractCarListModelFiller inMemoryCarsListModelFiller;
+
+    private AbstractCarListModelFiller inMemoryCarListModelFiller;
 
     @Inject
-    public ContentSearchController(AbstractCarListModelFiller inMemoryCarsListModelFiller) {
-        this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
+    public ContentSearchController(
+            @Named(IN_MEMORY_CAR_LIST_MODEL_FILLER) AbstractCarListModelFiller inMemoryCarListModelFiller) {
+        this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
     }
 
     @GetMapping
@@ -51,9 +55,10 @@ public class ContentSearchController extends BaseController {
             clonedContentSearchDto.setItemsPerPage(0);
             SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
             List<GenericEntity> searchResults = this.getSqlContentSearchDAO().searchContent(searchCommand);
-            searchResults = this.removeNotVisibleCars(searchResults);
+            searchResults = this.filterCarsByManufacturer(model, searchResults);
+            searchResults = this.removeNonVisibleCars(searchResults);
 
-            super.getCarControllerUtil().fillCarListModel(this.inMemoryCarsListModelFiller, model, contentSearchDTO);
+            super.getCarControllerUtil().fillCarListModel(this.inMemoryCarListModelFiller, model, contentSearchDTO);
             model.addAttribute(CARS, this.extractModelsListFromSearchResults(searchResults, contentSearchDTO));
             model.addAttribute(MODELS, searchResults);
             model.addAttribute(SEARCH_TOTAL_RESULTS_DATA, searchResults.size());
@@ -76,7 +81,7 @@ public class ContentSearchController extends BaseController {
     private SearchCommand createSearchCommand(ContentSearchDTO contentSearchDto) {
         Map<String, Boolean> orderByMap = new HashMap<>();
         orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
-        //TODO
+        //TODO order results by name and productionStartDate
         //orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
 
         SimpleDataConditionCommand contentToSearchCondition =
@@ -95,7 +100,17 @@ public class ContentSearchController extends BaseController {
                                  contentSearchDto.getItemsPerPage());
     }
 
-    private List<GenericEntity> removeNotVisibleCars(List<GenericEntity> cars) {
+    private List<GenericEntity> filterCarsByManufacturer(Model model, List<GenericEntity> cars) {
+        return super.getManufacturerService()
+                    .getInMemoryEntityFromModel(model)
+                    .map(manufacturer -> cars.stream()
+                                             .filter(car -> ((Car) car).getManufacturer().equals(manufacturer))
+                                             .filter(car -> ((Car) car).getVisible())
+                                             .collect(Collectors.toList()))
+                    .orElse(cars);
+    }
+
+    private List<GenericEntity> removeNonVisibleCars(List<GenericEntity> cars) {
         return cars.stream()
                    .filter(car -> ((Car) car).getVisible())
                    .collect(Collectors.toList());

@@ -2,6 +2,7 @@
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
+<#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#if MEFC.editForm.id??>
 	<#assign title>${MEFC.editForm.name}</#assign>
@@ -27,17 +28,17 @@
 					                                                                                        ${language.getTextSource('cms.saveManufacturer')}
 					                                                                                  </#if>"
                                                                                                onClick="<#if MEFC.editForm.id??>
-                                                                                                            editEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${editURL}"/>', '${language.getTextSource('manufacturer.confirmEdit')}');
+                                                                                                            editEntity('${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${editURL}")}', '${language.getTextSource('manufacturer.confirmEdit')}');
                                                                                                         <#else>
-                                                                                                            saveEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${saveURL}"/>', '${language.getTextSource('manufacturer.confirmSave')}');
+                                                                                                            saveEntity('${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${saveURL}")}', '${language.getTextSource('manufacturer.confirmSave')}');
                                                                                                         </#if>"/>
 					<#if MEFC.editForm.id??>
-                        <a class="btn btn-danger" onClick="deleteEntity('<@spring.url "/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${deleteURL}"/>',
+                        <a class="btn btn-danger" onClick="deleteEntity('${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${MEFC.editForm.id}/${deleteURL}")}',
 																		'${language.getTextSource('manufacturer.confirmDelete')}');">
                             <span class="glyphicon glyphicon-remove-sign"></span> ${language.getTextSource('cms.deleteManufacturer')}
 						</a>
 					</#if>
-                   	<a class="btn btn-default" href='<@spring.url "/${cmsContext}${manufacturersURL}/${editURL}"/>'>
+                   	<a class="btn btn-default" href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${editURL}")}'>
                     	<span class="glyphicon glyphicon-plus-sign"></span> ${language.getTextSource('cms.newManufacturer')}
                    	</a>
 			   </div>

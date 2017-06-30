@@ -8,7 +8,12 @@
 	<div id="main-login-div" class="col-md-offset-2 col-md-offset-0 col-lg-8 col-sm-10 col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-body form-horizontal">
-				<#assign resultDTO = {"errorMessages" : [error!""],"successMessage" : logout!""}>
+				<#if error?? && error?has_content>
+					<#assign resultDTO = {"errorMessages" : [error],"successMessage" : logout!""}>
+				<#else>
+					<#assign resultDTO = {"successMessage" : logout!""}>
+				</#if>
+
 				<@crudOperations.addOperationResultMessage resultDTO/>
 				<#if loggedIn?? && loggedIn == false>
   					<div class="form-group">

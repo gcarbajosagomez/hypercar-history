@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
 import static com.phistory.mvc.cms.controller.CMSBaseController.CARS_URL;
+import static com.phistory.mvc.springframework.view.filler.inmemory.InMemoryCarListModelFiller.IN_MEMORY_CAR_LIST_MODEL_FILLER;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -28,20 +30,21 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @RequestMapping(value = CARS_URL,
         method = {GET, HEAD})
 public class CarListController extends BaseController {
+
     private static final String CAR_LIST_PAGE_TITLE_MESSAGE_KEY = "meta.title.allModels";
 
-    private AbstractCarListModelFiller inMemoryCarsListModelFiller;
+    private AbstractCarListModelFiller inMemoryCarListModelFiller;
 
     @Inject
-    public CarListController(AbstractCarListModelFiller inMemoryCarsListModelFiller) {
-        this.inMemoryCarsListModelFiller = inMemoryCarsListModelFiller;
+    public CarListController(@Named(IN_MEMORY_CAR_LIST_MODEL_FILLER) AbstractCarListModelFiller inMemoryCarListModelFiller) {
+        this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
     }
 
     @RequestMapping
     public ModelAndView handleCarsList(Model model,
                                        PaginationDTO paginationDTO) {
         try {
-            super.getCarControllerUtil().fillCarListModel(this.inMemoryCarsListModelFiller, model, paginationDTO);
+            super.getCarControllerUtil().fillCarListModel(this.inMemoryCarListModelFiller, model, paginationDTO);
             return new ModelAndView(CARS);
         } catch (Exception e) {
             log.error(e.toString(), e);
@@ -52,20 +55,28 @@ public class CarListController extends BaseController {
     @RequestMapping("/" + PAGINATION_URL)
     @ResponseBody
     public PaginationDTO handlePagination(Model model, PaginationDTO paginationDTO) {
-        model = this.inMemoryCarsListModelFiller.fillPaginatedModel(model, paginationDTO);
+        model = this.inMemoryCarListModelFiller.fillPaginatedModel(model, paginationDTO);
 
         paginationDTO.setItems((List<GenericEntity>) model.asMap().get(CARS));
 
-        String pageTitle = super.getMessageSource()
-                                .getMessage(CAR_LIST_PAGE_TITLE_MESSAGE_KEY,
-                                            new Object[] {
-                                                    super.getInMemoryCarDAO().getAllVisibleOrderedByProductionStartDate().size(),
-                                                    paginationDTO.getFirstResult() + 1,
-                                                    paginationDTO.getLastResult()
-                                            },
-                                            LocaleContextHolder.getLocale());
+        super.getManufacturerService()
+             .getInMemoryEntityFromModel(model)
+             .ifPresent(manufacturer -> {
+                 Object[] args = new Object[] {
+                         super.getInMemoryCarDAO()
+                              .getAllVisibleOrderedByProductionStartDate(manufacturer).size(),
+                         paginationDTO.getFirstResult() + 1,
+                         paginationDTO.getLastResult()
+                 };
 
-        paginationDTO.setPageTitle(pageTitle);
+                 String pageTitle = super.getMessageSource()
+                                         .getMessage(CAR_LIST_PAGE_TITLE_MESSAGE_KEY,
+                                                     args,
+                                                     LocaleContextHolder.getLocale());
+
+                 paginationDTO.setPageTitle(pageTitle);
+             });
+
         return paginationDTO;
     }
 }

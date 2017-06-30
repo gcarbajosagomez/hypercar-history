@@ -1,12 +1,13 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
+<#import "uriUtils.ftl" as uriUtils/>
 
 <#macro addCarsPagination chunkedModelsList=[]>
 	<@carsPagination "/${carsURL}/${paginationURL}" chunkedModelsList/>
 </#macro>
 
 <#macro addCMSCarsPagination chunkedModelsList=[]>
-	<@carsPagination "/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
+	<@carsPagination "/${manufacturerShortName}/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
 </#macro>
 
 <#macro carsPagination url chunkedModelsList=[]>
@@ -120,7 +121,7 @@
 	         			 				   			
 	         			$.ajax({
         	        			type:'GET',
-	        					url: "/${modelsSearchURL}",
+	        					url: "${uriUtils.buildDomainURI("/${modelsSearchURL}")}",
         						data: contentSearchDto,
                 				beforeSend: function(xhr)
                 				{
@@ -161,13 +162,13 @@
 
 <#function getCarsPerPageURI carsPerPageNumber>
 	<#assign uri>
-		<#if requestURI?matches(".{1,}([&?]${pagNum}=).{1,}")>
-			${requestURI?replace("${pagNum}=[0-9]{1,}&${carsPerPage}=[0-9]{1,}", "${pagNum}=1&${carsPerPage}=${carsPerPageNumber}", "r")}
+		<#if requestURI?matches(".*([&?]${pagNum}=).*")>
+			<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>/${manufacturerShortName}</#if>${requestURI?replace("${pagNum}=[0-9]*&${carsPerPage}=[0-9]*", "${pagNum}=1&${carsPerPage}=${carsPerPageNumber}", "r")}
 		<#else>
 			<#if requestURI?contains("?")>
-				${requestURI}&${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+				<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>/${manufacturerShortName}</#if>${requestURI}&${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
 			<#else>
-            	${requestURI}?${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
+				<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>/${manufacturerShortName}</#if>${requestURI}?${pagNum}=1&${carsPerPage}=${carsPerPageNumber}
 			</#if>
 		</#if>
 	</#assign>

@@ -2,6 +2,7 @@
 <#import "pageLanguage.ftl" as language/>
 <#import "genericFunctionalities.ftl" as generic/>
 <#import "advertising.ftl" as advertising/>
+<#import "uriUtils.ftl" as uriUtils/>
 
 <#macro addHandleContentSearchFunctionScript>
 	<script type='application/javascript'>
@@ -15,7 +16,7 @@
 			         			   
 			$.ajax({            
 		        	type:'GET',
-			        url: "/${modelsSearchURL}<#if doNotTrack>?${doNotTrackParam}=true</#if>",
+			        url: "${uriUtils.buildDomainURI("/${modelsSearchURL}")}",
 		    	    data: contentSearchDto,
 			        beforeSend: function(xhr)
 		    	    {
@@ -30,7 +31,7 @@
 					document.children[0].innerHTML = data;
 					contentSearchDto.searchTotalResults = $("#search-total-results")[0].value;			
 		
-					<#--Pagination is only created if needed -->
+					<#--pagination is only created if needed -->
 		            if (contentSearchDto.searchTotalResults > 0)
 		            {
 		              	<@pagination.createContentSearchPaginationFunction/>
@@ -48,7 +49,7 @@
 						$("#main-car-list-div").append(noContentFoundElements);				
 		            }                      
 		
-					window.history.pushState(null,'',"/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
+					window.history.pushState(null,'',<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>"/${manufacturerShortName}</#if>/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 					setupContentSearchEventListeners();	
 				}
 				

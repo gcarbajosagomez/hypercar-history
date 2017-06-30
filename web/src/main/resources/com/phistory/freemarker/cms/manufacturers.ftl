@@ -1,6 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
+<#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <@generic.startPage language.getTextSource('meta.title.allManufacturers')/>
 
@@ -9,7 +10,7 @@
         <div class="col-lg-2">
 			<div class="list-group">
 				<#list manufacturers as manufacturer>
-    				<a class="list-group-item" href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>'>
+    				<a class="list-group-item" href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}")}'>
     					<h5 class="text-center list-group-element">${manufacturer.name}</h5>
     				</a>
   				</#list> 
@@ -79,7 +80,7 @@
                		<img class="img-thumbnail preview-img" src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${manufacturer.id}"/>' alt="${manufacturer.name}">
 				</div>
 				<figcaption>
-			 		<a href='<@spring.url "/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}"/>' style="padding-bottom: 0px; padding-top: 0px;">
+			 		<a href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}")}' style="padding-bottom: 0px; padding-top: 0px;">
 						<h3 class="text-center model-name">${manufacturer.name}</h3>
 					</a>
 				</figcaption>

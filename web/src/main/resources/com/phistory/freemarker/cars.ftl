@@ -5,6 +5,7 @@
     <#import "applicationMacros/pagination.ftl" as pagination/>
     <#import "applicationMacros/metaData.ftl" as metaData/>
     <#import "applicationMacros/carUtils.ftl" as carUtils/>
+    <#import "applicationMacros/uriUtils.ftl" as uriUtils/>
 
     <#assign metaKeywords = language.getTextSource('meta.keywords.cars', [models?size])/>
     <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
@@ -18,12 +19,12 @@
             <div class="col-lg-2">
                 <div class="list-group">
                     <#list models as car>
-                        <a class="list-group-item" href='<@spring.url "${carsURL}/${car.getNormalizedModelName()}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'>
+                        <a class="list-group-item" href='${uriUtils.buildDomainURI("/${carsURL}/${car.getNormalizedModelName()}")}'/>
                             <h5 class="text-center list-group-element">${car.model?upper_case}</h5>
                         </a>
                     </#list>
                     <#if models??>
-                        <a class="list-group-item" <#if requestIsCars>href='<@spring.url "${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}"/><#if doNotTrack>&${doNotTrackParam}=true</#if>'</#if>>
+                        <a class="list-group-item" <#if requestIsCars>href='${uriUtils.buildDomainURI("/${carsURL}?${pagNum}=1&${carsPerPage}=${models?size}")}'</#if>>
                             <h5 class="text-center<#if requestIsCars> list-group-element</#if>">${models?size} ${language.getTextSource('models')?upper_case}</h5>
                         </a>
                     </#if>
@@ -84,12 +85,12 @@
                 carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
                 carRowString = carRowString.concat(	  	 	"<figure>");
                 carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-                carRowString = carRowString.concat(				    "<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
-                carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
+                carRowString = carRowString.concat(				    "<a href='${carsURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
+                carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
                 carRowString = carRowString.concat(				    "</a>");
                 carRowString = carRowString.concat(				"</div>");
                 carRowString = carRowString.concat(				"<figcaption>");
-                carRowString = carRowString.concat(					"<a href='/${carsURL}/" + cars[i].normalizedModelName + "'>");
+                carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
 
                 if (carModel.length < 33)
                 {

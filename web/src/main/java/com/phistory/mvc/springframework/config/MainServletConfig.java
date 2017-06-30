@@ -5,7 +5,6 @@ import com.phistory.mvc.language.Language;
 import com.phistory.mvc.springframework.filter.PathVariableLocaleFilter;
 import com.phistory.mvc.springframework.interceptor.LocaleChangeInterceptor;
 import freemarker.template.TemplateException;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -26,7 +25,6 @@ import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.phistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.phistory.mvc.controller.BaseControllerData.*;
 import static java.util.Locale.ENGLISH;
-import static org.springframework.beans.factory.annotation.Autowire.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 /**
@@ -42,21 +40,21 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     private static final String  NO_CACHE_VALUE                  = "0";
-    private static final Integer TWO_WEEKS_SECONDS               = 1209600;
-    private static final Integer THIRTY_MINUTES_SECONDS          = 1800;
-    private static final String  ROBOTS_FILE_NAME                = "robots.txt";
-    private static final String  SITEMAP_FILE_NAME               = "sitemap.xml";
-    private static final String  FAVICON_FILE_NAME               = "favicon.ico";
-    private static final String  DEFAULT_TIMEZONE                = "UTC";
-    private static final String  FREEMARKER_ENCODING             = "UTF-8";
-    private static final String  FREEMARKER_TEMLATE_FILES_SUFFIX = ".ftl";
+    private static final Integer TWO_WEEKS_SECONDS                = 1209600;
+    private static final Integer THIRTY_MINUTES_SECONDS           = 1800;
+    private static final String  ROBOTS_FILE_NAME                 = "robots.txt";
+    private static final String  SITEMAP_FILE_NAME                = "sitemap.xml";
+    private static final String  FAVICON_FILE_NAME                = "favicon.ico";
+    private static final String  DEFAULT_TIMEZONE                 = "UTC";
+    private static final String  FREEMARKER_ENCODING              = "UTF-8";
+    private static final String  FREEMARKER_TEMPLATE_FILES_SUFFIX = ".ftl";
 
-    @Bean(name = "viewResolver", autowire = BY_NAME)
+    @Bean
     public FreeMarkerViewResolver internalResourceViewResolver() {
         FreeMarkerViewResolver viewResolver = new FreeMarkerViewResolver();
         viewResolver.setCache(true);
         viewResolver.setPrefix("");
-        viewResolver.setSuffix(FREEMARKER_TEMLATE_FILES_SUFFIX);
+        viewResolver.setSuffix(FREEMARKER_TEMPLATE_FILES_SUFFIX);
         viewResolver.setExposeSpringMacroHelpers(true);
         viewResolver.setContentType("text/html;charset=" + FREEMARKER_ENCODING);
 
@@ -91,6 +89,11 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        return new LocaleChangeInterceptor(this.localeResolver());
+    }
+
+    @Bean
     public CookieLocaleResolver localeResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(ENGLISH);
@@ -110,7 +113,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean someFilterRegistration() {
+    public FilterRegistrationBean filterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean();
         registration.setFilter(new PathVariableLocaleFilter());
         registration.addUrlPatterns("*");
@@ -118,11 +121,6 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
         registration.setName("localeFilter");
         registration.setOrder(1);
         return registration;
-    }
-
-    @Bean
-    public LocaleChangeInterceptor localeChangeInterceptor() {
-        return new LocaleChangeInterceptor(this.localeResolver());
     }
 
     @Override
@@ -154,12 +152,16 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         //so that the content of the resources directory is served as static content
-        registry.addResourceHandler(STATIC_RESOURCES_URI + "**").addResourceLocations("classpath:/static/")
+        registry.addResourceHandler(STATIC_RESOURCES_URI + "**")
+                .addResourceLocations("classpath:" + STATIC_RESOURCES_URI)
                 .setCachePeriod(THIRTY_MINUTES_SECONDS);
+
         registry.addResourceHandler("/" + ROBOTS_FILE_NAME)
                 .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + ROBOTS_FILE_NAME);
+
         registry.addResourceHandler("/" + SITEMAP_FILE_NAME)
                 .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + SITEMAP_FILE_NAME);
+
         registry.addResourceHandler("/" + FAVICON_FILE_NAME)
                 .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "img/" + FAVICON_FILE_NAME);
     }

@@ -1,6 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#macro addLoadEngineFromDBScriptFunction>
 <script type="application/javascript">
@@ -40,7 +41,7 @@
 
             $.ajax({
                         type: 'GET',
-                        url: '<@spring.url "/${cmsContext}${engineURL}/"/>' + engineId,
+                        url: '${uriUtils.buildDomainURI("/${cmsContext}${engineURL}/")}' + engineId,
                         contentType: 'application/json; charset=UTF-8',
                         dataType: 'json',
                         beforeSend: function (xhr) {
