@@ -66,7 +66,7 @@
             carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
-			carRowString = carRowString.concat(					"<a href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}")}' style='padding-bottom: 0px; padding-top: 0px;'>");
+			carRowString = carRowString.concat(					"<a href='<#if requestContainsManufacturerData?? && requestContainsManufacturerData>/${manufacturerShortName}</#if>/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
 			carRowString = carRowString.concat(					"</a>");	
             carRowString = carRowString.concat(				"</figcaption>");		   	

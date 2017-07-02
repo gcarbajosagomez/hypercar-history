@@ -49,7 +49,7 @@
 						$("#main-car-list-div").append(noContentFoundElements);				
 		            }                      
 		
-					window.history.pushState(null,'',<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>"/${manufacturerShortName}</#if>/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
+					window.history.pushState(null,'',"<#if (requestContainsManufacturerData?? && requestContainsManufacturerData)>/${manufacturerShortName}</#if>/${modelsSearchURL}?${pagNum}=1&${carsPerPage}=" + contentSearchDto.cpp + "&${contentToSearch}=" + contentSearchDto.cts<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
 					setupContentSearchEventListeners();	
 				}
 				

@@ -16,7 +16,7 @@
 	   	<param name="file" value="logs/pagani_history.log" />
 	   	<layout class="org.apache.log4j.EnhancedPatternLayout">
 		<param name="ConversionPattern" 
-			value="%d{yyyy-MM-dd HH:mm:ss}{GMT+1} %-5p %c{1}:%L - %m%n" />
+			value="%d{yyyy-MM-dd HH:mm:ss}{GMT+2} %-5p %c{1}:%L - %m%n" />
 	   	</layout>
 	</appender>
  
