@@ -206,7 +206,7 @@
 														${language.getTextSource('car.seatsConfig.${car.carSeatsConfig}')}
 													</#if>
 													<#if car.bodyShape??>
-														${language.getTextSource('car.bodyShape.${car.bodyShape}')?lower_case}
+														${language.getTextSource('car.bodyShape.${car.bodyShape.getName()}')?lower_case}
 													</#if>
 												</p>
 											</dd>
