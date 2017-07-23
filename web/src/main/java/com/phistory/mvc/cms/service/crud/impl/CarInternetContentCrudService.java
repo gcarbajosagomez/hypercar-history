@@ -7,6 +7,7 @@ import com.phistory.mvc.cms.command.EditFormCommand;
 import com.phistory.mvc.cms.dto.CrudOperationDTO;
 import com.phistory.mvc.cms.form.CarEditForm;
 import com.phistory.mvc.cms.form.CarInternetContentForm;
+import com.phistory.mvc.cms.form.CarInternetContentFormAdapter;
 import com.phistory.mvc.cms.form.EditForm;
 import com.phistory.mvc.cms.form.factory.EntityFormFactory;
 import com.phistory.mvc.cms.form.factory.impl.CarInternetContentFormFactory;
@@ -24,6 +25,7 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.phistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.phistory.mvc.cms.controller.CMSBaseController.ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY;
@@ -60,30 +62,39 @@ public class CarInternetContentCrudService extends BaseCrudService {
         CrudOperationDTO crudOperationDTO = new CrudOperationDTO();
 
         if (!result.hasErrors()) {
-            try {
-                List<CarInternetContent> savedCarInternetContents = new ArrayList<>();
+            List<CarInternetContent> savedCarInternetContents = new ArrayList<>();
 
-                for (CarInternetContentForm carInternetContentForm :
-                        ((CarInternetContentEditFormCommandAdapter) editFormCommand).getEditForms()) {
-                    try {
-                        CarInternetContent carInternetContent = (CarInternetContent)
-                                this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentForm.adapt());
-                        if (Objects.isNull(carInternetContent.getAddedDate())) {
-                            carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
+            List<CarInternetContentForm> editForms =
+                    ((CarInternetContentEditFormCommandAdapter) editFormCommand)
+                    .getEditForms()
+                    .stream()
+                    .map(carInternetContentForm -> {
+                        try {
+                            CarInternetContent carInternetContent = (CarInternetContent)
+                                    this.carInternetContentFormFactory.buildEntityFromForm(carInternetContentForm.adapt());
+                            if (Objects.isNull(carInternetContent.getAddedDate())) {
+                                carInternetContent.setAddedDate(this.dateProvider.getCurrentTime());
+                            }
+
+                            log.info("Saving or editing carInternetContent: {}", carInternetContent.toString());
+                            carInternetContent =
+                                    (CarInternetContent) this.sqlCarInternetContentRepository.save(carInternetContent);
+
+                            savedCarInternetContents.add(carInternetContent);
+
+                            return ((CarInternetContentFormAdapter) this.carInternetContentFormFactory
+                                    .buildFormFromEntity(carInternetContent))
+                                    .adapt();
+                        } catch (Exception e) {
+                            log.error("There was an error while editing carInternetContents",
+                                      e);
+                            crudOperationDTO.addErrorMessage(e.toString());
                         }
+                        return carInternetContentForm;
+                    })
+                    .collect(Collectors.toList());
 
-                        log.info("Saving or editing carInternetContent: {}", carInternetContent.toString());
-                        carInternetContent = (CarInternetContent) this.sqlCarInternetContentRepository.save(carInternetContent);
-                        savedCarInternetContents.add(carInternetContent);
-                    } catch (Exception e) {
-                        throw e;
-                    }
-                }
-            } catch (Exception e) {
-                log.error("There was an error while editing carInternetContents",
-                          e);
-                crudOperationDTO.addErrorMessage(e.toString());
-            }
+            ((CarInternetContentEditFormCommandAdapter) editFormCommand).setEditForms(editForms);
         } else {
             super.addBindingResultErrors(result, crudOperationDTO);
         }

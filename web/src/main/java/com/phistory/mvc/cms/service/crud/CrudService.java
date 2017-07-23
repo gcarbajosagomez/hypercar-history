@@ -14,4 +14,7 @@ public interface CrudService {
 
     CrudOperationDTO deleteEntity(EditFormCommand editFormCommand,
                                   BindingResult result);
+
+    CrudOperationDTO addBindingResultErrors(BindingResult result,
+                                            CrudOperationDTO crudOperationDTO);
 }

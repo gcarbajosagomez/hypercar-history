@@ -100,14 +100,16 @@ public class CMSCarEditController extends CMSBaseController {
         model.addAttribute(CRUD_OPERATION_DTO, carCrudOperationDTO);
 
         Car car = (Car) carCrudOperationDTO.getEntity();
-        List<CarInternetContentForm> enrichedCarInternetContentForms =
-                this.enrichCarInternetContentForms(carInternetContentEditFormCommand.getEditForms(),
-                                                   car);
-        carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
-
-        CrudOperationDTO carInternetContentCrudOperationDTO =
-                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
-                                                                    carInternetContentEditFormCommandResult);
+        CrudOperationDTO carInternetContentCrudOperationDTO = new CrudOperationDTO();
+        if (!carInternetContentEditFormCommandResult.hasErrors()) {
+            carInternetContentCrudOperationDTO = this.saveOrEditCarInternetContentForms(carInternetContentEditFormCommand,
+                                                                                        carInternetContentEditFormCommandResult,
+                                                                                        car);
+        } else {
+            carInternetContentCrudOperationDTO =
+                    this.carInternetContentCrudService.addBindingResultErrors(carInternetContentEditFormCommandResult,
+                                                                              carInternetContentCrudOperationDTO);
+        }
 
         model.addAttribute(CAR_INTERNET_CONTENTS_CRUD_OPERATION_DTO, carInternetContentCrudOperationDTO);
 
@@ -127,8 +129,24 @@ public class CMSCarEditController extends CMSBaseController {
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
     }
 
+    private CrudOperationDTO saveOrEditCarInternetContentForms(
+            CarInternetContentEditFormCommand carInternetContentEditFormCommand,
+            BindingResult carInternetContentEditFormCommandResult,
+            Car car) {
+        List<CarInternetContentForm> enrichedCarInternetContentForms =
+                this.enrichCarInternetContentForms(carInternetContentEditFormCommand.getEditForms(),
+                                                   car);
+        carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
+
+        CrudOperationDTO carInternetContentCrudOperationDTO =
+                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
+                                                                    carInternetContentEditFormCommandResult);
+
+        return carInternetContentCrudOperationDTO;
+    }
+
     private List<CarInternetContentForm> enrichCarInternetContentForms(List<CarInternetContentForm> carInternetContentForms,
-                                                         Car car) {
+                                                                       Car car) {
         return carInternetContentForms.stream()
                                       .map(carInternetContentForm -> {
                                           carInternetContentForm.setCar(car);

@@ -41,7 +41,8 @@ public abstract class BaseCrudService implements CrudService {
                                              LocaleContextHolder.getLocale());
     }
 
-    protected CrudOperationDTO addBindingResultErrors(BindingResult result, CrudOperationDTO crudOperationDTO) {
+    @Override
+    public CrudOperationDTO addBindingResultErrors(BindingResult result, CrudOperationDTO crudOperationDTO) {
         String errorMessage = this.messageSource.getMessage(ENTITY_CONTAINED_ERRORS_TEXT_SOURCE_KEY,
                                                             new Object[] {},
                                                             LocaleContextHolder.getLocale());

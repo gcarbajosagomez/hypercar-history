@@ -47,7 +47,6 @@ public class CMSCarController extends CMSBaseController {
     private ModelFiller                carModelFiller;
     private ModelFiller                pictureModelFiller;
     private CarEditModelFiller         carEditModelFiller;
-    private AbstractCarListModelFiller sqlCarListModelFiller;
     private AbstractCarListModelFiller inMemoryCarListModelFiller;
     private CMSCarControllerUtil       cmsCarControllerUtil;
     private CarControllerUtil          carControllerUtil;
@@ -59,7 +58,6 @@ public class CMSCarController extends CMSBaseController {
                             ModelFiller carModelFiller,
                             ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
-                            AbstractCarListModelFiller sqlCarListModelFiller,
                             AbstractCarListModelFiller inMemoryCarListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
                             CarControllerUtil carControllerUtil) {
@@ -69,7 +67,6 @@ public class CMSCarController extends CMSBaseController {
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carEditModelFiller = carEditModelFiller;
-        this.sqlCarListModelFiller = sqlCarListModelFiller;
         this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
         this.cmsCarControllerUtil = cmsCarControllerUtil;
         this.carControllerUtil = carControllerUtil;

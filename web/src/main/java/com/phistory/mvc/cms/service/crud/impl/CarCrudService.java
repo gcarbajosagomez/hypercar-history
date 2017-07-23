@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.phistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
 import static com.phistory.mvc.cms.controller.CMSBaseController.*;
@@ -77,9 +78,11 @@ public class CarCrudService extends BaseCrudService {
 
             List<PictureEditCommand> pictureFileEditCommands = carEditForm.getPictureFileEditCommands();
             if (Objects.nonNull(pictureFileEditCommands)) {
+
                 for (int i = 0; i < pictureFileEditCommands.size(); i++) {
                     PictureEditCommand pictureEditCommand = pictureFileEditCommands.get(i);
                     Picture picture = pictureEditCommand.getPicture();
+
                     if (Objects.nonNull(picture)) {
                         picture.setCar(car);
 

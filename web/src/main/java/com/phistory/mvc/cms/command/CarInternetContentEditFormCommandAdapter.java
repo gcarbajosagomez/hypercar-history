@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * Adapts {@link CarInternetContentEditFormCommand}s to {@link EditFormCommand}s
- *
+ * <p>
  * Created by Gonzalo Carbajosa on 21/05/17.
  */
 public class CarInternetContentEditFormCommandAdapter implements EditFormCommand {
@@ -28,6 +28,10 @@ public class CarInternetContentEditFormCommandAdapter implements EditFormCommand
 
     @Override
     public void setEditForm(EditForm form) {
+    }
+
+    public void setEditForms(List<CarInternetContentForm> forms) {
+        this.carInternetContentEditFormCommand.setEditForms(forms);
     }
 
     public List<CarInternetContentForm> getEditForms() {

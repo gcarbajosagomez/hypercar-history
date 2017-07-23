@@ -195,7 +195,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list bodyShapes as bodyShape>
-                                   <option value="${bodyShape}" <#if spring.status.value?? && bodyShape == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.bodyShape.${bodyShape}')}</option>
+                                   <option value="${bodyShape}" <#if spring.status.value?? && bodyShape == spring.status.value?default("")> selected</#if>>${language.getTextSource('car.bodyShape.${bodyShape.getName()}')}</option>
                                </#list>
                            </select>
                       </dd>
@@ -590,6 +590,8 @@
    					</a>
 			   </div>
 			   <div id="internet-contents-main-panel-body" class="panel-body">
+                   ${CICEFC.editForms?size}
+                   ${CICEFC.editForms[0]}
 				   <#if (CICEFC.editForms?size > 0)>
 					   <#list CICEFC.editForms as carInternetContentForm>
 						   <#assign carInternetContentFormIndex = carInternetContentForm?index>
@@ -645,10 +647,8 @@
 						   </div>
 					   </#list>
 				   <#else>
-				   	   <div class="well well-lg">
+				   	   <#--<div class="well well-lg">
 		                   <dl class="dl-horizontal dl-horizontal-edit text-left">
-                                <@spring.bind "CICEFC.editForms[0].id"/>
-                                <input type="hidden" name="${spring.status.expression}" value="">
 		                   		<dt>
 		                             ${language.getTextSource('cms.car.internetContent.link')}
 		                        </dt>
@@ -680,7 +680,7 @@
                            			</select>
 								</dd>
 		                   </dl>
-					   </div>
+					   </div>-->
 				   </#if>
                </div>
 		   </div>
