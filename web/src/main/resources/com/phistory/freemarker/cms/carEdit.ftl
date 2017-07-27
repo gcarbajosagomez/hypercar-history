@@ -590,8 +590,6 @@
    					</a>
 			   </div>
 			   <div id="internet-contents-main-panel-body" class="panel-body">
-                   ${CICEFC.editForms?size}
-                   ${CICEFC.editForms[0]}
 				   <#if (CICEFC.editForms?size > 0)>
 					   <#list CICEFC.editForms as carInternetContentForm>
 						   <#assign carInternetContentFormIndex = carInternetContentForm?index>
@@ -647,7 +645,7 @@
 						   </div>
 					   </#list>
 				   <#else>
-				   	   <#--<div class="well well-lg">
+				   	   <div class="well well-lg">
 		                   <dl class="dl-horizontal dl-horizontal-edit text-left">
 		                   		<dt>
 		                             ${language.getTextSource('cms.car.internetContent.link')}
@@ -680,7 +678,7 @@
                            			</select>
 								</dd>
 		                   </dl>
-					   </div>-->
+					   </div>
 				   </#if>
                </div>
 		   </div>
