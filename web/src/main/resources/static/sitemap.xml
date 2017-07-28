@@ -573,13 +573,22 @@
         <loc>http://www.paganihistory.com/es/cars/zonda-viola</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=59</loc>
+        <loc>http://www.paganihistory.com/cars/zonda-riviera</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=59</loc>
+        <loc>http://www.paganihistory.com/en/cars/zonda-riviera</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=59</loc>
+        <loc>http://www.paganihistory.com/es/cars/zonda-riviera</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=60</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=60</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=60</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=6</loc>
