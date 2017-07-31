@@ -12,10 +12,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
 import org.apache.lucene.analysis.core.LowerCaseFilterFactory;
-import org.apache.lucene.analysis.core.WhitespaceTokenizerFactory;
+import org.apache.lucene.analysis.en.EnglishAnalyzer;
+import org.apache.lucene.analysis.es.SpanishAnalyzer;
 import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
+import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.hibernate.search.annotations.*;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.Parameter;
@@ -35,19 +38,35 @@ import static javax.persistence.TemporalType.DATE;
  */
 @Entity
 @Table(name = Car.CAR_TABLE_NAME,
-        uniqueConstraints = @UniqueConstraint(columnNames = {Car.MANUFACTURER_ID_FIELD, Car.MODEL_FIELD, Car.ENGINE_ID_FIELD}))
+        uniqueConstraints = @UniqueConstraint(columnNames =
+                {
+                        Car.MANUFACTURER_ID_FIELD,
+                        Car.MODEL_FIELD,
+                        Car.ENGINE_ID_FIELD
+                }))
 @Indexed
-@AnalyzerDef(name = Car.CAR_MODEL_ANALYZER_NAME,
-        // Split input into tokens according to tokenizer
-        tokenizer = @TokenizerDef(factory = WhitespaceTokenizerFactory.class),
-        filters = {
-                // Normalize token text to lowercase, as the user is unlikely to care about casing when searching for matches
-                @TokenFilterDef(factory = LowerCaseFilterFactory.class),
-                // Accent insensitive
-                @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
-                // Index partial words starting at the front, so we can provide Autocomplete functionality
-                @TokenFilterDef(factory = NGramFilterFactory.class, params = {@Parameter(name = "maxGramSize", value = "1024")})
-        })
+@AnalyzerDefs({
+        @AnalyzerDef(name = Car.CAR_MODEL_ANALYZER_NAME,
+                tokenizer = @TokenizerDef(factory = KeywordTokenizerFactory.class),
+                filters = {
+                        // Normalize token text to lowercase, as the user is unlikely to care about casing when searching for matches
+                        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                        // Accent insensitive
+                        @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class),
+                        // Index partial words starting at the front, so we can provide Autocomplete functionality
+                        @TokenFilterDef(factory = NGramFilterFactory.class, params = {
+                                @Parameter(name = "minGramSize", value = "3"),
+                                @Parameter(name = "maxGramSize", value = "100")
+                        })
+                }),
+        @AnalyzerDef(name = Car.CAR_DESCRIPTION_ANALYZER_NAME,
+                tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
+                filters = {
+                        // Normalize token text to lowercase, as the user is unlikely to care about casing when searching for matches
+                        @TokenFilterDef(factory = LowerCaseFilterFactory.class),
+                        // Accent insensitive
+                        @TokenFilterDef(factory = ASCIIFoldingFilterFactory.class)
+                })})
 @Data
 @Builder
 @NoArgsConstructor
@@ -61,8 +80,11 @@ public class Car implements GenericEntity {
     public static final String ENGINE_ID_FIELD                     = "car_engine_id";
     public static final String CAR_VISIBLE_PROPERTY_NAME           = "visible";
     public static final String MODEL_PROPERTY_NAME                 = "model";
+    public static final String DESCRIPTION_ES_PROPERTY_NAME        = "descriptionES";
+    public static final String DESCRIPTION_EN_PROPERTY_NAME        = "descriptionEN";
     public static final String PRODUCTION_START_DATE_PROPERTY_NAME = "productionStartDate";
     public static final String CAR_MODEL_ANALYZER_NAME             = "carModelAnalyzer";
+    public static final String CAR_DESCRIPTION_ANALYZER_NAME       = "carDescriptionAnalyzer";
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -164,9 +186,13 @@ public class Car implements GenericEntity {
     @Column(name = "car_road_legal", nullable = false, columnDefinition = "tinyint(1) default 0")
     private Boolean roadLegal;
 
+    @Field
+    @Analyzer(definition = CAR_DESCRIPTION_ANALYZER_NAME, impl = SpanishAnalyzer.class)
     @Column(name = "car_description_es", columnDefinition = "LONGTEXT")
     private String descriptionES;
 
+    @Field
+    @Analyzer(definition = CAR_DESCRIPTION_ANALYZER_NAME, impl = EnglishAnalyzer.class)
     @Column(name = "car_description_en", columnDefinition = "LONGTEXT")
     private String descriptionEN;
 

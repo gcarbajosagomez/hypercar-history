@@ -58,7 +58,7 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("cookiesPolicyURL", COOKIES_POLICY_URL);
         model.addAttribute("carsURL", CARS_URL);
         model.addAttribute("engineURL", ENGINE_URL);
-        model.addAttribute("modelsSearchURL", MODELS_SEARCH_URL);
+        model.addAttribute("searchURL", SEARCH_URL);
         model.addAttribute("technologyStackURL", TECHNOLOGY_STACK_URL);
         model.addAttribute("siteURL", "http://www.paganihistory.com");
         model.addAttribute(ID, ID);
@@ -80,7 +80,7 @@ public class BaseModelFiller implements ModelFiller {
                                     model.addAttribute("carsHeaderLinkValue", this.buildCarsHeaderLinkValue(manufacturer));
                                     List<Car> models =
                                             this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate(manufacturer);
-                                    model.addAttribute(MODELS, models);
+                                    model.addAttribute(ALL_MODELS, models);
                                 });
 
         return model;

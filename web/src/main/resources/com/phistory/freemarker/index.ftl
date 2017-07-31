@@ -3,9 +3,9 @@
 	<#import "applicationMacros/pageLanguage.ftl" as language/>
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 
-	<@generic.startPage language.getTextSource('meta.title.index', [models?size])
+	<@generic.startPage language.getTextSource('meta.title.index', [allModels?size])
 						language.getTextSource('meta.keywords.index')
-						language.getTextSource('meta.title.index.metaDescription', [models?size, numberOfPictures, numberOfVideos])/>
+						language.getTextSource('meta.title.index.metaDescription', [allModels?size, numberOfPictures, numberOfVideos])/>
 
 	<div id="main-container" class="container">
 		<div class="row">

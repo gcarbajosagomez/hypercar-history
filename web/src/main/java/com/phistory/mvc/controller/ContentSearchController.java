@@ -5,6 +5,7 @@ import com.phistory.data.model.GenericEntity;
 import com.phistory.data.model.car.Car;
 import com.phistory.data.query.command.SimpleDataConditionCommand;
 import com.phistory.mvc.dto.ContentSearchDTO;
+import com.phistory.mvc.language.Language;
 import com.phistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
@@ -15,14 +16,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.phistory.data.query.command.SimpleDataConditionCommand.EntityConditionType.LIKE;
-import static com.phistory.mvc.controller.BaseControllerData.MODELS_SEARCH_URL;
+import static com.phistory.mvc.controller.BaseControllerData.SEARCH_URL;
 import static com.phistory.mvc.springframework.view.filler.inmemory.InMemoryCarListModelFiller.IN_MEMORY_CAR_LIST_MODEL_FILLER;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -33,7 +34,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
  */
 @Slf4j
 @RestController
-@RequestMapping(value = MODELS_SEARCH_URL,
+@RequestMapping(value = SEARCH_URL,
         method = HEAD)
 public class ContentSearchController extends BaseController {
 
@@ -53,7 +54,7 @@ public class ContentSearchController extends BaseController {
             //so that we can return all the searched car model names to the view, we need to retrieve all cars, and separate
             // them into models (full list of model names) and cars
             clonedContentSearchDto.setItemsPerPage(0);
-            SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto);
+            SearchCommand searchCommand = this.createSearchCommand(clonedContentSearchDto, model);
             List<GenericEntity> searchResults = this.getSqlContentSearchDAO().searchContent(searchCommand);
             searchResults = this.filterCarsByManufacturer(model, searchResults);
             searchResults = this.removeNonVisibleCars(searchResults);
@@ -78,26 +79,23 @@ public class ContentSearchController extends BaseController {
      * @param contentSearchDto
      * @return
      */
-    private SearchCommand createSearchCommand(ContentSearchDTO contentSearchDto) {
-        Map<String, Boolean> orderByMap = new HashMap<>();
-        orderByMap.put(Car.PRODUCTION_START_DATE_PROPERTY_NAME, Boolean.TRUE);
-        //TODO order results by name and productionStartDate
-        //orderByMap.put(Car.MODEL_PROPERTY_NAME, Boolean.TRUE);
-
+    private SearchCommand createSearchCommand(ContentSearchDTO contentSearchDto, Model model) {
         SimpleDataConditionCommand contentToSearchCondition =
                 new SimpleDataConditionCommand(LIKE,
-                                               new Object[] {contentSearchDto.getContentToSearch()});
+                                               new Object[] {contentSearchDto.getContentToSearch().toLowerCase()});
 
         Map<String, SimpleDataConditionCommand> dataConditionMap = new HashMap<>();
         dataConditionMap.put(Car.MODEL_PROPERTY_NAME, contentToSearchCondition);
+        Optional<Language> languageOptional = Optional.ofNullable((Language) model.asMap().get(LANGUAGE_DATA));
+        languageOptional.ifPresent(language -> dataConditionMap.put("description" + language.getIsoCode().toUpperCase(),
+                                                                    contentToSearchCondition));
 
-        return new SearchCommand(Car.class,
-                                 dataConditionMap,
-                                 null,
-                                 orderByMap,
-                                 Collections.EMPTY_LIST,
-                                 contentSearchDto.getFirstResult(),
-                                 contentSearchDto.getItemsPerPage());
+        return SearchCommand.builder()
+                            .entityClass(Car.class)
+                            .conditionMap(dataConditionMap)
+                            .firstResult(contentSearchDto.getFirstResult())
+                            .maxResults(contentSearchDto.getItemsPerPage())
+                            .build();
     }
 
     private List<GenericEntity> filterCarsByManufacturer(Model model, List<GenericEntity> cars) {

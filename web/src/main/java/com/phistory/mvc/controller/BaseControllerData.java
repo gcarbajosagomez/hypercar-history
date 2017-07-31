@@ -9,7 +9,7 @@ public abstract class BaseControllerData {
     public static final String MANUFACTURER_HISTORY_URL = "history";
     public static final String CARS_URL                 = "cars";
     public static final String ENGINE_URL               = "engine";
-    public static final String MODELS_SEARCH_URL        = "modelsSearch";
+    public static final String SEARCH_URL               = "search";
     public static final String PICTURES_URL             = "pictures";
     public static final String COOKIES_POLICY_URL       = "cookiesPolicy";
     public static final String PAGINATION_URL           = "pagination";
@@ -60,14 +60,13 @@ public abstract class BaseControllerData {
     public static final String PICTURE_IDS                          = "pictureIds";
     public static final String PICTURES                             = "pictures";
     public static final String NUMBER_OF_PICTURES                   = "numberOfPictures";
+    public static final String ALL_MODELS                           = "allModels";
     public static final String MODELS                               = "models";
     public static final String CONTENT_TO_SEARCH_DATA               = "contentToSearchData";
     public static final String CAR_DETAILS                          = "carDetails";
     public static final String ENGINE                               = "engine";
     public static final String MANUFACTURER                         = "manufacturer";
     public static final String MANUFACTURER_ENTITY                  = "manufacturerEntity";
-    public static final String CONTACT_US_SUCCESS_MESSAGE           = "contactUsSuccessMessage";
-    public static final String CONTACT_US_EXCEPTION_MESSAGE         = "contactUsExceptionMessage";
     public static final String YOUTUBE_VIDEO_IDS                    = "youtubeVideoIds";
     public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES = "carInternetContentReviewArticles";
     public static final String NUMBER_OF_VIDEOS                     = "numberOfVideos";

@@ -121,7 +121,7 @@
 	         			 				   			
 	         			$.ajax({
         	        			type:'GET',
-	        					url: "${uriUtils.buildDomainURI("/${modelsSearchURL}")}",
+	        					url: "${uriUtils.buildDomainURI("/${searchURL}")}",
         						data: contentSearchDto,
                 				beforeSend: function(xhr)
                 				{
@@ -143,7 +143,7 @@
                                         <#else>
                                             $('#car-list-div').unblock();
                                         </#if>
-        	        	 	    		window.history.pushState(null,'',"${modelsSearchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch}<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
+        	        	 	    		window.history.pushState(null,'',"${searchURL}?${pagNum}=" + page + "&${carsPerPage}=" + contentSearchDto.${carsPerPage} + "&${contentToSearch}=" + contentSearchDto.${contentToSearch}<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
     									paginationOptions.currentPage = contentSearchDto.${pagNum};
         	        	 	    		$('#pagination-ul').bootstrapPaginator(paginationOptions);
     									$('#pagination-ul').addClass('cursor-pointer');

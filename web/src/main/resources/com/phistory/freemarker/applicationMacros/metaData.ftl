@@ -89,7 +89,7 @@
         "position":2,
         "item": {
             "@id":"${siteURL}/${carsURL}/",
-            "name":"${language.getTextSource('cars.all', [models?size])}"
+            "name":"${language.getTextSource('cars.all', [allModels?size])}"
         }
     }
 </#macro>
@@ -112,16 +112,12 @@
             "@type":"WebSite",
             "name":"${language.getTextSource('${manufacturerName}History')}",
             "url":"${siteURL}",
-            "about":"${language.getTextSource('footer.aboutUs.text', [models?size])}",
+            "about":"${language.getTextSource('footer.aboutUs.text', [allModels?size])}",
             "keywords":"${metaKeywords}",
             "potentialAction": {
                 "@type":"SearchAction",
-                "target":"${manufacturerShortName}/${siteURL}/${modelsSearchURL}?${contentToSearch}={contentToSearch}",
-                "query-input": {
-                    "@type":"PropertyValueSpecification",
-                    "valueName":"contentToSearch",
-                    "valueRequired":"http://schema.org/True"
-                }
+                "target":"${siteURL}/${manufacturerShortName}/${searchURL}?${contentToSearch}={contentToSearch}",
+                "query-input": "required name=contentToSearch"
             }
         }
     </script>

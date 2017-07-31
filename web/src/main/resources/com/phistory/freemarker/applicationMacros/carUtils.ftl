@@ -257,7 +257,7 @@
                         <li role="presentation"><a role="menuitem" href='${pagination.getCarsPerPageURI(18)}'>18</a></li>
                         <li role="presentation"><a role="menuitem" href='${pagination.getCarsPerPageURI(24)}'>24</a></li>
                         <hr>
-                        <li role="presentation"><a role="menuitem" href='${pagination.getCarsPerPageURI(models?size)}'>${language.getTextSource('pagination.allCars')}</a></li>
+                        <li role="presentation"><a role="menuitem" href='${pagination.getCarsPerPageURI(allModels?size)}'>${language.getTextSource('pagination.allCars')}</a></li>
                     </ul>
                 </div>
             </div>

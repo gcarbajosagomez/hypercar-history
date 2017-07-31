@@ -9,6 +9,7 @@ import com.phistory.data.dao.sql.SqlContentSearchDAO;
 import com.phistory.data.dao.sql.SqlPictureDAO;
 import com.phistory.data.dao.sql.SqlPictureRepository;
 import com.phistory.mvc.controller.util.CarControllerUtil;
+import com.phistory.mvc.language.Language;
 import com.phistory.mvc.manufacturer.Manufacturer;
 import com.phistory.mvc.service.ManufacturerService;
 import com.phistory.mvc.service.URILoggingService;
@@ -22,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,6 +97,9 @@ public abstract class BaseController extends BaseControllerData {
     @Getter
     private ManufacturerService manufacturerService;
 
+    @Inject
+    private CookieLocaleResolver cookieLocaleResolver;
+
     @ModelAttribute
     public ModelAndView fillBaseModel(@RequestParam(value = DO_NOT_TRACK_REQUEST_PARAM, required = false) boolean dnt,
                                       Model model,
@@ -109,6 +114,9 @@ public abstract class BaseController extends BaseControllerData {
             model.addAttribute(REQUEST_CONTAINS_MANUFACTURER_DATA, request.getAttribute(REQUEST_CONTAINS_MANUFACTURER_DATA));
             model.addAttribute(MANUFACTURER, Optional.ofNullable((Manufacturer) request.getAttribute(MANUFACTURER_DATA))
                                                      .orElse(PAGANI));
+
+            Optional<Language> languageOptional = Language.map(this.cookieLocaleResolver.resolveLocale(request).getLanguage());
+            languageOptional.ifPresent(language -> model.addAttribute(LANGUAGE_DATA, language));
 
             this.manufacturerService.mapToInMemoryEntity(model)
                                     .ifPresent(manufacturer -> model.addAttribute(MANUFACTURER_ENTITY, manufacturer));

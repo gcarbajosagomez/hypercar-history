@@ -25,7 +25,7 @@
         <#else>
             <#global requestIsCarDetails = true/>
         </#if>
-    <#elseif requestURI?contains(modelsSearchURL)>
+    <#elseif requestURI?contains(searchURL)>
         <#global requestIsModelsSearch = true/>
     </#if>
 </#macro>

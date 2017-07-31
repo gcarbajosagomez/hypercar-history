@@ -12,15 +12,16 @@ import org.apache.lucene.search.SortField.Type;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.FullTextQuery;
 import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.BooleanJunction;
 import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -62,30 +63,39 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
 
         Map<String, SimpleDataConditionCommand> conditionMap = searchCommand.getConditionMap();
 
-        return conditionMap.keySet()
-                           .stream()
-                           .map(entityPropertyName -> {
-                               SimpleDataConditionCommand conditionCommand = conditionMap.get(entityPropertyName);
-                               String queryTerm = conditionCommand.getConditionSingleValue().toString();
+        List<Query> queries = conditionMap.keySet()
+                                          .stream()
+                                          .map(entityPropertyName -> {
+                                              SimpleDataConditionCommand conditionCommand = conditionMap.get(entityPropertyName);
+                                              String queryTerm = conditionCommand.getConditionSingleValue().toString();
 
-                               Query luceneQuery = queryBuilder.keyword()
-                                                               .wildcard()
-                                                               .onField(entityPropertyName)
-                                                               .matching(queryTerm)
-                                                               .createQuery();
+                                              return queryBuilder.keyword()
+                                                                 .onField(entityPropertyName)
+                                                                 .matching(queryTerm)
+                                                                 .createQuery();
+                                          })
+                                          .collect(Collectors.toList());
 
-                               //create a Hibernate Search query out of a Lucene one
-                               FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery,
-                                                                                                       entityClass);
+        BooleanJunction bool = queryBuilder.bool();
+        for (Query query : queries) {
+            bool = bool.should(query);
+        }
 
-                               fullTextQuery = this.applySortingToSearchQuery(searchCommand, fullTextQuery);
-                               fullTextQuery.setFirstResult(searchCommand.getFirstResult());
-                               fullTextQuery.setProjection(searchCommand.getProjectedFields().toArray(new String[] {}));
+        Query luceneQuery = bool.createQuery();
 
-                               return (List<GenericEntity>) fullTextQuery.getResultList();
-                           })
-                           .findFirst()
-                           .orElse(Collections.emptyList());
+        //create a Hibernate Search query out of a Lucene one
+        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery,
+                                                                                entityClass);
+
+        fullTextQuery = this.applySortingToSearchQuery(searchCommand, fullTextQuery);
+        fullTextQuery.setFirstResult(searchCommand.getFirstResult());
+        List<String> projectedFields = searchCommand.getProjectedFields();
+        if (Objects.nonNull(projectedFields)) {
+            fullTextQuery.setProjection(projectedFields.toArray(new String[] {}));
+        }
+
+        return (List<GenericEntity>) fullTextQuery.getResultList();
+
     }
 
     /**

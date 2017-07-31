@@ -7,7 +7,7 @@
 
 <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
 <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
-<@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])/>
+<@generic.startPage language.getTextSource('meta.title.allModels', [allModels?size, paginationFirstResult, paginationLastResult])/>
 
 <div id="main-container" class="container panel panel-default cars-main-container main-panel">
 	<div class="row">
@@ -39,12 +39,12 @@
 		</div>		
 	</div>
 </div>
-<#assign chunkedModelsList = models?chunk(carsPerPageData)>
+<#assign chunkedModelsList = allModels?chunk(carsPerPageData)>
 <@generic.endPage chunkedModelsList/>
 
 <script type='application/javascript'>
 	
-	<#if cars?? && (models?size > carsPerPageData)>
+	<#if cars?? && (allModels?size > carsPerPageData)>
 		$( document ).ready(function()
 		{
 			<@pagination.addCMSCarsPagination chunkedModelsList/>
