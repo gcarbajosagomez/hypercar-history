@@ -129,6 +129,14 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Override
+    public List<Long> getAllPreviewIds() {
+        return this.pictures.stream()
+                            .filter(Picture::getEligibleForPreview)
+                            .map(Picture::getId)
+                            .collect(Collectors.toList());
+    }
+
+    @Override
     public Picture getById(Long pictureId) {
         return this.pictures.stream()
                             .filter(picture -> picture.getId().equals(pictureId))

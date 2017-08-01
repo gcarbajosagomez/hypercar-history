@@ -34,6 +34,13 @@ public interface InMemoryPictureDAO extends InMemoryDAO<Picture, Long> {
     List<Long> getAllIds();
 
     /**
+     * Get all the {@link Picture#id}s of {@link Picture}s whose {@link Picture#eligibleForPreview} is true
+     *
+     * @return the {@link List} of {@link Picture} ids
+     */
+    List<Long> getAllPreviewIds();
+
+    /**
      * Get the preview {@link Picture} for the supplied {@code carId}
      *
      * @param carId
