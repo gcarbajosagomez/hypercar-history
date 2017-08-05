@@ -5,11 +5,11 @@
 		 				     http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.pagani-history</groupId>
-    <artifactId>pagani-history</artifactId>
+    <groupId>com.hyper-history</groupId>
+    <artifactId>hypercar-history</artifactId>
     <version>0.1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Pagani History</name>
+    <name>Hypercar History</name>
     <developers>
         <developer>
             <name>Gonzalo Carbajosa Gómez</name>
@@ -93,8 +93,8 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.pagani-history</groupId>
-                <artifactId>pagani-history-data</artifactId>
+                <groupId>com.hyper-history</groupId>
+                <artifactId>hypercar-history-data</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

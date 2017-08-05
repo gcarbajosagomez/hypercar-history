@@ -1,5 +1,5 @@
 /deployments
-/com.phistory.data.model.*
+/com.hhistory.data.model.*
 *.log
 /logs
 /.idea/
@@ -9,7 +9,7 @@ data/*.iml
 *.sql
 data/target/
 web/target/
-/pagani-history.iml
-/web/com.phistory.data.model.car.Car/
-web/com.phistory.data.model.car.Car/
+/hypercar-history.iml
+/web/com.hhistory.data.model.car.Car/
+web/com.hhistory.data.model.car.Car/
 web/logs/

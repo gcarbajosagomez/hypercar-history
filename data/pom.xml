@@ -7,14 +7,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.pagani-history</groupId>
-        <artifactId>pagani-history</artifactId>
+        <groupId>com.hyper-history</groupId>
+        <artifactId>hypercar-history</artifactId>
         <version>0.1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>pagani-history-data</artifactId>
+    <artifactId>hypercar-history-data</artifactId>
     <packaging>jar</packaging>
-    <name>Pagani History Data</name>
+    <name>Hypercar History Data</name>
 
     <properties>
         <mysql.connector.version>6.0.5</mysql.connector.version>
