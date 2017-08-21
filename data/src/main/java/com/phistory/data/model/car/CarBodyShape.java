@@ -28,7 +28,8 @@ public enum CarBodyShape {
     SUV("SUV"),
     ALL_TERRAIN("allTerrain"),
     PICKUP_TRUCK("pickupTruck"),
-    RACE_CAR("raceCar");
+    RACE_CAR("raceCar"),
+    BARCHETTA("barchetta");
 
     private String name;
 
