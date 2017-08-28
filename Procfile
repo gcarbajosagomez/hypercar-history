@@ -1,1 +1,0 @@
-web: mvn clean package -DskipTests=true -P prod
