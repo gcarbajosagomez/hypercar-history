@@ -1,2 +1,51 @@
 #!/bin/bash
-mvn clean package -DskipTests=true -P prod
+echo "build" action hook initializing!!
+
+# define some variables for JDK 8
+JDK_TGZ=jdk-8u101-linux-i586.tar.gz
+JDK_URL=http://download.oracle.com/otn-pub/java/jdk/8u101-b13/$JDK_TGZ
+JDK_DIR=jdk1.8.0_101
+JDK_LINK=jdk1.8
+# download JDK1.8 to the data directory if it does not yet exist, extract it and create a symlink
+cd ${OPENSHIFT_DATA_DIR}
+if [[ ! -d $JDK_DIR ]]
+then
+  wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" $JDK_URL
+  tar -zxf $JDK_TGZ
+  rm -fr $JDK_TGZ
+  ln -s $JDK_DIR $JDK_LINK
+fi
+
+# export environment variables
+export JAVA_HOME=$OPENSHIFT_DATA_DIR$JDK_LINK
+echo "JAVA_HOME" exported to ${JAVA_HOME}
+export PATH=$JAVA_HOME/bin:$PATH
+echo "PATH" exported to ${PATH}
+
+# define some variables for Maven 3
+M3_HOME="${OPENSHIFT_DATA_DIR}.m2"
+export M3_HOME
+echo "M3_HOME" exported to ${M3_HOME}
+mkdir -p $M3_HOME
+mkdir -p $M3_HOME/repository
+echo -e  "<settings>\n   <localRepository>$OPENSHIFT_DATA_DIR/.m2/repository</localRepository>\n</settings>\n" > $M3_HOME/settings.xml
+MVN_TGZ=apache-maven-3.3.9-bin.tar.gz
+MVN_URL=http://www.eu.apache.org/dist/maven/maven-3/3.3.9/binaries/$MVN_TGZ
+MVN_DIR=apache-maven-3.3.9
+export MVN_LINK=maven
+echo "MVN_LINK" exported to ${MVN_LINK}
+
+# download Maven3 to the data directory if it does not yet exist, extract it and create a symlink
+cd ${OPENSHIFT_DATA_DIR}
+if [[ ! -d $MVN_DIR ]]
+then
+  wget $MVN_URL
+  tar -zxf $MVN_TGZ
+  rm -fr $MVN_TGZ
+  ln -s $MVN_DIR $MVN_LINK
+fi
+
+# call our own mvn script with the right settings
+cd $OPENSHIFT_REPO_DIR
+echo about to package pom.xml file
+${OPENSHIFT_DATA_DIR}${MVN_LINK}/bin/mvn clean package -s .openshift/action_hooks/settings.xml -DskipTests=true -P prod
