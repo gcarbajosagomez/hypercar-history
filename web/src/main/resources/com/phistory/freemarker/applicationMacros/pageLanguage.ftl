@@ -104,13 +104,13 @@
 		<#else>
             <#if requestURI?contains("/" + languageSpanishCode + "/")>
                 <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageSpanishCode + "/", "/" + languageEnglishCode + "/")}"/>
-            	<link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageSpanishCode + "/", "/")}"/>
+            	<link rel="alternate" hreflang="${languageSpanishCode}" href="/${manufacturerShortName}${requestURI?replace("/" + languageSpanishCode + "/", "/")}"/>
 				<#if requestContainsManufacturerData>
                 	<link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageSpanishCode + "/", "/" + languageEnglishCode + "/")}"/>
 				</#if>
             <#elseif requestURI?contains("/" + languageEnglishCode + "/")>
                 <link rel="alternate" hreflang="${language}" href="${requestURI?replace("/" + languageEnglishCode + "/", "/" + languageSpanishCode + "/")}"/>
-            	<link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageEnglishCode + "/", "/")}"/>
+            	<link rel="alternate" hreflang="${languageEnglishCode}" href="/${manufacturerShortName}${requestURI?replace("/" + languageEnglishCode + "/", "/")}"/>
 				<#if requestContainsManufacturerData>
                 	<link rel="alternate" hreflang="${language}" href="/${manufacturerShortName}${requestURI?replace("/" + languageEnglishCode + "/", "/" + languageSpanishCode + "/")}"/>
 				</#if>
