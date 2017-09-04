@@ -1,1 +1,0 @@
-web: java $JAVA_OPTS -jar deployments/Pagani-History.jar --server.port=$PORT $JAR_OPTS

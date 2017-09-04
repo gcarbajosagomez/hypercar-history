@@ -1,2 +1,0 @@
-#!/bin/bash
-mvn clean package -DskipTests=true -P prod -s /opt/app-root/src/.m2/settings.xml
