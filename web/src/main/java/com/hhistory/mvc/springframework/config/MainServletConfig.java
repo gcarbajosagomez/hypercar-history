@@ -37,7 +37,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.hhistory.mvc"})
 @Import(SqlDatabaseConfig.class)
-@PropertySource(value = "classpath:" + PACKAGES_BASENAME + "systemproperty/systemProperties.properties")
+@PropertySource(value = "classpath:" + PACKAGES_BASENAME + "systemproperty/application.properties")
 public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     public static final String PACKAGES_BASENAME = "com/hhistory/";
