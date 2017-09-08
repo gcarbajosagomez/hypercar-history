@@ -13,7 +13,7 @@ import java.util.stream.Stream;
  */
 @Slf4j
 public enum PictureLoadAction {
-    
+
     LOAD_CAR_PICTURE("picture"),
     LOAD_CAR_PREVIEW("preview"),
     LOAD_MANUFACTURER_LOGO("logo");
