@@ -36,7 +36,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @EnableWebMvc
 @ComponentScan(basePackages = {"com.phistory.mvc"})
 @Import(SqlDatabaseConfig.class)
-@PropertySource(value = "classpath:com/phistory/systemproperty/systemProperties.properties")
+@PropertySource(value = "classpath:com/phistory/systemproperty/application.properties")
 public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     private static final String  NO_CACHE_VALUE                  = "0";
