@@ -6,9 +6,9 @@
     <#import "applicationMacros/pageLanguage.ftl" as language/>
     <#import "applicationMacros/picture.ftl" as picture/>
 
-    <@generic.startPage language.getTextSource('meta.title.manufacturerHistory')
-                        language.getTextSource('meta.keywords.manufacturerHistory')
-                        language.getTextSource('meta.title.manufacturerHistory.metaDescription')/>
+    <@generic.startPage language.getTextSource('${manufacturerName}.meta.title.manufacturerHistory')
+                        language.getTextSource('${manufacturerName}.meta.keywords.manufacturerHistory')
+                        language.getTextSource('${manufacturerName}.meta.title.manufacturerHistory.metaDescription')/>
 
         <div id="main-container" class="container panel panel-default main-container main-panel">
             <div class="main-row-container row">

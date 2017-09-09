@@ -3,9 +3,10 @@
 	<#import "applicationMacros/pageLanguage.ftl" as language/>
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 
-	<@generic.startPage language.getTextSource('meta.title.index', [allModels?size])
-						language.getTextSource('meta.keywords.index')
-						language.getTextSource('meta.title.index.metaDescription', [allModels?size, numberOfPictures, numberOfVideos])/>
+	<#assign manufacturerName = manufacturer.getName()/>
+	<@generic.startPage language.getTextSource('${manufacturerName}.meta.title.index', [allModels?default({})?size])
+						language.getTextSource('${manufacturerName}.meta.keywords.index')
+						language.getTextSource('${manufacturerName}.meta.title.index.metaDescription', [allModels?default({})?size, numberOfPictures, numberOfVideos])/>
 
 	<div id="main-container" class="container">
 		<div class="row">

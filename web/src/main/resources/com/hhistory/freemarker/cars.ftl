@@ -7,12 +7,13 @@
     <#import "applicationMacros/carUtils.ftl" as carUtils/>
     <#import "applicationMacros/uriUtils.ftl" as uriUtils/>
 
-    <#assign metaKeywords = language.getTextSource('meta.keywords.cars', [models?size])/>
+    <#assign manufacturerName = manufacturer.getName()/>
+    <#assign metaKeywords = language.getTextSource('${manufacturerName}.meta.keywords.cars', [models?size])/>
     <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
     <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
-    <@generic.startPage language.getTextSource('meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])
+    <@generic.startPage language.getTextSource('${manufacturerName}.meta.title.allModels', [models?size, paginationFirstResult, paginationLastResult])
                         metaKeywords
-                        language.getTextSource('meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
+                        language.getTextSource('${manufacturerName}.meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
 
     <div id="main-container" class="container panel panel-default main-container main-panel">
         <div class="main-row-container row">

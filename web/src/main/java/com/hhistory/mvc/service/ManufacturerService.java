@@ -12,6 +12,8 @@ public interface ManufacturerService {
 
     Optional<Manufacturer> mapToInMemoryEntity(Model model);
 
+    Optional<Manufacturer> mapToInMemoryEntity(com.hhistory.mvc.manufacturer.Manufacturer manufacturer);
+
     Optional<Manufacturer> getInMemoryEntityFromModel(Model model);
 
     com.hhistory.mvc.manufacturer.Manufacturer getFromModel(Model model);

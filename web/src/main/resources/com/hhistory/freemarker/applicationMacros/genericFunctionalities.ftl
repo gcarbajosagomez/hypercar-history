@@ -7,14 +7,14 @@
 <#import "cookiesDirective.ftl" as cookiesDirective/>
 <#import "uriUtils.ftl" as uriUtils/>
 
-<#macro startPage title='' metaKeywords=language.getTextSource('meta.keywords.index') metaDescription=''>
+<#macro startPage title='' metaKeywords='' metaDescription=''>
     <@uriUtils.identifyRequestURL/>
 	<#global triggerMobileAdvertisement = !requestIsDesktop && !doNotTrack && !requestIsCMS/>
 	<#global manufacturerShortName = manufacturer.getShortName()/>
 	<#global manufacturerName = manufacturer.getName()/>
 
 	<!DOCTYPE html>
-    	<#global lang = language.getTextSource('${manufacturerName}History.language')/>
+    	<#global lang = language.getTextSource('hypercarHistory.language')/>
         <html lang="${lang}" class="no-js">
             <head>
             		<title>${title} <#if title?? && (title?length > 0)> | </#if> ${language.getTextSource('${manufacturerName}History')}</title>
@@ -31,8 +31,8 @@
 					<link rel="shortcut icon" href="/static/img/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.css">
+        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.css">
 				    <#if !requestIsDesktop>
                         <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
@@ -111,7 +111,7 @@
           					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
-                                     	<li><a href='${uriUtils.buildDomainURI("/${manufacturerHistoryURL}")}'>${language.getTextSource('manufacturer.history.headerLinkValue')?upper_case}</a></li>
+                                     	<li><a href='${uriUtils.buildDomainURI("/${manufacturerHistoryURL}")}'>${language.getTextSource('${manufacturerName}.history.headerLinkValue')?upper_case}</a></li>
                                         <hr class="navbar-divider">
 										<li><a href='${uriUtils.buildDomainURI("/${carsURL}")}'>${carsHeaderLinkValue?upper_case}</a></li>
                                         <hr class="navbar-divider">
@@ -209,14 +209,14 @@
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>
 								<p class="text-muted text-left">
-									${language.getTextSource('footer.aboutUs.text',
+									${language.getTextSource('${manufacturerName}.footer.aboutUs.text',
 															 [uriUtils.buildDomainURI("/${carsURL}?pn=1&cpp=${allModels?size}"), allModels?size])}
 								</p>
         					</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <h4>${language.getTextSource('footer.contactUs')?upper_case}</h4>
 								<p class="text-muted text-left">
-									${language.getTextSource('footer.contactUs.text')}
+									${language.getTextSource('${manufacturerName}.footer.contactUs.text')}
 								</p>
 	        				</div>
     	  				</div>
@@ -239,7 +239,7 @@
                         <hr>
       					<div class="row" style="margin-bottom: 15px">
         					<p class="col-lg-12 text-muted text-center" style="padding-top: 15px">
-								${language.getTextSource('paganiHistory')} 2015 - ${.now?string("yyyy")}. ${language.getTextSource('footer.allRightsReserved')}
+								${language.getTextSource('${manufacturerName}History')} 2015 - ${.now?string("yyyy")}. ${language.getTextSource('footer.allRightsReserved')}
 							</p>
     	  				</div>
     				</div>

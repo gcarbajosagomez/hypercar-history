@@ -30,6 +30,11 @@ public class ManufacturerServiceImpl implements ManufacturerService {
         com.hhistory.mvc.manufacturer.Manufacturer manufacturer =
                 (com.hhistory.mvc.manufacturer.Manufacturer) model.asMap().get(MANUFACTURER);
 
+        return this.mapToInMemoryEntity(manufacturer);
+    }
+
+    @Override
+    public Optional<Manufacturer> mapToInMemoryEntity(com.hhistory.mvc.manufacturer.Manufacturer manufacturer) {
         return this.inMemoryManufacturerDAO.getByName(manufacturer.getName());
     }
 

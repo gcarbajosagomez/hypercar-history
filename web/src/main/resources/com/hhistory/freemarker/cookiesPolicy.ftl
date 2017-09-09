@@ -10,7 +10,7 @@
 
 				<h2>${language.getTextSource('cookiesPolicy.whatAreCookies')}</h2>
 				<p class="text-muted text-left">
-					${language.getTextSource('cookiesPolicy.whatAreCookies.text')}
+					${language.getTextSource('${manufacturerName}.cookiesPolicy.whatAreCookies.text')}
 				</p>
 				<br/>
 

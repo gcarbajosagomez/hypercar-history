@@ -89,7 +89,7 @@
         "position":2,
         "item": {
             "@id":"${siteURL}/${carsURL}/",
-            "name":"${language.getTextSource('cars.all', [allModels?size])}"
+            "name":"${language.getTextSource('${manufacturerName}.cars.all', [allModels?size])}"
         }
     }
 </#macro>
@@ -105,14 +105,14 @@
     }
 </#macro>
 
-<#macro addWebSiteMetaDataElement metaKeywords=language.getTextSource('meta.keywords.index')>
+<#macro addWebSiteMetaDataElement metaKeywords=language.getTextSource('${manufacturerName}.meta.keywords.index')>
     <script type="application/ld+json">
         {
             "@context":"http://schema.org/",
             "@type":"WebSite",
             "name":"${language.getTextSource('${manufacturerName}History')}",
             "url":"${siteURL}",
-            "about":"${language.getTextSource('footer.aboutUs.text', [allModels?size])}",
+            "about":"${language.getTextSource('${manufacturerName}.footer.aboutUs.text', [allModels?size])}",
             "keywords":"${metaKeywords}",
             "potentialAction": {
                 "@type":"SearchAction",
