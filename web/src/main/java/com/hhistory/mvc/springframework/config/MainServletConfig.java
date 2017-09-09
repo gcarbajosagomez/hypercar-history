@@ -2,6 +2,7 @@ package com.hhistory.mvc.springframework.config;
 
 import com.hhistory.data.mvc.springframework.config.SqlDatabaseConfig;
 import com.hhistory.mvc.language.Language;
+import com.hhistory.mvc.manufacturer.Manufacturer;
 import com.hhistory.mvc.springframework.filter.PathVariableLocaleFilter;
 import com.hhistory.mvc.springframework.interceptor.LocaleChangeInterceptor;
 import freemarker.template.TemplateException;
@@ -18,8 +19,7 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
 import java.io.IOException;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 import static com.hhistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.hhistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
@@ -42,16 +42,17 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     public static final String PACKAGES_BASENAME = "com/hhistory/";
 
-    private static final String  NO_CACHE_VALUE                   = "0";
-    private static final Integer TWO_WEEKS_SECONDS                = 1209600;
-    private static final Integer THIRTY_MINUTES_SECONDS           = 1800;
-    private static final String  ROBOTS_FILE_NAME                 = "robots.txt";
-    private static final String  SITEMAP_FILE_NAME                = "sitemap.xml";
-    private static final String  FAVICON_FILE_NAME                = "favicon.ico";
-    private static final String  DEFAULT_TIMEZONE                 = "UTC";
-    private static final String  FREEMARKER_ENCODING              = "UTF-8";
-    private static final String  FREEMARKER_TEMPLATE_FILES_SUFFIX = ".ftl";
-    private static final String TEXT_SOURCES_PACKAGE_BASENAME = PACKAGES_BASENAME + "/textsource/textSources";
+    private static final String  NO_CACHE_VALUE                     = "0";
+    private static final Integer TWO_WEEKS_SECONDS                  = 1209600;
+    private static final Integer THIRTY_MINUTES_SECONDS             = 1800;
+    private static final String  ROBOTS_FILE_NAME                   = "robots.txt";
+    private static final String  SITEMAP_FILE_NAME                  = "sitemap.xml";
+    private static final String  FAVICON_FILE_NAME                  = "favicon.ico";
+    private static final String  DEFAULT_TIMEZONE                   = "UTC";
+    private static final String  FREEMARKER_ENCODING                = "UTF-8";
+    private static final String  FREEMARKER_TEMPLATE_FILES_SUFFIX   = ".ftl";
+    private static final String  TEXT_SOURCES_PACKAGE_BASENAME = PACKAGES_BASENAME + "textsource/";
+    private static final String  MAIN_TEXT_SOURCES_PACKAGE_BASENAME = TEXT_SOURCES_PACKAGE_BASENAME + "main";
 
     @Bean
     public FreeMarkerViewResolver internalResourceViewResolver() {
@@ -82,8 +83,14 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public ResourceBundleMessageSource messageSource() {
+        List<String> textSourcesPackageBaseNames = new ArrayList<>();
+        textSourcesPackageBaseNames.add(MAIN_TEXT_SOURCES_PACKAGE_BASENAME);
+        Arrays.stream(Manufacturer.values())
+              .map(Manufacturer::getName)
+              .forEach(name -> textSourcesPackageBaseNames.add(TEXT_SOURCES_PACKAGE_BASENAME + name));
+
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasenames(TEXT_SOURCES_PACKAGE_BASENAME);
+        messageSource.setBasenames(textSourcesPackageBaseNames.toArray(new String[textSourcesPackageBaseNames.size()]));
         return messageSource;
     }
 
