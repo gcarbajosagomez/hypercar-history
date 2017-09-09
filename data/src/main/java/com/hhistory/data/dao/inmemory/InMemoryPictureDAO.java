@@ -1,5 +1,6 @@
 package com.hhistory.data.dao.inmemory;
 
+import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.picture.Picture;
 
 import java.util.List;
@@ -34,11 +35,12 @@ public interface InMemoryPictureDAO extends InMemoryDAO<Picture, Long> {
     List<Long> getAllIds();
 
     /**
-     * Get all the {@link Picture#id}s of {@link Picture}s whose {@link Picture#eligibleForPreview} is true
+     * Get all the {@link Picture#id}s of {@link Picture}s whose {@link Picture#eligibleForPreview} is true and
+     * {@link Picture#car#manufacturer} matches the supplied {@code manufacturer}
      *
      * @return the {@link List} of {@link Picture} ids
      */
-    List<Long> getAllPreviewIds();
+    List<Long> getAllPreviewIds(Manufacturer manufacturer);
 
     /**
      * Get the preview {@link Picture} for the supplied {@code carId}

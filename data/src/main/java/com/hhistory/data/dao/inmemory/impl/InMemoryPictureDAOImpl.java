@@ -4,6 +4,7 @@ import com.hhistory.data.dao.inmemory.InMemoryDAO;
 import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
+import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.util.PictureUtil;
@@ -129,8 +130,9 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Override
-    public List<Long> getAllPreviewIds() {
+    public List<Long> getAllPreviewIds(Manufacturer manufacturer) {
         return this.pictures.stream()
+                            .filter(picture -> picture.getCar().getManufacturer().equals(manufacturer))
                             .filter(Picture::getEligibleForPreview)
                             .map(Picture::getId)
                             .collect(Collectors.toList());

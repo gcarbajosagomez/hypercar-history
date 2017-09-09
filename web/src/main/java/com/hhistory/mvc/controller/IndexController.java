@@ -1,6 +1,7 @@
 package com.hhistory.mvc.controller;
 
 import com.google.common.collect.HashMultimap;
+import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
@@ -48,7 +49,11 @@ public class IndexController extends BaseController {
         try {
             this.carModelFiller.fillModel(model);
             this.pictureModelFiller.fillModel(model);
-            model.addAttribute("carNamesToPictureIds", this.generateRandomCarNamesToPictureIds());
+            super.getManufacturerService()
+                 .getInMemoryEntityFromModel(model)
+                 .ifPresent(manufacturer -> model.addAttribute("carNamesToPictureIds",
+                                                               this.generateRandomCarNamesToPictureIds(manufacturer)));
+
 
             return new ModelAndView(INDEX_VIEW_NAME);
         } catch (Exception e) {
@@ -63,15 +68,13 @@ public class IndexController extends BaseController {
      *
      * @return
      */
-    private Map<String, Collection<Long>> generateRandomCarNamesToPictureIds() {
-        List<Long> randomPictureIds = new ArrayList<>();
+    private Map<String, Collection<Long>> generateRandomCarNamesToPictureIds(Manufacturer manufacturer) {
+        List<Long> randomPictureIds = super.getInMemoryPictureDAO().getAllPreviewIds(manufacturer);
         HashMultimap<String, Long> carNamesToPictureIds = HashMultimap.create();
+        Collections.shuffle(randomPictureIds);
 
-        List<Long> pictureIds = super.getInMemoryPictureDAO().getAllPreviewIds();
-        Collections.shuffle(pictureIds);
-
-        if (pictureIds.size() > MAX_NUMBER_PICTURES_TO_DISPLAY) {
-            randomPictureIds = this.generateRandomPictureIdsList(pictureIds);
+        if (randomPictureIds.size() > MAX_NUMBER_PICTURES_TO_DISPLAY) {
+            randomPictureIds = this.generateRandomPictureIdsList(randomPictureIds);
         }
 
         randomPictureIds.forEach(pictureId -> {
