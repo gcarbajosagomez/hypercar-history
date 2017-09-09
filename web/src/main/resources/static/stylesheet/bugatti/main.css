@@ -1,15 +1,15 @@
 @CHARSET "ISO-8859-1";
 
 hr {
-    border-top-color: #337ab7 !important;
+    border-top-color: #e40421 !important;
 }
 
 a {
-    color: #337ab7;
+    color: #e40421;
 }
 
 .bordered-div {
-    border: 1px solid #337ab7 !important;
+    border: 1px solid #e40421 !important;
     background: #ffffff none !important;
 }
 
@@ -27,7 +27,7 @@ a {
 .language-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
-    color: #337ab7 !important;
+    color: #e40421 !important;
 }
 
 .manufacturer-history-navbar {
@@ -40,16 +40,16 @@ a {
 }
 
 .content-search-input {
-    background: #337ab7;
+    background: #e40421;
     color: white;
 }
 
 .content-search-input:hover {
-    background: #337ab7;
+    background: #e40421;
 }
 
 .content-search-input:focus {
-    background-color: #337ab7;
+    background-color: #e40421;
 }
 
 #content-search-span {
@@ -57,11 +57,11 @@ a {
 }
 
 .manufacturer-colour {
-    color: #337ab7;
+    color: #e40421;
 }
 
 .measure-unit-text {
-    color: #337ab7;
+    color: #e40421;
 }
 
 .manufacturer-history-footer {
@@ -69,7 +69,7 @@ a {
 }
 
 .manufacturer-history-footer h4 {
-    color: #337ab7;
+    color: #e40421;
 }
 
 .preview-div {
@@ -86,11 +86,11 @@ a {
 }
 
 .list-group > a > h5 {
-    color: #337ab7;
+    color: #e40421;
 }
 
 .technology-stack .row {
-    border-color: #337ab7 !important;
+    border-color: #e40421 !important;
 }
 
 .grid figcaption {
@@ -102,13 +102,13 @@ a {
 }
 
 .grid figcaption a {
-    background: #337ab7;
+    background: #e40421;
     color: #fff;
 }
 
 .toggle-button {
     color: #ffffff;
-    background: #337ab7 none;
+    background: #e40421 none;
 }
 
 .toggle-button:hover {
@@ -121,5 +121,5 @@ a {
 }
 
 .manufacturer-selector {
-    color: #337ab7;
+    color: #e40421;
 }
