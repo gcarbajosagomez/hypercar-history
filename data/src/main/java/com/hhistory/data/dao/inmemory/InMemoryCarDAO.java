@@ -15,12 +15,7 @@ public interface InMemoryCarDAO extends InMemoryDAO<Car, Long> {
 
     Car getByQueryCommand(CarQueryCommand queryCommand);
 
-    /**
-     * Get all {@link Car}s whose {@link Car#visible} is true ordered by their {@link Car#productionStartDate} descending
-     *
-     * @return
-     */
-    List<Car> getAllVisibleOrderedByProductionStartDate(Manufacturer manufacturer);
+    List<Car> getByQueryCommandOrderedByProductionStartDate(CarQueryCommand queryCommand);
 
     long countVisibleCars(Manufacturer manufacturer);
 }

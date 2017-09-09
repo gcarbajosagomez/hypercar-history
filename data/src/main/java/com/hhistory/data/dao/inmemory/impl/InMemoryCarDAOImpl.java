@@ -14,10 +14,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -84,11 +81,11 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public Car getCarByPictureId(Long pictureId) {
         return this.inMemoryPictureDAO.getEntities()
-                                              .stream()
-                                              .filter(picture -> picture.getId().equals(pictureId))
-                                              .map(Picture::getCar)
-                                              .findFirst()
-                                              .orElse(null);
+                                      .stream()
+                                      .filter(picture -> picture.getId().equals(pictureId))
+                                      .map(Picture::getCar)
+                                      .findFirst()
+                                      .orElse(null);
     }
 
     @Override
@@ -106,21 +103,31 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     @Override
     public Car getByQueryCommand(CarQueryCommand queryCommand) {
-        return this.cars.stream()
-                        .filter(car -> Objects.isNull(queryCommand.getCarId()) || car.getId().equals(queryCommand.getCarId()))
-                        .filter(car -> Objects.isNull(queryCommand.getEngineId()) ||
-                                       car.getEngine().getId().equals(queryCommand.getEngineId()))
-                        .filter(car -> Objects.isNull(queryCommand.getModelName()) ||
-                                       car.getNormalizedModelName().equals(Car.normalizeModelName(queryCommand.getModelName())))
-                        .findFirst()
-                        .orElse(null);
+        return this.getByQueryCommandOrderedByProductionStartDate(queryCommand)
+                   .stream()
+                   .findFirst()
+                   .orElse(null);
     }
 
     @Override
-    public List<Car> getAllVisibleOrderedByProductionStartDate(Manufacturer manufacturer) {
+    public List<Car> getByQueryCommandOrderedByProductionStartDate(CarQueryCommand queryCommand) {
+        Manufacturer manufacturer = queryCommand.getManufacturer();
+        Boolean visible = queryCommand.getVisible();
+        Long carId = queryCommand.getCarId();
+        Long engineId = queryCommand.getEngineId();
+        String modelName = queryCommand.getModelName();
+
         return this.cars.stream()
-                        .filter(car -> car.getManufacturer().equals(manufacturer))
-                        .filter(Car::getVisible)
+                        .filter(car -> !Optional.ofNullable(manufacturer).isPresent() ||
+                                       car.getManufacturer().equals(manufacturer))
+                        .filter(car -> !Optional.ofNullable(visible).isPresent() ||
+                                       car.getVisible() == visible)
+                        .filter(car -> !Optional.ofNullable(carId).isPresent() ||
+                                       car.getId().equals(carId))
+                        .filter(car -> !Optional.ofNullable(engineId).isPresent() ||
+                                       car.getEngine().getId().equals(engineId))
+                        .filter(car -> !Optional.ofNullable(modelName).isPresent() ||
+                                       car.getNormalizedModelName().equals(Car.normalizeModelName(modelName)))
                         .sorted(Comparator.comparing(Car::getProductionStartDate))
                         .collect(Collectors.toList());
     }
