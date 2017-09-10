@@ -6,6 +6,7 @@
     <#import "applicationMacros/pageLanguage.ftl" as language/>
     <#import "applicationMacros/picture.ftl" as picture/>
 
+    <#assign manufacturerName = manufacturer.getName()/>
     <@generic.startPage language.getTextSource('${manufacturerName}.meta.title.manufacturerHistory')
                         language.getTextSource('${manufacturerName}.meta.keywords.manufacturerHistory')
                         language.getTextSource('${manufacturerName}.meta.title.manufacturerHistory.metaDescription')/>
