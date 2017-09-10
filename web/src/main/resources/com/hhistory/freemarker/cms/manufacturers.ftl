@@ -9,7 +9,7 @@
      <div class="row">
         <div class="col-lg-2">
 			<div class="list-group">
-				<#list manufacturers as manufacturer>
+				<#list manufacturerEntities as manufacturer>
     				<a class="list-group-item" href='${uriUtils.buildDomainURI("/${cmsContext}${manufacturersURL}/${manufacturer.id}/${editURL}")}'>
     					<h5 class="text-center list-group-element">${manufacturer.name}</h5>
     				</a>
@@ -21,13 +21,13 @@
 			<#if (manufacturersPerPageData >= 1)>
 				<div id="manufacturer-list-div" class="col-lg-12">	
 					<ul class="grid preview">		
-						<#list manufacturers?chunk(2) as row>	
+						<#list manufacturerEntities?chunk(2) as row>
 							<div id="manufacturer-list-row" class="row">
 								<#list row as manufacturer>
 									<div class="col-lg-6 col-md-6 col-sm-12 preview-outer" id="${manufacturer.name}-div">	
 										<#assign zIndex = (manufacturer_index + 1) * (row_index + 1)>
 										<#--the Z-index of the elements on top must be higher than those below, threrfore the figure must be inverted -->		
-										<#assign zIndex = zIndex + (manufacturers?size - ((manufacturer_index + 1) * (row_index + 1)) - zIndex)>		
+										<#assign zIndex = zIndex + (manufacturerEntities?size - ((manufacturer_index + 1) * (row_index + 1)) - zIndex)>
 										<#if manufacturer_index == 0>
 											<#assign zIndex = (zIndex) - (1 * row_index)>
 										</#if>					
@@ -39,7 +39,7 @@
 					</ul>
 				</div>
 				
-				<#assign chunkedManufacturersList = manufacturers?chunk(manufacturersPerPageData)>
+				<#assign chunkedManufacturersList = manufacturerEntities?chunk(manufacturersPerPageData)>
 				
 				<div class="col-lg-12" style="margin-top: 55px;">
 					<div class="<#if (chunkedManufacturersList?size < 2)>col-lg-3 col-md-3 col-sm-5 col-xs-6<#elseif (chunkedManufacturersList?size >= 3)>col-lg-7 col-md-7 col-sm-8 col-xs-10<#else>col-lg-6 col-md-6 col-sm-7 col-xs-8</#if> center-block well well-sm">
@@ -60,7 +60,7 @@
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=18">18</a></li>
     								<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=24">24</a></li>
    									<hr>
-	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturers?size}">${language.getTextSource('pagination.allManufacturers')}</a></li>
+	    							<li role="presentation"><a role="menuitem" href="${manufacturersURL}?${pagNum}=1&${manufacturersPerPage}=${manufacturerEntities?size}">${language.getTextSource('pagination.allManufacturers')}</a></li>
   								</ul>
   							</div>
   						</div>

@@ -1,5 +1,6 @@
 package com.hhistory.mvc.springframework.view.filler.inmemory;
 
+import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.hhistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS;
 import static com.hhistory.mvc.controller.BaseControllerData.CARS;
 import static com.hhistory.mvc.controller.BaseControllerData.MODELS;
 import static com.hhistory.mvc.springframework.view.filler.inmemory.InMemoryCarListModelFiller.IN_MEMORY_CAR_LIST_MODEL_FILLER;
@@ -41,11 +43,18 @@ public class InMemoryCarListModelFiller extends AbstractCarListModelFiller {
     @Override
     public Model fillPaginatedModel(Model model, PaginationDTO paginationDTO) {
         super.fillPaginatedModel(model, paginationDTO);
+        model.addAttribute(MANUFACTURERS, com.hhistory.mvc.manufacturer.Manufacturer.values());
         Optional<Manufacturer> manufacturerOptional = this.manufacturerService.getInMemoryEntityFromModel(model);
         manufacturerOptional.ifPresent(manufacturer -> {
+            CarQueryCommand queryCommand = CarQueryCommand.builder()
+                                                          .visible(true)
+                                                          .manufacturer(manufacturer)
+                                                          .build();
+
             model.addAttribute(CARS,
-                               this.loadCarsBySearchCommand(paginationDTO, manufacturer));
-            model.addAttribute(MODELS, this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate(manufacturer));
+                               this.loadCarsByPaginationDTO(paginationDTO, queryCommand));
+
+            model.addAttribute(MODELS, this.inMemoryCarDAO.getByQueryCommandOrderedByProductionStartDate(queryCommand));
         });
 
         return model;
@@ -57,8 +66,8 @@ public class InMemoryCarListModelFiller extends AbstractCarListModelFiller {
      * @param paginationDTO
      * @return The resulting {@link List<Car>}
      */
-    private List<Car> loadCarsBySearchCommand(PaginationDTO paginationDTO, Manufacturer manufacturer) {
-        return this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate(manufacturer)
+    protected List<Car> loadCarsByPaginationDTO(PaginationDTO paginationDTO, CarQueryCommand queryCommand) {
+        return this.inMemoryCarDAO.getByQueryCommandOrderedByProductionStartDate(queryCommand)
                                   .stream()
                                   .skip(paginationDTO.getFirstResult())
                                   .limit(paginationDTO.getItemsPerPage())

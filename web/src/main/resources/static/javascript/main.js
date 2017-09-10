@@ -77,26 +77,41 @@ function deleteCarInternetContent(carInternetContentId, deleteMessage) {
 }
 
 //this function is called from the pagination template
-function writeCarPreviews(data) {
+function writeCarPreviews(cars) {
     var auxCarRowList = new Array();
     var carListString = "";
 
-    for (var i = 0; i < data.length; i++) {
+    for (var i = 0; i < cars.length; i++) {
         if (i % 2 == 0) {
             auxCarRowList = new Array()
-            auxCarRowList[0] = data[i];
+            auxCarRowList[0] = cars[i];
 
-            if ((i + 1) <= (data.length - 1)) {
-                auxCarRowList[1] = data[i + 1];
+            if ((i + 1) <= (cars.length - 1)) {
+                auxCarRowList[1] = cars[i + 1];
             }
 
             i++;
-            var zIndex = ((data.length - (i + 1)) + 1);
-            carListString = carListString.concat(writeCarListRow(auxCarRowList, zIndex));
+            var zIndex = ((cars.length - (i + 1)) + 1);
+            var rowString = writeCarListRow(auxCarRowList, zIndex);
+            carListString = carListString.concat(rowString);
         }
     }
 
     $('#car-list-div')[0].innerHTML = carListString;
+}
+
+//this function is called from the pagination template
+function writeModelListGroup(paginationDto) {
+    $('#cms-models-list-group').empty();
+    var manufacturerSelectorElement = buildManufacturerSelectorListElement();
+    $('#cms-models-list-group').append(manufacturerSelectorElement);
+    var manufacturer = paginationDto.manufacturer;
+    $('#manufacturer-selector').val(manufacturer ? manufacturer.shortName : null);
+
+    paginationDto.models.forEach(function(model) {
+        var modelListElement = buildModelListElement(model);
+        $('#cms-models-list-group').append(modelListElement);
+    });
 }
 
 function setupContentSearchEventListeners() {

@@ -13,8 +13,8 @@ import com.hhistory.data.model.transmission.DriveWheelType;
 import com.hhistory.data.model.transmission.TransmissionType;
 import com.hhistory.data.model.tyre.TyreManufacturer;
 import com.hhistory.data.model.tyre.TyreType;
-import com.hhistory.mvc.cms.command.EditFormCommand;
 import com.hhistory.mvc.cms.command.CarMaterial;
+import com.hhistory.mvc.cms.command.EditFormCommand;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hhistory.mvc.cms.controller.CMSBaseController.MANUFACTURER_ENTITIES;
 import static com.hhistory.mvc.controller.BaseControllerData.ENGINE;
 import static com.hhistory.mvc.controller.BaseControllerData.PICTURES;
 
@@ -49,7 +50,7 @@ public class CarEditModelFiller implements ModelFiller {
 
     @Override
     public Model fillModel(Model model) {
-        model.addAttribute("manufacturers", this.sqlManufacturerRepository.findAll());
+        model.addAttribute(MANUFACTURER_ENTITIES, this.sqlManufacturerRepository.findAll());
         model.addAttribute("engineLayouts", CarEngineLayout.values());
         model.addAttribute("engineDispositions", CarEngineDisposition.values());
         model.addAttribute("engines", this.sqlEngineRepository.findAll());

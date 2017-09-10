@@ -1,11 +1,13 @@
 package com.hhistory.mvc.dto;
 
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.hhistory.data.model.GenericEntity;
-import com.hhistory.data.model.car.Car;
+import com.hhistory.mvc.manufacturer.Manufacturer;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * DTO class that transports pagination data
@@ -20,6 +22,7 @@ public class PaginationDTO {
 
     private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
 
+    private Optional<Manufacturer> manufacturer = Optional.empty();
     private Integer pagNum       = PAG_NUM_DEFAULT_VALUE;
     private Integer itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
     private Integer             firstResult;
@@ -41,6 +44,11 @@ public class PaginationDTO {
 
     public void setMpp(Integer manufacturersPerPage) {
         this.itemsPerPage = manufacturersPerPage;
+    }
+
+    @JsonSetter
+    public void setManufacturer(String manufacturerShortName) {
+        this.manufacturer = Manufacturer.mapShortName(manufacturerShortName);
     }
 
     /**

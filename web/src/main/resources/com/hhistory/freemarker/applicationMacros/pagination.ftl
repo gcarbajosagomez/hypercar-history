@@ -3,117 +3,155 @@
 <#import "uriUtils.ftl" as uriUtils/>
 
 <#macro addCarsPagination chunkedModelsList=[]>
-	<@carsPagination "/${carsURL}/${paginationURL}" chunkedModelsList/>
+	<@createPaginationCallFuncion "/${carsURL}/${paginationURL}" false/>
+	<@addPaginatorFunction chunkedModelsList?size/>
 </#macro>
 
 <#macro addCMSCarsPagination chunkedModelsList=[]>
-	<@carsPagination "/${manufacturerShortName}/${cmsContext}${carsURL}/${paginationURL}" chunkedModelsList/>
+	<@addCMSPaginatorFunction chunkedModelsList?size/>
 </#macro>
 
-<#macro carsPagination url chunkedModelsList=[]>
-	var paginationOptions =
-   	{
-	    bootstrapMajorVersion : 3,
+<#macro addCMSPaginatorFunction totalPages=1>
+	var paginationOptions = {
+		bootstrapMajorVersion : 3,
 		currentPage: ${pagNumData},
 		alignment: 'left',
-	    totalPages: <#if (chunkedModelsList?size > 0)>${chunkedModelsList?size}<#else>1</#if>,
+		totalPages: ${totalPages},
 		useBootstrapTooltip: true,
-		tooltipTitles:
-		   	function(type,page,current)
-	       	{
-	       		switch (type) {
-	            case "first":
-	                return "${language.getTextSource('pagination.goToFirstPage')} ";
-	            case "prev":
-	                return "${language.getTextSource('pagination.goToPreviousPage')} ";
-	            case "next":
-	                return "${language.getTextSource('pagination.goToNextPage')} ";
-	            case "last":
-	                return "${language.getTextSource('pagination.goToLastPage')} ";
-	            case "page":
-	                return "${language.getTextSource('pagination.goToPage')} " + page;
-	            }
-	     	},        
-	    onPageClicked:
-	       	function(e,originalEvent,type,page)
-	       	{      		
-	       		if (!ajaxCallBeingProcessed)
-	       		{	         			
-	       			ajaxCallBeingProcessed = true;
-	       			var paginationData = {
-	       									${pagNum} : page,
-	       									${carsPerPage} : ${carsPerPageData}
-	       							  	 };
-		   	    	$.ajax({
-	    	       			type: 'GET',
-	            			url: "${url}",
-	           				data: paginationData, 
-	           				beforeSend: function(xhr)
-	           				{
-                                <#if requestIsDesktop>
-                                    <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
-                                <#else>
-                                    <@generic.addLoadingSpinnerToComponentScript "car-list-div"/>
-                                </#if>
-								addCRSFTokenToAjaxRequest(xhr);
-                            }
-	                	  })	                	 
-	                	  .done(function (data)
-						  {    	            	 
-	    	        	    	writeCarPreviews(data.items);
-                                <#if requestIsDesktop>
-	    	        	     	    $('#main-car-list-div').unblock();
-                                <#else>
-                                    $('#car-list-div').unblock();
-                                </#if>
-	    	        	     	ajaxCallBeingProcessed = false;
-	    	        	 	    	
-	    	        	     	if (data != null)
-	    	        	     	{
-									var pageTitle = data.pageTitle;
-									if (pageTitle) {
-										document.title = pageTitle;
-									}
-	    	        	     		window.history.pushState(null,'',"${carsURL}?${pagNum}=" + data.pagNum + "&${carsPerPage}=" + data.itemsPerPage<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
-								}
-						  });  
-				}                      
-	    	}
-	}        
+		<@addPaginatorTooltipTitlesProperty/>
+		onPageClicked:
+			function(e,originalEvent,type,page) {
+				var paginationDto = {
+					${pagNum}      : page,
+					${carsPerPage} : ${carsPerPageData}
+				};
+				var manufacturerValue = $('#manufacturer-selector')[0].value;
+				if (manufacturerValue) {
+					paginationDto['manufacturer'] = manufacturerValue;
+				}
+				requestPagination(paginationDto);
+			}
+	}
 
 	$('#pagination-ul').bootstrapPaginator(paginationOptions);
 	$('#pagination-ul').addClass('cursor-pointer');
 </#macro>
 
+<#macro addPaginatorFunction totalPages=1>
+	var paginationOptions = {
+		bootstrapMajorVersion : 3,
+		currentPage: ${pagNumData},
+		alignment: 'left',
+		totalPages: ${totalPages},
+		useBootstrapTooltip: true,
+		<@addPaginatorTooltipTitlesProperty/>
+		onPageClicked:
+			function(e,originalEvent,type,page) {
+				var paginationDto = {
+					${pagNum}      : page,
+					${carsPerPage} : ${carsPerPageData}
+				};
+				requestPagination(paginationDto);
+			}
+	}
+
+	$('#pagination-ul').bootstrapPaginator(paginationOptions);
+	$('#pagination-ul').addClass('cursor-pointer');
+</#macro>
+
+<#macro addPaginatorTooltipTitlesProperty>
+	tooltipTitles:
+		function(type,page,current) {
+			switch (type) {
+				case "first":
+					return "${language.getTextSource('pagination.goToFirstPage')}";
+				case "prev":
+					return "${language.getTextSource('pagination.goToPreviousPage')}";
+				case "next":
+					return "${language.getTextSource('pagination.goToNextPage')}";
+				case "last":
+					return "${language.getTextSource('pagination.goToLastPage')}";
+				case "page":
+					return "${language.getTextSource('pagination.goToPage')}" + page;
+		}
+	},
+</#macro>
+
+<#macro createPaginatorFunction>
+	function createPaginator(currentPage, totalPages) {
+		var paginationOptions = {
+			bootstrapMajorVersion : 3,
+			currentPage: currentPage,
+			alignment: 'left',
+			totalPages: totalPages > 0 ? totalPages : 1,
+			useBootstrapTooltip: true,
+			<@addPaginatorTooltipTitlesProperty/>
+			onPageClicked:
+				function(e,originalEvent,type,page) {
+					var paginationDto = {
+						${pagNum}      : page,
+						${carsPerPage} : ${carsPerPageData}
+					};
+					requestPagination(paginationDto);
+				}
+		}
+
+		$('#pagination-ul').bootstrapPaginator(paginationOptions);
+		$('#pagination-ul').addClass('cursor-pointer');
+	}
+</#macro>
+
+<#macro createPaginationCallFuncion url isCms=false>
+	function requestPagination(paginationDto) {
+		if (!ajaxCallBeingProcessed) {
+			ajaxCallBeingProcessed = true;
+			$.ajax({
+				type: 'GET',
+				url: '${url}',
+				data: paginationDto,
+				beforeSend: function(xhr){
+					<@generic.addLoadingSpinnerToComponentScript "main-container"/>
+
+					addCRSFTokenToAjaxRequest(xhr);
+				}
+			})
+			.done(function (paginationDTO) {
+				writeCarPreviews(paginationDTO.items);
+				<#if isCms>
+					writeModelListGroup(paginationDTO);
+                	setUpManufacturerSelectorValueChangedListener();
+
+					var totalPages = Math.ceil(paginationDTO.models.length / ${carsPerPageData});
+                	createPaginator(paginationDTO.pagNum, totalPages);
+				</#if>
+
+				$('#main-container').unblock();
+
+				ajaxCallBeingProcessed = false;
+
+				if (paginationDTO) {
+					var pageTitle = paginationDTO.pageTitle;
+					if (pageTitle) {
+						document.title = pageTitle;
+					}
+					window.history.pushState(null,'',"${carsURL}?${pagNum}=" + paginationDTO.pagNum + "&${carsPerPage}=" + paginationDTO.itemsPerPage<#if doNotTrack> + "&${doNotTrackParam}=true"</#if>);
+				}
+			});
+		}
+	}
+</#macro>
+
 <#macro createContentSearchPaginationFunction>
-		var paginationOptions =
-    	{
+		var paginationOptions = {
 	    	bootstrapMajorVersion : 3,
     	    currentPage: contentSearchDto.${pagNum},
     	    alignment: 'left',
         	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${carsPerPage}),
     	    useBootstrapTooltip: true,
-    	    tooltipTitles:
-    	    	function(type,page,current)
-	         	{
-	         		switch (type) {
-                    case "first":
-                        return "${language.getTextSource('pagination.goToFirstPage')} ";
-                    case "prev":
-                        return "${language.getTextSource('pagination.goToPreviousPage')} ";
-                    case "next":
-                        return "${language.getTextSource('pagination.goToNextPage')} ";
-                    case "last":
-                        return "${language.getTextSource('pagination.goToLastPage')} ";
-                    case "page":
-                        return "${language.getTextSource('pagination.goToPage')} " + page;
-                    }
-	         	},        
+			<@addPaginatorTooltipTitlesProperty/>
         	onPageClicked:
-	         	function(e,originalEvent,type,page)
-	         	{      		
-	         		if (!ajaxCallBeingProcessed)
-	         		{	         			
+	         	function(e,originalEvent,type,page) {
+	         		if (!ajaxCallBeingProcessed) {
 	         			ajaxCallBeingProcessed = true;
 
 	         			delete contentSearchDto.searchTotalResults; 
@@ -123,8 +161,7 @@
         	        			type:'GET',
 	        					url: "${uriUtils.buildDomainURI("/${searchURL}")}",
         						data: contentSearchDto,
-                				beforeSend: function(xhr)
-                				{
+                				beforeSend: function(xhr) {
                                     <#if requestIsDesktop>
                                         <@generic.addLoadingSpinnerToComponentScript "main-car-list-div"/>
                                     <#else>
@@ -133,10 +170,8 @@
 									addCRSFTokenToAjaxRequest(xhr);
   								}
 	                	  	  })	                	 
-	                	  	  .done(function (data)
-						  	  {    	            	 
-        	        	 	    	if (data != null)
-      								{
+	                	  	  .done(function (data) {
+        	        	 	    	if (data) {
       									document.children[0].innerHTML = data;
                                         <#if requestIsDesktop>
                                             $('#main-car-list-div').unblock();

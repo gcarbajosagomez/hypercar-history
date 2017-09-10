@@ -1,5 +1,6 @@
 package com.hhistory.mvc.springframework.view.filler.impl;
 
+import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
@@ -13,7 +14,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
-
 import java.util.List;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -30,7 +30,7 @@ import static com.hhistory.mvc.language.Language.SPANISH;
  */
 @Component
 public class BaseModelFiller implements ModelFiller {
-    private static final String CARS_HEADER_LINK_MESSAGE_ID = "cars.all";
+    private static final String CARS_HEADER_BASE_LINK_MESSAGE_ID = ".cars.all";
 
     private InMemoryCarDAO                inMemoryCarDAO;
     private InMemoryPictureDAO            inMemoryPictureDAO;
@@ -60,7 +60,6 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("engineURL", ENGINE_URL);
         model.addAttribute("searchURL", SEARCH_URL);
         model.addAttribute("technologyStackURL", TECHNOLOGY_STACK_URL);
-        model.addAttribute("siteURL", "http://www.paganihistory.com");
         model.addAttribute(ID, ID);
         model.addAttribute("engineIdData", ENGINE_ID);
         model.addAttribute("carsPerPage", CARS_PER_PAGE);
@@ -77,17 +76,25 @@ public class BaseModelFiller implements ModelFiller {
 
         this.manufacturerService.getInMemoryEntityFromModel(model)
                                 .ifPresent(manufacturer -> {
-                                    model.addAttribute("carsHeaderLinkValue", this.buildCarsHeaderLinkValue(manufacturer));
+                                    model.addAttribute("carsHeaderLinkValue", this.buildCarsHeaderLinkValue(model,
+                                                                                                            manufacturer));
+                                    CarQueryCommand queryCommand = CarQueryCommand.builder()
+                                                                                  .manufacturer(manufacturer)
+                                                                                  .build();
                                     List<Car> models =
-                                            this.inMemoryCarDAO.getAllVisibleOrderedByProductionStartDate(manufacturer);
+                                            this.inMemoryCarDAO.getByQueryCommandOrderedByProductionStartDate(queryCommand);
                                     model.addAttribute(ALL_MODELS, models);
                                 });
+
+        String manufacturerName = this.manufacturerService.getFromModel(model).getName();
+        model.addAttribute("siteURL", "http://www." + manufacturerName + "history.com");
 
         return model;
     }
 
-    private String buildCarsHeaderLinkValue(Manufacturer manufacturer) {
-        return this.messageSource.getMessage(CARS_HEADER_LINK_MESSAGE_ID,
+    private String buildCarsHeaderLinkValue(Model model, Manufacturer manufacturer) {
+        String manufacturerName = this.manufacturerService.getFromModel(model).getName();
+        return this.messageSource.getMessage(manufacturerName + CARS_HEADER_BASE_LINK_MESSAGE_ID,
                                              new Object[] {this.inMemoryCarDAO.countVisibleCars(manufacturer)},
                                              LocaleContextHolder.getLocale());
     }

@@ -25,7 +25,7 @@ public class ManufacturerModelFiller implements ModelFiller {
 
     @Override
     public Model fillModel(Model model) {
-        model.addAttribute(MANUFACTURERS, this.manufacturerRepository.findAll());
+        model.addAttribute(MANUFACTURER_ENTITIES, this.manufacturerRepository.findAll());
         model.addAttribute("loadManufacturerLogoAction", LOAD_MANUFACTURER_LOGO.getName());
         return model;
     }

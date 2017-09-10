@@ -9,9 +9,10 @@ import com.hhistory.mvc.cms.dto.CrudOperationDTO;
 import com.hhistory.mvc.cms.form.CarInternetContentForm;
 import com.hhistory.mvc.cms.service.crud.CrudService;
 import com.hhistory.mvc.cms.springframework.view.filler.CarEditModelFiller;
-import com.hhistory.mvc.controller.CarListController;
 import com.hhistory.mvc.controller.util.CarControllerUtil;
+import com.hhistory.mvc.dto.CarPaginationDTO;
 import com.hhistory.mvc.dto.PaginationDTO;
+import com.hhistory.mvc.service.CarPaginationService;
 import com.hhistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,7 @@ import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.service.crud.impl.CarCrudService.CAR_CRUD_SERVICE;
 import static com.hhistory.mvc.cms.service.crud.impl.CarInternetContentCrudService.CAR_INTERNET_CONTENT_CRUD_SERVICE;
+import static com.hhistory.mvc.cms.service.impl.CmsCarPaginationServiceImpl.CMS_CAR_PAGINATION_SERVICE_IMPL;
 import static com.hhistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 
 @Secured(USER_ROLE)
@@ -43,40 +45,40 @@ public class CMSCarController extends CMSBaseController {
 
     private CrudService                carCrudService;
     private CrudService                carInternetContentCrudService;
-    private CarListController          carListController;
     private ModelFiller                carModelFiller;
     private ModelFiller                pictureModelFiller;
     private CarEditModelFiller         carEditModelFiller;
-    private AbstractCarListModelFiller inMemoryCarListModelFiller;
+    private AbstractCarListModelFiller cmsInMemoryCarListModelFiller;
     private CMSCarControllerUtil       cmsCarControllerUtil;
     private CarControllerUtil          carControllerUtil;
+    private CarPaginationService       carPaginationService;
 
     @Inject
     public CMSCarController(@Named(CAR_CRUD_SERVICE) CrudService carCrudService,
                             @Named(CAR_INTERNET_CONTENT_CRUD_SERVICE) CrudService carInternetContentCrudService,
-                            CarListController carListController,
+                            @Named(CMS_CAR_PAGINATION_SERVICE_IMPL) CarPaginationService carPaginationService,
                             ModelFiller carModelFiller,
                             ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
-                            AbstractCarListModelFiller inMemoryCarListModelFiller,
+                            AbstractCarListModelFiller cmsInMemoryCarListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
                             CarControllerUtil carControllerUtil) {
         this.carCrudService = carCrudService;
         this.carInternetContentCrudService = carInternetContentCrudService;
-        this.carListController = carListController;
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carEditModelFiller = carEditModelFiller;
-        this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
+        this.cmsInMemoryCarListModelFiller = cmsInMemoryCarListModelFiller;
         this.cmsCarControllerUtil = cmsCarControllerUtil;
         this.carControllerUtil = carControllerUtil;
+        this.carPaginationService = carPaginationService;
     }
 
     @GetMapping
     public ModelAndView handleCarsList(Model model,
                                        PaginationDTO paginationDTO) {
         try {
-            this.carControllerUtil.fillCarListModel(this.inMemoryCarListModelFiller, model, paginationDTO);
+            this.carControllerUtil.fillCarListModel(this.cmsInMemoryCarListModelFiller, model, paginationDTO);
             return new ModelAndView();
         } catch (Exception e) {
             log.error(e.toString(), e);
@@ -86,8 +88,8 @@ public class CMSCarController extends CMSBaseController {
 
     @GetMapping(value = {"/" + PAGINATION_URL})
     @ResponseBody
-    public PaginationDTO handlePagination(Model model, PaginationDTO paginationDTO) {
-        return this.carListController.handlePagination(model, paginationDTO);
+    public CarPaginationDTO handlePagination(Model model, CarPaginationDTO paginationDTO) {
+        return this.carPaginationService.paginate(model, paginationDTO);
     }
 
     @GetMapping(value = EDIT_URL)
