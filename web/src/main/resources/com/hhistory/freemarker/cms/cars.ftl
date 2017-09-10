@@ -7,15 +7,21 @@
 
 <#assign paginationFirstResult><#if paginationFirstResult??>${paginationFirstResult + 1}<#else>0</#if></#assign>
 <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
-<@generic.startPage language.getTextSource('meta.title.allModels', [allModels?size, paginationFirstResult, paginationLastResult])/>
+<@generic.startPage language.getTextSource('${manufacturer.getName()}.meta.title.allModels', [allModels?size, paginationFirstResult, paginationLastResult])/>
 
 <div id="main-container" class="container panel panel-default cars-main-container main-panel">
 	<div class="row">
 		<div class="col-lg-2">
-			<div class="list-group">
+			<div id="cms-models-list-group" class="list-group">
+                <select id="manufacturer-selector" class="form-control manufacturer-selector">
+                    <option value="" selected>${language.getTextSource('pagination.allManufacturers')}</option>
+					<#list manufacturers as manufacturer>
+						<option value="${manufacturer.getShortName()}">${manufacturer.getName()?cap_first}</option>
+					</#list>
+                </select>
 				<#list cmsModels as car>
     				<a class="list-group-item" href='${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/${car.id}/${editURL}")}'>
-    					<h5 class="text-center list-group-element">${car.model}</h5>
+    					<h5 class="text-center list-group-element">${car.manufacturer.name} ${car.model}</h5>
     				</a>
   				</#list> 
 			</div>
@@ -43,21 +49,21 @@
 <@generic.endPage chunkedModelsList/>
 
 <script type='application/javascript'>
-	
-	<#if cars?? && (allModels?size > carsPerPageData)>
-		$( document ).ready(function()
-		{
-			<@pagination.addCMSCarsPagination chunkedModelsList/>
-		});
-	</#if>
+
+	<#assign url><#if requestContainsManufacturerData?? && requestContainsManufacturerData>/${manufacturerShortName}</#if>/${cmsContext}${carsURL}/${paginationURL}</#assign>
+	<@pagination.createPaginatorFunction/>
+	<@pagination.createPaginationCallFuncion url true/>
+
+	$(document).ready(function() {
+		<@pagination.addCMSCarsPagination chunkedModelsList/>
+		setUpManufacturerSelectorValueChangedListener(1);
+	});
     
-    function writeCarListRow(cars, zIndex)
-    { 	
-    	carRowString = "<div id='car-list-row' class='row'>";
+    function writeCarListRow(cars, zIndex) {
+    	var carRowString = "<div id='car-list-row' class='row'>";
     	carRowString = carRowString.concat("<ul class='grid preview'>");
 
-    	for (var i=0 ; i< cars.length; i++)
-    	{
+    	for (var i=0; i< cars.length; i++) {
     		carRowString = carRowString.concat("<div class='col-lg-6 col-md-6 col-sm-12 preview-outer' id='" + cars[i].manufacturer.name + "-" + cars[i].model + "-div'>");
     		carRowString = carRowString.concat(	  "<div class='thumbnail preview-div'>");
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
@@ -68,10 +74,10 @@
             carRowString = carRowString.concat(				"<figcaption>");
 			carRowString = carRowString.concat(					"<a href='<#if requestContainsManufacturerData?? && requestContainsManufacturerData>/${manufacturerShortName}</#if>/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
 			carRowString = carRowString.concat(						"<h3 class='text-center'>" + cars[i].model + "</h3>");
-			carRowString = carRowString.concat(					"</a>");	
-            carRowString = carRowString.concat(				"</figcaption>");		   	
-			carRowString = carRowString.concat(	  		"</figure>");   	
-			carRowString = carRowString.concat(	  	 "</li>");   	
+			carRowString = carRowString.concat(					"</a>");
+            carRowString = carRowString.concat(				"</figcaption>");
+			carRowString = carRowString.concat(	  		"</figure>");
+			carRowString = carRowString.concat(	  	 "</li>");
 			carRowString = carRowString.concat(	  "</div>");
 			carRowString = carRowString.concat("</div>");
     	}
@@ -80,6 +86,51 @@
     	carRowString = carRowString.concat("</div>");
     	
     	return carRowString;
+    }
+
+    function buildManufacturerSelectorListElement() {
+        var selector = $('<select>', {
+            'id': "manufacturer-selector",
+			'class': "form-control manufacturer-selector"
+		});
+
+        selector.append($('<option>', {
+            value: "",
+            text: "${language.getTextSource('pagination.allManufacturers')}"
+        }));
+
+		<#list manufacturers as manufacturer>
+            selector.append($('<option>', {
+                value: "${manufacturer.getShortName()}",
+                text: "${manufacturer.getName()?cap_first}"
+            }));
+		</#list>
+
+        return selector;
+	}
+
+    function buildModelListElement(model) {
+		var modelListElement = $('<a>', {
+            'class': "list-group-item",
+            'href': "${uriUtils.buildDomainURI("/${cmsContext}${carsURL}/\" + model.id + \"/${editURL}")}"
+        });
+		modelListElement.append('<h5 class="text-center list-group-element">' + model.model + '</h5>');
+		return modelListElement;
+	}
+
+    function setUpManufacturerSelectorValueChangedListener() {
+        $("#manufacturer-selector").change(function () {
+            var paginationDto = {
+				${pagNum}      : 1,
+				${carsPerPage} : ${carsPerPageData}
+			};
+
+            var manufacturerValue = $('#manufacturer-selector')[0].value;
+            if (manufacturerValue) {
+                paginationDto['manufacturer'] = manufacturerValue;
+            }
+            requestPagination(paginationDto);
+        });
     }
        
 </script>
