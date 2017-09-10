@@ -79,6 +79,9 @@ public class CarDetailsController extends BaseController {
     @ModelAttribute(CAR_QUERY_COMMAND)
     public CarQueryCommand getCarQueryCommand(@PathVariable(CAR_MODEL_NAME) String modelName,
                                               @RequestParam(name = ENGINE_ID, required = false) Long engineId) {
-        return new CarQueryCommand(null, modelName, engineId);
+        return CarQueryCommand.builder()
+                              .modelName(modelName)
+                              .engineId(engineId)
+                              .build();
     }
 }

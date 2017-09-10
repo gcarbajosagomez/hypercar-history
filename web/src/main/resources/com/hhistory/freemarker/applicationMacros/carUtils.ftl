@@ -150,10 +150,8 @@
 
 <#macro addSetUnitsOfMeasureFunctionScript>
     <script type="application/javascript">
-        function setUnitsOfMeasure(unitsOfMeasure, mainForm)
-        {
-            if ($.cookie('${unitsOfMeasureCookieName}') !== unitsOfMeasure && !ajaxCallBeingProcessed)
-            {
+        function setUnitsOfMeasure(unitsOfMeasure, mainForm) {
+            if ($.cookie('${unitsOfMeasureCookieName}') !== unitsOfMeasure && !ajaxCallBeingProcessed) {
                 $.cookie('${unitsOfMeasureCookieName}', unitsOfMeasure, {path : '/', expires : 14});
                 ajaxCallBeingProcessed = true;
 
@@ -162,22 +160,18 @@
                             url: mainForm.action,
                             dataType: 'html',
                             cache: false,
-                            beforeSend: function()
-                            {
-                                if(unitsOfMeasure == '${unitsOfMeasureMetric}')
-                                {
+                            beforeSend: function() {
+                                if(unitsOfMeasure == '${unitsOfMeasureMetric}') {
                                     $('#metric-units-loading-gif').removeClass('sr-only');
                                 }
-                                else if(unitsOfMeasure == '${unitsOfMeasureImperial}')
-                                {
+                                else if(unitsOfMeasure == '${unitsOfMeasureImperial}') {
                                     $('#imperial-units-loading-gif').removeClass('sr-only');
                                 }
 
                                 <@generic.addLoadingSpinnerToComponentScript "main-car-details-div"/>
                             }
                         })
-                        .done(function(data)
-                        {
+                        .done(function(data) {
                             document.body.innerHTML = data;
                             ajaxCallBeingProcessed = false;
                             <@picture.addPicturesGalleryFunctionScript "images-gallery" "carousel-inner"/>

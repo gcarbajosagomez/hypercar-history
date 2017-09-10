@@ -87,7 +87,7 @@
                            <@spring.bind "CEFC.editForm.manufacturer"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                              <#list manufacturers as manufacturer>
+                              <#list manufacturerEntities as manufacturer>
                                  <option value="${manufacturer.id}" <#if spring.status.value?? && manufacturer.id == spring.status.value?default(-1)?number> selected</#if>>${manufacturer.name}</option>
                               </#list>
                            </select>

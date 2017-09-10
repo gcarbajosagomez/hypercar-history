@@ -33,8 +33,8 @@ public class CarControllerUtil {
      * @param paginationDTO
      */
     public Model fillCarListModel(AbstractCarListModelFiller carListModelFiller,
-                                 Model model,
-                                 PaginationDTO paginationDTO) {
+                                  Model model,
+                                  PaginationDTO paginationDTO) {
         model = carListModelFiller.fillPaginatedModel(model, paginationDTO);
         this.carModelFiller.fillModel(model);
         this.pictureModelFiller.fillModel(model);
