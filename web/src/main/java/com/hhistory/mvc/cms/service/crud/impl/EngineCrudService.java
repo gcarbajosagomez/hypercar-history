@@ -51,9 +51,9 @@ public class EngineCrudService extends BaseCrudService {
         try {
             if (!result.hasErrors()) {
                 log.info("Saving or editing engine: {}", engine.toString());
-                engine = (Engine) this.sqlEngineRepository.save(engine);
 
                 String successMessage = super.getSaveOrEditSuccessMessage(engine);
+                engine = (Engine) this.sqlEngineRepository.save(engine);
                 crudOperationDTO.setEntity(engine);
                 crudOperationDTO.setSuccessMessage(successMessage);
             } else {

@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.hhistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.*;
@@ -63,9 +64,8 @@ public class CarCrudService extends BaseCrudService {
         if (!result.hasErrors()) {
             log.info("Saving or editing car: {}", car.toString());
             try {
-                car = (Car) this.sqlCarRepository.save(car);
-
                 String successMessage = super.getSaveOrEditSuccessMessage(car);
+                this.sqlCarRepository.save(car);
                 crudOperationDTO.setEntity(car);
                 crudOperationDTO.setSuccessMessage(successMessage);
             } catch (Exception e) {
@@ -77,28 +77,29 @@ public class CarCrudService extends BaseCrudService {
 
             List<PictureEditCommand> pictureFileEditCommands = carEditForm.getPictureFileEditCommands();
             if (Objects.nonNull(pictureFileEditCommands)) {
+                IntStream.range(0, pictureFileEditCommands.size())
+                         .forEach(i -> {
+                             PictureEditCommand pictureEditCommand = pictureFileEditCommands.get(i);
+                             Picture picture = pictureEditCommand.getPicture();
 
-                for (int i = 0; i < pictureFileEditCommands.size(); i++) {
-                    PictureEditCommand pictureEditCommand = pictureFileEditCommands.get(i);
-                    Picture picture = pictureEditCommand.getPicture();
+                             if (Objects.nonNull(picture)) {
+                                 picture.setCar(car);
 
-                    if (Objects.nonNull(picture)) {
-                        picture.setCar(car);
+                                 if (picture.getGalleryPosition() == null) {
+                                     picture.setGalleryPosition(i);
+                                 }
 
-                        if (picture.getGalleryPosition() == null) {
-                            picture.setGalleryPosition(i);
-                        }
+                                 try {
+                                     this.pictureCrudService.saveOrUpdatePicture(pictureEditCommand);
+                                 } catch (Exception e) {
+                                     crudOperationDTO.addErrorMessage(e.toString());
+                                 }
+                             }
+                         });
 
-                        try {
-                            this.pictureCrudService.saveOrUpdatePicture(pictureEditCommand);
-                        } catch (Exception e) {
-                            crudOperationDTO.addErrorMessage(e.toString());
-                        }
-                    }
-                }
-
-                pictureFileEditCommands = this.orderPictureCommandsByGalleryPosition(pictureFileEditCommands);
-                carEditForm.setPictureFileEditCommands(pictureFileEditCommands);
+                List<PictureEditCommand> orderedPictureFileEditCommands =
+                        this.orderPictureCommandsByGalleryPosition(pictureFileEditCommands);
+                carEditForm.setPictureFileEditCommands(orderedPictureFileEditCommands);
             }
 
             if (carEditForm.getId() == null) {

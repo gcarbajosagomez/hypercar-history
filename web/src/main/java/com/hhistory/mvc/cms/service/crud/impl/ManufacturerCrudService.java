@@ -51,9 +51,9 @@ public class ManufacturerCrudService extends BaseCrudService {
 
         if (!result.hasErrors()) {
             log.info("Saving or editing manufacturer: {}", manufacturer.toString());
-            manufacturer = (Manufacturer) this.sqlManufacturerRepository.save(manufacturer);
 
             String successMessage = super.getSaveOrEditSuccessMessage(manufacturer);
+            manufacturer = (Manufacturer) this.sqlManufacturerRepository.save(manufacturer);
             crudOperationDTO.setEntity(manufacturer);
             crudOperationDTO.setSuccessMessage(successMessage);
 
