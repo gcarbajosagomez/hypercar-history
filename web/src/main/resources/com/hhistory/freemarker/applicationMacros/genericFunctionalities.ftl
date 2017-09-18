@@ -28,7 +28,7 @@
 					<meta name="_csrf_header" content="${_csrf.headerName}"/>
 
 					<@language.addHrefLangInfo/>
-					<link rel="shortcut icon" href="/static/img/favicon.ico">
+					<link rel="shortcut icon" href="/static/${manufacturerName}/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/main.css">
@@ -100,7 +100,7 @@
     	        		<nav class="navbar navbar-default manufacturer-history-navbar" role="navigation">
           					<div class="navbar-header">
 								<a class="navbar-brand manufacturer-history-navbar-brand" href='${uriUtils.buildDomainURI("/")}'>
-									<img class="main-logo" src="/static/img/${manufacturerName}/main-logo.png" alt="Home page" title="Home page">
+									<img class="main-logo" src="/static/${manufacturerName}/main-logo.png" alt="Home page" title="Home page">
 								</a>
 
                                 <a class="toggle-button navbar-toggle collapsed" data-toggle="collapse" data-target="#main-navbar-collapse" aria-expanded="false">

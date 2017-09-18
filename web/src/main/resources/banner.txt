@@ -72,5 +72,5 @@ $$/       $$$$$$$/  $$$$$$$ | $$$$$$$/ $$/   $$/ $$/       $$/   $$/ $$/ $$$$$$$
 
 
 ${AnsiColor.YELLOW}
-Pagani History ${application.formatted.version} :: Running on Spring Boot ${spring-boot.version} ::${AnsiColor.DEFAULT}
+Hypercar History ${application.formatted.version} :: Running on Spring Boot ${spring-boot.version} ::${AnsiColor.DEFAULT}
 

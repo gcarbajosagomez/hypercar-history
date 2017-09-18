@@ -5,6 +5,7 @@ import com.hhistory.mvc.language.Language;
 import com.hhistory.mvc.manufacturer.Manufacturer;
 import com.hhistory.mvc.springframework.filter.PathVariableLocaleFilter;
 import com.hhistory.mvc.springframework.interceptor.LocaleChangeInterceptor;
+import com.hhistory.mvc.springframework.resource.ManufacturerBasedResourceResolver;
 import freemarker.template.TemplateException;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
@@ -51,7 +52,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     private static final String  DEFAULT_TIMEZONE                   = "UTC";
     private static final String  FREEMARKER_ENCODING                = "UTF-8";
     private static final String  FREEMARKER_TEMPLATE_FILES_SUFFIX   = ".ftl";
-    private static final String  TEXT_SOURCES_PACKAGE_BASENAME = PACKAGES_BASENAME + "textsource/";
+    private static final String  TEXT_SOURCES_PACKAGE_BASENAME      = PACKAGES_BASENAME + "textsource/";
     private static final String  MAIN_TEXT_SOURCES_PACKAGE_BASENAME = TEXT_SOURCES_PACKAGE_BASENAME + "main";
 
     @Bean
@@ -167,14 +168,18 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
                 .addResourceLocations("classpath:" + STATIC_RESOURCES_URI)
                 .setCachePeriod(THIRTY_MINUTES_SECONDS);
 
+        ManufacturerBasedResourceResolver manufacturerBasedResourceResolver = new ManufacturerBasedResourceResolver();
         registry.addResourceHandler("/" + ROBOTS_FILE_NAME)
-                .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + ROBOTS_FILE_NAME);
+                .resourceChain(false)
+                .addResolver(manufacturerBasedResourceResolver);
 
         registry.addResourceHandler("/" + SITEMAP_FILE_NAME)
-                .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + SITEMAP_FILE_NAME);
+                .resourceChain(false)
+                .addResolver(manufacturerBasedResourceResolver);
 
         registry.addResourceHandler("/" + FAVICON_FILE_NAME)
-                .addResourceLocations("classpath:" + STATIC_RESOURCES_URI + "img/" + FAVICON_FILE_NAME);
+                .resourceChain(false)
+                .addResolver(manufacturerBasedResourceResolver);
     }
 
     @Override
