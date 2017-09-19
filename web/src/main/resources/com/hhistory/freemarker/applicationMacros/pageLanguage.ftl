@@ -7,10 +7,8 @@
 <#macro addSetPageLanguage chunkedModelsList=[]>
 
 	<script type='application/javascript'>
-		function setPageLanguage(locale, mainForm)
-		{
-		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed)
-		   {
+		function setPageLanguage(locale, mainForm) {
+		   if ($.cookie('${languageCookieName}') != locale && !ajaxCallBeingProcessed) {
 		   		ajaxCallBeingProcessed = true;
                 var url = mainForm.action.replace(/\/(${languageEnglishCode}|${languageSpanishCode})\//, '/');
 		   		var matches = mainForm.action.match(/^https?\:\/\/([^\/?#]+)(?:[\/?#]|$)/i);
@@ -22,8 +20,7 @@
 		        	type:'GET',
 			        url: url,
 		    	    contentType :'application/json; charset=UTF-8',
-			        beforeSend: function(xhr)
-		    	    {
+			        beforeSend: function(xhr) {
                         if (locale == '${languageEnglishCode}') {
                             $('#english-loading-gif').removeClass('sr-only');
                         }
@@ -31,20 +28,18 @@
                             $('#spanish-loading-gif').removeClass('sr-only');
                         }
 
-                        var regex = new RegExp('/' + locale + '/(.*)','g');
+                        var regex = new RegExp('/${manufacturerShortName}/' + locale + '/(.*)','g');
                         var replacedURL = url.replace(regex, "/$1");
                         window.history.pushState(null, '', replacedURL);
                         <@generic.addLoadingSpinnerToComponentScript "main-wrap-div"/>
                         addCRSFTokenToAjaxRequest(xhr);
 		   			}
 			   })
-			   .done(function(data)
-			   {
+			   .done(function(data) {
 			        document.children[0].innerHTML = data;
 					<#if requestIsCars || requestIsModelsSearch>
 			            <#--Pagination is only created if the language change is called from the cars page and if needed -->
-			            if ($('#car-list-div').length > 0)
-			            {
+			            if ($('#car-list-div').length > 0) {
 			              	<#if requestIsCars && (chunkedModelsList?size > 0)>
 								<#if requestIsCMS>
 									<@pagination.addCMSCarsPagination chunkedModelsList/>
