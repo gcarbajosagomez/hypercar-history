@@ -1,15 +1,18 @@
 package com.hhistory.data.model.engine;
 
 import com.hhistory.data.model.GenericEntity;
+import com.hhistory.data.model.util.EngineUtils;
 import lombok.*;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+
+import java.util.Objects;
 
 import static javax.persistence.EnumType.*;
 import static javax.persistence.GenerationType.*;
 
 /**
- *
  * @author Gonzalo
  */
 @Entity
@@ -17,8 +20,7 @@ import static javax.persistence.GenerationType.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Engine implements GenericEntity
-{
+public class Engine implements GenericEntity {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "engine_id")
@@ -67,8 +69,12 @@ public class Engine implements GenericEntity
         return id;
     }
 
-	@Override
-	public String toString() {
-		return this.code;
-	}  
+    @Override
+    public String toString() {
+        return EngineUtils.buildToString(this.code,
+                                         this.size,
+                                         this.cylinderDisposition,
+                                         this.numberOfCylinders,
+                                         this.maxPower);
+    }
 }

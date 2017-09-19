@@ -2,12 +2,16 @@ package com.hhistory.mvc.cms.form;
 
 import javax.validation.constraints.NotNull;
 
+import com.hhistory.data.model.util.EngineUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import com.hhistory.data.model.engine.EngineCylinderDisposition;
 import com.hhistory.data.model.engine.EngineType;
+import org.springframework.util.StringUtils;
+
+import java.util.Objects;
 
 /**
  * Engine form
@@ -42,4 +46,13 @@ public class EngineEditForm implements EditForm {
     private Integer maxPowerRPM;
     private Integer maxTorque;
     private Integer maxTorqueRPM;
+
+    @Override
+    public String toString() {
+        return EngineUtils.buildToString(this.code,
+                                         this.size,
+                                         this.cylinderDisposition,
+                                         this.numberOfCylinders,
+                                         this.maxPower);
+    }
 }

@@ -378,7 +378,7 @@
                                <dd>
 								   <select id="load-engine-by-id-select" class="form-control" onChange="loadEngineById(this.value);">
                                         <#list engines as engine>
-                                        	<option value="${engine.id}" <#if CEFC.editForm.engineEditForm.code?? && CEFC.editForm.engineEditForm.code == engine.code> selected</#if>>${engine.code}</option>
+                                        	<option value="${engine.id}" <#if CEFC.editForm.engineEditForm.toString()?? && CEFC.editForm.engineEditForm.toString() == engine.toString()> selected</#if>>${engine.toString()}</option>
                                       	</#list>
                                    <select>
                                </dd>
