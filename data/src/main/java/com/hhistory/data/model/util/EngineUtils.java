@@ -3,7 +3,7 @@ package com.hhistory.data.model.util;
 import com.hhistory.data.model.engine.EngineCylinderDisposition;
 import org.springframework.util.StringUtils;
 
-import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Created by Gonzalo Carbajosa on 19/09/17.
@@ -16,15 +16,15 @@ public class EngineUtils {
                                        Integer numberOfCylinders,
                                        Integer maxPower) {
         if (StringUtils.isEmpty(code)) {
-            StringBuilder sb = new StringBuilder(size.toString());
-            sb.append(" - ")
-              .append(cylinderDisposition)
-              .append(numberOfCylinders);
+            StringBuilder sb = new StringBuilder();
+            Optional.ofNullable(size)
+                    .ifPresent(value -> sb.append(size.toString()).append(" - ")
+                                          .append(cylinderDisposition)
+                                          .append(numberOfCylinders));
 
-            if (Objects.nonNull(maxPower)) {
-                sb.append(" - ")
-                  .append(maxPower);
-            }
+            Optional.ofNullable(maxPower)
+                    .ifPresent(value -> sb.append(" - ")
+                                          .append(maxPower));
             return sb.toString();
         }
         return code;
