@@ -3,7 +3,7 @@
 html, body {
     height: 100%;
     font-size: 16px;
-    background-color: #777;
+    background-color: #ffffff;
 }
 
 a {
@@ -27,33 +27,38 @@ hr {
     border-radius: 3px;
 }
 
+.navbar-default {
+    border: none;
+}
+
 .navbar-header {
     height: 15em;
     width: 100%;
 }
 
-.manufacturer-history-navbar {
+.hypercar-history-navbar {
     min-height: 8em;
     margin: 20px 20px 20px;
+    background: #ffffff none;
 }
 
-.manufacturer-history-navbar .navbar-nav {
+.hypercar-history-navbar .navbar-nav {
     width: 100%;
 }
 
-.manufacturer-history-navbar .navbar-nav > li > a,
-.manufacturer-history-navbar .navbar-nav > li > #search-container > a,
+.hypercar-history-navbar .navbar-nav > li > a,
+.hypercar-history-navbar .navbar-nav > li > #search-container > a,
 .language-selection-div > div > h4 {
     font-size: 18px;
 }
 
-.manufacturer-history-navbar .navbar-nav > li > a:hover,
-.manufacturer-history-navbar .navbar-nav > li > div > div > a:hover,
-.manufacturer-history-navbar .navbar-nav > li > ul > li > a:hover,
-.manufacturer-history-navbar .navbar-nav > li > ul > li > a:focus,
-.manufacturer-history-navbar .navbar-nav > .open > a,
-.manufacturer-history-navbar .navbar-nav > .open > a:hover,
-.manufacturer-history-navbar .navbar-nav > .open > a:focus,
+.hypercar-history-navbar .navbar-nav > li > a:hover,
+.hypercar-history-navbar .navbar-nav > li > div > div > a:hover,
+.hypercar-history-navbar .navbar-nav > li > ul > li > a:hover,
+.hypercar-history-navbar .navbar-nav > li > ul > li > a:focus,
+.hypercar-history-navbar .navbar-nav > .open > a,
+.hypercar-history-navbar .navbar-nav > .open > a:hover,
+.hypercar-history-navbar .navbar-nav > .open > a:focus,
 .language-selection-div > div > h4:hover,
 .language-selection-div > div > h4:focus,
 .list-group-element:hover,
@@ -61,38 +66,38 @@ hr {
     font-weight: 800 !important;
 }
 
-.manufacturer-history-navbar-brand {
+.hypercar-history-navbar-brand {
     padding-top: 3px;
     height: 100% !important;
     width: 100% !important;
 }
 
 @media (max-width: 768px) {
-    .manufacturer-history-navbar-brand {
+    .hypercar-history-navbar-brand {
         width: 80% !important;
     }
 }
 
-.manufacturer-history-navbar .navbar-nav > li > a,
-.manufacturer-history-navbar .navbar-nav > li > #search-container > a,
-.manufacturer-history-navbar .navbar-nav > li > div > div {
+.hypercar-history-navbar .navbar-nav > li > a,
+.hypercar-history-navbar .navbar-nav > li > #search-container > a,
+.hypercar-history-navbar .navbar-nav > li > div > div {
     padding-top: 1em;
     padding-bottom: 0;
 }
 
-.manufacturer-history-navbar .navbar-nav > li {
+.hypercar-history-navbar .navbar-nav > li {
     margin-top: 0.5em;
     margin-bottom: 1em;
 }
 
 @media (min-width: 768px) {
-    .manufacturer-history-navbar .navbar-nav > li > a,
-    .manufacturer-history-navbar .navbar-nav > li > #search-container > a,
-    .manufacturer-history-navbar .navbar-nav > li > div > div {
+    .hypercar-history-navbar .navbar-nav > li > a,
+    .hypercar-history-navbar .navbar-nav > li > #search-container > a,
+    .hypercar-history-navbar .navbar-nav > li > div > div {
         padding-top: 1.3em;
     }
 
-    .manufacturer-history-navbar .navbar-nav > li {
+    .hypercar-history-navbar .navbar-nav > li {
         margin-top: 0.85em;
         margin-bottom: 1.7em;
     }
@@ -114,6 +119,8 @@ hr {
     height: 45px !important;
     cursor: pointer;
     margin-top: 180px;
+    background-color: #ddd;
+    border-color: initial;
 }
 
 .navbar-toggle i {
@@ -146,6 +153,7 @@ hr {
     cursor: pointer;
     margin-left: 10px;
     padding-left: 15px;
+    color: #ffffff;
 }
 
 .content-search-input:hover {
@@ -176,10 +184,18 @@ hr {
     text-indent: -5000px;
 }
 
+#content-search-span {
+    color: #ffffff;
+}
+
 .search-icon {
     position: relative;
     left: -30px;
     cursor: pointer;
+}
+
+.bordered-div {
+    background: #ffffff none !important;
 }
 
 .cursor-pointer {
@@ -196,6 +212,11 @@ hr {
 
 #main-container {
     max-width: 95%;
+    background-color: #ffffff;
+}
+
+#car-list-main-container {
+    background-color: #f8f8f8;
 }
 
 .wrap {
@@ -236,15 +257,16 @@ hr {
     width: 200px;
 }
 
-.manufacturer-history-footer {
+.hypercar-history-footer {
     padding: 25px 40px;
     margin-bottom: 20px;
     margin-left: 20px;
     margin-right: 20px;
     border-radius: 4px;
+    background: #ffffff none;
 }
 
-.manufacturer-history-footer h4 {
+.hypercar-history-footer h4 {
     font-weight: bold;
 }
 
@@ -262,12 +284,18 @@ hr {
     }
 }
 
+#manufacturer-history-main-container {
+    background-color: #ffffff !important;
+}
+
 .cars-list-group {
     padding-left: 4px;
 }
 
 #main-car-list-div {
     margin-top: 10px;
+    border: none;
+    background-color: transparent;
 }
 
 .center-block {
@@ -288,6 +316,7 @@ hr {
 .preview-div {
     padding: 0;
     margin-bottom: 50px;
+    background-color: #ffffff;
 }
 
 .preview-outer {
@@ -300,6 +329,7 @@ hr {
     max-width: 400px;
     height: auto;
     max-height: 400px;
+    border: none;
 }
 
 .resizable-img {
@@ -390,6 +420,10 @@ hr {
     padding: 0 !important;
 }
 
+.pagination-well {
+    background-color: #ffffff;
+}
+
 .pagination > .active > a,
 .pagination > .active > a:hover,
 .pagination > li > a {
@@ -398,6 +432,10 @@ hr {
 
 .list-group {
     margin-top: 10px;
+}
+
+.car-details-main-panel {
+    border: none;
 }
 
 #main-car-details-div > .panel > .panel-body {
@@ -412,6 +450,10 @@ hr {
     padding: 0px !important;
 }
 
+.car-details-model-name-panel-heading {
+    background: none !important;
+}
+
 .car-details-model-name {
     margin-top: 10px;
     margin-bottom: 15px;
@@ -419,8 +461,7 @@ hr {
 }
 
 #main-car-details-div {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0;
 }
 
 .nav-tabs {
@@ -547,7 +588,7 @@ hr {
     height: 48em;
     padding-left: 0;
     padding-right: 0;
-    background-color: black;
+    background-color: #000000;
     border: 0;
     border-radius: 0px;
 }
@@ -713,6 +754,7 @@ hr {
 .grid figcaption h3 {
     margin-top: 300px;
     font-weight: 600;
+    color: #ffffff;
 }
 
 .grid figcaption a {
@@ -725,6 +767,7 @@ hr {
     top: 115px;
     left: 10px;
     margin-right: 10px;
+    color: #ffffff;
 }
 
 .cookies-policy-main-container {
@@ -743,12 +786,18 @@ hr {
     z-index: 100;
     text-decoration: none;
     border-radius: 4px;
+    color: #ffffff;
 }
 
 .toggle-button i {
     font-size: 45px;
     padding-left: 4px;
     padding-right: 3px;
+}
+
+.toggle-button:hover,
+.toggle-button i:hover {
+    color: #ffffff !important;
 }
 
 .back-to-top {
@@ -776,4 +825,8 @@ hr {
 
 .entity-id {
     margin-top: 4px;
+}
+
+#main-login-panel {
+    background-color: #f8f8f8;
 }

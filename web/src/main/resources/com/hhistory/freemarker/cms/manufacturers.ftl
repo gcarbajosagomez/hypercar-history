@@ -5,7 +5,7 @@
 
 <@generic.startPage language.getTextSource('meta.title.allManufacturers')/>
 
-<div id="main-container" class="container panel panel-default main-container main-panel"> 
+<div id="main-container" class="container panel panel-default">
      <div class="row">
         <div class="col-lg-2">
 			<div class="list-group">

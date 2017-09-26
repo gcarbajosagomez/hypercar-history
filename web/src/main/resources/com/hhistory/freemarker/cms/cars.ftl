@@ -9,7 +9,7 @@
 <#assign paginationLastResult><#if paginationLastResult??>${paginationLastResult}<#else>0</#if></#assign>
 <@generic.startPage language.getTextSource('${manufacturer.getName()}.meta.title.allModels', [allModels?size, paginationFirstResult, paginationLastResult])/>
 
-<div id="main-container" class="container panel panel-default cars-main-container main-panel">
+<div id="main-container" class="container panel panel-default cars-main-container">
 	<div class="row">
 		<div class="col-lg-2">
 			<div id="cms-models-list-group" class="list-group">

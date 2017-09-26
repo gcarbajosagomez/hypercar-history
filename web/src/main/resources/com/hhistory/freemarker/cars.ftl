@@ -15,7 +15,7 @@
                         metaKeywords
                         language.getTextSource('${manufacturerName}.meta.title.allModels.metaDescription', [models?size, paginationFirstResult, paginationLastResult])/>
 
-    <div id="main-container" class="container panel panel-default main-container main-panel">
+    <div id="car-list-main-container" class="container panel panel-default">
         <div class="main-row-container row">
             <div class="col-lg-2">
                 <div class="list-group">

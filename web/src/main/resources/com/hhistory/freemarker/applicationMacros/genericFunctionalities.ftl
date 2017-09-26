@@ -31,10 +31,10 @@
 					<link rel="shortcut icon" href="/static/${manufacturerName}/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.css">
-        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
                         <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
 				    </#if>
 	                <#if requestIsCMS>
@@ -97,9 +97,9 @@
             <body>
               	<div id="main-wrap-div">
 	            	<div class="wrap">
-    	        		<nav class="navbar navbar-default manufacturer-history-navbar" role="navigation">
+    	        		<nav class="navbar navbar-default hypercar-history-navbar" role="navigation">
           					<div class="navbar-header">
-								<a class="navbar-brand manufacturer-history-navbar-brand" href='${uriUtils.buildDomainURI("/")}'>
+								<a class="navbar-brand hypercar-history-navbar-brand" href='${uriUtils.buildDomainURI("/")}'>
 									<img class="main-logo" src="/static/${manufacturerName}/main-logo.png" alt="Home page" title="Home page">
 								</a>
 
@@ -204,7 +204,7 @@
 						</form>
 					</div>
 
-					<div class="manufacturer-history-footer navbar">
+					<div class="hypercar-history-footer navbar">
 						<div class="row">
         					<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>

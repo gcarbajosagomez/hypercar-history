@@ -235,7 +235,7 @@
 
 <#macro writePaginationMarkup>
     <div id="car-pagination-main-div" class="col-lg-12">
-        <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12 center-block well well-sm">
+        <div class="col-lg-7 col-md-8 col-sm-10 col-xs-12 center-block well well-sm pagination-well">
             <div id="pagination-row-div" class="row">
                 <div class="text-left col-lg-8 col-md-8 <#if requestIsDesktop>col-sm-8 col-xs-8<#else>col-sm-12 col-xs-12</#if>">
                     <ul id="pagination-ul"></ul>

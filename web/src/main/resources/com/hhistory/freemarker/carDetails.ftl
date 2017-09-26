@@ -34,9 +34,9 @@
 						null/>
 
 	<div id="main-container" class="container">
-		<div class="panel panel-default main-panel row" style="border:0px;">
+		<div class="panel panel-default row car-details-main-panel">
 			<#if car??>
-				<div class="panel-heading">
+				<div class="panel-heading car-details-model-name-panel-heading">
 					 <h1 class="text-left car-details-model-name">${car.manufacturer.name}<#if !requestIsDesktop><br/></#if> ${car.model} (${carUtils.getCarProductionLifeTime (car)})</h1>
 				</div>
 				<div class="<#if (numberOfPictures > 0)>thumbnail vertically-aligned-div car-pictures-carousel-div</#if>">

@@ -33,23 +33,23 @@
         right: 5px !important;
     }
 
-    .manufacturer-history-navbar {
+    .hypercar-history-navbar {
         min-height: 10em;
         margin: 10px 10px 20px;
     }
 
     @media (orientation: landscape) {
-        .manufacturer-history-navbar {
+        .hypercar-history-navbar {
             min-height: 8.5em;
         }
     }
 
-    .manufacturer-history-navbar .navbar-nav > li {
+    .hypercar-history-navbar .navbar-nav > li {
         margin-top: 0.1em;
         margin-bottom: 0.1em;
     }
 
-    .manufacturer-history-navbar .navbar-nav > li > a {
+    .hypercar-history-navbar .navbar-nav > li > a {
         padding-top: 0.9em;
         padding-bottom: 0.9em;
     }
@@ -68,17 +68,17 @@
     }
 
     @media only screen and (min-width: 768px) {
-        .manufacturer-history-navbar .navbar-nav > li > a {
+        .hypercar-history-navbar .navbar-nav > li > a {
             padding-top: 25px;
         }
     }
 
-    .manufacturer-history-navbar .navbar-nav > li > a,
-    .manufacturer-history-navbar .navbar-nav > li > #search-container > a {
+    .hypercar-history-navbar .navbar-nav > li > a,
+    .hypercar-history-navbar .navbar-nav > li > #search-container > a {
         font-size: 15px;
     }
 
-    .manufacturer-history-navbar-brand {
+    .hypercar-history-navbar-brand {
         font-size: 26px;
         width: 80% !important;
         padding-bottom: 0px;
@@ -86,7 +86,7 @@
     }
 
     @media (orientation: landscape) {
-        .manufacturer-history-navbar-brand {
+        .hypercar-history-navbar-brand {
             height: 92% !important;
         }
     }
@@ -135,7 +135,7 @@
     }
 
     @media (orientation: landscape) {
-        .manufacturer-history-navbar {
+        .hypercar-history-navbar {
             min-height: 8.5em;
         }
     }
@@ -150,7 +150,11 @@
         }
     }
 
-    .manufacturer-history-footer {
+    #manufacturer-history-main-container {
+        border: none;
+    }
+
+    .hypercar-history-footer {
         height: auto;
         padding: 25px;
         margin-left: 10px;
@@ -162,9 +166,9 @@
         padding-top: 0
     }
 
-    .main-car-list-container {
-        padding-right: initial;
-        padding-left: initial;
+    #car-list-main-container {
+        background-color: #ffffff;
+        border: none;
     }
 
     #main-car-list-div {
@@ -174,6 +178,10 @@
     .car-details-model-name {
         margin-top: 0px;
         margin-bottom: 0px;
+    }
+
+    .nav-tabs {
+        width: 100%;
     }
 
     .brake-set-train-name {

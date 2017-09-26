@@ -11,7 +11,7 @@
                         language.getTextSource('${manufacturerName}.meta.keywords.manufacturerHistory')
                         language.getTextSource('${manufacturerName}.meta.title.manufacturerHistory.metaDescription')/>
 
-        <div id="main-container" class="container panel panel-default main-container main-panel">
+        <div id="manufacturer-history-main-container" class="container panel panel-default">
             <div class="main-row-container row">
                 <div class="col-lg-12 manufacturer-history-div">
                     <#if manufacturerEntity??>
@@ -22,6 +22,8 @@
                             ${generic.normalizeDatabaseString(historyES?j_string)}
                         <#elseif (historyEN?? && historyEN?length > 0) && lang == languageEnglishCode>
                             ${generic.normalizeDatabaseString(historyEN?j_string)}
+                        <#else>
+                            <h2 class="text-center">${language.getTextSource('sectionNotAvailable')}</h2>
                         </#if>
                     </#if>
                 </div>
