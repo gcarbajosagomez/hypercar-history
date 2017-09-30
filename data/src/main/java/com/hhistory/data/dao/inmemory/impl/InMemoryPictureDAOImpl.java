@@ -133,6 +133,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     public List<Long> getAllPreviewIds(Manufacturer manufacturer) {
         return this.pictures.stream()
                             .filter(picture -> picture.getCar().getManufacturer().equals(manufacturer))
+                            .filter(picture -> picture.getCar().getVisible())
                             .filter(Picture::getEligibleForPreview)
                             .map(Picture::getId)
                             .collect(Collectors.toList());
