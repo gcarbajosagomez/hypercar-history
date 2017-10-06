@@ -13,6 +13,7 @@ import java.sql.Blob;
 import java.util.Objects;
 
 import static com.hhistory.data.model.car.Car.CAR_ID_FIELD;
+import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
@@ -39,7 +40,7 @@ public class Picture implements GenericEntity {
     @Column(name = PICTURE_ID_FIELD)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 

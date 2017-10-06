@@ -69,7 +69,7 @@ public class CarCrudService extends BaseCrudService {
                 crudOperationDTO.setEntity(car);
                 crudOperationDTO.setSuccessMessage(successMessage);
             } catch (Exception e) {
-                log.error("There was a problem while saving new car {}",
+                log.error("There was an error while saving new car {}",
                           car.toString(),
                           e);
                 crudOperationDTO.addErrorMessage(e.toString());
@@ -92,6 +92,9 @@ public class CarCrudService extends BaseCrudService {
                                  try {
                                      this.pictureCrudService.saveOrUpdatePicture(pictureEditCommand);
                                  } catch (Exception e) {
+                                     log.error("There was an error while saving or updating picture {}",
+                                               pictureEditCommand.getPicture().getId(),
+                                               e);
                                      crudOperationDTO.addErrorMessage(e.toString());
                                  }
                              }
@@ -140,7 +143,7 @@ public class CarCrudService extends BaseCrudService {
 
                 crudOperationDTO.setSuccessMessage(successMessage);
             } catch (Exception e) {
-                log.error("There was a problem while deleting car {}",
+                log.error("There was an error while deleting car {}",
                           car.toString(),
                           e);
                 crudOperationDTO.addErrorMessage(e.toString());
