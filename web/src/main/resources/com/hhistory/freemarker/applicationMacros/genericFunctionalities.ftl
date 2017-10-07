@@ -34,7 +34,7 @@
         			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
         			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
                         <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
 				    </#if>
 	                <#if requestIsCMS>

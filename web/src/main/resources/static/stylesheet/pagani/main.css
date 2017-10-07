@@ -100,3 +100,7 @@ a {
 .pagination > li > a:hover {
     color: #337ab7;
 }
+
+#cookiesdirective > div > a {
+    color: #337ab7 !important;
+}
