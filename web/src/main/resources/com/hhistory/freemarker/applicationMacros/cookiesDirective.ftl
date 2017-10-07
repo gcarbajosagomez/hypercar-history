@@ -18,7 +18,6 @@
         fontColor: '#FFFFFF',
         fontSize: '13px',
         backgroundColor: 'rgba(63, 63, 63, 1)',
-        backgroundOpacity: '90',
-        linkColor: '#337ab7'
+        backgroundOpacity: '90'
     });
 </#macro>

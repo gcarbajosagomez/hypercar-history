@@ -57,7 +57,7 @@ public class CarInternetContent implements GenericEntity {
     @Column(name = "content_language", nullable = false)
     private Language contentLanguage;
 
-    @ManyToOne(cascade = PERSIST)
+    @ManyToOne
     @JoinColumn(name = CAR_ID_FIELD, nullable = false)
     private Car car;
 
