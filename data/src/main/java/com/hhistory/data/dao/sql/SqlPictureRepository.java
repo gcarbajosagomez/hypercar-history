@@ -30,9 +30,4 @@ public interface SqlPictureRepository extends CrudRepository<Picture, Long> {
            "AND picture.eligibleForPreview = true")
     List<Picture> getCarPreviews(@Param("carId") Long carId);
 
-    @Query("SELECT manufacturer.logo " +
-           "FROM Manufacturer AS manufacturer " +
-           "WHERE manufacturer.id = :manufacturerId")
-    Picture getManufacturerLogo(@Param("manufacturerId") Long manufacturerId);
-
 }

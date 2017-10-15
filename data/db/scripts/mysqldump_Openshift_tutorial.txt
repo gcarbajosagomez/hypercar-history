@@ -1,6 +1,6 @@
 In MySQL pod:
-    - mysqldump --user userName -p --databases hypercar_history --single-transaction > /var/lib/mysql/app-root/data/Hypercar_History-DB_07-10-2017.sql
-    - rm -rf /var/lib/mysql/app-root/data/Hypercar_History-DB_07-10-2017.sql
+    - mysqldump --user userName -p --databases hypercar_history --single-transaction > /var/lib/mysql/data/Hypercar_History-DB_07-10-2017.sql
+    - rm -rf /var/lib/mysql/data/Hypercar_History-DB_07-10-2017.sql
 
 From localhost:
-    - oc rsync mysql-7-ps0zx:/var/lib/mysql/app-root/data/Hypercar_History-DB_07-10-2017.sql ~/workspace/pagani-history-web/data/db/scripts
+    - oc rsync mysql-7-ps0zx:/var/lib/mysql/data/Hypercar_History-DB_07-10-2017.sql ~/workspace/pagani-history-web/data/db/scripts

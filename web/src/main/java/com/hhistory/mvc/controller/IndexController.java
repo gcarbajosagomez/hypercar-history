@@ -69,7 +69,7 @@ public class IndexController extends BaseController {
      * @return
      */
     private Map<String, Collection<Long>> generateRandomCarNamesToPictureIds(Manufacturer manufacturer) {
-        List<Long> randomPictureIds = super.getInMemoryPictureDAO().getAllPreviewIds(manufacturer);
+        List<Long> randomPictureIds = super.getPictureDAO().getAllPreviewIds(manufacturer.getId());
         HashMultimap<String, Long> carNamesToPictureIds = HashMultimap.create();
         Collections.shuffle(randomPictureIds);
 

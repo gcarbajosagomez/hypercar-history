@@ -22,6 +22,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static java.util.Comparator.*;
 
 /**
@@ -29,11 +30,13 @@ import static java.util.Comparator.*;
  * <p>
  * Created by gonzalo on 11/4/16.
  */
-@Component
+@Component(value = IN_MEMORY_PICTURE_DAO)
 @EnableScheduling
 @NoArgsConstructor
 @Slf4j
 public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
+
+    public static final String IN_MEMORY_PICTURE_DAO = "inMemoryPictureDAO";
 
     private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
 
@@ -52,7 +55,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Transactional
-    @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    //@Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
@@ -130,9 +133,9 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Override
-    public List<Long> getAllPreviewIds(Manufacturer manufacturer) {
+    public List<Long> getAllPreviewIds(Long manufacturerId) {
         return this.pictures.stream()
-                            .filter(picture -> picture.getCar().getManufacturer().equals(manufacturer))
+                            .filter(picture -> picture.getCar().getManufacturer().getId().equals(manufacturerId))
                             .filter(picture -> picture.getCar().getVisible())
                             .filter(Picture::getEligibleForPreview)
                             .map(Picture::getId)

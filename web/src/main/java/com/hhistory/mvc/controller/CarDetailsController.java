@@ -1,7 +1,8 @@
 package com.hhistory.mvc.controller;
 
 import com.hhistory.data.command.CarQueryCommand;
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.hhistory.data.dao.PictureDAO;
+import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.car.CarInternetContent;
 import com.hhistory.mvc.controller.util.CarInternetContentUtils;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
@@ -33,17 +35,17 @@ public class CarDetailsController extends BaseController {
     private ModelFiller             carModelFiller;
     private ModelFiller             pictureModelFiller;
     private CarInternetContentUtils carInternetContentUtils;
-    private InMemoryPictureDAO      inMemoryPictureDAO;
+    private PictureDAO              pictureDAO;
 
     @Inject
     public CarDetailsController(ModelFiller carModelFiller,
                                 ModelFiller pictureModelFiller,
                                 CarInternetContentUtils carInternetContentUtils,
-                                InMemoryPictureDAO inMemoryPictureDAO) {
+                                @Named(SqlPictureDAO.SQL_PICTURE_DAO) PictureDAO pictureDAO) {
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carInternetContentUtils = carInternetContentUtils;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
+        this.pictureDAO = pictureDAO;
     }
 
     @RequestMapping
@@ -60,7 +62,7 @@ public class CarDetailsController extends BaseController {
             this.carModelFiller.fillModel(model);
 
             model.addAttribute(CAR, car);
-            model.addAttribute(PICTURE_IDS, this.inMemoryPictureDAO.getIdsByCarId(carId));
+            model.addAttribute(PICTURE_IDS, this.pictureDAO.getIdsByCarId(carId));
             model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 
             List<CarInternetContent> videos = super.getInMemoryCarInternetContentDAO().getVideosByCarId(carId);

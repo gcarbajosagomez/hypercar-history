@@ -1,9 +1,9 @@
 package com.hhistory.mvc.controller;
 
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.hhistory.data.dao.inmemory.InMemoryManufacturerDAO;
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.hhistory.data.dao.sql.SqlCarDAO;
 import com.hhistory.data.dao.sql.SqlContentSearchDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
@@ -28,11 +28,11 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.Optional;
 
 import static com.hhistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
-import static com.hhistory.mvc.manufacturer.Manufacturer.*;
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
+import static com.hhistory.mvc.manufacturer.Manufacturer.PAGANI;
 
 /**
  * Base controller that contains common data and functionality
@@ -65,7 +65,8 @@ public abstract class BaseController extends BaseControllerData {
 
     @Inject
     @Getter
-    private InMemoryPictureDAO inMemoryPictureDAO;
+    @Named(SQL_PICTURE_DAO)
+    private PictureDAO pictureDAO;
 
     @Inject
     @Getter

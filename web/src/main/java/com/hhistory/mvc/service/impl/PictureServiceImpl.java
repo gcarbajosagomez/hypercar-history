@@ -1,6 +1,6 @@
 package com.hhistory.mvc.service.impl;
 
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.picture.Picture;
@@ -10,9 +10,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
@@ -24,15 +26,15 @@ public class PictureServiceImpl implements PictureService {
 
     private SqlPictureDAO        sqlPictureDAO;
     private SqlPictureRepository sqlPictureRepository;
-    private InMemoryPictureDAO   inMemoryPictureDAO;
+    private PictureDAO           pictureDAO;
 
     @Inject
     public PictureServiceImpl(SqlPictureDAO sqlPictureDAO,
                               SqlPictureRepository sqlPictureRepository,
-                              InMemoryPictureDAO inMemoryPictureDAO) {
+                              @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO) {
         this.sqlPictureDAO = sqlPictureDAO;
         this.sqlPictureRepository = sqlPictureRepository;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
+        this.pictureDAO = pictureDAO;
     }
 
     @Override
@@ -98,8 +100,8 @@ public class PictureServiceImpl implements PictureService {
             }
             case LOAD_CAR_PREVIEW: {
                 if (carId != null) {
-                    return this.inMemoryPictureDAO.getCarPreview(carId)
-                                                  .orElseGet(() -> this.sqlPictureDAO.getCarPreview(pictureId)
+                    return this.pictureDAO.getCarPreview(carId)
+                                          .orElseGet(() -> this.sqlPictureDAO.getCarPreview(pictureId)
                                                                                      .orElse(null));
                 }
                 break;
@@ -121,7 +123,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     private Picture loadById(Long pictureId) {
-        return Optional.ofNullable(this.inMemoryPictureDAO.getById(pictureId))
+        return Optional.ofNullable(this.pictureDAO.getById(pictureId))
                        .orElse(this.sqlPictureRepository.findOne(pictureId));
     }
 }

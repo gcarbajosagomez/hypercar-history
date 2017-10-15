@@ -1,6 +1,6 @@
 package com.hhistory.mvc.cms.springframework.view.filler;
 
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.sql.SqlEngineRepository;
 import com.hhistory.data.dao.sql.SqlManufacturerRepository;
 import com.hhistory.data.model.Language;
@@ -20,9 +20,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.MANUFACTURER_ENTITIES;
 import static com.hhistory.mvc.controller.BaseControllerData.ENGINE;
 import static com.hhistory.mvc.controller.BaseControllerData.PICTURES;
@@ -37,15 +39,15 @@ public class CarEditModelFiller implements ModelFiller {
 
     private SqlManufacturerRepository sqlManufacturerRepository;
     private SqlEngineRepository       sqlEngineRepository;
-    private InMemoryPictureDAO        inMemoryPictureDAO;
+    private PictureDAO                pictureDAO;
 
     @Inject
     public CarEditModelFiller(SqlManufacturerRepository sqlManufacturerRepository,
                               SqlEngineRepository sqlEngineRepository,
-                              InMemoryPictureDAO inMemoryPictureDAO) {
+                              @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO) {
         this.sqlManufacturerRepository = sqlManufacturerRepository;
         this.sqlEngineRepository = sqlEngineRepository;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
+        this.pictureDAO = pictureDAO;
     }
 
     @Override
@@ -82,7 +84,7 @@ public class CarEditModelFiller implements ModelFiller {
         Long carId = command.getEditForm().getId();
 
         if (carId != null) {
-            pictures = this.inMemoryPictureDAO.getByCarId(carId);
+            pictures = this.pictureDAO.getByCarId(carId);
         }
 
         model.addAttribute(PICTURES, pictures);

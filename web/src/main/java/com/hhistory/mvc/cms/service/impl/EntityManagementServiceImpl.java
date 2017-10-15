@@ -1,20 +1,22 @@
 package com.hhistory.mvc.cms.service.impl;
 
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.hhistory.data.dao.inmemory.InMemoryManufacturerDAO;
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.hhistory.data.dao.sql.SqlCarInternetContentRepository;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.car.CarInternetContent;
-import com.hhistory.data.model.picture.Picture;
 import com.hhistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.hhistory.mvc.cms.service.EntityManagementService;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 import java.util.Objects;
+
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 
 /**
  * Created by Gonzalo Carbajosa on 3/12/16.
@@ -22,7 +24,7 @@ import java.util.Objects;
 @Component
 public class EntityManagementServiceImpl implements EntityManagementService {
     private InMemoryCarDAO                  inMemoryCarDAO;
-    private InMemoryPictureDAO              inMemoryPictureDAO;
+    private PictureDAO                      pictureDAO;
     private SqlPictureRepository            sqlPictureRepository;
     private InMemoryCarInternetContentDAO   inMemoryCarInternetContentDAO;
     private SqlCarInternetContentRepository sqlCarInternetContentRepository;
@@ -30,13 +32,13 @@ public class EntityManagementServiceImpl implements EntityManagementService {
 
     @Inject
     public EntityManagementServiceImpl(InMemoryCarDAO inMemoryCarDAO,
-                                       InMemoryPictureDAO inMemoryPictureDAO,
+                                       @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO,
                                        SqlPictureRepository sqlPictureRepository,
                                        InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
                                        SqlCarInternetContentRepository sqlCarInternetContentRepository,
                                        InMemoryManufacturerDAO inMemoryManufacturerDAO) {
         this.inMemoryCarDAO = inMemoryCarDAO;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
+        this.pictureDAO = pictureDAO;
         this.sqlPictureRepository = sqlPictureRepository;
         this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
         this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
@@ -60,15 +62,15 @@ public class EntityManagementServiceImpl implements EntityManagementService {
                 this.inMemoryCarDAO.removeEntity(carId);
                 break;
             case RELOAD_PICTURES:
-                if (Objects.nonNull(carId)) {
+                /*if (Objects.nonNull(carId)) {
                     List<Picture> picturesToReload = this.sqlPictureRepository.getByCarId(carId);
-                    picturesToReload.forEach(picture -> this.inMemoryPictureDAO.loadEntityFromDB(picture.getId()));
+                    picturesToReload.forEach(picture -> this.pictureDAO.loadEntityFromDB(picture.getId()));
                 } else {
-                    this.inMemoryPictureDAO.loadEntitiesFromDB();
-                }
+                    this.pictureDAO.loadEntitiesFromDB();
+                }*/
                 break;
             case REMOVE_PICTURE:
-                this.inMemoryPictureDAO.removeEntity(entityManagementLoadCommand.getPictureId());
+                //this.pictureDAO.removeEntity(entityManagementLoadCommand.getPictureId());
                 break;
             case RELOAD_CAR_INTERNET_CONTENTS:
                 if (Objects.nonNull(carId)) {

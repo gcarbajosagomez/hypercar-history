@@ -1,9 +1,11 @@
 package com.hhistory.mvc.springframework.view.filler.impl;
 
 import com.hhistory.data.command.CarQueryCommand;
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.service.ManufacturerService;
@@ -14,8 +16,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
+import static com.hhistory.data.dao.sql.SqlPictureDAO.*;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
 import static com.hhistory.mvc.controller.BaseControllerData.*;
@@ -33,19 +37,19 @@ public class BaseModelFiller implements ModelFiller {
     private static final String CARS_HEADER_BASE_LINK_MESSAGE_ID = ".cars.all";
 
     private InMemoryCarDAO                inMemoryCarDAO;
-    private InMemoryPictureDAO            inMemoryPictureDAO;
+    private PictureDAO                    pictureDAO;
     private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
     private ResourceBundleMessageSource   messageSource;
     private ManufacturerService           manufacturerService;
 
     @Inject
     public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
-                           InMemoryPictureDAO inMemoryPictureDAO,
+                           @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO,
                            InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
                            ResourceBundleMessageSource messageSource,
                            ManufacturerService manufacturerService) {
         this.inMemoryCarDAO = inMemoryCarDAO;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
+        this.pictureDAO = pictureDAO;
         this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
         this.messageSource = messageSource;
         this.manufacturerService = manufacturerService;
@@ -70,7 +74,7 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("languageCookieName", LANGUAGE_COOKIE_NAME);
         model.addAttribute("languageSpanishCode", SPANISH.getIsoCode());
         model.addAttribute("languageEnglishCode", ENGLISH.getIsoCode());
-        model.addAttribute(NUMBER_OF_PICTURES, this.inMemoryPictureDAO.getAllIds().size());
+        model.addAttribute(NUMBER_OF_PICTURES, this.pictureDAO.getAllIds().size());
         model.addAttribute(NUMBER_OF_VIDEOS, this.inMemoryCarInternetContentDAO.getAllVideos().size());
         model.addAttribute("defaultCarsPerPageData", ITEMS_PER_PAGE_DEFAULT_VALUE);
 

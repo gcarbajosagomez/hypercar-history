@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.io.IOException;
 import java.sql.Blob;
 import java.util.List;
@@ -43,6 +44,58 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
     }
 
     @Override
+    public Picture getById(Long id) {
+        TypedQuery<Picture> query = super.getEntityManager()
+                                         .createQuery("SELECT picture " +
+                                                      "FROM Picture AS picture " +
+                                                      "WHERE picture.id = :id",
+                                                      Picture.class);
+
+        query.setParameter("id", id);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<Long> getIdsByCarId(Long carId) {
+        Query query = super.getEntityManager()
+                           .createQuery("SELECT picture.id " +
+                                        "FROM Picture AS picture " +
+                                        "WHERE picture.car.id = :carId");
+
+        query.setParameter("carId", carId);
+
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Picture> getByCarId(Long carId) {
+        return this.sqlPictureRepository.getByCarId(carId);
+    }
+
+    @Override
+    public List<Long> getAllIds() {
+        return super.getEntityManager()
+                    .createQuery("SELECT picture.id " +
+                                 "FROM Picture AS picture")
+                    .getResultList();
+    }
+
+    @Override
+    public List<Long> getAllPreviewIds(Long manufacturerId) {
+        Query query = super.getEntityManager()
+                           .createQuery("SELECT picture.id " +
+                                        "FROM Picture AS picture JOIN picture.car as car " +
+                                        "WHERE car.manufacturer.id = :manufacturerId " +
+                                        "AND car.visible = true " +
+                                        "AND picture.eligibleForPreview = true ");
+
+        query.setParameter("manufacturerId", manufacturerId);
+
+        return query.getResultList();
+    }
+
+    @Override
     public Optional<Picture> getCarPreview(Long carId) {
         List<Picture> previewCandidates = this.sqlPictureRepository.getCarPreviews(carId);
         return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
@@ -50,14 +103,14 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
 
     @Override
     public Picture getManufacturerLogo(Long manufacturerId) {
-        Picture picture = new Picture();
-
         Query query = super.getEntityManager()
                            .createQuery("SELECT manufacturer.logo " +
                                         "FROM Manufacturer AS manufacturer " +
                                         "WHERE manufacturer.id = :manufacturerId");
 
         query.setParameter("manufacturerId", manufacturerId);
+
+        Picture picture = new Picture();
         picture.setImage((Blob) query.getSingleResult());
 
         return picture;
