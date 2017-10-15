@@ -55,7 +55,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Transactional
-    //@Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");

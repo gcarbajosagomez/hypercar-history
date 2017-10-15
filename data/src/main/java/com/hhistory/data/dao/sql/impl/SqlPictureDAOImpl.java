@@ -3,11 +3,13 @@ package com.hhistory.data.dao.sql.impl;
 import com.hhistory.data.command.PictureDataCommand;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
+import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.util.PictureUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
 import org.hibernate.engine.jdbc.LobCreator;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -146,13 +148,18 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
 
     @Override
     public List<Picture> getPaginated(int firstResult, int limit) {
-        Query query = super.getEntityManager()
-                           .createQuery("FROM Picture AS picture " +
-                                        "ORDER BY picture.id");
+        org.hibernate.Query query = super.getCurrentSession()
+                                         .createQuery("SELECT picture.id AS id," +
+                                                      "picture.car AS car," +
+                                                      "picture.galleryPosition AS galleryPosition," +
+                                                      "picture.eligibleForPreview AS eligibleForPreview " +
+                                                      "FROM Picture AS picture " +
+                                                      "ORDER BY picture.id")
+                                         .setResultTransformer(Transformers.aliasToBean(Picture.class));
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);
 
-        return query.getResultList();
+        return query.list();
     }
 }

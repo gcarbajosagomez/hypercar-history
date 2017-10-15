@@ -54,7 +54,6 @@ public class IndexController extends BaseController {
                  .ifPresent(manufacturer -> model.addAttribute("carNamesToPictureIds",
                                                                this.generateRandomCarNamesToPictureIds(manufacturer)));
 
-
             return new ModelAndView(INDEX_VIEW_NAME);
         } catch (Exception e) {
             log.error(e.toString(), e);
