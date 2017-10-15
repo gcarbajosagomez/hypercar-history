@@ -1,6 +1,5 @@
 package com.hhistory.mvc.service.impl;
 
-import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.picture.Picture;
@@ -10,11 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
@@ -24,15 +21,12 @@ import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 @Slf4j
 public class PictureServiceImpl implements PictureService {
 
-    private SqlPictureDAO        sqlPictureDAO;
     private SqlPictureRepository sqlPictureRepository;
-    private PictureDAO           pictureDAO;
+    private SqlPictureDAO        pictureDAO;
 
     @Inject
-    public PictureServiceImpl(SqlPictureDAO sqlPictureDAO,
-                              SqlPictureRepository sqlPictureRepository,
-                              @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO) {
-        this.sqlPictureDAO = sqlPictureDAO;
+    public PictureServiceImpl(SqlPictureRepository sqlPictureRepository,
+                              SqlPictureDAO pictureDAO) {
         this.sqlPictureRepository = sqlPictureRepository;
         this.pictureDAO = pictureDAO;
     }
@@ -58,68 +52,30 @@ public class PictureServiceImpl implements PictureService {
     }
 
     @Override
-    public Picture loadPictureFromDB(PictureLoadCommand command) throws Exception {
-        switch (command.getAction()) {
-            case LOAD_CAR_PICTURE: {
-                if (command.getEntityId() != null) {
-                    return this.sqlPictureRepository.findOne(command.getEntityId());
-                }
-            }
-            case LOAD_CAR_PREVIEW: {
-                if (command.getEntityId() != null) {
-                    return this.sqlPictureDAO.getCarPreview(command.getEntityId())
-                                             .orElse(null);
-                }
-            }
-            case LOAD_MANUFACTURER_LOGO: {
-                if (command.getEntityId() != null) {
-                    return this.sqlPictureDAO.getManufacturerLogo(command.getEntityId());
-                }
-            }
-            default: {
-                if (command.getEntityId() != null) {
-                    return this.sqlPictureRepository.findOne(command.getEntityId());
-                }
-            }
-        }
-
-        return this.sqlPictureRepository.findOne(command.getEntityId());
-    }
-
-    @Override
     public Picture loadPicture(PictureLoadCommand command) {
-        Long pictureId = command.getEntityId();
-        Long carId = command.getEntityId();
+        Optional<Long> pictureId = Optional.ofNullable(command.getEntityId());
+        Optional<Long> carId = Optional.ofNullable(command.getEntityId());
 
         switch (command.getAction()) {
             case LOAD_CAR_PICTURE: {
-                if (pictureId != null) {
-                    return this.loadById(pictureId);
-                }
-                break;
+                return pictureId.map(this::loadById)
+                                .orElse(null);
             }
             case LOAD_CAR_PREVIEW: {
-                if (carId != null) {
-                    return this.pictureDAO.getCarPreview(carId)
-                                          .orElseGet(() -> this.sqlPictureDAO.getCarPreview(pictureId)
-                                                                                     .orElse(null));
-                }
-                break;
+                return carId.map(this.pictureDAO::getCarPreview)
+                            .map(Optional::get)
+                            .orElse(null);
             }
             case LOAD_MANUFACTURER_LOGO: {
-                if (command.getEntityId() != null) {
-                    return this.sqlPictureDAO.getManufacturerLogo(command.getEntityId());
-                }
-                break;
+                Optional<Long> entityId = Optional.ofNullable(command.getEntityId());
+                return entityId.map(this.pictureDAO::getManufacturerLogo)
+                               .orElse(null);
             }
             default: {
-                if (pictureId != null) {
-                    return this.loadById(pictureId);
-                }
+                return pictureId.map(this::loadById)
+                                .orElse(null);
             }
         }
-
-        return this.sqlPictureRepository.findOne(pictureId);
     }
 
     private Picture loadById(Long pictureId) {

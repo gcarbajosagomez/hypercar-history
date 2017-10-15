@@ -4,8 +4,6 @@ import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
-import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.service.ManufacturerService;
@@ -19,7 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-import static com.hhistory.data.dao.sql.SqlPictureDAO.*;
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
 import static com.hhistory.mvc.controller.BaseControllerData.*;
@@ -44,7 +42,7 @@ public class BaseModelFiller implements ModelFiller {
 
     @Inject
     public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
-                           @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO,
+                           @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO,
                            InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
                            ResourceBundleMessageSource messageSource,
                            ManufacturerService manufacturerService) {

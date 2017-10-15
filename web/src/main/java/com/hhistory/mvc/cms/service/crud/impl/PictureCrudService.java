@@ -87,7 +87,7 @@ public class PictureCrudService {
     public CrudOperationDTO deletePicture(PictureLoadCommand command) {
         CrudOperationDTO crudOperationDTO = new CrudOperationDTO();
         try {
-            Picture picture = this.pictureService.loadPictureFromDB(command);
+            Picture picture = this.pictureService.loadPicture(command);
             this.sqlPictureRepository.delete(picture);
             crudOperationDTO.setEntity(picture);
 

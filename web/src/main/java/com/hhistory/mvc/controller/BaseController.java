@@ -1,6 +1,5 @@
 package com.hhistory.mvc.controller;
 
-import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
 import com.hhistory.data.dao.inmemory.InMemoryManufacturerDAO;
@@ -31,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import static com.hhistory.data.dao.sql.SqlCarRepository.CAR_REPOSITORY;
-import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.manufacturer.Manufacturer.PAGANI;
 
 /**
@@ -62,11 +60,6 @@ public abstract class BaseController extends BaseControllerData {
     @Inject
     @Getter
     private SqlPictureRepository sqlPictureRepository;
-
-    @Inject
-    @Getter
-    @Named(SQL_PICTURE_DAO)
-    private PictureDAO pictureDAO;
 
     @Inject
     @Getter

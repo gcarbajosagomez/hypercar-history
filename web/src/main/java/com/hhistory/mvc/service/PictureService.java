@@ -20,15 +20,6 @@ public interface PictureService {
     HttpServletResponse printPictureToResponse(Picture picture, HttpServletResponse response);
 
     /**
-     * Load a {@link Picture} from the DB depending on the action being performed
-     *
-     * @param command
-     * @return
-     * @throws Exception
-     */
-    Picture loadPictureFromDB(PictureLoadCommand command) throws Exception;
-
-    /**
      * Load a {@link Picture} from the in-memory storage depending on the action being performed
      *
      * @param command

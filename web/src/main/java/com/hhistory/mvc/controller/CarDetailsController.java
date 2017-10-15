@@ -2,7 +2,6 @@ package com.hhistory.mvc.controller;
 
 import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.PictureDAO;
-import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.car.CarInternetContent;
 import com.hhistory.mvc.controller.util.CarInternetContentUtils;
@@ -17,6 +16,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -41,7 +41,7 @@ public class CarDetailsController extends BaseController {
     public CarDetailsController(ModelFiller carModelFiller,
                                 ModelFiller pictureModelFiller,
                                 CarInternetContentUtils carInternetContentUtils,
-                                @Named(SqlPictureDAO.SQL_PICTURE_DAO) PictureDAO pictureDAO) {
+                                @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO) {
         this.carModelFiller = carModelFiller;
         this.pictureModelFiller = pictureModelFiller;
         this.carInternetContentUtils = carInternetContentUtils;

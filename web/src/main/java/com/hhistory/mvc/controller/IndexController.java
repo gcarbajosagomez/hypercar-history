@@ -1,9 +1,10 @@
 package com.hhistory.mvc.controller;
 
 import com.google.common.collect.HashMultimap;
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.model.Manufacturer;
-import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.car.Car;
+import com.hhistory.data.model.picture.Picture;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.*;
 
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.INDEX_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -34,14 +37,17 @@ public class IndexController extends BaseController {
     private ModelFiller pictureModelFiller;
     private ModelFiller carModelFiller;
     private Random      previewPictureRandomGenerator;
+    private PictureDAO pictureDAO;
 
     @Inject
     public IndexController(ModelFiller pictureModelFiller,
                            ModelFiller carModelFiller,
-                           Random previewPictureRandomGenerator) {
+                           Random previewPictureRandomGenerator,
+                           @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO) {
         this.pictureModelFiller = pictureModelFiller;
         this.carModelFiller = carModelFiller;
         this.previewPictureRandomGenerator = previewPictureRandomGenerator;
+        this.pictureDAO = pictureDAO;
     }
 
     @RequestMapping
@@ -68,7 +74,7 @@ public class IndexController extends BaseController {
      * @return
      */
     private Map<String, Collection<Long>> generateRandomCarNamesToPictureIds(Manufacturer manufacturer) {
-        List<Long> randomPictureIds = super.getPictureDAO().getAllPreviewIds(manufacturer.getId());
+        List<Long> randomPictureIds = this.pictureDAO.getAllPreviewIds(manufacturer.getId());
         HashMultimap<String, Long> carNamesToPictureIds = HashMultimap.create();
         Collections.shuffle(randomPictureIds);
 
