@@ -3,7 +3,6 @@ package com.hhistory.data.dao.sql.impl;
 import com.hhistory.data.command.PictureDataCommand;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
-import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.util.PictureUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -60,10 +59,11 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
 
     @Override
     public List<Long> getIdsByCarId(Long carId) {
-        Query query = super.getEntityManager()
-                           .createQuery("SELECT picture.id " +
-                                        "FROM Picture AS picture " +
-                                        "WHERE picture.car.id = :carId");
+        TypedQuery<Long> query = super.getEntityManager()
+                                      .createQuery("SELECT picture.id " +
+                                                   "FROM Picture AS picture " +
+                                                   "WHERE picture.car.id = :carId",
+                                                   Long.class);
 
         query.setParameter("carId", carId);
 
@@ -79,18 +79,20 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
     public List<Long> getAllIds() {
         return super.getEntityManager()
                     .createQuery("SELECT picture.id " +
-                                 "FROM Picture AS picture")
+                                 "FROM Picture AS picture",
+                                 Long.class)
                     .getResultList();
     }
 
     @Override
     public List<Long> getAllPreviewIds(Long manufacturerId) {
-        Query query = super.getEntityManager()
-                           .createQuery("SELECT picture.id " +
-                                        "FROM Picture AS picture JOIN picture.car as car " +
-                                        "WHERE car.manufacturer.id = :manufacturerId " +
-                                        "AND car.visible = true " +
-                                        "AND picture.eligibleForPreview = true ");
+        TypedQuery<Long> query = super.getEntityManager()
+                                      .createQuery("SELECT picture.id " +
+                                                   "FROM Picture AS picture JOIN picture.car as car " +
+                                                   "WHERE car.manufacturer.id = :manufacturerId " +
+                                                   "AND car.visible = true " +
+                                                   "AND picture.eligibleForPreview = true",
+                                                   Long.class);
 
         query.setParameter("manufacturerId", manufacturerId);
 
