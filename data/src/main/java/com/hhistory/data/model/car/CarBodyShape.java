@@ -13,6 +13,7 @@ public enum CarBodyShape {
     STATION_WAGON("stationWagon"),
     FOUR_DOOR_SALOON("fourDoorSaloon"),
     GRAND_SALOON("grandSaloon"),
+    SPORTS_SALOON("sportsSaloon"),
     LIMOUSINE("limousine"),
     COUPE("coupe"),
     GRAND_TOURER("grandTourer"),
