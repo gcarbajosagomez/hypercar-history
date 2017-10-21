@@ -24,11 +24,11 @@ public class Brake implements GenericEntity {
     @Column(name = "brake_id")
     private Long id;
 
-    @Column(name = "brake_disc_diameter", nullable = false)
+    @Column(name = "brake_disc_diameter")
     private Long discDiameter;
 
     @Enumerated(ORDINAL)
-    @Column(name = "brake_disc_material", nullable = false)
+    @Column(name = "brake_disc_material")
     private BrakeDiscMaterial discMaterial;
 
     @Column(name = "brake_caliper_number_of_pistons")
