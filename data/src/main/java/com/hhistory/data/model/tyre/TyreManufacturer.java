@@ -9,6 +9,7 @@ public enum TyreManufacturer {
 
     PIRELLI("Pirelli"),
     MICHELIN("Michelin"),
+    DUNLOP("Dunlop"),
     BRIDGESTONE("Bridgestone"),
     CONTINENTAL("Continental"),
     KUMHO("Kumho"),
