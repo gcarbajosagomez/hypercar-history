@@ -210,7 +210,7 @@
 								<h4>${language.getTextSource('footer.aboutUs')?upper_case}</h4>
 								<p class="text-muted text-left">
 									${language.getTextSource('${manufacturerName}.footer.aboutUs.text',
-															 [uriUtils.buildDomainURI("/${carsURL}?pn=1&cpp=${allModels?size}"), allModels?size])}
+															 [uriUtils.buildDomainURI("/${carsURL}?pn=1&cpp=${visibleModels?size}"), visibleModels?size])}
 								</p>
         					</div>
 							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">

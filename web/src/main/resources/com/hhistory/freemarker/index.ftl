@@ -4,9 +4,9 @@
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 
 	<#assign manufacturerName = manufacturer.getName()/>
-	<@generic.startPage language.getTextSource('${manufacturerName}.meta.title.index', [allModels?default({})?size])
+	<@generic.startPage language.getTextSource('${manufacturerName}.meta.title.index', [visibleModels?default({})?size])
 						language.getTextSource('${manufacturerName}.meta.keywords.index')
-						language.getTextSource('${manufacturerName}.meta.title.index.metaDescription', [allModels?default({})?size, numberOfPictures, numberOfVideos])/>
+						language.getTextSource('${manufacturerName}.meta.title.index.metaDescription', [visibleModels?default({})?size, numberOfPictures, numberOfVideos])/>
 
 	<div id="main-container" class="container">
 		<div class="row">

@@ -86,6 +86,14 @@ public class BaseModelFiller implements ModelFiller {
                                     List<Car> models =
                                             this.inMemoryCarDAO.getByQueryCommandOrderedByProductionStartDate(queryCommand);
                                     model.addAttribute(ALL_MODELS, models);
+
+                                    queryCommand = CarQueryCommand.builder()
+                                                                  .manufacturer(manufacturer)
+                                                                  .visible(true)
+                                                                  .build();
+                                    List<Car> visibleModels =
+                                            this.inMemoryCarDAO.getByQueryCommandOrderedByProductionStartDate(queryCommand);
+                                    model.addAttribute(VISIBLE_MODELS, visibleModels);
                                 });
 
         String manufacturerName = this.manufacturerService.getFromModel(model).getName();

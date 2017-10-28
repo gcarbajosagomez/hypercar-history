@@ -89,7 +89,7 @@
         "position":2,
         "item": {
             "@id":"${siteURL}/${carsURL}/",
-            "name":"${language.getTextSource('${manufacturerName}.cars.all', [allModels?size])}"
+            "name":"${language.getTextSource('${manufacturerName}.cars.all', [visibleModels?size])}"
         }
     }
 </#macro>
@@ -112,7 +112,7 @@
             "@type":"WebSite",
             "name":"${language.getTextSource('${manufacturerName}History')}",
             "url":"${siteURL}",
-            "about":"${language.getTextSource('${manufacturerName}.footer.aboutUs.text', [allModels?size])}",
+            "about":"${language.getTextSource('${manufacturerName}.footer.aboutUs.text', [visibleModels?size])}",
             "keywords":"${metaKeywords}",
             "potentialAction": {
                 "@type":"SearchAction",

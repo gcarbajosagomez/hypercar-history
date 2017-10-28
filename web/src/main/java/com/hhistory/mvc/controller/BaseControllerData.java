@@ -61,6 +61,7 @@ public abstract class BaseControllerData {
     public static final String PICTURES                             = "pictures";
     public static final String NUMBER_OF_PICTURES                   = "numberOfPictures";
     public static final String ALL_MODELS                           = "allModels";
+    public static final String VISIBLE_MODELS                       = "visibleModels";
     public static final String MODELS                               = "models";
     public static final String CONTENT_TO_SEARCH_DATA               = "contentToSearchData";
     public static final String CAR_DETAILS                          = "carDetails";
