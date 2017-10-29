@@ -549,6 +549,7 @@
                            <@spring.bind "CEFC.editForm.tyreSetEditForm.manufacturer"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                <option value="" selected></option>
                                 <#list tyreManufacturers as manufacturer>
                                     <option value="${manufacturer}" <#if spring.status.value?? && manufacturer == spring.status.value?default("")> selected</#if>>${manufacturer.getName()}</option>
                                 </#list>
@@ -567,6 +568,7 @@
                            <@spring.bind "CEFC.editForm.tyreSetEditForm.type"/>
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
+                                <option value="" selected></option>
                                 <#list tyreTypes as tyreType>
                                     <option value="${tyreType}" <#if spring.status.value?? && tyreType == spring.status.value?default("")> selected</#if>>${language.getTextSource('tyreSet.type.${tyreType.getName()}')}</option>
                                 </#list>

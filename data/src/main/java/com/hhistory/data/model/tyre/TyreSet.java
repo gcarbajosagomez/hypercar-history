@@ -40,13 +40,13 @@ public class TyreSet implements GenericEntity {
     private Long id;
 
     @Enumerated(ORDINAL)
-    @Column(name = "tyre_set_manufacturer_name", nullable = false)
+    @Column(name = "tyre_set_manufacturer_name")
     private TyreManufacturer manufacturer;
 
-    @Column(name = "tyre_set_type", nullable = false)
+    @Column(name = "tyre_set_type")
     private TyreType type;
 
-    @Column(name = "tyre_set_model_name", nullable = false)
+    @Column(name = "tyre_set_model_name")
     private String model;
 
     @ManyToOne(cascade = ALL)
