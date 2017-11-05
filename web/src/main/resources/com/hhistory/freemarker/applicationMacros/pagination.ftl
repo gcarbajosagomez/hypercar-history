@@ -13,7 +13,7 @@
 
 <#macro addCMSPaginatorFunction totalPages=1>
 	var paginationOptions = {
-		bootstrapMajorVersion : 3,
+		bootstrapMajorVersion: 3,
 		currentPage: ${pagNumData},
 		alignment: 'left',
 		totalPages: ${totalPages},
@@ -39,7 +39,7 @@
 
 <#macro addPaginatorFunction totalPages=1>
 	var paginationOptions = {
-		bootstrapMajorVersion : 3,
+		bootstrapMajorVersion: 3,
 		currentPage: ${pagNumData},
 		alignment: 'left',
 		totalPages: ${totalPages},
@@ -51,6 +51,10 @@
 					${pagNum}      : page,
 					${carsPerPage} : ${carsPerPageData}
 				};
+				var manufacturerValue = $('#manufacturer-selector')[0].value;
+				if (manufacturerValue) {
+					paginationDto['manufacturer'] = manufacturerValue;
+				}
 				requestPagination(paginationDto);
 			}
 	}
@@ -80,7 +84,7 @@
 <#macro createPaginatorFunction>
 	function createPaginator(currentPage, totalPages) {
 		var paginationOptions = {
-			bootstrapMajorVersion : 3,
+			bootstrapMajorVersion: 3,
 			currentPage: currentPage,
 			alignment: 'left',
 			totalPages: totalPages > 0 ? totalPages : 1,
@@ -92,6 +96,10 @@
 						${pagNum}      : page,
 						${carsPerPage} : ${carsPerPageData}
 					};
+					var manufacturerValue = $('#manufacturer-selector')[0].value;
+					if (manufacturerValue) {
+						paginationDto['manufacturer'] = manufacturerValue;
+					}
 					requestPagination(paginationDto);
 				}
 		}
@@ -143,7 +151,7 @@
 
 <#macro createContentSearchPaginationFunction>
 		var paginationOptions = {
-	    	bootstrapMajorVersion : 3,
+	    	bootstrapMajorVersion: 3,
     	    currentPage: contentSearchDto.${pagNum},
     	    alignment: 'left',
         	totalPages: Math.ceil(contentSearchDto.searchTotalResults/contentSearchDto.${carsPerPage}),
