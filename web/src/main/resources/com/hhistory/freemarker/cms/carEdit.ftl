@@ -705,7 +705,7 @@
                                         <#assign pictureId = picture.id/>
                                         <tr id="${picture.id}-picture-row">
                                             <td style="width:70%">
-                                                <a href='${uriUtils.buildDomainURI("/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}")}' title="${CEFC.editForm.manufacturer.name}${CEFC.editForm.model}" gallery="#images-gallery">
+                                                <a href='/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}' title="${CEFC.editForm.manufacturer.name}${CEFC.editForm.model}" gallery="#images-gallery">
                                                     <img class="col-lg-6 col-md-12 col-sm-12 thumbnail preview-img resizable-img car-picture" src="/${picturesURL}/${loadCarPictureAction}?${id}=${picture.id}" alt="${CEFC.editForm.manufacturer.name} ${CEFC.editForm.model}">
                                                 </a>
                                             </td>

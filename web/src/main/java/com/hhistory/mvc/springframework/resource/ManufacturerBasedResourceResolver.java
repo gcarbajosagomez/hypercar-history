@@ -1,6 +1,5 @@
 package com.hhistory.mvc.springframework.resource;
 
-import com.hhistory.mvc.controller.BaseControllerData;
 import com.hhistory.mvc.manufacturer.Manufacturer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -11,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
 
+import static com.hhistory.mvc.controller.BaseControllerData.MANUFACTURER_DATA;
 import static com.hhistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_URI;
 
 /**
@@ -24,7 +24,7 @@ public class ManufacturerBasedResourceResolver extends PathResourceResolver {
                                     List<? extends Resource> locations,
                                     ResourceResolverChain chain) {
 
-        Manufacturer manufacturer = (Manufacturer) request.getAttribute(BaseControllerData.MANUFACTURER_DATA);
+        Manufacturer manufacturer = (Manufacturer) request.getAttribute(MANUFACTURER_DATA);
 
         return super.resolveResource(request,
                                      requestPath,
