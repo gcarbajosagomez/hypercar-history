@@ -51,10 +51,6 @@
 					${pagNum}      : page,
 					${carsPerPage} : ${carsPerPageData}
 				};
-				var manufacturerValue = $('#manufacturer-selector')[0].value;
-				if (manufacturerValue) {
-					paginationDto['manufacturer'] = manufacturerValue;
-				}
 				requestPagination(paginationDto);
 			}
 	}
