@@ -5,6 +5,7 @@ import com.hhistory.mvc.manufacturer.Manufacturer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.util.UriUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.nio.charset.Charset;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -40,8 +43,10 @@ public class PathVariableLocaleFilter extends OncePerRequestFilter {
                                                       .substring(request.getContextPath().length()));
 
         if (this.urlContainsInfo(url)) {
-            url = this.addManufacturerToRequest(url, request);
-            url = this.addLanguageToRequest(url, request);
+            url = Optional.of(url)
+                          .map(value -> this.addManufacturerToRequest(value, request))
+                          .map(value -> this.addLanguageToRequest(value, request))
+                          .orElse(url);
         }
 
         RequestDispatcher dispatcher = request.getRequestDispatcher(url);

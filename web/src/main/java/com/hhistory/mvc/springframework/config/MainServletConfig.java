@@ -26,6 +26,7 @@ import static com.hhistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
 import static com.hhistory.mvc.command.PictureLoadAction.LOAD_CAR_PREVIEW;
 import static com.hhistory.mvc.controller.BaseControllerData.*;
 import static com.hhistory.mvc.springframework.config.MainServletConfig.PACKAGES_BASENAME;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Locale.ENGLISH;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
@@ -50,7 +51,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     private static final String  SITEMAP_FILE_NAME                  = "sitemap.xml";
     private static final String  FAVICON_FILE_NAME                  = "favicon.ico";
     private static final String  DEFAULT_TIMEZONE                   = "UTC";
-    private static final String  FREEMARKER_ENCODING                = "UTF-8";
+    private static final String  FREEMARKER_ENCODING                =  UTF_8.name();
     private static final String  FREEMARKER_TEMPLATE_FILES_SUFFIX   = ".ftl";
     private static final String  TEXT_SOURCES_PACKAGE_BASENAME      = PACKAGES_BASENAME + "textsource/";
     private static final String  MAIN_TEXT_SOURCES_PACKAGE_BASENAME = TEXT_SOURCES_PACKAGE_BASENAME + "main";
@@ -77,6 +78,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
         properties.setProperty("number_format", "0.##");
         properties.setProperty("time_zone", DEFAULT_TIMEZONE);
         properties.setProperty("sql_date_and_time_time_zone", DEFAULT_TIMEZONE);
+        properties.setProperty("url_escaping_charset", FREEMARKER_ENCODING);
         freemarkerConfigurer.setFreemarkerSettings(properties);
 
         return freemarkerConfigurer;

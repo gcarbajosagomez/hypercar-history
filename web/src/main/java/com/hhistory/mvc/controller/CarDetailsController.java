@@ -14,10 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
+import static java.nio.charset.StandardCharsets.*;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -81,6 +85,13 @@ public class CarDetailsController extends BaseController {
     @ModelAttribute(CAR_QUERY_COMMAND)
     public CarQueryCommand getCarQueryCommand(@PathVariable(CAR_MODEL_NAME) String modelName,
                                               @RequestParam(name = ENGINE_ID, required = false) Long engineId) {
+        try {
+            modelName = URLDecoder.decode(modelName, UTF_8.name());
+        } catch (UnsupportedEncodingException uee) {
+            log.error("Cannot decode model name: {}",
+                      modelName,
+                      uee);
+        }
         return CarQueryCommand.builder()
                               .modelName(modelName)
                               .engineId(engineId)

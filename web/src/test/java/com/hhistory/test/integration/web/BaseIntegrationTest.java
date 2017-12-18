@@ -27,7 +27,7 @@ public abstract class BaseIntegrationTest extends AbstractTestNGSpringContextTes
 
     protected void setupBaseTest() throws Exception {
         System.setProperty(CHROME_DRIVER_SYSTEM_PROPERTY_NAME,
-                           "src/test/resources/com/hhistory/test/integration/web/chromedriver");
+                           "web/src/test/resources/com/hhistory/test/integration/web/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--start-maximized");
         this.webDriver = new ChromeDriver(options);

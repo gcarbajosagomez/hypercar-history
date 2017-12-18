@@ -25,10 +25,10 @@ import static com.hhistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_UR
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     public static final String CMS_LOGIN_USER = "admin";
-    public static final String USER           = "USER";
     public static final String USER_ROLE      = "ROLE_USER";
 
     private static final String CMS_LOGIN_ENCRYPTED_PASSWORD = "$2a$11$7FwmOPUQFJL.vrbS0xNETeAGU/4QlpWOuRM8Q8gD9lQlkM7MQGrHS";
+    private static final String USER                         = "USER";
 
     @Inject
     private PasswordEncoder passwordEncoder;
