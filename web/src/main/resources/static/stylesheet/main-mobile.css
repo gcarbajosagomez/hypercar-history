@@ -102,11 +102,11 @@
         }
     }
 
-    .language-selection-div {
+    .dropdown-selection-div {
         width: 230px;
     }
 
-    .language-selection-div > div > h4 {
+    .dropdown-selection-div > div > h4 {
         font-size: 15px;
     }
 
@@ -263,6 +263,12 @@
     .language-flag {
         max-height: 45px;
         max-width: 45px;
+        border-radius: 4px;
+    }
+
+    .manufacturer-logo {
+        max-height: 70px;
+        max-width: 70px;
         border-radius: 4px;
     }
 

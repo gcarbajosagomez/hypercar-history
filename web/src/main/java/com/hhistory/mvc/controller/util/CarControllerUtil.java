@@ -16,13 +16,12 @@ import javax.inject.Inject;
  */
 @Component
 public class CarControllerUtil {
+
     private ModelFiller carModelFiller;
-    private ModelFiller pictureModelFiller;
 
     @Inject
-    public CarControllerUtil(ModelFiller carModelFiller, ModelFiller pictureModelFiller) {
+    public CarControllerUtil(ModelFiller carModelFiller) {
         this.carModelFiller = carModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
     }
 
     /**
@@ -37,7 +36,6 @@ public class CarControllerUtil {
                                   PaginationDTO paginationDTO) {
         model = carListModelFiller.fillPaginatedModel(model, paginationDTO);
         this.carModelFiller.fillModel(model);
-        this.pictureModelFiller.fillModel(model);
         return model;
     }
 }

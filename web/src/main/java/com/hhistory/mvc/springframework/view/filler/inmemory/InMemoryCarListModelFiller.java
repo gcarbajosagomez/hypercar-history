@@ -7,6 +7,7 @@ import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.dto.PaginationDTO;
 import com.hhistory.mvc.service.ManufacturerService;
 import com.hhistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -25,6 +26,7 @@ import static com.hhistory.mvc.springframework.view.filler.inmemory.InMemoryCarL
  *
  * @author gonzalo
  */
+@AllArgsConstructor(onConstructor = @__({ @Inject }))
 @Component(IN_MEMORY_CAR_LIST_MODEL_FILLER)
 public class InMemoryCarListModelFiller extends AbstractCarListModelFiller {
 
@@ -32,13 +34,6 @@ public class InMemoryCarListModelFiller extends AbstractCarListModelFiller {
 
     private InMemoryCarDAO      inMemoryCarDAO;
     private ManufacturerService manufacturerService;
-
-    @Inject
-    public InMemoryCarListModelFiller(InMemoryCarDAO inMemoryCarDAO,
-                                      ManufacturerService manufacturerService) {
-        this.inMemoryCarDAO = inMemoryCarDAO;
-        this.manufacturerService = manufacturerService;
-    }
 
     @Override
     public Model fillPaginatedModel(Model model, PaginationDTO paginationDTO) {

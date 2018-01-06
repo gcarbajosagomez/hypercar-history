@@ -71,7 +71,6 @@ public abstract class CMSBaseController extends BaseController {
     /*************************
      **********Misc***********
      *************************/
-    public static final    String MANUFACTURER_ENTITIES                       = "manufacturerEntities";
     public static final    String MANUFACTURERS                               = "manufacturers";
     public static final    String CAR_EDIT_VIEW_NAME                          = "/cms/carEdit";
     public static final    String MANUFACTURER_EDIT_VIEW_NAME                 = "/cms/manufacturerEdit";

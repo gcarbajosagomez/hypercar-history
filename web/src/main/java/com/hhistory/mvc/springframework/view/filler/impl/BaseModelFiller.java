@@ -4,6 +4,7 @@ import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarDAO;
 import com.hhistory.data.dao.inmemory.InMemoryCarInternetContentDAO;
+import com.hhistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.service.ManufacturerService;
@@ -20,6 +21,7 @@ import java.util.List;
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
+import static com.hhistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
 import static com.hhistory.mvc.controller.BaseControllerData.*;
 import static com.hhistory.mvc.dto.PaginationDTO.ITEMS_PER_PAGE_DEFAULT_VALUE;
 import static com.hhistory.mvc.language.Language.ENGLISH;
@@ -39,18 +41,21 @@ public class BaseModelFiller implements ModelFiller {
     private InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO;
     private ResourceBundleMessageSource   messageSource;
     private ManufacturerService           manufacturerService;
+    private InMemoryManufacturerDAO       inMemoryManufacturerDAO;
 
     @Inject
     public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
                            @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO,
                            InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
                            ResourceBundleMessageSource messageSource,
-                           ManufacturerService manufacturerService) {
+                           ManufacturerService manufacturerService,
+                           InMemoryManufacturerDAO inMemoryManufacturerDAO) {
         this.inMemoryCarDAO = inMemoryCarDAO;
         this.pictureDAO = pictureDAO;
         this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
         this.messageSource = messageSource;
         this.manufacturerService = manufacturerService;
+        this.inMemoryManufacturerDAO = inMemoryManufacturerDAO;
     }
 
     @Override
@@ -62,6 +67,7 @@ public class BaseModelFiller implements ModelFiller {
         model.addAttribute("engineURL", ENGINE_URL);
         model.addAttribute("searchURL", SEARCH_URL);
         model.addAttribute("technologyStackURL", TECHNOLOGY_STACK_URL);
+        model.addAttribute("picturesURL", PICTURES_URL);
         model.addAttribute(ID, ID);
         model.addAttribute("engineIdData", ENGINE_ID);
         model.addAttribute("carsPerPage", CARS_PER_PAGE);
@@ -96,8 +102,8 @@ public class BaseModelFiller implements ModelFiller {
                                     model.addAttribute(VISIBLE_MODELS, visibleModels);
                                 });
 
-        String manufacturerName = this.manufacturerService.getFromModel(model).getName();
-        model.addAttribute("siteURL", "http://www." + manufacturerName + "history.com");
+        model.addAttribute("loadManufacturerLogoAction", LOAD_MANUFACTURER_LOGO.getName());
+        model.addAttribute(MANUFACTURER_ENTITIES, this.inMemoryManufacturerDAO.getEntities());
 
         return model;
     }

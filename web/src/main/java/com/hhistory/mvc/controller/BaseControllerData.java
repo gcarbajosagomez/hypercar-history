@@ -55,6 +55,7 @@ public abstract class BaseControllerData {
     public static final String ERROR_VIEW_NAME                      = "/error";
     public static final String INDEX_VIEW_NAME                      = "index";
     public static final String MANUFACTURER_HISTORY_VIEW_NAME       = "manufacturerHistory";
+    public static final String MANUFACTURER_ENTITIES                = "manufacturerEntities";
     public static final String CARS                                 = "cars";
     public static final String CAR                                  = "car";
     public static final String PICTURE_IDS                          = "pictureIds";

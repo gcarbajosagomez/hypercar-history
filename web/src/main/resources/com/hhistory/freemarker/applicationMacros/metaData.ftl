@@ -48,14 +48,14 @@
         {
             "@context":"http://schema.org/",
             "@type":"Car",
-            "url":"${siteURL}${requestURI}/",
+            "url":"${language.getTextSource('${manufacturerName}.website')}${requestURI}/",
             "manufacturer":"${language.getTextSource('${manufacturerName}')}",
             "name":"${car.model}",
             "model":"${car.model}",
             "category":"${language.getTextSource('car.bodyShape.${car.bodyShape.getName()}')?lower_case}",
             "bodyType":"${language.getTextSource('car.bodyShape.${car.bodyShape.getName()}')?lower_case}",
             "description":"${language.getTextSource('${manufacturerName}')} ${car.model}",
-            "image":"${siteURL}/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}",
+            "image":"${language.getTextSource('${manufacturerName}.website')}/${picturesURL}/${loadCarPreviewAction}?${id}=${car.id}",
             "numberOfForwardGears":"${carUtils.writeCarNumericData (car.transmission.numOfGears?default(-1))}",
             "driveWheelConfiguration":"${language.getTextSource('car.driveWheelType.${car.driveWheelType}')}",
             "accelerationTime":"${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??>${language.getTextSource('S')}</#if>",
@@ -77,7 +77,7 @@
         "@type":"ListItem",
         "position":1,
         "item": {
-            "@id":"${siteURL}/",
+            "@id":"${language.getTextSource('${manufacturerName}.website')}/",
             "name":"Home"
         }
     }
@@ -88,7 +88,7 @@
         "@type":"ListItem",
         "position":2,
         "item": {
-            "@id":"${siteURL}/${carsURL}/",
+            "@id":"${language.getTextSource('${manufacturerName}.website')}/${carsURL}/",
             "name":"${language.getTextSource('${manufacturerName}.cars.all', [visibleModels?size])}"
         }
     }
@@ -99,7 +99,7 @@
         "@type":"ListItem",
         "position":3,
         "item": {
-            "@id":"${siteURL}${requestURI}/",
+            "@id":"${language.getTextSource('${manufacturerName}.website')}${requestURI}/",
             "name":"${language.getTextSource('${manufacturerName}')} ${car.model}"
         }
     }
@@ -111,12 +111,12 @@
             "@context":"http://schema.org/",
             "@type":"WebSite",
             "name":"${language.getTextSource('${manufacturerName}History')}",
-            "url":"${siteURL}",
+            "url":"${language.getTextSource('${manufacturerName}.website')}",
             "about":"${language.getTextSource('${manufacturerName}.footer.aboutUs.text', [visibleModels?size])}",
             "keywords":"${metaKeywords}",
             "potentialAction": {
                 "@type":"SearchAction",
-                "target":"${siteURL}/${manufacturerShortName}/${searchURL}?${contentToSearch}={contentToSearch}",
+                "target":"${language.getTextSource('${manufacturerName}.website')}/${manufacturerShortName}/${searchURL}?${contentToSearch}={contentToSearch}",
                 "query-input": "required name=contentToSearch"
             }
         }

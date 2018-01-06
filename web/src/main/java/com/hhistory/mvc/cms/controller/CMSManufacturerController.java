@@ -5,9 +5,8 @@ import com.hhistory.mvc.cms.command.ManufacturerEditFormCommand;
 import com.hhistory.mvc.cms.controller.util.CMSManufacturerControllerUtil;
 import com.hhistory.mvc.cms.dto.CrudOperationDTO;
 import com.hhistory.mvc.cms.service.crud.CrudService;
+import com.hhistory.mvc.cms.springframework.view.filler.ManufacturerModelFiller;
 import com.hhistory.mvc.dto.PaginationDTO;
-import com.hhistory.mvc.springframework.view.filler.ModelFiller;
-import com.hhistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.Valid;
-
 import java.util.Optional;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
@@ -35,17 +33,14 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 public class CMSManufacturerController extends CMSBaseController {
 
     private ManufacturerModelFiller       manufacturerModelFiller;
-    private ModelFiller                   pictureModelFiller;
     private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
     private CrudService                   manufacturerCrudService;
 
     @Inject
     public CMSManufacturerController(@Named(MANUFACTURER_CRUD_SERVICE) CrudService manufacturerCrudService,
                                      ManufacturerModelFiller manufacturerModelFiller,
-                                     ModelFiller pictureModelFiller,
                                      CMSManufacturerControllerUtil cmsManufacturerControllerUtil) {
         this.manufacturerModelFiller = manufacturerModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
         this.cmsManufacturerControllerUtil = cmsManufacturerControllerUtil;
         this.manufacturerCrudService = manufacturerCrudService;
     }
@@ -55,7 +50,6 @@ public class CMSManufacturerController extends CMSBaseController {
                                                 PaginationDTO manufacturersPaginationDTO) {
         try {
             model = this.manufacturerModelFiller.fillPaginatedModel(model, manufacturersPaginationDTO);
-            this.pictureModelFiller.fillModel(model);
 
             return new ModelAndView();
         } catch (Exception e) {
@@ -78,8 +72,7 @@ public class CMSManufacturerController extends CMSBaseController {
             ManufacturerEditFormCommand manufacturerEditFormCommand = new ManufacturerEditFormCommand();
             model.addAttribute(MANUFACTURER_EDIT_FORM_COMMAND, manufacturerEditFormCommand);
 
-            model = this.manufacturerModelFiller.fillModel(model);
-            this.pictureModelFiller.fillModel(model);
+           this.manufacturerModelFiller.fillModel(model);
         } catch (Exception e) {
             log.error(e.toString(), e);
 
@@ -113,7 +106,6 @@ public class CMSManufacturerController extends CMSBaseController {
                 });
 
         model = this.manufacturerModelFiller.fillModel(model);
-        this.pictureModelFiller.fillModel(model);
         return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
     }
 }

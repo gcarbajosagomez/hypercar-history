@@ -46,7 +46,6 @@ public class CMSCarController extends CMSBaseController {
     private CrudService                carCrudService;
     private CrudService                carInternetContentCrudService;
     private ModelFiller                carModelFiller;
-    private ModelFiller                pictureModelFiller;
     private CarEditModelFiller         carEditModelFiller;
     private AbstractCarListModelFiller cmsInMemoryCarListModelFiller;
     private CMSCarControllerUtil       cmsCarControllerUtil;
@@ -58,7 +57,6 @@ public class CMSCarController extends CMSBaseController {
                             @Named(CAR_INTERNET_CONTENT_CRUD_SERVICE) CrudService carInternetContentCrudService,
                             @Named(CMS_CAR_PAGINATION_SERVICE_IMPL) CarPaginationService carPaginationService,
                             ModelFiller carModelFiller,
-                            ModelFiller pictureModelFiller,
                             CarEditModelFiller carEditModelFiller,
                             AbstractCarListModelFiller cmsInMemoryCarListModelFiller,
                             CMSCarControllerUtil cmsCarControllerUtil,
@@ -66,7 +64,6 @@ public class CMSCarController extends CMSBaseController {
         this.carCrudService = carCrudService;
         this.carInternetContentCrudService = carInternetContentCrudService;
         this.carModelFiller = carModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
         this.carEditModelFiller = carEditModelFiller;
         this.cmsInMemoryCarListModelFiller = cmsInMemoryCarListModelFiller;
         this.cmsCarControllerUtil = cmsCarControllerUtil;
@@ -171,7 +168,6 @@ public class CMSCarController extends CMSBaseController {
     protected Model fillModel(Model model, EditFormCommand carFormEditCommand) {
         model = this.carModelFiller.fillModel(model);
         model = this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
-        model = this.pictureModelFiller.fillModel(model);
         return model;
     }
 }

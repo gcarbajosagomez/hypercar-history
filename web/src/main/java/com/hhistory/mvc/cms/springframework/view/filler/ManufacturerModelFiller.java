@@ -1,4 +1,4 @@
-package com.hhistory.mvc.springframework.view.filler.sql;
+package com.hhistory.mvc.cms.springframework.view.filler;
 
 import com.hhistory.data.dao.sql.SqlManufacturerRepository;
 import com.hhistory.mvc.dto.PaginationDTO;
@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import javax.inject.Inject;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.*;
-import static com.hhistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
 import static com.hhistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
 
 /**
@@ -26,7 +25,6 @@ public class ManufacturerModelFiller implements ModelFiller {
     @Override
     public Model fillModel(Model model) {
         model.addAttribute(MANUFACTURER_ENTITIES, this.manufacturerRepository.findAll());
-        model.addAttribute("loadManufacturerLogoAction", LOAD_MANUFACTURER_LOGO.getName());
         return model;
     }
 

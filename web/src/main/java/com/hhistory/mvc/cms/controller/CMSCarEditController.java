@@ -55,7 +55,6 @@ public class CMSCarEditController extends CMSBaseController {
     private CarInternetContentFormFactory carInternetContentFormFactory;
     private ModelFiller                   carModelFiller;
     private CarEditModelFiller            carEditModelFiller;
-    private ModelFiller                   pictureModelFiller;
     private EntityManagementService       entityManagementService;
 
     @Inject
@@ -66,7 +65,6 @@ public class CMSCarEditController extends CMSBaseController {
                                 CarInternetContentFormFactory carInternetContentFormFactory,
                                 ModelFiller carModelFiller,
                                 CarEditModelFiller carEditModelFiller,
-                                ModelFiller pictureModelFiller,
                                 EntityManagementService entityManagementService) {
         this.carCrudService = carCrudService;
         this.carInternetContentCrudService = carInternetContentCrudService;
@@ -75,7 +73,6 @@ public class CMSCarEditController extends CMSBaseController {
         this.carInternetContentFormFactory = carInternetContentFormFactory;
         this.carModelFiller = carModelFiller;
         this.carEditModelFiller = carEditModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
         this.entityManagementService = entityManagementService;
     }
 
@@ -218,7 +215,6 @@ public class CMSCarEditController extends CMSBaseController {
     protected Model fillModel(Model model, EditFormCommand carFormEditCommand) {
         model = this.carModelFiller.fillModel(model);
         model = this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
-        model = this.pictureModelFiller.fillModel(model);
         return model;
     }
 }

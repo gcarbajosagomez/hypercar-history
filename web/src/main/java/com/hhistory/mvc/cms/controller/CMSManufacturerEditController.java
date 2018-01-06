@@ -11,8 +11,7 @@ import com.hhistory.mvc.cms.form.factory.EntityFormFactory;
 import com.hhistory.mvc.cms.form.factory.impl.ManufacturerFormFactory;
 import com.hhistory.mvc.cms.service.EntityManagementService;
 import com.hhistory.mvc.cms.service.crud.CrudService;
-import com.hhistory.mvc.springframework.view.filler.ModelFiller;
-import com.hhistory.mvc.springframework.view.filler.sql.ManufacturerModelFiller;
+import com.hhistory.mvc.cms.springframework.view.filler.ManufacturerModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -24,13 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.validation.Valid;
-
 import java.util.Optional;
 
 import static com.hhistory.mvc.cms.command.EntityManagementQueryType.REMOVE_MANUFACTURERS;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS_URL;
-import static com.hhistory.mvc.cms.service.crud.impl.ManufacturerCrudService.*;
+import static com.hhistory.mvc.cms.service.crud.impl.ManufacturerCrudService.MANUFACTURER_CRUD_SERVICE;
 import static com.hhistory.mvc.controller.BaseControllerData.ID;
 import static com.hhistory.mvc.springframework.config.WebSecurityConfig.USER_ROLE;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
@@ -49,7 +47,6 @@ public class CMSManufacturerEditController extends CMSBaseController {
     private CrudService                   manufacturerCrudService;
     private EntityFormFactory             manufacturerFormFactory;
     private ManufacturerModelFiller       manufacturerModelFiller;
-    private ModelFiller                   pictureModelFiller;
     private EntityManagementService       entityManagementService;
 
     @Inject
@@ -57,13 +54,11 @@ public class CMSManufacturerEditController extends CMSBaseController {
                                          CMSManufacturerControllerUtil cmsManufacturerControllerUtil,
                                          ManufacturerFormFactory manufacturerFormFactory,
                                          ManufacturerModelFiller manufacturerModelFiller,
-                                         ModelFiller pictureModelFiller,
                                          EntityManagementService entityManagementService) {
         this.cmsManufacturerControllerUtil = cmsManufacturerControllerUtil;
         this.manufacturerCrudService = manufacturerCrudService;
         this.manufacturerFormFactory = manufacturerFormFactory;
         this.manufacturerModelFiller = manufacturerModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
         this.entityManagementService = entityManagementService;
     }
 
@@ -145,7 +140,6 @@ public class CMSManufacturerEditController extends CMSBaseController {
     @Override
     protected Model fillModel(Model model) {
         this.manufacturerModelFiller.fillModel(model);
-        this.pictureModelFiller.fillModel(model);
         return model;
     }
 }

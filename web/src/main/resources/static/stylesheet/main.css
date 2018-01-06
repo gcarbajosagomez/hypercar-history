@@ -20,7 +20,6 @@ hr {
 
 d {
     text-align: justify;
-    text-align-last: center;
 }
 
 .big-text {
@@ -53,7 +52,7 @@ d {
 
 .hypercar-history-navbar .navbar-nav > li > a,
 .hypercar-history-navbar .navbar-nav > li > #search-container > a,
-.language-selection-div > div > h4 {
+.dropdown-selection-div > div > h4 {
     font-size: 18px;
 }
 
@@ -64,8 +63,8 @@ d {
 .hypercar-history-navbar .navbar-nav > .open > a,
 .hypercar-history-navbar .navbar-nav > .open > a:hover,
 .hypercar-history-navbar .navbar-nav > .open > a:focus,
-.language-selection-div > div > h4:hover,
-.language-selection-div > div > h4:focus,
+.dropdown-selection-div > div > h4:hover,
+.dropdown-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
     font-weight: 800 !important;
@@ -258,8 +257,12 @@ d {
     }
 }
 
-.language-selection-div {
+.dropdown-selection-div {
     width: 200px;
+}
+
+.other-stories-dropdown-selection-div {
+    width: 270px;
 }
 
 .hypercar-history-footer {
@@ -699,6 +702,12 @@ d {
     max-height: 35px;
     max-width: 35px;
     margin: 5px;
+}
+
+.manufacturer-logo {
+    max-height: 60px;
+    max-width: 60px;
+    margin: 0px 5px 5px;
 }
 
 .close {

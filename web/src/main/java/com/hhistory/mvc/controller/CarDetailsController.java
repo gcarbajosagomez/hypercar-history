@@ -16,12 +16,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
-import static java.nio.charset.StandardCharsets.*;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 
@@ -37,17 +36,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 public class CarDetailsController extends BaseController {
 
     private ModelFiller             carModelFiller;
-    private ModelFiller             pictureModelFiller;
     private CarInternetContentUtils carInternetContentUtils;
     private PictureDAO              pictureDAO;
 
     @Inject
     public CarDetailsController(ModelFiller carModelFiller,
-                                ModelFiller pictureModelFiller,
                                 CarInternetContentUtils carInternetContentUtils,
                                 @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO) {
         this.carModelFiller = carModelFiller;
-        this.pictureModelFiller = pictureModelFiller;
         this.carInternetContentUtils = carInternetContentUtils;
         this.pictureDAO = pictureDAO;
     }
@@ -62,7 +58,6 @@ public class CarDetailsController extends BaseController {
             Car car = super.getInMemoryCarDAO().getByQueryCommand(carQueryCommand);
 
             Long carId = car.getId();
-            this.pictureModelFiller.fillModel(model);
             this.carModelFiller.fillModel(model);
 
             model.addAttribute(CAR, car);

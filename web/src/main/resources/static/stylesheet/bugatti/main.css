@@ -25,9 +25,9 @@ a:hover {
 .hypercar-history-navbar .navbar-nav > .open > a,
 .hypercar-history-navbar .navbar-nav > .open > a:hover,
 .hypercar-history-navbar .navbar-nav > .open > a:focus,
-.language-selection-div > div > h4
-.language-selection-div > div > h4:hover,
-.language-selection-div > div > h4:focus,
+.dropdown-selection-div > div > h4
+.dropdown-selection-div > div > h4:hover,
+.dropdown-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
     color: #e40421 !important;

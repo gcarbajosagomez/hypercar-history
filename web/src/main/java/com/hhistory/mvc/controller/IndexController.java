@@ -34,17 +34,14 @@ public class IndexController extends BaseController {
 
     private static final int MAX_NUMBER_PICTURES_TO_DISPLAY = 9;
 
-    private ModelFiller pictureModelFiller;
     private ModelFiller carModelFiller;
     private Random      previewPictureRandomGenerator;
     private PictureDAO pictureDAO;
 
     @Inject
-    public IndexController(ModelFiller pictureModelFiller,
-                           ModelFiller carModelFiller,
+    public IndexController(ModelFiller carModelFiller,
                            Random previewPictureRandomGenerator,
                            @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO) {
-        this.pictureModelFiller = pictureModelFiller;
         this.carModelFiller = carModelFiller;
         this.previewPictureRandomGenerator = previewPictureRandomGenerator;
         this.pictureDAO = pictureDAO;
@@ -54,7 +51,6 @@ public class IndexController extends BaseController {
     public ModelAndView handleDefault(Model model) {
         try {
             this.carModelFiller.fillModel(model);
-            this.pictureModelFiller.fillModel(model);
             super.getManufacturerService()
                  .getInMemoryEntityFromModel(model)
                  .ifPresent(manufacturer -> model.addAttribute("carNamesToPictureIds",

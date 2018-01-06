@@ -31,11 +31,11 @@
 					<link rel="shortcut icon" href="/static/${manufacturerName}/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.css">
+        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
-                        <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
+                        <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">
@@ -111,16 +111,46 @@
           					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 navbar-collapse-main-container">
           					 	<div id="main-navbar-collapse" class="collapse navbar-collapse well bordered-div">
 	          						 <ul class="nav navbar-nav">
-                                     	<li><a href='${uriUtils.buildDomainURI("/${manufacturerHistoryURL}")}'>${language.getTextSource('${manufacturerName}.history.headerLinkValue')?upper_case}</a></li>
-                                        <hr class="navbar-divider">
-										<li><a href='${uriUtils.buildDomainURI("/${carsURL}")}'>${carsHeaderLinkValue?upper_case}</a></li>
-                                        <hr class="navbar-divider">
+										 <li><a href='${uriUtils.buildDomainURI("/${manufacturerHistoryURL}")}'>${language.getTextSource('${manufacturerName}.history.headerLinkValue')?upper_case}</a></li>
+                                         <hr class="navbar-divider">
+										 <li><a href='${uriUtils.buildDomainURI("/${carsURL}")}'>${carsHeaderLinkValue?upper_case}</a></li>
+                                         <hr class="navbar-divider">
+                                         <li>
+                                             <a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('otherStories')?upper_case} <b class="caret"></b></a>
+                                             <ul class="dropdown-menu">
+												 <#list manufacturerEntities as manufacturer>
+													 <#if manufacturerName?lower_case != manufacturer.name?lower_case>
+                                                         <li role="presentation">
+                                                             <a href="${language.getTextSource('${manufacturer.name?lower_case}.website')}" target="_blank" class="cursor-pointer" role="menuitem" tabindex="-1">
+                                                                 <div class="row other-stories-dropdown-selection-div">
+                                                                     <div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 text-left">
+                                                                         <h4 title="${manufacturer.name} History">${manufacturer.name?upper_case} HISTORY</h4>
+                                                                     </div>
+                                                                     <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right">
+                                                                         <img class="manufacturer-logo pull-right"
+                                                                              src='<@spring.url "/${picturesURL}/${loadManufacturerLogoAction}?${id}=${manufacturer.id}"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
+                                                                              alt="${manufacturer.name} History"
+                                                                              title="${manufacturer.name} History"/>
+                                                                     </div>
+                                                                 </div>
+                                                             </a>
+                                                         </li>
+														 <#assign index = manufacturer?index/>
+														 <#if index < (manufacturerEntities?size - 1)>
+															 <#if manufacturerName?lower_case != manufacturerEntities[index + 1]?lower_case>
+                                                                 <hr role="separator" class="divider">
+															 </#if>
+														 </#if>
+													 </#if>
+												 </#list>
+                                             </ul>
+                                         </li>
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
         	  									<li role="presentation">
           											<a id="spanish-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('${languageSpanishCode}', $('#main-form')[0]);">
-          												<div class="row language-selection-div">
+          												<div class="row dropdown-selection-div">
           													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
           													    <h4>${language.getTextSource('language.spanish')?upper_case}</h4>
           													</div>
@@ -137,7 +167,7 @@
           										<hr role="separator" class="divider">
           										<li role="presentation">
           											<a id="english-language-link" class="cursor-pointer" role="menuitem" tabindex="-1" onClick="setPageLanguage('${languageEnglishCode}', $('#main-form')[0]);">
-														<div class="row language-selection-div">
+														<div class="row dropdown-selection-div">
     	      												<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 text-left">
 																<h4>${language.getTextSource('language.english')?upper_case}</h4>
           													</div>
