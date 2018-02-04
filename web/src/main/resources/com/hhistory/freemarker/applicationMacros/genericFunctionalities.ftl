@@ -31,11 +31,11 @@
 					<link rel="shortcut icon" href="/static/${manufacturerName}/favicon.ico">
         			<link rel="stylesheet" href="/static/stylesheet/bootstrap.min.css">
                 	<link rel="stylesheet" href="/static/stylesheet/font-awesome.min.css">
-        			<link rel="stylesheet" href="/static/stylesheet/main.css">
-        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.css">
+        			<link rel="stylesheet" href="/static/stylesheet/main.min.css">
+        			<link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main.min.css">
 				    <#if !requestIsDesktop>
-                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.css">
-                        <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.css">
+                        <link rel="stylesheet" href="/static/stylesheet/main-mobile.min.css">
+                        <link rel="stylesheet" href="/static/stylesheet/${manufacturerName}/main-mobile.min.css">
 				    </#if>
 	                <#if requestIsCMS>
                         <link rel="stylesheet" href="/static/stylesheet/jquery.bootstrap-touchspin.min.css">

@@ -63,7 +63,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
         Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
         chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int chunkSize = new Double(chunkSizeDouble).intValue();
+        int chunkSize = chunkSizeDouble.intValue();
 
         this.pictures = this.sqlPictureDAO.getPaginated(0, chunkSize);
 
