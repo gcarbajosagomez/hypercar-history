@@ -1,6 +1,5 @@
 package com.hhistory.mvc.service.impl;
 
-import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.picture.Picture;
@@ -10,11 +9,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.hhistory.data.dao.inmemory.impl.InMemoryCarPreviewDAOImpl.IN_MEMORY_CAR_PREVIEW_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
@@ -26,15 +23,12 @@ public class PictureServiceImpl implements PictureService {
 
     private SqlPictureRepository sqlPictureRepository;
     private SqlPictureDAO        pictureDAO;
-    private InMemoryPictureDAO   inMemoryCarPreviewDAO;
 
     @Inject
     public PictureServiceImpl(SqlPictureRepository sqlPictureRepository,
-                              SqlPictureDAO pictureDAO,
-                              @Named(IN_MEMORY_CAR_PREVIEW_DAO) InMemoryPictureDAO inMemoryCarPreviewDAO) {
+                              SqlPictureDAO pictureDAO) {
         this.sqlPictureRepository = sqlPictureRepository;
         this.pictureDAO = pictureDAO;
-        this.inMemoryCarPreviewDAO = inMemoryCarPreviewDAO;
     }
 
     @Override
@@ -68,8 +62,7 @@ public class PictureServiceImpl implements PictureService {
                                 .orElse(null);
             }
             case LOAD_CAR_PREVIEW: {
-                return carId.map(this.inMemoryCarPreviewDAO::getCarPreview)
-                            .filter(Optional::isPresent)
+                return carId.map(this.pictureDAO::getCarPreview)
                             .map(Optional::get)
                             .orElse(null);
             }
