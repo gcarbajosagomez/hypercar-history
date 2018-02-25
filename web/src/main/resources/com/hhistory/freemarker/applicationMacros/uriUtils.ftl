@@ -39,3 +39,9 @@
 
     <#return domainURI>
 </#function>
+
+<#function sanitizeCarName carName>
+    <#assign sanitizedName>${carName?replace('\'','%27')?replace("/", "%252F")}</#assign>
+
+    <#return sanitizedName>
+</#function>

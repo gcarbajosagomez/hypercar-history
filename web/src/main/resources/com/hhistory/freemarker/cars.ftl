@@ -20,9 +20,8 @@
             <div class="col-lg-2">
                 <div class="list-group">
                     <#list models as car>
-                        <#assign modelName>${car.getNormalizedModelName()?replace("/", "%252F")}</#assign>
-                        <a class="list-group-item" href='${uriUtils.buildDomainURI("/${carsURL}/${modelName}")}'/>
-
+                        <#assign modelName>${uriUtils.sanitizeCarName(car.getNormalizedModelName())}</#assign>
+                        <a class="list-group-item" href='${uriUtils.buildDomainURI("/${carsURL}/${modelName}")}'>
                             <h5 class="text-center list-group-element">${car.model?upper_case}</h5>
                         </a>
                     </#list>
