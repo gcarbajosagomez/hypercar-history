@@ -68,8 +68,7 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
 
                 List<Picture> pictures = this.sqlPictureRepository.getByCarId(car.getId());
                 List<PictureEditCommand> pictureFileEditCommands = new ArrayList<>();
-                pictures.stream()
-                        .forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
+                pictures.forEach(picture -> pictureFileEditCommands.add(new PictureEditCommand(picture, null)));
 
                 return new CarEditForm(car.getId(),
                                        car.getVisible(),
@@ -92,6 +91,7 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
                                        car.getLength(),
                                        car.getWidth(),
                                        car.getHeight(),
+                                       car.getWheelbase(),
                                        this.brakeSetFormFactory.buildFormFromEntity(car.getBrakeSet()),
                                        this.transmissionFormFactory.buildFormFromEntity(car.getTransmission()),
                                        car.getFuelTankCapacity(),
@@ -150,6 +150,7 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
                               carEditForm.getLength(),
                               carEditForm.getWidth(),
                               carEditForm.getHeight(),
+                              carEditForm.getWheelbase(),
                               brakeSet,
                               transmission,
                               carEditForm.getFuelTankCapacity(),

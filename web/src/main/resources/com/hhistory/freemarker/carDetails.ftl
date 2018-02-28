@@ -310,6 +310,18 @@
 													</#if>
 												</p>
 											</dd>
+                                            <dt>
+                                                ${language.getTextSource('car.wheelbase')} :
+                                            </dt>
+                                            <dd>
+												<p class="text-muted">
+													<#if car.wheelbase??>
+														${car.wheelbase}<em class="measure-unit-text"> ${language.getTextSource('MM')}</em>
+													<#else>
+														${language.getTextSource('unknown')}
+													</#if>
+												</p>
+                                            </dd>
 											<dt class="double-height">
 												${language.getTextSource('car.fuelConsumption')} :
 												<p class="text-muted">

@@ -265,6 +265,12 @@
                       <dd>
                            <@spring.formInput "CEFC.editForm.height", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
                       </dd>
+					  <dt>
+                           ${language.getTextSource('car.wheelbase')}
+                      </dt>
+                      <dd>
+                           <@spring.formInput "CEFC.editForm.wheelbase", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
+                      </dd>
                       <dt>
                            ${language.getTextSource('car.acceleration')}
                       </dt>

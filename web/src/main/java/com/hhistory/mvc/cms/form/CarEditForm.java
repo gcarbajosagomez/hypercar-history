@@ -74,6 +74,7 @@ public class CarEditForm implements EditForm {
     private Long length;
     private Long width;
     private Long height;
+    private Long wheelbase;
 
     @Valid
     @NotNull(message = "The field must not be blank.")

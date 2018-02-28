@@ -164,6 +164,9 @@ public class Car implements GenericEntity {
     @Column(name = "car_height")
     private Long height;
 
+    @Column(name = "car_wheelbase")
+    private Long wheelbase;
+
     @OneToOne(orphanRemoval = true, cascade = ALL)
     @JoinColumn(name = "car_brake_set_id", unique = true)
     private BrakeSet brakeSet;
