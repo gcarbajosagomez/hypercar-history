@@ -457,4 +457,8 @@
         padding-left: 0px;
         padding-right: 0px;
     }
+
+    .nano-address {
+        font-size: 9px;
+    }
 }
