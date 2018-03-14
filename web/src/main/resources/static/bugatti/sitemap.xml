@@ -591,13 +591,22 @@
         <loc>http://www.bugattihistory.com/es/cars/chiron-%27la-mer-argentée%27</loc>
     </url>
     <url>
-        <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=60</loc>
+        <loc>http://www.bugattihistory.com/cars/chiron-sport</loc>
     </url>
     <url>
-        <loc>http://www.bugattihistory.com/en/cars?pn=1&amp;cpp=60</loc>
+        <loc>http://www.bugattihistory.com/en/cars/chiron-sport</loc>
     </url>
     <url>
-        <loc>http://www.bugattihistory.com/es/cars?pn=1&amp;cpp=60</loc>
+        <loc>http://www.bugattihistory.com/es/cars/chiron-sport</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=61</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/en/cars?pn=1&amp;cpp=61</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/es/cars?pn=1&amp;cpp=61</loc>
     </url>
     <url>
         <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=6</loc>
