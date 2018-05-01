@@ -3,7 +3,7 @@
 <#import "uriUtils.ftl" as uriUtils/>
 
 <#macro addCarsPagination chunkedModelsList=[]>
-	<@createPaginationCallFuncion "/${carsURL}/${paginationURL}" false/>
+	<@createPaginationCallFuncion uriUtils.buildDomainURI("/${carsURL}/${paginationURL}") false/>
 	<@addPaginatorFunction chunkedModelsList?size/>
 </#macro>
 
@@ -49,7 +49,8 @@
 			function(e,originalEvent,type,page) {
 				var paginationDto = {
 					${pagNum}      : page,
-					${carsPerPage} : ${carsPerPageData}
+					${carsPerPage} : ${carsPerPageData},
+				    manufacturer   : '${manufacturerShortName}'
 				};
 				requestPagination(paginationDto);
 			}
@@ -90,12 +91,9 @@
 				function(e,originalEvent,type,page) {
 					var paginationDto = {
 						${pagNum}      : page,
-						${carsPerPage} : ${carsPerPageData}
+						${carsPerPage} : ${carsPerPageData},
+						manufacturer   : '${manufacturerShortName}'
 					};
-					var manufacturerValue = $('#manufacturer-selector')[0].value;
-					if (manufacturerValue) {
-						paginationDto['manufacturer'] = manufacturerValue;
-					}
 					requestPagination(paginationDto);
 				}
 		}

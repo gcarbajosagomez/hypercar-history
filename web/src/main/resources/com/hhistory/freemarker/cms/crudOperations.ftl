@@ -1,5 +1,5 @@
-<#import "genericFunctionalities.ftl" as generic/>
-<#import "pageLanguage.ftl" as language/>
+<#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
+<#import "../applicationMacros/pageLanguage.ftl" as language/>
 
 <#macro addCreateEntityFunctionScript>
 
@@ -24,8 +24,8 @@
                         addDatePicker();
                         addBrakeTypeSelectListener();
 
-                        var savedEntityId = $("input[id*='.id']")[0].value;
-                        var urlReplacement = '';
+                        const savedEntityId = $("input[id*='.id']")[0].value;
+                        const urlReplacement = '';
 
                         if (savedEntityId.length > 0) {
                             urlReplacement = "/" + savedEntityId + "/${editURL}";

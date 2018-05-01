@@ -2,8 +2,7 @@
 	<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 	<#import "applicationMacros/pageLanguage.ftl" as language/>
 	<#import "applicationMacros/picture.ftl" as picture/>
-	<#import "cms/brake.ftl" as brake/>
-	<#import "cms/tyre.ftl" as tyre/>
+	<#import "applicationMacros/brake.ftl" as brake/>
 	<#import "applicationMacros/carUtils.ftl" as carUtils/>
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 

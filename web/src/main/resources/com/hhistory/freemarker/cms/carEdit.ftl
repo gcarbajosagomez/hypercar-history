@@ -2,12 +2,12 @@
 <#import "engine.ftl" as engine/>
 <#import "brake.ftl" as brake/>
 <#import "tyre.ftl" as tyre/>
+<#import "internetContent.ftl" as internetContent/>
+<#import "crudOperations.ftl" as crudOperations/>
+<#import "picture.ftl" as cmsPictureUtil/>
+<#import "../applicationMacros/picture.ftl" as pictureUtil/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
-<#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
-<#import "../applicationMacros/internetContent.ftl" as internetContent/>
-<#import "../applicationMacros/picture.ftl" as pictureUtil/>
-<#import "../applicationMacros/carUtils.ftl" as carUtils/>
 <#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#if CEFC.editForm.id??>
@@ -848,8 +848,8 @@
 
 <@internetContent.addAddInternetContentFunctionScript/>
 
-<@pictureUtil.addPictureUploadBoxFunctionScript/>
-<@pictureUtil.addDisplayCarPictureWhenFileSelectedFunctionScript/>
+<@cmsPictureUtil.addPictureUploadBoxFunctionScript/>
+<@cmsPictureUtil.addDisplayCarPictureWhenFileSelectedFunctionScript/>
 
 <@brake.addLoadBrakeDiscFieldsScriptFunction/>
 <@brake.addDiscBrakeInputsFunctionsScript/>

@@ -1,7 +1,7 @@
 <#import "/spring.ftl" as spring/>
+<#import "crudOperations.ftl" as crudOperations/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
-<#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 <#import "../applicationMacros/uriUtils.ftl" as uriUtils/>
 
 <#if MEFC.editForm.id??>

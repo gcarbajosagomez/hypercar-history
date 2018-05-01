@@ -1,4 +1,4 @@
-<#import "pageLanguage.ftl" as language/>
+<#import "../applicationMacros/pageLanguage.ftl" as language/>
 
 <#macro addAddInternetContentFunctionScript>
 

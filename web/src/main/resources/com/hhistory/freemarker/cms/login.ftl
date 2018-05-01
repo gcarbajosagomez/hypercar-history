@@ -1,6 +1,6 @@
+<#import "crudOperations.ftl" as crudOperations/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
-<#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
 
 <@generic.startPage language.getTextSource('meta.title.login')/>
 

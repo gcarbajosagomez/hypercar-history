@@ -6,6 +6,7 @@
     <#import "applicationMacros/metaData.ftl" as metaData/>
     <#import "applicationMacros/carUtils.ftl" as carUtils/>
     <#import "applicationMacros/uriUtils.ftl" as uriUtils/>
+    <#import "applicationMacros/picture.ftl" as picture/>
 
     <#assign manufacturerName = manufacturer.getName()/>
     <#assign metaKeywords = language.getTextSource('${manufacturerName}.meta.keywords.cars', [models?size])/>
@@ -40,7 +41,7 @@
                             <#list cars?chunk(2) as row>
                                 <div class="row car-list-row">
                                     <#list row as car>
-                                        <@carUtils.printCarPreview car car_index row_index/>
+                                        <@picture.printCarPreview car car_index row_index/>
                                     </#list>
                                 </div>
                             </#list>
