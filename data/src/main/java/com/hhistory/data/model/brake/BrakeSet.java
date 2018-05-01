@@ -3,10 +3,7 @@ package com.hhistory.data.model.brake;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hhistory.data.model.GenericEntity;
 import com.hhistory.data.model.car.Car;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 

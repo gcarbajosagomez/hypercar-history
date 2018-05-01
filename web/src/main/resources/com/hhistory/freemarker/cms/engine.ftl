@@ -176,7 +176,7 @@
 
         bootbox.confirm("${language.getTextSource('engine.confirmSave')}", function (result) {
             //OK button
-            if (result == true) {
+            if (result === true) {
                 $.ajax({
                     url: '/${cmsContext}${engineURL}/${saveURL}',
                     type: 'POST',
@@ -204,7 +204,7 @@
 
         bootbox.confirm("${language.getTextSource('engine.confirmEdit')}", function (result) {
             //OK button
-            if (result == true) {
+            if (result === true) {
                 $.ajax({
                     url: '/${cmsContext}${engineURL}/' + engineId + '/${editURL}',
                     type: 'PUT',
@@ -231,7 +231,7 @@
 
         bootbox.confirm("${language.getTextSource('engine.confirmDelete')}", function (result) {
             //OK button
-            if (result == true) {
+            if (result === true) {
                 $.ajax({
                     url: '/${cmsContext}${engineURL}/' + engineId + '/${deleteURL}',
                     type: 'DELETE',

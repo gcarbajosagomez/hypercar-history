@@ -7,7 +7,7 @@
         function saveEntity(url, confirmSaveMessage) {
             bootbox.confirm(confirmSaveMessage, function (result) {
                 //OK button
-                if (result == true) {
+                if (result === true) {
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -21,6 +21,8 @@
                     }).done(function (data) {
                         document.children[0].innerHTML = data;
                         setupPictureGalleryPositionInputs();
+                        addDatePicker();
+                        addBrakeTypeSelectListener();
 
                         var savedEntityId = $("input[id*='.id']")[0].value;
                         var urlReplacement = '';
@@ -46,7 +48,7 @@
         function editEntity(url, confirmEditMessage) {
             bootbox.confirm(confirmEditMessage, function (result) {
                 //OK button
-                if (result == true) {
+                if (result === true) {
                     $.ajax({
                         type: 'POST',
                         url: url,
@@ -60,6 +62,8 @@
                     }).done(function (data) {
                         document.children[0].innerHTML = data;
                         setupPictureGalleryPositionInputs();
+                        addDatePicker();
+                        addBrakeTypeSelectListener();
 
                         $('#main-container').unblock();
                     });
@@ -74,7 +78,7 @@
         function deleteEntity(url, confirmDeleteMessage) {
             bootbox.confirm(confirmDeleteMessage, function (result) {
                 //OK button
-                if (result == true) {
+                if (result === true) {
                     $.ajax({
                         url: url,
                         type: 'DELETE',

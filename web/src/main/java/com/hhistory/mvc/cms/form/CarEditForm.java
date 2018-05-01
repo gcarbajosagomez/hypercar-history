@@ -2,7 +2,6 @@ package com.hhistory.mvc.cms.form;
 
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.*;
-import com.hhistory.data.model.engine.Engine;
 import com.hhistory.data.model.transmission.DriveWheelType;
 import com.hhistory.mvc.cms.command.CarMaterial;
 import com.hhistory.mvc.cms.command.PictureEditCommand;
@@ -105,7 +104,7 @@ public class CarEditForm implements EditForm {
         this.visible = true;
         this.manufacturer = new Manufacturer();
         this.engineEditForm = new EngineEditForm();
-        this.brakeSetEditForm = new BrakeSetForm();
+        this.brakeSetEditForm = new BrakeSetEditForm();
         this.transmissionEditForm = new TransmissionEditForm();
         this.tyreSetEditForm = new TyreSetEditForm();
         this.pictureFileEditCommands = new ArrayList<>();

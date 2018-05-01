@@ -30,11 +30,19 @@
         <li class="list-group-item brake-set-list-group-item"><h3 class="brake-set-train-name">${language.getTextSource('brakeSet.${trainName}')}</h3>
             <dl class="dl-horizontal text-left">
                 <dt>
+                    ${language.getTextSource('brake.type')} :
+                </dt>
+                <dd>
+                    <p class="text-muted">
+                        ${language.getTextSource('brake.type.${brake.getType().getName()}')}
+                    </p>
+                </dd>
+                <dt>
                     ${language.getTextSource('brake.disc.diameter')} :
                 </dt>
                 <dd>
                     <p class="text-muted">
-                        ${writeCarNumericData (brake.discDiameter?default(-1))}<#if brake.discDiameter??><em class="measure-unit-text"> ${language.getTextSource('MM')}</em></#if>
+                        ${writeCarNumericData (brake.discDiameter!-1)}<#if brake.discDiameter??><em class="measure-unit-text"> ${language.getTextSource('MM')}</em></#if>
                     </p>
                 </dd>
                 <dt>
@@ -52,100 +60,12 @@
                 </dt>
                 <dd>
                     <p class="text-muted">
-                        ${writeCarNumericData (brake.caliperNumOfPistons?default(-1))}
+                        ${writeCarNumericData (brake.caliperNumOfPistons!-1)}
                     </p>
                 </dd>
             </dl>
         </li>
     </ul>
-</#macro>
-
-<#macro writeBrakeEditFields brake objectBindingPath brakeTrain>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="text-left">${language.getTextSource('brakeSet.${brakeTrain?lower_case}')}</h4>
-    </div>
-    <div class="panel-body">
-        <dl class="dl-horizontal dl-horizontal-edit text-left">
-            <#if brake.id??>
-                <dt>
-                    ${language.getTextSource('id')}
-                </dt>
-                <dd>
-                    <h5 class="entity-id text-muted">${brake.id}</h5>
-                    <@spring.formHiddenInput "${objectBindingPath?string}.id", ""/>
-                </dd>
-            </#if>
-            <@spring.bind "${objectBindingPath?string}.train"/>
-            <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${brakeTrain}">
-            <dt>
-                ${language.getTextSource('brake.disc.diameter')}
-            </dt>
-            <dd>
-                <@spring.formInput "${objectBindingPath?string}.discDiameter", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-            </dd>
-            <dt>
-                ${language.getTextSource('brake.disc.material')}
-            </dt>
-            <dd>
-                <@spring.bind "${objectBindingPath}.discMaterial"/>
-
-                <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
-                    <#list brakeDiscMaterials as brakeDiscMaterial>
-                        <option value="${brakeDiscMaterial}" <#if spring.status.value?? && brakeDiscMaterial == spring.status.value?default("")> selected</#if>>${language.getTextSource('brake.disc.material.${brakeDiscMaterial}')}</option>
-                    </#list>
-                </select>
-            </dd>
-            <dt>
-                ${language.getTextSource('brake.caliper.numOfPistons')}
-            </dt>
-            <dd>
-                <@spring.formInput "${objectBindingPath?string}.caliperNumOfPistons", "class=form-control", "text"/>
-            </dd>
-        </dl>
-    </div>
-</div>
-</#macro>
-
-<#macro writeTyreEditFields tyre objectBindingPath tyreTrain>
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h4 class="text-left">${language.getTextSource('brakeSet.${tyreTrain?lower_case}')}</h4>
-    </div>
-    <div class="panel-body">
-        <dl class="dl-horizontal dl-horizontal-edit text-left">
-            <#if tyre.id??>
-                <dt>
-                    ${language.getTextSource('id')}
-                </dt>
-                <dd>
-                    <h5 class="entity-id text-muted">${tyre.id}</h5>
-                    <@spring.formHiddenInput "${objectBindingPath}.id", ""/>
-                </dd>
-            </#if>
-            <@spring.bind "${objectBindingPath?string}.train"/>
-            <input type="hidden" id="${objectBindingPath?string?replace("CEFC.", "")}.train" name="${objectBindingPath?string?replace("CEFC.", "")}.train" class="form-control" value="${tyreTrain}">
-            <dt>
-                ${language.getTextSource('tyre.width')}
-            </dt>
-            <dd>
-                <@spring.formInput "${objectBindingPath?string}.width", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-            </dd>
-            <dt>
-                ${language.getTextSource('tyre.profile')}
-            </dt>
-            <dd>
-                <@spring.formInput "${objectBindingPath?string}.profile", "class=form-control placeholder=${language.getTextSource('MM')}", "text"/>
-            </dd>
-            <dt>
-                ${language.getTextSource('tyre.rimDiameter')}
-            </dt>
-            <dd>
-                <@spring.formInput "${objectBindingPath}.rimDiameter", "class=form-control placeholder=${language.getTextSource('inch')}", "text"/>
-            </dd>
-        </dl>
-    </div>
-</div>
 </#macro>
 
 <#macro addSetUnitsOfMeasureFunctionScript>
@@ -161,10 +81,10 @@
                             dataType: 'html',
                             cache: false,
                             beforeSend: function() {
-                                if(unitsOfMeasure == '${unitsOfMeasureMetric}') {
+                                if(unitsOfMeasure === '${unitsOfMeasureMetric}') {
                                     $('#metric-units-loading-gif').removeClass('sr-only');
                                 }
-                                else if(unitsOfMeasure == '${unitsOfMeasureImperial}') {
+                                else if(unitsOfMeasure === '${unitsOfMeasureImperial}') {
                                     $('#imperial-units-loading-gif').removeClass('sr-only');
                                 }
 

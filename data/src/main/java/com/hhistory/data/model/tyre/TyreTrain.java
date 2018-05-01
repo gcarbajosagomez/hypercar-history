@@ -5,6 +5,16 @@ package com.hhistory.data.model.tyre;
  */
 public enum TyreTrain {
 
-    FRONT,
-    REAR
+    FRONT("front"),
+    REAR("rear");
+
+    private String name;
+
+    TyreTrain(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
 }

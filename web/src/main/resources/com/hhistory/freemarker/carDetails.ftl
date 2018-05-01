@@ -2,6 +2,8 @@
 	<#import "applicationMacros/genericFunctionalities.ftl" as generic/>
 	<#import "applicationMacros/pageLanguage.ftl" as language/>
 	<#import "applicationMacros/picture.ftl" as picture/>
+	<#import "cms/brake.ftl" as brake/>
+	<#import "cms/tyre.ftl" as tyre/>
 	<#import "applicationMacros/carUtils.ftl" as carUtils/>
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 
@@ -498,9 +500,9 @@
 								<h3 class="text-left car-details-panel-heading">${language.getTextSource('brakes')}</h3>
 							</div>
 							<div class="row panel-body">
-								<@carUtils.writeCarBrakeInfo car.brakeSet.frontBrake/>
+								<@brake.writeCarBrakeInfo car.brakeSet.frontBrake/>
 								<hr>
-								<@carUtils.writeCarBrakeInfo car.brakeSet.rearBrake/>
+								<@brake.writeCarBrakeInfo car.brakeSet.rearBrake/>
 							</div>
 						</div>
 					</div>
@@ -528,7 +530,7 @@
 									<dd>
 										<p class="text-muted">
 											<#if car.transmission??>
-												${carUtils.writeCarNumericData (car.transmission.numOfGears?default(-1))}
+												${carUtils.writeCarNumericData (car.transmission.numOfGears!-1)}
 											</#if>
 										</p>
 									</dd>
@@ -548,7 +550,11 @@
 									</dt>
 									<dd>
 										<p class="text-muted">
-											${car.tyreSet.manufacturer.getName()}
+											<#if (car.tyreSet.manufacturer??)>
+												${car.tyreSet.manufacturer.getName()}
+											<#else>
+												${language.getTextSource('unknown')}
+											</#if>
 										</p>
 									</dd>
 									<dt>
@@ -559,9 +565,8 @@
 											<#if (car.tyreSet.model?length > 0)>
 												${car.tyreSet.model}
 											<#else>
-											${language.getTextSource('unknown')}
+												${language.getTextSource('unknown')}
 											</#if>
-
 										</p>
 									</dd>
 									<dt>
@@ -569,7 +574,11 @@
 									</dt>
 									<dd>
 										<p class="text-muted">
-											${language.getTextSource('tyreSet.type.${car.tyreSet.type.getName()}')}
+											<#if (car.tyreSet.manufacturer??)>
+												${language.getTextSource('tyreSet.type.${car.tyreSet.type.getName()}')}
+											<#else>
+												${language.getTextSource('unknown')}
+											</#if>
 										</p>
 									</dd>
 									<dt>

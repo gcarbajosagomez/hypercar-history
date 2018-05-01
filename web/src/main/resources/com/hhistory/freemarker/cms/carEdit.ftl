@@ -1,5 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <#import "engine.ftl" as engine/>
+<#import "brake.ftl" as brake/>
+<#import "tyre.ftl" as tyre/>
 <#import "../applicationMacros/genericFunctionalities.ftl" as generic/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 <#import "../applicationMacros/crudOperations.ftl" as crudOperations/>
@@ -81,7 +83,7 @@
                             </select>
                       </dd>
                       <dt>
-                           ${language.getTextSource('car.manufacturer')}</h5>
+                            ${language.getTextSource('car.manufacturer')}
                       </dt>
                       <dd>
                            <@spring.bind "CEFC.editForm.manufacturer"/>
@@ -242,7 +244,7 @@
 						   </div>
                       </dd>
                       <dt>
-                           ${language.getTextSource('car.weight')}</td>
+                           ${language.getTextSource('car.weight')}
                       </dt>
                       <dd>
 							<@spring.formInput "CEFC.editForm.weight", "class=form-control placeholder=${language.getTextSource('Kg')}", "text"/>
@@ -420,7 +422,7 @@
 
                            <select id="${spring.status.expression}" name="${spring.status.expression}" class="form-control">
                                <#list engineTypes as engineType>
-                                   <option value="${engineType}" <#if spring.status.value?? && engineType == spring.status.value?default("")> selected</#if>>${language.getTextSource('engine.type.${engineType}')}</option>
+                                   <option value="${engineType}" <#if spring.status.value?? && engineType == spring.status.value!""> selected</#if>>${language.getTextSource('engine.type.${engineType}')}</option>
                                </#list>
                            </select>
                       </dd>
@@ -501,8 +503,8 @@
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.editForm.brakeSetEditForm.id", ""/>
 
-                       <@carUtils.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.frontBrake "CEFC.editForm.brakeSetEditForm.frontBrake" "FRONT"/>
-                       <@carUtils.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.rearBrake "CEFC.editForm.brakeSetEditForm.rearBrake" "REAR"/>
+                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.frontDiscBrake CEFC.editForm.brakeSetEditForm.frontBrakeType "CEFC.editForm.brakeSetEditForm." brakeTrains[0]/>
+                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.rearDiscBrake CEFC.editForm.brakeSetEditForm.rearBrakeType "CEFC.editForm.brakeSetEditForm." brakeTrains[1]/>
                    </dl>
                </div>
 		   </div>
@@ -584,8 +586,8 @@
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.editForm.tyreSetEditForm.id"/>
 
-                       <@carUtils.writeTyreEditFields CEFC.editForm.tyreSetEditForm.frontTyre "CEFC.editForm.tyreSetEditForm.frontTyre" "FRONT"/>
-                       <@carUtils.writeTyreEditFields CEFC.editForm.tyreSetEditForm.rearTyre "CEFC.editForm.tyreSetEditForm.rearTyre" "REAR"/>
+                       <@tyre.writeTyreEditFields CEFC.editForm.tyreSetEditForm.frontTyre "CEFC.editForm.tyreSetEditForm.frontTyre" tyreTrains[0]/>
+                       <@tyre.writeTyreEditFields CEFC.editForm.tyreSetEditForm.rearTyre "CEFC.editForm.tyreSetEditForm.rearTyre" tyreTrains[0]/>
                    </dl>
                </div>
 		   </div>
@@ -813,18 +815,23 @@
 <@generic.endPage/>
 
 <script type="application/javascript">
-       	$(function() {
-            $('.input-group.date').datepicker({
-                format: "yyyy-mm",
-                startView: 1,
-                minViewMode: 1,
-                maxViewMode: 2,
-                autoclose: true
-            });
+    $(function() {
+        addDatePicker();
+        addBrakeTypeSelectListener();
+    });
 
-            setupPictureGalleryPositionInputs();
-            $('#main-form')[0].enctype = "multipart/form-data";
+    function addDatePicker(){
+        $('.input-group.date').datepicker({
+            format: "yyyy-mm",
+            startView: 1,
+            minViewMode: 1,
+            maxViewMode: 2,
+            autoclose: true
         });
+
+        setupPictureGalleryPositionInputs();
+        $('#main-form')[0].enctype = "multipart/form-data";
+    }
 </script>
 
 <@crudOperations.addEditEntityFunctionScript/>
@@ -843,3 +850,6 @@
 
 <@pictureUtil.addPictureUploadBoxFunctionScript/>
 <@pictureUtil.addDisplayCarPictureWhenFileSelectedFunctionScript/>
+
+<@brake.addLoadBrakeDiscFieldsScriptFunction/>
+<@brake.addDiscBrakeInputsFunctionsScript/>

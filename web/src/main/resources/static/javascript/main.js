@@ -37,7 +37,7 @@ function setUpContactUsModal() {
 function deletePicture(pictureId, deleteMessage) {
     bootbox.confirm(deleteMessage, function (result) {
         //OK button
-        if (result == true) {
+        if (result === true) {
             $.ajax({
                 url: '/cms/pictures/' + pictureId + '/delete',
                 type: 'DELETE',
@@ -58,7 +58,7 @@ function deletePicture(pictureId, deleteMessage) {
 function deleteCarInternetContent(carInternetContentId, deleteMessage) {
     bootbox.confirm(deleteMessage, function (result) {
         //OK button
-        if (result == true) {
+        if (result === true) {
             $.ajax({
                 url: '/cms/carInternetContents/' + carInternetContentId + '/delete',
                 type: 'DELETE',
@@ -82,7 +82,7 @@ function writeCarPreviews(cars) {
     var carListString = "";
 
     for (var i = 0; i < cars.length; i++) {
-        if (i % 2 == 0) {
+        if (i % 2 === 0) {
             auxCarRowList = new Array()
             auxCarRowList[0] = cars[i];
 

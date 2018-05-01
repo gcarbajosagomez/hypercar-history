@@ -1,5 +1,6 @@
 package com.hhistory.mvc.cms.form.factory.impl;
 
+import com.hhistory.data.dao.sql.SqlEngineRepository;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.brake.BrakeSet;
 import com.hhistory.data.model.car.Car;
@@ -12,6 +13,7 @@ import com.hhistory.mvc.cms.command.PictureEditCommand;
 import com.hhistory.mvc.cms.form.CarEditForm;
 import com.hhistory.mvc.cms.form.EditForm;
 import com.hhistory.mvc.cms.form.factory.EntityFormFactory;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,7 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,30 +37,16 @@ import static com.hhistory.data.dao.sql.SqlEngineRepository.ENGINE_REPOSITORY;
  */
 @Slf4j
 @Component
+@AllArgsConstructor(onConstructor = @__(@Inject))
 public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
     public static final String CAR_MATERIAL_STRING_SEPARATOR = "-";
 
     private SqlPictureRepository sqlPictureRepository;
-    private CrudRepository       sqlEngineRepository;
+    private SqlEngineRepository  sqlEngineRepository;
     private EntityFormFactory    brakeSetFormFactory;
     private EntityFormFactory    engineFormFactory;
     private EntityFormFactory    transmissionFormFactory;
     private EntityFormFactory    tyreSetFormFactory;
-
-    @Inject
-    public CarFormFactory(SqlPictureRepository sqlPictureRepository,
-                          @Named(ENGINE_REPOSITORY) CrudRepository sqlEngineRepository,
-                          EntityFormFactory brakeSetFormFactory,
-                          EntityFormFactory engineFormFactory,
-                          EntityFormFactory transmissionFormFactory,
-                          EntityFormFactory tyreSetFormFactory) {
-        this.sqlPictureRepository = sqlPictureRepository;
-        this.sqlEngineRepository = sqlEngineRepository;
-        this.brakeSetFormFactory = brakeSetFormFactory;
-        this.engineFormFactory = engineFormFactory;
-        this.transmissionFormFactory = transmissionFormFactory;
-        this.tyreSetFormFactory = tyreSetFormFactory;
-    }
 
     @Override
     public CarEditForm buildFormFromEntity(Car car) {
@@ -118,11 +107,9 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
             Engine engine;
             EditForm engineEditForm = carEditForm.getEngineEditForm();
             Long engineId = engineEditForm.getId();
-            if (Objects.nonNull(engineId)) {
-                engine = (Engine) this.sqlEngineRepository.findOne(engineId);
-            } else {
-                engine = (Engine) this.engineFormFactory.buildEntityFromForm(engineEditForm);
-            }
+            engine = Optional.ofNullable(engineId)
+                             .map(sqlEngineRepository::findOne)
+                             .orElse((Engine) this.engineFormFactory.buildEntityFromForm(engineEditForm));
 
             BrakeSet brakeSet = (BrakeSet) this.brakeSetFormFactory.buildEntityFromForm(carEditForm.getBrakeSetEditForm());
             EditForm transmissionEditForm = carEditForm.getTransmissionEditForm();

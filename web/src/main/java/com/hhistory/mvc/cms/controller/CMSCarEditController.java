@@ -135,11 +135,8 @@ public class CMSCarEditController extends CMSBaseController {
                                                    car);
         carInternetContentEditFormCommand.setEditForms(enrichedCarInternetContentForms);
 
-        CrudOperationDTO carInternetContentCrudOperationDTO =
-                this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
-                                                                    carInternetContentEditFormCommandResult);
-
-        return carInternetContentCrudOperationDTO;
+        return this.carInternetContentCrudService.saveOrEditEntity(carInternetContentEditFormCommand.adapt(),
+                                                                   carInternetContentEditFormCommandResult);
     }
 
     private List<CarInternetContentForm> enrichCarInternetContentForms(List<CarInternetContentForm> carInternetContentForms,
