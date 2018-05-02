@@ -154,6 +154,8 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
         Properties cacheMappings = new Properties();
         cacheMappings.setProperty("/" + CARS_URL, NO_CACHE_VALUE);
         cacheMappings.setProperty("/" + CARS_URL + "/*", NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + CAR_URL, NO_CACHE_VALUE);
+        cacheMappings.setProperty("/" + CAR_URL + "/*", NO_CACHE_VALUE);
         cacheMappings.setProperty("/" + SEARCH_URL + "/*", NO_CACHE_VALUE);
         cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PICTURE.getName() + "*", TWO_WEEKS_SECONDS.toString());
         cacheMappings.setProperty("/" + PICTURES_URL + "/" + LOAD_CAR_PREVIEW.getName() + "/*", NO_CACHE_VALUE);

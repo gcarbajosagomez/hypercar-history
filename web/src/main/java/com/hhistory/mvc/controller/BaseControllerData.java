@@ -8,6 +8,7 @@ public abstract class BaseControllerData {
     public static final String INDEX_URL                = "index";
     public static final String MANUFACTURER_HISTORY_URL = "history";
     public static final String CARS_URL                 = "cars";
+    public static final String CAR_URL                  = "car";
     public static final String ENGINE_URL               = "engine";
     public static final String SEARCH_URL               = "search";
     public static final String PICTURES_URL             = "pictures";

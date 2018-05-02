@@ -503,8 +503,8 @@
                    <dl class="dl-horizontal dl-horizontal-edit text-left">
                        <@spring.formHiddenInput "CEFC.editForm.brakeSetEditForm.id", ""/>
 
-                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.frontDiscBrake CEFC.editForm.brakeSetEditForm.frontBrakeType "CEFC.editForm.brakeSetEditForm." brakeTrains[0]/>
-                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.rearDiscBrake CEFC.editForm.brakeSetEditForm.rearBrakeType "CEFC.editForm.brakeSetEditForm." brakeTrains[1]/>
+                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.frontDiscBrake "CEFC.editForm.brakeSetEditForm." brakeTrains[0] CEFC.editForm.brakeSetEditForm.frontBrakeType/>
+                       <@brake.writeBrakeEditFields CEFC.editForm.brakeSetEditForm.rearDiscBrake "CEFC.editForm.brakeSetEditForm." brakeTrains[1] CEFC.editForm.brakeSetEditForm.rearBrakeType/>
                    </dl>
                </div>
 		   </div>

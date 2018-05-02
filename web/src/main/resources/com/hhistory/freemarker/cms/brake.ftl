@@ -1,7 +1,7 @@
 <#import "/spring.ftl" as spring/>
 <#import "../applicationMacros/pageLanguage.ftl" as language/>
 
-<#macro writeBrakeEditFields brake brakeType objectBindingPath brakeTrain>
+<#macro writeBrakeEditFields brake objectBindingPath brakeTrain brakeType='DISC'>
     <#assign brakeTrainName = brakeTrain.getName()/>
     <#assign baseBindingPath = "${objectBindingPath?string}${brakeTrainName}DiscBrake"/>
     <div class="panel panel-default">

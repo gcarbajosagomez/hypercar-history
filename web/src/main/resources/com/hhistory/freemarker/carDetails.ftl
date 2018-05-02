@@ -236,7 +236,7 @@
 											</dt>
 											<dd class="double-height">
 												<p class="text-muted">
-													${carUtils.writeCarNumericData (car.acceleration?default(-1))}<#if car.acceleration??><em class="measure-unit-text"> ${language.getTextSource('S')}</em></#if>
+													${carUtils.writeCarNumericData (car.acceleration!-1)}<#if car.acceleration??><em class="measure-unit-text"> ${language.getTextSource('S')}</em></#if>
 												</p>
 											</dd>
 											<dt>

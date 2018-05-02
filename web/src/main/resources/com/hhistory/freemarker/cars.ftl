@@ -22,7 +22,7 @@
                 <div class="list-group">
                     <#list models as car>
                         <#assign modelName>${uriUtils.sanitizeCarName(car.getNormalizedModelName())}</#assign>
-                        <a class="list-group-item" href='${uriUtils.buildDomainURI("/${carsURL}/${modelName}")}'>
+                        <a class="list-group-item" href='${uriUtils.buildDomainURI("/${carURL}/${modelName}")}'>
                             <h5 class="text-center list-group-element">${car.model?upper_case}</h5>
                         </a>
                     </#list>
@@ -88,12 +88,12 @@
                 carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
                 carRowString = carRowString.concat(	  	 	"<figure>");
                 carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-                carRowString = carRowString.concat(				    "<a href='${carsURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
-                carRowString = carRowString.concat(					    "<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
+                carRowString = carRowString.concat(				    "<a href='${carURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
+                carRowString = carRowString.concat(					    "<img class='history-thumbnail preview-history' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + carModel + " preview' title='" + cars[i].manufacturer.name + " " + carModel + "'>");
                 carRowString = carRowString.concat(				    "</a>");
                 carRowString = carRowString.concat(				"</div>");
                 carRowString = carRowString.concat(				"<figcaption>");
-                carRowString = carRowString.concat(					"<a href='${carsURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
+                carRowString = carRowString.concat(					"<a href='${carURL}/" + cars[i].normalizedModelName + "<#if doNotTrack>?${doNotTrackParam}=true</#if>'>");
 
                 if (carModel.length < 33)
                 {

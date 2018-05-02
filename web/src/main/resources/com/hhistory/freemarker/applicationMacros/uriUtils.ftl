@@ -20,11 +20,9 @@
     <#elseif requestURI?contains(manufacturerHistoryURL)>
         <#global requestIsManufacturerHistory = true/>
     <#elseif requestURI?contains(carsURL)>
-        <#if requestURI?matches(".*/" + carsURL + "[^/]*")>
-            <#global requestIsCars = true/>
-        <#else>
-            <#global requestIsCarDetails = true/>
-        </#if>
+        <#global requestIsCars = true/>
+    <#elseif requestURI?contains(carURL)>
+        <#global requestIsCarDetails = true/>
     <#elseif requestURI?contains(searchURL)>
         <#global requestIsModelsSearch = true/>
     </#if>

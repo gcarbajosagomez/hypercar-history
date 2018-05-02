@@ -11,7 +11,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import static com.hhistory.mvc.controller.BaseControllerData.CARS_URL;
+import static com.hhistory.mvc.controller.BaseControllerData.CAR_URL;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
@@ -43,7 +43,7 @@ public class CarDetailsTest extends BaseIntegrationTest {
         return TEST_SERVER_HOST +
                this.port + "/" +
                IRRELEVANT_MANUFACTURER.getShortName() + "/" +
-               CARS_URL + "/" +
+               CAR_URL + "/" +
                IRRELEVANT_CAR_MODEL;
     }
 
