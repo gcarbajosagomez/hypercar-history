@@ -1,0 +1,21 @@
+1. Add MySQL service to application and fill in its credentials
+
+2. Add Red Hat OpenJDK 8 service to application:
+    2.1 Add Git repo address, creating a new secret with the SSH key in the process
+    2.2 Fill in the Hostname
+    2.3 Add the following environment vbles:
+        MAVEN_ARGS : clean package -DskipTests=true -P prod
+        ARTIFACT_DIR : deployments
+
+3. Log into the Java pod and run "env", this will prompt the container's env vbles, check for MYSQL_SERVICE_HOST and MYSQL_SERVICE_PORT,
+   if they're not present, scale down all containers to 0 pods and scale the MySQL service first
+
+4. Set the DB connection values in the connection string, using the "${}" placeholder
+
+5. Upload the DB backup script from localhost to the MySQL pod via SFTP using the following command:  oc rsync backup <MySQL pod name>:/var/lib/mysql/data/
+
+6. Import the script from within the pod using the "mysql" command
+
+
+####### Adding persistent storage #######
+When adding persistent storage for MySQL, set the mount path to /var/lib/mysql (or /var/lib/mysql/data?)
