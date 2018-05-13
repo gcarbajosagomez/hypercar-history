@@ -12,7 +12,7 @@
 
 4. Set the DB connection values in the connection string, using the "${}" placeholder
 
-5. Upload the DB backup script from localhost to the MySQL pod via SFTP using the following command:  oc rsync backup <MySQL pod name>:/var/lib/mysql/data/
+5. Upload the DB backup script from localhost to the MySQL pod via SFTP using the following command:  oc rsync /data/db/scripts/backup <MySQL pod name>:/
 
 6. Import the script from within the pod using the "mysql" command
 
