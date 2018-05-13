@@ -18,7 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.List;
 
-import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CMS_CONTEXT;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.TECHNOLOGY_STACK_URL;
 import static com.hhistory.mvc.command.PictureLoadAction.LOAD_MANUFACTURER_LOGO;
@@ -45,7 +45,7 @@ public class BaseModelFiller implements ModelFiller {
 
     @Inject
     public BaseModelFiller(InMemoryCarDAO inMemoryCarDAO,
-                           @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO,
+                           @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO,
                            InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
                            ResourceBundleMessageSource messageSource,
                            ManufacturerService manufacturerService,
