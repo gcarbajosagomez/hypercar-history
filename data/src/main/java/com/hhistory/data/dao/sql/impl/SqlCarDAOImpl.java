@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 import static com.hhistory.data.dao.sql.impl.SqlCarDAOImpl.SQL_CAR_DAO;
@@ -34,5 +35,18 @@ public class SqlCarDAOImpl extends AbstractSqlDAO<Car> implements SqlCarDAO {
                                  "         car.model ASC")
                     .setResultTransformer(Transformers.aliasToBean(Car.class))
                     .list();
+    }
+
+    @Override
+    public Car getCarByPictureId(Long pictureId) {
+        TypedQuery<Car> query = super.getEntityManager()
+                                     .createQuery("SELECT car AS car " +
+                                                  "FROM Picture AS picture " +
+                                                  "WHERE picture.id = :pictureId",
+                                                  Car.class);
+
+        query.setParameter("pictureId", pictureId);
+
+        return query.getSingleResult();
     }
 }

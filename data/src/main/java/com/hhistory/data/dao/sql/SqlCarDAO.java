@@ -12,4 +12,6 @@ public interface SqlCarDAO extends SqlDAO<Car> {
     String SQL_CAR_DAO = "sqlCarDAO";
 
     List<Car> getAllOrderedByProductionStartDate();
+
+    Car getCarByPictureId(Long pictureId);
 }
