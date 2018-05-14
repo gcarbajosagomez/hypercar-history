@@ -8,15 +8,15 @@
 				<div class="modal-header">
 					<div class="row">
 						<div class="col-md-8 col-md-8 col-sm-10 col-xs-10">
-							<h3 class="modal-title">${language.getTextSource('footer.contactUs')}</h3>
+							<h2 class="modal-title">${language.getTextSource('footer.contactUs')}</h2>
 						</div>
 						<div class="col-md-4 col-sm-2 col-xs-2">
 							<button type="button" class="close pull-right" data-dismiss="modal" aria-hidden="true">&times;</button>
 						</div>
 					</div>
 				</div>
-				<div class="modal-body" style="background-color: rgba(0, 0, 0, 0.611765);">
-					<div id="contact-us-main-div" class="thumbnail row" style="margin-bottom: 0px;">
+				<div class="modal-body">
+					<div id="contact-us-main-div" class="row" style="margin-bottom: 0px;">
 						<div class="col-lg-12" style="padding-top: 10px;">
 							<div id="contact-us-error-alert-div" class="col-xs-12 alert alert-danger hidden" role="alert">
 								<span id="contact-us-error-alert-span" class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
