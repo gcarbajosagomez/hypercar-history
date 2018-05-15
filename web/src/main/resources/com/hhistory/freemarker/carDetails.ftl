@@ -3,6 +3,7 @@
 	<#import "applicationMacros/pageLanguage.ftl" as language/>
 	<#import "applicationMacros/picture.ftl" as picture/>
 	<#import "applicationMacros/brake.ftl" as brake/>
+	<#import "applicationMacros/tyre.ftl" as tyre/>
 	<#import "applicationMacros/carUtils.ftl" as carUtils/>
 	<#import "applicationMacros/metaData.ftl" as metaData/>
 
@@ -245,9 +246,9 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.topSpeed?default(-1))}<#if car.topSpeed??><em class="measure-unit-text"> ${language.getTextSource('Km/h')}</em></#if>
+														${carUtils.writeCarNumericData (car.topSpeed!-1)}<#if car.topSpeed??><em class="measure-unit-text"> ${language.getTextSource('Km/h')}</em></#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((car.topSpeed*0.621371)?default(-1))}<#if car.topSpeed??><em class="measure-unit-text"> ${language.getTextSource('Mph')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((car.topSpeed*0.621371)!-1)}<#if car.topSpeed??><em class="measure-unit-text"> ${language.getTextSource('Mph')}</em></#if>
 													</#if>
 												</p>
 											</dd>
@@ -266,9 +267,9 @@
 												<p class="text-muted">
 													<#if car.weight??>
 														<#if unitsOfMeasure == unitsOfMeasureMetric>
-															${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.weight/1000))?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('hpPerTonne')}</em>
+															${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.weight/1000))!-1)}<em class="measure-unit-text"> ${language.getTextSource('hpPerTonne')}</em>
 														<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-															${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.weight/1000))?default(-1)}<em class="measure-unit-text"> ${language.getTextSource('bhpPerTonne')}</em>
+															${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)/(car.weight/1000))!-1}<em class="measure-unit-text"> ${language.getTextSource('bhpPerTonne')}</em>
 														</#if>
 													<#else>
 														${language.getTextSource('unknown')}
@@ -281,9 +282,9 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.weight?default(-1))}<#if car.weight??><em class="measure-unit-text"> ${language.getTextSource('Kg')}</em></#if>
+														${carUtils.writeCarNumericData (car.weight!-1)}<#if car.weight??><em class="measure-unit-text"> ${language.getTextSource('Kg')}</em></#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((car.weight*2.20462)?default(-1))}<#if car.weight??><em class="measure-unit-text"> ${language.getTextSource('Lb')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((car.weight*2.20462)!-1)}<#if car.weight??><em class="measure-unit-text"> ${language.getTextSource('Lb')}</em></#if>
 													</#if>
 												</p>
 											</dd>
@@ -336,9 +337,9 @@
 											<dd class="double-height">
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.fuelConsumption?default(-1))}<#if car.fuelConsumption??><em class="measure-unit-text"> ${language.getTextSource('L/100Km')}</em></#if>
+														${carUtils.writeCarNumericData (car.fuelConsumption!-1)}<#if car.fuelConsumption??><em class="measure-unit-text"> ${language.getTextSource('L/100Km')}</em></#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((235.214/car.fuelConsumption)?default(-1))}<#if car.fuelConsumption??><em class="measure-unit-text"> ${language.getTextSource('MPG')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((235.214/car.fuelConsumption)!-1)}<#if car.fuelConsumption??><em class="measure-unit-text"> ${language.getTextSource('MPG')}</em></#if>
 													</#if>
 												</p>
 											</dd>
@@ -348,9 +349,9 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.fuelTankCapacity?default(-1))}<#if car.fuelTankCapacity??><em class="measure-unit-text"> ${language.getTextSource('L')}</em></#if>
+														${carUtils.writeCarNumericData (car.fuelTankCapacity!-1)}<#if car.fuelTankCapacity??><em class="measure-unit-text"> ${language.getTextSource('L')}</em></#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((car.fuelTankCapacity*0.219969)?default(-1))}<#if car.fuelTankCapacity??><em class="measure-unit-text"> ${language.getTextSource('Gal')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((car.fuelTankCapacity*0.219969)!-1)}<#if car.fuelTankCapacity??><em class="measure-unit-text"> ${language.getTextSource('Gal')}</em></#if>
 													</#if>
 												</p>
 											</dd>
@@ -361,13 +362,13 @@
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
 														<#if car.fuelConsumption?? && car.fuelTankCapacity??>
-															${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('Km')}</em>
+															${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)!-1)}<em class="measure-unit-text"> ${language.getTextSource('Km')}</em>
 														<#else>
 															${language.getTextSource('unknown')}
 														</#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
 														<#if car.fuelConsumption?? && car.fuelTankCapacity??>
-															${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)*0.621371?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('Miles')}</em>
+															${carUtils.writeNonDecimalCarNumericData (((car.fuelTankCapacity)/(car.fuelConsumption)*100)*0.621371!-1)}<em class="measure-unit-text"> ${language.getTextSource('Miles')}</em>
 														<#else>
 															${language.getTextSource('unknown')}
 														</#if>
@@ -424,7 +425,7 @@
 											</dt>
 											<dd>
 												<p class="text-muted">
-													${carUtils.writeCarNumericData (car.engine.numberOfValves?default(-1))}
+													${carUtils.writeCarNumericData (car.engine.numberOfValves!-1)}
 													<#if car.engine.numberOfValves??>
 														 (${car.engine.numberOfValves/car.engine.numberOfCylinders} ${language.getTextSource('engine.valvesPerCylinder')})
 													</#if>
@@ -436,14 +437,14 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.engine.maxPower?default(-1))}<#if car.engine.maxPower??><em class="measure-unit-text"> ${language.getTextSource('CV')}</em></#if>
+														${carUtils.writeCarNumericData (car.engine.maxPower!-1)}<#if car.engine.maxPower??><em class="measure-unit-text"> ${language.getTextSource('CV')}</em></#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)?default(-1))}<#if car.engine.maxPower??><em class="measure-unit-text"> ${language.getTextSource('BHP')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.9863)!-1)}<#if car.engine.maxPower??><em class="measure-unit-text"> ${language.getTextSource('BHP')}</em></#if>
 													</#if>
 													<#if car.engine.maxPower??>
-														(${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.736)?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('KW')}</em>)
+														(${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower*0.736)!-1)}<em class="measure-unit-text"> ${language.getTextSource('KW')}</em>)
 														<#if car.engine.maxPowerRPM??>
-															<b>@</b> ${carUtils.writeCarNumericData ((car.engine.maxPowerRPM?default(-1)))}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
+															<b>@</b> ${carUtils.writeCarNumericData ((car.engine.maxPowerRPM!-1))}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
 														</#if>
 													</#if>
 												</p>
@@ -454,14 +455,14 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeCarNumericData (car.engine.maxTorque?default(-1))}<#if car.engine.maxTorque??><em class="measure-unit-text"> ${language.getTextSource('NM')}</em></#if>
+														${carUtils.writeCarNumericData (car.engine.maxTorque!-1)}<#if car.engine.maxTorque??><em class="measure-unit-text"> ${language.getTextSource('NM')}</em></#if>
 														<#if car.engine.maxTorqueRPM??>
-															<b>@</b> ${carUtils.writeCarNumericData (car.engine.maxTorqueRPM?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
+															<b>@</b> ${carUtils.writeCarNumericData (car.engine.maxTorqueRPM!-1)}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
 														</#if>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxTorque*0.737562149)?default(-1))}<#if car.engine.maxTorque??><em class="measure-unit-text"> ${language.getTextSource('LbFt')}</em></#if>
+														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxTorque*0.737562149)!-1)}<#if car.engine.maxTorque??><em class="measure-unit-text"> ${language.getTextSource('LbFt')}</em></#if>
 														<#if car.engine.maxTorqueRPM??>
-															<b>@</b> ${carUtils.writeCarNumericData (car.engine.maxTorqueRPM?default(-1))}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
+															<b>@</b> ${carUtils.writeCarNumericData (car.engine.maxTorqueRPM!-1)}<em class="measure-unit-text"> ${language.getTextSource('RPM')}</em>
 														</#if>
 													</#if>
 												</p>
@@ -471,7 +472,7 @@
 											</dt>
 											<dd>
 												<p class="text-muted">
-													${carUtils.writeCarNumericData (car.engine.maxRPM?default(-1))}<#if car.engine.maxRPM??><em class="measure-unit-text"> ${language.getTextSource('RPM')}</em></#if>
+													${carUtils.writeCarNumericData (car.engine.maxRPM!-1)}<#if car.engine.maxRPM??><em class="measure-unit-text"> ${language.getTextSource('RPM')}</em></#if>
 												</p>
 											</dd>
 											<dt>
@@ -480,9 +481,9 @@
 											<dd>
 												<p class="text-muted">
 													<#if unitsOfMeasure == unitsOfMeasureMetric>
-														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('hpPerLitre')}</#if></em>
+														${carUtils.writeNonDecimalCarNumericData ((car.engine.maxPower/(car.engine.size/1000))!-1)}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('hpPerLitre')}</#if></em>
 													<#elseif unitsOfMeasure == unitsOfMeasureImperial>
-														${carUtils.writeNonDecimalCarNumericData (((car.engine.maxPower*0.9863)/(car.engine.size/1000))?default(-1))}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('bhpPerLitre')}</#if></em>
+														${carUtils.writeNonDecimalCarNumericData (((car.engine.maxPower*0.9863)/(car.engine.size/1000))!-1)}<em class="measure-unit-text"> <#if car.engine.maxPower??>${language.getTextSource('bhpPerLitre')}</#if></em>
 													</#if>
 												</p>
 											</dd>
@@ -537,72 +538,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h3 class="text-left car-details-panel-heading">${language.getTextSource('tyres')}</h3>
-							</div>
-							<div class="panel-body inner-car-details-panel-body">
-								<dl class="dl-horizontal text-left">
-									<dt>
-										${language.getTextSource('tyreSet.manufacturer')} :
-									</dt>
-									<dd>
-										<p class="text-muted">
-											<#if (car.tyreSet.manufacturer??)>
-												${car.tyreSet.manufacturer.getName()}
-											<#else>
-												${language.getTextSource('unknown')}
-											</#if>
-										</p>
-									</dd>
-									<dt>
-										${language.getTextSource('tyreSet.model')} :
-									</dt>
-									<dd>
-										<p class="text-muted">
-											<#if (car.tyreSet.model?length > 0)>
-												${car.tyreSet.model}
-											<#else>
-												${language.getTextSource('unknown')}
-											</#if>
-										</p>
-									</dd>
-									<dt>
-										${language.getTextSource('tyreSet.type')} :
-									</dt>
-									<dd>
-										<p class="text-muted">
-											<#if (car.tyreSet.manufacturer??)>
-												${language.getTextSource('tyreSet.type.${car.tyreSet.type.getName()}')}
-											<#else>
-												${language.getTextSource('unknown')}
-											</#if>
-										</p>
-									</dd>
-									<dt>
-										${language.getTextSource('tyreSet.frontTyre')} :
-									</dt>
-									<dd>
-										<p class="text-muted">
-											<#assign frontTyre = car.tyreSet.frontTyre/>
-											${carUtils.writeCarNumericData (frontTyre.width?default(-1))} / ${carUtils.writeCarNumericData (frontTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (frontTyre.rimDiameter?default(-1))}
-										</p>
-									</dd>
-									<dt>
-										${language.getTextSource('tyreSet.rearTyre')} :
-									</dt>
-									<dd>
-										<p class="text-muted">
-											<#assign rearTyre = car.tyreSet.rearTyre/>
-											${carUtils.writeCarNumericData (rearTyre.width?default(-1))} / ${carUtils.writeCarNumericData (rearTyre.profile?default(-1))} / <em class="measure-unit-text">R</em>${carUtils.writeCarNumericData (rearTyre.rimDiameter?default(-1))}
-										</p>
-									</dd>
-								</dl>
-							</div>
-						</div>
-					</div>
-				</div>
+					<@tyre.writeTyreInfo car.tyreSet/>
 				</div>
 			<#else>
 				<div class="panel panel-body col-lg-12">
