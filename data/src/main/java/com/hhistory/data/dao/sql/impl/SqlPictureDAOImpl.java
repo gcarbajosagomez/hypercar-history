@@ -62,7 +62,8 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
         TypedQuery<Long> query = super.getEntityManager()
                                       .createQuery("SELECT picture.id " +
                                                    "FROM Picture AS picture " +
-                                                   "WHERE picture.car.id = :carId",
+                                                   "WHERE picture.car.id = :carId " +
+                                                   "ORDER BY picture.galleryPosition ASC",
                                                    Long.class);
 
         query.setParameter("carId", carId);
