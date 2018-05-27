@@ -43,6 +43,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car preview entities in memory");
+        previews = null;
         previews = pictureRepository.getAllPreviews();
     }
 
