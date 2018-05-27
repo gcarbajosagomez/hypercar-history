@@ -4,7 +4,6 @@ import com.hhistory.data.dao.inmemory.InMemoryDAO;
 import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
-import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.util.PictureUtil;
@@ -38,12 +37,12 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     public static final String IN_MEMORY_PICTURE_DAO = "inMemoryPictureDAO";
 
-    private static final int NUMBER_OF_CHUNKS_TO_LOAD_PICTURES = 10;
+    private static final int PICTURE_LOADING_NUMBER_OF_CHUNKS = 10;
 
     private SqlPictureRepository sqlPictureRepository;
     private SqlPictureDAO        sqlPictureDAO;
     private PictureUtil          pictureUtil;
-    private List<Picture> pictures = new ArrayList<>();
+    private List<Picture>        pictures;
 
     @Inject
     public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
@@ -55,25 +54,25 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Transactional
-    //@Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    //@Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
         Long pictureCount = this.sqlPictureRepository.count();
 
-        Double chunkSizeDouble = (pictureCount.doubleValue() / NUMBER_OF_CHUNKS_TO_LOAD_PICTURES);
+        Double chunkSizeDouble = (pictureCount.doubleValue() / PICTURE_LOADING_NUMBER_OF_CHUNKS);
         chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int chunkSize = chunkSizeDouble.intValue();
+        int skipPosition = chunkSizeDouble.intValue();
 
-        this.pictures = this.sqlPictureDAO.getPaginated(0, chunkSize);
+        pictures = this.sqlPictureDAO.getPaginated(0, skipPosition);
 
-        for (int i = 2; i < NUMBER_OF_CHUNKS_TO_LOAD_PICTURES; i++) {
-            this.pictures.addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+        for (int i = 2; i < PICTURE_LOADING_NUMBER_OF_CHUNKS; i++) {
+            this.pictures.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
                                                                  chunkSizeDouble.intValue()));
-            chunkSize = chunkSize + chunkSizeDouble.intValue();
+            skipPosition += chunkSizeDouble.intValue();
         }
 
-        this.pictures.addAll(this.sqlPictureDAO.getPaginated(chunkSize,
+        this.pictures.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
                                                              pictureCount.intValue()));
     }
 
@@ -161,7 +160,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                 this.pictures.stream()
                              .filter(picture -> {
                                  Car car = picture.getCar();
-                                 return ((Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview());
+                                 return (Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview();
                              })
                              .collect(Collectors.toList());
 

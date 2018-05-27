@@ -39,7 +39,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
         this.pictureRepository = pictureRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car preview entities in memory");
@@ -52,9 +52,9 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
     }
 
     @Override
-    public void removeEntity(Long id){
+    public void removeEntity(Long id) {
         throw new UnsupportedOperationException();
-}
+    }
 
     @Override
     public Picture getById(Long id) {

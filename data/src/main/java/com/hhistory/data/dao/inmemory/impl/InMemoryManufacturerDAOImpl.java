@@ -25,21 +25,20 @@ import java.util.Optional;
 public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
 
     private SqlManufacturerRepository sqlManufacturerRepository;
-    private List<Manufacturer> manufacturers = new ArrayList<>();
+    private List<Manufacturer>        manufacturers;
 
     @Inject
     public InMemoryManufacturerDAOImpl(SqlManufacturerRepository sqlManufacturerRepository) {
         this.sqlManufacturerRepository = sqlManufacturerRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.manufacturers.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.manufacturers.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Manufacturers entities in memory");
         this.manufacturers = new ArrayList<>();
         this.sqlManufacturerRepository.findAll()
-                                      .iterator()
-                                      .forEachRemaining(this.manufacturers::add);
+                                      .forEach(this.manufacturers::add);
     }
 
     @Override

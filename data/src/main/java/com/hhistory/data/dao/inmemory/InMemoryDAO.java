@@ -8,7 +8,6 @@ import java.util.List;
  * Created by gonzalo on 11/4/16.
  */
 public interface InMemoryDAO<TYPE extends GenericEntity, IDENTIFIER> {
-    int LOAD_ENTITIES_DELAY = 3600000;
 
     /**
      * Load all the {@link TYPE} entities there are on the DB

@@ -33,7 +33,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     private InMemoryPictureDAO inMemoryPictureDAO;
     private SqlCarRepository   sqlCarRepository;
-    private List<Car> cars = new ArrayList<>();
+    private List<Car> cars;
 
     @Inject
     public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO,
@@ -42,7 +42,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
         this.sqlCarRepository = sqlCarRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.cars.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.cars.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");
@@ -54,7 +54,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     @Override
     public void loadEntityFromDB(Long id) {
-        log.info("Loading Car: " + id + " entity in memory");
+        log.info("Loading Car: {} entity in memory", id);
         Car carToReload = this.getById(id);
         Car dbCar = this.sqlCarRepository.findOne(id);
 
@@ -74,7 +74,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     @Override
     public void removeEntity(Long id) {
-        log.info("Removing Car: " + id + " entity from the memory cache");
+        log.info("Removing Car: {} entity from the memory cache", id);
         this.cars.stream()
                  .filter(car -> car.getId().equals(id))
                  .findFirst()

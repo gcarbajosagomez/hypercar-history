@@ -30,32 +30,29 @@ import static com.hhistory.data.model.car.CarInternetContentType.VIDEO;
 @Slf4j
 public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetContentDAO {
 
-    private CrudRepository sqlCarInternetContentRepository;
-    private List<CarInternetContent> carInternetContents = new ArrayList<>();
+    private CrudRepository<CarInternetContent, Long> sqlCarInternetContentRepository;
+    private List<CarInternetContent>                 carInternetContents;
 
     @Inject
     public InMemoryCarInternetContentDAOImpl(@Named(CAR_INTERNET_CONTENT_REPOSITORY)
-                                                         CrudRepository sqlCarInternetContentRepository) {
+                                                     CrudRepository<CarInternetContent, Long> sqlCarInternetContentRepository) {
         this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.carInternetContents.inMemoryLoadDelay}", fixedDelay = LOAD_ENTITIES_DELAY)
+    @Scheduled(initialDelayString = "${data.carInternetContents.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in memory");
         this.carInternetContents = new ArrayList<>();
         this.sqlCarInternetContentRepository.findAll()
-                                            .iterator()
-                                            .forEachRemaining(carInternetContent -> {
-                                                this.carInternetContents.add((CarInternetContent) carInternetContent);
-                                            });
+                                            .forEach(carInternetContent -> this.carInternetContents.add(carInternetContent));
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
-        log.info("Loading CarInternetContent: " + id + " entity in memory");
+        log.info("Loading CarInternetContent: {} entity in memory", id);
         CarInternetContent contentToReload = this.getById(id);
-        CarInternetContent dbContent = (CarInternetContent) this.sqlCarInternetContentRepository.findOne(id);
+        CarInternetContent dbContent = this.sqlCarInternetContentRepository.findOne(id);
 
         if (Objects.nonNull(dbContent)) {
             if (Objects.nonNull(contentToReload)) {
@@ -73,7 +70,7 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
 
     @Override
     public void removeEntity(Long id) {
-        log.info("Removing CarInternetContent: " + id + " entity from the memory cache");
+        log.info("Removing CarInternetContent: {} entity from the memory cache", id);
         this.carInternetContents.stream()
                                 .filter(content -> content.getId().equals(id))
                                 .findFirst()
