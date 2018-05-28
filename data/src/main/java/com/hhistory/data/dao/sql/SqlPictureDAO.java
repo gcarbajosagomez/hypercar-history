@@ -21,6 +21,8 @@ public interface SqlPictureDAO extends PictureDAO, SqlDAO<Picture> {
 
     List<Picture> getPaginated(int firstResult, int limit);
 
+    List<Picture> getPreviewsPaginated(int firstResult, int limit);
+
     @Modifying
     void saveOrEdit(PictureDataCommand pictureEditCommand) throws IOException;
 

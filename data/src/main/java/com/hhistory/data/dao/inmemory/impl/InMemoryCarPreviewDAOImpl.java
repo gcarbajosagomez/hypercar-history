@@ -1,6 +1,7 @@
 package com.hhistory.data.dao.inmemory.impl;
 
 import com.hhistory.data.dao.inmemory.InMemoryPictureDAO;
+import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.data.model.util.PictureUtil;
@@ -28,23 +29,42 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
 
     public static final String IN_MEMORY_CAR_PREVIEW_DAO = "inMemoryCarPreviewDAO";
 
+    private static final int PREVIEW_LOADING_NUMBER_OF_CHUNKS = 5;
+
     private PictureUtil          pictureUtil;
     private SqlPictureRepository pictureRepository;
+    private SqlPictureDAO        sqlPictureDAO;
     private List<Picture>        previews;
 
     @Inject
     public InMemoryCarPreviewDAOImpl(PictureUtil pictureUtil,
-                                     SqlPictureRepository pictureRepository) {
+                                     SqlPictureRepository pictureRepository,
+                                     SqlPictureDAO sqlPictureDAO) {
         this.pictureUtil = pictureUtil;
         this.pictureRepository = pictureRepository;
+        this.sqlPictureDAO = sqlPictureDAO;
     }
 
     @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car preview entities in memory");
-        previews = null;
-        previews = pictureRepository.getAllPreviews();
+
+        Long previewCount = this.pictureRepository.count();
+        Double chunkSizeDouble = (previewCount.doubleValue() / PREVIEW_LOADING_NUMBER_OF_CHUNKS);
+        chunkSizeDouble = Math.floor(chunkSizeDouble);
+        int skipPosition = chunkSizeDouble.intValue();
+
+        previews = this.sqlPictureDAO.getPreviewsPaginated(0, skipPosition);
+
+        for (int i = 2; i < PREVIEW_LOADING_NUMBER_OF_CHUNKS; i++) {
+            previews.addAll(this.sqlPictureDAO.getPreviewsPaginated(skipPosition,
+                                                                    chunkSizeDouble.intValue()));
+            skipPosition += chunkSizeDouble.intValue();
+        }
+
+        previews.addAll(this.sqlPictureDAO.getPreviewsPaginated(skipPosition,
+                                                                previewCount.intValue()));
     }
 
     @Override

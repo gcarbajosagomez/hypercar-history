@@ -165,4 +165,24 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
 
         return query.list();
     }
+
+    @Override
+    public List<Picture> getPreviewsPaginated(int firstResult, int limit) {
+        org.hibernate.Query query = super.getCurrentSession()
+                                         .createQuery("SELECT picture.id AS id," +
+                                                      "picture.car AS car," +
+                                                      "picture.galleryPosition AS galleryPosition," +
+                                                      "picture.eligibleForPreview AS eligibleForPreview " +
+                                                      "FROM Picture AS picture " +
+                                                      "JOIN picture.car as car " +
+                                                      "WHERE car.visible = true " +
+                                                      "AND picture.eligibleForPreview = true " +
+                                                      "ORDER BY picture.id")
+                                         .setResultTransformer(Transformers.aliasToBean(Picture.class));
+
+        query.setFirstResult(firstResult);
+        query.setMaxResults(limit);
+
+        return query.list();
+    }
 }

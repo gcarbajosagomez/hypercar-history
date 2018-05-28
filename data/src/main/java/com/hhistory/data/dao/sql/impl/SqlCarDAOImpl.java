@@ -26,18 +26,6 @@ public class SqlCarDAOImpl extends AbstractSqlDAO<Car> implements SqlCarDAO {
     }
 
     @Override
-    public List<Car> getAllOrderedByProductionStartDate() {
-        return super.getCurrentSession()
-                    .createQuery("SELECT car.model AS model, " +
-                                 "       car.id AS id " +
-                                 "FROM Car AS car " +
-                                 "ORDER BY car.productionStartDate ASC, " +
-                                 "         car.model ASC")
-                    .setResultTransformer(Transformers.aliasToBean(Car.class))
-                    .list();
-    }
-
-    @Override
     public Car getCarByPictureId(Long pictureId) {
         TypedQuery<Car> query = super.getEntityManager()
                                      .createQuery("SELECT car AS car " +

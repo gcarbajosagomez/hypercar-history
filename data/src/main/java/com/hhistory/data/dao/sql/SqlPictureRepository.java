@@ -35,4 +35,10 @@ public interface SqlPictureRepository extends CrudRepository<Picture, Long> {
            "WHERE car.visible = true " +
            "AND picture.eligibleForPreview = true")
     List<Picture> getAllPreviews();
+
+    @Query("SELECT COUNT(picture.id) " +
+           "FROM Picture AS picture " +
+           "WHERE car.visible = true " +
+           "AND picture.eligibleForPreview = true")
+    Long countAllPreviews();
 }
