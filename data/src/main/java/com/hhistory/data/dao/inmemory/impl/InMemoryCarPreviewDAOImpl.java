@@ -29,7 +29,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
 
     public static final String IN_MEMORY_CAR_PREVIEW_DAO = "inMemoryCarPreviewDAO";
 
-    private static final int PREVIEW_LOADING_NUMBER_OF_CHUNKS = 5;
+    private static final int PREVIEW_LOADING_NUMBER_OF_CHUNKS = 10;
 
     private PictureUtil          pictureUtil;
     private SqlPictureRepository pictureRepository;
