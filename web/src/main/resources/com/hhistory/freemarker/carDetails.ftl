@@ -391,7 +391,7 @@
 											</dt>
 											<dd>
 												<p class="text-muted">
-													${car.engine.code}
+													${carUtils.writeCarStringData (car.engine.code!"")}
 												</p>
 											</dd>
 											<dt>
@@ -416,7 +416,7 @@
 														${car.engine.cylinderDisposition}${car.engine.numberOfCylinders}
 													</#if>
 													<#if car.engine.cylinderBankAngle??>
-													${car.engine.cylinderBankAngle}<em class="measure-unit-text">º</em>
+														${car.engine.cylinderBankAngle}<em class="measure-unit-text">º</em>
 													</#if>
 												</p>
 											</dd>

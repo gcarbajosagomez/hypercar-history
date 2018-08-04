@@ -23,6 +23,15 @@
     <#return numericData/>
 </#function>
 
+<#function writeCarStringData data>
+    <#if (data?length > 0)>
+        <#assign stringData>${data}</#assign>
+    <#else>
+        <#assign stringData>${language.getTextSource('unknown')}</#assign>
+    </#if>
+    <#return stringData/>
+</#function>
+
 <#macro addSetUnitsOfMeasureFunctionScript>
     <script type="application/javascript">
         function setUnitsOfMeasure(unitsOfMeasure, mainForm) {

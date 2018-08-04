@@ -26,11 +26,7 @@
                     </dt>
                     <dd>
                         <p class="text-muted">
-                            <#if (tyreSet.model?length > 0)>
-                                ${tyreSet.model}
-                            <#else>
-                                ${language.getTextSource('unknown')}
-                            </#if>
+                            ${carUtils.writeCarStringData (tyreSet.model!"")}
                         </p>
                     </dd>
                     <dt>
