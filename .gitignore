@@ -1,15 +1,8 @@
-/deployments
+/.deployments
 /com.hhistory.data.model.*
 *.log
-/logs
-/.idea/
 .idea/
-web/*.iml
-data/*.iml
+*.iml
 *.sql
 data/target/
 web/target/
-/hypercar-history.iml
-/web/com.hhistory.data.model.car.Car/
-web/com.hhistory.data.model.car.Car/
-web/logs/
