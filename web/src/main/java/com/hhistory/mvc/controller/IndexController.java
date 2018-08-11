@@ -17,7 +17,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.*;
 
-import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.INDEX_URL;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
@@ -43,7 +43,7 @@ public class IndexController extends BaseController {
     @Inject
     public IndexController(ModelFiller carModelFiller,
                            Random previewPictureRandomGenerator,
-                           @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO,
+                           @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO,
                            SqlCarDAO sqlCarDAO) {
         this.carModelFiller = carModelFiller;
         this.previewPictureRandomGenerator = previewPictureRandomGenerator;

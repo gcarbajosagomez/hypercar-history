@@ -7,6 +7,7 @@ import com.hhistory.mvc.dto.CarPaginationDTO;
 import com.hhistory.mvc.service.CarPaginationService;
 import com.hhistory.mvc.service.ManufacturerService;
 import com.hhistory.mvc.springframework.view.filler.AbstractCarListModelFiller;
+import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -21,6 +22,7 @@ import static com.hhistory.mvc.controller.BaseControllerData.CARS;
 /**
  * Created by Gonzalo Carbajosa on 7/08/17.
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 @Primary
 public class CarPaginationServiceImpl implements CarPaginationService {
@@ -31,17 +33,6 @@ public class CarPaginationServiceImpl implements CarPaginationService {
     private ManufacturerService        manufacturerService;
     private InMemoryCarDAO             inMemoryCarDAO;
     private MessageSource              messageSource;
-
-    @Inject
-    public CarPaginationServiceImpl(AbstractCarListModelFiller inMemoryCarListModelFiller,
-                                    ManufacturerService manufacturerService,
-                                    InMemoryCarDAO inMemoryCarDAO,
-                                    MessageSource messageSource) {
-        this.inMemoryCarListModelFiller = inMemoryCarListModelFiller;
-        this.manufacturerService = manufacturerService;
-        this.inMemoryCarDAO = inMemoryCarDAO;
-        this.messageSource = messageSource;
-    }
 
     @Override
     public CarPaginationDTO paginate(Model model, CarPaginationDTO paginationDTO) {

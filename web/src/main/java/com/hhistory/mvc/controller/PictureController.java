@@ -6,6 +6,7 @@ import com.hhistory.mvc.command.PictureLoadCommand;
 import com.hhistory.mvc.service.PictureService;
 import com.hhistory.mvc.propertyEditor.PictureLoadActionPropertyEditor;
 import com.hhistory.mvc.service.URILoggingService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -27,17 +28,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
 @Controller
 @RequestMapping(value = PICTURES_URL + "/{" + PICTURE_LOAD_ACTION + "}",
         method = HEAD)
+@AllArgsConstructor(onConstructor = @__(@Inject))
 public class PictureController {
 
     private PictureService    pictureService;
     private URILoggingService uriLoggingService;
-
-    @Inject
-    public PictureController(PictureService pictureService,
-                             URILoggingService uriLoggingService) {
-        this.pictureService = pictureService;
-        this.uriLoggingService = uriLoggingService;
-    }
 
     @GetMapping
     public void handleDefault(HttpServletResponse response,

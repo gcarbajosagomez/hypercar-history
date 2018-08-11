@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static java.util.Comparator.*;
@@ -37,12 +38,12 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     public static final String IN_MEMORY_PICTURE_DAO = "inMemoryPictureDAO";
 
-    private static final int PICTURE_LOADING_NUMBER_OF_CHUNKS = 10;
+    private static final int PICTURE_LOADING_NUMBER_OF_CHUNKS = 5;
 
     private SqlPictureRepository sqlPictureRepository;
     private SqlPictureDAO        sqlPictureDAO;
     private PictureUtil          pictureUtil;
-    private List<Picture>        pictures;
+    private List<Picture>        pictures = new ArrayList<>();
 
     @Inject
     public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
@@ -54,31 +55,25 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     }
 
     @Transactional
-    //@Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
+    @Scheduled(fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Picture entities in-memory");
         Long pictureCount = this.sqlPictureRepository.count();
 
-        Double chunkSizeDouble = (pictureCount.doubleValue() / PICTURE_LOADING_NUMBER_OF_CHUNKS);
-        chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int skipPosition = chunkSizeDouble.intValue();
+        int chunkSize = (int) (pictureCount.doubleValue() / PICTURE_LOADING_NUMBER_OF_CHUNKS);
 
-        pictures = this.sqlPictureDAO.getPaginated(0, skipPosition);
-
-        for (int i = 2; i < PICTURE_LOADING_NUMBER_OF_CHUNKS; i++) {
-            this.pictures.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
-                                                                 chunkSizeDouble.intValue()));
-            skipPosition += chunkSizeDouble.intValue();
-        }
-
-        this.pictures.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
-                                                             pictureCount.intValue()));
+        IntStream.rangeClosed(0, PICTURE_LOADING_NUMBER_OF_CHUNKS)
+                 .forEach(i -> {
+                     int skipPosition = chunkSize * i;
+                     this.pictures.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
+                                                                          chunkSize));
+                 });
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
-        log.info("Loading Picture: " + id + " entity in memory");
+        log.info("Loading Picture: {} entity in memory", id);
         Picture pictureToReload = this.getById(id);
         Picture dbPicture = this.sqlPictureRepository.findOne(id);
 
@@ -100,7 +95,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     @Override
     public void removeEntity(Long id) {
-        log.info("Removing Picture: " + id + " entity from the memory cache");
+        log.info("Removing Picture: {} entity from the memory cache", id);
         this.pictures.stream()
                      .filter(picture -> picture.getId().equals(id))
                      .findFirst()

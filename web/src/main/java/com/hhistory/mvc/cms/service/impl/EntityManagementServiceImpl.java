@@ -10,6 +10,7 @@ import com.hhistory.data.model.car.CarInternetContent;
 import com.hhistory.data.model.picture.Picture;
 import com.hhistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.hhistory.mvc.cms.service.EntityManagementService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -19,6 +20,7 @@ import java.util.Objects;
 /**
  * Created by Gonzalo Carbajosa on 3/12/16.
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 public class EntityManagementServiceImpl implements EntityManagementService {
 
@@ -28,21 +30,6 @@ public class EntityManagementServiceImpl implements EntityManagementService {
     private InMemoryCarInternetContentDAO   inMemoryCarInternetContentDAO;
     private SqlCarInternetContentRepository sqlCarInternetContentRepository;
     private InMemoryManufacturerDAO         inMemoryManufacturerDAO;
-
-    @Inject
-    public EntityManagementServiceImpl(InMemoryCarDAO inMemoryCarDAO,
-                                       InMemoryPictureDAO inMemoryPictureDAO,
-                                       SqlPictureRepository sqlPictureRepository,
-                                       InMemoryCarInternetContentDAO inMemoryCarInternetContentDAO,
-                                       SqlCarInternetContentRepository sqlCarInternetContentRepository,
-                                       InMemoryManufacturerDAO inMemoryManufacturerDAO) {
-        this.inMemoryCarDAO = inMemoryCarDAO;
-        this.inMemoryPictureDAO = inMemoryPictureDAO;
-        this.sqlPictureRepository = sqlPictureRepository;
-        this.inMemoryCarInternetContentDAO = inMemoryCarInternetContentDAO;
-        this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
-        this.inMemoryManufacturerDAO = inMemoryManufacturerDAO;
-    }
 
     @Override
     public void reloadEntities(EntityManagementLoadCommand entityManagementLoadCommand) {
@@ -63,7 +50,9 @@ public class EntityManagementServiceImpl implements EntityManagementService {
             case RELOAD_PICTURES:
                 if (Objects.nonNull(carId)) {
                     List<Picture> picturesToReload = this.sqlPictureRepository.getByCarId(carId);
-                    picturesToReload.forEach(picture -> this.inMemoryPictureDAO.loadEntityFromDB(picture.getId()));
+                    picturesToReload.parallelStream()
+                                    .map(Picture::getId)
+                                    .forEach(inMemoryPictureDAO::loadEntityFromDB);
                 } else {
                     this.inMemoryPictureDAO.loadEntitiesFromDB();
                 }
@@ -74,7 +63,9 @@ public class EntityManagementServiceImpl implements EntityManagementService {
             case RELOAD_CAR_INTERNET_CONTENTS:
                 if (Objects.nonNull(carId)) {
                     List<CarInternetContent> contentsToReload = this.sqlCarInternetContentRepository.getByCarId(carId);
-                    contentsToReload.forEach(content -> this.inMemoryCarInternetContentDAO.loadEntityFromDB(content.getId()));
+                    contentsToReload.parallelStream()
+                                    .map(CarInternetContent::getId)
+                                    .forEach(inMemoryCarInternetContentDAO::loadEntityFromDB);
                 } else {
                     this.inMemoryCarInternetContentDAO.loadEntitiesFromDB();
                 }

@@ -151,19 +151,16 @@ public class SqlPictureDAOImpl extends AbstractSqlDAO<Picture> implements SqlPic
 
     @Override
     public List<Picture> getPaginated(int firstResult, int limit) {
-        org.hibernate.Query query = super.getCurrentSession()
-                                         .createQuery("SELECT picture.id AS id," +
-                                                      "picture.car AS car," +
-                                                      "picture.galleryPosition AS galleryPosition," +
-                                                      "picture.eligibleForPreview AS eligibleForPreview " +
-                                                      "FROM Picture AS picture " +
-                                                      "ORDER BY picture.id")
-                                         .setResultTransformer(Transformers.aliasToBean(Picture.class));
+        EntityManager entityManager = super.getEntityManager();
+        TypedQuery<Picture> query = entityManager.createQuery("SELECT picture " +
+                                                              "FROM Picture AS picture " +
+                                                              "ORDER BY picture.id",
+                                                              Picture.class);
 
         query.setFirstResult(firstResult);
         query.setMaxResults(limit);
 
-        return query.list();
+        return query.getResultList();
     }
 
     @Override

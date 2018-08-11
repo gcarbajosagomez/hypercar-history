@@ -32,7 +32,7 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
         this.sqlManufacturerRepository = sqlManufacturerRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.manufacturers.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
+    @Scheduled(fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Manufacturers entities in memory");
@@ -43,7 +43,7 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
 
     @Override
     public void loadEntityFromDB(Long id) {
-        log.info("Loading Manufacturer: " + id + " entity in memory");
+        log.info("Loading Manufacturer: {} entity in memory", id);
         Manufacturer manufacturer = this.getById(id);
         Manufacturer dbContent = this.sqlManufacturerRepository.findOne(id);
 

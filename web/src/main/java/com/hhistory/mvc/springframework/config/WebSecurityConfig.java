@@ -1,5 +1,6 @@
 package com.hhistory.mvc.springframework.config;
 
+import lombok.AllArgsConstructor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,7 @@ import static com.hhistory.mvc.controller.BaseControllerData.STATIC_RESOURCES_UR
  *
  * @author gonzalo
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @EnableGlobalMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -30,7 +32,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String CMS_LOGIN_ENCRYPTED_PASSWORD = "$2a$11$7FwmOPUQFJL.vrbS0xNETeAGU/4QlpWOuRM8Q8gD9lQlkM7MQGrHS";
     private static final String USER                         = "USER";
 
-    @Inject
     private PasswordEncoder passwordEncoder;
 
     @Override

@@ -4,6 +4,7 @@ import com.hhistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.hhistory.mvc.cms.controller.CMSCarController;
 import com.hhistory.mvc.cms.controller.CMSCarEditController;
 import com.hhistory.mvc.cms.service.EntityManagementService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,16 +17,12 @@ import static com.hhistory.mvc.cms.command.EntityManagementQueryType.*;
  *
  * @author gonzalo
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 @Slf4j
 public class CMSCarControllerUtil {
 
     private EntityManagementService entityManagementService;
-
-    @Inject
-    public CMSCarControllerUtil(EntityManagementService entityManagementService) {
-        this.entityManagementService = entityManagementService;
-    }
 
     public void reloadCarAndPictureDBEntities(Long carId) {
         EntityManagementLoadCommand entityManagementLoadCommand = new EntityManagementLoadCommand();

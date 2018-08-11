@@ -31,7 +31,8 @@ public class CmsInMemoryCarListModelFiller extends InMemoryCarListModelFiller {
     private InMemoryCarDAO      inMemoryCarDAO;
 
     @Inject
-    public CmsInMemoryCarListModelFiller(InMemoryCarDAO inMemoryCarDAO, ManufacturerService manufacturerService) {
+    public CmsInMemoryCarListModelFiller(InMemoryCarDAO inMemoryCarDAO,
+                                         ManufacturerService manufacturerService) {
         super(inMemoryCarDAO, manufacturerService);
         this.inMemoryCarDAO = inMemoryCarDAO;
         this.manufacturerService = manufacturerService;

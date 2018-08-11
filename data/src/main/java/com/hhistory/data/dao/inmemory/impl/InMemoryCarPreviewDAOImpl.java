@@ -45,7 +45,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
         this.sqlPictureDAO = sqlPictureDAO;
     }
 
-    @Scheduled(initialDelayString = "${data.pictures.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
+    //@Scheduled(fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car preview entities in memory");

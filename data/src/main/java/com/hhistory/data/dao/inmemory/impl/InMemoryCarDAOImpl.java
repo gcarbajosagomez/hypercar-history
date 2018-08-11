@@ -8,8 +8,6 @@ import com.hhistory.data.dao.sql.SqlCarRepository;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.picture.Picture;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -42,7 +40,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
         this.sqlCarRepository = sqlCarRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.cars.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
+    @Scheduled(fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");

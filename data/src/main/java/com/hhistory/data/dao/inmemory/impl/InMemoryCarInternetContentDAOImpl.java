@@ -39,7 +39,7 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
         this.sqlCarInternetContentRepository = sqlCarInternetContentRepository;
     }
 
-    @Scheduled(initialDelayString = "${data.carInternetContents.inMemoryLoadDelay}", fixedDelayString = "${data.entities.inMemoryLoadDelay}")
+    @Scheduled(fixedDelayString = "${data.entities.inMemoryLoadDelay}")
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading CarInternetContent entities in memory");

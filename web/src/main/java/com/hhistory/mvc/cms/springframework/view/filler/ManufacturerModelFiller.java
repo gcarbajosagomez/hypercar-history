@@ -3,6 +3,7 @@ package com.hhistory.mvc.cms.springframework.view.filler;
 import com.hhistory.data.dao.sql.SqlManufacturerRepository;
 import com.hhistory.mvc.dto.PaginationDTO;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -16,10 +17,10 @@ import static com.hhistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;
  *
  * @author gonzalo
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 public class ManufacturerModelFiller implements ModelFiller {
 
-    @Inject
     private SqlManufacturerRepository manufacturerRepository;
 
     @Override

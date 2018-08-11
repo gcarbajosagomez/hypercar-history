@@ -3,6 +3,7 @@ package com.hhistory.mvc.service.impl;
 import com.hhistory.data.dao.inmemory.InMemoryManufacturerDAO;
 import com.hhistory.data.model.Manufacturer;
 import com.hhistory.mvc.service.ManufacturerService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -15,15 +16,11 @@ import static com.hhistory.mvc.controller.BaseControllerData.MANUFACTURER_ENTITY
 /**
  * Created by Gonzalo Carbajosa on 23/05/17.
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 public class ManufacturerServiceImpl implements ManufacturerService {
 
     private InMemoryManufacturerDAO inMemoryManufacturerDAO;
-
-    @Inject
-    public ManufacturerServiceImpl(InMemoryManufacturerDAO inMemoryManufacturerDAO) {
-        this.inMemoryManufacturerDAO = inMemoryManufacturerDAO;
-    }
 
     @Override
     public Optional<Manufacturer> mapToInMemoryEntity(Model model) {

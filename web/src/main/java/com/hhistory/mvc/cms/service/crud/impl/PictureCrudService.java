@@ -27,10 +27,10 @@ import static com.hhistory.mvc.cms.controller.CMSBaseController.ENTITY_DELETED_S
 @Component
 public class PictureCrudService {
 
-    private CrudRepository          sqlPictureRepository;
-    private SqlPictureDAO           sqlPictureDAO;
-    private PictureService          pictureService;
-    private MessageSource           messageSource;
+    private CrudRepository sqlPictureRepository;
+    private SqlPictureDAO  sqlPictureDAO;
+    private PictureService pictureService;
+    private MessageSource  messageSource;
 
     @Inject
     public PictureCrudService(@Named(PICTURE_REPOSITORY) CrudRepository sqlPictureRepository,
@@ -92,9 +92,9 @@ public class PictureCrudService {
             crudOperationDTO.setEntity(picture);
 
             String successMessage = this.messageSource
-                    .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
-                                new Object[] {picture.toString()},
-                                LocaleContextHolder.getLocale());
+                                            .getMessage(ENTITY_DELETED_SUCCESSFULLY_TEXT_SOURCE_KEY,
+                                                        new Object[]{picture.toString()},
+                                                        LocaleContextHolder.getLocale());
 
             crudOperationDTO.setSuccessMessage(successMessage);
         } catch (Exception e) {

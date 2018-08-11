@@ -6,6 +6,7 @@ import com.hhistory.mvc.cms.dto.CrudOperationDTO;
 import com.hhistory.mvc.cms.service.EntityManagementService;
 import com.hhistory.mvc.cms.service.crud.impl.PictureCrudService;
 import com.hhistory.mvc.command.PictureLoadCommand;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
@@ -26,17 +27,11 @@ import static com.hhistory.mvc.springframework.config.WebSecurityConfig.USER_ROL
 @Secured(USER_ROLE)
 @RestController
 @RequestMapping(CMS_CONTEXT + PICTURES_URL + "/{" + ID + "}")
+@AllArgsConstructor(onConstructor = @__(@Inject))
 public class CMSPictureController extends CMSBaseController {
 
     private PictureCrudService      pictureCrudService;
     private EntityManagementService entityManagementService;
-
-    @Inject
-    public CMSPictureController(PictureCrudService pictureCrudService,
-                                EntityManagementService entityManagementService) {
-        this.pictureCrudService = pictureCrudService;
-        this.entityManagementService = entityManagementService;
-    }
 
     @DeleteMapping(value = DELETE_URL)
     public CrudOperationDTO handleDeletePicture(@ModelAttribute(PICTURE_LOAD_COMMAND) PictureLoadCommand command) {

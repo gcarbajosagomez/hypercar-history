@@ -1,5 +1,6 @@
 package com.hhistory.mvc.service.impl;
 
+import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
 import com.hhistory.data.model.picture.Picture;
@@ -13,7 +14,7 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
+import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
@@ -24,15 +25,15 @@ import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 public class PictureServiceImpl implements PictureService {
 
     private SqlPictureRepository sqlPictureRepository;
-    private SqlPictureDAO        pictureDAO;
+    private PictureDAO           inMemoryPictureDAO;
     private SqlPictureDAO        sqlPictureDAO;
 
     @Inject
     public PictureServiceImpl(SqlPictureRepository sqlPictureRepository,
-                              SqlPictureDAO pictureDAO,
-                              @Named(SQL_PICTURE_DAO) SqlPictureDAO sqlPictureDAO) {
+                              @Named(IN_MEMORY_PICTURE_DAO) PictureDAO inMemoryPictureDAO,
+                              SqlPictureDAO sqlPictureDAO) {
         this.sqlPictureRepository = sqlPictureRepository;
-        this.pictureDAO = pictureDAO;
+        this.inMemoryPictureDAO = inMemoryPictureDAO;
         this.sqlPictureDAO = sqlPictureDAO;
     }
 
@@ -67,14 +68,14 @@ public class PictureServiceImpl implements PictureService {
                                 .orElse(null);
             }
             case LOAD_CAR_PREVIEW: {
-                return carId.map(this.sqlPictureDAO::getCarPreview)
+                return carId.map(this.inMemoryPictureDAO::getCarPreview)
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .orElse(null);
             }
             case LOAD_MANUFACTURER_LOGO: {
                 Optional<Long> entityId = Optional.ofNullable(command.getEntityId());
-                return entityId.map(this.pictureDAO::getManufacturerLogo)
+                return entityId.map(this.sqlPictureDAO::getManufacturerLogo)
                                .orElse(null);
             }
             default: {
@@ -85,7 +86,7 @@ public class PictureServiceImpl implements PictureService {
     }
 
     private Picture loadById(Long pictureId) {
-        return Optional.ofNullable(this.pictureDAO.getById(pictureId))
+        return Optional.ofNullable(this.inMemoryPictureDAO.getById(pictureId))
                        .orElse(this.sqlPictureRepository.findOne(pictureId));
     }
 }

@@ -4,6 +4,7 @@ import com.hhistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.hhistory.mvc.cms.command.EntityManagementQueryType;
 import com.hhistory.mvc.propertyEditor.EntityManagementQueryTypePropertyEditor;
 import com.hhistory.mvc.cms.service.EntityManagementService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.WebDataBinder;
@@ -21,17 +22,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
  * Created by Gonzalo Carbajosa on 3/12/16.
  */
 @Secured(USER_ROLE)
-@Slf4j
 @RestController
 @RequestMapping(value = CMS_CONTEXT + ENTITY_MANAGEMENT_URL + "/{" + ENTITY_MANAGEMENT_QUERY_ACTION + "}",
         method = GET)
+@AllArgsConstructor(onConstructor = @__(@Inject))
+@Slf4j
 public class CMSEntityManagementController extends CMSBaseController {
-    private EntityManagementService entityManagementService;
 
-    @Inject
-    public CMSEntityManagementController(EntityManagementService entityManagementService) {
-        this.entityManagementService = entityManagementService;
-    }
+    private EntityManagementService entityManagementService;
 
     @RequestMapping
     public String handleReloadCars(

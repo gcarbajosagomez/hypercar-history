@@ -1,6 +1,7 @@
 package com.hhistory.data.service;
 
 import com.hhistory.data.dao.sql.SqlContentSearchDAO;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
@@ -12,16 +13,12 @@ import javax.inject.Inject;
  * <p>
  * Created by Gonzalo Carbajosa on 19/03/17.
  */
+@AllArgsConstructor(onConstructor = @__(@Inject))
 @Component
 @Slf4j
 public class EntityIndexingServiceImpl implements EntityIndexingService, InitializingBean {
 
     private SqlContentSearchDAO sqlContentSearchDAO;
-
-    @Inject
-    public EntityIndexingServiceImpl(SqlContentSearchDAO sqlContentSearchDAO) {
-        this.sqlContentSearchDAO = sqlContentSearchDAO;
-    }
 
     @Override
     public void indexEntities() {
