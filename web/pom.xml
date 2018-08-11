@@ -75,7 +75,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>deployments</directory>
+                            <directory>.deployments</directory>
                             <includes>
                                 <include>*.jar</include>
                                 <followSymlinks>false</followSymlinks>
@@ -103,7 +103,7 @@
                 <configuration>
                     <mainClass>com.hhistory.Main</mainClass>
                     <finalName>Hypercar-History</finalName>
-                    <outputDirectory>../deployments</outputDirectory>
+                    <outputDirectory>../.deployments</outputDirectory>
                     <excludeGroupIds>org.seleniumhq.selenium,org.projectlombok</excludeGroupIds>
                 </configuration>
             </plugin>
