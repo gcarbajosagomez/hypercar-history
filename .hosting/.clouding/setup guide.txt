@@ -1,0 +1,5 @@
+####### Running Hypercar History as a service #######
+1. Add hypercar-history.service file to /etc/systemd/system/
+2. Add hypercarHistory.sh file to /usr/local/bin/
+3. Give execution permissions to sudo chmod +x /usr/local/bin/hypercarHistory.sh
+4. Run sudo systemctl enable hypercar-history

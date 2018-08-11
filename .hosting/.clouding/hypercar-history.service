@@ -1,0 +1,12 @@
+[Unit]
+Description = Java Service
+After network.target = hypercar-history.service
+
+[Service]
+Type = forking
+ExecStart = /usr/local/bin/hypercarHistory.sh start
+ExecStop = /usr/local/bin/hypercarHistory.sh stop
+ExecReload = /usr/local/bin/hypercarHistory.sh reload
+
+[Install]
+WantedBy=multi-user.target
