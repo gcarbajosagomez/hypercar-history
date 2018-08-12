@@ -43,7 +43,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     private SqlPictureRepository sqlPictureRepository;
     private SqlPictureDAO        sqlPictureDAO;
     private PictureUtil          pictureUtil;
-    private List<Picture>        pictures = new ArrayList<>();
+    private List<Picture>        pictures;
 
     @Inject
     public InMemoryPictureDAOImpl(SqlPictureRepository sqlPictureRepository,
@@ -63,6 +63,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
         int chunkSize = (int) (pictureCount.doubleValue() / PICTURE_LOADING_NUMBER_OF_CHUNKS);
 
+        pictures = new ArrayList<>();
         IntStream.rangeClosed(0, PICTURE_LOADING_NUMBER_OF_CHUNKS)
                  .forEach(i -> {
                      int skipPosition = chunkSize * i;
@@ -96,7 +97,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     @Override
     public void removeEntity(Long id) {
         log.info("Removing Picture: {} entity from the memory cache", id);
-        this.pictures.stream()
+        this.pictures.parallelStream()
                      .filter(picture -> picture.getId().equals(id))
                      .findFirst()
                      .ifPresent(this.pictures::remove);
@@ -104,16 +105,15 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     @Override
     public List<Long> getIdsByCarId(Long carId) {
-        return this.pictures.stream()
-                            .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
-                            .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
-                            .map(Picture::getId)
-                            .collect(Collectors.toList());
+        return this.getByCarId(carId)
+                   .parallelStream()
+                   .map(Picture::getId)
+                   .collect(Collectors.toList());
     }
 
     @Override
     public List<Picture> getByCarId(Long carId) {
-        return this.pictures.stream()
+        return this.pictures.parallelStream()
                             .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
                             .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
                             .collect(Collectors.toList());
@@ -121,14 +121,14 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     @Override
     public List<Long> getAllIds() {
-        return this.pictures.stream()
+        return this.pictures.parallelStream()
                             .map(Picture::getId)
                             .collect(Collectors.toList());
     }
 
     @Override
     public List<Long> getAllPreviewIds(Long manufacturerId) {
-        return this.pictures.stream()
+        return this.pictures.parallelStream()
                             .filter(picture -> picture.getCar().getManufacturer().getId().equals(manufacturerId))
                             .filter(picture -> picture.getCar().getVisible())
                             .filter(Picture::getEligibleForPreview)
@@ -138,7 +138,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
 
     @Override
     public Picture getById(Long pictureId) {
-        return this.pictures.stream()
+        return this.pictures.parallelStream()
                             .filter(picture -> picture.getId().equals(pictureId))
                             .findFirst()
                             .orElse(null);
@@ -152,7 +152,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     @Override
     public Optional<Picture> getCarPreview(Long carId) {
         List<Picture> previewCandidates =
-                this.pictures.stream()
+                this.pictures.parallelStream()
                              .filter(picture -> {
                                  Car car = picture.getCar();
                                  return (Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview();

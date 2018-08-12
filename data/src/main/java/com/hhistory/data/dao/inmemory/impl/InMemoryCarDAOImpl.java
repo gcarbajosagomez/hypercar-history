@@ -73,7 +73,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public void removeEntity(Long id) {
         log.info("Removing Car: {} entity from the memory cache", id);
-        this.cars.stream()
+        this.cars.parallelStream()
                  .filter(car -> car.getId().equals(id))
                  .findFirst()
                  .ifPresent(this.cars::remove);
@@ -82,7 +82,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public Car getCarByPictureId(Long pictureId) {
         return this.inMemoryPictureDAO.getEntities()
-                                      .stream()
+                                      .parallelStream()
                                       .filter(picture -> picture.getId().equals(pictureId))
                                       .map(Picture::getCar)
                                       .findFirst()
@@ -91,7 +91,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     @Override
     public Car getById(Long id) {
-        return this.cars.stream()
+        return this.cars.parallelStream()
                         .filter(car -> car.getId().equals(id))
                         .findFirst()
                         .orElse(null);
@@ -105,7 +105,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public Car getByQueryCommand(CarQueryCommand queryCommand) {
         return this.getByQueryCommandOrderedByProductionStartDate(queryCommand)
-                   .stream()
+                   .parallelStream()
                    .findFirst()
                    .orElse(null);
     }
@@ -118,7 +118,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
         Long engineId = queryCommand.getEngineId();
         String modelName = queryCommand.getModelName();
 
-        return this.cars.stream()
+        return this.cars.parallelStream()
                         .filter(car -> !Optional.ofNullable(manufacturer).isPresent() ||
                                        car.getManufacturer().equals(manufacturer))
                         .filter(car -> !Optional.ofNullable(visible).isPresent() ||
@@ -135,7 +135,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     @Override
     public long countVisibleCars(Manufacturer manufacturer) {
-        return this.cars.stream()
+        return this.cars.parallelStream()
                         .filter(car -> car.getManufacturer().equals(manufacturer))
                         .filter(Car::getVisible)
                         .count();

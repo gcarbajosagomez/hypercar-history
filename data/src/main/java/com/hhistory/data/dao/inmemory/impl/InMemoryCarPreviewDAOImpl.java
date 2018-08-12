@@ -12,9 +12,11 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryCarPreviewDAOImpl.IN_MEMORY_CAR_PREVIEW_DAO;
 
@@ -51,20 +53,16 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
         log.info("Loading Car preview entities in memory");
 
         Long previewCount = this.pictureRepository.count();
-        Double chunkSizeDouble = (previewCount.doubleValue() / PREVIEW_LOADING_NUMBER_OF_CHUNKS);
-        chunkSizeDouble = Math.floor(chunkSizeDouble);
-        int skipPosition = chunkSizeDouble.intValue();
 
-        previews = this.sqlPictureDAO.getPreviewsPaginated(0, skipPosition);
+        int chunkSize = (int) (previewCount.doubleValue() / PREVIEW_LOADING_NUMBER_OF_CHUNKS);
 
-        for (int i = 2; i < PREVIEW_LOADING_NUMBER_OF_CHUNKS; i++) {
-            previews.addAll(this.sqlPictureDAO.getPreviewsPaginated(skipPosition,
-                                                                    chunkSizeDouble.intValue()));
-            skipPosition += chunkSizeDouble.intValue();
-        }
-
-        previews.addAll(this.sqlPictureDAO.getPreviewsPaginated(skipPosition,
-                                                                previewCount.intValue()));
+        previews = new ArrayList<>();
+        IntStream.rangeClosed(0, PREVIEW_LOADING_NUMBER_OF_CHUNKS)
+                 .forEach(i -> {
+                     int skipPosition = chunkSize * i;
+                     this.previews.addAll(this.sqlPictureDAO.getPaginated(skipPosition,
+                                                                          chunkSize));
+                 });
     }
 
     @Override
