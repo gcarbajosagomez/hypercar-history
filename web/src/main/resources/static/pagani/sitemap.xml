@@ -610,13 +610,22 @@
         <loc>http://www.paganihistory.com/es/car/huayra-lampo</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=63</loc>
+        <loc>http://www.paganihistory.com/car/zonda-aether</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=63</loc>
+        <loc>http://www.paganihistory.com/en/car/zonda-aether</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=63</loc>
+        <loc>http://www.paganihistory.com/es/car/zonda-aether</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=64</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=64</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=64</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=6</loc>
