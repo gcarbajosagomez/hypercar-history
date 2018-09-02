@@ -23,11 +23,11 @@ public class PaginationDTO {
     private static final Integer PAG_NUM_DEFAULT_VALUE = 1;
 
     private Optional<Manufacturer> manufacturer = Optional.empty();
-    private Integer pagNum       = PAG_NUM_DEFAULT_VALUE;
-    private Integer itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
-    private Integer             firstResult;
-    private List<GenericEntity> items;
-    private String              pageTitle;
+    private Integer                pagNum       = PAG_NUM_DEFAULT_VALUE;
+    private Integer                itemsPerPage = ITEMS_PER_PAGE_DEFAULT_VALUE;
+    private Integer                firstResult;
+    private List<GenericEntity>    items;
+    private String                 pageTitle;
 
     public PaginationDTO(Integer pagNum, Integer itemsPerPage) {
         this.pagNum = pagNum;
@@ -59,7 +59,7 @@ public class PaginationDTO {
             int firstResult = (this.pagNum - 1) * this.itemsPerPage;
             if (firstResult > 0) {
                 //it's 0 based
-                return firstResult--;
+                return firstResult - 1;
             }
         }
         return 0;

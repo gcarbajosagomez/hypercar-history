@@ -1,6 +1,7 @@
 package com.hhistory.mvc.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
  *
  * @author Gonzalo
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 public class ContentSearchDTO extends PaginationDTO {
