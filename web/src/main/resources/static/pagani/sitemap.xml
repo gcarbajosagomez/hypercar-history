@@ -619,13 +619,22 @@
         <loc>http://www.paganihistory.com/es/car/zonda-aether</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=64</loc>
+        <loc>http://www.paganihistory.com/car/huayra-l%27ultimo</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=64</loc>
+        <loc>http://www.paganihistory.com/en/car/huayra-l%27ultimo</loc>
     </url>
     <url>
-        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=64</loc>
+        <loc>http://www.paganihistory.com/es/car/huayra-l%27ultimo</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=65</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/en/cars?pn=1&amp;cpp=65</loc>
+    </url>
+    <url>
+        <loc>http://www.paganihistory.com/es/cars?pn=1&amp;cpp=65</loc>
     </url>
     <url>
         <loc>http://www.paganihistory.com/cars?pn=1&amp;cpp=6</loc>
