@@ -19,6 +19,7 @@ import java.net.URLDecoder;
 import java.util.List;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.CAR_URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -42,7 +43,7 @@ public class CarDetailsController extends BaseController {
     @Inject
     public CarDetailsController(ModelFiller carModelFiller,
                                 CarInternetContentUtils carInternetContentUtils,
-                                @Named(IN_MEMORY_PICTURE_DAO) PictureDAO pictureDAO) {
+                                @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO) {
         this.carModelFiller = carModelFiller;
         this.carInternetContentUtils = carInternetContentUtils;
         this.pictureDAO = pictureDAO;

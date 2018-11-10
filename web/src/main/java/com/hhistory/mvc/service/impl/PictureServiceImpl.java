@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
+import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
 /**
@@ -30,7 +31,7 @@ public class PictureServiceImpl implements PictureService {
 
     @Inject
     public PictureServiceImpl(SqlPictureRepository sqlPictureRepository,
-                              @Named(IN_MEMORY_PICTURE_DAO) PictureDAO inMemoryPictureDAO,
+                              @Named(SQL_PICTURE_DAO) PictureDAO inMemoryPictureDAO,
                               SqlPictureDAO sqlPictureDAO) {
         this.sqlPictureRepository = sqlPictureRepository;
         this.inMemoryPictureDAO = inMemoryPictureDAO;

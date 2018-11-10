@@ -1,5 +1,6 @@
 /.deployments
 /com.hhistory.data.model.*
+/web/com.hhistory.data.model.*
 *.log
 .idea/
 *.iml
