@@ -3,3 +3,7 @@
 2. Add hypercarHistory.sh file to /usr/local/bin/
 3. Give execution permissions to sudo chmod +x /usr/local/bin/hypercarHistory.sh
 4. Run sudo systemctl enable hypercar-history
+
+
+####### Backing up MySQL DB #######
+- mysqldump --user userName -p --databases hypercar_history --single-transaction > /home/hypercar-history/db-scripts/Hypercar_History-DB_07-02-2019.sql
