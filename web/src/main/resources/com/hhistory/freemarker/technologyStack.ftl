@@ -16,7 +16,6 @@
             <div class="modal-body">
                 <div class="row technology-stack" style="margin-bottom: 0px;">
                     <div class="col-lg-12" style="padding-top: 10px;">
-                        <img src="/static/img/tech-stack/openshift-logo.png" alt="Openshift logo">
                         <div class="row technology-stack-inner-logo">
                             <div class="thumbnail row technology-stack-inner-logo" style="margin-bottom: 10px;">
                                 <div class="col-lg-6" style="padding-top:10px;">
@@ -28,19 +27,14 @@
                             </div>
                             <div class="thumbnail row technology-stack-inner-logo" style="margin-bottom: 10px;">
                                 <div class="col-lg-12">
-                                    <div class="col-lg-6" style="padding-top: 10px;">
-                                        <div class="col-lg-12">
-                                            <img class="center-block" src="/static/img/tech-stack/jquery-logo.png" alt="jQuery logo">
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <img class="center-block" src="/static/img/tech-stack/ajax-logo.png" style="padding-top: 10px;" alt="Ajax logo">
-                                        </div>
-                                        <div class="col-lg-12">
-                                            <img class="center-block" src="/static/img/tech-stack/freemarker-logo.png" style="padding-top: 20px; padding-bottom: 10px;" alt="Freemarker logo">
-                                        </div>
+                                    <div class="col-lg-4" style="padding-top: <#if requestIsDesktop>55<#else>15</#if>px;">
+                                        <img class="center-block" src="/static/img/tech-stack/jquery-logo.png" alt="jQuery logo">
                                     </div>
-                                    <div class="col-lg-6" style="padding-top: 35px;">
-                                        <img class="center-block" src="/static/img/tech-stack/html-css-js-bootstrap-logo.png" alt="Bootstrap logo">
+                                    <div class="col-lg-4" style="padding-top: <#if requestIsDesktop>55<#else>30</#if>px;">
+                                        <img class="center-block" src="/static/img/tech-stack/freemarker-logo.png" alt="Freemarker logo">
+                                    </div>
+                                    <div class="col-lg-4" <#if !requestIsDesktop>style="padding-top: 30px;"</#if>>
+                                        <img class="center-block" src="/static/img/tech-stack/html-css-js-bootstrap-logo.png" alt="HTML - js - CSS - Bootstrap logo">
                                     </div>
                                 </div>
                             </div>

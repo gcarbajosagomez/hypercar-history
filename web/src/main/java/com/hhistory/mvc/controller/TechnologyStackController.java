@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = TECHNOLOGY_STACK_URL,
                 method = {GET, HEAD})
-public class TechnologyStackController {
+public class TechnologyStackController extends BaseController {
 
     @RequestMapping
     public ModelAndView handleDefault() {
