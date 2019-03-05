@@ -635,14 +635,24 @@
     <url>
         <loc>http://www.bugattihistory.com/es/car/chiron-sport-%27110-ans-bugatti%27</loc>
     </url>
-    <url>
-        <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=71</loc>
     </url>
     <url>
-        <loc>http://www.bugattihistory.com/en/cars?pn=1&amp;cpp=71</loc>
+        <loc>http://www.bugattihistory.com/car/chiron-%27la-voiture-noire%27</loc>
     </url>
     <url>
-        <loc>http://www.bugattihistory.com/es/cars?pn=1&amp;cpp=71</loc>
+        <loc>http://www.bugattihistory.com/en/car/chiron-%27la-voiture-noire%27</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/es/car/chiron-%27la-voiture-noire%27</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=72</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/en/cars?pn=1&amp;cpp=72</loc>
+    </url>
+    <url>
+        <loc>http://www.bugattihistory.com/es/cars?pn=1&amp;cpp=72</loc>
     </url>
     <url>
         <loc>http://www.bugattihistory.com/cars?pn=1&amp;cpp=6</loc>
