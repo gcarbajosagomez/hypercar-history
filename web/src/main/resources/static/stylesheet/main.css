@@ -65,6 +65,8 @@ d {
 .hypercar-history-navbar .navbar-nav > .open > a:focus,
 .dropdown-selection-div > div > h4:hover,
 .dropdown-selection-div > div > h4:focus,
+.other-stories-dropdown-selection-div > div > h4:hover,
+.other-stories-dropdown-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
     font-weight: 800 !important;
@@ -258,7 +260,7 @@ d {
 }
 
 .other-stories-dropdown-selection-div {
-    width: 270px;
+    width: 310px;
 }
 
 .hypercar-history-footer {
@@ -841,9 +843,4 @@ d {
 
 #main-login-panel {
     background-color: #f8f8f8;
-}
-
-.nano-logo {
-    width: 52px;
-    height: 24px;
 }

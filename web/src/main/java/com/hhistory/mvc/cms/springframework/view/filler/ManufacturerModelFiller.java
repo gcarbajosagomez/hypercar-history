@@ -1,6 +1,7 @@
 package com.hhistory.mvc.cms.springframework.view.filler;
 
 import com.hhistory.data.dao.sql.SqlManufacturerRepository;
+import com.hhistory.data.model.Manufacturer;
 import com.hhistory.mvc.dto.PaginationDTO;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.AllArgsConstructor;
@@ -8,6 +9,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
 import javax.inject.Inject;
+
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.*;
 import static com.hhistory.mvc.controller.BaseControllerData.PAG_NUM_DATA;

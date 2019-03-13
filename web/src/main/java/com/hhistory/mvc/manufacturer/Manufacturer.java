@@ -13,7 +13,8 @@ import static com.fasterxml.jackson.annotation.JsonFormat.Shape.OBJECT;
 @JsonFormat(shape = OBJECT)
 public enum Manufacturer {
     PAGANI("pagani", "p"),
-    BUGATTI("bugatti", "b");
+    BUGATTI("bugatti", "b"),
+    KOENIGSEGG("koenigsegg", "k");
 
     private String name;
     private String shortName;
