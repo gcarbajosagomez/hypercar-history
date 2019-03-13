@@ -30,7 +30,10 @@ public enum CarBodyShape {
     ALL_TERRAIN("allTerrain"),
     PICKUP_TRUCK("pickupTruck"),
     RACE_CAR("raceCar"),
-    BARCHETTA("barchetta");
+    BARCHETTA("barchetta"),
+    COUPE_TARGA("coupeTarga"),
+    SUPERCAR_TARGA("superCarTarga"),
+    HYPERCAR_TARGA("hyperCarTarga");
 
     private String name;
 
