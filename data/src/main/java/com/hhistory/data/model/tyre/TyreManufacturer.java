@@ -16,6 +16,7 @@ public enum TyreManufacturer {
     TOYO("Toyo"),
     YOKOHAMA("Yokohama"),
     MAXXIS("Maxxis"),
+    GOODYEAR("Goodyear"),
     UNKNOWN("Unknown");
 
     private String name;
