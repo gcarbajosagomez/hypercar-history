@@ -5,6 +5,7 @@
 <#import "picture.ftl" as picture/>
 <#import "cookiesDirective.ftl" as cookiesDirective/>
 <#import "uriUtils.ftl" as uriUtils/>
+<#import "emoji.ftl" as emoji/>
 
 <#macro startPage title='' metaKeywords='' metaDescription=''>
     <@uriUtils.identifyRequestURL/>
@@ -158,8 +159,7 @@
           													    <h4 title="${language.getTextSource('language.spanish')}">${language.getTextSource('language.spanish')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/spain_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
-                                                                     alt="${language.getTextSource('language.spanish')?upper_case}"/>
+                                                                <p class="language-flag">${emoji.getFlagEmojiByLanguage('spanish')}</p>
           													</div>
           													<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 center-block">
 	          													<i id="spanish-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>
@@ -175,8 +175,7 @@
 																<h4 title="${language.getTextSource('language.english')}">${language.getTextSource('language.english')?upper_case}</h4>
           													</div>
 															<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-          														<img class="language-flag" src='<@spring.url "/static/img/uk_flag.jpg"/><#if doNotTrack>?${doNotTrackParam}=true</#if>'
-                                                                     alt="${language.getTextSource('language.english')?upper_case}"/>
+																<p class="language-flag">${emoji.getFlagEmojiByLanguage('english')}</p>
 															</div>
 	          												<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 center-block">
 		          												<i id="english-loading-gif" class="fa fa-circle-o-notch fa-lg fa-spin manufacturer-colour sr-only"></i>

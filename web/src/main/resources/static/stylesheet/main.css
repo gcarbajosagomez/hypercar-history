@@ -697,9 +697,9 @@ d {
 }
 
 .language-flag {
-    max-height: 35px;
-    max-width: 35px;
-    margin: 5px;
+    font-family: "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", Times, Symbola, Aegyptus, Code2000, Code2001, Code2002, Musica, serif, LastResort;
+    font-size: 30px;
+    margin: 0;
 }
 
 .manufacturer-logo {
