@@ -31,8 +31,8 @@ public class CMSCarControllerUtil {
         entityManagementLoadCommand.setQueryType(RELOAD_CARS);
         this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
-        entityManagementLoadCommand.setQueryType(RELOAD_PICTURES);
-        this.entityManagementService.reloadEntities(entityManagementLoadCommand);
+        //entityManagementLoadCommand.setQueryType(RELOAD_PICTURES);
+        //this.entityManagementService.reloadEntities(entityManagementLoadCommand);
 
         entityManagementLoadCommand.setQueryType(RELOAD_CAR_INTERNET_CONTENTS);
         this.entityManagementService.reloadEntities(entityManagementLoadCommand);
