@@ -1,6 +1,6 @@
 <#import "/spring.ftl" as spring/>
-<#import "pageLanguage.ftl" as language/>
 <#import "uriUtils.ftl" as uriUtils/>
+<#import "emoji.ftl" as emoji/>
 
 <#macro addPicturesGallery galleryName classNameToTriggerGallery>
     <div id="${galleryName}" class="blueimp-gallery blueimp-gallery-controls">
@@ -50,19 +50,21 @@
             var galleryVideos = [];
 
             <#--By doing this we defer adding the videos until all AJAX calls have been completed -->
-            $.when(<#list youtubeVideoIds as videoId>
+            $.when(<#list youtubeVideos as video>
+                    <#assign videoId = video.videoId/>
                     $.getJSON('https://noembed.com/embed',
                             {format: 'json', url: 'https://www.youtube.com/watch?v=${videoId}'}, function (data) {
                                 galleryVideos.push({
-                                    title: data.title,
+                                    <#assign contentLanguage = video.contentLanguage.getName()/>
+                                    title: data.title + ' ${emoji.getFlagEmojiByLanguage(contentLanguage)}',
                                     href: 'https://www.youtube.com/watch?v=${videoId}',
                                     type: 'text/html',
                                     youtube: '${videoId}',
                                     poster: 'https://img.youtube.com/vi/${videoId}/sddefault.jpg'
                                 });
-                            })<#if videoId?has_next>,</#if>
+                            })<#if video?has_next>,</#if>
                     </#list>)
-                    .done(function (<#list youtubeVideoIds as videoId>video${videoId?index}<#if videoId?has_next>,</#if></#list>) {
+                    .done(function (<#list youtubeVideos as video>video${video?index}<#if video?has_next>,</#if></#list>) {
                         var options = {
                             container: '#${galleryName}',
                             fullScreen: true,
@@ -73,7 +75,7 @@
                                 color: 'white',
                                 playsinline: 0
                             }
-                        }
+                        };
                         blueimp.Gallery(galleryVideos, options);
                     });
         }

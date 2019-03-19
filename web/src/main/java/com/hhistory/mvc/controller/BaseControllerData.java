@@ -70,7 +70,7 @@ public abstract class BaseControllerData {
     public static final String ENGINE                               = "engine";
     public static final String MANUFACTURER                         = "manufacturer";
     public static final String MANUFACTURER_ENTITY                  = "manufacturerEntity";
-    public static final String YOUTUBE_VIDEO_IDS                    = "youtubeVideoIds";
+    public static final String YOUTUBE_VIDEOS                       = "youtubeVideos";
     public static final String CAR_INTERNET_CONTENT_REVIEW_ARTICLES = "carInternetContentReviewArticles";
     public static final String NUMBER_OF_VIDEOS                     = "numberOfVideos";
     public static final String STATIC_RESOURCES_URI                 = "/static/";

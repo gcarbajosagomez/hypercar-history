@@ -14,8 +14,8 @@
 			<#assign numberOfPictures = 0/>
 		</#if>
 
-		<#if youtubeVideoIds??>
-			<#assign numberOfVideos = youtubeVideoIds?size/><#else><#assign numberOfVideos = 0/>
+		<#if youtubeVideos??>
+			<#assign numberOfVideos = youtubeVideos?size/><#else><#assign numberOfVideos = 0/>
 		</#if>
 
 		<#assign manufacturerName = manufacturer.getName()/>

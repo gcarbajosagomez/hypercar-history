@@ -3,8 +3,8 @@ package com.hhistory.mvc.controller;
 import com.hhistory.data.command.CarQueryCommand;
 import com.hhistory.data.dao.PictureDAO;
 import com.hhistory.data.model.car.Car;
-import com.hhistory.data.model.car.CarInternetContent;
-import com.hhistory.mvc.controller.util.CarInternetContentUtils;
+import com.hhistory.data.model.car.YouTubeVideo;
+import com.hhistory.mvc.factory.YouTubeVideoFactory;
 import com.hhistory.mvc.springframework.view.filler.ModelFiller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -17,8 +17,8 @@ import javax.inject.Named;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.CAR_URL;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -36,16 +36,16 @@ import static org.springframework.web.bind.annotation.RequestMethod.HEAD;
         method = {GET, HEAD})
 public class CarDetailsController extends BaseController {
 
-    private ModelFiller             carModelFiller;
-    private CarInternetContentUtils carInternetContentUtils;
-    private PictureDAO              pictureDAO;
+    private ModelFiller         carModelFiller;
+    private YouTubeVideoFactory youTubeVideoFactory;
+    private PictureDAO          pictureDAO;
 
     @Inject
     public CarDetailsController(ModelFiller carModelFiller,
-                                CarInternetContentUtils carInternetContentUtils,
+                                YouTubeVideoFactory youTubeVideoFactory,
                                 @Named(SQL_PICTURE_DAO) PictureDAO pictureDAO) {
         this.carModelFiller = carModelFiller;
-        this.carInternetContentUtils = carInternetContentUtils;
+        this.youTubeVideoFactory = youTubeVideoFactory;
         this.pictureDAO = pictureDAO;
     }
 
@@ -65,8 +65,12 @@ public class CarDetailsController extends BaseController {
             model.addAttribute(PICTURE_IDS, this.pictureDAO.getIdsByCarId(carId));
             model.addAttribute(UNITS_OF_MEASURE, unitsOfMeasure);
 
-            List<CarInternetContent> videos = super.getInMemoryCarInternetContentDAO().getVideosByCarId(carId);
-            model.addAttribute(YOUTUBE_VIDEO_IDS, this.carInternetContentUtils.extractYoutubeVideoIds(videos));
+            List<YouTubeVideo> youTubeVideos = super.getInMemoryCarInternetContentDAO()
+                                                    .getVideosByCarId(carId)
+                                                    .stream()
+                                                    .map(youTubeVideoFactory::buildFromCarInternetContent)
+                                                    .collect(Collectors.toList());
+            model.addAttribute(YOUTUBE_VIDEOS, youTubeVideos);
             model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES,
                                super.getInMemoryCarInternetContentDAO().getReviewArticlesByCarId(carId));
 
