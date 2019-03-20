@@ -18,19 +18,22 @@ a:hover {
 
 .hypercar-history-navbar .navbar-nav > li > a,
 .hypercar-history-navbar .navbar-nav > li > #search-container > a,
-.hypercar-history-navbar .navbar-nav > li > a:hover,
-.hypercar-history-navbar .navbar-nav > li > div > div > a:hover,
 .hypercar-history-navbar .navbar-nav > li > ul > li > a,
-.hypercar-history-navbar .navbar-nav > li > ul > li > a:hover,
 .hypercar-history-navbar .navbar-nav > .open > a,
+.dropdown-selection-div > div > h4 {
+    color: #e40421 !important;
+}
+
+.hypercar-history-navbar .navbar-nav > li > a:hover,
+.hypercar-history-navbar .navbar-nav > li > ul > li > a:hover,
+.hypercar-history-navbar .navbar-nav > li > div > div > a:hover,
 .hypercar-history-navbar .navbar-nav > .open > a:hover,
 .hypercar-history-navbar .navbar-nav > .open > a:focus,
-.dropdown-selection-div > div > h4,
 .dropdown-selection-div > div > h4:hover,
 .dropdown-selection-div > div > h4:focus,
 .list-group-element:hover,
 .list-group-element:focus {
-    color: #e40421 !important;
+    color: #a50319 !important;
 }
 
 .content-search-input {

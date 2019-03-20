@@ -67,13 +67,14 @@
                         document.addEventListener("touchstart", function(){}, true);
 
                         $(function() {
+                            const navBarToggleArrow = $('#navbar-toggle-arrow');
                             $('.navbar-collapse').on('shown.bs.collapse', function () {
-                                $('#navbar-toggle-arrow').removeClass('fa-arrow-down');
-                                $('#navbar-toggle-arrow').addClass('fa-arrow-up');
+                                navBarToggleArrow.removeClass('fa-arrow-down');
+                                navBarToggleArrow.addClass('fa-arrow-up');
                             }).on( "hidden.bs.collapse", function() {
-                                $('#navbar-toggle-arrow').removeClass('fa-arrow-up');
-                                $('#navbar-toggle-arrow').addClass('fa-arrow-down');
-                            });;
+                                navBarToggleArrow.removeClass('fa-arrow-up');
+                                navBarToggleArrow.addClass('fa-arrow-down');
+                            });
                         });
 
 						$(document).ready(function()
@@ -149,6 +150,7 @@
 												 </#list>
                                              </ul>
                                          </li>
+                                         <hr class="navbar-divider">
         	      						<li>
 	        	  							<a id="language-dropdown-toggle" class="dropdown-toggle cursor-pointer" data-toggle="dropdown">${language.getTextSource('language')?upper_case} <b class="caret"></b></a>
     	      								<ul class="dropdown-menu">
