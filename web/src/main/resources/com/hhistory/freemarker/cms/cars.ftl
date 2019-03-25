@@ -69,7 +69,7 @@
     		carRowString = carRowString.concat(	  	 "<li style='z-index:" + (zIndex - i) + "'>");
     		carRowString = carRowString.concat(	  	 	"<figure>");
 		   	carRowString = carRowString.concat(				"<div class='caption vertically-aligned-div vertically-aligned-preview-div'>");
-            carRowString = carRowString.concat(					"<img class='history-thumbnail preview-history' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
+            carRowString = carRowString.concat(					"<img class='img-thumbnail preview-img' src='/${picturesURL}/${loadCarPreviewAction}?${id}=" + cars[i].id + "' alt='" + cars[i].manufacturer.name + " " + cars[i].model + "'>");
             carRowString = carRowString.concat(				"</div>");
             carRowString = carRowString.concat(				"<figcaption>");
 			carRowString = carRowString.concat(					"<a href='<#if requestContainsManufacturerData?? && requestContainsManufacturerData>/${manufacturerShortName}</#if>/${cmsContext}${carsURL}/" + cars[i].id + "/${editURL}' style='padding-bottom: 0px; padding-top: 0px;'>");
