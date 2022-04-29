@@ -14,7 +14,6 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
-import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
 import static com.hhistory.data.dao.sql.SqlPictureDAO.SQL_PICTURE_DAO;
 import static com.hhistory.mvc.controller.BaseControllerData.IMAGE_CONTENT_TYPE;
 
@@ -64,10 +63,6 @@ public class PictureServiceImpl implements PictureService {
         Optional<Long> carId = Optional.ofNullable(command.getEntityId());
 
         switch (command.getAction()) {
-            case LOAD_CAR_PICTURE: {
-                return pictureId.map(this::loadById)
-                                .orElse(null);
-            }
             case LOAD_CAR_PREVIEW: {
                 return carId.map(this.inMemoryPictureDAO::getCarPreview)
                             .filter(Optional::isPresent)
@@ -79,6 +74,7 @@ public class PictureServiceImpl implements PictureService {
                 return entityId.map(this.sqlPictureDAO::getManufacturerLogo)
                                .orElse(null);
             }
+            case LOAD_CAR_PICTURE:
             default: {
                 return pictureId.map(this::loadById)
                                 .orElse(null);
