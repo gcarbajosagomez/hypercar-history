@@ -105,28 +105,22 @@ public abstract class AbstractSqlDAO<TYPE extends GenericEntity> implements SqlD
             }
 
             switch (entityConditionType) {
-                case EQUAL:
-                    conditionPredicates.add(criteriaBuilder.equal(entityRoot.get(entityProperty),
-                                                                  conditionCommand.getConditionSingleValue()));
-                    break;
-                case BIGGER_THAN:
-                    conditionPredicates.add(criteriaBuilder.greaterThan(entityRoot.get(entityProperty)
-                                                                                  .as(Double.class),
-                                                                        doubleComparingEx));
-                    break;
-                case LOWER_THAN:
-                    conditionPredicates
-                            .add(criteriaBuilder.lessThan(entityRoot.get(entityProperty)
-                                                                    .as(Double.class),
-                                                          doubleComparingEx));
-                    break;
-                case LIKE:
-                    conditionPredicates.add(criteriaBuilder.like(entityRoot.get(entityProperty)
-                                                                           .as(String.class),
-                                                                 "%" + stringConditionValue + "%"));
-                    break;
-                default:
-                    break;
+                case EQUAL -> conditionPredicates.add(criteriaBuilder.equal(entityRoot.get(entityProperty),
+                                                                            conditionCommand.getConditionSingleValue()));
+
+                case BIGGER_THAN -> conditionPredicates.add(criteriaBuilder.greaterThan(entityRoot.get(entityProperty)
+                                                                                                  .as(Double.class),
+                                                                                        doubleComparingEx));
+
+                case LOWER_THAN -> conditionPredicates.add(criteriaBuilder.lessThan(entityRoot.get(entityProperty)
+                                                                                              .as(Double.class),
+                                                                                    doubleComparingEx));
+
+                case LIKE -> conditionPredicates.add(criteriaBuilder.like(entityRoot.get(entityProperty)
+                                                                                    .as(String.class),
+                                                                          "%" + stringConditionValue + "%"));
+                default -> {
+                }
             }
         }
 

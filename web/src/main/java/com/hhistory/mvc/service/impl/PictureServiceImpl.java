@@ -63,19 +63,18 @@ public class PictureServiceImpl implements PictureService {
         Optional<Long> carId = Optional.ofNullable(command.getEntityId());
 
         switch (command.getAction()) {
-            case LOAD_CAR_PREVIEW: {
+            case LOAD_CAR_PREVIEW -> {
                 return carId.map(this.inMemoryPictureDAO::getCarPreview)
                             .filter(Optional::isPresent)
                             .map(Optional::get)
                             .orElse(null);
             }
-            case LOAD_MANUFACTURER_LOGO: {
+            case LOAD_MANUFACTURER_LOGO -> {
                 Optional<Long> entityId = Optional.ofNullable(command.getEntityId());
                 return entityId.map(this.sqlPictureDAO::getManufacturerLogo)
                                .orElse(null);
             }
-            case LOAD_CAR_PICTURE:
-            default: {
+            default -> {
                 return pictureId.map(this::loadById)
                                 .orElse(null);
             }

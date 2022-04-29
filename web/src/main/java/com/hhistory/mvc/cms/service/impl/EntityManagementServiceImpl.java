@@ -37,17 +37,15 @@ public class EntityManagementServiceImpl implements EntityManagementService {
         Long manufacturerId = entityManagementLoadCommand.getManufacturerId();
 
         switch (entityManagementLoadCommand.getQueryType()) {
-            case RELOAD_CARS:
+            case RELOAD_CARS -> {
                 if (Objects.nonNull(carId)) {
                     this.inMemoryCarDAO.loadEntityFromDB(carId);
                 } else {
                     this.inMemoryCarDAO.loadEntitiesFromDB();
                 }
-                break;
-            case REMOVE_CAR:
-                this.inMemoryCarDAO.removeEntity(carId);
-                break;
-            case RELOAD_PICTURES:
+            }
+            case REMOVE_CAR -> this.inMemoryCarDAO.removeEntity(carId);
+            case RELOAD_PICTURES -> {
                 if (Objects.nonNull(carId)) {
                     List<Picture> picturesToReload = this.sqlPictureRepository.getByCarId(carId);
                     picturesToReload.parallelStream()
@@ -56,11 +54,9 @@ public class EntityManagementServiceImpl implements EntityManagementService {
                 } else {
                     this.inMemoryPictureDAO.loadEntitiesFromDB();
                 }
-                break;
-            case REMOVE_PICTURE:
-                this.inMemoryPictureDAO.removeEntity(entityManagementLoadCommand.getPictureId());
-                break;
-            case RELOAD_CAR_INTERNET_CONTENTS:
+            }
+            case REMOVE_PICTURE -> this.inMemoryPictureDAO.removeEntity(entityManagementLoadCommand.getPictureId());
+            case RELOAD_CAR_INTERNET_CONTENTS -> {
                 if (Objects.nonNull(carId)) {
                     List<CarInternetContent> contentsToReload = this.sqlCarInternetContentRepository.getByCarId(carId);
                     contentsToReload.parallelStream()
@@ -69,20 +65,16 @@ public class EntityManagementServiceImpl implements EntityManagementService {
                 } else {
                     this.inMemoryCarInternetContentDAO.loadEntitiesFromDB();
                 }
-                break;
-            case REMOVE_CAR_INTERNET_CONTENTS:
-                this.inMemoryCarInternetContentDAO.removeEntity(entityManagementLoadCommand.getCarInternetContentId());
-                break;
-            case RELOAD_MANUFACTURERS:
+            }
+            case REMOVE_CAR_INTERNET_CONTENTS -> this.inMemoryCarInternetContentDAO.removeEntity(entityManagementLoadCommand.getCarInternetContentId());
+            case RELOAD_MANUFACTURERS -> {
                 if (Objects.nonNull(manufacturerId)) {
                     this.inMemoryManufacturerDAO.loadEntityFromDB(manufacturerId);
                 } else {
                     this.inMemoryManufacturerDAO.loadEntitiesFromDB();
                 }
-                break;
-            case REMOVE_MANUFACTURERS:
-                this.inMemoryManufacturerDAO.removeEntity(entityManagementLoadCommand.getManufacturerId());
-                break;
+            }
+            case REMOVE_MANUFACTURERS -> this.inMemoryManufacturerDAO.removeEntity(entityManagementLoadCommand.getManufacturerId());
         }
     }
 }
