@@ -20,7 +20,7 @@ Technology Stack
 
 The technology stack is as follows:
 
-- **Java 8**
+- **Java 17**
 - **Spring Boot Framework**
 - **Hibernate**
 - **MySQL database**
@@ -34,7 +34,7 @@ Software Requirements
 
 And the software requirements are the following:
 
-- **JDK 8 or higher**
+- **JDK 17 or higher**
 - **MySQL database**
 
 The server will start on port `8080` by default, and the database should be listening on port `3306`. 
