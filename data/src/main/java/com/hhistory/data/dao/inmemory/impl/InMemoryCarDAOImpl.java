@@ -31,7 +31,7 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
 
     private InMemoryPictureDAO inMemoryPictureDAO;
     private SqlCarRepository   sqlCarRepository;
-    private List<Car> cars;
+    private List<Car>          cars;
 
     @Inject
     public InMemoryCarDAOImpl(InMemoryPictureDAO inMemoryPictureDAO,
@@ -44,100 +44,100 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     @Override
     public void loadEntitiesFromDB() {
         log.info("Loading Car entities in memory");
-        this.cars = new ArrayList<>();
-        this.sqlCarRepository.findAll()
-                             .iterator()
-                             .forEachRemaining(this.cars::add);
+        cars = new ArrayList<>();
+        sqlCarRepository.findAll()
+                        .iterator()
+                        .forEachRemaining(cars::add);
     }
 
     @Override
     public void loadEntityFromDB(Long id) {
         log.info("Loading Car: {} entity in memory", id);
-        Car carToReload = this.getById(id);
-        Car dbCar = this.sqlCarRepository.findOne(id);
+        var carToReload = getById(id);
+        var dbCar = sqlCarRepository.findOne(id);
 
         if (Objects.nonNull(dbCar)) {
             if (Objects.nonNull(carToReload)) {
-                int indexToReload = this.cars.indexOf(carToReload);
-                this.cars.set(indexToReload, dbCar);
+                var indexToReload = cars.indexOf(carToReload);
+                cars.set(indexToReload, dbCar);
             } else {
                 //we're loading a car that's not yet in memory because it has been just stored
-                this.cars.add(dbCar);
+                cars.add(dbCar);
             }
         } else {
             //removing a car from the memory that either never existed in the DB or has just been removed from it
-            this.cars.remove(carToReload);
+            cars.remove(carToReload);
         }
     }
 
     @Override
     public void removeEntity(Long id) {
         log.info("Removing Car: {} entity from the memory cache", id);
-        this.cars.parallelStream()
-                 .filter(car -> car.getId().equals(id))
-                 .findFirst()
-                 .ifPresent(this.cars::remove);
-    }
-
-    @Override
-    public Car getCarByPictureId(Long pictureId) {
-        return this.inMemoryPictureDAO.getEntities()
-                                      .parallelStream()
-                                      .filter(picture -> picture.getId().equals(pictureId))
-                                      .map(Picture::getCar)
-                                      .findFirst()
-                                      .orElse(null);
+        cars.parallelStream()
+            .filter(car -> car.getId().equals(id))
+            .findFirst()
+            .ifPresent(cars::remove);
     }
 
     @Override
     public Car getById(Long id) {
-        return this.cars.parallelStream()
-                        .filter(car -> car.getId().equals(id))
-                        .findFirst()
-                        .orElse(null);
-    }
-
-    @Override
-    public List<Car> getEntities() {
-        return this.cars;
-    }
-
-    @Override
-    public Car getByQueryCommand(CarQueryCommand queryCommand) {
-        return this.getByQueryCommandOrderedByProductionStartDate(queryCommand)
-                   .parallelStream()
+        return cars.parallelStream()
+                   .filter(car -> car.getId().equals(id))
                    .findFirst()
                    .orElse(null);
     }
 
     @Override
-    public List<Car> getByQueryCommandOrderedByProductionStartDate(CarQueryCommand queryCommand) {
-        Manufacturer manufacturer = queryCommand.getManufacturer();
-        Boolean visible = queryCommand.getVisible();
-        Long carId = queryCommand.getCarId();
-        Long engineId = queryCommand.getEngineId();
-        String modelName = queryCommand.getModelName();
+    public List<Car> getEntities() {
+        return cars;
+    }
 
-        return this.cars.parallelStream()
-                        .filter(car -> !Optional.ofNullable(manufacturer).isPresent() ||
-                                       car.getManufacturer().equals(manufacturer))
-                        .filter(car -> !Optional.ofNullable(visible).isPresent() ||
-                                       car.getVisible() == visible)
-                        .filter(car -> !Optional.ofNullable(carId).isPresent() ||
-                                       car.getId().equals(carId))
-                        .filter(car -> !Optional.ofNullable(engineId).isPresent() ||
-                                       car.getEngine().getId().equals(engineId))
-                        .filter(car -> !Optional.ofNullable(modelName).isPresent() ||
-                                       car.getNormalizedModelName().equals(Car.normalizeModelName(modelName)))
-                        .sorted(Comparator.comparing(Car::getProductionStartDate))
-                        .collect(Collectors.toList());
+    @Override
+    public Car getCarByPictureId(Long pictureId) {
+        return inMemoryPictureDAO.getEntities()
+                                 .parallelStream()
+                                 .filter(picture -> picture.getId().equals(pictureId))
+                                 .map(Picture::getCar)
+                                 .findFirst()
+                                 .orElse(null);
+    }
+
+    @Override
+    public Car getByQueryCommand(CarQueryCommand queryCommand) {
+        return getByQueryCommandOrderedByProductionStartDate(queryCommand)
+                .parallelStream()
+                .findFirst()
+                .orElse(null);
+    }
+
+    @Override
+    public List<Car> getByQueryCommandOrderedByProductionStartDate(CarQueryCommand queryCommand) {
+        var manufacturer = queryCommand.getManufacturer();
+        var visible = queryCommand.getVisible();
+        var carId = queryCommand.getCarId();
+        var engineId = queryCommand.getEngineId();
+        var modelName = queryCommand.getModelName();
+
+        return cars.parallelStream()
+                   .filter(car -> !Optional.ofNullable(manufacturer).isPresent() ||
+                                  car.getManufacturer().equals(manufacturer))
+                   .filter(car -> !Optional.ofNullable(visible).isPresent() ||
+                                  car.getVisible() == visible)
+                   .filter(car -> !Optional.ofNullable(carId).isPresent() ||
+                                  car.getId().equals(carId))
+                   .filter(car -> !Optional.ofNullable(engineId).isPresent() ||
+                                  car.getEngine().getId().equals(engineId))
+                   .filter(car -> !Optional.ofNullable(modelName).isPresent() ||
+                                  car.getNormalizedModelName().equals(Car.normalizeModelName(modelName)))
+                   .sorted(Comparator.comparing(Car::getProductionStartDate))
+                   .collect(Collectors.toList());
     }
 
     @Override
     public long countVisibleCars(Manufacturer manufacturer) {
-        return this.cars.parallelStream()
-                        .filter(car -> car.getManufacturer().equals(manufacturer))
-                        .filter(Car::getVisible)
-                        .count();
+        return cars.parallelStream()
+                   .filter(car -> car.getManufacturer().equals(manufacturer))
+                   .filter(Car::getVisible)
+                   .count();
     }
 }
