@@ -146,7 +146,7 @@ public class CMSCarEditController extends CMSBaseController {
                                           carInternetContentForm.setCar(car);
                                           return carInternetContentForm;
                                       })
-                                      .collect(Collectors.toList());
+                                      .toList();
     }
 
     @DeleteMapping(DELETE_URL)
@@ -197,7 +197,7 @@ public class CMSCarEditController extends CMSBaseController {
                 carInternetContents.stream()
                                    .map(this.carInternetContentFormFactory::buildFormFromEntity)
                                    .map(CarInternetContentFormAdapter::adapt)
-                                   .collect(Collectors.toList());
+                                   .toList();
 
         return new CarInternetContentEditFormCommand(carInternetContentForms);
     }

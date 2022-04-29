@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import javax.inject.Inject;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.hhistory.mvc.cms.controller.CMSBaseController.MANUFACTURERS;
 import static com.hhistory.mvc.controller.BaseControllerData.CARS;
@@ -66,6 +65,6 @@ public class InMemoryCarListModelFiller extends AbstractCarListModelFiller {
                                   .stream()
                                   .skip(paginationDTO.getFirstResult())
                                   .limit(paginationDTO.getItemsPerPage())
-                                  .collect(Collectors.toList());
+                                  .toList();
     }
 }

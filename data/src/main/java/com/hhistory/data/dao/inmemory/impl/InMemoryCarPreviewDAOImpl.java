@@ -14,7 +14,6 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryCarPreviewDAOImpl.IN_MEMORY_CAR_PREVIEW_DAO;
@@ -108,7 +107,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
     public Optional<Picture> getCarPreview(Long carId) {
         List<Picture> previewCandidates = previews.stream()
                                                   .filter(preview -> preview.getCar().getId().equals(carId))
-                                                  .collect(Collectors.toList());
+                                                  .toList();
 
         return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }

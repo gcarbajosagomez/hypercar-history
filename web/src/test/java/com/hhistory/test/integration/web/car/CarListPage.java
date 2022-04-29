@@ -1,15 +1,14 @@
 package com.hhistory.test.integration.web.car;
 
-import java.util.List;
-import java.util.Optional;
-
+import com.hhistory.test.integration.web.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.hhistory.test.integration.web.BasePage;
+import java.util.List;
+import java.util.Optional;
 
 public class CarListPage extends BasePage
 {
@@ -63,21 +62,17 @@ public class CarListPage extends BasePage
 														  		           .filter(page -> !page.getAttribute("class").equals("active"))
 														  		           .filter(page -> page.getText().equals(String.valueOf(pageNumber)))
 														  		           .findFirst();
-		if (inactivePageSelectors.isPresent())
-		{
-			inactivePageSelectors.get().findElement(By.cssSelector("a")).click();
-		}
+		inactivePageSelectors.ifPresent(webElement -> webElement.findElement(By.cssSelector("a")).click());
 	}
 	
 	public String getFirstCarListedDivId() {
-		Optional<WebElement> firstCarDiv = this.carListRowLocator.findElements(By.cssSelector("div")).stream().findFirst();
-		
-		if (firstCarDiv.isPresent())
-		{
-			return firstCarDiv.get().getAttribute("id");
-		}
-		
-		return null;
+		Optional<WebElement> firstCarDiv = this.carListRowLocator.findElements(By.cssSelector("div"))
+		                                                         .stream()
+		                                                         .findFirst();
+
+		return firstCarDiv.map(webElement -> webElement.getAttribute("id"))
+		                  .orElse(null);
+
 	}
 
     public int getNumberOfCarsDisplayed() {

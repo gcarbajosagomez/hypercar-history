@@ -1,14 +1,12 @@
 package com.hhistory.test.integration.web.index;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import com.hhistory.test.integration.web.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import com.hhistory.test.integration.web.BasePage;
+import java.util.List;
 
 public class IndexPage extends BasePage
 {
@@ -42,7 +40,9 @@ public class IndexPage extends BasePage
     public boolean carouselHasValidImages()
     {    	
     	List<WebElement> carouselItems = this.carouselInnerDivLocator.findElements(By.className("item"));	
-    	carouselItems.stream().filter(item -> this.validateCarouselPicture(item)).collect(Collectors.toList());
+    	carouselItems.stream()
+	                 .filter(this::validateCarouselPicture)
+	                 .toList();
     		
     	return !carouselItems.isEmpty();
     }
@@ -60,11 +60,8 @@ public class IndexPage extends BasePage
 				if (!pictureImg.getAttribute("src").isEmpty())
 				{
 					WebElement pictureCaption = picture.findElement(By.className("carousel-caption"));
-					
-					if (!pictureCaption.getAttribute("innerHTML").isEmpty())
-					{
-						return true;
-					}
+
+					return !pictureCaption.getAttribute("innerHTML").isEmpty();
 				}
 			}
 		}

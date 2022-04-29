@@ -14,7 +14,6 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.hhistory.data.dao.sql.SqlCarInternetContentRepository.CAR_INTERNET_CONTENT_REPOSITORY;
 import static com.hhistory.data.model.car.CarInternetContentType.REVIEW_ARTICLE;
@@ -94,7 +93,7 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
     public List<CarInternetContent> getAllVideos() {
         return this.carInternetContents.stream()
                                        .filter(content -> content.getType().equals(VIDEO))
-                                       .collect(Collectors.toList());
+                                       .toList();
     }
 
     @Override
@@ -102,7 +101,7 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
         return this.carInternetContents.stream()
                                        .filter(content -> content.getCar().getId().equals(carId) &&
                                                           content.getType().equals(VIDEO))
-                                       .collect(Collectors.toList());
+                                       .toList();
     }
 
     @Override
@@ -110,6 +109,6 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
         return this.carInternetContents.stream()
                                        .filter(content -> content.getCar().getId().equals(carId) &&
                                                           content.getType().equals(REVIEW_ARTICLE))
-                                       .collect(Collectors.toList());
+                                       .toList();
     }
 }

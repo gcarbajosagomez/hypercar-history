@@ -74,7 +74,7 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
                                                                  .matching(queryTerm)
                                                                  .createQuery();
                                           })
-                                          .collect(Collectors.toList());
+                                          .toList();
 
         BooleanJunction bool = queryBuilder.bool();
         for (Query query : queries) {
@@ -112,7 +112,7 @@ public class SqlContentSearchDAOImpl implements SqlContentSearchDAO {
             List<SortField> sortFields = orderByMap.keySet()
                                                    .stream()
                                                    .map((orderBy) -> new SortField(orderBy, Type.LONG))
-                                                   .collect(Collectors.toList());
+                                                   .toList();
 
             Sort sort = new Sort(sortFields.toArray(new SortField[] {}));
             searchQuery.setSort(sort);

@@ -69,7 +69,7 @@ public class CarDetailsController extends BaseController {
                                                     .getVideosByCarId(carId)
                                                     .stream()
                                                     .map(youTubeVideoFactory::buildFromCarInternetContent)
-                                                    .collect(Collectors.toList());
+                                                    .toList();
             model.addAttribute(YOUTUBE_VIDEOS, youTubeVideos);
             model.addAttribute(CAR_INTERNET_CONTENT_REVIEW_ARTICLES,
                                super.getInMemoryCarInternetContentDAO().getReviewArticlesByCarId(carId));

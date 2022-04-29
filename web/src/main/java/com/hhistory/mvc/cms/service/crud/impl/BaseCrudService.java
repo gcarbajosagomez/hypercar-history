@@ -50,7 +50,7 @@ public abstract class BaseCrudService implements CrudService {
         List<String> bindingErrorMessages = result.getAllErrors()
                                                   .stream()
                                                   .map(ObjectError::toString)
-                                                  .collect(Collectors.toList());
+                                                  .toList();
 
         List<String> errorMessages = new ArrayList<>();
         errorMessages.add(errorMessage);

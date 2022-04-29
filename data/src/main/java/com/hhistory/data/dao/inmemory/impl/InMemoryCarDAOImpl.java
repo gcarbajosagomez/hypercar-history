@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * {@link Car} {@link InMemoryDAO}
@@ -119,18 +118,18 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
         var modelName = queryCommand.getModelName();
 
         return cars.parallelStream()
-                   .filter(car -> !Optional.ofNullable(manufacturer).isPresent() ||
+                   .filter(car -> Optional.ofNullable(manufacturer).isEmpty() ||
                                   car.getManufacturer().equals(manufacturer))
-                   .filter(car -> !Optional.ofNullable(visible).isPresent() ||
+                   .filter(car -> Optional.ofNullable(visible).isEmpty() ||
                                   car.getVisible() == visible)
-                   .filter(car -> !Optional.ofNullable(carId).isPresent() ||
+                   .filter(car -> Optional.ofNullable(carId).isEmpty() ||
                                   car.getId().equals(carId))
-                   .filter(car -> !Optional.ofNullable(engineId).isPresent() ||
+                   .filter(car -> Optional.ofNullable(engineId).isEmpty() ||
                                   car.getEngine().getId().equals(engineId))
-                   .filter(car -> !Optional.ofNullable(modelName).isPresent() ||
+                   .filter(car -> Optional.ofNullable(modelName).isEmpty() ||
                                   car.getNormalizedModelName().equals(Car.normalizeModelName(modelName)))
                    .sorted(Comparator.comparing(Car::getProductionStartDate))
-                   .collect(Collectors.toList());
+                   .toList();
     }
 
     @Override

@@ -75,7 +75,7 @@ public class ManufacturerFormFactory implements EntityFormFactory<Manufacturer, 
             }
 
             if ((logoFile.isPresent() && logoFile.get().getSize() > 0) &&
-                (!logo.isPresent() || logo.get().length() == 0)) {
+                (logo.isEmpty() || logo.get().length() == 0)) {
                 logo = Optional.of(this.pictureUtil.createPictureFromMultipartFile(logoFile.get(),
                                                                                    this.sqlPictureDAO));
             }

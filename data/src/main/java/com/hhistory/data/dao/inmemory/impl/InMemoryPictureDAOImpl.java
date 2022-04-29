@@ -108,7 +108,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
         return this.getByCarId(carId)
                    .parallelStream()
                    .map(Picture::getId)
-                   .collect(Collectors.toList());
+                   .toList();
     }
 
     @Override
@@ -116,14 +116,14 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
         return this.pictures.parallelStream()
                             .filter(picture -> Objects.nonNull(picture.getCar()) && picture.getCar().getId().equals(carId))
                             .sorted(comparing(Picture::getGalleryPosition, nullsFirst(naturalOrder())))
-                            .collect(Collectors.toList());
+                            .toList();
     }
 
     @Override
     public List<Long> getAllIds() {
         return this.pictures.parallelStream()
                             .map(Picture::getId)
-                            .collect(Collectors.toList());
+                            .toList();
     }
 
     @Override
@@ -133,7 +133,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                             .filter(picture -> picture.getCar().getVisible())
                             .filter(Picture::getEligibleForPreview)
                             .map(Picture::getId)
-                            .collect(Collectors.toList());
+                            .toList();
     }
 
     @Override
@@ -157,7 +157,7 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                                  Car car = picture.getCar();
                                  return (Objects.nonNull(car) && car.getId().equals(carId)) && picture.getEligibleForPreview();
                              })
-                             .collect(Collectors.toList());
+                             .toList();
 
         return this.pictureUtil.getPreviewPictureFromCandidates(previewCandidates);
     }

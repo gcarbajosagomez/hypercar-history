@@ -151,7 +151,7 @@ public class CMSCarController extends CMSBaseController {
                                           carInternetContentForm.setCar(car);
                                           return carInternetContentForm;
                                       })
-                                      .collect(Collectors.toList());
+                                      .toList();
     }
 
     @ModelAttribute(CAR_EDIT_FORM_COMMAND)

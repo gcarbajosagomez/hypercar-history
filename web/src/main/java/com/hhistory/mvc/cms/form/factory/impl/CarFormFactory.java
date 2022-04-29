@@ -172,7 +172,7 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
             if (materialsString.contains(CAR_MATERIAL_STRING_SEPARATOR)) {
                 materialsList = Stream.of(materialsString.split(CAR_MATERIAL_STRING_SEPARATOR))
                                       .map(CarMaterial::map)
-                                      .collect(Collectors.toList());
+                                      .toList();
             } else {
                 materialsList.add(CarMaterial.map(materialsString));
             }
@@ -195,7 +195,7 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
                                                                   return null;
                                                               })
                                                               .filter(Objects::nonNull)
-                                                              .collect(Collectors.toList());
+                                                              .toList();
 
         String carChassisMaterials = null;
         if (!carChassisMaterialsStrings.isEmpty()) {

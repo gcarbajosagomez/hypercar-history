@@ -86,6 +86,6 @@ public class CmsInMemoryCarListModelFiller extends InMemoryCarListModelFiller {
                                   .stream()
                                   .skip(paginationDTO.getFirstResult())
                                   .limit(paginationDTO.getItemsPerPage())
-                                  .collect(Collectors.toList());
+                                  .toList();
     }
 }

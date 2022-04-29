@@ -104,14 +104,14 @@ public class ContentSearchController extends BaseController {
                     .map(manufacturer -> cars.stream()
                                              .filter(car -> ((Car) car).getManufacturer().equals(manufacturer))
                                              .filter(car -> ((Car) car).getVisible())
-                                             .collect(Collectors.toList()))
+                                             .toList())
                     .orElse(cars);
     }
 
     private List<GenericEntity> removeNonVisibleCars(List<GenericEntity> cars) {
         return cars.stream()
                    .filter(car -> ((Car) car).getVisible())
-                   .collect(Collectors.toList());
+                   .toList();
     }
 
     private List<GenericEntity> extractModelsListFromSearchResults(List<GenericEntity> searchResults,

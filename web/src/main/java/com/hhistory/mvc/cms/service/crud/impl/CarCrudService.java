@@ -122,7 +122,7 @@ public class CarCrudService extends BaseCrudService {
                                   .filter(Objects::nonNull)
                                   .sorted(Comparator.comparing(Picture::getGalleryPosition))
                                   .map(picture -> new PictureEditCommand(picture, null))
-                                  .collect(Collectors.toList());
+                                  .toList();
     }
 
     @Override

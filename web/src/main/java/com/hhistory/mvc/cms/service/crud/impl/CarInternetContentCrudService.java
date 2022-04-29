@@ -89,7 +89,7 @@ public class CarInternetContentCrudService extends BaseCrudService {
                         }
                         return carInternetContentForm;
                     })
-                    .collect(Collectors.toList());
+                    .toList();
 
             ((CarInternetContentEditFormCommandAdapter) editFormCommand).setEditForms(editForms);
         } else {
