@@ -18,27 +18,31 @@ public interface SqlPictureRepository extends CrudRepository<Picture, Long> {
 
     String PICTURE_REPOSITORY = "pictureRepository";
 
-    @Query("SELECT picture " +
-           "FROM Picture AS picture JOIN picture.car as car " +
-           "WHERE car.id = :carId " +
-           "ORDER BY picture.galleryPosition ASC")
+    @Query("""
+            SELECT picture
+            FROM Picture AS picture JOIN picture.car as car
+            WHERE car.id = :carId
+            ORDER BY picture.galleryPosition ASC""")
     List<Picture> getByCarId(@Param("carId") Long carId);
 
-    @Query("SELECT picture " +
-           "FROM Picture AS picture JOIN picture.car as car " +
-           "WHERE car.id = :carId " +
-           "AND picture.eligibleForPreview = true")
+    @Query("""
+            SELECT picture 
+            FROM Picture AS picture JOIN picture.car as car 
+            WHERE car.id = :carId 
+            AND picture.eligibleForPreview = true""")
     List<Picture> getCarPreviews(@Param("carId") Long carId);
 
-    @Query("SELECT picture " +
-           "FROM Picture AS picture " +
-           "WHERE car.visible = true " +
-           "AND picture.eligibleForPreview = true")
+    @Query("""
+            SELECT picture
+            FROM Picture AS picture
+            WHERE car.visible = true
+            AND picture.eligibleForPreview = true""")
     List<Picture> getAllPreviews();
 
-    @Query("SELECT COUNT(picture.id) " +
-           "FROM Picture AS picture " +
-           "WHERE car.visible = true " +
-           "AND picture.eligibleForPreview = true")
+    @Query("""
+            SELECT COUNT(picture.id)
+            FROM Picture AS picture
+            WHERE car.visible = true
+            AND picture.eligibleForPreview = true""")
     Long countAllPreviews();
 }

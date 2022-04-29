@@ -18,8 +18,9 @@ public interface SqlCarInternetContentRepository extends CrudRepository<CarInter
 
     String CAR_INTERNET_CONTENT_REPOSITORY = "carInternetContentRepository";
 
-    @Query("SELECT carInternetContent " +
-           "FROM CarInternetContent carInternetContent JOIN carInternetContent.car car " +
-           "WHERE car.id = :carId")
+    @Query("""
+            SELECT carInternetContent
+            FROM CarInternetContent carInternetContent JOIN carInternetContent.car car
+            WHERE car.id = :carId""")
     List<CarInternetContent> getByCarId(@Param("carId") Long carId);
 }
