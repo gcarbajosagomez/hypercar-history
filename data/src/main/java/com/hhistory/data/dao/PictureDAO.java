@@ -39,7 +39,7 @@ public interface PictureDAO {
      *
      * @return the {@link List} of {@link Picture} ids
      */
-    List getAllIds();
+    List<Long> getAllIds();
 
     /**
      * Get all the {@link Picture#id}s of {@link Picture}s whose {@link Picture#eligibleForPreview} is true and

@@ -8,7 +8,6 @@ import com.hhistory.data.model.util.PictureUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
@@ -96,7 +95,7 @@ public class InMemoryCarPreviewDAOImpl implements InMemoryPictureDAO {
     }
 
     @Override
-    public List getAllIds() {
+    public List<Long> getAllIds() {
         throw new UnsupportedOperationException();
     }
 
