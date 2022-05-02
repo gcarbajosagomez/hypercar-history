@@ -96,12 +96,12 @@ public abstract class CMSBaseController extends BaseController {
     @Getter
     @Inject
     @Named(MANUFACTURER_REPOSITORY)
-    private CrudRepository sqlManufacturerRepository;
+    private CrudRepository<Manufacturer, Long> sqlManufacturerRepository;
 
     @Getter
     @Inject
     @Named(ENGINE_REPOSITORY)
-    private CrudRepository sqlEngineRepository;
+    private CrudRepository<Engine, Long> sqlEngineRepository;
 
     @Getter
     @Inject

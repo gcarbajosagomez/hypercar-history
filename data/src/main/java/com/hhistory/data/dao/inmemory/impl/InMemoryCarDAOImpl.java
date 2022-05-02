@@ -53,20 +53,18 @@ public class InMemoryCarDAOImpl implements InMemoryCarDAO {
     public void loadEntityFromDB(Long id) {
         log.info("Loading Car: {} entity in memory", id);
         var carToReload = getById(id);
-        var dbCar = sqlCarRepository.findOne(id);
-
-        if (Objects.nonNull(dbCar)) {
-            if (Objects.nonNull(carToReload)) {
-                var indexToReload = cars.indexOf(carToReload);
-                cars.set(indexToReload, dbCar);
-            } else {
-                //we're loading a car that's not yet in memory because it has been just stored
-                cars.add(dbCar);
-            }
-        } else {
-            //removing a car from the memory that either never existed in the DB or has just been removed from it
-            cars.remove(carToReload);
-        }
+        sqlCarRepository.findById(id)
+                        .ifPresentOrElse(dbCar -> {
+                                             if (Objects.nonNull(carToReload)) {
+                                                 var indexToReload = cars.indexOf(carToReload);
+                                                 cars.set(indexToReload, dbCar);
+                                             } else {
+                                                 //we're loading a car that's not yet in memory because it has been just stored
+                                                 cars.add(dbCar);
+                                             }
+                                         },
+                                         //removing a car from the memory that either never existed in the DB or has just been removed from it
+                                         () -> cars.remove(carToReload));
     }
 
     @Override

@@ -2,9 +2,13 @@ package com.hhistory.mvc.cms.controller;
 
 import com.hhistory.data.model.car.Car;
 import com.hhistory.data.model.car.CarInternetContent;
-import com.hhistory.mvc.cms.command.*;
+import com.hhistory.mvc.cms.command.CarEditFormCommand;
+import com.hhistory.mvc.cms.command.CarInternetContentEditFormCommand;
+import com.hhistory.mvc.cms.command.EditFormCommand;
+import com.hhistory.mvc.cms.command.EntityManagementLoadCommand;
 import com.hhistory.mvc.cms.controller.util.CMSCarControllerUtil;
 import com.hhistory.mvc.cms.dto.CrudOperationDTO;
+import com.hhistory.mvc.cms.form.CarEditForm;
 import com.hhistory.mvc.cms.form.CarInternetContentForm;
 import com.hhistory.mvc.cms.form.CarInternetContentFormAdapter;
 import com.hhistory.mvc.cms.form.EditForm;
@@ -27,7 +31,6 @@ import javax.inject.Named;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static com.hhistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR;
 import static com.hhistory.mvc.cms.controller.CMSBaseController.CARS_URL;
@@ -48,14 +51,14 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @Slf4j
 public class CMSCarEditController extends CMSBaseController {
 
-    private CrudService                   carCrudService;
-    private CrudService                   carInternetContentCrudService;
-    private CMSCarControllerUtil          cmsCarControllerUtil;
-    private EntityFormFactory             carFormFactory;
-    private CarInternetContentFormFactory carInternetContentFormFactory;
-    private ModelFiller                   carModelFiller;
-    private CarEditModelFiller            carEditModelFiller;
-    private EntityManagementService       entityManagementService;
+    private CrudService                         carCrudService;
+    private CrudService                         carInternetContentCrudService;
+    private CMSCarControllerUtil                cmsCarControllerUtil;
+    private EntityFormFactory<Car, CarEditForm> carFormFactory;
+    private CarInternetContentFormFactory       carInternetContentFormFactory;
+    private ModelFiller                         carModelFiller;
+    private CarEditModelFiller                  carEditModelFiller;
+    private EntityManagementService             entityManagementService;
 
     @Inject
     public CMSCarEditController(@Named(CAR_CRUD_SERVICE) CrudService carCrudService,
@@ -81,6 +84,19 @@ public class CMSCarEditController extends CMSBaseController {
                                              @ModelAttribute(CAR_EDIT_FORM_COMMAND) EditFormCommand carFormEditCommand) {
         this.fillModel(model, carFormEditCommand);
         return new ModelAndView(CAR_EDIT_VIEW_NAME);
+    }
+
+    /**
+     * Fill the supplied {@link Model}
+     *
+     * @param model
+     * @param carFormEditCommand
+     */
+    @Override
+    protected Model fillModel(Model model, EditFormCommand carFormEditCommand) {
+        model = this.carModelFiller.fillModel(model);
+        model = this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
+        return model;
     }
 
     @RequestMapping(value = EDIT_URL,
@@ -184,10 +200,13 @@ public class CMSCarEditController extends CMSBaseController {
 
     @ModelAttribute(CAR_EDIT_FORM_COMMAND)
     public EditFormCommand createCarEditFormCommand(@PathVariable(ID) Long carId) {
-        Car car = (Car) super.getSqlCarRepository().findOne(carId);
-        EditForm carEditForm = this.carFormFactory.buildFormFromEntity(car);
-
-        return new CarEditFormCommand(carEditForm);
+        return super.getSqlCarRepository()
+                    .findById(carId)
+                    .map(car -> {
+                        EditForm carEditForm = this.carFormFactory.buildFormFromEntity(car);
+                        return new CarEditFormCommand(carEditForm);
+                    })
+                    .orElse(new CarEditFormCommand());
     }
 
     @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
@@ -200,18 +219,5 @@ public class CMSCarEditController extends CMSBaseController {
                                    .toList();
 
         return new CarInternetContentEditFormCommand(carInternetContentForms);
-    }
-
-    /**
-     * Fill the supplied {@link Model}
-     *
-     * @param model
-     * @param carFormEditCommand
-     */
-    @Override
-    protected Model fillModel(Model model, EditFormCommand carFormEditCommand) {
-        model = this.carModelFiller.fillModel(model);
-        model = this.carEditModelFiller.fillCarEditModel(model, carFormEditCommand);
-        return model;
     }
 }

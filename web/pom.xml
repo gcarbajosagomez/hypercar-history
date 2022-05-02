@@ -20,13 +20,13 @@
         <project.resources.path>src/main/resources</project.resources.path>
         <systemProperty.base.path>com/hhistory/systemproperty</systemProperty.base.path>
 
-        <javax.mail.version>1.4.7</javax.mail.version>
-        <com.google.guava.version>19.0</com.google.guava.version>
-        <com.jackson-datatype-jdk8.version>2.8.10</com.jackson-datatype-jdk8.version>
+        <jakarta.mail.version>2.1.0</jakarta.mail.version>
+        <com.google.guava.version>31.1-jre</com.google.guava.version>
+        <com.jackson-datatype-jdk8.version>2.13.2</com.jackson-datatype-jdk8.version>
         <org.springsecurity.version>4.0.3.RELEASE</org.springsecurity.version>
-        <org.spring-boot-log4j.version>1.3.6.RELEASE</org.spring-boot-log4j.version>
+        <org.spring-boot-log4j.version>1.3.8.RELEASE</org.spring-boot-log4j.version>
         <org.spring-mobile-device.version>1.1.5.RELEASE</org.spring-mobile-device.version>
-        <commons.collection.version>3.2.1</commons.collection.version>
+        <commons.collection.version>4.4</commons.collection.version>
         <org.selenium.version>2.53.0</org.selenium.version>
         <org.mockito-all.version>1.10.19</org.mockito-all.version>
         <xml-apis.version>1.4.01</xml-apis.version>
@@ -112,9 +112,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>${javax.mail.version}</version>
+            <groupId>jakarta.mail</groupId>
+            <artifactId>jakarta.mail-api</artifactId>
+            <version>${jakarta.mail.version}</version>
         </dependency>
 
         <dependency>
@@ -171,8 +171,8 @@
         </dependency>
 
         <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
             <version>${commons.collection.version}</version>
             <scope>runtime</scope>
         </dependency>

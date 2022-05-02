@@ -37,8 +37,8 @@ public class CMSEngineEditController extends CMSBaseController {
 
     private static final String ENGINE_EDIT_FORM_COMMAND = "EEFC";
 
-    private EntityFormFactory engineFormFactory;
-    private CrudService       engineCrudService;
+    private EntityFormFactory<Engine, EngineEditForm> engineFormFactory;
+    private CrudService                               engineCrudService;
 
     @Inject
     public CMSEngineEditController(@Named(ENGINE_CRUD_SERVICE) CrudService engineCrudService,
@@ -75,9 +75,12 @@ public class CMSEngineEditController extends CMSBaseController {
         EditFormCommand command = new EngineEditFormCommand();
 
         if (Objects.nonNull(engineId)) {
-            Engine engine = (Engine) super.getSqlEngineRepository().findOne(engineId);
-            EngineEditForm engineEditForm = (EngineEditForm) this.engineFormFactory.buildFormFromEntity(engine);
-            command.setEditForm(engineEditForm);
+            super.getSqlEngineRepository()
+                 .findById(engineId)
+                 .ifPresent(engine -> {
+                     EngineEditForm engineEditForm = engineFormFactory.buildFormFromEntity(engine);
+                     command.setEditForm(engineEditForm);
+                 });
         }
 
         return command;

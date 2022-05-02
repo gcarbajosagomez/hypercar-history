@@ -51,20 +51,18 @@ public class InMemoryCarInternetContentDAOImpl implements InMemoryCarInternetCon
     public void loadEntityFromDB(Long id) {
         log.info("Loading CarInternetContent: {} entity in memory", id);
         CarInternetContent contentToReload = this.getById(id);
-        CarInternetContent dbContent = this.sqlCarInternetContentRepository.findOne(id);
-
-        if (Objects.nonNull(dbContent)) {
-            if (Objects.nonNull(contentToReload)) {
-                int indexToReload = this.carInternetContents.indexOf(contentToReload);
-                this.carInternetContents.set(indexToReload, dbContent);
-            } else {
-                //we're loading a car that's not yet in memory because it has been just stored
-                this.carInternetContents.add(dbContent);
-            }
-        } else {
-            //removing a car from the memory that either never existed in the DB or has just been removed from it
-            this.carInternetContents.remove(contentToReload);
-        }
+        sqlCarInternetContentRepository.findById(id)
+                                       .ifPresentOrElse(dbContent -> {
+                                                            if (Objects.nonNull(contentToReload)) {
+                                                                int indexToReload = this.carInternetContents.indexOf(contentToReload);
+                                                                this.carInternetContents.set(indexToReload, dbContent);
+                                                            } else {
+                                                                //we're loading a car that's not yet in memory because it has been just stored
+                                                                this.carInternetContents.add(dbContent);
+                                                            }
+                                                        },
+                                                        //removing a car from the memory that either never existed in the DB or has just been removed from it
+                                                        () -> carInternetContents.remove(contentToReload));
     }
 
     @Override

@@ -10,7 +10,6 @@ import com.hhistory.data.model.util.PictureUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.hhistory.data.dao.inmemory.impl.InMemoryPictureDAOImpl.IN_MEMORY_PICTURE_DAO;
@@ -76,22 +74,20 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
     public void loadEntityFromDB(Long id) {
         log.info("Loading Picture: {} entity in memory", id);
         Picture pictureToReload = this.getById(id);
-        Picture dbPicture = this.sqlPictureRepository.findOne(id);
-
-        if (Objects.nonNull(dbPicture)) {
-            if (Objects.nonNull(pictureToReload)) {
-                int indexToReload = this.pictures.indexOf(pictureToReload);
-                this.pictures.set(indexToReload, dbPicture);
-            } else {
-                //we're loading a picture that's not yet in memory because it has been just stored
-                //a BLOB object that has been just stored needs to be refreshed before its content can be read for some reason
-                this.sqlPictureDAO.getCurrentSession().refresh(dbPicture);
-                this.pictures.add(dbPicture);
-            }
-        } else {
-            //removing a picture from the memory that either never existed in the DB or has just been removed from it
-            this.pictures.remove(pictureToReload);
-        }
+        sqlPictureRepository.findById(id)
+                            .ifPresentOrElse(dbPicture -> {
+                                                 if (Objects.nonNull(pictureToReload)) {
+                                                     int indexToReload = this.pictures.indexOf(pictureToReload);
+                                                     this.pictures.set(indexToReload, dbPicture);
+                                                 } else {
+                                                     //we're loading a picture that's not yet in memory because it has been just stored
+                                                     //a BLOB object that has been just stored needs to be refreshed before its content can be read for some reason
+                                                     this.sqlPictureDAO.getCurrentSession().refresh(dbPicture);
+                                                     this.pictures.add(dbPicture);
+                                                 }
+                                             },
+                                             //removing a picture from the memory that either never existed in the DB or has just been removed from it
+                                             () -> pictures.remove(pictureToReload));
     }
 
     @Override
@@ -101,6 +97,19 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                      .filter(picture -> picture.getId().equals(id))
                      .findFirst()
                      .ifPresent(this.pictures::remove);
+    }
+
+    @Override
+    public List<Picture> getEntities() {
+        return this.pictures;
+    }
+
+    @Override
+    public Picture getById(Long pictureId) {
+        return this.pictures.parallelStream()
+                            .filter(picture -> picture.getId().equals(pictureId))
+                            .findFirst()
+                            .orElse(null);
     }
 
     @Override
@@ -134,19 +143,6 @@ public class InMemoryPictureDAOImpl implements InMemoryPictureDAO {
                             .filter(Picture::getEligibleForPreview)
                             .map(Picture::getId)
                             .toList();
-    }
-
-    @Override
-    public Picture getById(Long pictureId) {
-        return this.pictures.parallelStream()
-                            .filter(picture -> picture.getId().equals(pictureId))
-                            .findFirst()
-                            .orElse(null);
-    }
-
-    @Override
-    public List<Picture> getEntities() {
-        return this.pictures;
     }
 
     @Override

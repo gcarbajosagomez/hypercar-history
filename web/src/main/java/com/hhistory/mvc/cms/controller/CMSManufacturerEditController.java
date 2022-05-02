@@ -43,11 +43,11 @@ import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 @RequestMapping(CMS_CONTEXT + MANUFACTURERS_URL + "/{" + ID + "}")
 public class CMSManufacturerEditController extends CMSBaseController {
 
-    private CMSManufacturerControllerUtil cmsManufacturerControllerUtil;
-    private CrudService                   manufacturerCrudService;
-    private EntityFormFactory             manufacturerFormFactory;
-    private ManufacturerModelFiller       manufacturerModelFiller;
-    private EntityManagementService       entityManagementService;
+    private CMSManufacturerControllerUtil                         cmsManufacturerControllerUtil;
+    private CrudService                                           manufacturerCrudService;
+    private EntityFormFactory<Manufacturer, ManufacturerEditForm> manufacturerFormFactory;
+    private ManufacturerModelFiller                               manufacturerModelFiller;
+    private EntityManagementService                               entityManagementService;
 
     @Inject
     public CMSManufacturerEditController(@Named(MANUFACTURER_CRUD_SERVICE) CrudService manufacturerCrudService,
@@ -66,6 +66,12 @@ public class CMSManufacturerEditController extends CMSBaseController {
     public ModelAndView handleEditManufacturer(Model model) {
         this.fillModel(model);
         return new ModelAndView(MANUFACTURER_EDIT_VIEW_NAME);
+    }
+
+    @Override
+    protected Model fillModel(Model model) {
+        this.manufacturerModelFiller.fillModel(model);
+        return model;
     }
 
     @RequestMapping(value = EDIT_URL, method = {POST, PUT})
@@ -129,17 +135,12 @@ public class CMSManufacturerEditController extends CMSBaseController {
 
     @ModelAttribute(MANUFACTURER_EDIT_FORM_COMMAND)
     public ManufacturerEditFormCommand createCarEditFormCommand(@PathVariable(ID) Long manufacturerId) {
-        Manufacturer manufacturer = (Manufacturer) super.getSqlManufacturerRepository().findOne(manufacturerId);
-        ManufacturerEditForm manufacturerEditForm =
-                (ManufacturerEditForm) this.manufacturerFormFactory.buildFormFromEntity(manufacturer);
-        ManufacturerEditFormCommand command = new ManufacturerEditFormCommand(manufacturerEditForm);
-
-        return command;
-    }
-
-    @Override
-    protected Model fillModel(Model model) {
-        this.manufacturerModelFiller.fillModel(model);
-        return model;
+        return super.getSqlManufacturerRepository()
+                    .findById(manufacturerId)
+                    .map(manufacturer -> {
+                        ManufacturerEditForm manufacturerEditForm = manufacturerFormFactory.buildFormFromEntity(manufacturer);
+                        return new ManufacturerEditFormCommand(manufacturerEditForm);
+                    })
+                    .orElse(new ManufacturerEditFormCommand());
     }
 }

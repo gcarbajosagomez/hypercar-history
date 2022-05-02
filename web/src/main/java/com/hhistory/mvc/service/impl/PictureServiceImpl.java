@@ -82,7 +82,8 @@ public class PictureServiceImpl implements PictureService {
     }
 
     private Picture loadById(Long pictureId) {
-        return Optional.ofNullable(this.inMemoryPictureDAO.getById(pictureId))
-                       .orElse(this.sqlPictureRepository.findOne(pictureId));
+        return Optional.ofNullable(inMemoryPictureDAO.getById(pictureId))
+                       .orElse(sqlPictureRepository.findById(pictureId)
+                                                   .orElse(null));
     }
 }

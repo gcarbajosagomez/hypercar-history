@@ -45,20 +45,19 @@ public class InMemoryManufacturerDAOImpl implements InMemoryManufacturerDAO {
     public void loadEntityFromDB(Long id) {
         log.info("Loading Manufacturer: {} entity in memory", id);
         Manufacturer manufacturer = this.getById(id);
-        Manufacturer dbContent = this.sqlManufacturerRepository.findOne(id);
+        sqlManufacturerRepository.findById(id)
+                                 .ifPresentOrElse(dbContent -> {
+                                                      if (Objects.nonNull(manufacturer)) {
+                                                          int indexToReload = this.manufacturers.indexOf(manufacturer);
+                                                          this.manufacturers.set(indexToReload, dbContent);
+                                                      } else {
+                                                          //we're loading a car that's not yet in memory because it has been just stored
+                                                          this.manufacturers.add(dbContent);
+                                                      }
+                                                  },
+                                                  //removing a car from the memory that either never existed in the DB or has just been removed from it
+                                                  () -> manufacturers.remove(manufacturer));
 
-        if (Objects.nonNull(dbContent)) {
-            if (Objects.nonNull(manufacturer)) {
-                int indexToReload = this.manufacturers.indexOf(manufacturer);
-                this.manufacturers.set(indexToReload, dbContent);
-            } else {
-                //we're loading a car that's not yet in memory because it has been just stored
-                this.manufacturers.add(dbContent);
-            }
-        } else {
-            //removing a car from the memory that either never existed in the DB or has just been removed from it
-            this.manufacturers.remove(manufacturer);
-        }
     }
 
     @Override

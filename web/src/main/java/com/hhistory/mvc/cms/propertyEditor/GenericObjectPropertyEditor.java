@@ -36,8 +36,9 @@ public class GenericObjectPropertyEditor<TYPE extends GenericEntity> extends Pro
     @Override
     public void setAsText(String idText) throws IllegalArgumentException {
         if (!StringUtils.isEmpty(idText)) {
-            Long id = new Long(idText);
-            super.setValue(this.crudRepository.findOne(id));
+            Long id = Long.valueOf(idText);
+            super.setValue(crudRepository.findById(id)
+                                         .orElse(null));
         } else {
             super.setValue(null);
         }

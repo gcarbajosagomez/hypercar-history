@@ -6,20 +6,21 @@ import com.hhistory.mvc.manufacturer.Manufacturer;
 import com.hhistory.mvc.springframework.filter.PathVariableLocaleFilter;
 import com.hhistory.mvc.springframework.interceptor.LocaleChangeInterceptor;
 import com.hhistory.mvc.springframework.resource.ManufacturerBasedResourceResolver;
-import freemarker.template.TemplateException;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.mobile.device.DeviceHandlerMethodArgumentResolver;
+import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.AntPathMatcher;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-import java.io.IOException;
 import java.util.*;
 
 import static com.hhistory.mvc.command.PictureLoadAction.LOAD_CAR_PICTURE;
@@ -40,7 +41,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 @ComponentScan(basePackages = {"com.hhistory.mvc"})
 @Import(SqlDatabaseConfig.class)
 @PropertySource(value = "classpath:" + PACKAGES_BASENAME + "systemproperty/application.properties")
-public class MainServletConfig extends WebMvcConfigurerAdapter {
+public class MainServletConfig implements WebMvcConfigurer {
 
     public static final String PACKAGES_BASENAME = "com/hhistory/";
 
@@ -69,7 +70,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FreeMarkerConfigurer freemarkerConfigurer() throws IOException, TemplateException {
+    public FreeMarkerConfigurer freemarkerConfigurer() {
         FreeMarkerConfigurer freemarkerConfigurer = new FreeMarkerConfigurer();
         freemarkerConfigurer.setTemplateLoaderPaths("classpath:/" + PACKAGES_BASENAME + "freemarker/");
         freemarkerConfigurer.setDefaultEncoding(FREEMARKER_ENCODING);
@@ -104,11 +105,11 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     @Bean
     public LocaleChangeInterceptor localeChangeInterceptor() {
-        return new LocaleChangeInterceptor(this.localeResolver());
+        return new LocaleChangeInterceptor(cookieLocaleResolver());
     }
 
     @Bean
-    public CookieLocaleResolver localeResolver() {
+    public CookieLocaleResolver cookieLocaleResolver() {
         CookieLocaleResolver localeResolver = new CookieLocaleResolver();
         localeResolver.setDefaultLocale(ENGLISH);
         //in order for the cookie to be accessible via Javascript for example
@@ -127,8 +128,8 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public FilterRegistrationBean filterRegistration() {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
+    public FilterRegistrationBean<PathVariableLocaleFilter> filterRegistration() {
+        FilterRegistrationBean<PathVariableLocaleFilter> registration = new FilterRegistrationBean<>();
         registration.setFilter(new PathVariableLocaleFilter());
         registration.addUrlPatterns("*");
         registration.addInitParameter(LANGUAGE_DATA, Language.ENGLISH.getIsoCode());
@@ -139,11 +140,10 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-        configurer.favorPathExtension(false);
         configurer.favorParameter(true);
         configurer.parameterName("mediaType");
         configurer.ignoreAcceptHeader(true);
-        configurer.useJaf(false);
+        configurer.useRegisteredExtensionsOnly(false);
         configurer.defaultContentType(APPLICATION_JSON);
         configurer.mediaType("json", APPLICATION_JSON);
     }
@@ -163,6 +163,7 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
 
         registry.addInterceptor(this.localeChangeInterceptor());
         registry.addInterceptor(webContentInterceptor);
+        registry.addInterceptor(deviceResolverHandlerInterceptor());
     }
 
     @Override
@@ -191,5 +192,22 @@ public class MainServletConfig extends WebMvcConfigurerAdapter {
         AntPathMatcher matcher = new AntPathMatcher();
         matcher.setCaseSensitive(false);
         configurer.setPathMatcher(matcher);
+    }
+
+    @Bean
+    public DeviceResolverHandlerInterceptor
+    deviceResolverHandlerInterceptor() {
+        return new DeviceResolverHandlerInterceptor();
+    }
+
+    @Bean
+    public DeviceHandlerMethodArgumentResolver
+    deviceHandlerMethodArgumentResolver() {
+        return new DeviceHandlerMethodArgumentResolver();
+    }
+
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(deviceHandlerMethodArgumentResolver());
     }
 }

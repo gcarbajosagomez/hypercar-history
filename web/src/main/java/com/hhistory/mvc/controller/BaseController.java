@@ -7,6 +7,7 @@ import com.hhistory.data.dao.sql.SqlCarDAO;
 import com.hhistory.data.dao.sql.SqlContentSearchDAO;
 import com.hhistory.data.dao.sql.SqlPictureDAO;
 import com.hhistory.data.dao.sql.SqlPictureRepository;
+import com.hhistory.data.model.car.Car;
 import com.hhistory.mvc.controller.util.CarControllerUtil;
 import com.hhistory.mvc.language.Language;
 import com.hhistory.mvc.manufacturer.Manufacturer;
@@ -47,7 +48,7 @@ public abstract class BaseController extends BaseControllerData {
     @Inject
     @Named(CAR_REPOSITORY)
     @Getter
-    private CrudRepository sqlCarRepository;
+    private CrudRepository<Car, Long> sqlCarRepository;
 
     @Inject
     @Getter

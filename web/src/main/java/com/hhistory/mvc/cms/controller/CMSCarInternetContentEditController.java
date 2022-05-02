@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static com.hhistory.mvc.cms.command.EntityManagementQueryType.REMOVE_CAR_INTERNET_CONTENTS;
@@ -73,7 +73,7 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
                         this.entityManagementService.reloadEntities(entityManagementLoadCommand);
                     } catch (Exception e) {
                         log.error("There was an error while deleting carInternetContent {} ",
-                                  carInternetContent.toString(),
+                                  carInternetContent,
                                   e);
                     }
                 });
@@ -83,12 +83,15 @@ public class CMSCarInternetContentEditController extends CMSBaseController {
 
     @ModelAttribute(CAR_INTERNET_CONTENT_EDIT_FORM_COMMAND)
     public CarInternetContentEditFormCommand createCarInternetContentCommand(@PathVariable(ID) Long contentId) throws Exception {
-        CarInternetContent carInternetContent = super.getSqlCarInternetContentRepository()
-                                                     .findOne(contentId);
+        return super.getSqlCarInternetContentRepository()
+                    .findById(contentId)
+                    .map(carInternetContent -> {
+                        CarInternetContentForm carInternetContentForm =
+                                carInternetContentFormFactory.buildFormFromEntity(carInternetContent)
+                                                             .adapt();
 
-        CarInternetContentForm carInternetContentForm =
-                this.carInternetContentFormFactory.buildFormFromEntity(carInternetContent)
-                                                  .adapt();
-        return new CarInternetContentEditFormCommand(Arrays.asList(carInternetContentForm));
+                        return new CarInternetContentEditFormCommand(List.of(carInternetContentForm));
+                    })
+                    .orElse(new CarInternetContentEditFormCommand());
     }
 }

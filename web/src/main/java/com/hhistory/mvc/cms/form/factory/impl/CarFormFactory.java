@@ -10,25 +10,19 @@ import com.hhistory.data.model.transmission.Transmission;
 import com.hhistory.data.model.tyre.TyreSet;
 import com.hhistory.mvc.cms.command.CarMaterial;
 import com.hhistory.mvc.cms.command.PictureEditCommand;
-import com.hhistory.mvc.cms.form.CarEditForm;
-import com.hhistory.mvc.cms.form.EditForm;
+import com.hhistory.mvc.cms.form.*;
 import com.hhistory.mvc.cms.form.factory.EntityFormFactory;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import static com.hhistory.data.dao.sql.SqlEngineRepository.ENGINE_REPOSITORY;
 
 /**
  * Creates new {@link Car}s out of the data contained in {@link CarEditForm}s and vice versa
@@ -108,8 +102,8 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
             EditForm engineEditForm = carEditForm.getEngineEditForm();
             Long engineId = engineEditForm.getId();
             engine = Optional.ofNullable(engineId)
-                             .map(sqlEngineRepository::findOne)
-                             .orElse((Engine) this.engineFormFactory.buildEntityFromForm(engineEditForm));
+                             .flatMap(sqlEngineRepository::findById)
+                             .orElse((Engine) engineFormFactory.buildEntityFromForm(engineEditForm));
 
             BrakeSet brakeSet = (BrakeSet) this.brakeSetFormFactory.buildEntityFromForm(carEditForm.getBrakeSetEditForm());
             EditForm transmissionEditForm = carEditForm.getTransmissionEditForm();
@@ -160,27 +154,6 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
     }
 
     /**
-     * Parse a materials {@link String} (material1-material2-materialN) into a {@link List<CarMaterial>}
-     *
-     * @param materialsString
-     * @return
-     */
-    private List<CarMaterial> parseMaterialsStringToList(String materialsString) {
-        List<CarMaterial> materialsList = new ArrayList<>();
-
-        if (StringUtils.hasText(materialsString)) {
-            if (materialsString.contains(CAR_MATERIAL_STRING_SEPARATOR)) {
-                materialsList = Stream.of(materialsString.split(CAR_MATERIAL_STRING_SEPARATOR))
-                                      .map(CarMaterial::map)
-                                      .toList();
-            } else {
-                materialsList.add(CarMaterial.map(materialsString));
-            }
-        }
-        return materialsList;
-    }
-
-    /**
      * Parse a {@link List<CarMaterial>} into a materials {@link String} (material1-material2-materialN)
      *
      * @param materialList
@@ -202,5 +175,26 @@ public class CarFormFactory implements EntityFormFactory<Car, CarEditForm> {
             carChassisMaterials = String.join(CAR_MATERIAL_STRING_SEPARATOR, carChassisMaterialsStrings);
         }
         return carChassisMaterials;
+    }
+
+    /**
+     * Parse a materials {@link String} (material1-material2-materialN) into a {@link List<CarMaterial>}
+     *
+     * @param materialsString
+     * @return
+     */
+    private List<CarMaterial> parseMaterialsStringToList(String materialsString) {
+        List<CarMaterial> materialsList = new ArrayList<>();
+
+        if (StringUtils.hasText(materialsString)) {
+            if (materialsString.contains(CAR_MATERIAL_STRING_SEPARATOR)) {
+                materialsList = Stream.of(materialsString.split(CAR_MATERIAL_STRING_SEPARATOR))
+                                      .map(CarMaterial::map)
+                                      .toList();
+            } else {
+                materialsList.add(CarMaterial.map(materialsString));
+            }
+        }
+        return materialsList;
     }
 }
